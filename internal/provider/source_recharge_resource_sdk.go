@@ -8,12 +8,19 @@ import (
 	"time"
 )
 
-func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCreateRequest {
+func (r *SourceRechargeResourceModel) ToSharedSourceRechargeCreateRequest() *shared.SourceRechargeCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	useOrdersDeprecatedAPI := new(bool)
+	if !r.Configuration.UseOrdersDeprecatedAPI.IsUnknown() && !r.Configuration.UseOrdersDeprecatedAPI.IsNull() {
+		*useOrdersDeprecatedAPI = r.Configuration.UseOrdersDeprecatedAPI.ValueBool()
+	} else {
+		useOrdersDeprecatedAPI = nil
+	}
 	configuration := shared.SourceRecharge{
-		AccessToken: accessToken,
-		StartDate:   startDate,
+		AccessToken:            accessToken,
+		StartDate:              startDate,
+		UseOrdersDeprecatedAPI: useOrdersDeprecatedAPI,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -39,17 +46,26 @@ func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCr
 	return &out
 }
 
-func (r *SourceRechargeResourceModel) ToGetSDKType() *shared.SourceRechargeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceRechargeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRechargeResourceModel) ToUpdateSDKType() *shared.SourceRechargePutRequest {
+func (r *SourceRechargeResourceModel) ToSharedSourceRechargePutRequest() *shared.SourceRechargePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	useOrdersDeprecatedAPI := new(bool)
+	if !r.Configuration.UseOrdersDeprecatedAPI.IsUnknown() && !r.Configuration.UseOrdersDeprecatedAPI.IsNull() {
+		*useOrdersDeprecatedAPI = r.Configuration.UseOrdersDeprecatedAPI.ValueBool()
+	} else {
+		useOrdersDeprecatedAPI = nil
+	}
 	configuration := shared.SourceRechargeUpdate{
-		AccessToken: accessToken,
-		StartDate:   startDate,
+		AccessToken:            accessToken,
+		StartDate:              startDate,
+		UseOrdersDeprecatedAPI: useOrdersDeprecatedAPI,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -59,20 +75,4 @@ func (r *SourceRechargeResourceModel) ToUpdateSDKType() *shared.SourceRechargePu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceRechargeResourceModel) ToDeleteSDKType() *shared.SourceRechargeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceRechargeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceRechargeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

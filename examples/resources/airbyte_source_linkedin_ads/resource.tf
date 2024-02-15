@@ -1,13 +1,13 @@
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      6,
+      4,
     ]
     ad_analytics_reports = [
       {
-        name             = "Dwayne Zboncak"
-        pivot_by         = "IMPRESSION_DEVICE_TYPE"
-        time_granularity = "MONTHLY"
+        name             = "Abraham Greenholt MD"
+        pivot_by         = "CONVERSATION_NODE"
+        time_granularity = "YEARLY"
       },
     ]
     credentials = {
@@ -17,8 +17,8 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     }
     start_date = "2021-05-17"
   }
-  definition_id = "4672645c-fb24-449e-af87-64eb4b875ea1"
-  name          = "Blake Howell"
+  definition_id = "61a4e466-849f-47bb-aaae-f524043cb4c4"
+  name          = "Tracy Watsica"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6c0fac14-03cf-4d91-9cc5-3ae1f1c37b35"
+  workspace_id  = "7bd59151-74a5-453f-9a41-daf7626ef51c"
 }

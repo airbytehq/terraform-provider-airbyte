@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.DestinationBigqueryCreateRequest {
+func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequest() *shared.DestinationBigqueryCreateRequest {
 	bigQueryClientBufferSizeMb := new(int64)
 	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
 		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
@@ -118,12 +118,14 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationBigqueryResourceModel) ToGetSDKType() *shared.DestinationBigqueryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationBigqueryResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.DestinationBigqueryPutRequest {
+func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest() *shared.DestinationBigqueryPutRequest {
 	bigQueryClientBufferSizeMb := new(int64)
 	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
 		*bigQueryClientBufferSizeMb = r.Configuration.BigQueryClientBufferSizeMb.ValueInt64()
@@ -225,20 +227,4 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationBigqueryResourceModel) ToDeleteSDKType() *shared.DestinationBigqueryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationBigqueryResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

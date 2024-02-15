@@ -45,6 +45,8 @@ type SelfManagedReplicaSet struct {
 	Database string `json:"database"`
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
+	// When enabled, syncs will validate and structure records against the stream's schema.
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
 	// The username which is used to access the database.
 	Username *string `json:"username,omitempty"`
 }
@@ -99,6 +101,13 @@ func (o *SelfManagedReplicaSet) GetPassword() *string {
 	return o.Password
 }
 
+func (o *SelfManagedReplicaSet) GetSchemaEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaEnforced
+}
+
 func (o *SelfManagedReplicaSet) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -142,6 +151,8 @@ type MongoDBAtlasReplicaSet struct {
 	Database string `json:"database"`
 	// The password associated with this username.
 	Password string `json:"password"`
+	// When enabled, syncs will validate and structure records against the stream's schema.
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
 }
@@ -196,6 +207,13 @@ func (o *MongoDBAtlasReplicaSet) GetPassword() string {
 	return o.Password
 }
 
+func (o *MongoDBAtlasReplicaSet) GetSchemaEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaEnforced
+}
+
 func (o *MongoDBAtlasReplicaSet) GetUsername() string {
 	if o == nil {
 		return ""
@@ -210,6 +228,7 @@ const (
 	ClusterTypeTypeSelfManagedReplicaSet  ClusterTypeType = "Self-Managed Replica Set"
 )
 
+// ClusterType - Configures the MongoDB cluster type.
 type ClusterType struct {
 	MongoDBAtlasReplicaSet *MongoDBAtlasReplicaSet
 	SelfManagedReplicaSet  *SelfManagedReplicaSet

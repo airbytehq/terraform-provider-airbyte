@@ -25,13 +25,13 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
       encrypted_trust_server_certificate = {}
     }
     tunnel_method = {
-      destination_mssql_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Amalia.Blick"
+    username = "Orville59"
   }
-  definition_id = "90e1a2bc-7de0-4ff6-b737-4915d3efc2cd"
-  name          = "Jorge Beahan"
-  workspace_id  = "6acc1e6f-1291-4560-8b55-b326e06d2448"
+  definition_id = "374090ef-b22d-4b6f-a086-4a856a04170f"
+  name          = "Bob Hamill"
+  workspace_id  = "dc323359-77b0-47bf-8728-b7077558c673"
 }
 ```
 
@@ -46,7 +46,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -66,10 +66,8 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with this username.
-- `port` (Number) Default: 1433
-The port of the MSSQL database.
-- `schema` (String) Default: "public"
-The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+- `port` (Number) The port of the MSSQL database. Default: 1433
+- `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 - `ssl_method` (Attributes) The encryption method which is used to communicate with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
@@ -99,9 +97,9 @@ Optional:
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -118,8 +116,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -133,7 +130,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

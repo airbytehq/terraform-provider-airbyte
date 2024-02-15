@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCreateRequest {
+func (r *SourceVantageResourceModel) ToSharedSourceVantageCreateRequest() *shared.SourceVantageCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	configuration := shared.SourceVantage{
 		AccessToken: accessToken,
@@ -36,12 +36,14 @@ func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCrea
 	return &out
 }
 
-func (r *SourceVantageResourceModel) ToGetSDKType() *shared.SourceVantageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceVantageResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceVantageResourceModel) ToUpdateSDKType() *shared.SourceVantagePutRequest {
+func (r *SourceVantageResourceModel) ToSharedSourceVantagePutRequest() *shared.SourceVantagePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	configuration := shared.SourceVantageUpdate{
 		AccessToken: accessToken,
@@ -54,20 +56,4 @@ func (r *SourceVantageResourceModel) ToUpdateSDKType() *shared.SourceVantagePutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceVantageResourceModel) ToDeleteSDKType() *shared.SourceVantageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceVantageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceVantageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -33,7 +33,6 @@ func (e *DestinationS3GlueUpdateSchemasCompressionType) UnmarshalJSON(data []byt
 	}
 }
 
-// DestinationS3GlueUpdateGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueUpdateGZIP struct {
 	CompressionType *DestinationS3GlueUpdateSchemasCompressionType `default:"GZIP" json:"compression_type"`
 }
@@ -80,7 +79,6 @@ func (e *DestinationS3GlueUpdateCompressionType) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// DestinationS3GlueUpdateNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueUpdateNoCompression struct {
 	CompressionType *DestinationS3GlueUpdateCompressionType `default:"No Compression" json:"compression_type"`
 }
@@ -110,6 +108,7 @@ const (
 	DestinationS3GlueUpdateCompressionUnionTypeDestinationS3GlueUpdateGZIP          DestinationS3GlueUpdateCompressionUnionType = "destination-s3-glue-update_GZIP"
 )
 
+// DestinationS3GlueUpdateCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueUpdateCompression struct {
 	DestinationS3GlueUpdateNoCompression *DestinationS3GlueUpdateNoCompression
 	DestinationS3GlueUpdateGZIP          *DestinationS3GlueUpdateGZIP
@@ -218,7 +217,6 @@ func (e *DestinationS3GlueUpdateFormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 type DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationS3GlueUpdateCompression `json:"compression,omitempty"`
@@ -265,6 +263,7 @@ const (
 	DestinationS3GlueUpdateOutputFormatTypeDestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON DestinationS3GlueUpdateOutputFormatType = "destination-s3-glue-update_JSON Lines: Newline-delimited JSON"
 )
 
+// DestinationS3GlueUpdateOutputFormat - Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 type DestinationS3GlueUpdateOutputFormat struct {
 	DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON *DestinationS3GlueUpdateJSONLinesNewlineDelimitedJSON
 
@@ -333,31 +332,39 @@ type DestinationS3GlueUpdateS3BucketRegion string
 
 const (
 	DestinationS3GlueUpdateS3BucketRegionUnknown      DestinationS3GlueUpdateS3BucketRegion = ""
-	DestinationS3GlueUpdateS3BucketRegionUsEast1      DestinationS3GlueUpdateS3BucketRegion = "us-east-1"
-	DestinationS3GlueUpdateS3BucketRegionUsEast2      DestinationS3GlueUpdateS3BucketRegion = "us-east-2"
-	DestinationS3GlueUpdateS3BucketRegionUsWest1      DestinationS3GlueUpdateS3BucketRegion = "us-west-1"
-	DestinationS3GlueUpdateS3BucketRegionUsWest2      DestinationS3GlueUpdateS3BucketRegion = "us-west-2"
 	DestinationS3GlueUpdateS3BucketRegionAfSouth1     DestinationS3GlueUpdateS3BucketRegion = "af-south-1"
 	DestinationS3GlueUpdateS3BucketRegionApEast1      DestinationS3GlueUpdateS3BucketRegion = "ap-east-1"
-	DestinationS3GlueUpdateS3BucketRegionApSouth1     DestinationS3GlueUpdateS3BucketRegion = "ap-south-1"
 	DestinationS3GlueUpdateS3BucketRegionApNortheast1 DestinationS3GlueUpdateS3BucketRegion = "ap-northeast-1"
 	DestinationS3GlueUpdateS3BucketRegionApNortheast2 DestinationS3GlueUpdateS3BucketRegion = "ap-northeast-2"
 	DestinationS3GlueUpdateS3BucketRegionApNortheast3 DestinationS3GlueUpdateS3BucketRegion = "ap-northeast-3"
+	DestinationS3GlueUpdateS3BucketRegionApSouth1     DestinationS3GlueUpdateS3BucketRegion = "ap-south-1"
+	DestinationS3GlueUpdateS3BucketRegionApSouth2     DestinationS3GlueUpdateS3BucketRegion = "ap-south-2"
 	DestinationS3GlueUpdateS3BucketRegionApSoutheast1 DestinationS3GlueUpdateS3BucketRegion = "ap-southeast-1"
 	DestinationS3GlueUpdateS3BucketRegionApSoutheast2 DestinationS3GlueUpdateS3BucketRegion = "ap-southeast-2"
+	DestinationS3GlueUpdateS3BucketRegionApSoutheast3 DestinationS3GlueUpdateS3BucketRegion = "ap-southeast-3"
+	DestinationS3GlueUpdateS3BucketRegionApSoutheast4 DestinationS3GlueUpdateS3BucketRegion = "ap-southeast-4"
 	DestinationS3GlueUpdateS3BucketRegionCaCentral1   DestinationS3GlueUpdateS3BucketRegion = "ca-central-1"
+	DestinationS3GlueUpdateS3BucketRegionCaWest1      DestinationS3GlueUpdateS3BucketRegion = "ca-west-1"
 	DestinationS3GlueUpdateS3BucketRegionCnNorth1     DestinationS3GlueUpdateS3BucketRegion = "cn-north-1"
 	DestinationS3GlueUpdateS3BucketRegionCnNorthwest1 DestinationS3GlueUpdateS3BucketRegion = "cn-northwest-1"
 	DestinationS3GlueUpdateS3BucketRegionEuCentral1   DestinationS3GlueUpdateS3BucketRegion = "eu-central-1"
+	DestinationS3GlueUpdateS3BucketRegionEuCentral2   DestinationS3GlueUpdateS3BucketRegion = "eu-central-2"
 	DestinationS3GlueUpdateS3BucketRegionEuNorth1     DestinationS3GlueUpdateS3BucketRegion = "eu-north-1"
 	DestinationS3GlueUpdateS3BucketRegionEuSouth1     DestinationS3GlueUpdateS3BucketRegion = "eu-south-1"
+	DestinationS3GlueUpdateS3BucketRegionEuSouth2     DestinationS3GlueUpdateS3BucketRegion = "eu-south-2"
 	DestinationS3GlueUpdateS3BucketRegionEuWest1      DestinationS3GlueUpdateS3BucketRegion = "eu-west-1"
 	DestinationS3GlueUpdateS3BucketRegionEuWest2      DestinationS3GlueUpdateS3BucketRegion = "eu-west-2"
 	DestinationS3GlueUpdateS3BucketRegionEuWest3      DestinationS3GlueUpdateS3BucketRegion = "eu-west-3"
-	DestinationS3GlueUpdateS3BucketRegionSaEast1      DestinationS3GlueUpdateS3BucketRegion = "sa-east-1"
+	DestinationS3GlueUpdateS3BucketRegionIlCentral1   DestinationS3GlueUpdateS3BucketRegion = "il-central-1"
+	DestinationS3GlueUpdateS3BucketRegionMeCentral1   DestinationS3GlueUpdateS3BucketRegion = "me-central-1"
 	DestinationS3GlueUpdateS3BucketRegionMeSouth1     DestinationS3GlueUpdateS3BucketRegion = "me-south-1"
+	DestinationS3GlueUpdateS3BucketRegionSaEast1      DestinationS3GlueUpdateS3BucketRegion = "sa-east-1"
+	DestinationS3GlueUpdateS3BucketRegionUsEast1      DestinationS3GlueUpdateS3BucketRegion = "us-east-1"
+	DestinationS3GlueUpdateS3BucketRegionUsEast2      DestinationS3GlueUpdateS3BucketRegion = "us-east-2"
 	DestinationS3GlueUpdateS3BucketRegionUsGovEast1   DestinationS3GlueUpdateS3BucketRegion = "us-gov-east-1"
 	DestinationS3GlueUpdateS3BucketRegionUsGovWest1   DestinationS3GlueUpdateS3BucketRegion = "us-gov-west-1"
+	DestinationS3GlueUpdateS3BucketRegionUsWest1      DestinationS3GlueUpdateS3BucketRegion = "us-west-1"
+	DestinationS3GlueUpdateS3BucketRegionUsWest2      DestinationS3GlueUpdateS3BucketRegion = "us-west-2"
 )
 
 func (e DestinationS3GlueUpdateS3BucketRegion) ToPointer() *DestinationS3GlueUpdateS3BucketRegion {
@@ -372,19 +379,9 @@ func (e *DestinationS3GlueUpdateS3BucketRegion) UnmarshalJSON(data []byte) error
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -392,11 +389,21 @@ func (e *DestinationS3GlueUpdateS3BucketRegion) UnmarshalJSON(data []byte) error
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -404,9 +411,13 @@ func (e *DestinationS3GlueUpdateS3BucketRegion) UnmarshalJSON(data []byte) error
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -414,13 +425,25 @@ func (e *DestinationS3GlueUpdateS3BucketRegion) UnmarshalJSON(data []byte) error
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = DestinationS3GlueUpdateS3BucketRegion(v)
 		return nil
 	default:

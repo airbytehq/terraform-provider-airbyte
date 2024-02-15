@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupAPICreateRequest {
+func (r *SourceClickupAPIResourceModel) ToSharedSourceClickupAPICreateRequest() *shared.SourceClickupAPICreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	folderID := new(string)
 	if !r.Configuration.FolderID.IsUnknown() && !r.Configuration.FolderID.IsNull() {
@@ -71,12 +71,14 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	return &out
 }
 
-func (r *SourceClickupAPIResourceModel) ToGetSDKType() *shared.SourceClickupAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceClickupAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceClickupAPIResourceModel) ToUpdateSDKType() *shared.SourceClickupAPIPutRequest {
+func (r *SourceClickupAPIResourceModel) ToSharedSourceClickupAPIPutRequest() *shared.SourceClickupAPIPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	folderID := new(string)
 	if !r.Configuration.FolderID.IsUnknown() && !r.Configuration.FolderID.IsNull() {
@@ -124,20 +126,4 @@ func (r *SourceClickupAPIResourceModel) ToUpdateSDKType() *shared.SourceClickupA
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceClickupAPIResourceModel) ToDeleteSDKType() *shared.SourceClickupAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceClickupAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceClickupAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

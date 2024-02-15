@@ -1,7 +1,7 @@
 resource "airbyte_destination_weaviate" "my_destination_weaviate" {
   configuration = {
     embedding = {
-      destination_weaviate_azure_open_ai = {
+      azure_open_ai = {
         api_base   = "https://your-resource-name.openai.azure.com"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
@@ -15,18 +15,20 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
         },
       ]
       auth = {
-        destination_weaviate_api_token = {
+        api_token = {
           token = "...my_token..."
         }
       }
-      batch_size         = 6
-      default_vectorizer = "text2vec-huggingface"
+      batch_size         = 9
+      default_vectorizer = "text2vec-contextionary"
       host               = "https://my-cluster.weaviate.network"
+      tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 4
-      chunk_size    = 5
+      chunk_overlap = 2
+      chunk_size    = 9
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -40,13 +42,13 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
         "...",
       ]
       text_splitter = {
-        destination_weaviate_by_markdown_header = {
-          split_level = 4
+        by_markdown_header = {
+          split_level = 2
         }
       }
     }
   }
-  definition_id = "97e801e6-7689-4a46-b396-c7c6bf737242"
-  name          = "Diana Runte Jr."
-  workspace_id  = "59f1e303-60fc-40ea-a506-81bc3adb090c"
+  definition_id = "bbde9f2b-b80c-4d3f-a4ad-282938c45275"
+  name          = "April Friesen IV"
+  workspace_id  = "930ed8d4-3c0d-4abb-a6ef-9fc3c3744fd2"
 }

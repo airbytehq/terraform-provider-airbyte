@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheGuardianAPICreateRequest {
+func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPICreateRequest() *shared.SourceTheGuardianAPICreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -66,12 +66,14 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 	return &out
 }
 
-func (r *SourceTheGuardianAPIResourceModel) ToGetSDKType() *shared.SourceTheGuardianAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTheGuardianAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTheGuardianAPIResourceModel) ToUpdateSDKType() *shared.SourceTheGuardianAPIPutRequest {
+func (r *SourceTheGuardianAPIResourceModel) ToSharedSourceTheGuardianAPIPutRequest() *shared.SourceTheGuardianAPIPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -114,20 +116,4 @@ func (r *SourceTheGuardianAPIResourceModel) ToUpdateSDKType() *shared.SourceTheG
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTheGuardianAPIResourceModel) ToDeleteSDKType() *shared.SourceTheGuardianAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTheGuardianAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTheGuardianAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

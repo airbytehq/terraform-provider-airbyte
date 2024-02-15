@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSecodaResourceModel) ToCreateSDKType() *shared.SourceSecodaCreateRequest {
+func (r *SourceSecodaResourceModel) ToSharedSourceSecodaCreateRequest() *shared.SourceSecodaCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSecoda{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceSecodaResourceModel) ToCreateSDKType() *shared.SourceSecodaCreate
 	return &out
 }
 
-func (r *SourceSecodaResourceModel) ToGetSDKType() *shared.SourceSecodaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSecodaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSecodaResourceModel) ToUpdateSDKType() *shared.SourceSecodaPutRequest {
+func (r *SourceSecodaResourceModel) ToSharedSourceSecodaPutRequest() *shared.SourceSecodaPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSecodaUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceSecodaResourceModel) ToUpdateSDKType() *shared.SourceSecodaPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSecodaResourceModel) ToDeleteSDKType() *shared.SourceSecodaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSecodaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSecodaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

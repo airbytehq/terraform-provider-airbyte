@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.DestinationElasticsearchCreateRequest {
+func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearchCreateRequest() *shared.DestinationElasticsearchCreateRequest {
 	var authenticationMethod *shared.DestinationElasticsearchAuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
 		var destinationElasticsearchAPIKeySecret *shared.DestinationElasticsearchAPIKeySecret
@@ -75,12 +75,14 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	return &out
 }
 
-func (r *DestinationElasticsearchResourceModel) ToGetSDKType() *shared.DestinationElasticsearchCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationElasticsearchResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationElasticsearchResourceModel) ToUpdateSDKType() *shared.DestinationElasticsearchPutRequest {
+func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearchPutRequest() *shared.DestinationElasticsearchPutRequest {
 	var authenticationMethod *shared.AuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
 		var apiKeySecret *shared.APIKeySecret
@@ -139,20 +141,4 @@ func (r *DestinationElasticsearchResourceModel) ToUpdateSDKType() *shared.Destin
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationElasticsearchResourceModel) ToDeleteSDKType() *shared.DestinationElasticsearchCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationElasticsearchResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationElasticsearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

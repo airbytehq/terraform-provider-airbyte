@@ -23,10 +23,10 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "4b91c615-d128-4040-ba03-eb3c0afcc3c8"
-  name          = "Gerard Kerluke"
+  definition_id = "ccb1d39d-dfc6-449b-ba58-a563641fd338"
+  name          = "Tony Collier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fbbc8e3e-7db5-4a3e-846f-c1e0fa91f7ef"
+  workspace_id  = "56cd88e7-e494-4b9e-9830-e9efbf412cdc"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -66,8 +66,8 @@ Optional:
 
 Optional:
 
-- `eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--eu_based_account))
-- `global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--global_account))
+- `eu_based_account` (Attributes) (see [below for nested schema](#nestedatt--configuration--region--eu_based_account))
+- `global_account` (Attributes) (see [below for nested schema](#nestedatt--configuration--region--global_account))
 
 <a id="nestedatt--configuration--region--eu_based_account"></a>
 ### Nested Schema for `configuration.region.eu_based_account`

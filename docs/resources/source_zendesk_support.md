@@ -16,20 +16,20 @@ SourceZendeskSupport Resource
 resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
-      source_zendesk_support_api_token = {
+      api_token = {
         additional_properties = "{ \"see\": \"documentation\" }"
         api_token             = "...my_api_token..."
-        email                 = "Ansel_McLaughlin@gmail.com"
+        email                 = "Pierre80@hotmail.com"
       }
     }
-    ignore_pagination = false
+    ignore_pagination = true
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  definition_id = "7526c0e6-8d41-4f29-878b-d831a4caf6a0"
-  name          = "Linda Weissnat"
+  definition_id = "01f692ef-f8de-4565-8472-830aace290d7"
+  name          = "Chad Reinger"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20a84c82-feed-435f-9471-260525978122"
+  workspace_id  = "8aff5206-e7c6-4651-a764-ede9cd819ecc"
 }
 ```
 
@@ -44,8 +44,8 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,8 +62,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `ignore_pagination` (Boolean) Default: false
-Makes each stream read a single page of data.
+- `ignore_pagination` (Boolean) Makes each stream read a single page of data. Default: false
 - `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -71,8 +70,8 @@ Makes each stream read a single page of data.
 
 Optional:
 
-- `api_token` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
-- `o_auth20` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 
 <a id="nestedatt--configuration--credentials--api_token"></a>
 ### Nested Schema for `configuration.credentials.api_token`

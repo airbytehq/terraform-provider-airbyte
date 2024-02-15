@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreateRequest {
+func (r *SourceTrelloResourceModel) ToSharedSourceTrelloCreateRequest() *shared.SourceTrelloCreateRequest {
 	var boardIds []string = nil
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
@@ -46,12 +46,14 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 	return &out
 }
 
-func (r *SourceTrelloResourceModel) ToGetSDKType() *shared.SourceTrelloCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTrelloResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTrelloResourceModel) ToUpdateSDKType() *shared.SourceTrelloPutRequest {
+func (r *SourceTrelloResourceModel) ToSharedSourceTrelloPutRequest() *shared.SourceTrelloPutRequest {
 	var boardIds []string = nil
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
@@ -73,20 +75,4 @@ func (r *SourceTrelloResourceModel) ToUpdateSDKType() *shared.SourceTrelloPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTrelloResourceModel) ToDeleteSDKType() *shared.SourceTrelloCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTrelloResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTrelloResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

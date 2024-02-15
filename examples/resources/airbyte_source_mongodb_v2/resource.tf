@@ -7,15 +7,16 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         connection_string     = "mongodb+srv://cluster0.abcd1.mongodb.net/"
         database              = "...my_database..."
         password              = "...my_password..."
-        username              = "Curtis38"
+        schema_enforced       = true
+        username              = "Juvenal53"
       }
     }
-    discover_sample_size    = 1
-    initial_waiting_seconds = 0
-    queue_size              = 5
+    discover_sample_size    = 6
+    initial_waiting_seconds = 9
+    queue_size              = 4
   }
-  definition_id = "c03f8392-0634-4c9d-b1c4-26709282f0b3"
-  name          = "Nora Waelchi"
+  definition_id = "fcbb78be-d982-412c-b04a-e19387527d5e"
+  name          = "Eloise Willms"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "729ff502-4b69-40b2-b36f-2f7a3b95d4ab"
+  workspace_id  = "46d0c0b7-968b-4724-a137-fe2e9e26c4c1"
 }

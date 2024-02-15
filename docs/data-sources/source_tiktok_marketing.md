@@ -27,8 +27,7 @@ data "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
 
 ### Read-Only
 
-- `configuration` (String) Parsed as JSON.
-The values required to configure the source.
+- `configuration` (String) The values required to configure the source. Parsed as JSON.
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)

@@ -4,7 +4,6 @@ package shared
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
@@ -37,9 +36,9 @@ func (e *SourcePinterestAuthMethod) UnmarshalJSON(data []byte) error {
 type SourcePinterestOAuth20 struct {
 	authMethod SourcePinterestAuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of your OAuth application
-	ClientID *string `json:"client_id,omitempty"`
+	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret string `json:"client_secret"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -49,7 +48,7 @@ func (s SourcePinterestOAuth20) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SourcePinterestOAuth20) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
 	return nil
@@ -59,16 +58,16 @@ func (o *SourcePinterestOAuth20) GetAuthMethod() SourcePinterestAuthMethod {
 	return SourcePinterestAuthMethodOauth20
 }
 
-func (o *SourcePinterestOAuth20) GetClientID() *string {
+func (o *SourcePinterestOAuth20) GetClientID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.ClientID
 }
 
-func (o *SourcePinterestOAuth20) GetClientSecret() *string {
+func (o *SourcePinterestOAuth20) GetClientSecret() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.ClientSecret
 }
@@ -78,47 +77,6 @@ func (o *SourcePinterestOAuth20) GetRefreshToken() string {
 		return ""
 	}
 	return o.RefreshToken
-}
-
-type SourcePinterestAuthorizationMethodType string
-
-const (
-	SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20 SourcePinterestAuthorizationMethodType = "source-pinterest_OAuth2.0"
-)
-
-type SourcePinterestAuthorizationMethod struct {
-	SourcePinterestOAuth20 *SourcePinterestOAuth20
-
-	Type SourcePinterestAuthorizationMethodType
-}
-
-func CreateSourcePinterestAuthorizationMethodSourcePinterestOAuth20(sourcePinterestOAuth20 SourcePinterestOAuth20) SourcePinterestAuthorizationMethod {
-	typ := SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20
-
-	return SourcePinterestAuthorizationMethod{
-		SourcePinterestOAuth20: &sourcePinterestOAuth20,
-		Type:                   typ,
-	}
-}
-
-func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
-
-	sourcePinterestOAuth20 := new(SourcePinterestOAuth20)
-	if err := utils.UnmarshalJSON(data, &sourcePinterestOAuth20, "", true, true); err == nil {
-		u.SourcePinterestOAuth20 = sourcePinterestOAuth20
-		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestOAuth20
-		return nil
-	}
-
-	return errors.New("could not unmarshal into supported union types")
-}
-
-func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePinterestOAuth20 != nil {
-		return utils.MarshalJSON(u.SourcePinterestOAuth20, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // SourcePinterestValidEnums - An enumeration.
@@ -910,13 +868,13 @@ func (e *SourcePinterestStatus) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePinterest struct {
-	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
+	Credentials *SourcePinterestOAuth20 `json:"credentials,omitempty"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomReports []SourcePinterestReportConfig `json:"custom_reports,omitempty"`
 	sourceType    *Pinterest                    `const:"pinterest" json:"sourceType,omitempty"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate *types.Date `json:"start_date,omitempty"`
-	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
+	// For the ads, ad_groups, and campaigns streams, specifying a status will filter out records that do not match the specified ones. If a status is not specified, the source will default to records with a status of either ACTIVE or PAUSED.
 	Status []SourcePinterestStatus `json:"status,omitempty"`
 }
 
@@ -931,7 +889,7 @@ func (s *SourcePinterest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePinterest) GetCredentials() *SourcePinterestAuthorizationMethod {
+func (o *SourcePinterest) GetCredentials() *SourcePinterestOAuth20 {
 	if o == nil {
 		return nil
 	}

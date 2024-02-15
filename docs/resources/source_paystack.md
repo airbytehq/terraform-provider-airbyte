@@ -19,10 +19,10 @@ resource "airbyte_source_paystack" "my_source_paystack" {
     secret_key           = "...my_secret_key..."
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "5b489304-8e9c-41af-9961-b1c883a57271"
-  name          = "Kari Lemke"
+  definition_id = "1df09849-375f-4622-b890-d41f13919c92"
+  name          = "Alexis Dickens"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b6433cb8-2b32-4ad0-bfd9-a9d8ba9b0df8"
+  workspace_id  = "517a8011-2166-4a5e-846f-2bce2e77bbcc"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -55,7 +55,6 @@ Required:
 
 Optional:
 
-- `lookback_window_days` (Number) Default: 0
-When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
+- `lookback_window_days` (Number) When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation. Default: 0
 
 

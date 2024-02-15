@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGainsightPxResourceModel) ToCreateSDKType() *shared.SourceGainsightPxCreateRequest {
+func (r *SourceGainsightPxResourceModel) ToSharedSourceGainsightPxCreateRequest() *shared.SourceGainsightPxCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGainsightPx{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceGainsightPxResourceModel) ToCreateSDKType() *shared.SourceGainsig
 	return &out
 }
 
-func (r *SourceGainsightPxResourceModel) ToGetSDKType() *shared.SourceGainsightPxCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGainsightPxResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGainsightPxResourceModel) ToUpdateSDKType() *shared.SourceGainsightPxPutRequest {
+func (r *SourceGainsightPxResourceModel) ToSharedSourceGainsightPxPutRequest() *shared.SourceGainsightPxPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGainsightPxUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceGainsightPxResourceModel) ToUpdateSDKType() *shared.SourceGainsig
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGainsightPxResourceModel) ToDeleteSDKType() *shared.SourceGainsightPxCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGainsightPxResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGainsightPxResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -34,7 +34,6 @@ func (e *SourceTiktokMarketingUpdateSchemasAuthType) UnmarshalJSON(data []byte) 
 	}
 }
 
-// SandboxAccessToken - Authentication method
 type SandboxAccessToken struct {
 	// The long-term authorized access token.
 	AccessToken string `json:"access_token"`
@@ -96,7 +95,6 @@ func (e *SourceTiktokMarketingUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTiktokMarketingUpdateOAuth20 - Authentication method
 type SourceTiktokMarketingUpdateOAuth20 struct {
 	// Long-term Authorized Access Token.
 	AccessToken string `json:"access_token"`
@@ -159,6 +157,7 @@ const (
 	SourceTiktokMarketingUpdateAuthenticationMethodTypeSandboxAccessToken                 SourceTiktokMarketingUpdateAuthenticationMethodType = "Sandbox Access Token"
 )
 
+// SourceTiktokMarketingUpdateAuthenticationMethod - Authentication method
 type SourceTiktokMarketingUpdateAuthenticationMethod struct {
 	SourceTiktokMarketingUpdateOAuth20 *SourceTiktokMarketingUpdateOAuth20
 	SandboxAccessToken                 *SandboxAccessToken

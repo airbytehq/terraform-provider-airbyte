@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCreateRequest {
+func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryCreateRequest() *shared.SourceBigqueryCreateRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	datasetID := new(string)
 	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
@@ -45,12 +45,14 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 	return &out
 }
 
-func (r *SourceBigqueryResourceModel) ToGetSDKType() *shared.SourceBigqueryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceBigqueryResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBigqueryResourceModel) ToUpdateSDKType() *shared.SourceBigqueryPutRequest {
+func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryPutRequest() *shared.SourceBigqueryPutRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	datasetID := new(string)
 	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
@@ -72,20 +74,4 @@ func (r *SourceBigqueryResourceModel) ToUpdateSDKType() *shared.SourceBigqueryPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceBigqueryResourceModel) ToDeleteSDKType() *shared.SourceBigqueryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceBigqueryResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

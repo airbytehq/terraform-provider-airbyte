@@ -18,12 +18,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    username         = "Efren_Mante15"
+    username         = "Jerad12"
   }
-  definition_id = "f283fdf1-b362-4a3e-b9ca-cc879ba7ac01"
-  name          = "Gail Kirlin"
+  definition_id = "e389cc42-00a4-4abb-b299-a611cc7be3e8"
+  name          = "Ms. Matt Kohler"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7c271c50-44a2-45a4-b7e4-eabe3a97768e"
+  workspace_id  = "dc05c92c-2050-4fdf-aba7-d43d20d3384e"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_metabase" "my_source_metabase" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

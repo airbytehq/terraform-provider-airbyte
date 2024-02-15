@@ -21,15 +21,15 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "row_number",
+      "sheetid",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00"
+    start_datetime = "2000-01-01T13:00:00-07:00"
   }
-  definition_id = "a6744848-ac2b-404b-aae9-e175304065f6"
-  name          = "Tara King"
+  definition_id = "14e9ed57-541c-4361-ab0e-8c8cf11a0d25"
+  name          = "Jeremiah Fritsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "901f87c9-df1a-4f8f-9013-d5d0cf403b28"
+  workspace_id  = "fa52a9e4-75ab-4ffb-a2c1-e7b6908ecd76"
 }
 ```
 
@@ -44,8 +44,8 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -63,8 +63,7 @@ Required:
 Optional:
 
 - `metadata_fields` (List of String) A List of available columns which metadata can be pulled from.
-- `start_datetime` (String) Default: "2020-01-01T00:00:00+00:00"
-Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`
+- `start_datetime` (String) Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`. Default: "2020-01-01T00:00:00+00:00"
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

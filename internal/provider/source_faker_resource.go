@@ -5,13 +5,15 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -52,71 +54,79 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"always_updated": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: true` + "\n" +
-							`Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted. Default: true`,
 					},
 					"count": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 1000` + "\n" +
-							`How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(1000),
+						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream. Default: 1000`,
 					},
 					"parallelism": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 4` + "\n" +
-							`How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(4),
+						Description: `How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source. Default: 4`,
 					},
 					"records_per_slice": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 1000` + "\n" +
-							`How many fake records will be in each page (stream slice), before a state message is emitted?`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(1000),
+						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?. Default: 1000`,
 					},
 					"seed": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: -1` + "\n" +
-							`Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(-1),
+						Description: `Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random). Default: -1`,
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -146,14 +156,14 @@ func (r *SourceFakerResource) Configure(ctx context.Context, req resource.Config
 
 func (r *SourceFakerResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceFakerResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -162,7 +172,7 @@ func (r *SourceFakerResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceFakerCreateRequest()
 	res, err := r.client.Sources.CreateSourceFaker(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -183,7 +193,34 @@ func (r *SourceFakerResource) Create(ctx context.Context, req resource.CreateReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceFakerRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceFaker(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -231,7 +268,7 @@ func (r *SourceFakerResource) Read(ctx context.Context, req resource.ReadRequest
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -239,12 +276,19 @@ func (r *SourceFakerResource) Read(ctx context.Context, req resource.ReadRequest
 
 func (r *SourceFakerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceFakerResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceFakerPutRequest := data.ToUpdateSDKType()
+	sourceFakerPutRequest := data.ToSharedSourceFakerPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceFakerRequest{
 		SourceFakerPutRequest: sourceFakerPutRequest,
@@ -266,31 +310,33 @@ func (r *SourceFakerResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceFakerRequest{
+	request1 := operations.GetSourceFakerRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceFaker(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceFaker(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.DestinationClickhouseCreateRequest {
+func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreateRequest() *shared.DestinationClickhouseCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -113,12 +113,14 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 	return &out
 }
 
-func (r *DestinationClickhouseResourceModel) ToGetSDKType() *shared.DestinationClickhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationClickhouseResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationClickhouseResourceModel) ToUpdateSDKType() *shared.DestinationClickhousePutRequest {
+func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutRequest() *shared.DestinationClickhousePutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -215,20 +217,4 @@ func (r *DestinationClickhouseResourceModel) ToUpdateSDKType() *shared.Destinati
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationClickhouseResourceModel) ToDeleteSDKType() *shared.DestinationClickhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationClickhouseResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsheetsCreateRequest {
+func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest() *shared.SourceSmartsheetsCreateRequest {
 	var credentials shared.SourceSmartsheetsAuthorizationMethod
 	var sourceSmartsheetsOAuth20 *shared.SourceSmartsheetsOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -83,12 +83,14 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	return &out
 }
 
-func (r *SourceSmartsheetsResourceModel) ToGetSDKType() *shared.SourceSmartsheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSmartsheetsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsheetsPutRequest {
+func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *shared.SourceSmartsheetsPutRequest {
 	var credentials shared.SourceSmartsheetsUpdateAuthorizationMethod
 	var sourceSmartsheetsUpdateOAuth20 *shared.SourceSmartsheetsUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -147,20 +149,4 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSmartsheetsResourceModel) ToDeleteSDKType() *shared.SourceSmartsheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSmartsheetsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSmartsheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

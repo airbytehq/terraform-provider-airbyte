@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCloudtrailCreateRequest {
+func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailCreateRequest() *shared.SourceAwsCloudtrailCreateRequest {
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
 	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
@@ -48,12 +48,14 @@ func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCl
 	return &out
 }
 
-func (r *SourceAwsCloudtrailResourceModel) ToGetSDKType() *shared.SourceAwsCloudtrailCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAwsCloudtrailResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAwsCloudtrailResourceModel) ToUpdateSDKType() *shared.SourceAwsCloudtrailPutRequest {
+func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailPutRequest() *shared.SourceAwsCloudtrailPutRequest {
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
 	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
@@ -77,20 +79,4 @@ func (r *SourceAwsCloudtrailResourceModel) ToUpdateSDKType() *shared.SourceAwsCl
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAwsCloudtrailResourceModel) ToDeleteSDKType() *shared.SourceAwsCloudtrailCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAwsCloudtrailResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAwsCloudtrailResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

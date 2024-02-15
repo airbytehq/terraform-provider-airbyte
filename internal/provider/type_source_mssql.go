@@ -12,7 +12,7 @@ type SourceMssql struct {
 	Port              types.Int64                           `tfsdk:"port"`
 	ReplicationMethod *SourceMssqlUpdateMethod              `tfsdk:"replication_method"`
 	Schemas           []types.String                        `tfsdk:"schemas"`
-	SslMethod         *DestinationMssqlSSLMethod            `tfsdk:"ssl_method"`
+	SslMethod         *SourceMssqlSSLMethod                 `tfsdk:"ssl_method"`
 	TunnelMethod      *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username          types.String                          `tfsdk:"username"`
 }

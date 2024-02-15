@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvmazeScheduleCreateRequest {
+func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeScheduleCreateRequest() *shared.SourceTvmazeScheduleCreateRequest {
 	domesticScheduleCountryCode := r.Configuration.DomesticScheduleCountryCode.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -52,12 +52,14 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 	return &out
 }
 
-func (r *SourceTvmazeScheduleResourceModel) ToGetSDKType() *shared.SourceTvmazeScheduleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTvmazeScheduleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTvmazeScheduleResourceModel) ToUpdateSDKType() *shared.SourceTvmazeSchedulePutRequest {
+func (r *SourceTvmazeScheduleResourceModel) ToSharedSourceTvmazeSchedulePutRequest() *shared.SourceTvmazeSchedulePutRequest {
 	domesticScheduleCountryCode := r.Configuration.DomesticScheduleCountryCode.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -86,20 +88,4 @@ func (r *SourceTvmazeScheduleResourceModel) ToUpdateSDKType() *shared.SourceTvma
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTvmazeScheduleResourceModel) ToDeleteSDKType() *shared.SourceTvmazeScheduleCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTvmazeScheduleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTvmazeScheduleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

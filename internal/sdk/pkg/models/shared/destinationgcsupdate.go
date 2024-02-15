@@ -33,7 +33,6 @@ func (e *CredentialType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// HMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type HMACKey struct {
 	CredentialType *CredentialType `default:"HMAC_KEY" json:"credential_type"`
 	// When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
@@ -80,6 +79,7 @@ const (
 	AuthenticationUnionTypeHMACKey AuthenticationUnionType = "HMAC Key"
 )
 
+// Authentication - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type Authentication struct {
 	HMACKey *HMACKey
 
@@ -182,7 +182,6 @@ func (e *DestinationGcsUpdateSchemasFormatOutputFormatFormatType) UnmarshalJSON(
 	}
 }
 
-// DestinationGcsUpdateParquetColumnarStorage - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsUpdateParquetColumnarStorage struct {
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
 	BlockSizeMb *int64 `default:"128" json:"block_size_mb"`
@@ -283,7 +282,6 @@ func (e *DestinationGcsUpdateSchemasFormatCompressionType) UnmarshalJSON(data []
 	}
 }
 
-// DestinationGcsUpdateGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsUpdateGZIP struct {
 	CompressionType *DestinationGcsUpdateSchemasFormatCompressionType `default:"GZIP" json:"compression_type"`
 }
@@ -330,7 +328,6 @@ func (e *DestinationGcsUpdateSchemasCompressionType) UnmarshalJSON(data []byte) 
 	}
 }
 
-// DestinationGcsUpdateSchemasNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsUpdateSchemasNoCompression struct {
 	CompressionType *DestinationGcsUpdateSchemasCompressionType `default:"No Compression" json:"compression_type"`
 }
@@ -360,6 +357,7 @@ const (
 	DestinationGcsUpdateCompressionUnionTypeDestinationGcsUpdateGZIP                 DestinationGcsUpdateCompressionUnionType = "destination-gcs-update_GZIP"
 )
 
+// DestinationGcsUpdateCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsUpdateCompression struct {
 	DestinationGcsUpdateSchemasNoCompression *DestinationGcsUpdateSchemasNoCompression
 	DestinationGcsUpdateGZIP                 *DestinationGcsUpdateGZIP
@@ -440,7 +438,6 @@ func (e *DestinationGcsUpdateSchemasFormatFormatType) UnmarshalJSON(data []byte)
 	}
 }
 
-// DestinationGcsUpdateJSONLinesNewlineDelimitedJSON - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsUpdateJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationGcsUpdateCompression             `json:"compression,omitempty"`
@@ -496,7 +493,6 @@ func (e *DestinationGcsUpdateCompressionType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Gzip - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type Gzip struct {
 	CompressionType *DestinationGcsUpdateCompressionType `default:"GZIP" json:"compression_type"`
 }
@@ -543,7 +539,6 @@ func (e *CompressionType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationGcsUpdateNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type DestinationGcsUpdateNoCompression struct {
 	CompressionType *CompressionType `default:"No Compression" json:"compression_type"`
 }
@@ -573,6 +568,7 @@ const (
 	CompressionUnionTypeGzip                              CompressionUnionType = "GZIP"
 )
 
+// Compression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type Compression struct {
 	DestinationGcsUpdateNoCompression *DestinationGcsUpdateNoCompression
 	Gzip                              *Gzip
@@ -681,7 +677,6 @@ func (e *DestinationGcsUpdateSchemasFormatType) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationGcsUpdateCSVCommaSeparatedValues - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsUpdateCSVCommaSeparatedValues struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 	Compression *Compression `json:"compression,omitempty"`
@@ -746,7 +741,6 @@ func (e *DestinationGcsUpdateSchemasFormatOutputFormat1Codec) UnmarshalJSON(data
 	}
 }
 
-// Snappy - The compression algorithm used to compress data. Default to no compression.
 type Snappy struct {
 	Codec *DestinationGcsUpdateSchemasFormatOutputFormat1Codec `default:"snappy" json:"codec"`
 }
@@ -793,7 +787,6 @@ func (e *DestinationGcsUpdateSchemasFormatOutputFormatCodec) UnmarshalJSON(data 
 	}
 }
 
-// Zstandard - The compression algorithm used to compress data. Default to no compression.
 type Zstandard struct {
 	Codec *DestinationGcsUpdateSchemasFormatOutputFormatCodec `default:"zstandard" json:"codec"`
 	// Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
@@ -858,7 +851,6 @@ func (e *DestinationGcsUpdateSchemasFormatCodec) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// Xz - The compression algorithm used to compress data. Default to no compression.
 type Xz struct {
 	Codec *DestinationGcsUpdateSchemasFormatCodec `default:"xz" json:"codec"`
 	// The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
@@ -914,7 +906,6 @@ func (e *DestinationGcsUpdateSchemasCodec) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Bzip2 - The compression algorithm used to compress data. Default to no compression.
 type Bzip2 struct {
 	Codec *DestinationGcsUpdateSchemasCodec `default:"bzip2" json:"codec"`
 }
@@ -961,7 +952,6 @@ func (e *DestinationGcsUpdateCodec) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Deflate - The compression algorithm used to compress data. Default to no compression.
 type Deflate struct {
 	Codec *DestinationGcsUpdateCodec `default:"Deflate" json:"codec"`
 	// 0: no compression & fastest, 9: best compression & slowest.
@@ -1017,7 +1007,6 @@ func (e *Codec) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// NoCompression - The compression algorithm used to compress data. Default to no compression.
 type NoCompression struct {
 	Codec *Codec `default:"no compression" json:"codec"`
 }
@@ -1051,6 +1040,7 @@ const (
 	CompressionCodecTypeSnappy        CompressionCodecType = "snappy"
 )
 
+// CompressionCodec - The compression algorithm used to compress data. Default to no compression.
 type CompressionCodec struct {
 	NoCompression *NoCompression
 	Deflate       *Deflate
@@ -1215,7 +1205,6 @@ func (e *DestinationGcsUpdateFormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AvroApacheAvro - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type AvroApacheAvro struct {
 	// The compression algorithm used to compress data. Default to no compression.
 	CompressionCodec CompressionCodec                `json:"compression_codec"`
@@ -1256,6 +1245,7 @@ const (
 	DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateParquetColumnarStorage        DestinationGcsUpdateOutputFormatType = "destination-gcs-update_Parquet: Columnar Storage"
 )
 
+// DestinationGcsUpdateOutputFormat - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsUpdateOutputFormat struct {
 	AvroApacheAvro                                    *AvroApacheAvro
 	DestinationGcsUpdateCSVCommaSeparatedValues       *DestinationGcsUpdateCSVCommaSeparatedValues

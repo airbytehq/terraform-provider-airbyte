@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreateRequest {
+func (r *SourceStripeResourceModel) ToSharedSourceStripeCreateRequest() *shared.SourceStripeCreateRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	callRateLimit := new(int64)
 	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
@@ -74,12 +74,14 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	return &out
 }
 
-func (r *SourceStripeResourceModel) ToGetSDKType() *shared.SourceStripeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceStripeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutRequest {
+func (r *SourceStripeResourceModel) ToSharedSourceStripePutRequest() *shared.SourceStripePutRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	callRateLimit := new(int64)
 	if !r.Configuration.CallRateLimit.IsUnknown() && !r.Configuration.CallRateLimit.IsNull() {
@@ -129,20 +131,4 @@ func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceStripeResourceModel) ToDeleteSDKType() *shared.SourceStripeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceStripeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

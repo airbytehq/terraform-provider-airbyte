@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequest {
+func (r *SourceXkcdResourceModel) ToSharedSourceXkcdCreateRequest() *shared.SourceXkcdCreateRequest {
 	configuration := shared.SourceXkcd{}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -33,12 +33,14 @@ func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequ
 	return &out
 }
 
-func (r *SourceXkcdResourceModel) ToGetSDKType() *shared.SourceXkcdCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceXkcdResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceXkcdResourceModel) ToUpdateSDKType() *shared.SourceXkcdPutRequest {
+func (r *SourceXkcdResourceModel) ToSharedSourceXkcdPutRequest() *shared.SourceXkcdPutRequest {
 	configuration := shared.SourceXkcdUpdate{}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -48,20 +50,4 @@ func (r *SourceXkcdResourceModel) ToUpdateSDKType() *shared.SourceXkcdPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceXkcdResourceModel) ToDeleteSDKType() *shared.SourceXkcdCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceXkcdResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceXkcdResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

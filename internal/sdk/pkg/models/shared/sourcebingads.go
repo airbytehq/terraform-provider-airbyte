@@ -9,6 +9,56 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
 
+// SourceBingAdsOperator - An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
+type SourceBingAdsOperator string
+
+const (
+	SourceBingAdsOperatorContains SourceBingAdsOperator = "Contains"
+	SourceBingAdsOperatorEquals   SourceBingAdsOperator = "Equals"
+)
+
+func (e SourceBingAdsOperator) ToPointer() *SourceBingAdsOperator {
+	return &e
+}
+
+func (e *SourceBingAdsOperator) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Contains":
+		fallthrough
+	case "Equals":
+		*e = SourceBingAdsOperator(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceBingAdsOperator: %v", v)
+	}
+}
+
+// SourceBingAdsAccountNames - Account Names Predicates Config.
+type SourceBingAdsAccountNames struct {
+	// Account Name is a string value for comparing with the specified predicate.
+	Name string `json:"name"`
+	// An Operator that will be used to filter accounts. The Contains predicate has features for matching words, matching inflectional forms of words, searching using wildcard characters, and searching using proximity. The Equals is used to return all rows where account name is equal(=) to the string that you provided
+	Operator SourceBingAdsOperator `json:"operator"`
+}
+
+func (o *SourceBingAdsAccountNames) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceBingAdsAccountNames) GetOperator() SourceBingAdsOperator {
+	if o == nil {
+		return SourceBingAdsOperator("")
+	}
+	return o.Operator
+}
+
 type SourceBingAdsAuthMethod string
 
 const (
@@ -232,7 +282,9 @@ func (e *BingAds) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBingAds struct {
-	authMethod *SourceBingAdsAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
+	// Predicates that will be used to sync data by specific accounts.
+	AccountNames []SourceBingAdsAccountNames `json:"account_names,omitempty"`
+	authMethod   *SourceBingAdsAuthMethod    `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
@@ -261,6 +313,13 @@ func (s *SourceBingAds) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceBingAds) GetAccountNames() []SourceBingAdsAccountNames {
+	if o == nil {
+		return nil
+	}
+	return o.AccountNames
 }
 
 func (o *SourceBingAds) GetAuthMethod() *SourceBingAdsAuthMethod {

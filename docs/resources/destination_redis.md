@@ -18,19 +18,19 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     cache_type = "hash"
     host       = "localhost,127.0.0.1"
     password   = "...my_password..."
-    port       = 7
-    ssl        = false
+    port       = 3
+    ssl        = true
     ssl_mode = {
-      destination_redis_disable = {}
+      disable = {}
     }
     tunnel_method = {
-      destination_redis_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Keyshawn.Ledner"
+    username = "Julia.Schuster11"
   }
-  definition_id = "34412bc3-217a-4cbe-aad9-f3186486fc7b"
-  name          = "Shannon Stroman"
-  workspace_id  = "848f4034-6c04-4b19-bfb2-8918e382726e"
+  definition_id = "c7ed17b1-d5b0-4028-9a0d-c02329a5cae9"
+  name          = "Alfred Littel"
+  workspace_id  = "495eab20-ebb3-405f-b624-c43900725fa3"
 }
 ```
 
@@ -45,7 +45,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,13 +62,10 @@ Required:
 
 Optional:
 
-- `cache_type` (String) must be one of ["hash"]; Default: "hash"
-Redis cache type to store data in.
+- `cache_type` (String) Redis cache type to store data in. must be one of ["hash"]; Default: "hash"
 - `password` (String, Sensitive) Password associated with Redis.
-- `port` (Number) Default: 6379
-Port of Redis.
-- `ssl` (Boolean) Default: false
-Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
+- `port` (Number) Port of Redis. Default: 6379
+- `ssl` (Boolean) Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible. Default: false
 - `ssl_mode` (Attributes) SSL connection modes. 
   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
@@ -105,9 +102,9 @@ Optional:
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -124,8 +121,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -139,7 +135,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

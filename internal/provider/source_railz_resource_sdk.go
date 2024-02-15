@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRequest {
+func (r *SourceRailzResourceModel) ToSharedSourceRailzCreateRequest() *shared.SourceRailzCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -40,12 +40,14 @@ func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRe
 	return &out
 }
 
-func (r *SourceRailzResourceModel) ToGetSDKType() *shared.SourceRailzCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceRailzResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRailzResourceModel) ToUpdateSDKType() *shared.SourceRailzPutRequest {
+func (r *SourceRailzResourceModel) ToSharedSourceRailzPutRequest() *shared.SourceRailzPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -62,20 +64,4 @@ func (r *SourceRailzResourceModel) ToUpdateSDKType() *shared.SourceRailzPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceRailzResourceModel) ToDeleteSDKType() *shared.SourceRailzCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceRailzResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceRailzResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

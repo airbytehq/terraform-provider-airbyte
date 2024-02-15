@@ -15,23 +15,23 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 0
+    attribution_window = 1
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
     }
-    date_window_size             = 3
+    date_window_size             = 10
     end_date                     = "2021-11-16"
-    project_timezone             = "UTC"
+    project_timezone             = "US/Pacific"
     region                       = "US"
-    select_properties_by_default = true
+    select_properties_by_default = false
     start_date                   = "2021-11-16"
   }
-  definition_id = "a514955f-a2ea-425a-91d7-622e389cc420"
-  name          = "Cecilia Gerlach"
+  definition_id = "8729ff50-24b6-490b-a736-f2f7a3b95d4a"
+  name          = "Lucas Reichert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b3299a61-1cc7-4be3-a8ba-7188dc05c92c"
+  workspace_id  = "dfbbab6a-d0e4-44a4-9c97-0c078573a20a"
 }
 ```
 
@@ -46,8 +46,8 @@ resource "airbyte_source_mixpanel" "my_source_mixpanel" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -63,17 +63,12 @@ Required:
 
 Optional:
 
-- `attribution_window` (Number) Default: 5
-A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days. (This value should be non-negative integer)
-- `date_window_size` (Number) Default: 30
-Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer)
+- `attribution_window` (Number) A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days. (This value should be non-negative integer). Default: 5
+- `date_window_size` (Number) Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer). Default: 30
 - `end_date` (String) The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
-- `project_timezone` (String) Default: "US/Pacific"
-Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
-- `region` (String) must be one of ["US", "EU"]; Default: "US"
-The region of mixpanel domain instance either US or EU.
-- `select_properties_by_default` (Boolean) Default: true
-Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
+- `project_timezone` (String) Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>. Default: "US/Pacific"
+- `region` (String) The region of mixpanel domain instance either US or EU. must be one of ["US", "EU"]; Default: "US"
+- `select_properties_by_default` (Boolean) Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored. Default: true
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -81,8 +76,8 @@ Setting this config parameter to TRUE ensures that new properties on events and 
 
 Optional:
 
-- `project_secret` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--project_secret))
-- `service_account` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--service_account))
+- `project_secret` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--project_secret))
+- `service_account` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--service_account))
 
 <a id="nestedatt--configuration--credentials--project_secret"></a>
 ### Nested Schema for `configuration.credentials.project_secret`

@@ -17,7 +17,7 @@ resource "airbyte_source_pocket" "my_source_pocket" {
   configuration = {
     access_token = "...my_access_token..."
     consumer_key = "...my_consumer_key..."
-    content_type = "image"
+    content_type = "video"
     detail_type  = "complete"
     domain       = "...my_domain..."
     favorite     = true
@@ -27,10 +27,10 @@ resource "airbyte_source_pocket" "my_source_pocket" {
     state        = "unread"
     tag          = "...my_tag..."
   }
-  definition_id = "da763315-0acf-4ec2-81f7-3646e1c87958"
-  name          = "Brandi Hane"
+  definition_id = "c77a4e3a-a4d1-4c74-bcd7-d939b8b6b2c0"
+  name          = "Todd Beer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "82553101-4017-4845-aa4c-1173de2c277a"
+  workspace_id  = "8be08607-521b-421e-a9bc-9d1c88f1ee12"
 }
 ```
 
@@ -45,8 +45,8 @@ resource "airbyte_source_pocket" "my_source_pocket" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -63,19 +63,14 @@ Required:
 
 Optional:
 
-- `content_type` (String) must be one of ["article", "video", "image"]
-Select the content type of the items to retrieve.
-- `detail_type` (String) must be one of ["simple", "complete"]
-Select the granularity of the information about each item.
+- `content_type` (String) Select the content type of the items to retrieve. must be one of ["article", "video", "image"]
+- `detail_type` (String) Select the granularity of the information about each item. must be one of ["simple", "complete"]
 - `domain` (String) Only return items from a particular `domain`.
-- `favorite` (Boolean) Default: false
-Retrieve only favorited items.
+- `favorite` (Boolean) Retrieve only favorited items. Default: false
 - `search` (String) Only return items whose title or url contain the `search` string.
 - `since` (String) Only return items modified since the given timestamp.
-- `sort` (String) must be one of ["newest", "oldest", "title", "site"]
-Sort retrieved items by the given criteria.
-- `state` (String) must be one of ["unread", "archive", "all"]
-Select the state of the items to retrieve.
+- `sort` (String) Sort retrieved items by the given criteria. must be one of ["newest", "oldest", "title", "site"]
+- `state` (String) Select the state of the items to retrieve. must be one of ["unread", "archive", "all"]
 - `tag` (String) Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 
 

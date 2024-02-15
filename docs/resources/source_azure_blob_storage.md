@@ -22,7 +22,7 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     start_date                        = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 8
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
             double_as_string = true
@@ -33,17 +33,17 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Angelina Armstrong"
+        name              = "Pablo White"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        schemaless        = false
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "e16b8da7-b814-43f8-91cf-99c7fd70e504"
-  name          = "Joy Sipes"
+  definition_id = "deb7264d-ad9e-45fb-9312-6691bfb5db9e"
+  name          = "Eugene Goyette"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4f64874e-62c5-48d8-b92f-d48887cb19c4"
+  workspace_id  = "51fb73f4-72f2-4e8b-bfe1-8227a33308df"
 }
 ```
 
@@ -59,8 +59,8 @@ because it is responsible for converting legacy Azure Blob Storage v0 configs in
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -92,35 +92,31 @@ Required:
 
 Optional:
 
-- `days_to_sync_if_history_is_full` (Number) Default: 3
-When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+- `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 - `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record.
-- `schemaless` (Boolean) Default: false
-When enabled, syncs will not validate or structure records against the stream's schema.
-- `validation_policy` (String) must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
-The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
+- `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 
 <a id="nestedatt--configuration--streams--format"></a>
 ### Nested Schema for `configuration.streams.format`
 
 Optional:
 
-- `avro_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
-- `csv_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
+- `avro_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
+- `csv_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
 - `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
-- `jsonl_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
-- `parquet_format` (Attributes) The configuration options that are used to alter how to read incoming files that deviate from the standard formatting. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
+- `jsonl_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
+- `parquet_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
 
 <a id="nestedatt--configuration--streams--format--avro_format"></a>
 ### Nested Schema for `configuration.streams.format.parquet_format`
 
 Optional:
 
-- `double_as_string` (Boolean) Default: false
-Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+- `double_as_string` (Boolean) Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers. Default: false
 
 
 <a id="nestedatt--configuration--streams--format--csv_format"></a>
@@ -128,26 +124,18 @@ Whether to convert double fields to strings. This is recommended if you have dec
 
 Optional:
 
-- `delimiter` (String) Default: ","
-The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-- `double_quote` (Boolean) Default: true
-Whether two quotes in a quoted CSV value denote a single quote in the data.
-- `encoding` (String) Default: "utf8"
-The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'. Default: ","
+- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data. Default: true
+- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
 - `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition))
-- `inference_type` (String) must be one of ["None", "Primitive Types Only"]; Default: "None"
-How to infer the types of the columns. If none, inference default to strings.
+- `inference_type` (String) How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]; Default: "None"
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-- `quote_char` (String) Default: "\""
-The character used for quoting CSV values. To disallow quoting, make this field blank.
-- `skip_rows_after_header` (Number) Default: 0
-The number of rows to skip after the header row.
-- `skip_rows_before_header` (Number) Default: 0
-The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-- `strings_can_be_null` (Boolean) Default: true
-Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""
+- `skip_rows_after_header` (Number) The number of rows to skip after the header row. Default: 0
+- `skip_rows_before_header` (Number) The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field. Default: 0
+- `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself. Default: true
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
 <a id="nestedatt--configuration--streams--format--parquet_format--header_definition"></a>
@@ -155,9 +143,9 @@ Whether strings can be interpreted as null values. If true, strings that match t
 
 Optional:
 
-- `autogenerated` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
-- `from_csv` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
-- `user_provided` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
+- `autogenerated` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
+- `from_csv` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
+- `user_provided` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
 
 <a id="nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated"></a>
 ### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
@@ -182,8 +170,21 @@ Required:
 
 Optional:
 
-- `skip_unprocessable_file_types` (Boolean) Default: true
-If true, skip files that cannot be parsed because of their file type and log a warning. If false, fail the sync. Corrupted files with valid file types will still result in a failed sync.
+- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing))
+- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
+- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"
+
+<a id="nestedatt--configuration--streams--format--parquet_format--processing"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.processing`
+
+Optional:
+
+- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing--local))
+
+<a id="nestedatt--configuration--streams--format--parquet_format--processing--local"></a>
+### Nested Schema for `configuration.streams.format.parquet_format.processing.local`
+
+
 
 
 <a id="nestedatt--configuration--streams--format--jsonl_format"></a>
@@ -195,7 +196,6 @@ If true, skip files that cannot be parsed because of their file type and log a w
 
 Optional:
 
-- `decimal_as_float` (Boolean) Default: false
-Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
+- `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false
 
 

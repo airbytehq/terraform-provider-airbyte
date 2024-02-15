@@ -17,16 +17,16 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
   configuration = {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
-    environment = "sandbox"
-    limit       = 8
+    environment = "production"
+    limit       = 1
     period      = "2MTH"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  definition_id = "f0e9a05e-994a-4ce4-9dc5-b42f2a228e88"
-  name          = "Rhonda Kunze"
+  definition_id = "70e18a81-72f9-4322-b1c9-f9cbaa542e6e"
+  name          = "Priscilla Aufderhar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d4275060-42c1-4c65-a61b-2485a060238e"
+  workspace_id  = "1d84c3fb-c24f-4860-bce8-5198c116e726"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -65,11 +65,13 @@ Optional:
 - `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
 from the start date to the current time, or when the count of result
 elements reaches its limit.
-- `environment` (String) must be one of ["sandbox", "production"]; Default: "sandbox"
-The environment to use. Either sandbox or production.
-- `limit` (Number) Default: 100
-The maximum number of elements to return. If not supplied, the default
+- `environment` (String) The environment to use. Either sandbox or production.
+
+must be one of ["sandbox", "production"]; Default: "sandbox"
+- `limit` (Number) The maximum number of elements to return. If not supplied, the default
 is 100. For numbers larger than 100, each 100 items is counted as one
 request for pricing purposes. Maximum value is 100000.
+
+Default: 100
 
 

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZendeskSunshineCreateRequest {
+func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreateRequest() *shared.SourceZendeskSunshineCreateRequest {
 	var credentials *shared.SourceZendeskSunshineAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineOAuth20 *shared.SourceZendeskSunshineOAuth20
@@ -73,12 +73,14 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 	return &out
 }
 
-func (r *SourceZendeskSunshineResourceModel) ToGetSDKType() *shared.SourceZendeskSunshineCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZendeskSunshineResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZendeskSunshinePutRequest {
+func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutRequest() *shared.SourceZendeskSunshinePutRequest {
 	var credentials *shared.SourceZendeskSunshineUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineUpdateOAuth20 *shared.SourceZendeskSunshineUpdateOAuth20
@@ -127,20 +129,4 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZendeskSunshineResourceModel) ToDeleteSDKType() *shared.SourceZendeskSunshineCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZendeskSunshineResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

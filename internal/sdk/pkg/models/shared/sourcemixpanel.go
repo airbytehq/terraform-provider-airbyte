@@ -34,7 +34,6 @@ func (e *SourceMixpanelSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMixpanelProjectSecret - Choose how to authenticate to Mixpanel
 type SourceMixpanelProjectSecret struct {
 	// Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
 	APISecret   string                            `json:"api_secret"`
@@ -87,7 +86,6 @@ func (e *SourceMixpanelOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMixpanelServiceAccount - Choose how to authenticate to Mixpanel
 type SourceMixpanelServiceAccount struct {
 	optionTitle *SourceMixpanelOptionTitle `const:"Service Account" json:"option_title,omitempty"`
 	// Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
@@ -141,6 +139,7 @@ const (
 	SourceMixpanelAuthenticationWildcardTypeSourceMixpanelProjectSecret  SourceMixpanelAuthenticationWildcardType = "source-mixpanel_Project Secret"
 )
 
+// SourceMixpanelAuthenticationWildcard - Choose how to authenticate to Mixpanel
 type SourceMixpanelAuthenticationWildcard struct {
 	SourceMixpanelServiceAccount *SourceMixpanelServiceAccount
 	SourceMixpanelProjectSecret  *SourceMixpanelProjectSecret

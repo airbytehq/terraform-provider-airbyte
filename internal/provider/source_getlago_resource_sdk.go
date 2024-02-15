@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCreateRequest {
+func (r *SourceGetlagoResourceModel) ToSharedSourceGetlagoCreateRequest() *shared.SourceGetlagoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
@@ -43,12 +43,14 @@ func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCrea
 	return &out
 }
 
-func (r *SourceGetlagoResourceModel) ToGetSDKType() *shared.SourceGetlagoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGetlagoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGetlagoResourceModel) ToUpdateSDKType() *shared.SourceGetlagoPutRequest {
+func (r *SourceGetlagoResourceModel) ToSharedSourceGetlagoPutRequest() *shared.SourceGetlagoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
@@ -68,20 +70,4 @@ func (r *SourceGetlagoResourceModel) ToUpdateSDKType() *shared.SourceGetlagoPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGetlagoResourceModel) ToDeleteSDKType() *shared.SourceGetlagoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGetlagoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGetlagoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

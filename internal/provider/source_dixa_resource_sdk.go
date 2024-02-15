@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequest {
+func (r *SourceDixaResourceModel) ToSharedSourceDixaCreateRequest() *shared.SourceDixaCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
@@ -46,12 +46,14 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	return &out
 }
 
-func (r *SourceDixaResourceModel) ToGetSDKType() *shared.SourceDixaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceDixaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDixaResourceModel) ToUpdateSDKType() *shared.SourceDixaPutRequest {
+func (r *SourceDixaResourceModel) ToSharedSourceDixaPutRequest() *shared.SourceDixaPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
@@ -73,20 +75,4 @@ func (r *SourceDixaResourceModel) ToUpdateSDKType() *shared.SourceDixaPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceDixaResourceModel) ToDeleteSDKType() *shared.SourceDixaCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceDixaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceDixaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

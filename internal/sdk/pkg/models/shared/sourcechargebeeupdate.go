@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// ProductCatalog - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
+// ProductCatalog - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
 type ProductCatalog string
 
 const (
@@ -38,13 +38,13 @@ func (e *ProductCatalog) UnmarshalJSON(data []byte) error {
 }
 
 type SourceChargebeeUpdate struct {
-	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
-	ProductCatalog ProductCatalog `json:"product_catalog"`
+	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
+	ProductCatalog *ProductCatalog `default:"2.0" json:"product_catalog"`
 	// The site prefix for your Chargebee instance.
 	Site string `json:"site"`
 	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
 	SiteAPIKey string `json:"site_api_key"`
-	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
+	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }
 
@@ -59,9 +59,9 @@ func (s *SourceChargebeeUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceChargebeeUpdate) GetProductCatalog() ProductCatalog {
+func (o *SourceChargebeeUpdate) GetProductCatalog() *ProductCatalog {
 	if o == nil {
-		return ProductCatalog("")
+		return nil
 	}
 	return o.ProductCatalog
 }

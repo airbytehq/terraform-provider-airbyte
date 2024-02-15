@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,11 +57,26 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
 						Required:    true,
 						Description: `Name of the database.`,
+					},
+					"disable_type_dedupe": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
+					},
+					"enable_incremental_final_table_updates": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -74,22 +92,27 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 5439` + "\n" +
-							`Port of the database.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(5439),
+						Description: `Port of the database. Default: 5439`,
+					},
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `The schema to write raw tables into`,
 					},
 					"schema": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: "public"` + "\n" +
-							`The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("public"),
+						Description: `The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public". Default: "public"`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"no_tunnel": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+								Optional:   true,
+								Attributes: map[string]schema.Attribute{},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -99,9 +122,10 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -113,7 +137,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -128,16 +151,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 						},
 						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -148,7 +171,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					"uploading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"s3_staging": schema.SingleNestedAttribute{
+							"awss3_staging": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
@@ -182,18 +205,20 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 10` + "\n" +
-											`Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(10),
+										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects. Default: 10`,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
 										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: true` + "\n" +
-											`Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details. Default: true`,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required:    true,
@@ -204,35 +229,46 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]; Default: ""` + "\n" +
-											`The region of the S3 staging bucket.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(""),
+										Description: `The region of the S3 staging bucket. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
 												"af-south-1",
 												"ap-east-1",
-												"ap-south-1",
 												"ap-northeast-1",
 												"ap-northeast-2",
 												"ap-northeast-3",
+												"ap-south-1",
+												"ap-south-2",
 												"ap-southeast-1",
 												"ap-southeast-2",
+												"ap-southeast-3",
+												"ap-southeast-4",
 												"ca-central-1",
+												"ca-west-1",
 												"cn-north-1",
 												"cn-northwest-1",
 												"eu-central-1",
+												"eu-central-2",
 												"eu-north-1",
 												"eu-south-1",
+												"eu-south-2",
 												"eu-west-1",
 												"eu-west-2",
 												"eu-west-3",
-												"sa-east-1",
+												"il-central-1",
+												"me-central-1",
 												"me-south-1",
+												"sa-east-1",
+												"us-east-1",
+												"us-east-2",
+												"us-gov-east-1",
+												"us-gov-west-1",
+												"us-west-1",
+												"us-west-2",
 											),
 										},
 									},
@@ -263,33 +299,33 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -319,14 +355,14 @@ func (r *DestinationRedshiftResource) Configure(ctx context.Context, req resourc
 
 func (r *DestinationRedshiftResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationRedshiftResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -335,7 +371,7 @@ func (r *DestinationRedshiftResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationRedshiftCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationRedshift(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -356,7 +392,34 @@ func (r *DestinationRedshiftResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationRedshiftRequest{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationRedshift(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -404,7 +467,7 @@ func (r *DestinationRedshiftResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -412,12 +475,19 @@ func (r *DestinationRedshiftResource) Read(ctx context.Context, req resource.Rea
 
 func (r *DestinationRedshiftResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationRedshiftResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationRedshiftPutRequest := data.ToUpdateSDKType()
+	destinationRedshiftPutRequest := data.ToSharedDestinationRedshiftPutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationRedshiftRequest{
 		DestinationRedshiftPutRequest: destinationRedshiftPutRequest,
@@ -439,31 +509,33 @@ func (r *DestinationRedshiftResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationRedshiftRequest{
+	request1 := operations.GetDestinationRedshiftRequest{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationRedshift(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationRedshift(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreateRequest {
+func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.SourceGithubCreateRequest {
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
@@ -74,12 +74,6 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	} else {
 		repository = nil
 	}
-	requestsPerHour := new(int64)
-	if !r.Configuration.RequestsPerHour.IsUnknown() && !r.Configuration.RequestsPerHour.IsNull() {
-		*requestsPerHour = r.Configuration.RequestsPerHour.ValueInt64()
-	} else {
-		requestsPerHour = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -87,14 +81,13 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 		startDate = nil
 	}
 	configuration := shared.SourceGithub{
-		APIURL:          apiURL,
-		Branch:          branch,
-		Branches:        branches,
-		Credentials:     credentials,
-		Repositories:    repositories,
-		Repository:      repository,
-		RequestsPerHour: requestsPerHour,
-		StartDate:       startDate,
+		APIURL:       apiURL,
+		Branch:       branch,
+		Branches:     branches,
+		Credentials:  credentials,
+		Repositories: repositories,
+		Repository:   repository,
+		StartDate:    startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -120,12 +113,14 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	return &out
 }
 
-func (r *SourceGithubResourceModel) ToGetSDKType() *shared.SourceGithubCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGithubResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutRequest {
+func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.SourceGithubPutRequest {
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
@@ -191,12 +186,6 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 	} else {
 		repository = nil
 	}
-	requestsPerHour := new(int64)
-	if !r.Configuration.RequestsPerHour.IsUnknown() && !r.Configuration.RequestsPerHour.IsNull() {
-		*requestsPerHour = r.Configuration.RequestsPerHour.ValueInt64()
-	} else {
-		requestsPerHour = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -204,14 +193,13 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 		startDate = nil
 	}
 	configuration := shared.SourceGithubUpdate{
-		APIURL:          apiURL,
-		Branch:          branch,
-		Branches:        branches,
-		Credentials:     credentials,
-		Repositories:    repositories,
-		Repository:      repository,
-		RequestsPerHour: requestsPerHour,
-		StartDate:       startDate,
+		APIURL:       apiURL,
+		Branch:       branch,
+		Branches:     branches,
+		Credentials:  credentials,
+		Repositories: repositories,
+		Repository:   repository,
+		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -221,20 +209,4 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGithubResourceModel) ToDeleteSDKType() *shared.SourceGithubCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGithubResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

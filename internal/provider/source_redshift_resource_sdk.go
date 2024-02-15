@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCreateRequest {
+func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftCreateRequest() *shared.SourceRedshiftCreateRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -61,12 +61,14 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 	return &out
 }
 
-func (r *SourceRedshiftResourceModel) ToGetSDKType() *shared.SourceRedshiftCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceRedshiftResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRedshiftResourceModel) ToUpdateSDKType() *shared.SourceRedshiftPutRequest {
+func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftPutRequest() *shared.SourceRedshiftPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -104,20 +106,4 @@ func (r *SourceRedshiftResourceModel) ToUpdateSDKType() *shared.SourceRedshiftPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceRedshiftResourceModel) ToDeleteSDKType() *shared.SourceRedshiftCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceRedshiftResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

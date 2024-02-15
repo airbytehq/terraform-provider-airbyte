@@ -23,10 +23,10 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "f51ed0a8-181e-46e5-9fd9-ebe7b2f5ca6e"
-  name          = "Dallas Wiza"
+  definition_id = "c48ec8b4-573d-466d-807e-52a2e4396e74"
+  name          = "Tiffany Waters"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2b052102-08e0-436b-a68d-758466c963e1"
+  workspace_id  = "d50959a4-fa50-4e80-bc86-bd0cbf5314ee"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_auth0" "my_source_auth0" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,8 +59,7 @@ Required:
 
 Optional:
 
-- `start_date` (String) Default: "2023-08-05T00:43:59.244Z"
-UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Default: "2023-08-05T00:43:59.244Z"
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

@@ -28,9 +28,9 @@ const (
 	PivotCategoryMemberCompanySize           PivotCategory = "MEMBER_COMPANY_SIZE"
 	PivotCategoryMemberIndustry              PivotCategory = "MEMBER_INDUSTRY"
 	PivotCategoryMemberSeniority             PivotCategory = "MEMBER_SENIORITY"
-	PivotCategoryMemberJobTitle              PivotCategory = "MEMBER_JOB_TITLE "
-	PivotCategoryMemberJobFunction           PivotCategory = "MEMBER_JOB_FUNCTION "
-	PivotCategoryMemberCountryV2             PivotCategory = "MEMBER_COUNTRY_V2 "
+	PivotCategoryMemberJobTitle              PivotCategory = "MEMBER_JOB_TITLE"
+	PivotCategoryMemberJobFunction           PivotCategory = "MEMBER_JOB_FUNCTION"
+	PivotCategoryMemberCountryV2             PivotCategory = "MEMBER_COUNTRY_V2"
 	PivotCategoryMemberRegionV2              PivotCategory = "MEMBER_REGION_V2"
 	PivotCategoryMemberCompany               PivotCategory = "MEMBER_COMPANY"
 	PivotCategoryPlacementName               PivotCategory = "PLACEMENT_NAME"
@@ -75,11 +75,11 @@ func (e *PivotCategory) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "MEMBER_SENIORITY":
 		fallthrough
-	case "MEMBER_JOB_TITLE ":
+	case "MEMBER_JOB_TITLE":
 		fallthrough
-	case "MEMBER_JOB_FUNCTION ":
+	case "MEMBER_JOB_FUNCTION":
 		fallthrough
-	case "MEMBER_COUNTRY_V2 ":
+	case "MEMBER_COUNTRY_V2":
 		fallthrough
 	case "MEMBER_REGION_V2":
 		fallthrough

@@ -177,8 +177,10 @@ func (e *SourcePostgresPlugin) UnmarshalJSON(data []byte) error {
 // SourcePostgresReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
 type SourcePostgresReadChangesUsingWriteAheadLogCDC struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
+	// Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting.
+	HeartbeatActionQuery *string `default:"" json:"heartbeat_action_query"`
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+	InitialWaitingSeconds *int64 `default:"1200" json:"initial_waiting_seconds"`
 	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 	LsnCommitBehaviour *SourcePostgresLSNCommitBehaviour `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
 	method             SourcePostgresMethod              `const:"CDC" json:"method"`
@@ -208,6 +210,13 @@ func (o *SourcePostgresReadChangesUsingWriteAheadLogCDC) GetAdditionalProperties
 		return nil
 	}
 	return o.AdditionalProperties
+}
+
+func (o *SourcePostgresReadChangesUsingWriteAheadLogCDC) GetHeartbeatActionQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HeartbeatActionQuery
 }
 
 func (o *SourcePostgresReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
@@ -264,6 +273,7 @@ const (
 	SourcePostgresUpdateMethodTypeSourcePostgresScanChangesWithUserDefinedCursor  SourcePostgresUpdateMethodType = "source-postgres_Scan Changes with User Defined Cursor"
 )
 
+// SourcePostgresUpdateMethod - Configures how data is extracted from the database.
 type SourcePostgresUpdateMethod struct {
 	SourcePostgresReadChangesUsingWriteAheadLogCDC  *SourcePostgresReadChangesUsingWriteAheadLogCDC
 	SourcePostgresDetectChangesWithXminSystemColumn *SourcePostgresDetectChangesWithXminSystemColumn
@@ -760,6 +770,9 @@ const (
 	SourcePostgresSSLModesTypeSourcePostgresVerifyFull SourcePostgresSSLModesType = "source-postgres_verify-full"
 )
 
+// SourcePostgresSSLModes - SSL connection modes.
+//
+//	Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 type SourcePostgresSSLModes struct {
 	SourcePostgresDisable    *SourcePostgresDisable
 	SourcePostgresAllow      *SourcePostgresAllow
@@ -925,7 +938,6 @@ func (e *SourcePostgresSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byt
 	}
 }
 
-// SourcePostgresPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -1007,7 +1019,6 @@ func (e *SourcePostgresSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePostgresSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -1089,7 +1100,6 @@ func (e *SourcePostgresTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePostgresNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourcePostgresTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -1118,6 +1128,7 @@ const (
 	SourcePostgresSSHTunnelMethodTypeSourcePostgresPasswordAuthentication SourcePostgresSSHTunnelMethodType = "source-postgres_Password Authentication"
 )
 
+// SourcePostgresSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresSSHTunnelMethod struct {
 	SourcePostgresNoTunnel               *SourcePostgresNoTunnel
 	SourcePostgresSSHKeyAuthentication   *SourcePostgresSSHKeyAuthentication

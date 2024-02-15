@@ -7,8 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequest {
-	var credentials *shared.SourceSftpAuthenticationWildcard
+func (r *SourceSftpResourceModel) ToSharedSourceSftpCreateRequest() *shared.SourceSftpCreateRequest {
+	var credentials *shared.SourceSftpAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceSftpPasswordAuthentication *shared.SourceSftpPasswordAuthentication
 		if r.Configuration.Credentials.PasswordAuthentication != nil {
@@ -18,7 +18,7 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 			}
 		}
 		if sourceSftpPasswordAuthentication != nil {
-			credentials = &shared.SourceSftpAuthenticationWildcard{
+			credentials = &shared.SourceSftpAuthentication{
 				SourceSftpPasswordAuthentication: sourceSftpPasswordAuthentication,
 			}
 		}
@@ -30,7 +30,7 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 			}
 		}
 		if sourceSftpSSHKeyAuthentication != nil {
-			credentials = &shared.SourceSftpAuthenticationWildcard{
+			credentials = &shared.SourceSftpAuthentication{
 				SourceSftpSSHKeyAuthentication: sourceSftpSSHKeyAuthentication,
 			}
 		}
@@ -94,13 +94,15 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 	return &out
 }
 
-func (r *SourceSftpResourceModel) ToGetSDKType() *shared.SourceSftpCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSftpResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest {
-	var credentials *shared.SourceSftpUpdateAuthenticationWildcard
+func (r *SourceSftpResourceModel) ToSharedSourceSftpPutRequest() *shared.SourceSftpPutRequest {
+	var credentials *shared.SourceSftpUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceSftpUpdatePasswordAuthentication *shared.SourceSftpUpdatePasswordAuthentication
 		if r.Configuration.Credentials.PasswordAuthentication != nil {
@@ -110,7 +112,7 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 			}
 		}
 		if sourceSftpUpdatePasswordAuthentication != nil {
-			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
+			credentials = &shared.SourceSftpUpdateAuthentication{
 				SourceSftpUpdatePasswordAuthentication: sourceSftpUpdatePasswordAuthentication,
 			}
 		}
@@ -122,7 +124,7 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 			}
 		}
 		if sourceSftpUpdateSSHKeyAuthentication != nil {
-			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
+			credentials = &shared.SourceSftpUpdateAuthentication{
 				SourceSftpUpdateSSHKeyAuthentication: sourceSftpUpdateSSHKeyAuthentication,
 			}
 		}
@@ -170,20 +172,4 @@ func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSftpResourceModel) ToDeleteSDKType() *shared.SourceSftpCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSftpResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSftpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

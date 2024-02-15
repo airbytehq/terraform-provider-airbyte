@@ -27,8 +27,7 @@ data "airbyte_destination_dev_null" "my_destination_devnull" {
 
 ### Read-Only
 
-- `configuration` (String) Parsed as JSON.
-The values required to configure the destination.
+- `configuration` (String) The values required to configure the destination. Parsed as JSON.
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)

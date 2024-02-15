@@ -2,8 +2,11 @@
 
 package provider
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type DestinationWeaviate struct {
-	Embedding  DestinationWeaviateEmbedding           `tfsdk:"embedding"`
-	Indexing   DestinationWeaviateIndexing            `tfsdk:"indexing"`
-	Processing DestinationMilvusProcessingConfigModel `tfsdk:"processing"`
+	Embedding   DestinationWeaviateEmbedding          `tfsdk:"embedding"`
+	Indexing    DestinationWeaviateIndexing           `tfsdk:"indexing"`
+	OmitRawText types.Bool                            `tfsdk:"omit_raw_text"`
+	Processing  DestinationAstraProcessingConfigModel `tfsdk:"processing"`
 }

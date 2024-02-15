@@ -15,23 +15,25 @@ DestinationPostgres Resource
 ```terraform
 resource "airbyte_destination_postgres" "my_destination_postgres" {
   configuration = {
-    database        = "...my_database..."
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 5432
-    schema          = "public"
+    database            = "...my_database..."
+    disable_type_dedupe = false
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
+    password            = "...my_password..."
+    port                = 5432
+    raw_data_schema     = "...my_raw_data_schema..."
+    schema              = "public"
     ssl_mode = {
       allow = {}
     }
     tunnel_method = {
-      destination_postgres_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Burley_Kuhic"
+    username = "Meagan_Treutel48"
   }
-  definition_id = "db19e64b-83f6-43d3-8837-0e173ec9d4f3"
-  name          = "Dianna Dooley V"
-  workspace_id  = "2a8a43c0-f29f-47cb-912b-320943801c36"
+  definition_id = "dc7cde8f-8d83-492a-ab15-fb458bad9ea7"
+  name          = "Marlene Brekke"
+  workspace_id  = "852a459d-e520-4ce3-820a-295e5c099628"
 }
 ```
 
@@ -46,7 +48,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,12 +66,12 @@ Required:
 
 Optional:
 
+- `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) Password associated with the username.
-- `port` (Number) Default: 5432
-Port of the database.
-- `schema` (String) Default: "public"
-The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+- `port` (Number) Port of the database. Default: 5432
+- `raw_data_schema` (String) The schema to write raw tables into
+- `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 - `ssl_mode` (Attributes) SSL connection modes. 
  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
  <b>allow</b> - Chose this mode to enable encryption only when required by the source database
@@ -140,9 +142,9 @@ Optional:
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -159,8 +161,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -174,7 +175,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

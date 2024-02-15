@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreateRequest {
+func (r *SourceNotionResourceModel) ToSharedSourceNotionCreateRequest() *shared.SourceNotionCreateRequest {
 	var credentials shared.SourceNotionAuthenticationMethod
 	var sourceNotionOAuth20 *shared.SourceNotionOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -72,12 +72,14 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 	return &out
 }
 
-func (r *SourceNotionResourceModel) ToGetSDKType() *shared.SourceNotionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceNotionResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutRequest {
+func (r *SourceNotionResourceModel) ToSharedSourceNotionPutRequest() *shared.SourceNotionPutRequest {
 	var credentials shared.SourceNotionUpdateAuthenticationMethod
 	var sourceNotionUpdateOAuth20 *shared.SourceNotionUpdateOAuth20
 	if r.Configuration.Credentials.OAuth20 != nil {
@@ -125,20 +127,4 @@ func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceNotionResourceModel) ToDeleteSDKType() *shared.SourceNotionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceNotionResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

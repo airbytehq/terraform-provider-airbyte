@@ -5,17 +5,20 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -56,32 +59,27 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"o_auth20": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"client_id": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client ID of your OAuth application`,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional:    true,
-										Description: `The Client Secret of your OAuth application.`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required:    true,
-										Sensitive:   true,
-										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
-									},
-								},
+							"client_id": schema.StringAttribute{
+								Required:    true,
+								Description: `The Client ID of your OAuth application`,
 							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
+							"client_secret": schema.StringAttribute{
+								Required:    true,
+								Description: `The Client Secret of your OAuth application.`,
+							},
+							"refresh_token": schema.StringAttribute{
+								Required:    true,
+								Sensitive:   true,
+								Description: `Refresh Token to obtain new Access Token, when it's expired.`,
+							},
 						},
 					},
 					"custom_reports": schema.ListNestedAttribute{
@@ -94,9 +92,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									Description: `List of types of attribution for the conversion report`,
 								},
 								"click_window_days": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: 30` + "\n" +
-										`Number of days to use as the conversion attribution window for a pin click action.`,
+									Computed:    true,
+									Optional:    true,
+									Default:     int64default.StaticInt64(30),
+									Description: `Number of days to use as the conversion attribution window for a pin click action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: 30`,
 									Validators: []validator.Int64{
 										int64validator.OneOf(
 											[]int64{
@@ -116,9 +115,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									Description: `A list of chosen columns`,
 								},
 								"conversion_report_time": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]; Default: "TIME_OF_AD_ACTION"` + "\n" +
-										`The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("TIME_OF_AD_ACTION"),
+									Description: `The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event.. must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]; Default: "TIME_OF_AD_ACTION"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"TIME_OF_AD_ACTION",
@@ -127,9 +127,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"engagement_window_days": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]` + "\n" +
-										`Number of days to use as the conversion attribution window for an engagement action.`,
+									Computed:    true,
+									Optional:    true,
+									Description: `Number of days to use as the conversion attribution window for an engagement action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]`,
 									Validators: []validator.Int64{
 										int64validator.OneOf(
 											[]int64{
@@ -144,9 +144,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"granularity": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]; Default: "TOTAL"` + "\n" +
-										`Chosen granularity for API`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("TOTAL"),
+									Description: `Chosen granularity for API. must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]; Default: "TOTAL"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"TOTAL",
@@ -158,9 +159,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"level": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]; Default: "ADVERTISER"` + "\n" +
-										`Chosen level for API`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("ADVERTISER"),
+									Description: `Chosen level for API. must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]; Default: "ADVERTISER"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"ADVERTISER",
@@ -190,9 +192,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								"view_window_days": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]` + "\n" +
-										`Number of days to use as the conversion attribution window for a view action.`,
+									Computed:    true,
+									Optional:    true,
+									Description: `Number of days to use as the conversion attribution window for a view action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]`,
 									Validators: []validator.Int64{
 										int64validator.OneOf(
 											[]int64{
@@ -220,46 +222,49 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 					"status": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
-						Description: `Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.`,
+						Description: `For the ads, ad_groups, and campaigns streams, specifying a status will filter out records that do not match the specified ones. If a status is not specified, the source will default to records with a status of either ACTIVE or PAUSED.`,
+						Validators: []validator.List{
+							listvalidator.UniqueValues(),
+						},
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -289,14 +294,14 @@ func (r *SourcePinterestResource) Configure(ctx context.Context, req resource.Co
 
 func (r *SourcePinterestResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourcePinterestResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -305,7 +310,7 @@ func (r *SourcePinterestResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourcePinterestCreateRequest()
 	res, err := r.client.Sources.CreateSourcePinterest(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -326,7 +331,34 @@ func (r *SourcePinterestResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourcePinterestRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourcePinterest(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -374,7 +406,7 @@ func (r *SourcePinterestResource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -382,12 +414,19 @@ func (r *SourcePinterestResource) Read(ctx context.Context, req resource.ReadReq
 
 func (r *SourcePinterestResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourcePinterestResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourcePinterestPutRequest := data.ToUpdateSDKType()
+	sourcePinterestPutRequest := data.ToSharedSourcePinterestPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourcePinterestRequest{
 		SourcePinterestPutRequest: sourcePinterestPutRequest,
@@ -409,31 +448,33 @@ func (r *SourcePinterestResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourcePinterestRequest{
+	request1 := operations.GetSourcePinterestRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourcePinterest(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourcePinterest(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

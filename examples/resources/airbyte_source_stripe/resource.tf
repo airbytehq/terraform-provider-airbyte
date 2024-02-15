@@ -3,13 +3,13 @@ resource "airbyte_source_stripe" "my_source_stripe" {
     account_id           = "...my_account_id..."
     call_rate_limit      = 100
     client_secret        = "...my_client_secret..."
-    lookback_window_days = 10
-    num_workers          = 3
-    slice_range          = 360
+    lookback_window_days = 8
+    num_workers          = 2
+    slice_range          = 3
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "46c36bb7-337b-4f0b-aca9-3a8ae78e1e53"
-  name          = "Marcella Muller"
+  definition_id = "b5a3e446-fc1e-40fa-91f7-ef5f462d7c84"
+  name          = "Willie Buckridge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b6d5dc1e-250f-480f-bc59-5c3777bccfe7"
+  workspace_id  = "7a1b271a-5b00-49f2-9606-a36dac99592a"
 }

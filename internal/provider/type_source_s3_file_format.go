@@ -3,8 +3,8 @@
 package provider
 
 type SourceS3FileFormat struct {
-	Avro    *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"avro"`
-	Csv     *Csv                                                      `tfsdk:"csv"`
-	Jsonl   *Jsonl                                                    `tfsdk:"jsonl"`
-	Parquet *Parquet                                                  `tfsdk:"parquet"`
+	Avro    *Fake    `tfsdk:"avro"`
+	Csv     *Csv     `tfsdk:"csv"`
+	Jsonl   *Jsonl   `tfsdk:"jsonl"`
+	Parquet *Parquet `tfsdk:"parquet"`
 }

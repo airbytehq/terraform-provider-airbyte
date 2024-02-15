@@ -22,10 +22,10 @@ resource "airbyte_source_trello" "my_source_trello" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "26a8838c-f8d2-427f-b18d-4240654f4782"
-  name          = "Esther Abshire"
+  definition_id = "a7270287-5abb-488c-b98d-79666080f3ec"
+  name          = "Lamar Douglas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b5a46242-8ebc-45c7-bead-f0c9ce16ebe8"
+  workspace_id  = "491ea799-2cd6-43d3-b81e-fe3f7d5a433d"
 }
 ```
 
@@ -40,8 +40,8 @@ resource "airbyte_source_trello" "my_source_trello" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

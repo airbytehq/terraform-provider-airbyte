@@ -140,6 +140,7 @@ const (
 	DestinationElasticsearchAuthenticationMethodTypeDestinationElasticsearchUsernamePassword DestinationElasticsearchAuthenticationMethodType = "destination-elasticsearch_Username/Password"
 )
 
+// DestinationElasticsearchAuthenticationMethod - The type of authentication to be used
 type DestinationElasticsearchAuthenticationMethod struct {
 	DestinationElasticsearchAPIKeySecret     *DestinationElasticsearchAPIKeySecret
 	DestinationElasticsearchUsernamePassword *DestinationElasticsearchUsernamePassword

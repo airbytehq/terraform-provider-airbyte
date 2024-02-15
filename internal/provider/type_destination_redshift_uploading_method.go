@@ -3,6 +3,6 @@
 package provider
 
 type DestinationRedshiftUploadingMethod struct {
-	S3Staging *S3Staging                                                `tfsdk:"s3_staging"`
-	Standard  *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"standard"`
+	AWSS3Staging *AWSS3Staging `tfsdk:"awss3_staging"`
+	Standard     *Fake         `tfsdk:"standard"`
 }

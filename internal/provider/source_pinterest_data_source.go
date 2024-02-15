@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
-
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -48,9 +47,8 @@ func (r *SourcePinterestDataSource) Schema(ctx context.Context, req datasource.S
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.StringAttribute{
-				Computed: true,
-				MarkdownDescription: `Parsed as JSON.` + "\n" +
-					`The values required to configure the source.`,
+				Computed:    true,
+				Description: `The values required to configure the source. Parsed as JSON.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -130,7 +128,7 @@ func (r *SourcePinterestDataSource) Read(ctx context.Context, req datasource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

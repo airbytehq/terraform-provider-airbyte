@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQdrantCreateRequest {
+func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest() *shared.DestinationQdrantCreateRequest {
 	var embedding shared.DestinationQdrantEmbedding
 	var destinationQdrantOpenAI *shared.DestinationQdrantOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -42,20 +42,6 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 			DestinationQdrantFake: destinationQdrantFake,
 		}
 	}
-	var destinationQdrantFromField *shared.DestinationQdrantFromField
-	if r.Configuration.Embedding.FromField != nil {
-		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
-		destinationQdrantFromField = &shared.DestinationQdrantFromField{
-			Dimensions: dimensions,
-			FieldName:  fieldName,
-		}
-	}
-	if destinationQdrantFromField != nil {
-		embedding = shared.DestinationQdrantEmbedding{
-			DestinationQdrantFromField: destinationQdrantFromField,
-		}
-	}
 	var destinationQdrantAzureOpenAI *shared.DestinationQdrantAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
 		apiBase := r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
@@ -81,7 +67,7 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 			apiKey = nil
 		}
 		baseURL := r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
-		dimensions1 := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+		dimensions := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
@@ -91,7 +77,7 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 		destinationQdrantOpenAICompatible = &shared.DestinationQdrantOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			Dimensions: dimensions1,
+			Dimensions: dimensions,
 			ModelName:  modelName,
 		}
 	}
@@ -125,35 +111,11 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 		}
 	}
 	collection := r.Configuration.Indexing.Collection.ValueString()
-	var distanceMetric *shared.DestinationQdrantDistanceMetric
-	if r.Configuration.Indexing.DistanceMetric != nil {
-		var destinationQdrantDot *shared.DestinationQdrantDot
-		if r.Configuration.Indexing.DistanceMetric.Dot != nil {
-			destinationQdrantDot = &shared.DestinationQdrantDot{}
-		}
-		if destinationQdrantDot != nil {
-			distanceMetric = &shared.DestinationQdrantDistanceMetric{
-				DestinationQdrantDot: destinationQdrantDot,
-			}
-		}
-		var destinationQdrantCos *shared.DestinationQdrantCos
-		if r.Configuration.Indexing.DistanceMetric.Cos != nil {
-			destinationQdrantCos = &shared.DestinationQdrantCos{}
-		}
-		if destinationQdrantCos != nil {
-			distanceMetric = &shared.DestinationQdrantDistanceMetric{
-				DestinationQdrantCos: destinationQdrantCos,
-			}
-		}
-		var destinationQdrantEuc *shared.DestinationQdrantEuc
-		if r.Configuration.Indexing.DistanceMetric.Euc != nil {
-			destinationQdrantEuc = &shared.DestinationQdrantEuc{}
-		}
-		if destinationQdrantEuc != nil {
-			distanceMetric = &shared.DestinationQdrantDistanceMetric{
-				DestinationQdrantEuc: destinationQdrantEuc,
-			}
-		}
+	distanceMetric := new(shared.DestinationQdrantDistanceMetric)
+	if !r.Configuration.Indexing.DistanceMetric.IsUnknown() && !r.Configuration.Indexing.DistanceMetric.IsNull() {
+		*distanceMetric = shared.DestinationQdrantDistanceMetric(r.Configuration.Indexing.DistanceMetric.ValueString())
+	} else {
+		distanceMetric = nil
 	}
 	preferGrpc := new(bool)
 	if !r.Configuration.Indexing.PreferGrpc.IsUnknown() && !r.Configuration.Indexing.PreferGrpc.IsNull() {
@@ -175,6 +137,12 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 		PreferGrpc:     preferGrpc,
 		TextField:      textField,
 		URL:            url,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -263,9 +231,10 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationQdrant{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -284,12 +253,14 @@ func (r *DestinationQdrantResourceModel) ToCreateSDKType() *shared.DestinationQd
 	return &out
 }
 
-func (r *DestinationQdrantResourceModel) ToGetSDKType() *shared.DestinationQdrantCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationQdrantResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQdrantPutRequest {
+func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *shared.DestinationQdrantPutRequest {
 	var embedding shared.DestinationQdrantUpdateEmbedding
 	var destinationQdrantUpdateOpenAI *shared.DestinationQdrantUpdateOpenAI
 	if r.Configuration.Embedding.OpenAI != nil {
@@ -324,20 +295,6 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 			DestinationQdrantUpdateFake: destinationQdrantUpdateFake,
 		}
 	}
-	var destinationQdrantUpdateFromField *shared.DestinationQdrantUpdateFromField
-	if r.Configuration.Embedding.FromField != nil {
-		dimensions := r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
-		fieldName := r.Configuration.Embedding.FromField.FieldName.ValueString()
-		destinationQdrantUpdateFromField = &shared.DestinationQdrantUpdateFromField{
-			Dimensions: dimensions,
-			FieldName:  fieldName,
-		}
-	}
-	if destinationQdrantUpdateFromField != nil {
-		embedding = shared.DestinationQdrantUpdateEmbedding{
-			DestinationQdrantUpdateFromField: destinationQdrantUpdateFromField,
-		}
-	}
 	var destinationQdrantUpdateAzureOpenAI *shared.DestinationQdrantUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
 		apiBase := r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
@@ -363,7 +320,7 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 			apiKey = nil
 		}
 		baseURL := r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
-		dimensions1 := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+		dimensions := r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
@@ -373,7 +330,7 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 		destinationQdrantUpdateOpenAICompatible = &shared.DestinationQdrantUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			Dimensions: dimensions1,
+			Dimensions: dimensions,
 			ModelName:  modelName,
 		}
 	}
@@ -407,35 +364,11 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 		}
 	}
 	collection := r.Configuration.Indexing.Collection.ValueString()
-	var distanceMetric *shared.DistanceMetric
-	if r.Configuration.Indexing.DistanceMetric != nil {
-		var dot *shared.Dot
-		if r.Configuration.Indexing.DistanceMetric.Dot != nil {
-			dot = &shared.Dot{}
-		}
-		if dot != nil {
-			distanceMetric = &shared.DistanceMetric{
-				Dot: dot,
-			}
-		}
-		var cos *shared.Cos
-		if r.Configuration.Indexing.DistanceMetric.Cos != nil {
-			cos = &shared.Cos{}
-		}
-		if cos != nil {
-			distanceMetric = &shared.DistanceMetric{
-				Cos: cos,
-			}
-		}
-		var euc *shared.Euc
-		if r.Configuration.Indexing.DistanceMetric.Euc != nil {
-			euc = &shared.Euc{}
-		}
-		if euc != nil {
-			distanceMetric = &shared.DistanceMetric{
-				Euc: euc,
-			}
-		}
+	distanceMetric := new(shared.DistanceMetric)
+	if !r.Configuration.Indexing.DistanceMetric.IsUnknown() && !r.Configuration.Indexing.DistanceMetric.IsNull() {
+		*distanceMetric = shared.DistanceMetric(r.Configuration.Indexing.DistanceMetric.ValueString())
+	} else {
+		distanceMetric = nil
 	}
 	preferGrpc := new(bool)
 	if !r.Configuration.Indexing.PreferGrpc.IsUnknown() && !r.Configuration.Indexing.PreferGrpc.IsNull() {
@@ -457,6 +390,12 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 		PreferGrpc:     preferGrpc,
 		TextField:      textField,
 		URL:            url,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
 	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
@@ -545,9 +484,10 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationQdrantUpdate{
-		Embedding:  embedding,
-		Indexing:   indexing,
-		Processing: processing,
+		Embedding:   embedding,
+		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -557,20 +497,4 @@ func (r *DestinationQdrantResourceModel) ToUpdateSDKType() *shared.DestinationQd
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationQdrantResourceModel) ToDeleteSDKType() *shared.DestinationQdrantCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationQdrantResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationQdrantResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

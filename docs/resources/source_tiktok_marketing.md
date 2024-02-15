@@ -17,21 +17,21 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
     attribution_window = 3
     credentials = {
-      source_tiktok_marketing_o_auth2_0 = {
+      o_auth20 = {
         access_token  = "...my_access_token..."
         advertiser_id = "...my_advertiser_id..."
         app_id        = "...my_app_id..."
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-10-15"
-    include_deleted = false
-    start_date      = "2022-12-08"
+    end_date        = "2022-06-11"
+    include_deleted = true
+    start_date      = "2021-06-15"
   }
-  definition_id = "fd338f32-2856-4cd8-8e7e-494b9e5830e9"
-  name          = "Elijah Prosacco"
+  definition_id = "5c77eadf-0c9c-4e16-abe8-5fa64aee8d2b"
+  name          = "Merle Grant"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "12cdcae9-f85c-4701-b380-526f8856cdf3"
+  workspace_id  = "efceb9e0-d54b-4089-8bdd-98fe3f92c06a"
 }
 ```
 
@@ -46,8 +46,8 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,22 +59,19 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
 
 Optional:
 
-- `attribution_window` (Number) Default: 3
-The attribution window in days.
+- `attribution_window` (Number) The attribution window in days. Default: 3
 - `credentials` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-- `include_deleted` (Boolean) Default: false
-Set to active if you want to include deleted data in reports.
-- `start_date` (String) Default: "2016-09-01"
-The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
+- `include_deleted` (Boolean) Set to active if you want to include deleted data in reports. Default: false
+- `start_date` (String) The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated. Default: "2016-09-01"
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `o_auth20` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
-- `sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--sandbox_access_token))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `sandbox_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--sandbox_access_token))
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
 ### Nested Schema for `configuration.credentials.o_auth20`

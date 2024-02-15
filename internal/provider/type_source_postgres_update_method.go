@@ -3,7 +3,7 @@
 package provider
 
 type SourcePostgresUpdateMethod struct {
-	DetectChangesWithXminSystemColumn *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"detect_changes_with_xmin_system_column"`
-	ReadChangesUsingWriteAheadLogCDC  *LogicalReplicationCDC                                    `tfsdk:"read_changes_using_write_ahead_log_cdc"`
-	ScanChangesWithUserDefinedCursor  *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"scan_changes_with_user_defined_cursor"`
+	DetectChangesWithXminSystemColumn *Fake                             `tfsdk:"detect_changes_with_xmin_system_column"`
+	ReadChangesUsingWriteAheadLogCDC  *ReadChangesUsingWriteAheadLogCDC `tfsdk:"read_changes_using_write_ahead_log_cdc"`
+	ScanChangesWithUserDefinedCursor  *Fake                             `tfsdk:"scan_changes_with_user_defined_cursor"`
 }

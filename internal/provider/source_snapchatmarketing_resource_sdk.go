@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceSnapchatMarketingCreateRequest {
+func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCreateRequest() *shared.SourceSnapchatMarketingCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	endDate := new(customTypes.Date)
@@ -55,12 +55,14 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 	return &out
 }
 
-func (r *SourceSnapchatMarketingResourceModel) ToGetSDKType() *shared.SourceSnapchatMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSnapchatMarketingResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSnapchatMarketingResourceModel) ToUpdateSDKType() *shared.SourceSnapchatMarketingPutRequest {
+func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPutRequest() *shared.SourceSnapchatMarketingPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	endDate := new(customTypes.Date)
@@ -91,20 +93,4 @@ func (r *SourceSnapchatMarketingResourceModel) ToUpdateSDKType() *shared.SourceS
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSnapchatMarketingResourceModel) ToDeleteSDKType() *shared.SourceSnapchatMarketingCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSnapchatMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSnapchatMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

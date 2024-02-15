@@ -5,16 +5,19 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +57,9 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"embedding": schema.SingleNestedAttribute{
@@ -93,20 +99,6 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
 							},
-							"from_field": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"dimensions": schema.Int64Attribute{
-										Required:    true,
-										Description: `The number of dimensions the embedding model is generating`,
-									},
-									"field_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Name of the field in the record that contains the embedding`,
-									},
-								},
-								Description: `Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.`,
-							},
 							"open_ai": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -121,8 +113,10 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
+										Default:     stringdefault.StaticString(""),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -134,9 +128,10 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Description: `The number of dimensions the embedding model is generating`,
 									},
 									"model_name": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `Default: "text-embedding-ada-002"` + "\n" +
-											`The name of the model to use for embedding`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},
 								Description: `Use a service that's compatible with the OpenAI API to embed text.`,
@@ -195,34 +190,44 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 								Description: `The collection to load data into`,
 							},
 							"db": schema.StringAttribute{
-								Optional: true,
-								MarkdownDescription: `Default: ""` + "\n" +
-									`The database to connect to`,
+								Computed:    true,
+								Optional:    true,
+								Default:     stringdefault.StaticString(""),
+								Description: `The database to connect to. Default: ""`,
 							},
 							"host": schema.StringAttribute{
 								Required:    true,
 								Description: `The public endpoint of the Milvus instance. `,
 							},
 							"text_field": schema.StringAttribute{
-								Optional: true,
-								MarkdownDescription: `Default: "text"` + "\n" +
-									`The field in the entity that contains the embedded text`,
+								Computed:    true,
+								Optional:    true,
+								Default:     stringdefault.StaticString("text"),
+								Description: `The field in the entity that contains the embedded text. Default: "text"`,
 							},
 							"vector_field": schema.StringAttribute{
-								Optional: true,
-								MarkdownDescription: `Default: "vector"` + "\n" +
-									`The field in the entity that contains the vector`,
+								Computed:    true,
+								Optional:    true,
+								Default:     stringdefault.StaticString("vector"),
+								Description: `The field in the entity that contains the vector. Default: "vector"`,
 							},
 						},
 						Description: `Indexing configuration`,
+					},
+					"omit_raw_text": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source. Default: false`,
 					},
 					"processing": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"chunk_overlap": schema.Int64Attribute{
-								Optional: true,
-								MarkdownDescription: `Default: 0` + "\n" +
-									`Size of overlap between chunks in tokens to store in vector store to better capture relevant context`,
+								Computed:    true,
+								Optional:    true,
+								Default:     int64default.StaticInt64(0),
+								Description: `Size of overlap between chunks in tokens to store in vector store to better capture relevant context. Default: 0`,
 							},
 							"chunk_size": schema.Int64Attribute{
 								Required:    true,
@@ -261,9 +266,10 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"split_level": schema.Int64Attribute{
-												Optional: true,
-												MarkdownDescription: `Default: 1` + "\n" +
-													`Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points`,
+												Computed:    true,
+												Optional:    true,
+												Default:     int64default.StaticInt64(1),
+												Description: `Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points. Default: 1`,
 											},
 										},
 										Description: `Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.`,
@@ -272,9 +278,8 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"language": schema.StringAttribute{
-												Required: true,
-												MarkdownDescription: `must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]` + "\n" +
-													`Split code in suitable places based on the programming language`,
+												Required:    true,
+												Description: `Split code in suitable places based on the programming language. must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]`,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"cpp",
@@ -303,9 +308,10 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"keep_separator": schema.BoolAttribute{
-												Optional: true,
-												MarkdownDescription: `Default: false` + "\n" +
-													`Whether to keep the separator in the resulting chunks`,
+												Computed:    true,
+												Optional:    true,
+												Default:     booldefault.StaticBool(false),
+												Description: `Whether to keep the separator in the resulting chunks. Default: false`,
 											},
 											"separators": schema.ListAttribute{
 												Optional:    true,
@@ -324,36 +330,46 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 				},
+				MarkdownDescription: `The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,` + "\n" +
+					`as well as to provide type safety for the configuration passed to the destination.` + "\n" +
+					`` + "\n" +
+					`The configuration model is composed of four parts:` + "\n" +
+					`* Processing configuration` + "\n" +
+					`* Embedding configuration` + "\n" +
+					`* Indexing configuration` + "\n" +
+					`* Advanced configuration` + "\n" +
+					`` + "\n" +
+					`Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.`,
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -383,14 +399,14 @@ func (r *DestinationMilvusResource) Configure(ctx context.Context, req resource.
 
 func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationMilvusResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -399,7 +415,7 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationMilvusCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -420,7 +436,34 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationMilvusRequest{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -468,7 +511,7 @@ func (r *DestinationMilvusResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -476,12 +519,19 @@ func (r *DestinationMilvusResource) Read(ctx context.Context, req resource.ReadR
 
 func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationMilvusResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationMilvusPutRequest := data.ToUpdateSDKType()
+	destinationMilvusPutRequest := data.ToSharedDestinationMilvusPutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationMilvusRequest{
 		DestinationMilvusPutRequest: destinationMilvusPutRequest,
@@ -503,31 +553,33 @@ func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationMilvusRequest{
+	request1 := operations.GetDestinationMilvusRequest{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationMilvus(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

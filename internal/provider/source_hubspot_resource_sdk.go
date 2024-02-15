@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCreateRequest {
+func (r *SourceHubspotResourceModel) ToSharedSourceHubspotCreateRequest() *shared.SourceHubspotCreateRequest {
 	var credentials shared.SourceHubspotAuthentication
 	var sourceHubspotOAuth *shared.SourceHubspotOAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -38,10 +38,17 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 			SourceHubspotPrivateApp: sourceHubspotPrivateApp,
 		}
 	}
+	enableExperimentalStreams := new(bool)
+	if !r.Configuration.EnableExperimentalStreams.IsUnknown() && !r.Configuration.EnableExperimentalStreams.IsNull() {
+		*enableExperimentalStreams = r.Configuration.EnableExperimentalStreams.ValueBool()
+	} else {
+		enableExperimentalStreams = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHubspot{
-		Credentials: credentials,
-		StartDate:   startDate,
+		Credentials:               credentials,
+		EnableExperimentalStreams: enableExperimentalStreams,
+		StartDate:                 startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -67,12 +74,14 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	return &out
 }
 
-func (r *SourceHubspotResourceModel) ToGetSDKType() *shared.SourceHubspotCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceHubspotResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutRequest {
+func (r *SourceHubspotResourceModel) ToSharedSourceHubspotPutRequest() *shared.SourceHubspotPutRequest {
 	var credentials shared.SourceHubspotUpdateAuthentication
 	var sourceHubspotUpdateOAuth *shared.SourceHubspotUpdateOAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -102,10 +111,17 @@ func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutR
 			PrivateApp: privateApp,
 		}
 	}
+	enableExperimentalStreams := new(bool)
+	if !r.Configuration.EnableExperimentalStreams.IsUnknown() && !r.Configuration.EnableExperimentalStreams.IsNull() {
+		*enableExperimentalStreams = r.Configuration.EnableExperimentalStreams.ValueBool()
+	} else {
+		enableExperimentalStreams = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHubspotUpdate{
-		Credentials: credentials,
-		StartDate:   startDate,
+		Credentials:               credentials,
+		EnableExperimentalStreams: enableExperimentalStreams,
+		StartDate:                 startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -115,20 +131,4 @@ func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceHubspotResourceModel) ToDeleteSDKType() *shared.SourceHubspotCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceHubspotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

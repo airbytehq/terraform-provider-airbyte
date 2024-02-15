@@ -18,10 +18,10 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     api_key    = "...my_api_key..."
     start_date = "dd/mm/YYYY HH:MM"
   }
-  definition_id = "8dbe50fc-b32a-4781-b3ab-b82e6a7189e9"
-  name          = "Erin Johns"
+  definition_id = "eb808ec8-c0a1-4f11-a71a-56d068f4b5e4"
+  name          = "Douglas McGlynn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4638d140-9463-49cf-9dd4-a0c05f536f6b"
+  workspace_id  = "6433e1d5-1484-4aac-986d-055244c5465b"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

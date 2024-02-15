@@ -16,7 +16,7 @@ DestinationPinecone Resource
 resource "airbyte_destination_pinecone" "my_destination_pinecone" {
   configuration = {
     embedding = {
-      destination_pinecone_azure_open_ai = {
+      azure_open_ai = {
         api_base   = "https://your-resource-name.openai.azure.com"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
@@ -24,12 +24,13 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
     }
     indexing = {
       index                = "...my_index..."
-      pinecone_environment = "us-west1-gcp"
+      pinecone_environment = "gcp-starter"
       pinecone_key         = "...my_pinecone_key..."
     }
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 6
-      chunk_size    = 6
+      chunk_overlap = 2
+      chunk_size    = 5
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -43,15 +44,15 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
         "...",
       ]
       text_splitter = {
-        destination_pinecone_by_markdown_header = {
-          split_level = 7
+        by_markdown_header = {
+          split_level = 0
         }
       }
     }
   }
-  definition_id = "d49dbc4f-abbf-4199-8382-023b4de2c1a7"
-  name          = "Bobby Lemke"
-  workspace_id  = "d3cde3c9-d6fa-494b-b4b9-38f85ce1dfc1"
+  definition_id = "1c3678d4-2b62-494a-b1a2-9aaf3c68070e"
+  name          = "Oliver Boyer"
+  workspace_id  = "7042295e-6e54-4dc3-8616-586b73990fea"
 }
 ```
 
@@ -60,13 +61,22 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
 
 ### Required
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (Attributes) The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+as well as to provide type safety for the configuration passed to the destination.
+
+The configuration model is composed of four parts:
+* Processing configuration
+* Embedding configuration
+* Indexing configuration
+* Advanced configuration
+
+Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class. (see [below for nested schema](#nestedatt--configuration))
 - `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -81,6 +91,10 @@ Required:
 - `embedding` (Attributes) Embedding configuration (see [below for nested schema](#nestedatt--configuration--embedding))
 - `indexing` (Attributes) Pinecone is a popular vector store that can be used to store and retrieve embeddings. (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
+
+Optional:
+
+- `omit_raw_text` (Boolean) Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source. Default: false
 
 <a id="nestedatt--configuration--embedding"></a>
 ### Nested Schema for `configuration.embedding`
@@ -134,8 +148,7 @@ Required:
 Optional:
 
 - `api_key` (String, Sensitive) Default: ""
-- `model_name` (String) Default: "text-embedding-ada-002"
-The name of the model to use for embedding
+- `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
 
@@ -158,8 +171,7 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Default: 0
-Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context. Default: 0
 - `field_name_mappings` (Attributes List) List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation. (see [below for nested schema](#nestedatt--configuration--processing--field_name_mappings))
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
@@ -188,8 +200,7 @@ Optional:
 
 Optional:
 
-- `split_level` (Number) Default: 1
-Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+- `split_level` (Number) Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points. Default: 1
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
@@ -197,8 +208,7 @@ Level of markdown headers to split text fields by. Headings down to the specifie
 
 Required:
 
-- `language` (String) must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
-Split code in suitable places based on the programming language
+- `language` (String) Split code in suitable places based on the programming language. must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_separator"></a>
@@ -206,8 +216,7 @@ Split code in suitable places based on the programming language
 
 Optional:
 
-- `keep_separator` (Boolean) Default: false
-Whether to keep the separator in the resulting chunks
+- `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
 

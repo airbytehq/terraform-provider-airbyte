@@ -69,15 +69,17 @@ func merge(ctx context.Context, req resource.UpdateRequest, resp *resource.Updat
 		return
 	}
 
-	// we need a tftypes.Value for this Object to be able to use it with
-	// our reflection code
+	refreshPlan(ctx, plan, target, resp.Diagnostics)
+}
+
+func refreshPlan(ctx context.Context, plan types.Object, target interface{}, diagnostics diag.Diagnostics) {
 	obj := types.ObjectType{AttrTypes: plan.AttributeTypes(ctx)}
 	val, err := plan.ToTerraformValue(ctx)
 	if err != nil {
-		resp.Diagnostics.Append(diag.NewErrorDiagnostic("Object Conversion Error", "An unexpected error was encountered trying to convert object. This is always an error in the provider. Please report the following to the provider developer:\n\n"+err.Error()))
+		diagnostics.Append(diag.NewErrorDiagnostic("Object Conversion Error", "An unexpected error was encountered trying to convert object. This is always an error in the provider. Please report the following to the provider developer:\n\n"+err.Error()))
 		return
 	}
-	resp.Diagnostics.Append(tfReflect.Into(ctx, obj, val, target, tfReflect.Options{
+	diagnostics.Append(tfReflect.Into(ctx, obj, val, target, tfReflect.Options{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	}, path.Empty())...)

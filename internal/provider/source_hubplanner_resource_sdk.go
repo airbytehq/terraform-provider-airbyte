@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplannerCreateRequest {
+func (r *SourceHubplannerResourceModel) ToSharedSourceHubplannerCreateRequest() *shared.SourceHubplannerCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceHubplanner{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplann
 	return &out
 }
 
-func (r *SourceHubplannerResourceModel) ToGetSDKType() *shared.SourceHubplannerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceHubplannerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceHubplannerResourceModel) ToUpdateSDKType() *shared.SourceHubplannerPutRequest {
+func (r *SourceHubplannerResourceModel) ToSharedSourceHubplannerPutRequest() *shared.SourceHubplannerPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceHubplannerUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceHubplannerResourceModel) ToUpdateSDKType() *shared.SourceHubplann
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceHubplannerResourceModel) ToDeleteSDKType() *shared.SourceHubplannerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceHubplannerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceHubplannerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

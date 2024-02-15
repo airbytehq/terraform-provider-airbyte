@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceYoutubeAnalyticsResourceModel) ToCreateSDKType() *shared.SourceYoutubeAnalyticsCreateRequest {
+func (r *SourceYoutubeAnalyticsResourceModel) ToSharedSourceYoutubeAnalyticsCreateRequest() *shared.SourceYoutubeAnalyticsCreateRequest {
 	var additionalProperties interface{}
 	if !r.Configuration.Credentials.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AdditionalProperties.IsNull() {
 		_ = json.Unmarshal([]byte(r.Configuration.Credentials.AdditionalProperties.ValueString()), &additionalProperties)
@@ -49,12 +49,14 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToCreateSDKType() *shared.SourceYo
 	return &out
 }
 
-func (r *SourceYoutubeAnalyticsResourceModel) ToGetSDKType() *shared.SourceYoutubeAnalyticsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceYoutubeAnalyticsResourceModel) ToUpdateSDKType() *shared.SourceYoutubeAnalyticsPutRequest {
+func (r *SourceYoutubeAnalyticsResourceModel) ToSharedSourceYoutubeAnalyticsPutRequest() *shared.SourceYoutubeAnalyticsPutRequest {
 	var additionalProperties interface{}
 	if !r.Configuration.Credentials.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AdditionalProperties.IsNull() {
 		_ = json.Unmarshal([]byte(r.Configuration.Credentials.AdditionalProperties.ValueString()), &additionalProperties)
@@ -79,20 +81,4 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToUpdateSDKType() *shared.SourceYo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceYoutubeAnalyticsResourceModel) ToDeleteSDKType() *shared.SourceYoutubeAnalyticsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

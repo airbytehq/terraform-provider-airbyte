@@ -15,22 +15,31 @@ SourceAmazonSellerPartner Resource
 ```terraform
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
-    account_type            = "Seller"
-    advanced_stream_options = "{\"GET_SALES_AND_TRAFFIC_REPORT\": {\"availability_sla_days\": 3}}"
-    aws_environment         = "SANDBOX"
-    lwa_app_id              = "...my_lwa_app_id..."
-    lwa_client_secret       = "...my_lwa_client_secret..."
-    period_in_days          = 2
-    refresh_token           = "...my_refresh_token..."
-    region                  = "AE"
-    replication_end_date    = "2017-01-25T00:00:00Z"
-    replication_start_date  = "2017-01-25T00:00:00Z"
-    report_options          = "{\"GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT\": {\"reportPeriod\": \"WEEK\"}}"
+    account_type           = "Vendor"
+    aws_environment        = "PRODUCTION"
+    lwa_app_id             = "...my_lwa_app_id..."
+    lwa_client_secret      = "...my_lwa_client_secret..."
+    period_in_days         = 7
+    refresh_token          = "...my_refresh_token..."
+    region                 = "UK"
+    replication_end_date   = "2017-01-25T00:00:00Z"
+    replication_start_date = "2017-01-25T00:00:00Z"
+    report_options_list = [
+      {
+        options_list = [
+          {
+            option_name  = "...my_option_name..."
+            option_value = "...my_option_value..."
+          },
+        ]
+        stream_name = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+      },
+    ]
   }
-  definition_id = "69bb26e6-b9f2-45aa-9f8c-7d4107048d9f"
-  name          = "Caleb Legros"
+  definition_id = "a73356f3-9bea-45e2-889f-0e8905c8543b"
+  name          = "Justin Luettgen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9afeef69-ead1-4e5d-b690-efc6e828b1d2"
+  workspace_id  = "ac7dcada-d293-48da-9765-e7880f00a30d"
 }
 ```
 
@@ -45,8 +54,8 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -61,20 +70,31 @@ Required:
 - `lwa_app_id` (String) Your Login with Amazon Client ID.
 - `lwa_client_secret` (String) Your Login with Amazon Client Secret.
 - `refresh_token` (String, Sensitive) The Refresh Token obtained via OAuth flow authorization.
-- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `account_type` (String) must be one of ["Seller", "Vendor"]; Default: "Seller"
-Type of the Account you're going to authorize the Airbyte application by
-- `advanced_stream_options` (String) Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.
-- `aws_environment` (String) must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"
-Select the AWS Environment.
-- `period_in_days` (Number) Default: 90
-Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.
-- `region` (String) must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
-Select the AWS Region.
+- `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. must be one of ["Seller", "Vendor"]; Default: "Seller"
+- `aws_environment` (String) Select the AWS Environment. must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"
+- `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90
+- `region` (String) Select the AWS Region. must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
-- `report_options` (String) Additional information passed to reports. This varies by report type. Must be a valid json string.
+- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.
+- `report_options_list` (Attributes List) Additional information passed to reports. This varies by report type. (see [below for nested schema](#nestedatt--configuration--report_options_list))
+
+<a id="nestedatt--configuration--report_options_list"></a>
+### Nested Schema for `configuration.report_options_list`
+
+Required:
+
+- `options_list` (Attributes List) List of options (see [below for nested schema](#nestedatt--configuration--report_options_list--options_list))
+- `stream_name` (String) must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT", "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT", "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SALES_AND_TRAFFIC_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_VENDOR_INVENTORY_REPORT", "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT", "GET_VENDOR_TRAFFIC_REPORT", "GET_VENDOR_SALES_REPORT", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA"]
+
+<a id="nestedatt--configuration--report_options_list--options_list"></a>
+### Nested Schema for `configuration.report_options_list.options_list`
+
+Required:
+
+- `option_name` (String)
+- `option_value` (String)
 
 

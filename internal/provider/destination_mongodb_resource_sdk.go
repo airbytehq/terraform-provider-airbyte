@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationMongodbCreateRequest {
+func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbCreateRequest() *shared.DestinationMongodbCreateRequest {
 	var authType shared.DestinationMongodbAuthorizationType
 	var destinationMongodbNone *shared.DestinationMongodbNone
 	if r.Configuration.AuthType.None != nil {
@@ -188,12 +188,14 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	return &out
 }
 
-func (r *DestinationMongodbResourceModel) ToGetSDKType() *shared.DestinationMongodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationMongodbResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationMongodbPutRequest {
+func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbPutRequest() *shared.DestinationMongodbPutRequest {
 	var authType shared.AuthorizationType
 	var none *shared.None
 	if r.Configuration.AuthType.None != nil {
@@ -365,20 +367,4 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationMongodbResourceModel) ToDeleteSDKType() *shared.DestinationMongodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationMongodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationMongodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

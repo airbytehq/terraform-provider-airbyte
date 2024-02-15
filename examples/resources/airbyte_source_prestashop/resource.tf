@@ -4,8 +4,8 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date = "2022-01-01"
     url        = "...my_url..."
   }
-  definition_id = "d797c2fd-0239-4507-97b2-06b8fda8b48b"
-  name          = "Dr. Jeffery Wuckert"
+  definition_id = "ea52c707-cb05-4c4a-8d21-cf34658e520f"
+  name          = "Maurice Gorczany"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "631ebcaf-aa2e-4e7a-9e0c-b6197095b91e"
+  workspace_id  = "67309cc0-ee4b-4ba7-baed-572054daa84a"
 }

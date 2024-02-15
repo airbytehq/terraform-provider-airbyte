@@ -16,12 +16,12 @@ SourceIp2whois Resource
 resource "airbyte_source_ip2whois" "my_source_ip2whois" {
   configuration = {
     api_key = "...my_api_key..."
-    domain  = "www.google.com"
+    domain  = "www.facebook.com"
   }
-  definition_id = "711f25a2-8dde-404a-9ce3-be57bfa46127"
-  name          = "Monica Champlin"
+  definition_id = "9882d54c-e598-4cc5-9eb9-52f06231c57f"
+  name          = "Ross Zboncak"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5ed08074-e17a-4648-8571-1ab94fe75a51"
+  workspace_id  = "1baac6e0-5b1e-450c-9446-8d231cdd98f8"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

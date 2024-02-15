@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesforceCreateRequest {
+func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() *shared.SourceSalesforceCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	forceUseBulkAPI := new(bool)
@@ -77,12 +77,14 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	return &out
 }
 
-func (r *SourceSalesforceResourceModel) ToGetSDKType() *shared.SourceSalesforceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSalesforceResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesforcePutRequest {
+func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *shared.SourceSalesforcePutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	forceUseBulkAPI := new(bool)
@@ -135,20 +137,4 @@ func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesfor
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSalesforceResourceModel) ToDeleteSDKType() *shared.SourceSalesforceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSalesforceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSalesforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

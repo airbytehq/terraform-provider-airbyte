@@ -20,10 +20,10 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     domain_url    = "https://000-AAA-000.mktorest.com"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  definition_id = "c87aaffe-b9ea-4290-b7e9-f4166b42b69c"
-  name          = "Doris Steuber"
+  definition_id = "b93b4991-11a3-420c-8ad5-adc1330ef574"
+  name          = "Guy Farrell"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bbad3f0b-f8ca-4743-bfb1-506e5d6deb8b"
+  workspace_id  = "b5ae0423-a624-49a5-9495-5fa2ea25a51d"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_marketo" "my_source_marketo" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

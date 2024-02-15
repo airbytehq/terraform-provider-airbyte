@@ -156,8 +156,8 @@ func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(
 	}
 }
 
-// DestinationWeaviateUpdateFromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
-type DestinationWeaviateUpdateFromField struct {
+// FromField - Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store.
+type FromField struct {
 	// The number of dimensions the embedding model is generating
 	Dimensions int64 `json:"dimensions"`
 	// Name of the field in the record that contains the embedding
@@ -165,32 +165,32 @@ type DestinationWeaviateUpdateFromField struct {
 	mode      *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode `const:"from_field" json:"mode"`
 }
 
-func (d DestinationWeaviateUpdateFromField) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (f FromField) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
 }
 
-func (d *DestinationWeaviateUpdateFromField) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+func (f *FromField) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DestinationWeaviateUpdateFromField) GetDimensions() int64 {
+func (o *FromField) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
 }
 
-func (o *DestinationWeaviateUpdateFromField) GetFieldName() string {
+func (o *FromField) GetFieldName() string {
 	if o == nil {
 		return ""
 	}
 	return o.FieldName
 }
 
-func (o *DestinationWeaviateUpdateFromField) GetMode() *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode {
+func (o *FromField) GetMode() *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode {
 	return DestinationWeaviateUpdateSchemasEmbeddingEmbedding5ModeFromField.ToPointer()
 }
 
@@ -420,17 +420,18 @@ const (
 	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateAzureOpenAI      DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_Azure OpenAI"
 	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateOpenAI           DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_OpenAI"
 	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateCohere           DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_Cohere"
-	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateFromField        DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_From Field"
+	DestinationWeaviateUpdateEmbeddingTypeFromField                                 DestinationWeaviateUpdateEmbeddingType = "From Field"
 	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateFake             DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_Fake"
 	DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateOpenAICompatible DestinationWeaviateUpdateEmbeddingType = "destination-weaviate-update_OpenAI-compatible"
 )
 
+// DestinationWeaviateUpdateEmbedding - Embedding configuration
 type DestinationWeaviateUpdateEmbedding struct {
 	NoExternalEmbedding                       *NoExternalEmbedding
 	DestinationWeaviateUpdateAzureOpenAI      *DestinationWeaviateUpdateAzureOpenAI
 	DestinationWeaviateUpdateOpenAI           *DestinationWeaviateUpdateOpenAI
 	DestinationWeaviateUpdateCohere           *DestinationWeaviateUpdateCohere
-	DestinationWeaviateUpdateFromField        *DestinationWeaviateUpdateFromField
+	FromField                                 *FromField
 	DestinationWeaviateUpdateFake             *DestinationWeaviateUpdateFake
 	DestinationWeaviateUpdateOpenAICompatible *DestinationWeaviateUpdateOpenAICompatible
 
@@ -473,12 +474,12 @@ func CreateDestinationWeaviateUpdateEmbeddingDestinationWeaviateUpdateCohere(des
 	}
 }
 
-func CreateDestinationWeaviateUpdateEmbeddingDestinationWeaviateUpdateFromField(destinationWeaviateUpdateFromField DestinationWeaviateUpdateFromField) DestinationWeaviateUpdateEmbedding {
-	typ := DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateFromField
+func CreateDestinationWeaviateUpdateEmbeddingFromField(fromField FromField) DestinationWeaviateUpdateEmbedding {
+	typ := DestinationWeaviateUpdateEmbeddingTypeFromField
 
 	return DestinationWeaviateUpdateEmbedding{
-		DestinationWeaviateUpdateFromField: &destinationWeaviateUpdateFromField,
-		Type:                               typ,
+		FromField: &fromField,
+		Type:      typ,
 	}
 }
 
@@ -530,10 +531,10 @@ func (u *DestinationWeaviateUpdateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	destinationWeaviateUpdateFromField := new(DestinationWeaviateUpdateFromField)
-	if err := utils.UnmarshalJSON(data, &destinationWeaviateUpdateFromField, "", true, true); err == nil {
-		u.DestinationWeaviateUpdateFromField = destinationWeaviateUpdateFromField
-		u.Type = DestinationWeaviateUpdateEmbeddingTypeDestinationWeaviateUpdateFromField
+	fromField := new(FromField)
+	if err := utils.UnmarshalJSON(data, &fromField, "", true, true); err == nil {
+		u.FromField = fromField
+		u.Type = DestinationWeaviateUpdateEmbeddingTypeFromField
 		return nil
 	}
 
@@ -571,8 +572,8 @@ func (u DestinationWeaviateUpdateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationWeaviateUpdateCohere, "", true)
 	}
 
-	if u.DestinationWeaviateUpdateFromField != nil {
-		return utils.MarshalJSON(u.DestinationWeaviateUpdateFromField, "", true)
+	if u.FromField != nil {
+		return utils.MarshalJSON(u.FromField, "", true)
 	}
 
 	if u.DestinationWeaviateUpdateFake != nil {
@@ -772,6 +773,7 @@ const (
 	DestinationWeaviateUpdateAuthenticationTypeNoAuthentication                          DestinationWeaviateUpdateAuthenticationType = "No Authentication"
 )
 
+// DestinationWeaviateUpdateAuthentication - Authentication method
 type DestinationWeaviateUpdateAuthentication struct {
 	DestinationWeaviateUpdateAPIToken         *DestinationWeaviateUpdateAPIToken
 	DestinationWeaviateUpdateUsernamePassword *DestinationWeaviateUpdateUsernamePassword
@@ -907,6 +909,8 @@ type DestinationWeaviateUpdateIndexing struct {
 	DefaultVectorizer *DefaultVectorizer `default:"none" json:"default_vectorizer"`
 	// The public endpoint of the Weaviate cluster.
 	Host string `json:"host"`
+	// The tenant ID to use for multi tenancy
+	TenantID *string `default:"" json:"tenant_id"`
 	// The field in the object that contains the embedded text
 	TextField *string `default:"text" json:"text_field"`
 }
@@ -955,6 +959,13 @@ func (o *DestinationWeaviateUpdateIndexing) GetHost() string {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *DestinationWeaviateUpdateIndexing) GetTenantID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TenantID
 }
 
 func (o *DestinationWeaviateUpdateIndexing) GetTextField() *string {
@@ -1231,6 +1242,7 @@ const (
 	DestinationWeaviateUpdateTextSplitterTypeDestinationWeaviateUpdateByProgrammingLanguage DestinationWeaviateUpdateTextSplitterType = "destination-weaviate-update_By Programming Language"
 )
 
+// DestinationWeaviateUpdateTextSplitter - Split text fields into chunks based on the specified method.
 type DestinationWeaviateUpdateTextSplitter struct {
 	DestinationWeaviateUpdateBySeparator           *DestinationWeaviateUpdateBySeparator
 	DestinationWeaviateUpdateByMarkdownHeader      *DestinationWeaviateUpdateByMarkdownHeader
@@ -1376,12 +1388,35 @@ func (o *DestinationWeaviateUpdateProcessingConfigModel) GetTextSplitter() *Dest
 	return o.TextSplitter
 }
 
+// DestinationWeaviateUpdate - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+// as well as to provide type safety for the configuration passed to the destination.
+//
+// The configuration model is composed of four parts:
+// * Processing configuration
+// * Embedding configuration
+// * Indexing configuration
+// * Advanced configuration
+//
+// Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationWeaviateUpdate struct {
 	// Embedding configuration
 	Embedding DestinationWeaviateUpdateEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing   DestinationWeaviateUpdateIndexing              `json:"indexing"`
-	Processing DestinationWeaviateUpdateProcessingConfigModel `json:"processing"`
+	Indexing DestinationWeaviateUpdateIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                          `default:"false" json:"omit_raw_text"`
+	Processing  DestinationWeaviateUpdateProcessingConfigModel `json:"processing"`
+}
+
+func (d DestinationWeaviateUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationWeaviateUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *DestinationWeaviateUpdate) GetEmbedding() DestinationWeaviateUpdateEmbedding {
@@ -1396,6 +1431,13 @@ func (o *DestinationWeaviateUpdate) GetIndexing() DestinationWeaviateUpdateIndex
 		return DestinationWeaviateUpdateIndexing{}
 	}
 	return o.Indexing
+}
+
+func (o *DestinationWeaviateUpdate) GetOmitRawText() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OmitRawText
 }
 
 func (o *DestinationWeaviateUpdate) GetProcessing() DestinationWeaviateUpdateProcessingConfigModel {

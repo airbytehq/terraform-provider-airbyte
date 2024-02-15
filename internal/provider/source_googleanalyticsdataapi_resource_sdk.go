@@ -8,7 +8,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPICreateRequest() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
+	convertConversionsEvent := new(bool)
+	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
+		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	} else {
+		convertConversionsEvent = nil
+	}
 	var credentials *shared.SourceGoogleAnalyticsDataAPICredentials
 	if r.Configuration.Credentials != nil {
 		var sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth
@@ -49,6 +55,80 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	}
 	var customReportsArray []shared.SourceGoogleAnalyticsDataAPICustomReportConfig = nil
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var cohortSpec *shared.SourceGoogleAnalyticsDataAPICohortReports
+		if customReportsArrayItem.CohortSpec != nil {
+			var sourceGoogleAnalyticsDataAPIDisabled *shared.SourceGoogleAnalyticsDataAPIDisabled
+			if customReportsArrayItem.CohortSpec.Disabled != nil {
+				sourceGoogleAnalyticsDataAPIDisabled = &shared.SourceGoogleAnalyticsDataAPIDisabled{}
+			}
+			if sourceGoogleAnalyticsDataAPIDisabled != nil {
+				cohortSpec = &shared.SourceGoogleAnalyticsDataAPICohortReports{
+					SourceGoogleAnalyticsDataAPIDisabled: sourceGoogleAnalyticsDataAPIDisabled,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPISchemasEnabled *shared.SourceGoogleAnalyticsDataAPISchemasEnabled
+			if customReportsArrayItem.CohortSpec.Enabled != nil {
+				var cohortReportSettings *shared.SourceGoogleAnalyticsDataAPICohortReportSettings
+				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
+					accumulate := new(bool)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
+						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
+					} else {
+						accumulate = nil
+					}
+					cohortReportSettings = &shared.SourceGoogleAnalyticsDataAPICohortReportSettings{
+						Accumulate: accumulate,
+					}
+				}
+				var cohorts []shared.SourceGoogleAnalyticsDataAPICohorts = nil
+				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
+					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
+					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
+					dateRange := shared.SourceGoogleAnalyticsDataAPIDateRange{
+						EndDate:   endDate,
+						StartDate: startDate,
+					}
+					dimension := shared.SourceGoogleAnalyticsDataAPIDimension(cohortsItem.Dimension.ValueString())
+					name := new(string)
+					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
+						*name = cohortsItem.Name.ValueString()
+					} else {
+						name = nil
+					}
+					cohorts = append(cohorts, shared.SourceGoogleAnalyticsDataAPICohorts{
+						DateRange: dateRange,
+						Dimension: dimension,
+						Name:      name,
+					})
+				}
+				var cohortsRange *shared.SourceGoogleAnalyticsDataAPICohortsRange
+				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
+					endOffset := customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
+					granularity := shared.SourceGoogleAnalyticsDataAPIGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
+					startOffset := new(int64)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
+						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
+					} else {
+						startOffset = nil
+					}
+					cohortsRange = &shared.SourceGoogleAnalyticsDataAPICohortsRange{
+						EndOffset:   endOffset,
+						Granularity: granularity,
+						StartOffset: startOffset,
+					}
+				}
+				sourceGoogleAnalyticsDataAPISchemasEnabled = &shared.SourceGoogleAnalyticsDataAPISchemasEnabled{
+					CohortReportSettings: cohortReportSettings,
+					Cohorts:              cohorts,
+					CohortsRange:         cohortsRange,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasEnabled != nil {
+				cohortSpec = &shared.SourceGoogleAnalyticsDataAPICohortReports{
+					SourceGoogleAnalyticsDataAPISchemasEnabled: sourceGoogleAnalyticsDataAPISchemasEnabled,
+				}
+			}
+		}
 		var dimensionFilter *shared.SourceGoogleAnalyticsDataAPIDimensionsFilter
 		if customReportsArrayItem.DimensionFilter != nil {
 			var sourceGoogleAnalyticsDataAPIAndGroup *shared.SourceGoogleAnalyticsDataAPIAndGroup
@@ -1403,13 +1483,14 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		for _, metricsItem := range customReportsArrayItem.Metrics {
 			metrics = append(metrics, metricsItem.ValueString())
 		}
-		name := customReportsArrayItem.Name.ValueString()
+		name1 := customReportsArrayItem.Name.ValueString()
 		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPICustomReportConfig{
+			CohortSpec:      cohortSpec,
 			DimensionFilter: dimensionFilter,
 			Dimensions:      dimensions,
 			MetricFilter:    metricFilter,
 			Metrics:         metrics,
-			Name:            name,
+			Name:            name1,
 		})
 	}
 	dateRangesStartDate := new(customTypes.Date)
@@ -1417,6 +1498,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	} else {
 		dateRangesStartDate = nil
+	}
+	keepEmptyRows := new(bool)
+	if !r.Configuration.KeepEmptyRows.IsUnknown() && !r.Configuration.KeepEmptyRows.IsNull() {
+		*keepEmptyRows = r.Configuration.KeepEmptyRows.ValueBool()
+	} else {
+		keepEmptyRows = nil
 	}
 	var propertyIds []string = nil
 	for _, propertyIdsItem := range r.Configuration.PropertyIds {
@@ -1429,11 +1516,13 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		windowInDays = nil
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPI{
-		Credentials:         credentials,
-		CustomReportsArray:  customReportsArray,
-		DateRangesStartDate: dateRangesStartDate,
-		PropertyIds:         propertyIds,
-		WindowInDays:        windowInDays,
+		ConvertConversionsEvent: convertConversionsEvent,
+		Credentials:             credentials,
+		CustomReportsArray:      customReportsArray,
+		DateRangesStartDate:     dateRangesStartDate,
+		KeepEmptyRows:           keepEmptyRows,
+		PropertyIds:             propertyIds,
+		WindowInDays:            windowInDays,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -1441,7 +1530,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	} else {
 		definitionID = nil
 	}
-	name1 := r.Name.ValueString()
+	name2 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -1452,19 +1541,27 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	out := shared.SourceGoogleAnalyticsDataAPICreateRequest{
 		Configuration: configuration,
 		DefinitionID:  definitionID,
-		Name:          name1,
+		Name:          name2,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
 	return &out
 }
 
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToGetSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.SourceGoogleAnalyticsDataAPIPutRequest {
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPIPutRequest() *shared.SourceGoogleAnalyticsDataAPIPutRequest {
+	convertConversionsEvent := new(bool)
+	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
+		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	} else {
+		convertConversionsEvent = nil
+	}
 	var credentials *shared.Credentials
 	if r.Configuration.Credentials != nil {
 		var authenticateViaGoogleOauth *shared.AuthenticateViaGoogleOauth
@@ -1505,6 +1602,80 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.So
 	}
 	var customReportsArray []shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig = nil
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var cohortSpec *shared.CohortReports
+		if customReportsArrayItem.CohortSpec != nil {
+			var sourceGoogleAnalyticsDataAPIUpdateDisabled *shared.SourceGoogleAnalyticsDataAPIUpdateDisabled
+			if customReportsArrayItem.CohortSpec.Disabled != nil {
+				sourceGoogleAnalyticsDataAPIUpdateDisabled = &shared.SourceGoogleAnalyticsDataAPIUpdateDisabled{}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateDisabled != nil {
+				cohortSpec = &shared.CohortReports{
+					SourceGoogleAnalyticsDataAPIUpdateDisabled: sourceGoogleAnalyticsDataAPIUpdateDisabled,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled
+			if customReportsArrayItem.CohortSpec.Enabled != nil {
+				var cohortReportSettings *shared.CohortReportSettings
+				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
+					accumulate := new(bool)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
+						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
+					} else {
+						accumulate = nil
+					}
+					cohortReportSettings = &shared.CohortReportSettings{
+						Accumulate: accumulate,
+					}
+				}
+				var cohorts []shared.Cohorts = nil
+				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
+					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
+					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
+					dateRange := shared.DateRange{
+						EndDate:   endDate,
+						StartDate: startDate,
+					}
+					dimension := shared.Dimension(cohortsItem.Dimension.ValueString())
+					name := new(string)
+					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
+						*name = cohortsItem.Name.ValueString()
+					} else {
+						name = nil
+					}
+					cohorts = append(cohorts, shared.Cohorts{
+						DateRange: dateRange,
+						Dimension: dimension,
+						Name:      name,
+					})
+				}
+				var cohortsRange *shared.CohortsRange
+				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
+					endOffset := customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
+					granularity := shared.SourceGoogleAnalyticsDataAPIUpdateGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
+					startOffset := new(int64)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
+						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
+					} else {
+						startOffset = nil
+					}
+					cohortsRange = &shared.CohortsRange{
+						EndOffset:   endOffset,
+						Granularity: granularity,
+						StartOffset: startOffset,
+					}
+				}
+				sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled{
+					CohortReportSettings: cohortReportSettings,
+					Cohorts:              cohorts,
+					CohortsRange:         cohortsRange,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled != nil {
+				cohortSpec = &shared.CohortReports{
+					SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled: sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled,
+				}
+			}
+		}
 		var dimensionFilter *shared.DimensionsFilter
 		if customReportsArrayItem.DimensionFilter != nil {
 			var andGroup *shared.AndGroup
@@ -2859,13 +3030,14 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.So
 		for _, metricsItem := range customReportsArrayItem.Metrics {
 			metrics = append(metrics, metricsItem.ValueString())
 		}
-		name := customReportsArrayItem.Name.ValueString()
+		name1 := customReportsArrayItem.Name.ValueString()
 		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig{
+			CohortSpec:      cohortSpec,
 			DimensionFilter: dimensionFilter,
 			Dimensions:      dimensions,
 			MetricFilter:    metricFilter,
 			Metrics:         metrics,
-			Name:            name,
+			Name:            name1,
 		})
 	}
 	dateRangesStartDate := new(customTypes.Date)
@@ -2873,6 +3045,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.So
 		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	} else {
 		dateRangesStartDate = nil
+	}
+	keepEmptyRows := new(bool)
+	if !r.Configuration.KeepEmptyRows.IsUnknown() && !r.Configuration.KeepEmptyRows.IsNull() {
+		*keepEmptyRows = r.Configuration.KeepEmptyRows.ValueBool()
+	} else {
+		keepEmptyRows = nil
 	}
 	var propertyIds []string = nil
 	for _, propertyIdsItem := range r.Configuration.PropertyIds {
@@ -2885,34 +3063,20 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToUpdateSDKType() *shared.So
 		windowInDays = nil
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPIUpdate{
-		Credentials:         credentials,
-		CustomReportsArray:  customReportsArray,
-		DateRangesStartDate: dateRangesStartDate,
-		PropertyIds:         propertyIds,
-		WindowInDays:        windowInDays,
+		ConvertConversionsEvent: convertConversionsEvent,
+		Credentials:             credentials,
+		CustomReportsArray:      customReportsArray,
+		DateRangesStartDate:     dateRangesStartDate,
+		KeepEmptyRows:           keepEmptyRows,
+		PropertyIds:             propertyIds,
+		WindowInDays:            windowInDays,
 	}
-	name1 := r.Name.ValueString()
+	name2 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleAnalyticsDataAPIPutRequest{
 		Configuration: configuration,
-		Name:          name1,
+		Name:          name2,
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToDeleteSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

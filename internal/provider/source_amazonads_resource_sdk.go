@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAdsCreateRequest {
+func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *shared.SourceAmazonAdsCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookBackWindow := new(int64)
@@ -82,12 +82,14 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	return &out
 }
 
-func (r *SourceAmazonAdsResourceModel) ToGetSDKType() *shared.SourceAmazonAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAmazonAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAdsPutRequest {
+func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shared.SourceAmazonAdsPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	lookBackWindow := new(int64)
@@ -145,20 +147,4 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAmazonAdsResourceModel) ToDeleteSDKType() *shared.SourceAmazonAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAmazonAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

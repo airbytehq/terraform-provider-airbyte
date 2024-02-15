@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogleSheetsCreateRequest {
+func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateRequest() *shared.SourceGoogleSheetsCreateRequest {
 	var credentials shared.SourceGoogleSheetsAuthentication
 	var sourceGoogleSheetsAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -73,12 +73,14 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	return &out
 }
 
-func (r *SourceGoogleSheetsResourceModel) ToGetSDKType() *shared.SourceGoogleSheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleSheetsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogleSheetsPutRequest {
+func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsPutRequest() *shared.SourceGoogleSheetsPutRequest {
 	var credentials shared.SourceGoogleSheetsUpdateAuthentication
 	var sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -128,20 +130,4 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleSheetsResourceModel) ToDeleteSDKType() *shared.SourceGoogleSheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleSheetsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.DestinationFireboltCreateRequest {
+func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltCreateRequest() *shared.DestinationFireboltCreateRequest {
 	account := new(string)
 	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
 		*account = r.Configuration.Account.ValueString()
@@ -85,12 +85,14 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationFireboltResourceModel) ToGetSDKType() *shared.DestinationFireboltCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationFireboltResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.DestinationFireboltPutRequest {
+func (r *DestinationFireboltResourceModel) ToSharedDestinationFireboltPutRequest() *shared.DestinationFireboltPutRequest {
 	account := new(string)
 	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
 		*account = r.Configuration.Account.ValueString()
@@ -159,20 +161,4 @@ func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationFireboltResourceModel) ToDeleteSDKType() *shared.DestinationFireboltCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationFireboltResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

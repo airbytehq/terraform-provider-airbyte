@@ -7,7 +7,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationQdrantIndexing struct {
 	AuthMethod     *DestinationQdrantAuthenticationMethod `tfsdk:"auth_method"`
 	Collection     types.String                           `tfsdk:"collection"`
-	DistanceMetric *DestinationQdrantDistanceMetric       `tfsdk:"distance_metric"`
+	DistanceMetric types.String                           `tfsdk:"distance_metric"`
 	PreferGrpc     types.Bool                             `tfsdk:"prefer_grpc"`
 	TextField      types.String                           `tfsdk:"text_field"`
 	URL            types.String                           `tfsdk:"url"`

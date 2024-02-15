@@ -16,15 +16,15 @@ SourceCoinmarketcap Resource
 resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
   configuration = {
     api_key   = "...my_api_key..."
-    data_type = "historical"
+    data_type = "latest"
     symbols = [
       "...",
     ]
   }
-  definition_id = "a1361d3c-00cf-4e1b-a68d-340502b96029"
-  name          = "Pat Robel"
+  definition_id = "81ee6770-fa8e-4c1b-a804-bd6457a40e88"
+  name          = "Heather Murray"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9e6abf17-c2d5-40cb-ae6f-f332bdf14577"
+  workspace_id  = "41ba6f5d-90d5-4a8a-b49e-2072bdff3818"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -53,8 +53,7 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
 Required:
 
 - `api_key` (String, Sensitive) Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.
-- `data_type` (String) must be one of ["latest", "historical"]
-/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
+- `data_type` (String) /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>. must be one of ["latest", "historical"]
 
 Optional:
 

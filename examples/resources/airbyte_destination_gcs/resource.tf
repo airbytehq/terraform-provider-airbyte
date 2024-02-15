@@ -19,9 +19,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "us-west1"
+    gcs_bucket_region = "us-east4"
   }
-  definition_id = "37e4a59e-7bfd-41d4-96bd-14d08d4a7d5d"
-  name          = "Opal D'Amore"
-  workspace_id  = "153b42c3-2f48-4f6e-943a-0f0f39a6c151"
+  definition_id = "3f0d76fb-78bf-474f-a22d-e12791b5f134"
+  name          = "Ms. Jose Bechtelar"
+  workspace_id  = "9774ae87-c308-492f-bb0f-41f82248d601"
 }

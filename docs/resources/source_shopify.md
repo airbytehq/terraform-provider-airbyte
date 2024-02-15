@@ -21,12 +21,12 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       }
     }
     shop       = "my-store"
-    start_date = "2022-08-02"
+    start_date = "2022-01-27"
   }
-  definition_id = "4e1dc4a0-1d44-4fb9-b610-a4d0de91eaa4"
-  name          = "Clinton Baumbach"
+  definition_id = "b02fd25c-7727-4b36-b542-81d3e7f0bc64"
+  name          = "Moses Thiel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb870eb9-8050-4c39-a745-0657bfd1cb4d"
+  workspace_id  = "08c82dc4-0ca1-4ab7-a639-716f1b8331df"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_shopify" "my_source_shopify" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,8 +59,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
-- `start_date` (String) Default: "2020-01-01"
-The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

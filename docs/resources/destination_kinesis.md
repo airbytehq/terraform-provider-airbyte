@@ -16,15 +16,15 @@ DestinationKinesis Resource
 resource "airbyte_destination_kinesis" "my_destination_kinesis" {
   configuration = {
     access_key  = "...my_access_key..."
-    buffer_size = 1
+    buffer_size = 2
     endpoint    = "kinesis.us‑west‑1.amazonaws.com"
     private_key = "...my_private_key..."
     region      = "us‑west‑1"
-    shard_count = 1
+    shard_count = 8
   }
-  definition_id = "83384bd8-7b5c-4ce3-a148-54333df23c5e"
-  name          = "Mary Monahan"
-  workspace_id  = "52521a04-7878-4c25-8cd1-84fd116e75f1"
+  definition_id = "f17a6683-bb76-4cbd-942c-04b7b603cc8c"
+  name          = "Clifton Larkin"
+  workspace_id  = "7603813e-f7fc-40d1-b6e5-f414549f1242"
 }
 ```
 
@@ -39,7 +39,7 @@ resource "airbyte_destination_kinesis" "my_destination_kinesis" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -58,9 +58,7 @@ Required:
 
 Optional:
 
-- `buffer_size` (Number) Default: 100
-Buffer size for storing kinesis records before being batch streamed.
-- `shard_count` (Number) Default: 5
-Number of shards to which the data should be streamed.
+- `buffer_size` (Number) Buffer size for storing kinesis records before being batch streamed. Default: 100
+- `shard_count` (Number) Number of shards to which the data should be streamed. Default: 5
 
 

@@ -3,5 +3,5 @@
 package provider
 
 type DestinationDevNullTestDestination struct {
-	Silent *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"silent"`
+	Silent *Fake `tfsdk:"silent"`
 }

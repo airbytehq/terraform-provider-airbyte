@@ -20,10 +20,10 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     aws_secret_key  = "...my_aws_secret_key..."
     start_date      = "2021-01-01"
   }
-  definition_id = "1b394b84-acdf-48db-aa4f-7e23711b260f"
-  name          = "Janis Erdman"
+  definition_id = "fa21aa37-3672-471c-b8a9-aa9603df323c"
+  name          = "Nadine Konopelski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1edcb36c-da3d-451c-bc15-623ec6453ce6"
+  workspace_id  = "5b7f8882-a197-438b-a18b-70494da21b79"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,7 +57,6 @@ Required:
 
 Optional:
 
-- `start_date` (String) Default: "1970-01-01"
-The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
+- `start_date` (String) The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD. Default: "1970-01-01"
 
 

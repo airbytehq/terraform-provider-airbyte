@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.SourceMongodbInternalPocCreateRequest {
+func (r *SourceMongodbInternalPocResourceModel) ToSharedSourceMongodbInternalPocCreateRequest() *shared.SourceMongodbInternalPocCreateRequest {
 	authSource := new(string)
 	if !r.Configuration.AuthSource.IsUnknown() && !r.Configuration.AuthSource.IsNull() {
 		*authSource = r.Configuration.AuthSource.ValueString()
@@ -69,12 +69,14 @@ func (r *SourceMongodbInternalPocResourceModel) ToCreateSDKType() *shared.Source
 	return &out
 }
 
-func (r *SourceMongodbInternalPocResourceModel) ToGetSDKType() *shared.SourceMongodbInternalPocCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMongodbInternalPocResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMongodbInternalPocResourceModel) ToUpdateSDKType() *shared.SourceMongodbInternalPocPutRequest {
+func (r *SourceMongodbInternalPocResourceModel) ToSharedSourceMongodbInternalPocPutRequest() *shared.SourceMongodbInternalPocPutRequest {
 	authSource := new(string)
 	if !r.Configuration.AuthSource.IsUnknown() && !r.Configuration.AuthSource.IsNull() {
 		*authSource = r.Configuration.AuthSource.ValueString()
@@ -120,20 +122,4 @@ func (r *SourceMongodbInternalPocResourceModel) ToUpdateSDKType() *shared.Source
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMongodbInternalPocResourceModel) ToDeleteSDKType() *shared.SourceMongodbInternalPocCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMongodbInternalPocResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMongodbInternalPocResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

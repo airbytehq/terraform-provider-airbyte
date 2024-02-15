@@ -18,10 +18,10 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
     dataset_id = "rHuMdwm6xCFt6WiGU"
     token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  definition_id = "a73356f3-9bea-45e2-889f-0e8905c8543b"
-  name          = "Justin Luettgen"
+  definition_id = "181e6e55-fd9e-4be7-b2f5-ca6ecdfaf2b0"
+  name          = "Mr. Andrea Bogan IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ac7dcada-d293-48da-9765-e7880f00a30d"
+  workspace_id  = "e036b268-d758-4466-8963-e10b1b394b84"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

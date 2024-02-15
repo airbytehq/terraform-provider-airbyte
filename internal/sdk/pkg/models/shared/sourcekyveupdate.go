@@ -13,10 +13,10 @@ type SourceKyveUpdate struct {
 	PageSize *int64 `default:"100" json:"page_size"`
 	// The IDs of the KYVE storage pool you want to archive. (Comma separated)
 	PoolIds string `json:"pool_ids"`
-	// The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)
+	// The start-id defines, from which bundle id the pipeline should start to extract the data. (Comma separated)
 	StartIds string `json:"start_ids"`
 	// URL to the KYVE Chain API.
-	URLBase *string `default:"https://api.korellia.kyve.network" json:"url_base"`
+	URLBase *string `default:"https://api.kyve.network" json:"url_base"`
 }
 
 func (s SourceKyveUpdate) MarshalJSON() ([]byte, error) {

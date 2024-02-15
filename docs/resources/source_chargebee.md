@@ -15,15 +15,15 @@ SourceChargebee Resource
 ```terraform
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
-    product_catalog = "2.0"
+    product_catalog = "1.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
     start_date      = "2021-01-25T00:00:00Z"
   }
-  definition_id = "08691686-308e-4adb-b3c3-69be0c12ece5"
-  name          = "Jean Mann"
+  definition_id = "2c2e302e-6de9-42b3-a430-98446f9835e6"
+  name          = "Andrea Cruickshank III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aef8e474-9058-48d0-a293-9574a681eea7"
+  workspace_id  = "b828621a-877d-42e6-a5cd-d80ba5ff53c6"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -51,10 +51,12 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 
 Required:
 
-- `product_catalog` (String) must be one of ["1.0", "2.0"]
-Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
 - `site` (String) The site prefix for your Chargebee instance.
 - `site_api_key` (String, Sensitive) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-- `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
+
+Optional:
+
+- `product_catalog` (String) Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0. must be one of ["1.0", "2.0"]; Default: "2.0"
 
 

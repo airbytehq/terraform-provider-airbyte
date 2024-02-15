@@ -21,10 +21,10 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "18021619-8723-463e-89a2-aae62d9d7702"
-  name          = "Tanya Hand"
+  definition_id = "0259c6b1-3998-4d3f-8543-0ae066d4a91b"
+  name          = "Rickey Satterfield"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6995c576-52df-4199-822b-3629976b741d"
+  workspace_id  = "ba892b6d-5805-4ab7-b933-1a5ddafad6ab"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_outreach" "my_source_outreach" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

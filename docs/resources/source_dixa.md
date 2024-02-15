@@ -16,13 +16,13 @@ SourceDixa Resource
 resource "airbyte_source_dixa" "my_source_dixa" {
   configuration = {
     api_token  = "...my_api_token..."
-    batch_size = 1
+    batch_size = 31
     start_date = "YYYY-MM-DD"
   }
-  definition_id = "9f9b4783-ac23-42bf-a41c-80b23345c949"
-  name          = "Arturo Hammes"
+  definition_id = "66314cac-e02f-496b-8335-56f7e4181b36"
+  name          = "Saul Bogisich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9f5a34ff-680c-488d-8e9f-7431721e4227"
+  workspace_id  = "cf94e3c7-9cbe-4ca1-8757-3a5bbba82d4c"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_dixa" "my_source_dixa" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -55,7 +55,6 @@ Required:
 
 Optional:
 
-- `batch_size` (Number) Default: 31
-Number of days to batch into one request. Max 31.
+- `batch_size` (Number) Number of days to batch into one request. Max 31. Default: 31
 
 

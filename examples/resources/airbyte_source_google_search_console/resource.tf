@@ -1,7 +1,7 @@
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
     authorization = {
-      source_google_search_console_o_auth = {
+      o_auth = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
@@ -12,9 +12,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     custom_reports_array = [
       {
         dimensions = [
-          "device",
+          "query",
         ]
-        name = "Ms. Randy Gorczany V"
+        name = "Roosevelt Waters"
       },
     ]
     data_state = "all"
@@ -22,10 +22,10 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2020-03-18"
+    start_date = "2022-05-23"
   }
-  definition_id = "165bc484-0e7f-4b5d-b254-77f370b0ec7c"
-  name          = "Wendell Rempel"
+  definition_id = "4c11e4e9-93d2-4947-8281-bb54dff6cf9b"
+  name          = "Velma Volkman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0cb9d8df-c27a-48c7-ac3e-b5dc55714db0"
+  workspace_id  = "2888b6bd-e251-454a-92da-80f2bfa49853"
 }

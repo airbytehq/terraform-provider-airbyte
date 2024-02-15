@@ -16,14 +16,14 @@ SourceKlarna Resource
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
     password   = "...my_password..."
-    playground = true
-    region     = "oc"
-    username   = "Lessie_Beatty"
+    playground = false
+    region     = "us"
+    username   = "Dock.Muller2"
   }
-  definition_id = "ed1087b9-882d-454c-a598-cc59eb952f06"
-  name          = "Carmen Bins"
+  definition_id = "ea69f1b1-a975-4dd1-b5a0-295b197bbb02"
+  name          = "Stella Schuster"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7fd8f9d1-baac-46e0-9b1e-50c14468d231"
+  workspace_id  = "5c3155f7-31c6-4e6b-81ca-f166aee78925"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -52,13 +52,11 @@ resource "airbyte_source_klarna" "my_source_klarna" {
 Required:
 
 - `password` (String, Sensitive) A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
-- `region` (String) must be one of ["eu", "us", "oc"]
-Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
+- `region` (String) Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'. must be one of ["eu", "us", "oc"]
 - `username` (String) Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
 
 Optional:
 
-- `playground` (Boolean) Default: false
-Propertie defining if connector is used against playground or production environment
+- `playground` (Boolean) Propertie defining if connector is used against playground or production environment. Default: false
 
 

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsalesCreateRequest {
+func (r *SourceFreshsalesResourceModel) ToSharedSourceFreshsalesCreateRequest() *shared.SourceFreshsalesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	configuration := shared.SourceFreshsales{
@@ -38,12 +38,14 @@ func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsal
 	return &out
 }
 
-func (r *SourceFreshsalesResourceModel) ToGetSDKType() *shared.SourceFreshsalesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFreshsalesResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFreshsalesResourceModel) ToUpdateSDKType() *shared.SourceFreshsalesPutRequest {
+func (r *SourceFreshsalesResourceModel) ToSharedSourceFreshsalesPutRequest() *shared.SourceFreshsalesPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	configuration := shared.SourceFreshsalesUpdate{
@@ -58,20 +60,4 @@ func (r *SourceFreshsalesResourceModel) ToUpdateSDKType() *shared.SourceFreshsal
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFreshsalesResourceModel) ToDeleteSDKType() *shared.SourceFreshsalesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFreshsalesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFreshsalesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

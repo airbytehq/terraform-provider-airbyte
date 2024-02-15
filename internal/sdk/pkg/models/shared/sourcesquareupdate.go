@@ -34,7 +34,6 @@ func (e *SourceSquareUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSquareUpdateAPIKey - Choose how to authenticate to Square.
 type SourceSquareUpdateAPIKey struct {
 	// The API key for a Square application
 	APIKey   string                            `json:"api_key"`
@@ -87,7 +86,6 @@ func (e *SourceSquareUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// OauthAuthentication - Choose how to authenticate to Square.
 type OauthAuthentication struct {
 	authType SourceSquareUpdateAuthType `const:"OAuth" json:"auth_type"`
 	// The Square-issued ID of your application
@@ -141,6 +139,7 @@ const (
 	SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAPIKey SourceSquareUpdateAuthenticationType = "source-square-update_API key"
 )
 
+// SourceSquareUpdateAuthentication - Choose how to authenticate to Square.
 type SourceSquareUpdateAuthentication struct {
 	OauthAuthentication      *OauthAuthentication
 	SourceSquareUpdateAPIKey *SourceSquareUpdateAPIKey

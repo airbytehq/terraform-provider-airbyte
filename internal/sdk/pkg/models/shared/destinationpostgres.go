@@ -362,6 +362,15 @@ const (
 	DestinationPostgresSSLModesTypeDestinationPostgresVerifyFull DestinationPostgresSSLModesType = "destination-postgres_verify-full"
 )
 
+// DestinationPostgresSSLModes - SSL connection modes.
+//
+//	<b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
+//	<b>allow</b> - Chose this mode to enable encryption only when required by the source database
+//	<b>prefer</b> - Chose this mode to allow unencrypted connection only if the source database does not support encryption
+//	<b>require</b> - Chose this mode to always require encryption. If the source database server does not support encryption, connection will fail
+//	 <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the source database server has a valid SSL certificate
+//	 <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
+//	See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 type DestinationPostgresSSLModes struct {
 	DestinationPostgresDisable    *DestinationPostgresDisable
 	DestinationPostgresAllow      *DestinationPostgresAllow
@@ -527,7 +536,6 @@ func (e *DestinationPostgresSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data 
 	}
 }
 
-// DestinationPostgresPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -609,7 +617,6 @@ func (e *DestinationPostgresSchemasTunnelMethod) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// DestinationPostgresSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -691,7 +698,6 @@ func (e *DestinationPostgresTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationPostgresNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationPostgresTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -720,6 +726,7 @@ const (
 	DestinationPostgresSSHTunnelMethodTypeDestinationPostgresPasswordAuthentication DestinationPostgresSSHTunnelMethodType = "destination-postgres_Password Authentication"
 )
 
+// DestinationPostgresSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresSSHTunnelMethod struct {
 	DestinationPostgresNoTunnel               *DestinationPostgresNoTunnel
 	DestinationPostgresSSHKeyAuthentication   *DestinationPostgresSSHKeyAuthentication
@@ -801,6 +808,8 @@ type DestinationPostgres struct {
 	// Name of the database.
 	Database        string   `json:"database"`
 	destinationType Postgres `const:"postgres" json:"destinationType"`
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -809,6 +818,8 @@ type DestinationPostgres struct {
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
 	Port *int64 `default:"5432" json:"port"`
+	// The schema to write raw tables into
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 	Schema *string `default:"public" json:"schema"`
 	// SSL connection modes.
@@ -848,6 +859,13 @@ func (o *DestinationPostgres) GetDestinationType() Postgres {
 	return PostgresPostgres
 }
 
+func (o *DestinationPostgres) GetDisableTypeDedupe() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DisableTypeDedupe
+}
+
 func (o *DestinationPostgres) GetHost() string {
 	if o == nil {
 		return ""
@@ -874,6 +892,13 @@ func (o *DestinationPostgres) GetPort() *int64 {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *DestinationPostgres) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
 }
 
 func (o *DestinationPostgres) GetSchema() *string {

@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
-
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -47,7 +46,7 @@ func (r *WorkspaceDataSource) Schema(ctx context.Context, req datasource.SchemaR
 		Attributes: map[string]schema.Attribute{
 			"data_residency": schema.StringAttribute{
 				Computed:    true,
-				Description: `must be one of ["auto", "us", "eu"]; Default: "auto"`,
+				Description: `must be one of ["auto", "us", "eu"]`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
@@ -121,7 +120,7 @@ func (r *WorkspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.WorkspaceResponse)
+	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

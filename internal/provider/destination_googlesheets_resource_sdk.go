@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.DestinationGoogleSheetsCreateRequest {
+func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsCreateRequest() *shared.DestinationGoogleSheetsCreateRequest {
 	clientID := r.Configuration.Credentials.ClientID.ValueString()
 	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
 	refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
@@ -38,12 +38,14 @@ func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.Destina
 	return &out
 }
 
-func (r *DestinationGoogleSheetsResourceModel) ToGetSDKType() *shared.DestinationGoogleSheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationGoogleSheetsResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationGoogleSheetsResourceModel) ToUpdateSDKType() *shared.DestinationGoogleSheetsPutRequest {
+func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsPutRequest() *shared.DestinationGoogleSheetsPutRequest {
 	clientID := r.Configuration.Credentials.ClientID.ValueString()
 	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
 	refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
@@ -65,20 +67,4 @@ func (r *DestinationGoogleSheetsResourceModel) ToUpdateSDKType() *shared.Destina
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationGoogleSheetsResourceModel) ToDeleteSDKType() *shared.DestinationGoogleSheetsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationGoogleSheetsResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

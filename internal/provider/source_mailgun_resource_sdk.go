@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCreateRequest {
+func (r *SourceMailgunResourceModel) ToSharedSourceMailgunCreateRequest() *shared.SourceMailgunCreateRequest {
 	domainRegion := new(string)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
 		*domainRegion = r.Configuration.DomainRegion.ValueString()
@@ -51,12 +51,14 @@ func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCrea
 	return &out
 }
 
-func (r *SourceMailgunResourceModel) ToGetSDKType() *shared.SourceMailgunCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMailgunResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMailgunResourceModel) ToUpdateSDKType() *shared.SourceMailgunPutRequest {
+func (r *SourceMailgunResourceModel) ToSharedSourceMailgunPutRequest() *shared.SourceMailgunPutRequest {
 	domainRegion := new(string)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
 		*domainRegion = r.Configuration.DomainRegion.ValueString()
@@ -83,20 +85,4 @@ func (r *SourceMailgunResourceModel) ToUpdateSDKType() *shared.SourceMailgunPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMailgunResourceModel) ToDeleteSDKType() *shared.SourceMailgunCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMailgunResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMailgunResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

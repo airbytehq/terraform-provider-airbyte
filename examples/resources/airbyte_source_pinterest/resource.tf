@@ -1,28 +1,26 @@
 resource "airbyte_source_pinterest" "my_source_pinterest" {
   configuration = {
     credentials = {
-      source_pinterest_o_auth2_0 = {
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
+      client_id     = "...my_client_id..."
+      client_secret = "...my_client_secret..."
+      refresh_token = "...my_refresh_token..."
     }
     custom_reports = [
       {
         attribution_types = [
           "HOUSEHOLD",
         ]
-        click_window_days = "30"
+        click_window_days = "1"
         columns = [
-          "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT",
+          "TOTAL_WEB_SESSIONS",
         ]
-        conversion_report_time = "TIME_OF_AD_ACTION"
-        engagement_window_days = "7"
-        granularity            = "MONTH"
-        level                  = "CAMPAIGN"
-        name                   = "Ms. Edgar Halvorson"
+        conversion_report_time = "TIME_OF_CONVERSION"
+        engagement_window_days = "0"
+        granularity            = "HOUR"
+        level                  = "ADVERTISER_TARGETING"
+        name                   = "Dewey Bogisich"
         start_date             = "2022-07-28"
-        view_window_days       = "0"
+        view_window_days       = "60"
       },
     ]
     start_date = "2022-07-28"
@@ -30,8 +28,8 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
       "ACTIVE",
     ]
   }
-  definition_id = "66a5ec46-f2bc-4e2e-b7bb-ccef588ac548"
-  name          = "Lamar Lakin"
+  definition_id = "3fa02ef0-08f1-418d-8157-2f724d1e0e7e"
+  name          = "Sharon Labadie"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a9dbf52c-7929-43e2-8aa8-1903348b38fe"
+  workspace_id  = "f815bf9f-1370-4c28-b278-d25e4ee4a51a"
 }

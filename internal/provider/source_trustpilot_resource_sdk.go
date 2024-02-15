@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpilotCreateRequest {
+func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotCreateRequest() *shared.SourceTrustpilotCreateRequest {
 	var businessUnits []string = nil
 	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
@@ -76,12 +76,14 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	return &out
 }
 
-func (r *SourceTrustpilotResourceModel) ToGetSDKType() *shared.SourceTrustpilotCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTrustpilotResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpilotPutRequest {
+func (r *SourceTrustpilotResourceModel) ToSharedSourceTrustpilotPutRequest() *shared.SourceTrustpilotPutRequest {
 	var businessUnits []string = nil
 	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
@@ -133,20 +135,4 @@ func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpil
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTrustpilotResourceModel) ToDeleteSDKType() *shared.SourceTrustpilotCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTrustpilotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

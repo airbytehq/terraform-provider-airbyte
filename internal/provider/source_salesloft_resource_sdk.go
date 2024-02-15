@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloftCreateRequest {
+func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftCreateRequest() *shared.SourceSalesloftCreateRequest {
 	var credentials shared.SourceSalesloftCredentials
 	var sourceSalesloftAuthenticateViaOAuth *shared.SourceSalesloftAuthenticateViaOAuth
 	if r.Configuration.Credentials.AuthenticateViaOAuth != nil {
@@ -71,12 +71,14 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 	return &out
 }
 
-func (r *SourceSalesloftResourceModel) ToGetSDKType() *shared.SourceSalesloftCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSalesloftResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSalesloftResourceModel) ToUpdateSDKType() *shared.SourceSalesloftPutRequest {
+func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftPutRequest() *shared.SourceSalesloftPutRequest {
 	var credentials shared.SourceSalesloftUpdateCredentials
 	var authenticateViaOAuth *shared.AuthenticateViaOAuth
 	if r.Configuration.Credentials.AuthenticateViaOAuth != nil {
@@ -123,20 +125,4 @@ func (r *SourceSalesloftResourceModel) ToUpdateSDKType() *shared.SourceSalesloft
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSalesloftResourceModel) ToDeleteSDKType() *shared.SourceSalesloftCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSalesloftResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSalesloftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

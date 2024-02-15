@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequest {
+func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.SourceJiraCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domain := r.Configuration.Domain.ValueString()
 	email := r.Configuration.Email.ValueString()
@@ -34,6 +34,12 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
 		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.SourceJiraIssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
 	}
+	lookbackWindowMinutes := new(int64)
+	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
+		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
+	} else {
+		lookbackWindowMinutes = nil
+	}
 	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -58,6 +64,7 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 		ExpandIssueChangelog:      expandIssueChangelog,
 		ExpandIssueTransition:     expandIssueTransition,
 		IssuesStreamExpandWith:    issuesStreamExpandWith,
+		LookbackWindowMinutes:     lookbackWindowMinutes,
 		Projects:                  projects,
 		RenderFields:              renderFields,
 		StartDate:                 startDate,
@@ -86,12 +93,14 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	return &out
 }
 
-func (r *SourceJiraResourceModel) ToGetSDKType() *shared.SourceJiraCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceJiraResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest {
+func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJiraPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domain := r.Configuration.Domain.ValueString()
 	email := r.Configuration.Email.ValueString()
@@ -117,6 +126,12 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
 		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.IssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
 	}
+	lookbackWindowMinutes := new(int64)
+	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
+		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
+	} else {
+		lookbackWindowMinutes = nil
+	}
 	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -141,6 +156,7 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 		ExpandIssueChangelog:      expandIssueChangelog,
 		ExpandIssueTransition:     expandIssueTransition,
 		IssuesStreamExpandWith:    issuesStreamExpandWith,
+		LookbackWindowMinutes:     lookbackWindowMinutes,
 		Projects:                  projects,
 		RenderFields:              renderFields,
 		StartDate:                 startDate,
@@ -153,20 +169,4 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceJiraResourceModel) ToDeleteSDKType() *shared.SourceJiraCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceJiraResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceJiraResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

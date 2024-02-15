@@ -13,6 +13,7 @@ type SourceS3 struct {
 	Format             *SourceS3FileFormat          `tfsdk:"format"`
 	PathPattern        types.String                 `tfsdk:"path_pattern"`
 	Provider           *SourceS3S3AmazonWebServices `tfsdk:"provider"`
+	RoleArn            types.String                 `tfsdk:"role_arn"`
 	Schema             types.String                 `tfsdk:"schema"`
 	StartDate          types.String                 `tfsdk:"start_date"`
 	Streams            []FileBasedStreamConfig      `tfsdk:"streams"`

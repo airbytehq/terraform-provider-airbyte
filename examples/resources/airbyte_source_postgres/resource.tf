@@ -12,17 +12,17 @@ resource "airbyte_source_postgres" "my_source_postgres" {
       "...",
     ]
     ssl_mode = {
-      source_postgres_allow = {
+      allow = {
         additional_properties = "{ \"see\": \"documentation\" }"
       }
     }
     tunnel_method = {
-      source_postgres_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Dagmar_Towne8"
+    username = "Lee8"
   }
-  definition_id = "558e983f-33bb-4c2f-8e75-b95ee5dd11c7"
-  name          = "Brandi Gerhold"
+  definition_id = "ebcafaa2-ee7a-41e0-8b61-97095b91e126"
+  name          = "Patricia Beatty V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aa4d1c74-fcd7-4d93-9b8b-6b2c0920aa8b"
+  workspace_id  = "eb706bb0-16ea-40ac-abfa-e2b40c173d4d"
 }

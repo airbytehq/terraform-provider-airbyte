@@ -5,14 +5,15 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -54,6 +55,9 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
@@ -66,9 +70,10 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Comma separated list of Mesage Attribute names to return`,
 					},
 					"delete_messages": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: false` + "\n" +
-							`If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. `,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. . Default: false`,
 					},
 					"max_batch_size": schema.Int64Attribute{
 						Optional:    true,
@@ -83,36 +88,43 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `URL of the SQS Queue`,
 					},
 					"region": schema.StringAttribute{
-						Required: true,
-						MarkdownDescription: `must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
-							`AWS Region of the SQS Queue`,
+						Required:    true,
+						Description: `AWS Region of the SQS Queue. must be one of ["af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
 								"af-south-1",
 								"ap-east-1",
-								"ap-south-1",
 								"ap-northeast-1",
 								"ap-northeast-2",
 								"ap-northeast-3",
+								"ap-south-1",
+								"ap-south-2",
 								"ap-southeast-1",
 								"ap-southeast-2",
+								"ap-southeast-3",
+								"ap-southeast-4",
 								"ca-central-1",
+								"ca-west-1",
 								"cn-north-1",
 								"cn-northwest-1",
 								"eu-central-1",
+								"eu-central-2",
 								"eu-north-1",
 								"eu-south-1",
+								"eu-south-2",
 								"eu-west-1",
 								"eu-west-2",
 								"eu-west-3",
-								"sa-east-1",
+								"il-central-1",
+								"me-central-1",
 								"me-south-1",
+								"sa-east-1",
+								"us-east-1",
+								"us-east-2",
 								"us-gov-east-1",
 								"us-gov-west-1",
+								"us-west-1",
+								"us-west-2",
 							),
 						},
 					},
@@ -129,40 +141,40 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -192,14 +204,14 @@ func (r *SourceAmazonSqsResource) Configure(ctx context.Context, req resource.Co
 
 func (r *SourceAmazonSqsResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceAmazonSqsResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -208,7 +220,7 @@ func (r *SourceAmazonSqsResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceAmazonSqsCreateRequest()
 	res, err := r.client.Sources.CreateSourceAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -229,7 +241,34 @@ func (r *SourceAmazonSqsResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceAmazonSqsRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceAmazonSqs(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -277,7 +316,7 @@ func (r *SourceAmazonSqsResource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -285,12 +324,19 @@ func (r *SourceAmazonSqsResource) Read(ctx context.Context, req resource.ReadReq
 
 func (r *SourceAmazonSqsResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceAmazonSqsResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceAmazonSqsPutRequest := data.ToUpdateSDKType()
+	sourceAmazonSqsPutRequest := data.ToSharedSourceAmazonSqsPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceAmazonSqsRequest{
 		SourceAmazonSqsPutRequest: sourceAmazonSqsPutRequest,
@@ -312,31 +358,33 @@ func (r *SourceAmazonSqsResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceAmazonSqsRequest{
+	request1 := operations.GetSourceAmazonSqsRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceAmazonSqs(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceAmazonSqs(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

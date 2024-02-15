@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocommerceCreateRequest {
+func (r *SourceWoocommerceResourceModel) ToSharedSourceWoocommerceCreateRequest() *shared.SourceWoocommerceCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiSecret := r.Configuration.APISecret.ValueString()
 	shop := r.Configuration.Shop.ValueString()
@@ -43,12 +43,14 @@ func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocomm
 	return &out
 }
 
-func (r *SourceWoocommerceResourceModel) ToGetSDKType() *shared.SourceWoocommerceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceWoocommerceResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceWoocommerceResourceModel) ToUpdateSDKType() *shared.SourceWoocommercePutRequest {
+func (r *SourceWoocommerceResourceModel) ToSharedSourceWoocommercePutRequest() *shared.SourceWoocommercePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiSecret := r.Configuration.APISecret.ValueString()
 	shop := r.Configuration.Shop.ValueString()
@@ -67,20 +69,4 @@ func (r *SourceWoocommerceResourceModel) ToUpdateSDKType() *shared.SourceWoocomm
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceWoocommerceResourceModel) ToDeleteSDKType() *shared.SourceWoocommerceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceWoocommerceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceWoocommerceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

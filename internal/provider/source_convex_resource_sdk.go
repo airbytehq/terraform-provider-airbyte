@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceConvexResourceModel) ToCreateSDKType() *shared.SourceConvexCreateRequest {
+func (r *SourceConvexResourceModel) ToSharedSourceConvexCreateRequest() *shared.SourceConvexCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
 	configuration := shared.SourceConvex{
@@ -38,12 +38,14 @@ func (r *SourceConvexResourceModel) ToCreateSDKType() *shared.SourceConvexCreate
 	return &out
 }
 
-func (r *SourceConvexResourceModel) ToGetSDKType() *shared.SourceConvexCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceConvexResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceConvexResourceModel) ToUpdateSDKType() *shared.SourceConvexPutRequest {
+func (r *SourceConvexResourceModel) ToSharedSourceConvexPutRequest() *shared.SourceConvexPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
 	configuration := shared.SourceConvexUpdate{
@@ -58,20 +60,4 @@ func (r *SourceConvexResourceModel) ToUpdateSDKType() *shared.SourceConvexPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceConvexResourceModel) ToDeleteSDKType() *shared.SourceConvexCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceConvexResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceConvexResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

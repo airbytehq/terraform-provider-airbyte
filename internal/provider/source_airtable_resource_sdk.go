@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCreateRequest {
+func (r *SourceAirtableResourceModel) ToSharedSourceAirtableCreateRequest() *shared.SourceAirtableCreateRequest {
 	var credentials *shared.SourceAirtableAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceAirtableOAuth20 *shared.SourceAirtableOAuth20
@@ -81,12 +81,14 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 	return &out
 }
 
-func (r *SourceAirtableResourceModel) ToGetSDKType() *shared.SourceAirtableCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAirtableResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAirtableResourceModel) ToUpdateSDKType() *shared.SourceAirtablePutRequest {
+func (r *SourceAirtableResourceModel) ToSharedSourceAirtablePutRequest() *shared.SourceAirtablePutRequest {
 	var credentials *shared.SourceAirtableUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceAirtableUpdateOAuth20 *shared.SourceAirtableUpdateOAuth20
@@ -143,20 +145,4 @@ func (r *SourceAirtableResourceModel) ToUpdateSDKType() *shared.SourceAirtablePu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAirtableResourceModel) ToDeleteSDKType() *shared.SourceAirtableCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAirtableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAirtableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

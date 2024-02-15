@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTempoResourceModel) ToCreateSDKType() *shared.SourceTempoCreateRequest {
+func (r *SourceTempoResourceModel) ToSharedSourceTempoCreateRequest() *shared.SourceTempoCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.SourceTempo{
 		APIToken: apiToken,
@@ -36,12 +36,14 @@ func (r *SourceTempoResourceModel) ToCreateSDKType() *shared.SourceTempoCreateRe
 	return &out
 }
 
-func (r *SourceTempoResourceModel) ToGetSDKType() *shared.SourceTempoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTempoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTempoResourceModel) ToUpdateSDKType() *shared.SourceTempoPutRequest {
+func (r *SourceTempoResourceModel) ToSharedSourceTempoPutRequest() *shared.SourceTempoPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.SourceTempoUpdate{
 		APIToken: apiToken,
@@ -54,20 +56,4 @@ func (r *SourceTempoResourceModel) ToUpdateSDKType() *shared.SourceTempoPutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTempoResourceModel) ToDeleteSDKType() *shared.SourceTempoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTempoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTempoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

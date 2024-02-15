@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignalCreateRequest {
+func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalCreateRequest() *shared.SourceOnesignalCreateRequest {
 	var applications []shared.SourceOnesignalApplications = nil
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
@@ -58,12 +58,14 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 	return &out
 }
 
-func (r *SourceOnesignalResourceModel) ToGetSDKType() *shared.SourceOnesignalCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOnesignalResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignalPutRequest {
+func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalPutRequest() *shared.SourceOnesignalPutRequest {
 	var applications []shared.Applications = nil
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
@@ -97,20 +99,4 @@ func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignal
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOnesignalResourceModel) ToDeleteSDKType() *shared.SourceOnesignalCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOnesignalResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOnesignalResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

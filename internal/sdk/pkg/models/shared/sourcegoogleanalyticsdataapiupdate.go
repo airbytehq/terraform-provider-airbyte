@@ -34,7 +34,6 @@ func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType) UnmarshalJSON(data [
 	}
 }
 
-// ServiceAccountKeyAuthentication - Credentials for the service
 type ServiceAccountKeyAuthentication struct {
 	authType *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType `const:"Service" json:"auth_type,omitempty"`
 	// The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
@@ -87,7 +86,6 @@ func (e *SourceGoogleAnalyticsDataAPIUpdateAuthType) UnmarshalJSON(data []byte) 
 	}
 }
 
-// AuthenticateViaGoogleOauth - Credentials for the service
 type AuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
 	AccessToken *string                                     `json:"access_token,omitempty"`
@@ -150,6 +148,7 @@ const (
 	CredentialsTypeServiceAccountKeyAuthentication CredentialsType = "Service Account Key Authentication"
 )
 
+// Credentials for the service
 type Credentials struct {
 	AuthenticateViaGoogleOauth      *AuthenticateViaGoogleOauth
 	ServiceAccountKeyAuthentication *ServiceAccountKeyAuthentication
@@ -201,6 +200,342 @@ func (u Credentials) MarshalJSON() ([]byte, error) {
 
 	if u.ServiceAccountKeyAuthentication != nil {
 		return utils.MarshalJSON(u.ServiceAccountKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
+// CohortReportSettings - Optional settings for a cohort report.
+type CohortReportSettings struct {
+	// If true, accumulates the result from first touch day to the end day
+	Accumulate *bool `json:"accumulate,omitempty"`
+}
+
+func (o *CohortReportSettings) GetAccumulate() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Accumulate
+}
+
+type DateRange struct {
+	EndDate   types.Date `json:"endDate"`
+	StartDate types.Date `json:"startDate"`
+}
+
+func (d DateRange) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DateRange) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DateRange) GetEndDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.EndDate
+}
+
+func (o *DateRange) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
+}
+
+// Dimension used by the cohort. Required and only supports `firstSessionDate`
+type Dimension string
+
+const (
+	DimensionFirstSessionDate Dimension = "firstSessionDate"
+)
+
+func (e Dimension) ToPointer() *Dimension {
+	return &e
+}
+
+func (e *Dimension) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "firstSessionDate":
+		*e = Dimension(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Dimension: %v", v)
+	}
+}
+
+type Cohorts struct {
+	DateRange DateRange `json:"dateRange"`
+	// Dimension used by the cohort. Required and only supports `firstSessionDate`
+	Dimension Dimension `json:"dimension"`
+	// Assigns a name to this cohort. If not set, cohorts are named by their zero based index cohort_0, cohort_1, etc.
+	Name *string `json:"name,omitempty"`
+}
+
+func (o *Cohorts) GetDateRange() DateRange {
+	if o == nil {
+		return DateRange{}
+	}
+	return o.DateRange
+}
+
+func (o *Cohorts) GetDimension() Dimension {
+	if o == nil {
+		return Dimension("")
+	}
+	return o.Dimension
+}
+
+func (o *Cohorts) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+// SourceGoogleAnalyticsDataAPIUpdateGranularity - The granularity used to interpret the startOffset and endOffset for the extended reporting date range for a cohort report.
+type SourceGoogleAnalyticsDataAPIUpdateGranularity string
+
+const (
+	SourceGoogleAnalyticsDataAPIUpdateGranularityGranularityUnspecified SourceGoogleAnalyticsDataAPIUpdateGranularity = "GRANULARITY_UNSPECIFIED"
+	SourceGoogleAnalyticsDataAPIUpdateGranularityDaily                  SourceGoogleAnalyticsDataAPIUpdateGranularity = "DAILY"
+	SourceGoogleAnalyticsDataAPIUpdateGranularityWeekly                 SourceGoogleAnalyticsDataAPIUpdateGranularity = "WEEKLY"
+	SourceGoogleAnalyticsDataAPIUpdateGranularityMonthly                SourceGoogleAnalyticsDataAPIUpdateGranularity = "MONTHLY"
+)
+
+func (e SourceGoogleAnalyticsDataAPIUpdateGranularity) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateGranularity {
+	return &e
+}
+
+func (e *SourceGoogleAnalyticsDataAPIUpdateGranularity) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GRANULARITY_UNSPECIFIED":
+		fallthrough
+	case "DAILY":
+		fallthrough
+	case "WEEKLY":
+		fallthrough
+	case "MONTHLY":
+		*e = SourceGoogleAnalyticsDataAPIUpdateGranularity(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateGranularity: %v", v)
+	}
+}
+
+type CohortsRange struct {
+	// Specifies the end date of the extended reporting date range for a cohort report.
+	EndOffset int64 `json:"endOffset"`
+	// The granularity used to interpret the startOffset and endOffset for the extended reporting date range for a cohort report.
+	Granularity SourceGoogleAnalyticsDataAPIUpdateGranularity `json:"granularity"`
+	// Specifies the start date of the extended reporting date range for a cohort report.
+	StartOffset *int64 `json:"startOffset,omitempty"`
+}
+
+func (o *CohortsRange) GetEndOffset() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.EndOffset
+}
+
+func (o *CohortsRange) GetGranularity() SourceGoogleAnalyticsDataAPIUpdateGranularity {
+	if o == nil {
+		return SourceGoogleAnalyticsDataAPIUpdateGranularity("")
+	}
+	return o.Granularity
+}
+
+func (o *CohortsRange) GetStartOffset() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.StartOffset
+}
+
+type SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled string
+
+const (
+	SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabledTrue SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled = "true"
+)
+
+func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled {
+	return &e
+}
+
+func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "true":
+		*e = SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled: %v", v)
+	}
+}
+
+type SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled struct {
+	// Optional settings for a cohort report.
+	CohortReportSettings *CohortReportSettings                                               `json:"cohortReportSettings,omitempty"`
+	Cohorts              []Cohorts                                                           `json:"cohorts,omitempty"`
+	CohortsRange         *CohortsRange                                                       `json:"cohortsRange,omitempty"`
+	enabled              *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled `const:"true" json:"enabled,omitempty"`
+}
+
+func (s SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) GetCohortReportSettings() *CohortReportSettings {
+	if o == nil {
+		return nil
+	}
+	return o.CohortReportSettings
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) GetCohorts() []Cohorts {
+	if o == nil {
+		return nil
+	}
+	return o.Cohorts
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) GetCohortsRange() *CohortsRange {
+	if o == nil {
+		return nil
+	}
+	return o.CohortsRange
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) GetEnabled() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled {
+	return SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabledTrue.ToPointer()
+}
+
+type SourceGoogleAnalyticsDataAPIUpdateEnabled string
+
+const (
+	SourceGoogleAnalyticsDataAPIUpdateEnabledFalse SourceGoogleAnalyticsDataAPIUpdateEnabled = "false"
+)
+
+func (e SourceGoogleAnalyticsDataAPIUpdateEnabled) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateEnabled {
+	return &e
+}
+
+func (e *SourceGoogleAnalyticsDataAPIUpdateEnabled) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "false":
+		*e = SourceGoogleAnalyticsDataAPIUpdateEnabled(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIUpdateEnabled: %v", v)
+	}
+}
+
+type SourceGoogleAnalyticsDataAPIUpdateDisabled struct {
+	enabled *SourceGoogleAnalyticsDataAPIUpdateEnabled `const:"false" json:"enabled,omitempty"`
+}
+
+func (s SourceGoogleAnalyticsDataAPIUpdateDisabled) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleAnalyticsDataAPIUpdateDisabled) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateDisabled) GetEnabled() *SourceGoogleAnalyticsDataAPIUpdateEnabled {
+	return SourceGoogleAnalyticsDataAPIUpdateEnabledFalse.ToPointer()
+}
+
+type CohortReportsType string
+
+const (
+	CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateDisabled       CohortReportsType = "source-google-analytics-data-api-update_Disabled"
+	CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateSchemasEnabled CohortReportsType = "source-google-analytics-data-api-update_Schemas_Enabled"
+)
+
+// CohortReports - Cohort reports creates a time series of user retention for the cohort.
+type CohortReports struct {
+	SourceGoogleAnalyticsDataAPIUpdateDisabled       *SourceGoogleAnalyticsDataAPIUpdateDisabled
+	SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled *SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled
+
+	Type CohortReportsType
+}
+
+func CreateCohortReportsSourceGoogleAnalyticsDataAPIUpdateDisabled(sourceGoogleAnalyticsDataAPIUpdateDisabled SourceGoogleAnalyticsDataAPIUpdateDisabled) CohortReports {
+	typ := CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateDisabled
+
+	return CohortReports{
+		SourceGoogleAnalyticsDataAPIUpdateDisabled: &sourceGoogleAnalyticsDataAPIUpdateDisabled,
+		Type: typ,
+	}
+}
+
+func CreateCohortReportsSourceGoogleAnalyticsDataAPIUpdateSchemasEnabled(sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled) CohortReports {
+	typ := CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateSchemasEnabled
+
+	return CohortReports{
+		SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled: &sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled,
+		Type: typ,
+	}
+}
+
+func (u *CohortReports) UnmarshalJSON(data []byte) error {
+
+	sourceGoogleAnalyticsDataAPIUpdateDisabled := new(SourceGoogleAnalyticsDataAPIUpdateDisabled)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleAnalyticsDataAPIUpdateDisabled, "", true, true); err == nil {
+		u.SourceGoogleAnalyticsDataAPIUpdateDisabled = sourceGoogleAnalyticsDataAPIUpdateDisabled
+		u.Type = CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateDisabled
+		return nil
+	}
+
+	sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled := new(SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled)
+	if err := utils.UnmarshalJSON(data, &sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled, "", true, true); err == nil {
+		u.SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled = sourceGoogleAnalyticsDataAPIUpdateSchemasEnabled
+		u.Type = CohortReportsTypeSourceGoogleAnalyticsDataAPIUpdateSchemasEnabled
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u CohortReports) MarshalJSON() ([]byte, error) {
+	if u.SourceGoogleAnalyticsDataAPIUpdateDisabled != nil {
+		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIUpdateDisabled, "", true)
+	}
+
+	if u.SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled != nil {
+		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIUpdateSchemasEnabled, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
@@ -4196,6 +4531,7 @@ const (
 	DimensionsFilterTypeFilter        DimensionsFilterType = "filter"
 )
 
+// DimensionsFilter - Dimensions filter
 type DimensionsFilter struct {
 	AndGroup      *AndGroup
 	OrGroup       *OrGroup
@@ -8284,6 +8620,7 @@ const (
 	MetricsFilterTypeSourceGoogleAnalyticsDataAPIUpdateFilter        MetricsFilterType = "source-google-analytics-data-api-update_filter"
 )
 
+// MetricsFilter - Metrics filter
 type MetricsFilter struct {
 	SourceGoogleAnalyticsDataAPIUpdateAndGroup      *SourceGoogleAnalyticsDataAPIUpdateAndGroup
 	SourceGoogleAnalyticsDataAPIUpdateOrGroup       *SourceGoogleAnalyticsDataAPIUpdateOrGroup
@@ -8383,6 +8720,8 @@ func (u MetricsFilter) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig struct {
+	// Cohort reports creates a time series of user retention for the cohort.
+	CohortSpec *CohortReports `json:"cohortSpec,omitempty"`
 	// Dimensions filter
 	DimensionFilter *DimensionsFilter `json:"dimensionFilter,omitempty"`
 	// A list of dimensions.
@@ -8393,6 +8732,13 @@ type SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig struct {
 	Metrics []string `json:"metrics"`
 	// The name of the custom report, this name would be used as stream name.
 	Name string `json:"name"`
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig) GetCohortSpec() *CohortReports {
+	if o == nil {
+		return nil
+	}
+	return o.CohortSpec
 }
 
 func (o *SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig) GetDimensionFilter() *DimensionsFilter {
@@ -8431,12 +8777,16 @@ func (o *SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig) GetName() string 
 }
 
 type SourceGoogleAnalyticsDataAPIUpdate struct {
+	// Enables conversion of `conversions:*` event metrics from integers to floats. This is beneficial for preventing data rounding when the API returns float values for any `conversions:*` fields.
+	ConvertConversionsEvent *bool `default:"false" json:"convert_conversions_event"`
 	// Credentials for the service
 	Credentials *Credentials `json:"credentials,omitempty"`
 	// You can add your Custom Analytics report by creating one.
 	CustomReportsArray []SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig `json:"custom_reports_array,omitempty"`
 	// The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 	DateRangesStartDate *types.Date `json:"date_ranges_start_date,omitempty"`
+	// If false, each row with all metrics equal to 0 will not be returned. If true, these rows will be returned if they are not separately removed by a filter. More information is available in <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#request-body">the documentation</a>.
+	KeepEmptyRows *bool `default:"false" json:"keep_empty_rows"`
 	// A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 	PropertyIds []string `json:"property_ids"`
 	// The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
@@ -8452,6 +8802,13 @@ func (s *SourceGoogleAnalyticsDataAPIUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetConvertConversionsEvent() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ConvertConversionsEvent
 }
 
 func (o *SourceGoogleAnalyticsDataAPIUpdate) GetCredentials() *Credentials {
@@ -8473,6 +8830,13 @@ func (o *SourceGoogleAnalyticsDataAPIUpdate) GetDateRangesStartDate() *types.Dat
 		return nil
 	}
 	return o.DateRangesStartDate
+}
+
+func (o *SourceGoogleAnalyticsDataAPIUpdate) GetKeepEmptyRows() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepEmptyRows
 }
 
 func (o *SourceGoogleAnalyticsDataAPIUpdate) GetPropertyIds() []string {

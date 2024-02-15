@@ -16,7 +16,7 @@ DestinationQdrant Resource
 resource "airbyte_destination_qdrant" "my_destination_qdrant" {
   configuration = {
     embedding = {
-      destination_qdrant_azure_open_ai = {
+      azure_open_ai = {
         api_base   = "https://your-resource-name.openai.azure.com"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
@@ -28,17 +28,16 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
           api_key = "...my_api_key..."
         }
       }
-      collection = "...my_collection..."
-      distance_metric = {
-        cos = {}
-      }
-      prefer_grpc = true
-      text_field  = "...my_text_field..."
-      url         = "...my_url..."
+      collection      = "...my_collection..."
+      distance_metric = "dot"
+      prefer_grpc     = false
+      text_field      = "...my_text_field..."
+      url             = "...my_url..."
     }
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 8
-      chunk_size    = 9
+      chunk_overlap = 5
+      chunk_size    = 1
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -52,15 +51,15 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
         "...",
       ]
       text_splitter = {
-        destination_qdrant_by_markdown_header = {
-          split_level = 9
+        by_markdown_header = {
+          split_level = 4
         }
       }
     }
   }
-  definition_id = "8f8d8392-aab1-45fb-858b-ad9ea7671d58"
-  name          = "Kathryn O'Keefe"
-  workspace_id  = "9de520ce-3420-4a29-9e5c-09962877b187"
+  definition_id = "ed560cd3-f9e1-4f9e-af9a-8e2157a8560c"
+  name          = "Austin Vandervort"
+  workspace_id  = "fd0c2020-86d3-496d-a60f-942f937a3c59"
 }
 ```
 
@@ -69,13 +68,22 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
 
 ### Required
 
-- `configuration` (Attributes) (see [below for nested schema](#nestedatt--configuration))
+- `configuration` (Attributes) The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+as well as to provide type safety for the configuration passed to the destination.
+
+The configuration model is composed of four parts:
+* Processing configuration
+* Embedding configuration
+* Indexing configuration
+* Advanced configuration
+
+Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class. (see [below for nested schema](#nestedatt--configuration))
 - `name` (String) Name of the destination e.g. dev-mysql-instance.
 - `workspace_id` (String)
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -91,6 +99,10 @@ Required:
 - `indexing` (Attributes) Indexing configuration (see [below for nested schema](#nestedatt--configuration--indexing))
 - `processing` (Attributes) (see [below for nested schema](#nestedatt--configuration--processing))
 
+Optional:
+
+- `omit_raw_text` (Boolean) Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source. Default: false
+
 <a id="nestedatt--configuration--embedding"></a>
 ### Nested Schema for `configuration.embedding`
 
@@ -99,7 +111,6 @@ Optional:
 - `azure_open_ai` (Attributes) Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--azure_open_ai))
 - `cohere` (Attributes) Use the Cohere API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--cohere))
 - `fake` (Attributes) Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs. (see [below for nested schema](#nestedatt--configuration--embedding--fake))
-- `from_field` (Attributes) Use a field in the record as the embedding. This is useful if you already have an embedding for your data and want to store it in the vector store. (see [below for nested schema](#nestedatt--configuration--embedding--from_field))
 - `open_ai` (Attributes) Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions. (see [below for nested schema](#nestedatt--configuration--embedding--open_ai))
 - `open_ai_compatible` (Attributes) Use a service that's compatible with the OpenAI API to embed text. (see [below for nested schema](#nestedatt--configuration--embedding--open_ai_compatible))
 
@@ -125,15 +136,6 @@ Required:
 ### Nested Schema for `configuration.embedding.fake`
 
 
-<a id="nestedatt--configuration--embedding--from_field"></a>
-### Nested Schema for `configuration.embedding.from_field`
-
-Required:
-
-- `dimensions` (Number) The number of dimensions the embedding model is generating
-- `field_name` (String) Name of the field in the record that contains the embedding
-
-
 <a id="nestedatt--configuration--embedding--open_ai"></a>
 ### Nested Schema for `configuration.embedding.open_ai`
 
@@ -153,8 +155,7 @@ Required:
 Optional:
 
 - `api_key` (String, Sensitive) Default: ""
-- `model_name` (String) Default: "text-embedding-ada-002"
-The name of the model to use for embedding
+- `model_name` (String) The name of the model to use for embedding. Default: "text-embedding-ada-002"
 
 
 
@@ -169,19 +170,17 @@ Required:
 Optional:
 
 - `auth_method` (Attributes) Method to authenticate with the Qdrant Instance (see [below for nested schema](#nestedatt--configuration--indexing--auth_method))
-- `distance_metric` (Attributes) The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. (see [below for nested schema](#nestedatt--configuration--indexing--distance_metric))
-- `prefer_grpc` (Boolean) Default: true
-Whether to prefer gRPC over HTTP. Set to true for Qdrant cloud clusters
-- `text_field` (String) Default: "text"
-The field in the payload that contains the embedded text
+- `distance_metric` (String) The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. must be one of ["dot", "cos", "euc"]; Default: "cos"
+- `prefer_grpc` (Boolean) Whether to prefer gRPC over HTTP. Set to true for Qdrant cloud clusters. Default: true
+- `text_field` (String) The field in the payload that contains the embedded text. Default: "text"
 
 <a id="nestedatt--configuration--indexing--auth_method"></a>
 ### Nested Schema for `configuration.indexing.auth_method`
 
 Optional:
 
-- `api_key_auth` (Attributes) Method to authenticate with the Qdrant Instance (see [below for nested schema](#nestedatt--configuration--indexing--auth_method--api_key_auth))
-- `no_auth` (Attributes) Method to authenticate with the Qdrant Instance (see [below for nested schema](#nestedatt--configuration--indexing--auth_method--no_auth))
+- `api_key_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--indexing--auth_method--api_key_auth))
+- `no_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--indexing--auth_method--no_auth))
 
 <a id="nestedatt--configuration--indexing--auth_method--api_key_auth"></a>
 ### Nested Schema for `configuration.indexing.auth_method.no_auth`
@@ -196,28 +195,6 @@ Required:
 
 
 
-<a id="nestedatt--configuration--indexing--distance_metric"></a>
-### Nested Schema for `configuration.indexing.distance_metric`
-
-Optional:
-
-- `cos` (Attributes) The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. (see [below for nested schema](#nestedatt--configuration--indexing--distance_metric--cos))
-- `dot` (Attributes) The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. (see [below for nested schema](#nestedatt--configuration--indexing--distance_metric--dot))
-- `euc` (Attributes) The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. (see [below for nested schema](#nestedatt--configuration--indexing--distance_metric--euc))
-
-<a id="nestedatt--configuration--indexing--distance_metric--cos"></a>
-### Nested Schema for `configuration.indexing.distance_metric.euc`
-
-
-<a id="nestedatt--configuration--indexing--distance_metric--dot"></a>
-### Nested Schema for `configuration.indexing.distance_metric.euc`
-
-
-<a id="nestedatt--configuration--indexing--distance_metric--euc"></a>
-### Nested Schema for `configuration.indexing.distance_metric.euc`
-
-
-
 
 <a id="nestedatt--configuration--processing"></a>
 ### Nested Schema for `configuration.processing`
@@ -228,8 +205,7 @@ Required:
 
 Optional:
 
-- `chunk_overlap` (Number) Default: 0
-Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+- `chunk_overlap` (Number) Size of overlap between chunks in tokens to store in vector store to better capture relevant context. Default: 0
 - `field_name_mappings` (Attributes List) List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation. (see [below for nested schema](#nestedatt--configuration--processing--field_name_mappings))
 - `metadata_fields` (List of String) List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
 - `text_fields` (List of String) List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
@@ -258,8 +234,7 @@ Optional:
 
 Optional:
 
-- `split_level` (Number) Default: 1
-Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+- `split_level` (Number) Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points. Default: 1
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
@@ -267,8 +242,7 @@ Level of markdown headers to split text fields by. Headings down to the specifie
 
 Required:
 
-- `language` (String) must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
-Split code in suitable places based on the programming language
+- `language` (String) Split code in suitable places based on the programming language. must be one of ["cpp", "go", "java", "js", "php", "proto", "python", "rst", "ruby", "rust", "scala", "swift", "markdown", "latex", "html", "sol"]
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_separator"></a>
@@ -276,8 +250,7 @@ Split code in suitable places based on the programming language
 
 Optional:
 
-- `keep_separator` (Boolean) Default: false
-Whether to keep the separator in the resulting chunks
+- `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
 

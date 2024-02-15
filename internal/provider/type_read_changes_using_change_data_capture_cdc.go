@@ -5,7 +5,5 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ReadChangesUsingChangeDataCaptureCDC struct {
-	DataToSync            types.String `tfsdk:"data_to_sync"`
-	InitialWaitingSeconds types.Int64  `tfsdk:"initial_waiting_seconds"`
-	SnapshotIsolation     types.String `tfsdk:"snapshot_isolation"`
+	InitialWaitingSeconds types.Int64 `tfsdk:"initial_waiting_seconds"`
 }

@@ -4,14 +4,14 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
       "...",
     ]
     credentials = {
-      source_trustpilot_api_key = {
+      api_key = {
         client_id = "...my_client_id..."
       }
     }
     start_date = "%Y-%m-%dT%H:%M:%S"
   }
-  definition_id = "5fa64aee-8d2b-4de4-8eef-ceb9e0d54b08"
-  name          = "Clifford Quigley"
+  definition_id = "30ca4aa9-f684-4d9a-b345-ef3183cb2e52"
+  name          = "Byron Howell"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "98fe3f92-c06a-49aa-b270-2875abb88c39"
+  workspace_id  = "bb57c5cb-e7cc-4ff9-9072-4747a4b37eb2"
 }

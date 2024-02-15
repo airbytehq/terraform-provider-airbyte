@@ -3,6 +3,6 @@
 package provider
 
 type SourceMysqlUpdateMethod struct {
-	ReadChangesUsingBinaryLogCDC     *ReadChangesUsingBinaryLogCDC                             `tfsdk:"read_changes_using_binary_log_cdc"`
-	ScanChangesWithUserDefinedCursor *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"scan_changes_with_user_defined_cursor"`
+	ReadChangesUsingBinaryLogCDC     *ReadChangesUsingBinaryLogCDC `tfsdk:"read_changes_using_binary_log_cdc"`
+	ScanChangesWithUserDefinedCursor *Fake                         `tfsdk:"scan_changes_with_user_defined_cursor"`
 }

@@ -18,10 +18,10 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "d6014991-0eec-4fc7-b384-ec604057d045"
-  name          = "Geneva Bogan"
+  definition_id = "be57bfa4-6127-4442-b75e-d08074e17a64"
+  name          = "Clayton Herman Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b5cccbbb-db31-4196-8f99-d67745afb65f"
+  workspace_id  = "ab94fe75-a513-4e00-9777-93827c06dd86"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_insightly" "my_source_insightly" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

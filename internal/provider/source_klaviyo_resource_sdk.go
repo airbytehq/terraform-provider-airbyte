@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceKlaviyoResourceModel) ToCreateSDKType() *shared.SourceKlaviyoCreateRequest {
+func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest() *shared.SourceKlaviyoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -44,12 +44,14 @@ func (r *SourceKlaviyoResourceModel) ToCreateSDKType() *shared.SourceKlaviyoCrea
 	return &out
 }
 
-func (r *SourceKlaviyoResourceModel) ToGetSDKType() *shared.SourceKlaviyoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceKlaviyoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceKlaviyoResourceModel) ToUpdateSDKType() *shared.SourceKlaviyoPutRequest {
+func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest() *shared.SourceKlaviyoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -69,20 +71,4 @@ func (r *SourceKlaviyoResourceModel) ToUpdateSDKType() *shared.SourceKlaviyoPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceKlaviyoResourceModel) ToDeleteSDKType() *shared.SourceKlaviyoCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceKlaviyoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceKlaviyoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

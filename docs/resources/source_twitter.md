@@ -16,14 +16,14 @@ SourceTwitter Resource
 resource "airbyte_source_twitter" "my_source_twitter" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2022-09-12T14:25:08.896Z"
+    end_date   = "2021-02-14T11:13:26.293Z"
     query      = "...my_query..."
-    start_date = "2022-06-24T22:46:50.628Z"
+    start_date = "2022-12-21T00:24:01.911Z"
   }
-  definition_id = "89040904-7267-4ce8-aa32-2e02b7e6dd49"
-  name          = "Domingo Heller"
+  definition_id = "dd3cfb0a-a2fa-4d05-8413-0837d3e5de43"
+  name          = "Rene Adams"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "592a5dd7-ddbd-4797-92eb-894fd682a677"
+  workspace_id  = "63cc02bc-2f7f-45df-b2c2-6b4986915d33"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_twitter" "my_source_twitter" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

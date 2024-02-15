@@ -24,12 +24,12 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 5
+    window_in_days = 1
   }
-  definition_id = "b7242137-fe2e-49e2-ac4c-104f1dbe3b1f"
-  name          = "Ramona Bahringer"
+  definition_id = "e45e3ceb-6c91-40dc-95a9-6cb5f3bc4b32"
+  name          = "Ethel Towne"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "77573847-65c7-4741-8014-d1f263651b77"
+  workspace_id  = "d591e254-44d2-4234-bd1d-8ea1c7d43320"
 }
 ```
 
@@ -44,8 +44,8 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -67,7 +67,6 @@ Required:
 Optional:
 
 - `object_types` (List of String) The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
-- `window_in_days` (Number) Default: 30
-The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
+- `window_in_days` (Number) The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data. Default: 30
 
 

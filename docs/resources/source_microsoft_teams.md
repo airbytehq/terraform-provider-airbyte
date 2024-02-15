@@ -24,10 +24,10 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "79345d14-4630-4331-8f29-cf10b0742b93"
-  name          = "Jesus Marquardt Sr."
+  definition_id = "74976dbe-116c-4781-96c7-0bfb32667c47"
+  name          = "Derek Bauch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1a320cca-d5ad-4c13-b0ef-57488395b5ae"
+  workspace_id  = "16107c03-f839-4206-b4c9-db1c42670928"
 }
 ```
 
@@ -42,8 +42,8 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -66,8 +66,8 @@ Optional:
 
 Optional:
 
-- `authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft))
-- `authenticate_via_microsoft_o_auth20` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20))
+- `authenticate_via_microsoft` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft))
+- `authenticate_via_microsoft_o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_microsoft"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_microsoft`

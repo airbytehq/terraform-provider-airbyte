@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSendgridResourceModel) ToCreateSDKType() *shared.SourceSendgridCreateRequest {
+func (r *SourceSendgridResourceModel) ToSharedSourceSendgridCreateRequest() *shared.SourceSendgridCreateRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	startTime := new(time.Time)
 	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
@@ -44,12 +44,14 @@ func (r *SourceSendgridResourceModel) ToCreateSDKType() *shared.SourceSendgridCr
 	return &out
 }
 
-func (r *SourceSendgridResourceModel) ToGetSDKType() *shared.SourceSendgridCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSendgridResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSendgridResourceModel) ToUpdateSDKType() *shared.SourceSendgridPutRequest {
+func (r *SourceSendgridResourceModel) ToSharedSourceSendgridPutRequest() *shared.SourceSendgridPutRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	startTime := new(time.Time)
 	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
@@ -69,20 +71,4 @@ func (r *SourceSendgridResourceModel) ToUpdateSDKType() *shared.SourceSendgridPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSendgridResourceModel) ToDeleteSDKType() *shared.SourceSendgridCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSendgridResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSendgridResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

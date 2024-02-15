@@ -16,18 +16,19 @@ SourceHubspot Resource
 resource "airbyte_source_hubspot" "my_source_hubspot" {
   configuration = {
     credentials = {
-      source_hubspot_o_auth = {
+      o_auth = {
         client_id     = "123456789000"
         client_secret = "secret"
         refresh_token = "refresh_token"
       }
     }
-    start_date = "2017-01-25T00:00:00Z"
+    enable_experimental_streams = false
+    start_date                  = "2017-01-25T00:00:00Z"
   }
-  definition_id = "b1210837-28d8-49e3-91e8-68df1f2c5ad8"
-  name          = "Amelia Gulgowski II"
+  definition_id = "56253a66-e5ad-4391-9293-14c65ed70eb1"
+  name          = "Myra Reinger"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3eb240d6-26d4-4887-8caa-f58e0f5c1159"
+  workspace_id  = "c24002ca-0d01-4711-b25a-28dde04a9ce3"
 }
 ```
 
@@ -42,8 +43,8 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -58,13 +59,17 @@ Required:
 - `credentials` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials))
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
+Optional:
+
+- `enable_experimental_streams` (Boolean) If enabled then experimental streams become available for sync. Default: false
+
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--o_auth))
-- `private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--private_app))
+- `o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth))
+- `private_app` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--private_app))
 
 <a id="nestedatt--configuration--credentials--o_auth"></a>
 ### Nested Schema for `configuration.credentials.o_auth`

@@ -22,17 +22,18 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         connection_string     = "mongodb+srv://cluster0.abcd1.mongodb.net/"
         database              = "...my_database..."
         password              = "...my_password..."
-        username              = "Curtis38"
+        schema_enforced       = true
+        username              = "Juvenal53"
       }
     }
-    discover_sample_size    = 1
-    initial_waiting_seconds = 0
-    queue_size              = 5
+    discover_sample_size    = 6
+    initial_waiting_seconds = 9
+    queue_size              = 4
   }
-  definition_id = "c03f8392-0634-4c9d-b1c4-26709282f0b3"
-  name          = "Nora Waelchi"
+  definition_id = "fcbb78be-d982-412c-b04a-e19387527d5e"
+  name          = "Eloise Willms"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "729ff502-4b69-40b2-b36f-2f7a3b95d4ab"
+  workspace_id  = "46d0c0b7-968b-4724-a137-fe2e9e26c4c1"
 }
 ```
 
@@ -47,8 +48,8 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,12 +65,9 @@ Required:
 
 Optional:
 
-- `discover_sample_size` (Number) Default: 10000
-The maximum number of documents to sample when attempting to discover the unique fields for a collection.
-- `initial_waiting_seconds` (Number) Default: 300
-The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds.
-- `queue_size` (Number) Default: 10000
-The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+- `discover_sample_size` (Number) The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
 
 <a id="nestedatt--configuration--database_config"></a>
 ### Nested Schema for `configuration.database_config`
@@ -92,8 +90,8 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_source` (String) Default: "admin"
-The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.
+- `auth_source` (String) The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details. Default: "admin"
+- `schema_enforced` (Boolean) When enabled, syncs will validate and structure records against the stream's schema. Default: true
 
 
 <a id="nestedatt--configuration--database_config--self_managed_replica_set"></a>
@@ -107,9 +105,9 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_source` (String) Default: "admin"
-The authentication source where the user information is stored.
+- `auth_source` (String) The authentication source where the user information is stored. Default: "admin"
 - `password` (String, Sensitive) The password associated with this username.
+- `schema_enforced` (Boolean) When enabled, syncs will validate and structure records against the stream's schema. Default: true
 - `username` (String) The username which is used to access the database.
 
 

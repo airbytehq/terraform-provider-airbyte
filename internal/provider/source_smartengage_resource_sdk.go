@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmartengageCreateRequest {
+func (r *SourceSmartengageResourceModel) ToSharedSourceSmartengageCreateRequest() *shared.SourceSmartengageCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSmartengage{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmarten
 	return &out
 }
 
-func (r *SourceSmartengageResourceModel) ToGetSDKType() *shared.SourceSmartengageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSmartengageResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSmartengageResourceModel) ToUpdateSDKType() *shared.SourceSmartengagePutRequest {
+func (r *SourceSmartengageResourceModel) ToSharedSourceSmartengagePutRequest() *shared.SourceSmartengagePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSmartengageUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceSmartengageResourceModel) ToUpdateSDKType() *shared.SourceSmarten
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSmartengageResourceModel) ToDeleteSDKType() *shared.SourceSmartengageCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSmartengageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSmartengageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

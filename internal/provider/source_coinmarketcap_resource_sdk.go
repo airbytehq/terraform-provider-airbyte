@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinmarketcapCreateRequest {
+func (r *SourceCoinmarketcapResourceModel) ToSharedSourceCoinmarketcapCreateRequest() *shared.SourceCoinmarketcapCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapDataType(r.Configuration.DataType.ValueString())
 	var symbols []string = nil
@@ -43,12 +43,14 @@ func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinm
 	return &out
 }
 
-func (r *SourceCoinmarketcapResourceModel) ToGetSDKType() *shared.SourceCoinmarketcapCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceCoinmarketcapResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceCoinmarketcapResourceModel) ToUpdateSDKType() *shared.SourceCoinmarketcapPutRequest {
+func (r *SourceCoinmarketcapResourceModel) ToSharedSourceCoinmarketcapPutRequest() *shared.SourceCoinmarketcapPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.DataType(r.Configuration.DataType.ValueString())
 	var symbols []string = nil
@@ -68,20 +70,4 @@ func (r *SourceCoinmarketcapResourceModel) ToUpdateSDKType() *shared.SourceCoinm
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceCoinmarketcapResourceModel) ToDeleteSDKType() *shared.SourceCoinmarketcapCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceCoinmarketcapResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

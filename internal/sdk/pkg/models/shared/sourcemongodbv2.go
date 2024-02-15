@@ -45,6 +45,8 @@ type SourceMongodbV2SelfManagedReplicaSet struct {
 	Database string `json:"database"`
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
+	// When enabled, syncs will validate and structure records against the stream's schema.
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
 	// The username which is used to access the database.
 	Username *string `json:"username,omitempty"`
 }
@@ -99,6 +101,13 @@ func (o *SourceMongodbV2SelfManagedReplicaSet) GetPassword() *string {
 	return o.Password
 }
 
+func (o *SourceMongodbV2SelfManagedReplicaSet) GetSchemaEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaEnforced
+}
+
 func (o *SourceMongodbV2SelfManagedReplicaSet) GetUsername() *string {
 	if o == nil {
 		return nil
@@ -142,6 +151,8 @@ type SourceMongodbV2MongoDBAtlasReplicaSet struct {
 	Database string `json:"database"`
 	// The password associated with this username.
 	Password string `json:"password"`
+	// When enabled, syncs will validate and structure records against the stream's schema.
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
 }
@@ -196,6 +207,13 @@ func (o *SourceMongodbV2MongoDBAtlasReplicaSet) GetPassword() string {
 	return o.Password
 }
 
+func (o *SourceMongodbV2MongoDBAtlasReplicaSet) GetSchemaEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SchemaEnforced
+}
+
 func (o *SourceMongodbV2MongoDBAtlasReplicaSet) GetUsername() string {
 	if o == nil {
 		return ""
@@ -210,6 +228,7 @@ const (
 	SourceMongodbV2ClusterTypeTypeSourceMongodbV2SelfManagedReplicaSet  SourceMongodbV2ClusterTypeType = "source-mongodb-v2_Self-Managed Replica Set"
 )
 
+// SourceMongodbV2ClusterType - Configures the MongoDB cluster type.
 type SourceMongodbV2ClusterType struct {
 	SourceMongodbV2MongoDBAtlasReplicaSet *SourceMongodbV2MongoDBAtlasReplicaSet
 	SourceMongodbV2SelfManagedReplicaSet  *SourceMongodbV2SelfManagedReplicaSet

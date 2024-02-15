@@ -20,10 +20,10 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     custom_reports_include_default_fields = true
     subdomain                             = "...my_subdomain..."
   }
-  definition_id = "1aa37367-271c-478a-9aa9-603df323c7d7"
-  name          = "Joel Harber"
+  definition_id = "d078a361-2fcb-45a7-bdd8-54e0c39c22fe"
+  name          = "Caroline Steuber"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f8882a19-738b-4218-b704-94da21b79cfd"
+  workspace_id  = "7adf1072-5ff7-4f1a-a7e8-fd2f193d4f9a"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -56,9 +56,7 @@ Required:
 
 Optional:
 
-- `custom_reports_fields` (String) Default: ""
-Comma-separated list of fields to include in custom reports.
-- `custom_reports_include_default_fields` (Boolean) Default: true
-If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
+- `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports. Default: ""
+- `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names. Default: true
 
 

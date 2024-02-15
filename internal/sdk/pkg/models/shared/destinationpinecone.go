@@ -341,6 +341,7 @@ const (
 	DestinationPineconeEmbeddingTypeDestinationPineconeOpenAICompatible DestinationPineconeEmbeddingType = "destination-pinecone_OpenAI-compatible"
 )
 
+// DestinationPineconeEmbedding - Embedding configuration
 type DestinationPineconeEmbedding struct {
 	DestinationPineconeOpenAI           *DestinationPineconeOpenAI
 	DestinationPineconeCohere           *DestinationPineconeCohere
@@ -758,6 +759,7 @@ const (
 	DestinationPineconeTextSplitterTypeDestinationPineconeByProgrammingLanguage DestinationPineconeTextSplitterType = "destination-pinecone_By Programming Language"
 )
 
+// DestinationPineconeTextSplitter - Split text fields into chunks based on the specified method.
 type DestinationPineconeTextSplitter struct {
 	DestinationPineconeBySeparator           *DestinationPineconeBySeparator
 	DestinationPineconeByMarkdownHeader      *DestinationPineconeByMarkdownHeader
@@ -903,13 +905,25 @@ func (o *DestinationPineconeProcessingConfigModel) GetTextSplitter() *Destinatio
 	return o.TextSplitter
 }
 
+// DestinationPinecone - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
+// as well as to provide type safety for the configuration passed to the destination.
+//
+// The configuration model is composed of four parts:
+// * Processing configuration
+// * Embedding configuration
+// * Indexing configuration
+// * Advanced configuration
+//
+// Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationPinecone struct {
 	destinationType Pinecone `const:"pinecone" json:"destinationType"`
 	// Embedding configuration
 	Embedding DestinationPineconeEmbedding `json:"embedding"`
 	// Pinecone is a popular vector store that can be used to store and retrieve embeddings.
-	Indexing   DestinationPineconeIndexing              `json:"indexing"`
-	Processing DestinationPineconeProcessingConfigModel `json:"processing"`
+	Indexing DestinationPineconeIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                    `default:"false" json:"omit_raw_text"`
+	Processing  DestinationPineconeProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationPinecone) MarshalJSON() ([]byte, error) {
@@ -939,6 +953,13 @@ func (o *DestinationPinecone) GetIndexing() DestinationPineconeIndexing {
 		return DestinationPineconeIndexing{}
 	}
 	return o.Indexing
+}
+
+func (o *DestinationPinecone) GetOmitRawText() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OmitRawText
 }
 
 func (o *DestinationPinecone) GetProcessing() DestinationPineconeProcessingConfigModel {

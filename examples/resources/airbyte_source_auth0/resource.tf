@@ -8,8 +8,8 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "f51ed0a8-181e-46e5-9fd9-ebe7b2f5ca6e"
-  name          = "Dallas Wiza"
+  definition_id = "c48ec8b4-573d-466d-807e-52a2e4396e74"
+  name          = "Tiffany Waters"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2b052102-08e0-436b-a68d-758466c963e1"
+  workspace_id  = "d50959a4-fa50-4e80-bc86-bd0cbf5314ee"
 }

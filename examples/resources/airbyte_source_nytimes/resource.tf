@@ -1,13 +1,13 @@
 resource "airbyte_source_nytimes" "my_source_nytimes" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "1851-01"
-    period     = "30"
+    end_date   = "2022-08"
+    period     = "1"
     share_type = "facebook"
     start_date = "2022-08"
   }
-  definition_id = "83b2c4dd-4d42-4907-b41e-e0bbab0457d9"
-  name          = "Sue Durgan"
+  definition_id = "db92c72d-541f-4538-928a-50561c1cc629"
+  name          = "Sandy Boyle"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e6ecd841-e72a-4766-a686-faa512d8044b"
+  workspace_id  = "7b3d761e-29ef-426a-a07d-2b59ab56edb5"
 }

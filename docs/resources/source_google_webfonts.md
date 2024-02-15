@@ -20,10 +20,10 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
   }
-  definition_id = "77e51fa7-73fc-4f1a-8306-e082909d97bf"
-  name          = "Kerry Reinger"
+  definition_id = "ce1bb1ca-daa0-4e32-8a3b-d5563e04de28"
+  name          = "Whitney Kilback"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3671a9ca-1d9c-4174-bee4-145562d27576"
+  workspace_id  = "65fdff2d-eb8c-4bf2-a74a-92033b17bfcc"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

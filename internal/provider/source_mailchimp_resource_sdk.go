@@ -5,9 +5,10 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimpCreateRequest {
+func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest() *shared.SourceMailchimpCreateRequest {
 	campaignID := new(string)
 	if !r.Configuration.CampaignID.IsUnknown() && !r.Configuration.CampaignID.IsNull() {
 		*campaignID = r.Configuration.CampaignID.ValueString()
@@ -55,9 +56,16 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 			}
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceMailchimp{
 		CampaignID:  campaignID,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -83,12 +91,14 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 	return &out
 }
 
-func (r *SourceMailchimpResourceModel) ToGetSDKType() *shared.SourceMailchimpCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMailchimpResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimpPutRequest {
+func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpPutRequest() *shared.SourceMailchimpPutRequest {
 	campaignID := new(string)
 	if !r.Configuration.CampaignID.IsUnknown() && !r.Configuration.CampaignID.IsNull() {
 		*campaignID = r.Configuration.CampaignID.ValueString()
@@ -136,9 +146,16 @@ func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimp
 			}
 		}
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceMailchimpUpdate{
 		CampaignID:  campaignID,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -148,20 +165,4 @@ func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimp
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMailchimpResourceModel) ToDeleteSDKType() *shared.SourceMailchimpCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMailchimpResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMailchimpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhouseCreateRequest {
+func (r *SourceGreenhouseResourceModel) ToSharedSourceGreenhouseCreateRequest() *shared.SourceGreenhouseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGreenhouse{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhou
 	return &out
 }
 
-func (r *SourceGreenhouseResourceModel) ToGetSDKType() *shared.SourceGreenhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGreenhouseResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGreenhouseResourceModel) ToUpdateSDKType() *shared.SourceGreenhousePutRequest {
+func (r *SourceGreenhouseResourceModel) ToSharedSourceGreenhousePutRequest() *shared.SourceGreenhousePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGreenhouseUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceGreenhouseResourceModel) ToUpdateSDKType() *shared.SourceGreenhou
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGreenhouseResourceModel) ToDeleteSDKType() *shared.SourceGreenhouseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGreenhouseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGreenhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

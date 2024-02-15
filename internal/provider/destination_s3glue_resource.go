@@ -5,9 +5,9 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -15,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +55,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
@@ -78,7 +82,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("GZIP"),
 														Description: `must be one of ["GZIP"]; Default: "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -87,13 +93,14 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed:    true,
 														Optional:    true,
+														Default:     stringdefault.StaticString("No Compression"),
 														Description: `must be one of ["No Compression"]; Default: "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -102,7 +109,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 														},
 													},
 												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 										},
 										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -111,9 +117,10 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]; Default: "Root level flattening"` + "\n" +
-											`Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("Root level flattening"),
+										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "Root level flattening"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -122,7 +129,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"format_type": schema.StringAttribute{
+										Computed:    true,
 										Optional:    true,
+										Default:     stringdefault.StaticString("JSONL"),
 										Description: `must be one of ["JSONL"]; Default: "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -131,7 +140,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 						},
 						Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -144,9 +152,10 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Name of the glue database for creating the tables, leave blank if no integration`,
 					},
 					"glue_serialization_library": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]; Default: "org.openx.data.jsonserde.JsonSerDe"` + "\n" +
-							`The library that your query engine will use for reading and writing data in your lake.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("org.openx.data.jsonserde.JsonSerDe"),
+						Description: `The library that your query engine will use for reading and writing data in your lake. must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]; Default: "org.openx.data.jsonserde.JsonSerDe"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"org.openx.data.jsonserde.JsonSerDe",
@@ -163,44 +172,54 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>`,
 					},
 					"s3_bucket_region": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""` + "\n" +
-							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(""),
+						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"",
-								"us-east-1",
-								"us-east-2",
-								"us-west-1",
-								"us-west-2",
 								"af-south-1",
 								"ap-east-1",
-								"ap-south-1",
 								"ap-northeast-1",
 								"ap-northeast-2",
 								"ap-northeast-3",
+								"ap-south-1",
+								"ap-south-2",
 								"ap-southeast-1",
 								"ap-southeast-2",
+								"ap-southeast-3",
+								"ap-southeast-4",
 								"ca-central-1",
+								"ca-west-1",
 								"cn-north-1",
 								"cn-northwest-1",
 								"eu-central-1",
+								"eu-central-2",
 								"eu-north-1",
 								"eu-south-1",
+								"eu-south-2",
 								"eu-west-1",
 								"eu-west-2",
 								"eu-west-3",
-								"sa-east-1",
+								"il-central-1",
+								"me-central-1",
 								"me-south-1",
+								"sa-east-1",
+								"us-east-1",
+								"us-east-2",
 								"us-gov-east-1",
 								"us-gov-west-1",
+								"us-west-1",
+								"us-west-2",
 							),
 						},
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: ""` + "\n" +
-							`Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString(""),
+						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""`,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Optional:    true,
@@ -215,33 +234,33 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -271,14 +290,14 @@ func (r *DestinationS3GlueResource) Configure(ctx context.Context, req resource.
 
 func (r *DestinationS3GlueResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *DestinationS3GlueResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -287,7 +306,7 @@ func (r *DestinationS3GlueResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedDestinationS3GlueCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationS3Glue(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -308,7 +327,34 @@ func (r *DestinationS3GlueResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	destinationID := data.DestinationID.ValueString()
+	request1 := operations.GetDestinationS3GlueRequest{
+		DestinationID: destinationID,
+	}
+	res1, err := r.client.Destinations.GetDestinationS3Glue(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -356,7 +402,7 @@ func (r *DestinationS3GlueResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -364,12 +410,19 @@ func (r *DestinationS3GlueResource) Read(ctx context.Context, req resource.ReadR
 
 func (r *DestinationS3GlueResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationS3GlueResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	destinationS3GluePutRequest := data.ToUpdateSDKType()
+	destinationS3GluePutRequest := data.ToSharedDestinationS3GluePutRequest()
 	destinationID := data.DestinationID.ValueString()
 	request := operations.PutDestinationS3GlueRequest{
 		DestinationS3GluePutRequest: destinationS3GluePutRequest,
@@ -391,31 +444,33 @@ func (r *DestinationS3GlueResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	destinationId1 := data.DestinationID.ValueString()
-	getRequest := operations.GetDestinationS3GlueRequest{
+	request1 := operations.GetDestinationS3GlueRequest{
 		DestinationID: destinationId1,
 	}
-	getResponse, err := r.client.Destinations.GetDestinationS3Glue(ctx, getRequest)
+	res1, err := r.client.Destinations.GetDestinationS3Glue(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.DestinationResponse)
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

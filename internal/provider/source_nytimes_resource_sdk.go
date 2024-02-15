@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCreateRequest {
+func (r *SourceNytimesResourceModel) ToSharedSourceNytimesCreateRequest() *shared.SourceNytimesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -55,12 +55,14 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	return &out
 }
 
-func (r *SourceNytimesResourceModel) ToGetSDKType() *shared.SourceNytimesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceNytimesResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceNytimesResourceModel) ToUpdateSDKType() *shared.SourceNytimesPutRequest {
+func (r *SourceNytimesResourceModel) ToSharedSourceNytimesPutRequest() *shared.SourceNytimesPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -91,20 +93,4 @@ func (r *SourceNytimesResourceModel) ToUpdateSDKType() *shared.SourceNytimesPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceNytimesResourceModel) ToDeleteSDKType() *shared.SourceNytimesCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceNytimesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

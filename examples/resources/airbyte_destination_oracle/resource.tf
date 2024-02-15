@@ -7,11 +7,11 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
-      destination_oracle_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Abdullah_Ward15"
+    username = "Pearl82"
   }
-  definition_id = "2db6fe08-64a8-456a-8417-0ff8566dc323"
-  name          = "Brittany Mohr"
-  workspace_id  = "b07bf072-8b70-4775-98c6-7348eaa4356f"
+  definition_id = "fc1b2798-db19-4e64-b83f-63d348370e17"
+  name          = "Lorena Schowalter"
+  workspace_id  = "4f32d3e1-92a8-4a43-80f2-9f7cbd12b320"
 }

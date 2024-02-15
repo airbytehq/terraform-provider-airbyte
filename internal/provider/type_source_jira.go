@@ -12,6 +12,7 @@ type SourceJira struct {
 	ExpandIssueChangelog      types.Bool     `tfsdk:"expand_issue_changelog"`
 	ExpandIssueTransition     types.Bool     `tfsdk:"expand_issue_transition"`
 	IssuesStreamExpandWith    []types.String `tfsdk:"issues_stream_expand_with"`
+	LookbackWindowMinutes     types.Int64    `tfsdk:"lookback_window_minutes"`
 	Projects                  []types.String `tfsdk:"projects"`
 	RenderFields              types.Bool     `tfsdk:"render_fields"`
 	StartDate                 types.String   `tfsdk:"start_date"`

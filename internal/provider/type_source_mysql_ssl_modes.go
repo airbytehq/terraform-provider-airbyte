@@ -3,8 +3,8 @@
 package provider
 
 type SourceMysqlSSLModes struct {
-	Preferred      *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"preferred"`
-	Required       *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"required"`
-	VerifyCA       *SourceMysqlVerifyCA                                      `tfsdk:"verify_ca"`
-	VerifyIdentity *SourceMysqlVerifyCA                                      `tfsdk:"verify_identity"`
+	Preferred      *Fake                `tfsdk:"preferred"`
+	Required       *Fake                `tfsdk:"required"`
+	VerifyCA       *SourceMysqlVerifyCA `tfsdk:"verify_ca"`
+	VerifyIdentity *SourceMysqlVerifyCA `tfsdk:"verify_identity"`
 }

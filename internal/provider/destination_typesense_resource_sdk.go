@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.DestinationTypesenseCreateRequest {
+func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRequest() *shared.DestinationTypesenseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
@@ -52,12 +52,14 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
-func (r *DestinationTypesenseResourceModel) ToGetSDKType() *shared.DestinationTypesenseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationTypesenseResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationTypesenseResourceModel) ToUpdateSDKType() *shared.DestinationTypesensePutRequest {
+func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutRequest() *shared.DestinationTypesensePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
@@ -93,20 +95,4 @@ func (r *DestinationTypesenseResourceModel) ToUpdateSDKType() *shared.Destinatio
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationTypesenseResourceModel) ToDeleteSDKType() *shared.DestinationTypesenseCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationTypesenseResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationTypesenseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

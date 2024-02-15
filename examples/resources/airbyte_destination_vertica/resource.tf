@@ -7,11 +7,11 @@ resource "airbyte_destination_vertica" "my_destination_vertica" {
     port            = 5433
     schema          = "...my_schema..."
     tunnel_method = {
-      destination_vertica_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Bailey26"
+    username = "Avis.Pagac10"
   }
-  definition_id = "f7f4dcb2-8108-4584-a7e5-cd333285c7cc"
-  name          = "Josefina Sporer"
-  workspace_id  = "34f786aa-e3aa-4f52-bfe1-9eb1bf8ee233"
+  definition_id = "dffa69fe-7143-4a3e-9a24-4d7bc1a5a6e1"
+  name          = "Sherman Cartwright"
+  workspace_id  = "13722140-27ee-471b-a38b-d648d54814af"
 }

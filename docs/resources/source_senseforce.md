@@ -18,13 +18,13 @@ resource "airbyte_source_senseforce" "my_source_senseforce" {
     access_token = "...my_access_token..."
     backend_url  = "https://galaxyapi.senseforce.io"
     dataset_id   = "8f418098-ca28-4df5-9498-0df9fe78eda7"
-    slice_range  = 180
+    slice_range  = 360
     start_date   = "2017-01-25"
   }
-  definition_id = "974cd0d5-39af-4231-9a6f-8898d74d7cd0"
-  name          = "Lillie Anderson"
+  definition_id = "be1d2ecd-0150-41d5-af6c-56d3cf89e692"
+  name          = "Miss Pat Terry"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3c633751-f6c5-444c-a0e7-3f23dc46e62d"
+  workspace_id  = "a6ecf050-91d9-408d-9d00-175338429733"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_senseforce" "my_source_senseforce" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,7 +59,6 @@ Required:
 
 Optional:
 
-- `slice_range` (Number) Default: 10
-The time increment used by the connector when requesting data from the Senseforce API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted and the more likely one could run into rate limites.  Furthermore, consider that large chunks of time might take a long time for the Senseforce query to return data - meaning it could take in effect longer than with more smaller time slices. If there are a lot of data per day, set this setting to 1. If there is only very little data per day, you might change the setting to 10 or more.
+- `slice_range` (Number) The time increment used by the connector when requesting data from the Senseforce API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted and the more likely one could run into rate limites.  Furthermore, consider that large chunks of time might take a long time for the Senseforce query to return data - meaning it could take in effect longer than with more smaller time slices. If there are a lot of data per day, set this setting to 1. If there is only very little data per day, you might change the setting to 10 or more. Default: 10
 
 

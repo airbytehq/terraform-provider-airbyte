@@ -4,8 +4,8 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     api_url      = "...my_api_url..."
     workspace_id = "...my_workspace_id..."
   }
-  definition_id = "a5ff53c6-fc10-4ca6-ba82-7c3d349f444d"
-  name          = "Julius Lockman"
+  definition_id = "4ace41dc-5b42-4f2a-a28e-88647f2d4275"
+  name          = "Sue Adams"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9d8494dc-faea-4550-8380-1e9f446900c8"
+  workspace_id  = "c1c65661-b248-45a0-a023-8eba1361d3c0"
 }

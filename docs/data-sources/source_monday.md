@@ -27,8 +27,7 @@ data "airbyte_source_monday" "my_source_monday" {
 
 ### Read-Only
 
-- `configuration` (String) Parsed as JSON.
-The values required to configure the source.
+- `configuration` (String) The values required to configure the source. Parsed as JSON.
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)

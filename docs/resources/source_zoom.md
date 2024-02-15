@@ -17,10 +17,10 @@ resource "airbyte_source_zoom" "my_source_zoom" {
   configuration = {
     jwt_token = "...my_jwt_token..."
   }
-  definition_id = "d6f5cf39-b34f-4958-9f42-198f32822b82"
-  name          = "Gregory Hirthe"
+  definition_id = "a568aa6d-c340-4bb1-9469-57c123858702"
+  name          = "Austin Lang"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bc2b7c1d-3540-4fbb-a2d8-a9d0010028d1"
+  workspace_id  = "32c86dad-817e-4f75-b417-c7a0b7ebf790"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_zoom" "my_source_zoom" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

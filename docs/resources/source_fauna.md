@@ -19,17 +19,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
       deletions = {
         disabled = {}
       }
-      page_size = 0
+      page_size = 10
     }
     domain = "...my_domain..."
     port   = 10
     scheme = "...my_scheme..."
     secret = "...my_secret..."
   }
-  definition_id = "56112c1f-da02-410a-9cfb-ec287654f12b"
-  name          = "Mr. Willard Gislason"
+  definition_id = "5a2e94ef-f211-4adf-8721-dd1f80239a92"
+  name          = "Miss Sam Kemmer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fbb0cddc-f802-4e3e-a016-5466352da9b0"
+  workspace_id  = "3eb11448-c1cd-43af-a5ef-85381e22d9fe"
 }
 ```
 
@@ -44,8 +44,8 @@ resource "airbyte_source_fauna" "my_source_fauna" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,12 +62,9 @@ Required:
 Optional:
 
 - `collection` (Attributes) Settings for the Fauna Collection. (see [below for nested schema](#nestedatt--configuration--collection))
-- `domain` (String) Default: "db.fauna.com"
-Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
-- `port` (Number) Default: 443
-Endpoint port.
-- `scheme` (String) Default: "https"
-URL scheme.
+- `domain` (String) Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>. Default: "db.fauna.com"
+- `port` (Number) Endpoint port. Default: 443
+- `scheme` (String) URL scheme. Default: "https"
 
 <a id="nestedatt--configuration--collection"></a>
 ### Nested Schema for `configuration.collection`
@@ -81,24 +78,18 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 
 Optional:
 
-- `page_size` (Number) Default: 64
-The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+- `page_size` (Number) The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
 Choose your page size based on how large the documents are. <br>
 See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
+Default: 64
 
 <a id="nestedatt--configuration--collection--deletions"></a>
 ### Nested Schema for `configuration.collection.deletions`
 
 Optional:
 
-- `disabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
-Enabling deletion mode informs your destination of deleted documents.<br>
-Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--disabled))
-- `enabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
-Enabling deletion mode informs your destination of deleted documents.<br>
-Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--enabled))
+- `disabled` (Attributes) (see [below for nested schema](#nestedatt--configuration--collection--deletions--disabled))
+- `enabled` (Attributes) (see [below for nested schema](#nestedatt--configuration--collection--deletions--enabled))
 
 <a id="nestedatt--configuration--collection--deletions--disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.enabled`
@@ -109,7 +100,6 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 
 Optional:
 
-- `column` (String) Default: "deleted_at"
-Name of the "deleted at" column.
+- `column` (String) Name of the "deleted at" column. Default: "deleted_at"
 
 

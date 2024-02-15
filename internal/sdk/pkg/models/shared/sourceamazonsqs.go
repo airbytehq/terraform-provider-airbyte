@@ -12,31 +12,39 @@ import (
 type SourceAmazonSqsAWSRegion string
 
 const (
-	SourceAmazonSqsAWSRegionUsEast1      SourceAmazonSqsAWSRegion = "us-east-1"
-	SourceAmazonSqsAWSRegionUsEast2      SourceAmazonSqsAWSRegion = "us-east-2"
-	SourceAmazonSqsAWSRegionUsWest1      SourceAmazonSqsAWSRegion = "us-west-1"
-	SourceAmazonSqsAWSRegionUsWest2      SourceAmazonSqsAWSRegion = "us-west-2"
 	SourceAmazonSqsAWSRegionAfSouth1     SourceAmazonSqsAWSRegion = "af-south-1"
 	SourceAmazonSqsAWSRegionApEast1      SourceAmazonSqsAWSRegion = "ap-east-1"
-	SourceAmazonSqsAWSRegionApSouth1     SourceAmazonSqsAWSRegion = "ap-south-1"
 	SourceAmazonSqsAWSRegionApNortheast1 SourceAmazonSqsAWSRegion = "ap-northeast-1"
 	SourceAmazonSqsAWSRegionApNortheast2 SourceAmazonSqsAWSRegion = "ap-northeast-2"
 	SourceAmazonSqsAWSRegionApNortheast3 SourceAmazonSqsAWSRegion = "ap-northeast-3"
+	SourceAmazonSqsAWSRegionApSouth1     SourceAmazonSqsAWSRegion = "ap-south-1"
+	SourceAmazonSqsAWSRegionApSouth2     SourceAmazonSqsAWSRegion = "ap-south-2"
 	SourceAmazonSqsAWSRegionApSoutheast1 SourceAmazonSqsAWSRegion = "ap-southeast-1"
 	SourceAmazonSqsAWSRegionApSoutheast2 SourceAmazonSqsAWSRegion = "ap-southeast-2"
+	SourceAmazonSqsAWSRegionApSoutheast3 SourceAmazonSqsAWSRegion = "ap-southeast-3"
+	SourceAmazonSqsAWSRegionApSoutheast4 SourceAmazonSqsAWSRegion = "ap-southeast-4"
 	SourceAmazonSqsAWSRegionCaCentral1   SourceAmazonSqsAWSRegion = "ca-central-1"
+	SourceAmazonSqsAWSRegionCaWest1      SourceAmazonSqsAWSRegion = "ca-west-1"
 	SourceAmazonSqsAWSRegionCnNorth1     SourceAmazonSqsAWSRegion = "cn-north-1"
 	SourceAmazonSqsAWSRegionCnNorthwest1 SourceAmazonSqsAWSRegion = "cn-northwest-1"
 	SourceAmazonSqsAWSRegionEuCentral1   SourceAmazonSqsAWSRegion = "eu-central-1"
+	SourceAmazonSqsAWSRegionEuCentral2   SourceAmazonSqsAWSRegion = "eu-central-2"
 	SourceAmazonSqsAWSRegionEuNorth1     SourceAmazonSqsAWSRegion = "eu-north-1"
 	SourceAmazonSqsAWSRegionEuSouth1     SourceAmazonSqsAWSRegion = "eu-south-1"
+	SourceAmazonSqsAWSRegionEuSouth2     SourceAmazonSqsAWSRegion = "eu-south-2"
 	SourceAmazonSqsAWSRegionEuWest1      SourceAmazonSqsAWSRegion = "eu-west-1"
 	SourceAmazonSqsAWSRegionEuWest2      SourceAmazonSqsAWSRegion = "eu-west-2"
 	SourceAmazonSqsAWSRegionEuWest3      SourceAmazonSqsAWSRegion = "eu-west-3"
-	SourceAmazonSqsAWSRegionSaEast1      SourceAmazonSqsAWSRegion = "sa-east-1"
+	SourceAmazonSqsAWSRegionIlCentral1   SourceAmazonSqsAWSRegion = "il-central-1"
+	SourceAmazonSqsAWSRegionMeCentral1   SourceAmazonSqsAWSRegion = "me-central-1"
 	SourceAmazonSqsAWSRegionMeSouth1     SourceAmazonSqsAWSRegion = "me-south-1"
+	SourceAmazonSqsAWSRegionSaEast1      SourceAmazonSqsAWSRegion = "sa-east-1"
+	SourceAmazonSqsAWSRegionUsEast1      SourceAmazonSqsAWSRegion = "us-east-1"
+	SourceAmazonSqsAWSRegionUsEast2      SourceAmazonSqsAWSRegion = "us-east-2"
 	SourceAmazonSqsAWSRegionUsGovEast1   SourceAmazonSqsAWSRegion = "us-gov-east-1"
 	SourceAmazonSqsAWSRegionUsGovWest1   SourceAmazonSqsAWSRegion = "us-gov-west-1"
+	SourceAmazonSqsAWSRegionUsWest1      SourceAmazonSqsAWSRegion = "us-west-1"
+	SourceAmazonSqsAWSRegionUsWest2      SourceAmazonSqsAWSRegion = "us-west-2"
 )
 
 func (e SourceAmazonSqsAWSRegion) ToPointer() *SourceAmazonSqsAWSRegion {
@@ -49,19 +57,9 @@ func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -69,11 +67,21 @@ func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -81,9 +89,13 @@ func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -91,13 +103,25 @@ func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
 		fallthrough
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = SourceAmazonSqsAWSRegion(v)
 		return nil
 	default:

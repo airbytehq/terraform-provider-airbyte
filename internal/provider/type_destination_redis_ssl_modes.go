@@ -3,6 +3,6 @@
 package provider
 
 type DestinationRedisSSLModes struct {
-	Disable    *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"disable"`
-	VerifyFull *VerifyFull                                               `tfsdk:"verify_full"`
+	Disable    *Fake       `tfsdk:"disable"`
+	VerifyFull *VerifyFull `tfsdk:"verify_full"`
 }

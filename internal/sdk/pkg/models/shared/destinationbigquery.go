@@ -255,7 +255,6 @@ func (e *DestinationBigqueryCredentialType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationBigqueryHMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationBigqueryHMACKey struct {
 	credentialType DestinationBigqueryCredentialType `const:"HMAC_KEY" json:"credential_type"`
 	// HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
@@ -299,6 +298,7 @@ const (
 	DestinationBigqueryCredentialUnionTypeDestinationBigqueryHMACKey DestinationBigqueryCredentialUnionType = "destination-bigquery_HMAC key"
 )
 
+// DestinationBigqueryCredential - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationBigqueryCredential struct {
 	DestinationBigqueryHMACKey *DestinationBigqueryHMACKey
 
@@ -449,6 +449,7 @@ const (
 	DestinationBigqueryLoadingMethodTypeDestinationBigqueryStandardInserts DestinationBigqueryLoadingMethodType = "destination-bigquery_Standard Inserts"
 )
 
+// DestinationBigqueryLoadingMethod - The way data will be uploaded to BigQuery.
 type DestinationBigqueryLoadingMethod struct {
 	DestinationBigqueryGCSStaging      *DestinationBigqueryGCSStaging
 	DestinationBigqueryStandardInserts *DestinationBigqueryStandardInserts

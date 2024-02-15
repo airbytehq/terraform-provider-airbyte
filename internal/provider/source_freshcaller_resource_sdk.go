@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceFreshcallerResourceModel) ToCreateSDKType() *shared.SourceFreshcallerCreateRequest {
+func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerCreateRequest() *shared.SourceFreshcallerCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domain := r.Configuration.Domain.ValueString()
 	requestsPerMinute := new(int64)
@@ -60,12 +60,14 @@ func (r *SourceFreshcallerResourceModel) ToCreateSDKType() *shared.SourceFreshca
 	return &out
 }
 
-func (r *SourceFreshcallerResourceModel) ToGetSDKType() *shared.SourceFreshcallerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceFreshcallerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceFreshcallerResourceModel) ToUpdateSDKType() *shared.SourceFreshcallerPutRequest {
+func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerPutRequest() *shared.SourceFreshcallerPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domain := r.Configuration.Domain.ValueString()
 	requestsPerMinute := new(int64)
@@ -101,20 +103,4 @@ func (r *SourceFreshcallerResourceModel) ToUpdateSDKType() *shared.SourceFreshca
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceFreshcallerResourceModel) ToDeleteSDKType() *shared.SourceFreshcallerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceFreshcallerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceFreshcallerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationKinesisCreateRequest {
+func (r *DestinationKinesisResourceModel) ToSharedDestinationKinesisCreateRequest() *shared.DestinationKinesisCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	bufferSize := new(int64)
 	if !r.Configuration.BufferSize.IsUnknown() && !r.Configuration.BufferSize.IsNull() {
@@ -49,12 +49,14 @@ func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationK
 	return &out
 }
 
-func (r *DestinationKinesisResourceModel) ToGetSDKType() *shared.DestinationKinesisCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationKinesisResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationKinesisResourceModel) ToUpdateSDKType() *shared.DestinationKinesisPutRequest {
+func (r *DestinationKinesisResourceModel) ToSharedDestinationKinesisPutRequest() *shared.DestinationKinesisPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	bufferSize := new(int64)
 	if !r.Configuration.BufferSize.IsUnknown() && !r.Configuration.BufferSize.IsNull() {
@@ -87,20 +89,4 @@ func (r *DestinationKinesisResourceModel) ToUpdateSDKType() *shared.DestinationK
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationKinesisResourceModel) ToDeleteSDKType() *shared.DestinationKinesisCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationKinesisResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationKinesisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -8,8 +8,13 @@ import (
 	"time"
 )
 
-func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebeeCreateRequest {
-	productCatalog := shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
+func (r *SourceChargebeeResourceModel) ToSharedSourceChargebeeCreateRequest() *shared.SourceChargebeeCreateRequest {
+	productCatalog := new(shared.SourceChargebeeProductCatalog)
+	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
+		*productCatalog = shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	} else {
+		productCatalog = nil
+	}
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -43,13 +48,20 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	return &out
 }
 
-func (r *SourceChargebeeResourceModel) ToGetSDKType() *shared.SourceChargebeeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceChargebeeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebeePutRequest {
-	productCatalog := shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
+func (r *SourceChargebeeResourceModel) ToSharedSourceChargebeePutRequest() *shared.SourceChargebeePutRequest {
+	productCatalog := new(shared.ProductCatalog)
+	if !r.Configuration.ProductCatalog.IsUnknown() && !r.Configuration.ProductCatalog.IsNull() {
+		*productCatalog = shared.ProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	} else {
+		productCatalog = nil
+	}
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -67,20 +79,4 @@ func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebee
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceChargebeeResourceModel) ToDeleteSDKType() *shared.SourceChargebeeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceChargebeeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceChargebeeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

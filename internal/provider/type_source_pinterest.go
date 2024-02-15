@@ -5,8 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePinterest struct {
-	Credentials   *SourcePinterestAuthorizationMethod `tfsdk:"credentials"`
-	CustomReports []ReportConfig                      `tfsdk:"custom_reports"`
-	StartDate     types.String                        `tfsdk:"start_date"`
-	Status        []types.String                      `tfsdk:"status"`
+	Credentials   *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"credentials"`
+	CustomReports []ReportConfig                                       `tfsdk:"custom_reports"`
+	StartDate     types.String                                         `tfsdk:"start_date"`
+	Status        []types.String                                       `tfsdk:"status"`
 }

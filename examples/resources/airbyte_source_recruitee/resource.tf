@@ -1,10 +1,10 @@
 resource "airbyte_source_recruitee" "my_source_recruitee" {
   configuration = {
     api_key    = "...my_api_key..."
-    company_id = 4
+    company_id = 10
   }
-  definition_id = "f1211e1f-cb26-4b90-8c0d-f941919892a2"
-  name          = "Mrs. Sherri Rosenbaum"
+  definition_id = "ae93f7f0-f8c4-4b4f-8d4f-6833e1f3303a"
+  name          = "Kevin Goldner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "af7bc34c-463b-4838-9c5f-976535f73a45"
+  workspace_id  = "891fe9c8-dcb6-4cc1-8d73-d2cf40136d59"
 }

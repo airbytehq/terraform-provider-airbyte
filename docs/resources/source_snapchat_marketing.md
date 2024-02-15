@@ -21,10 +21,10 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2022-01-01"
   }
-  definition_id = "8a6950f0-007e-4330-87d9-5358a56819d2"
-  name          = "Rudy Toy"
+  definition_id = "b60aa080-4c97-41e6-8235-dc09fadad73b"
+  name          = "Mr. Ramona Sporer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1d7e3d24-dfd3-4d51-a342-f997d059d38a"
+  workspace_id  = "48acfdc6-fb50-44a1-ab77-23cbf0223ae8"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,7 +59,6 @@ Required:
 Optional:
 
 - `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
-- `start_date` (String) Default: "2022-01-01"
-Date in the format 2022-01-01. Any data before this date will not be replicated.
+- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated. Default: "2022-01-01"
 
 

@@ -34,7 +34,6 @@ func (e *SourceZendeskTalkUpdateSchemasAuthType) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceZendeskTalkUpdateOAuth20 - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 type SourceZendeskTalkUpdateOAuth20 struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
@@ -113,7 +112,6 @@ func (e *SourceZendeskTalkUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZendeskTalkUpdateAPIToken - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 type SourceZendeskTalkUpdateAPIToken struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
@@ -166,6 +164,7 @@ const (
 	SourceZendeskTalkUpdateAuthenticationTypeSourceZendeskTalkUpdateOAuth20  SourceZendeskTalkUpdateAuthenticationType = "source-zendesk-talk-update_OAuth2.0"
 )
 
+// SourceZendeskTalkUpdateAuthentication - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 type SourceZendeskTalkUpdateAuthentication struct {
 	SourceZendeskTalkUpdateAPIToken *SourceZendeskTalkUpdateAPIToken
 	SourceZendeskTalkUpdateOAuth20  *SourceZendeskTalkUpdateOAuth20

@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMailchimpDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourceMailchimpDataSourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	configurationResult, _ := json.Marshal(resp.Configuration)
 	r.Configuration = types.StringValue(string(configurationResult))
 	r.Name = types.StringValue(resp.Name)

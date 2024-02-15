@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreateRequest {
+func (r *SourceSentryResourceModel) ToSharedSourceSentryCreateRequest() *shared.SourceSentryCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	var discoverFields []interface{} = nil
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
@@ -55,12 +55,14 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 	return &out
 }
 
-func (r *SourceSentryResourceModel) ToGetSDKType() *shared.SourceSentryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSentryResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSentryResourceModel) ToUpdateSDKType() *shared.SourceSentryPutRequest {
+func (r *SourceSentryResourceModel) ToSharedSourceSentryPutRequest() *shared.SourceSentryPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	var discoverFields []interface{} = nil
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
@@ -91,20 +93,4 @@ func (r *SourceSentryResourceModel) ToUpdateSDKType() *shared.SourceSentryPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSentryResourceModel) ToDeleteSDKType() *shared.SourceSentryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSentryResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSentryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

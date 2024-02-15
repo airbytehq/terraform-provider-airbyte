@@ -6,8 +6,8 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2022-01-01"
   }
-  definition_id = "8a6950f0-007e-4330-87d9-5358a56819d2"
-  name          = "Rudy Toy"
+  definition_id = "b60aa080-4c97-41e6-8235-dc09fadad73b"
+  name          = "Mr. Ramona Sporer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1d7e3d24-dfd3-4d51-a342-f997d059d38a"
+  workspace_id  = "48acfdc6-fb50-44a1-ab77-23cbf0223ae8"
 }

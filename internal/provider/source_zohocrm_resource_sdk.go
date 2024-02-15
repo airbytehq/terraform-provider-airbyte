@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCreateRequest {
+func (r *SourceZohoCrmResourceModel) ToSharedSourceZohoCrmCreateRequest() *shared.SourceZohoCrmCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	dcRegion := shared.SourceZohoCrmDataCenterLocation(r.Configuration.DcRegion.ValueString())
@@ -59,12 +59,14 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 	return &out
 }
 
-func (r *SourceZohoCrmResourceModel) ToGetSDKType() *shared.SourceZohoCrmCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZohoCrmResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZohoCrmResourceModel) ToUpdateSDKType() *shared.SourceZohoCrmPutRequest {
+func (r *SourceZohoCrmResourceModel) ToSharedSourceZohoCrmPutRequest() *shared.SourceZohoCrmPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	dcRegion := shared.DataCenterLocation(r.Configuration.DcRegion.ValueString())
@@ -99,20 +101,4 @@ func (r *SourceZohoCrmResourceModel) ToUpdateSDKType() *shared.SourceZohoCrmPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZohoCrmResourceModel) ToDeleteSDKType() *shared.SourceZohoCrmCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZohoCrmResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

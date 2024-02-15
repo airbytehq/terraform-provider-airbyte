@@ -8,18 +8,12 @@ import (
 	"time"
 )
 
-func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
+func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartnerCreateRequest() *shared.SourceAmazonSellerPartnerCreateRequest {
 	accountType := new(shared.SourceAmazonSellerPartnerAWSSellerPartnerAccountType)
 	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
 		*accountType = shared.SourceAmazonSellerPartnerAWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
 	} else {
 		accountType = nil
-	}
-	advancedStreamOptions := new(string)
-	if !r.Configuration.AdvancedStreamOptions.IsUnknown() && !r.Configuration.AdvancedStreamOptions.IsNull() {
-		*advancedStreamOptions = r.Configuration.AdvancedStreamOptions.ValueString()
-	} else {
-		advancedStreamOptions = nil
 	}
 	awsEnvironment := new(shared.SourceAmazonSellerPartnerAWSEnvironment)
 	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
@@ -48,25 +42,40 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		replicationEndDate = nil
 	}
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	reportOptions := new(string)
-	if !r.Configuration.ReportOptions.IsUnknown() && !r.Configuration.ReportOptions.IsNull() {
-		*reportOptions = r.Configuration.ReportOptions.ValueString()
+	replicationStartDate := new(time.Time)
+	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
+		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	} else {
-		reportOptions = nil
+		replicationStartDate = nil
+	}
+	var reportOptionsList []shared.SourceAmazonSellerPartnerReportOptions = nil
+	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
+		var optionsList []shared.SourceAmazonSellerPartnerOptionsList = nil
+		for _, optionsListItem := range reportOptionsListItem.OptionsList {
+			optionName := optionsListItem.OptionName.ValueString()
+			optionValue := optionsListItem.OptionValue.ValueString()
+			optionsList = append(optionsList, shared.SourceAmazonSellerPartnerOptionsList{
+				OptionName:  optionName,
+				OptionValue: optionValue,
+			})
+		}
+		streamName := shared.SourceAmazonSellerPartnerStreamName(reportOptionsListItem.StreamName.ValueString())
+		reportOptionsList = append(reportOptionsList, shared.SourceAmazonSellerPartnerReportOptions{
+			OptionsList: optionsList,
+			StreamName:  streamName,
+		})
 	}
 	configuration := shared.SourceAmazonSellerPartner{
-		AccountType:           accountType,
-		AdvancedStreamOptions: advancedStreamOptions,
-		AwsEnvironment:        awsEnvironment,
-		LwaAppID:              lwaAppID,
-		LwaClientSecret:       lwaClientSecret,
-		PeriodInDays:          periodInDays,
-		RefreshToken:          refreshToken,
-		Region:                region,
-		ReplicationEndDate:    replicationEndDate,
-		ReplicationStartDate:  replicationStartDate,
-		ReportOptions:         reportOptions,
+		AccountType:          accountType,
+		AwsEnvironment:       awsEnvironment,
+		LwaAppID:             lwaAppID,
+		LwaClientSecret:      lwaClientSecret,
+		PeriodInDays:         periodInDays,
+		RefreshToken:         refreshToken,
+		Region:               region,
+		ReplicationEndDate:   replicationEndDate,
+		ReplicationStartDate: replicationStartDate,
+		ReportOptionsList:    reportOptionsList,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -92,23 +101,19 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	return &out
 }
 
-func (r *SourceAmazonSellerPartnerResourceModel) ToGetSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.SourceAmazonSellerPartnerPutRequest {
+func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartnerPutRequest() *shared.SourceAmazonSellerPartnerPutRequest {
 	accountType := new(shared.AWSSellerPartnerAccountType)
 	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
 		*accountType = shared.AWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
 	} else {
 		accountType = nil
-	}
-	advancedStreamOptions := new(string)
-	if !r.Configuration.AdvancedStreamOptions.IsUnknown() && !r.Configuration.AdvancedStreamOptions.IsNull() {
-		*advancedStreamOptions = r.Configuration.AdvancedStreamOptions.ValueString()
-	} else {
-		advancedStreamOptions = nil
 	}
 	awsEnvironment := new(shared.AWSEnvironment)
 	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
@@ -137,25 +142,40 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 	} else {
 		replicationEndDate = nil
 	}
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	reportOptions := new(string)
-	if !r.Configuration.ReportOptions.IsUnknown() && !r.Configuration.ReportOptions.IsNull() {
-		*reportOptions = r.Configuration.ReportOptions.ValueString()
+	replicationStartDate := new(time.Time)
+	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
+		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	} else {
-		reportOptions = nil
+		replicationStartDate = nil
+	}
+	var reportOptionsList []shared.ReportOptions = nil
+	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
+		var optionsList []shared.OptionsList = nil
+		for _, optionsListItem := range reportOptionsListItem.OptionsList {
+			optionName := optionsListItem.OptionName.ValueString()
+			optionValue := optionsListItem.OptionValue.ValueString()
+			optionsList = append(optionsList, shared.OptionsList{
+				OptionName:  optionName,
+				OptionValue: optionValue,
+			})
+		}
+		streamName := shared.StreamName(reportOptionsListItem.StreamName.ValueString())
+		reportOptionsList = append(reportOptionsList, shared.ReportOptions{
+			OptionsList: optionsList,
+			StreamName:  streamName,
+		})
 	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
-		AccountType:           accountType,
-		AdvancedStreamOptions: advancedStreamOptions,
-		AwsEnvironment:        awsEnvironment,
-		LwaAppID:              lwaAppID,
-		LwaClientSecret:       lwaClientSecret,
-		PeriodInDays:          periodInDays,
-		RefreshToken:          refreshToken,
-		Region:                region,
-		ReplicationEndDate:    replicationEndDate,
-		ReplicationStartDate:  replicationStartDate,
-		ReportOptions:         reportOptions,
+		AccountType:          accountType,
+		AwsEnvironment:       awsEnvironment,
+		LwaAppID:             lwaAppID,
+		LwaClientSecret:      lwaClientSecret,
+		PeriodInDays:         periodInDays,
+		RefreshToken:         refreshToken,
+		Region:               region,
+		ReplicationEndDate:   replicationEndDate,
+		ReplicationStartDate: replicationStartDate,
+		ReportOptionsList:    reportOptionsList,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -165,20 +185,4 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToUpdateSDKType() *shared.Sourc
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAmazonSellerPartnerResourceModel) ToDeleteSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmogulCreateRequest {
+func (r *SourceChartmogulResourceModel) ToSharedSourceChartmogulCreateRequest() *shared.SourceChartmogulCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChartmogul{
@@ -39,12 +39,14 @@ func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmog
 	return &out
 }
 
-func (r *SourceChartmogulResourceModel) ToGetSDKType() *shared.SourceChartmogulCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceChartmogulResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceChartmogulResourceModel) ToUpdateSDKType() *shared.SourceChartmogulPutRequest {
+func (r *SourceChartmogulResourceModel) ToSharedSourceChartmogulPutRequest() *shared.SourceChartmogulPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChartmogulUpdate{
@@ -59,20 +61,4 @@ func (r *SourceChartmogulResourceModel) ToUpdateSDKType() *shared.SourceChartmog
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceChartmogulResourceModel) ToDeleteSDKType() *shared.SourceChartmogulCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceChartmogulResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceChartmogulResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

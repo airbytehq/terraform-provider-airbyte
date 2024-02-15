@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePrestashopDataSourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
+func (r *SourcePrestashopDataSourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	configurationResult, _ := json.Marshal(resp.Configuration)
 	r.Configuration = types.StringValue(string(configurationResult))
 	r.Name = types.StringValue(resp.Name)

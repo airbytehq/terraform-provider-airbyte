@@ -5,15 +5,17 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -54,6 +56,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"collection": schema.SingleNestedAttribute{
@@ -65,24 +70,17 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									"disabled": schema.SingleNestedAttribute{
 										Optional:   true,
 										Attributes: map[string]schema.Attribute{},
-										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
-											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
-											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
-											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 									},
 									"enabled": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Optional: true,
-												MarkdownDescription: `Default: "deleted_at"` + "\n" +
-													`Name of the "deleted at" column.`,
+												Computed:    true,
+												Optional:    true,
+												Default:     stringdefault.StaticString("deleted_at"),
+												Description: `Name of the "deleted at" column. Default: "deleted_at"`,
 											},
 										},
-										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
-											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
-											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
-											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 									},
 								},
 								MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -94,29 +92,34 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"page_size": schema.Int64Attribute{
+								Computed: true,
 								Optional: true,
-								MarkdownDescription: `Default: 64` + "\n" +
-									`The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>` + "\n" +
+								Default:  int64default.StaticInt64(64),
+								MarkdownDescription: `The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>` + "\n" +
 									`Choose your page size based on how large the documents are. <br>` + "\n" +
-									`See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.`,
+									`See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.` + "\n" +
+									`Default: 64`,
 							},
 						},
 						Description: `Settings for the Fauna Collection.`,
 					},
 					"domain": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: "db.fauna.com"` + "\n" +
-							`Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("db.fauna.com"),
+						Description: `Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>. Default: "db.fauna.com"`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 443` + "\n" +
-							`Endpoint port.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(443),
+						Description: `Endpoint port. Default: 443`,
 					},
 					"scheme": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: "https"` + "\n" +
-							`URL scheme.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("https"),
+						Description: `URL scheme. Default: "https"`,
 					},
 					"secret": schema.StringAttribute{
 						Required:    true,
@@ -126,40 +129,40 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -189,14 +192,14 @@ func (r *SourceFaunaResource) Configure(ctx context.Context, req resource.Config
 
 func (r *SourceFaunaResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceFaunaResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -205,7 +208,7 @@ func (r *SourceFaunaResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceFaunaCreateRequest()
 	res, err := r.client.Sources.CreateSourceFauna(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -226,7 +229,34 @@ func (r *SourceFaunaResource) Create(ctx context.Context, req resource.CreateReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceFaunaRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceFauna(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -274,7 +304,7 @@ func (r *SourceFaunaResource) Read(ctx context.Context, req resource.ReadRequest
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -282,12 +312,19 @@ func (r *SourceFaunaResource) Read(ctx context.Context, req resource.ReadRequest
 
 func (r *SourceFaunaResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceFaunaResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceFaunaPutRequest := data.ToUpdateSDKType()
+	sourceFaunaPutRequest := data.ToSharedSourceFaunaPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceFaunaRequest{
 		SourceFaunaPutRequest: sourceFaunaPutRequest,
@@ -309,31 +346,33 @@ func (r *SourceFaunaResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceFaunaRequest{
+	request1 := operations.GetSourceFaunaRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceFauna(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceFauna(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

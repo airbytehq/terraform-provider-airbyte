@@ -17,14 +17,14 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
     data_region        = "Standard Server"
-    request_time_range = 2
+    request_time_range = 3
     secret_key         = "...my_secret_key..."
     start_date         = "2021-01-25T00:00:00Z"
   }
-  definition_id = "526ae8aa-3c4f-4287-913b-8668105e1180"
-  name          = "Dominic Dach"
+  definition_id = "ce17ccd6-b10d-4638-8d4f-dfb9af007bc0"
+  name          = "Miss Ashley Mayer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "75a1ca19-0e95-4bd1-982a-17eb0af63def"
+  workspace_id  = "b057f07c-5466-421b-9ba9-0354f51ed0a8"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -58,9 +58,7 @@ Required:
 
 Optional:
 
-- `data_region` (String) must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"
-Amplitude data region server
-- `request_time_range` (Number) Default: 24
-According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
+- `data_region` (String) Amplitude data region server. must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"
+- `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours. Default: 24
 
 

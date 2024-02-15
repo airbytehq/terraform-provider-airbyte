@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationConvexResourceModel) ToCreateSDKType() *shared.DestinationConvexCreateRequest {
+func (r *DestinationConvexResourceModel) ToSharedDestinationConvexCreateRequest() *shared.DestinationConvexCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
 	configuration := shared.DestinationConvex{
@@ -31,12 +31,14 @@ func (r *DestinationConvexResourceModel) ToCreateSDKType() *shared.DestinationCo
 	return &out
 }
 
-func (r *DestinationConvexResourceModel) ToGetSDKType() *shared.DestinationConvexCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationConvexResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationConvexResourceModel) ToUpdateSDKType() *shared.DestinationConvexPutRequest {
+func (r *DestinationConvexResourceModel) ToSharedDestinationConvexPutRequest() *shared.DestinationConvexPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
 	configuration := shared.DestinationConvexUpdate{
@@ -51,20 +53,4 @@ func (r *DestinationConvexResourceModel) ToUpdateSDKType() *shared.DestinationCo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationConvexResourceModel) ToDeleteSDKType() *shared.DestinationConvexCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationConvexResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationConvexResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

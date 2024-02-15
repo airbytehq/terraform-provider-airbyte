@@ -122,6 +122,7 @@ const (
 	SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateScanChangesWithUserDefinedCursor SourceMysqlUpdateUpdateMethodType = "source-mysql-update_Scan Changes with User Defined Cursor"
 )
 
+// SourceMysqlUpdateUpdateMethod - Configures how data is extracted from the database.
 type SourceMysqlUpdateUpdateMethod struct {
 	ReadChangesUsingBinaryLogCDC                      *ReadChangesUsingBinaryLogCDC
 	SourceMysqlUpdateScanChangesWithUserDefinedCursor *SourceMysqlUpdateScanChangesWithUserDefinedCursor
@@ -435,6 +436,7 @@ const (
 	SourceMysqlUpdateSSLModesTypeVerifyIdentity            SourceMysqlUpdateSSLModesType = "Verify Identity"
 )
 
+// SourceMysqlUpdateSSLModes - SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 type SourceMysqlUpdateSSLModes struct {
 	Preferred                 *Preferred
 	Required                  *Required
@@ -558,7 +560,6 @@ func (e *SourceMysqlUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []
 	}
 }
 
-// SourceMysqlUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -640,7 +641,6 @@ func (e *SourceMysqlUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceMysqlUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -722,7 +722,6 @@ func (e *SourceMysqlUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMysqlUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourceMysqlUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -751,6 +750,7 @@ const (
 	SourceMysqlUpdateSSHTunnelMethodTypeSourceMysqlUpdatePasswordAuthentication SourceMysqlUpdateSSHTunnelMethodType = "source-mysql-update_Password Authentication"
 )
 
+// SourceMysqlUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlUpdateSSHTunnelMethod struct {
 	SourceMysqlUpdateNoTunnel               *SourceMysqlUpdateNoTunnel
 	SourceMysqlUpdateSSHKeyAuthentication   *SourceMysqlUpdateSSHKeyAuthentication

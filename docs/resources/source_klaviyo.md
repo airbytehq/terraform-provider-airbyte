@@ -18,10 +18,10 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "d98f81ed-eee1-4be4-a723-eeaf419bc59e"
-  name          = "Joanne Murray"
+  definition_id = "7f387c53-022b-4a4a-ad29-95c663b6d13c"
+  name          = "Jenna DuBuque"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9e9d149f-3b04-4e32-9c64-9b6bc8e2c7d0"
+  workspace_id  = "b93bd413-d75c-4669-ba6b-92ef16650e4c"
 }
 ```
 
@@ -36,8 +36,8 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -15,16 +15,16 @@ SourceKyve Resource
 ```terraform
 resource "airbyte_source_kyve" "my_source_kyve" {
   configuration = {
-    max_pages = 0
+    max_pages = 2
     page_size = 0
     pool_ids  = "0"
     start_ids = "0"
-    url_base  = "https://api.beta.kyve.network/"
+    url_base  = "https://api.korellia.kyve.network/"
   }
-  definition_id = "be9a984e-4b07-4bca-b13e-d5606ac59e7c"
-  name          = "Wilbur Turcotte"
+  definition_id = "77a566ac-796f-4dac-9f48-b8f86701054c"
+  name          = "Miss Cristina Ratke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b09ffd37-53fe-446a-9403-ba1bd8103cfb"
+  workspace_id  = "49a8fc7f-8e24-4672-a45c-fb2449eef876"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_kyve" "my_source_kyve" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -53,14 +53,12 @@ resource "airbyte_source_kyve" "my_source_kyve" {
 Required:
 
 - `pool_ids` (String) The IDs of the KYVE storage pool you want to archive. (Comma separated)
-- `start_ids` (String) The start-id defines, from which bundle id the pipeline should start to extract the data (Comma separated)
+- `start_ids` (String) The start-id defines, from which bundle id the pipeline should start to extract the data. (Comma separated)
 
 Optional:
 
 - `max_pages` (Number) The maximum amount of pages to go trough. Set to 'null' for all pages.
-- `page_size` (Number) Default: 100
-The pagesize for pagination, smaller numbers are used in integration tests.
-- `url_base` (String) Default: "https://api.korellia.kyve.network"
-URL to the KYVE Chain API.
+- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests. Default: 100
+- `url_base` (String) URL to the KYVE Chain API. Default: "https://api.kyve.network"
 
 

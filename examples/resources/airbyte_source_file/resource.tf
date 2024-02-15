@@ -1,7 +1,7 @@
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "jsonl"
+    format       = "csv"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -10,10 +10,10 @@ resource "airbyte_source_file" "my_source_file" {
       }
     }
     reader_options = "{\"sep\": \"\t\", \"header\": 0, \"names\": [\"column1\", \"column2\"] }"
-    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+    url            = "s3://gdelt-open-data/events/20190914.export.csv"
   }
-  definition_id = "6c5d5cf5-0fbf-4713-864e-d5bf6d67306c"
-  name          = "Floyd Goyette"
+  definition_id = "2224121e-6315-4be3-86a4-e83994413a7c"
+  name          = "Beatrice Spencer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "68cfaeff-480d-4f14-bee1-0f8279e427b2"
+  workspace_id  = "70b5882c-881a-4087-8bfd-f7e2fa4a6362"
 }

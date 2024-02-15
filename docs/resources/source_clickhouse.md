@@ -15,19 +15,20 @@ SourceClickhouse Resource
 ```terraform
 resource "airbyte_source_clickhouse" "my_source_clickhouse" {
   configuration = {
-    database = "default"
-    host     = "...my_host..."
-    password = "...my_password..."
-    port     = 8123
+    database        = "default"
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 8123
     tunnel_method = {
-      source_clickhouse_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Maximus28"
+    username = "Loy_Bartoletti"
   }
-  definition_id = "54cb2418-93e1-4da4-ac4f-685d205011b8"
-  name          = "Milton Crooks"
+  definition_id = "bdda328f-6c37-43e0-a663-420a6a3ab4d4"
+  name          = "Georgia Haley"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3b757391-0861-48e9-9445-d83c494a849c"
+  workspace_id  = "910e5c99-9e89-4cbd-8e8f-2a37cc1fbec8"
 }
 ```
 
@@ -42,8 +43,8 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -61,9 +62,9 @@ Required:
 
 Optional:
 
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 - `password` (String, Sensitive) The password associated with this username.
-- `port` (Number) Default: 8123
-The port of the database.
+- `port` (Number) The port of the database. Default: 8123
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -71,9 +72,9 @@ The port of the database.
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -90,8 +91,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -105,7 +105,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

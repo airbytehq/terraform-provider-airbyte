@@ -35,7 +35,6 @@ func (e *SourceHubspotUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// PrivateApp - Choose how to authenticate to HubSpot.
 type PrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
@@ -90,7 +89,6 @@ func (e *SourceHubspotUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHubspotUpdateOAuth - Choose how to authenticate to HubSpot.
 type SourceHubspotUpdateOAuth struct {
 	// The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 	ClientID string `json:"client_id"`
@@ -145,6 +143,7 @@ const (
 	SourceHubspotUpdateAuthenticationTypePrivateApp               SourceHubspotUpdateAuthenticationType = "Private App"
 )
 
+// SourceHubspotUpdateAuthentication - Choose how to authenticate to HubSpot.
 type SourceHubspotUpdateAuthentication struct {
 	SourceHubspotUpdateOAuth *SourceHubspotUpdateOAuth
 	PrivateApp               *PrivateApp
@@ -204,6 +203,8 @@ func (u SourceHubspotUpdateAuthentication) MarshalJSON() ([]byte, error) {
 type SourceHubspotUpdate struct {
 	// Choose how to authenticate to HubSpot.
 	Credentials SourceHubspotUpdateAuthentication `json:"credentials"`
+	// If enabled then experimental streams become available for sync.
+	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }
@@ -224,6 +225,13 @@ func (o *SourceHubspotUpdate) GetCredentials() SourceHubspotUpdateAuthentication
 		return SourceHubspotUpdateAuthentication{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceHubspotUpdate) GetEnableExperimentalStreams() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableExperimentalStreams
 }
 
 func (o *SourceHubspotUpdate) GetStartDate() time.Time {

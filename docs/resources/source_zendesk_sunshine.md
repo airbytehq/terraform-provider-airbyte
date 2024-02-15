@@ -16,18 +16,18 @@ SourceZendeskSunshine Resource
 resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
   configuration = {
     credentials = {
-      source_zendesk_sunshine_api_token = {
+      api_token = {
         api_token = "...my_api_token..."
-        email     = "Robbie51@hotmail.com"
+        email     = "Elna.Schamberger@yahoo.com"
       }
     }
     start_date = "2021-01-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "6f099262-2de7-4b1a-93e5-915fe5844c8d"
-  name          = "Kristie Moen"
+  definition_id = "ed35fd47-1260-4525-9781-224214e979a9"
+  name          = "Brandy Kuphal"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7badf74d-23a8-47a4-aabf-6ae57802daa8"
+  workspace_id  = "c6ec23f8-9368-434b-b7f2-56aa2eed97a7"
 }
 ```
 
@@ -42,8 +42,8 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

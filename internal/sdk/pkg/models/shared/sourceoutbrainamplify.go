@@ -33,7 +33,6 @@ func (e *SourceOutbrainAmplifyBothUsernameAndPasswordIsRequiredForAuthentication
 	}
 }
 
-// SourceOutbrainAmplifyUsernamePassword - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyUsernamePassword struct {
 	// Add Password for authentication.
 	Password string                                                                         `json:"password"`
@@ -95,7 +94,6 @@ func (e *SourceOutbrainAmplifyAccessTokenIsRequiredForAuthenticationRequests) Un
 	}
 }
 
-// SourceOutbrainAmplifyAccessToken - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyAccessToken struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                                                              `json:"access_token"`
@@ -131,6 +129,7 @@ const (
 	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Username Password"
 )
 
+// SourceOutbrainAmplifyAuthenticationMethod - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyAuthenticationMethod struct {
 	SourceOutbrainAmplifyAccessToken      *SourceOutbrainAmplifyAccessToken
 	SourceOutbrainAmplifyUsernamePassword *SourceOutbrainAmplifyUsernamePassword

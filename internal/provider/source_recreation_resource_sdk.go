@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreationCreateRequest {
+func (r *SourceRecreationResourceModel) ToSharedSourceRecreationCreateRequest() *shared.SourceRecreationCreateRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	queryCampsites := new(string)
 	if !r.Configuration.QueryCampsites.IsUnknown() && !r.Configuration.QueryCampsites.IsNull() {
@@ -43,12 +43,14 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	return &out
 }
 
-func (r *SourceRecreationResourceModel) ToGetSDKType() *shared.SourceRecreationCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceRecreationResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRecreationResourceModel) ToUpdateSDKType() *shared.SourceRecreationPutRequest {
+func (r *SourceRecreationResourceModel) ToSharedSourceRecreationPutRequest() *shared.SourceRecreationPutRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	queryCampsites := new(string)
 	if !r.Configuration.QueryCampsites.IsUnknown() && !r.Configuration.QueryCampsites.IsNull() {
@@ -68,20 +70,4 @@ func (r *SourceRecreationResourceModel) ToUpdateSDKType() *shared.SourceRecreati
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceRecreationResourceModel) ToDeleteSDKType() *shared.SourceRecreationCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceRecreationResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceRecreationResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

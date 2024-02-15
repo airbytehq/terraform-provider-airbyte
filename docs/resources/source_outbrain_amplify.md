@@ -16,7 +16,7 @@ SourceOutbrainAmplify Resource
 resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
   configuration = {
     credentials = {
-      source_outbrain_amplify_access_token = {
+      access_token = {
         access_token = "...my_access_token..."
       }
     }
@@ -25,10 +25,10 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
     report_granularity     = "monthly"
     start_date             = "...my_start_date..."
   }
-  definition_id = "9d0f84cc-bad7-41da-b038-014a124b6e7b"
-  name          = "Donna Leannon"
+  definition_id = "3b6433cb-82b3-42ad-83fd-9a9d8ba9b0df"
+  name          = "Mrs. Charlie Hayes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "37b0c992-762a-438a-a73d-79a85cb72465"
+  workspace_id  = "4743ee79-bd13-4e20-8659-bbdc56c2f2e2"
 }
 ```
 
@@ -43,8 +43,8 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -62,18 +62,16 @@ Required:
 Optional:
 
 - `end_date` (String) Date in the format YYYY-MM-DD.
-- `geo_location_breakdown` (String) must be one of ["country", "region", "subregion"]
-The granularity used for geo location data in reports.
-- `report_granularity` (String) must be one of ["daily", "weekly", "monthly"]
-The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+- `geo_location_breakdown` (String) The granularity used for geo location data in reports. must be one of ["country", "region", "subregion"]
+- `report_granularity` (String) The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>. must be one of ["daily", "weekly", "monthly"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `access_token` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
-- `username_password` (Attributes) Credentials for making authenticated requests requires either username/password or access_token. (see [below for nested schema](#nestedatt--configuration--credentials--username_password))
+- `access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--access_token))
+- `username_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--username_password))
 
 <a id="nestedatt--configuration--credentials--access_token"></a>
 ### Nested Schema for `configuration.credentials.access_token`

@@ -17,10 +17,10 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "92033b17-bfcc-4526-af10-da401fb0fc52"
-  name          = "Gladys Adams"
+  definition_id = "3f80b7f5-5709-44a9-bb63-56d53391630f"
+  name          = "Mr. Fred Will PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9994a41e-4a89-485c-b8fa-7d86bdf5bf91"
+  workspace_id  = "4fbef253-f33a-4c13-9dc9-0f63794a97d5"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

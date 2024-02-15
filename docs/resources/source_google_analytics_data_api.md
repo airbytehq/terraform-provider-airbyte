@@ -15,6 +15,7 @@ SourceGoogleAnalyticsDataAPI Resource
 ```terraform
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
+    convert_conversions_event = true
     credentials = {
       authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
@@ -25,21 +26,24 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
     }
     custom_reports_array = [
       {
+        cohort_spec = {
+          disabled = {}
+        }
         dimension_filter = {
           and_group = {
             expressions = [
               {
                 field_name = "...my_field_name..."
                 filter = {
-                  source_google_analytics_data_api_update_schemas_custom_reports_array_between_filter = {
+                  between_filter = {
                     from_value = {
-                      source_google_analytics_data_api_schemas_custom_reports_array_dimension_filter_dimensions_filter_1_expressions_double_value = {
-                        value = 45.05
+                      double_value = {
+                        value = 27.51
                       }
                     }
                     to_value = {
-                      source_google_analytics_data_api_schemas_custom_reports_array_dimension_filter_dimensions_filter_1_expressions_filter_double_value = {
-                        value = 22.65
+                      double_value = {
+                        value = 50.41
                       }
                     }
                   }
@@ -52,20 +56,20 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
           "...",
         ]
         metric_filter = {
-          source_google_analytics_data_api_update_and_group = {
+          and_group = {
             expressions = [
               {
                 field_name = "...my_field_name..."
                 filter = {
-                  source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_between_filter = {
+                  between_filter = {
                     from_value = {
-                      source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_metrics_filter_1_expressions_filter_double_value = {
-                        value = 8.4
+                      double_value = {
+                        value = 85.84
                       }
                     }
                     to_value = {
-                      source_google_analytics_data_api_schemas_custom_reports_array_metric_filter_metrics_filter_1_double_value = {
-                        value = 77.49
+                      double_value = {
+                        value = 24.53
                       }
                     }
                   }
@@ -77,19 +81,20 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Mrs. Mercedes Herman PhD"
+        name = "Connie Boyer"
       },
     ]
     date_ranges_start_date = "2021-01-01"
+    keep_empty_rows        = false
     property_ids = [
       "...",
     ]
     window_in_days = 60
   }
-  definition_id = "d4fc0324-2ccd-4276-ba0d-30eb91c3df25"
-  name          = "Rodney Goldner"
+  definition_id = "f352d320-6afb-43a7-a4a6-0d40134e5887"
+  name          = "Mrs. Jody Rogahn MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "52dc8258-f30a-4271-83b0-0ec7045956c0"
+  workspace_id  = "128ae06a-57c7-4c57-baf1-e5baddd2747b"
 }
 ```
 
@@ -104,8 +109,8 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -121,19 +126,20 @@ Required:
 
 Optional:
 
+- `convert_conversions_event` (Boolean) Enables conversion of `conversions:*` event metrics from integers to floats. This is beneficial for preventing data rounding when the API returns float values for any `conversions:*` fields. Default: false
 - `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
 - `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
-- `window_in_days` (Number) Default: 1
-The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
+- `keep_empty_rows` (Boolean) If false, each row with all metrics equal to 0 will not be returned. If true, these rows will be returned if they are not separately removed by a filter. More information is available in <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#request-body">the documentation</a>. Default: false
+- `window_in_days` (Number) The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>. Default: 1
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_oauth))
-- `service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
+- `authenticate_via_google_oauth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_oauth))
+- `service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_google_oauth"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_google_oauth`
@@ -169,8 +175,75 @@ Required:
 
 Optional:
 
+- `cohort_spec` (Attributes) Cohort reports creates a time series of user retention for the cohort. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec))
 - `dimension_filter` (Attributes) Dimensions filter (see [below for nested schema](#nestedatt--configuration--custom_reports_array--dimension_filter))
 - `metric_filter` (Attributes) Metrics filter (see [below for nested schema](#nestedatt--configuration--custom_reports_array--metric_filter))
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec`
+
+Optional:
+
+- `disabled` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--disabled))
+- `enabled` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--enabled))
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--disabled"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled`
+
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--enabled"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled`
+
+Optional:
+
+- `cohort_report_settings` (Attributes) Optional settings for a cohort report. (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohort_report_settings))
+- `cohorts` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts))
+- `cohorts_range` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts_range))
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohort_report_settings"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled.cohort_report_settings`
+
+Optional:
+
+- `accumulate` (Boolean) If true, accumulates the result from first touch day to the end day
+
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled.cohorts`
+
+Required:
+
+- `date_range` (Attributes) (see [below for nested schema](#nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts--date_range))
+- `dimension` (String) Dimension used by the cohort. Required and only supports `firstSessionDate`. must be one of ["firstSessionDate"]
+
+Optional:
+
+- `name` (String) Assigns a name to this cohort. If not set, cohorts are named by their zero based index cohort_0, cohort_1, etc.
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts--date_range"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled.cohorts.name`
+
+Required:
+
+- `end_date` (String)
+- `start_date` (String)
+
+
+
+<a id="nestedatt--configuration--custom_reports_array--cohort_spec--enabled--cohorts_range"></a>
+### Nested Schema for `configuration.custom_reports_array.cohort_spec.enabled.cohorts_range`
+
+Required:
+
+- `end_offset` (Number) Specifies the end date of the extended reporting date range for a cohort report.
+- `granularity` (String) The granularity used to interpret the startOffset and endOffset for the extended reporting date range for a cohort report. must be one of ["GRANULARITY_UNSPECIFIED", "DAILY", "WEEKLY", "MONTHLY"]
+
+Optional:
+
+- `start_offset` (Number) Specifies the start date of the extended reporting date range for a cohort report.
+
+
+
 
 <a id="nestedatt--configuration--custom_reports_array--dimension_filter"></a>
 ### Nested Schema for `configuration.custom_reports_array.dimension_filter`

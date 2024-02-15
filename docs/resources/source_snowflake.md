@@ -16,7 +16,7 @@ SourceSnowflake Resource
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     credentials = {
-      source_snowflake_o_auth2_0 = {
+      o_auth20 = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
@@ -30,10 +30,10 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "2e5fcf99-c418-476f-a0cb-c1b99ee1e960"
-  name          = "Mrs. Jeanette Howell"
+  definition_id = "22e5327d-8cbc-4054-bdc9-3d7d7628c478"
+  name          = "Paula Hartmann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0d51b311-4e9e-4d57-941c-3612b0e8c8cf"
+  workspace_id  = "a6f537d9-dfc7-4f45-8565-e7155c9f06b5"
 }
 ```
 
@@ -48,8 +48,8 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

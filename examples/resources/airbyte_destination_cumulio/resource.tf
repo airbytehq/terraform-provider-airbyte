@@ -4,7 +4,7 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
     api_key   = "...my_api_key..."
     api_token = "...my_api_token..."
   }
-  definition_id = "c0eb8223-613d-423c-a875-293aec4aa100"
-  name          = "Felipe Champlin"
-  workspace_id  = "22581a88-452d-4e7c-b5eb-92a9e952da29"
+  definition_id = "a293962c-006a-4ece-a7c8-84619655998a"
+  name          = "Roy Grimes"
+  workspace_id  = "c560fc49-48d7-4191-bbd7-7158c7e04c57"
 }

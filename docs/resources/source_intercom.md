@@ -20,10 +20,10 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     client_secret = "...my_client_secret..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "135dc90f-6379-44a9-bd5a-cf56253a66e5"
-  name          = "Clint Douglas V"
+  definition_id = "cc6e7e95-c9a7-4c9f-9975-11d624796585"
+  name          = "Mr. Sonia Hilll MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "29314c65-ed70-4eb1-bcb4-fc24002ca0d0"
+  workspace_id  = "ad5e5f9c-fb0d-41e8-93ac-ce90aeed1087"
 }
 ```
 
@@ -38,8 +38,8 @@ resource "airbyte_source_intercom" "my_source_intercom" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

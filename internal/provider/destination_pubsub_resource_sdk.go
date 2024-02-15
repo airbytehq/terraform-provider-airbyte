@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPubsubCreateRequest {
+func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubCreateRequest() *shared.DestinationPubsubCreateRequest {
 	batchingDelayThreshold := new(int64)
 	if !r.Configuration.BatchingDelayThreshold.IsUnknown() && !r.Configuration.BatchingDelayThreshold.IsNull() {
 		*batchingDelayThreshold = r.Configuration.BatchingDelayThreshold.ValueInt64()
@@ -68,12 +68,14 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 	return &out
 }
 
-func (r *DestinationPubsubResourceModel) ToGetSDKType() *shared.DestinationPubsubCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationPubsubResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationPubsubResourceModel) ToUpdateSDKType() *shared.DestinationPubsubPutRequest {
+func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubPutRequest() *shared.DestinationPubsubPutRequest {
 	batchingDelayThreshold := new(int64)
 	if !r.Configuration.BatchingDelayThreshold.IsUnknown() && !r.Configuration.BatchingDelayThreshold.IsNull() {
 		*batchingDelayThreshold = r.Configuration.BatchingDelayThreshold.ValueInt64()
@@ -125,20 +127,4 @@ func (r *DestinationPubsubResourceModel) ToUpdateSDKType() *shared.DestinationPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationPubsubResourceModel) ToDeleteSDKType() *shared.DestinationPubsubCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationPubsubResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationPubsubResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

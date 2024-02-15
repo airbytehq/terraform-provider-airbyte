@@ -2,19 +2,19 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
     attribution_window = 3
     credentials = {
-      source_tiktok_marketing_o_auth2_0 = {
+      o_auth20 = {
         access_token  = "...my_access_token..."
         advertiser_id = "...my_advertiser_id..."
         app_id        = "...my_app_id..."
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-10-15"
-    include_deleted = false
-    start_date      = "2022-12-08"
+    end_date        = "2022-06-11"
+    include_deleted = true
+    start_date      = "2021-06-15"
   }
-  definition_id = "fd338f32-2856-4cd8-8e7e-494b9e5830e9"
-  name          = "Elijah Prosacco"
+  definition_id = "5c77eadf-0c9c-4e16-abe8-5fa64aee8d2b"
+  name          = "Merle Grant"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "12cdcae9-f85c-4701-b380-526f8856cdf3"
+  workspace_id  = "efceb9e0-d54b-4089-8bdd-98fe3f92c06a"
 }

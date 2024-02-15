@@ -16,13 +16,13 @@ SourceGoogleWorkspaceAdminReports Resource
 resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    email            = "Daisha.Halvorson12@gmail.com"
-    lookback         = 8
+    email            = "Bryce_Kertzmann@gmail.com"
+    lookback         = 1
   }
-  definition_id = "b8adc8fd-2a7f-4940-9ec4-4e216dff8929"
-  name          = "Francisco Swaniawski"
+  definition_id = "0da401fb-0fc5-4273-8b39-994a41e4a898"
+  name          = "Pat Koelpin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a00b494f-7d68-4d64-a810-b2959587ed0c"
+  workspace_id  = "a7d86bdf-5bf9-41ac-b121-083728d89e35"
 }
 ```
 
@@ -37,8 +37,8 @@ resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworksp
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

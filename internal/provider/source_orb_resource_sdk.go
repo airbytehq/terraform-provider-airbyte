@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateRequest {
+func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.SourceOrbCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
@@ -69,12 +69,14 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	return &out
 }
 
-func (r *SourceOrbResourceModel) ToGetSDKType() *shared.SourceOrbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceOrbResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
+func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrbPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
@@ -120,20 +122,4 @@ func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceOrbResourceModel) ToDeleteSDKType() *shared.SourceOrbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceOrbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

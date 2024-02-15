@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceHubspot struct {
-	Credentials SourceHubspotAuthentication `tfsdk:"credentials"`
-	StartDate   types.String                `tfsdk:"start_date"`
+	Credentials               SourceHubspotAuthentication `tfsdk:"credentials"`
+	EnableExperimentalStreams types.Bool                  `tfsdk:"enable_experimental_streams"`
+	StartDate                 types.String                `tfsdk:"start_date"`
 }

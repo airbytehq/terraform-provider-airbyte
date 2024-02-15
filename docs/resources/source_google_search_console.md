@@ -16,7 +16,7 @@ SourceGoogleSearchConsole Resource
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
     authorization = {
-      source_google_search_console_o_auth = {
+      o_auth = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
@@ -27,9 +27,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     custom_reports_array = [
       {
         dimensions = [
-          "device",
+          "query",
         ]
-        name = "Ms. Randy Gorczany V"
+        name = "Roosevelt Waters"
       },
     ]
     data_state = "all"
@@ -37,12 +37,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2020-03-18"
+    start_date = "2022-05-23"
   }
-  definition_id = "165bc484-0e7f-4b5d-b254-77f370b0ec7c"
-  name          = "Wendell Rempel"
+  definition_id = "4c11e4e9-93d2-4947-8281-bb54dff6cf9b"
+  name          = "Velma Volkman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0cb9d8df-c27a-48c7-ac3e-b5dc55714db0"
+  workspace_id  = "2888b6bd-e251-454a-92da-80f2bfa49853"
 }
 ```
 
@@ -57,8 +57,8 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -77,11 +77,9 @@ Optional:
 
 - `custom_reports` (String) (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
-- `data_state` (String) must be one of ["final", "all"]; Default: "final"
-If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
+- `data_state` (String) If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>. must be one of ["final", "all"]; Default: "final"
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
-- `start_date` (String) Default: "2021-01-01"
-UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. Default: "2021-01-01"
 
 <a id="nestedatt--configuration--authorization"></a>
 ### Nested Schema for `configuration.authorization`

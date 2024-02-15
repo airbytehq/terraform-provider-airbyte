@@ -5,16 +5,20 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,6 +59,9 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
@@ -62,14 +69,20 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Sensitive:   true,
 						Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
 					},
-					"account_id": schema.StringAttribute{
+					"account_ids": schema.ListAttribute{
 						Required:    true,
-						Description: `The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.`,
+						ElementType: types.StringType,
+						Description: `The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.`,
+						Validators: []validator.List{
+							listvalidator.SizeAtLeast(1),
+							listvalidator.UniqueValues(),
+						},
 					},
 					"action_breakdowns_allow_empty": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: true` + "\n" +
-							`Allows action_breakdowns to be an empty list`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `Allows action_breakdowns to be an empty list. Default: true`,
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
@@ -89,9 +102,10 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									Description: `A list of chosen action_breakdowns for action_breakdowns`,
 								},
 								"action_report_time": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["conversion", "impression", "mixed"]; Default: "mixed"` + "\n" +
-										`Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("mixed"),
+									Description: `Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. must be one of ["conversion", "impression", "mixed"]; Default: "mixed"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"conversion",
@@ -117,15 +131,23 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									ElementType: types.StringType,
 									Description: `A list of chosen fields for fields parameter`,
 								},
+								"insights_job_timeout": schema.Int64Attribute{
+									Computed:    true,
+									Optional:    true,
+									Default:     int64default.StaticInt64(60),
+									Description: `The insights job timeout. Default: 60`,
+								},
 								"insights_lookback_window": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `Default: 28` + "\n" +
-										`The attribution window`,
+									Computed:    true,
+									Optional:    true,
+									Default:     int64default.StaticInt64(28),
+									Description: `The attribution window. Default: 28`,
 								},
 								"level": schema.StringAttribute{
-									Optional: true,
-									MarkdownDescription: `must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"` + "\n" +
-										`Chosen level for API`,
+									Computed:    true,
+									Optional:    true,
+									Default:     stringdefault.StaticString("ad"),
+									Description: `Chosen level for API. must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"ad",
@@ -147,9 +169,10 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									},
 								},
 								"time_increment": schema.Int64Attribute{
-									Optional: true,
-									MarkdownDescription: `Default: 1` + "\n" +
-										`Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).`,
+									Computed:    true,
+									Optional:    true,
+									Default:     int64default.StaticInt64(1),
+									Description: `Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). Default: 1`,
 								},
 							},
 						},
@@ -163,24 +186,34 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						},
 					},
 					"fetch_thumbnail_images": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: false` + "\n" +
-							`Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false`,
 					},
 					"include_deleted": schema.BoolAttribute{
-						Optional: true,
-						MarkdownDescription: `Default: false` + "\n" +
-							`Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Set to active if you want to include data from deleted Campaigns, Ads, and AdSets. Default: false`,
+					},
+					"insights_job_timeout": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(60),
+						Description: `Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster. Default: 60`,
 					},
 					"insights_lookback_window": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 28` + "\n" +
-							`The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(28),
+						Description: `The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here. Default: 28`,
 					},
 					"page_size": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 100` + "\n" +
-							`Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(100),
+						Description: `Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases. Default: 100`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -193,40 +226,40 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -256,14 +289,14 @@ func (r *SourceFacebookMarketingResource) Configure(ctx context.Context, req res
 
 func (r *SourceFacebookMarketingResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceFacebookMarketingResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -272,7 +305,7 @@ func (r *SourceFacebookMarketingResource) Create(ctx context.Context, req resour
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceFacebookMarketingCreateRequest()
 	res, err := r.client.Sources.CreateSourceFacebookMarketing(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -293,7 +326,34 @@ func (r *SourceFacebookMarketingResource) Create(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceFacebookMarketingRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceFacebookMarketing(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -341,7 +401,7 @@ func (r *SourceFacebookMarketingResource) Read(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -349,12 +409,19 @@ func (r *SourceFacebookMarketingResource) Read(ctx context.Context, req resource
 
 func (r *SourceFacebookMarketingResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceFacebookMarketingResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceFacebookMarketingPutRequest := data.ToUpdateSDKType()
+	sourceFacebookMarketingPutRequest := data.ToSharedSourceFacebookMarketingPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceFacebookMarketingRequest{
 		SourceFacebookMarketingPutRequest: sourceFacebookMarketingPutRequest,
@@ -376,31 +443,33 @@ func (r *SourceFacebookMarketingResource) Update(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceFacebookMarketingRequest{
+	request1 := operations.GetSourceFacebookMarketingRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceFacebookMarketing(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceFacebookMarketing(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

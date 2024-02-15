@@ -5,5 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DocumentFileTypeFormatExperimental struct {
-	SkipUnprocessableFileTypes types.Bool `tfsdk:"skip_unprocessable_file_types"`
+	Processing             *SourceAzureBlobStorageProcessing `tfsdk:"processing"`
+	SkipUnprocessableFiles types.Bool                        `tfsdk:"skip_unprocessable_files"`
+	Strategy               types.String                      `tfsdk:"strategy"`
 }

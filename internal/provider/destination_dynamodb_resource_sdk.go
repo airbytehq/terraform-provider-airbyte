@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.DestinationDynamodbCreateRequest {
+func (r *DestinationDynamodbResourceModel) ToSharedDestinationDynamodbCreateRequest() *shared.DestinationDynamodbCreateRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
@@ -47,12 +47,14 @@ func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationDynamodbResourceModel) ToGetSDKType() *shared.DestinationDynamodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationDynamodbResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationDynamodbResourceModel) ToUpdateSDKType() *shared.DestinationDynamodbPutRequest {
+func (r *DestinationDynamodbResourceModel) ToSharedDestinationDynamodbPutRequest() *shared.DestinationDynamodbPutRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
@@ -83,20 +85,4 @@ func (r *DestinationDynamodbResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationDynamodbResourceModel) ToDeleteSDKType() *shared.DestinationDynamodbCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationDynamodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

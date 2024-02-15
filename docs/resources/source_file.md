@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "jsonl"
+    format       = "csv"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -25,12 +25,12 @@ resource "airbyte_source_file" "my_source_file" {
       }
     }
     reader_options = "{\"sep\": \"\t\", \"header\": 0, \"names\": [\"column1\", \"column2\"] }"
-    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+    url            = "s3://gdelt-open-data/events/20190914.export.csv"
   }
-  definition_id = "6c5d5cf5-0fbf-4713-864e-d5bf6d67306c"
-  name          = "Floyd Goyette"
+  definition_id = "2224121e-6315-4be3-86a4-e83994413a7c"
+  name          = "Beatrice Spencer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "68cfaeff-480d-4f14-bee1-0f8279e427b2"
+  workspace_id  = "70b5882c-881a-4087-8bfd-f7e2fa4a6362"
 }
 ```
 
@@ -45,8 +45,8 @@ resource "airbyte_source_file" "my_source_file" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,8 +64,7 @@ Required:
 
 Optional:
 
-- `format` (String) must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]; Default: "csv"
-The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
+- `format` (String) The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs). must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "fwf", "feather", "parquet", "yaml"]; Default: "csv"
 - `reader_options` (String) This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.
 
 <a id="nestedatt--configuration--provider"></a>
@@ -73,13 +72,13 @@ The Format of the file which should be replicated (Warning: some formats may be 
 
 Optional:
 
-- `az_blob_azure_blob_storage` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--az_blob_azure_blob_storage))
-- `gcs_google_cloud_storage` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--gcs_google_cloud_storage))
-- `https_public_web` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--https_public_web))
-- `s3_amazon_web_services` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--s3_amazon_web_services))
-- `scp_secure_copy_protocol` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--scp_secure_copy_protocol))
-- `sftp_secure_file_transfer_protocol` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--sftp_secure_file_transfer_protocol))
-- `ssh_secure_shell` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--ssh_secure_shell))
+- `az_blob_azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--az_blob_azure_blob_storage))
+- `gcs_google_cloud_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--gcs_google_cloud_storage))
+- `https_public_web` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--https_public_web))
+- `s3_amazon_web_services` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--s3_amazon_web_services))
+- `scp_secure_copy_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--scp_secure_copy_protocol))
+- `sftp_secure_file_transfer_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--sftp_secure_file_transfer_protocol))
+- `ssh_secure_shell` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--ssh_secure_shell))
 
 <a id="nestedatt--configuration--provider--az_blob_azure_blob_storage"></a>
 ### Nested Schema for `configuration.provider.az_blob_azure_blob_storage`
@@ -107,8 +106,7 @@ Optional:
 
 Optional:
 
-- `user_agent` (Boolean) Default: false
-Add User-Agent to request
+- `user_agent` (Boolean) Add User-Agent to request. Default: false
 
 
 <a id="nestedatt--configuration--provider--s3_amazon_web_services"></a>

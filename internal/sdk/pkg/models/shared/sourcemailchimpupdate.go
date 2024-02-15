@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+	"time"
 )
 
 type SourceMailchimpUpdateSchemasAuthType string
@@ -197,6 +198,19 @@ func (u SourceMailchimpUpdateAuthentication) MarshalJSON() ([]byte, error) {
 type SourceMailchimpUpdate struct {
 	CampaignID  *string                              `json:"campaign_id,omitempty"`
 	Credentials *SourceMailchimpUpdateAuthentication `json:"credentials,omitempty"`
+	// The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.
+	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceMailchimpUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMailchimpUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceMailchimpUpdate) GetCampaignID() *string {
@@ -211,4 +225,11 @@ func (o *SourceMailchimpUpdate) GetCredentials() *SourceMailchimpUpdateAuthentic
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceMailchimpUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

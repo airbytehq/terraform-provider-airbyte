@@ -18,6 +18,7 @@ const (
 	FileFormatJsonl       FileFormat = "jsonl"
 	FileFormatExcel       FileFormat = "excel"
 	FileFormatExcelBinary FileFormat = "excel_binary"
+	FileFormatFwf         FileFormat = "fwf"
 	FileFormatFeather     FileFormat = "feather"
 	FileFormatParquet     FileFormat = "parquet"
 	FileFormatYaml        FileFormat = "yaml"
@@ -42,6 +43,8 @@ func (e *FileFormat) UnmarshalJSON(data []byte) error {
 	case "excel":
 		fallthrough
 	case "excel_binary":
+		fallthrough
+	case "fwf":
 		fallthrough
 	case "feather":
 		fallthrough
@@ -79,7 +82,6 @@ func (e *SourceFileUpdateSchemasProviderStorageProvider7Storage) UnmarshalJSON(d
 	}
 }
 
-// SFTPSecureFileTransferProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SFTPSecureFileTransferProtocol struct {
 	Host     string                                                 `json:"host"`
 	Password *string                                                `json:"password,omitempty"`
@@ -155,7 +157,6 @@ func (e *SourceFileUpdateSchemasProviderStorageProvider6Storage) UnmarshalJSON(d
 	}
 }
 
-// SCPSecureCopyProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SCPSecureCopyProtocol struct {
 	Host     string                                                 `json:"host"`
 	Password *string                                                `json:"password,omitempty"`
@@ -231,7 +232,6 @@ func (e *SourceFileUpdateSchemasProviderStorageProviderStorage) UnmarshalJSON(da
 	}
 }
 
-// SSHSecureShell - The storage Provider or Location of the file(s) which should be replicated.
 type SSHSecureShell struct {
 	Host     string                                                `json:"host"`
 	Password *string                                               `json:"password,omitempty"`
@@ -307,7 +307,6 @@ func (e *SourceFileUpdateSchemasProviderStorage) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// AzBlobAzureBlobStorage - The storage Provider or Location of the file(s) which should be replicated.
 type AzBlobAzureBlobStorage struct {
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.
 	SasToken *string `json:"sas_token,omitempty"`
@@ -378,7 +377,6 @@ func (e *SourceFileUpdateSchemasStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFileUpdateS3AmazonWebServices - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileUpdateS3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
@@ -440,7 +438,6 @@ func (e *SourceFileUpdateStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// GCSGoogleCloudStorage - The storage Provider or Location of the file(s) which should be replicated.
 type GCSGoogleCloudStorage struct {
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
 	ServiceAccountJSON *string                 `json:"service_account_json,omitempty"`
@@ -493,7 +490,6 @@ func (e *Storage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// HTTPSPublicWeb - The storage Provider or Location of the file(s) which should be replicated.
 type HTTPSPublicWeb struct {
 	storage Storage `const:"HTTPS" json:"storage"`
 	// Add User-Agent to request
@@ -534,6 +530,7 @@ const (
 	StorageProviderTypeSFTPSecureFileTransferProtocol      StorageProviderType = "SFTP: Secure File Transfer Protocol"
 )
 
+// StorageProvider - The storage Provider or Location of the file(s) which should be replicated.
 type StorageProvider struct {
 	HTTPSPublicWeb                      *HTTPSPublicWeb
 	GCSGoogleCloudStorage               *GCSGoogleCloudStorage

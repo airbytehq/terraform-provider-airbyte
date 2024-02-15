@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendeskTalkCreateRequest {
+func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkCreateRequest() *shared.SourceZendeskTalkCreateRequest {
 	var credentials *shared.SourceZendeskTalkAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskTalkAPIToken *shared.SourceZendeskTalkAPIToken
@@ -94,12 +94,14 @@ func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendesk
 	return &out
 }
 
-func (r *SourceZendeskTalkResourceModel) ToGetSDKType() *shared.SourceZendeskTalkCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceZendeskTalkResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceZendeskTalkResourceModel) ToUpdateSDKType() *shared.SourceZendeskTalkPutRequest {
+func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkPutRequest() *shared.SourceZendeskTalkPutRequest {
 	var credentials *shared.SourceZendeskTalkUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskTalkUpdateAPIToken *shared.SourceZendeskTalkUpdateAPIToken
@@ -168,20 +170,4 @@ func (r *SourceZendeskTalkResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceZendeskTalkResourceModel) ToDeleteSDKType() *shared.SourceZendeskTalkCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceZendeskTalkResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceZendeskTalkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -7,37 +7,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.DestinationSnowflakeCreateRequest {
+func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRequest() *shared.DestinationSnowflakeCreateRequest {
 	var credentials *shared.DestinationSnowflakeAuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var destinationSnowflakeOAuth20 *shared.DestinationSnowflakeOAuth20
-		if r.Configuration.Credentials.OAuth20 != nil {
-			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			clientID := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-			destinationSnowflakeOAuth20 = &shared.DestinationSnowflakeOAuth20{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				RefreshToken: refreshToken,
-			}
-		}
-		if destinationSnowflakeOAuth20 != nil {
-			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-				DestinationSnowflakeOAuth20: destinationSnowflakeOAuth20,
-			}
-		}
 		var destinationSnowflakeKeyPairAuthentication *shared.DestinationSnowflakeKeyPairAuthentication
 		if r.Configuration.Credentials.KeyPairAuthentication != nil {
 			privateKey := r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
@@ -69,6 +41,34 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 				DestinationSnowflakeUsernameAndPassword: destinationSnowflakeUsernameAndPassword,
 			}
 		}
+		var destinationSnowflakeOAuth20 *shared.DestinationSnowflakeOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			destinationSnowflakeOAuth20 = &shared.DestinationSnowflakeOAuth20{
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
+		}
+		if destinationSnowflakeOAuth20 != nil {
+			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
+				DestinationSnowflakeOAuth20: destinationSnowflakeOAuth20,
+			}
+		}
 	}
 	database := r.Configuration.Database.ValueString()
 	disableTypeDedupe := new(bool)
@@ -76,6 +76,12 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
+	}
+	enableIncrementalFinalTableUpdates := new(bool)
+	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
+		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
+	} else {
+		enableIncrementalFinalTableUpdates = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -95,16 +101,17 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflake{
-		Credentials:       credentials,
-		Database:          database,
-		DisableTypeDedupe: disableTypeDedupe,
-		Host:              host,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
-		Role:              role,
-		Schema:            schema,
-		Username:          username,
-		Warehouse:         warehouse,
+		Credentials:                        credentials,
+		Database:                           database,
+		DisableTypeDedupe:                  disableTypeDedupe,
+		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
+		Host:                               host,
+		JdbcURLParams:                      jdbcURLParams,
+		RawDataSchema:                      rawDataSchema,
+		Role:                               role,
+		Schema:                             schema,
+		Username:                           username,
+		Warehouse:                          warehouse,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -123,42 +130,16 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
-func (r *DestinationSnowflakeResourceModel) ToGetSDKType() *shared.DestinationSnowflakeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationSnowflakeResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.DestinationSnowflakePutRequest {
+func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutRequest() *shared.DestinationSnowflakePutRequest {
 	var credentials *shared.AuthorizationMethod
 	if r.Configuration.Credentials != nil {
-		var oAuth20 *shared.OAuth20
-		if r.Configuration.Credentials.OAuth20 != nil {
-			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			clientID := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
-				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-			} else {
-				clientID = nil
-			}
-			clientSecret := new(string)
-			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
-				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-			} else {
-				clientSecret = nil
-			}
-			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
-			oAuth20 = &shared.OAuth20{
-				AccessToken:  accessToken,
-				ClientID:     clientID,
-				ClientSecret: clientSecret,
-				RefreshToken: refreshToken,
-			}
-		}
-		if oAuth20 != nil {
-			credentials = &shared.AuthorizationMethod{
-				OAuth20: oAuth20,
-			}
-		}
 		var keyPairAuthentication *shared.KeyPairAuthentication
 		if r.Configuration.Credentials.KeyPairAuthentication != nil {
 			privateKey := r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
@@ -190,6 +171,34 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 				UsernameAndPassword: usernameAndPassword,
 			}
 		}
+		var destinationSnowflakeUpdateOAuth20 *shared.DestinationSnowflakeUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.OAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			refreshToken := r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+			destinationSnowflakeUpdateOAuth20 = &shared.DestinationSnowflakeUpdateOAuth20{
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
+		}
+		if destinationSnowflakeUpdateOAuth20 != nil {
+			credentials = &shared.AuthorizationMethod{
+				DestinationSnowflakeUpdateOAuth20: destinationSnowflakeUpdateOAuth20,
+			}
+		}
 	}
 	database := r.Configuration.Database.ValueString()
 	disableTypeDedupe := new(bool)
@@ -197,6 +206,12 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
+	}
+	enableIncrementalFinalTableUpdates := new(bool)
+	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
+		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
+	} else {
+		enableIncrementalFinalTableUpdates = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -216,16 +231,17 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflakeUpdate{
-		Credentials:       credentials,
-		Database:          database,
-		DisableTypeDedupe: disableTypeDedupe,
-		Host:              host,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
-		Role:              role,
-		Schema:            schema,
-		Username:          username,
-		Warehouse:         warehouse,
+		Credentials:                        credentials,
+		Database:                           database,
+		DisableTypeDedupe:                  disableTypeDedupe,
+		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
+		Host:                               host,
+		JdbcURLParams:                      jdbcURLParams,
+		RawDataSchema:                      rawDataSchema,
+		Role:                               role,
+		Schema:                             schema,
+		Username:                           username,
+		Warehouse:                          warehouse,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -235,20 +251,4 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationSnowflakeResourceModel) ToDeleteSDKType() *shared.DestinationSnowflakeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationSnowflakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

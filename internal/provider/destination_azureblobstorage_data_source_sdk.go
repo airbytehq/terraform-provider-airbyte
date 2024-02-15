@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationAzureBlobStorageDataSourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
+func (r *DestinationAzureBlobStorageDataSourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
 	configurationResult, _ := json.Marshal(resp.Configuration)
 	r.Configuration = types.StringValue(string(configurationResult))
 	r.DestinationID = types.StringValue(resp.DestinationID)

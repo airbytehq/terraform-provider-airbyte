@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCreateRequest {
+func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *shared.SourceShopifyCreateRequest {
 	var credentials *shared.SourceShopifyShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyOAuth20 *shared.SourceShopifyOAuth20
@@ -91,12 +91,14 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 	return &out
 }
 
-func (r *SourceShopifyResourceModel) ToGetSDKType() *shared.SourceShopifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceShopifyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutRequest {
+func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.SourceShopifyPutRequest {
 	var credentials *shared.ShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyUpdateOAuth20 *shared.SourceShopifyUpdateOAuth20
@@ -163,20 +165,4 @@ func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceShopifyResourceModel) ToDeleteSDKType() *shared.SourceShopifyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceShopifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceShopifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

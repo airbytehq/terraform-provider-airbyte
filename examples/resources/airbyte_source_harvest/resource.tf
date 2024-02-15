@@ -12,8 +12,8 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "bb7037ab-5561-4ce1-bb1c-adaa0e328a3b"
-  name          = "Jorge Heathcote"
+  definition_id = "e680e441-7c6f-44b5-89c8-206a4b043ef0"
+  name          = "Miss Tomas Homenick"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e04de287-b752-465f-9ff2-deb8cbf2674a"
+  workspace_id  = "5b726765-eab1-4ad8-8295-4bd759bdc8b9"
 }

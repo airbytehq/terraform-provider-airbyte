@@ -35,7 +35,6 @@ func (e *SourceHubspotSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHubspotPrivateApp - Choose how to authenticate to HubSpot.
 type SourceHubspotPrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
@@ -90,7 +89,6 @@ func (e *SourceHubspotAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHubspotOAuth - Choose how to authenticate to HubSpot.
 type SourceHubspotOAuth struct {
 	// The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 	ClientID string `json:"client_id"`
@@ -145,6 +143,7 @@ const (
 	SourceHubspotAuthenticationTypeSourceHubspotPrivateApp SourceHubspotAuthenticationType = "source-hubspot_Private App"
 )
 
+// SourceHubspotAuthentication - Choose how to authenticate to HubSpot.
 type SourceHubspotAuthentication struct {
 	SourceHubspotOAuth      *SourceHubspotOAuth
 	SourceHubspotPrivateApp *SourceHubspotPrivateApp
@@ -228,7 +227,9 @@ func (e *Hubspot) UnmarshalJSON(data []byte) error {
 type SourceHubspot struct {
 	// Choose how to authenticate to HubSpot.
 	Credentials SourceHubspotAuthentication `json:"credentials"`
-	sourceType  Hubspot                     `const:"hubspot" json:"sourceType"`
+	// If enabled then experimental streams become available for sync.
+	EnableExperimentalStreams *bool   `default:"false" json:"enable_experimental_streams"`
+	sourceType                Hubspot `const:"hubspot" json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }
@@ -249,6 +250,13 @@ func (o *SourceHubspot) GetCredentials() SourceHubspotAuthentication {
 		return SourceHubspotAuthentication{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceHubspot) GetEnableExperimentalStreams() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableExperimentalStreams
 }
 
 func (o *SourceHubspot) GetSourceType() Hubspot {

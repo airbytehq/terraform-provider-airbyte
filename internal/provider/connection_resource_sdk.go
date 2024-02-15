@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequest {
+func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.ConnectionCreateRequest {
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
 		var streams []shared.StreamConfiguration = nil
@@ -116,12 +116,75 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	return &out
 }
 
-func (r *ConnectionResourceModel) ToGetSDKType() *shared.ConnectionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shared.ConnectionResponse) {
+	if r.Configurations == nil {
+		r.Configurations = &StreamConfigurations{}
+	}
+	if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
+		r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
+	}
+	for streamsCount, streamsItem := range resp.Configurations.Streams {
+		var streams1 StreamConfiguration
+		streams1.CursorField = nil
+		for _, v := range streamsItem.CursorField {
+			streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
+		}
+		streams1.Name = types.StringValue(streamsItem.Name)
+		streams1.PrimaryKey = nil
+		for _, primaryKeyItem := range streamsItem.PrimaryKey {
+			var primaryKey1 []types.String
+			primaryKey1 = nil
+			for _, v := range primaryKeyItem {
+				primaryKey1 = append(primaryKey1, types.StringValue(v))
+			}
+			streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
+		}
+		if streamsItem.SyncMode != nil {
+			streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
+		} else {
+			streams1.SyncMode = types.StringNull()
+		}
+		if streamsCount+1 > len(r.Configurations.Streams) {
+			r.Configurations.Streams = append(r.Configurations.Streams, streams1)
+		} else {
+			r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+			r.Configurations.Streams[streamsCount].Name = streams1.Name
+			r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+			r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
+		}
+	}
+	r.ConnectionID = types.StringValue(resp.ConnectionID)
+	if resp.DataResidency != nil {
+		r.DataResidency = types.StringValue(string(*resp.DataResidency))
+	} else {
+		r.DataResidency = types.StringNull()
+	}
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.Name = types.StringValue(resp.Name)
+	if resp.NamespaceDefinition != nil {
+		r.NamespaceDefinition = types.StringValue(string(*resp.NamespaceDefinition))
+	} else {
+		r.NamespaceDefinition = types.StringNull()
+	}
+	r.NamespaceFormat = types.StringPointerValue(resp.NamespaceFormat)
+	if resp.NonBreakingSchemaUpdatesBehavior != nil {
+		r.NonBreakingSchemaUpdatesBehavior = types.StringValue(string(*resp.NonBreakingSchemaUpdatesBehavior))
+	} else {
+		r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
+	}
+	r.Prefix = types.StringPointerValue(resp.Prefix)
+	if r.Schedule == nil {
+		r.Schedule = &ConnectionSchedule{}
+	}
+	r.Schedule.BasicTiming = types.StringPointerValue(resp.Schedule.BasicTiming)
+	r.Schedule.CronExpression = types.StringPointerValue(resp.Schedule.CronExpression)
+	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.Status = types.StringValue(string(resp.Status))
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchRequest {
+func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.ConnectionPatchRequest {
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
 		var streams []shared.StreamConfiguration = nil
@@ -224,101 +287,4 @@ func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchReque
 		Status:                           status,
 	}
 	return &out
-}
-
-func (r *ConnectionResourceModel) ToDeleteSDKType() *shared.ConnectionCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.ConnectionResponse) {
-	if r.Configurations == nil {
-		r.Configurations = &StreamConfigurations{}
-	}
-	if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
-		r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
-	}
-	for streamsCount, streamsItem := range resp.Configurations.Streams {
-		var streams1 StreamConfiguration
-		streams1.CursorField = nil
-		for _, v := range streamsItem.CursorField {
-			streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
-		}
-		streams1.Name = types.StringValue(streamsItem.Name)
-		streams1.PrimaryKey = nil
-		for _, primaryKeyItem := range streamsItem.PrimaryKey {
-			var primaryKey1 []types.String
-			primaryKey1 = nil
-			for _, v := range primaryKeyItem {
-				primaryKey1 = append(primaryKey1, types.StringValue(v))
-			}
-			streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
-		}
-		if streamsItem.SyncMode != nil {
-			streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
-		} else {
-			streams1.SyncMode = types.StringNull()
-		}
-		if streamsCount+1 > len(r.Configurations.Streams) {
-			r.Configurations.Streams = append(r.Configurations.Streams, streams1)
-		} else {
-			r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
-			r.Configurations.Streams[streamsCount].Name = streams1.Name
-			r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
-			r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
-		}
-	}
-	r.ConnectionID = types.StringValue(resp.ConnectionID)
-	if resp.DataResidency != nil {
-		r.DataResidency = types.StringValue(string(*resp.DataResidency))
-	} else {
-		r.DataResidency = types.StringNull()
-	}
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.Name = types.StringValue(resp.Name)
-	if resp.NamespaceDefinition != nil {
-		r.NamespaceDefinition = types.StringValue(string(*resp.NamespaceDefinition))
-	} else {
-		r.NamespaceDefinition = types.StringNull()
-	}
-	if resp.NamespaceFormat != nil {
-		r.NamespaceFormat = types.StringValue(*resp.NamespaceFormat)
-	} else {
-		r.NamespaceFormat = types.StringNull()
-	}
-	if resp.NonBreakingSchemaUpdatesBehavior != nil {
-		r.NonBreakingSchemaUpdatesBehavior = types.StringValue(string(*resp.NonBreakingSchemaUpdatesBehavior))
-	} else {
-		r.NonBreakingSchemaUpdatesBehavior = types.StringNull()
-	}
-	if resp.Prefix != nil {
-		r.Prefix = types.StringValue(*resp.Prefix)
-	} else {
-		r.Prefix = types.StringNull()
-	}
-	if r.Schedule == nil {
-		r.Schedule = &ConnectionSchedule{}
-	}
-	if resp.Schedule.BasicTiming != nil {
-		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
-	} else {
-		r.Schedule.BasicTiming = types.StringNull()
-	}
-	if resp.Schedule.CronExpression != nil {
-		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
-	} else {
-		r.Schedule.CronExpression = types.StringNull()
-	}
-	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.Status = types.StringValue(string(resp.Status))
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
-	r.RefreshFromGetResponse(resp)
-}
-
-func (r *ConnectionResourceModel) RefreshFromUpdateResponse(resp *shared.ConnectionResponse) {
-	r.RefreshFromGetResponse(resp)
 }

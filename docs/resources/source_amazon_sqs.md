@@ -21,14 +21,14 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "ap-northeast-2"
+    region               = "eu-south-2"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     visibility_timeout   = 15
   }
-  definition_id = "aa9ea927-cae7-4b29-885e-6b85628652e0"
-  name          = "Emmett Labadie"
+  definition_id = "90fa7f8f-441b-458d-bc55-9a0bee1c5ff2"
+  name          = "Tracy Donnelly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "21b517b1-6f1f-4884-abcd-5137451945c4"
+  workspace_id  = "20422616-84e7-43ef-a02c-915f597cf589"
 }
 ```
 
@@ -43,8 +43,8 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -57,15 +57,13 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 Required:
 
 - `queue_url` (String) URL of the SQS Queue
-- `region` (String) must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
-AWS Region of the SQS Queue
+- `region` (String) AWS Region of the SQS Queue. must be one of ["af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 
 Optional:
 
 - `access_key` (String, Sensitive) The Access Key ID of the AWS IAM Role to use for pulling messages
 - `attributes_to_return` (String) Comma separated list of Mesage Attribute names to return
-- `delete_messages` (Boolean) Default: false
-If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail.
+- `delete_messages` (Boolean) If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. . Default: false
 - `max_batch_size` (Number) Max amount of messages to get in one batch (10 max)
 - `max_wait_time` (Number) Max amount of time in seconds to wait for messages in a single poll (20 max)
 - `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages

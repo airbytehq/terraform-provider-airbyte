@@ -12,8 +12,8 @@ resource "airbyte_source_asana" "my_source_asana" {
     ]
     test_mode = true
   }
-  definition_id = "f5896557-ce17-4ccd-ab10-d6388d4fdfb9"
-  name          = "Ms. Irvin Anderson"
+  definition_id = "0de16b8d-a7b8-4143-b851-cf99c7fd70e5"
+  name          = "Esther Heaney"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c04191be-b057-4f07-8546-621bdba90354"
+  workspace_id  = "cf4f6487-4e62-4c58-9879-2fd48887cb19"
 }

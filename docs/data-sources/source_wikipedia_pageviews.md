@@ -27,8 +27,7 @@ data "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
 
 ### Read-Only
 
-- `configuration` (String) Parsed as JSON.
-The values required to configure the source.
+- `configuration` (String) The values required to configure the source. Parsed as JSON.
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)

@@ -34,7 +34,6 @@ func (e *SourceClickhouseUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(da
 	}
 }
 
-// SourceClickhouseUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceClickhouseUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -116,7 +115,6 @@ func (e *SourceClickhouseUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) e
 	}
 }
 
-// SourceClickhouseUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceClickhouseUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -198,7 +196,6 @@ func (e *SourceClickhouseUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceClickhouseUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceClickhouseUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourceClickhouseUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -227,6 +224,7 @@ const (
 	SourceClickhouseUpdateSSHTunnelMethodTypeSourceClickhouseUpdatePasswordAuthentication SourceClickhouseUpdateSSHTunnelMethodType = "source-clickhouse-update_Password Authentication"
 )
 
+// SourceClickhouseUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceClickhouseUpdateSSHTunnelMethod struct {
 	SourceClickhouseUpdateNoTunnel               *SourceClickhouseUpdateNoTunnel
 	SourceClickhouseUpdateSSHKeyAuthentication   *SourceClickhouseUpdateSSHKeyAuthentication
@@ -309,6 +307,8 @@ type SourceClickhouseUpdate struct {
 	Database string `json:"database"`
 	// The host endpoint of the Clickhouse cluster.
 	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
 	// The port of the database.
@@ -342,6 +342,13 @@ func (o *SourceClickhouseUpdate) GetHost() string {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *SourceClickhouseUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
 }
 
 func (o *SourceClickhouseUpdate) GetPassword() *string {

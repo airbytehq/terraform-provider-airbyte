@@ -21,10 +21,10 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
     replica_set       = "...my_replica_set..."
     user              = "...my_user..."
   }
-  definition_id = "6ea9203c-b787-46e7-9a53-1f3b4802a3b9"
-  name          = "Hector Kuhic"
+  definition_id = "799a12d6-e33e-466d-b00d-4772456d0d26"
+  name          = "Sergio Bogisich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "76dbe116-c781-416c-b0bf-b32667c47d50"
+  workspace_id  = "bb3566ca-647b-4a4f-baab-a25784141a21"
 }
 ```
 
@@ -39,8 +39,8 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -52,8 +52,7 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
 
 Optional:
 
-- `auth_source` (String) Default: "admin"
-The authentication source where the user information is stored.
+- `auth_source` (String) The authentication source where the user information is stored. Default: "admin"
 - `connection_string` (String) The connection string of the database that you want to replicate..
 - `password` (String, Sensitive) The password associated with this username.
 - `replica_set` (String) The name of the replica set to be replicated.

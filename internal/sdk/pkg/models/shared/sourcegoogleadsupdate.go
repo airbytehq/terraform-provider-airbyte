@@ -3,6 +3,8 @@
 package shared
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
 )
@@ -55,38 +57,75 @@ func (o *GoogleCredentials) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-type CustomQueries struct {
+type CustomQueriesArray struct {
 	// A custom defined GAQL query for building the report. Avoid including the segments.date field; wherever possible, Airbyte will automatically include it for incremental syncs. For more information, refer to <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">Google's documentation</a>.
 	Query string `json:"query"`
 	// The table name in your destination database for the chosen query.
 	TableName string `json:"table_name"`
 }
 
-func (o *CustomQueries) GetQuery() string {
+func (o *CustomQueriesArray) GetQuery() string {
 	if o == nil {
 		return ""
 	}
 	return o.Query
 }
 
-func (o *CustomQueries) GetTableName() string {
+func (o *CustomQueriesArray) GetTableName() string {
 	if o == nil {
 		return ""
 	}
 	return o.TableName
 }
 
+// CustomerStatus - An enumeration.
+type CustomerStatus string
+
+const (
+	CustomerStatusUnknown   CustomerStatus = "UNKNOWN"
+	CustomerStatusEnabled   CustomerStatus = "ENABLED"
+	CustomerStatusCanceled  CustomerStatus = "CANCELED"
+	CustomerStatusSuspended CustomerStatus = "SUSPENDED"
+	CustomerStatusClosed    CustomerStatus = "CLOSED"
+)
+
+func (e CustomerStatus) ToPointer() *CustomerStatus {
+	return &e
+}
+
+func (e *CustomerStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "UNKNOWN":
+		fallthrough
+	case "ENABLED":
+		fallthrough
+	case "CANCELED":
+		fallthrough
+	case "SUSPENDED":
+		fallthrough
+	case "CLOSED":
+		*e = CustomerStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomerStatus: %v", v)
+	}
+}
+
 type SourceGoogleAdsUpdate struct {
 	// A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.
-	ConversionWindowDays *int64            `default:"14" json:"conversion_window_days"`
-	Credentials          GoogleCredentials `json:"credentials"`
-	CustomQueries        []CustomQueries   `json:"custom_queries,omitempty"`
+	ConversionWindowDays *int64               `default:"14" json:"conversion_window_days"`
+	Credentials          GoogleCredentials    `json:"credentials"`
+	CustomQueriesArray   []CustomQueriesArray `json:"custom_queries_array,omitempty"`
 	// Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
-	CustomerID string `json:"customer_id"`
+	CustomerID *string `json:"customer_id,omitempty"`
+	// A list of customer statuses to filter on. For detailed info about what each status mean refer to Google Ads <a href="https://developers.google.com/google-ads/api/reference/rpc/v15/CustomerStatusEnum.CustomerStatus">documentation</a>.
+	CustomerStatusFilter []CustomerStatus `json:"customer_status_filter,omitempty"`
 	// UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
 	EndDate *types.Date `json:"end_date,omitempty"`
-	// If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
-	LoginCustomerID *string `json:"login_customer_id,omitempty"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 	StartDate *types.Date `json:"start_date,omitempty"`
 }
@@ -116,18 +155,25 @@ func (o *SourceGoogleAdsUpdate) GetCredentials() GoogleCredentials {
 	return o.Credentials
 }
 
-func (o *SourceGoogleAdsUpdate) GetCustomQueries() []CustomQueries {
+func (o *SourceGoogleAdsUpdate) GetCustomQueriesArray() []CustomQueriesArray {
 	if o == nil {
 		return nil
 	}
-	return o.CustomQueries
+	return o.CustomQueriesArray
 }
 
-func (o *SourceGoogleAdsUpdate) GetCustomerID() string {
+func (o *SourceGoogleAdsUpdate) GetCustomerID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *SourceGoogleAdsUpdate) GetCustomerStatusFilter() []CustomerStatus {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerStatusFilter
 }
 
 func (o *SourceGoogleAdsUpdate) GetEndDate() *types.Date {
@@ -135,13 +181,6 @@ func (o *SourceGoogleAdsUpdate) GetEndDate() *types.Date {
 		return nil
 	}
 	return o.EndDate
-}
-
-func (o *SourceGoogleAdsUpdate) GetLoginCustomerID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LoginCustomerID
 }
 
 func (o *SourceGoogleAdsUpdate) GetStartDate() *types.Date {

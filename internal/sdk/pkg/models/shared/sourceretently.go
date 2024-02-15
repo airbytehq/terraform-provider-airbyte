@@ -33,7 +33,6 @@ func (e *SourceRetentlySchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRetentlyAuthenticateWithAPIToken - Choose how to authenticate to Retently
 type SourceRetentlyAuthenticateWithAPIToken struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
 	// Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
@@ -94,7 +93,6 @@ func (e *SourceRetentlyAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRetentlyAuthenticateViaRetentlyOAuth - Choose how to authenticate to Retently
 type SourceRetentlyAuthenticateViaRetentlyOAuth struct {
 	AdditionalProperties interface{}             `additionalProperties:"true" json:"-"`
 	authType             *SourceRetentlyAuthType `const:"Client" json:"auth_type,omitempty"`
@@ -156,6 +154,7 @@ const (
 	SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticateWithAPIToken     SourceRetentlyAuthenticationMechanismType = "source-retently_Authenticate with API Token"
 )
 
+// SourceRetentlyAuthenticationMechanism - Choose how to authenticate to Retently
 type SourceRetentlyAuthenticationMechanism struct {
 	SourceRetentlyAuthenticateViaRetentlyOAuth *SourceRetentlyAuthenticateViaRetentlyOAuth
 	SourceRetentlyAuthenticateWithAPIToken     *SourceRetentlyAuthenticateWithAPIToken

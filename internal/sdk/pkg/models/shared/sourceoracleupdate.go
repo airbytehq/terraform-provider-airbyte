@@ -35,7 +35,7 @@ func (e *SourceOracleUpdateConnectionType) UnmarshalJSON(data []byte) error {
 
 // SystemIDSID - Use SID (Oracle System Identifier)
 type SystemIDSID struct {
-	connectionType *SourceOracleUpdateConnectionType `const:"sid" json:"connection_type"`
+	connectionType *SourceOracleUpdateConnectionType `const:"sid" json:"connection_type,omitempty"`
 	Sid            string                            `json:"sid"`
 }
 
@@ -87,7 +87,7 @@ func (e *ConnectionType) UnmarshalJSON(data []byte) error {
 
 // ServiceName - Use service name
 type ServiceName struct {
-	connectionType *ConnectionType `const:"service_name" json:"connection_type"`
+	connectionType *ConnectionType `const:"service_name" json:"connection_type,omitempty"`
 	ServiceName    string          `json:"service_name"`
 }
 
@@ -120,6 +120,7 @@ const (
 	ConnectByTypeSystemIDSID ConnectByType = "System ID (SID)"
 )
 
+// ConnectBy - Connect data that will be used for DB connection
 type ConnectBy struct {
 	ServiceName *ServiceName
 	SystemIDSID *SystemIDSID
@@ -202,7 +203,7 @@ func (e *SourceOracleUpdateEncryptionMethod) UnmarshalJSON(data []byte) error {
 
 // TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type TLSEncryptedVerifyCertificate struct {
-	encryptionMethod *SourceOracleUpdateEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
+	encryptionMethod SourceOracleUpdateEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
 }
@@ -218,8 +219,8 @@ func (t *TLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceOracleUpdateEncryptionMethod {
-	return SourceOracleUpdateEncryptionMethodEncryptedVerifyCertificate.ToPointer()
+func (o *TLSEncryptedVerifyCertificate) GetEncryptionMethod() SourceOracleUpdateEncryptionMethod {
+	return SourceOracleUpdateEncryptionMethodEncryptedVerifyCertificate
 }
 
 func (o *TLSEncryptedVerifyCertificate) GetSslCertificate() string {
@@ -288,7 +289,7 @@ func (e *EncryptionMethod) UnmarshalJSON(data []byte) error {
 type NativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
 	EncryptionAlgorithm *EncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	encryptionMethod    *EncryptionMethod    `const:"client_nne" json:"encryption_method"`
+	encryptionMethod    EncryptionMethod     `const:"client_nne" json:"encryption_method"`
 }
 
 func (n NativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -309,8 +310,8 @@ func (o *NativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *EncryptionAlgorit
 	return o.EncryptionAlgorithm
 }
 
-func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() *EncryptionMethod {
-	return EncryptionMethodClientNne.ToPointer()
+func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() EncryptionMethod {
+	return EncryptionMethodClientNne
 }
 
 type EncryptionUnionType string
@@ -320,6 +321,7 @@ const (
 	EncryptionUnionTypeTLSEncryptedVerifyCertificate EncryptionUnionType = "TLS Encrypted (verify certificate)"
 )
 
+// Encryption - The encryption method with is used when communicating with the database.
 type Encryption struct {
 	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE
 	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate
@@ -401,7 +403,6 @@ func (e *SourceOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data [
 	}
 }
 
-// SourceOracleUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -483,7 +484,6 @@ func (e *SourceOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error
 	}
 }
 
-// SourceOracleUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -565,7 +565,6 @@ func (e *SourceOracleUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOracleUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourceOracleUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -594,6 +593,7 @@ const (
 	SourceOracleUpdateSSHTunnelMethodTypeSourceOracleUpdatePasswordAuthentication SourceOracleUpdateSSHTunnelMethodType = "source-oracle-update_Password Authentication"
 )
 
+// SourceOracleUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleUpdateSSHTunnelMethod struct {
 	SourceOracleUpdateNoTunnel               *SourceOracleUpdateNoTunnel
 	SourceOracleUpdateSSHKeyAuthentication   *SourceOracleUpdateSSHKeyAuthentication

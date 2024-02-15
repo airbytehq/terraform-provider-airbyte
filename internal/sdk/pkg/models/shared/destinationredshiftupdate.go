@@ -34,7 +34,6 @@ func (e *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON
 	}
 }
 
-// DestinationRedshiftUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedshiftUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -116,7 +115,6 @@ func (e *DestinationRedshiftUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte
 	}
 }
 
-// DestinationRedshiftUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedshiftUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -198,7 +196,6 @@ func (e *DestinationRedshiftUpdateTunnelMethod) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationRedshiftUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedshiftUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationRedshiftUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -227,6 +224,7 @@ const (
 	DestinationRedshiftUpdateSSHTunnelMethodTypeDestinationRedshiftUpdatePasswordAuthentication DestinationRedshiftUpdateSSHTunnelMethodType = "destination-redshift-update_Password Authentication"
 )
 
+// DestinationRedshiftUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedshiftUpdateSSHTunnelMethod struct {
 	DestinationRedshiftUpdateNoTunnel               *DestinationRedshiftUpdateNoTunnel
 	DestinationRedshiftUpdateSSHKeyAuthentication   *DestinationRedshiftUpdateSSHKeyAuthentication
@@ -452,6 +450,7 @@ const (
 	DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption DestinationRedshiftUpdateEncryptionUnionType = "AES-CBC envelope encryption"
 )
 
+// DestinationRedshiftUpdateEncryption - How to encrypt the staging data
 type DestinationRedshiftUpdateEncryption struct {
 	NoEncryption             *NoEncryption
 	AESCBCEnvelopeEncryption *AESCBCEnvelopeEncryption
@@ -537,29 +536,39 @@ type DestinationRedshiftUpdateS3BucketRegion string
 
 const (
 	DestinationRedshiftUpdateS3BucketRegionUnknown      DestinationRedshiftUpdateS3BucketRegion = ""
-	DestinationRedshiftUpdateS3BucketRegionUsEast1      DestinationRedshiftUpdateS3BucketRegion = "us-east-1"
-	DestinationRedshiftUpdateS3BucketRegionUsEast2      DestinationRedshiftUpdateS3BucketRegion = "us-east-2"
-	DestinationRedshiftUpdateS3BucketRegionUsWest1      DestinationRedshiftUpdateS3BucketRegion = "us-west-1"
-	DestinationRedshiftUpdateS3BucketRegionUsWest2      DestinationRedshiftUpdateS3BucketRegion = "us-west-2"
 	DestinationRedshiftUpdateS3BucketRegionAfSouth1     DestinationRedshiftUpdateS3BucketRegion = "af-south-1"
 	DestinationRedshiftUpdateS3BucketRegionApEast1      DestinationRedshiftUpdateS3BucketRegion = "ap-east-1"
-	DestinationRedshiftUpdateS3BucketRegionApSouth1     DestinationRedshiftUpdateS3BucketRegion = "ap-south-1"
 	DestinationRedshiftUpdateS3BucketRegionApNortheast1 DestinationRedshiftUpdateS3BucketRegion = "ap-northeast-1"
 	DestinationRedshiftUpdateS3BucketRegionApNortheast2 DestinationRedshiftUpdateS3BucketRegion = "ap-northeast-2"
 	DestinationRedshiftUpdateS3BucketRegionApNortheast3 DestinationRedshiftUpdateS3BucketRegion = "ap-northeast-3"
+	DestinationRedshiftUpdateS3BucketRegionApSouth1     DestinationRedshiftUpdateS3BucketRegion = "ap-south-1"
+	DestinationRedshiftUpdateS3BucketRegionApSouth2     DestinationRedshiftUpdateS3BucketRegion = "ap-south-2"
 	DestinationRedshiftUpdateS3BucketRegionApSoutheast1 DestinationRedshiftUpdateS3BucketRegion = "ap-southeast-1"
 	DestinationRedshiftUpdateS3BucketRegionApSoutheast2 DestinationRedshiftUpdateS3BucketRegion = "ap-southeast-2"
+	DestinationRedshiftUpdateS3BucketRegionApSoutheast3 DestinationRedshiftUpdateS3BucketRegion = "ap-southeast-3"
+	DestinationRedshiftUpdateS3BucketRegionApSoutheast4 DestinationRedshiftUpdateS3BucketRegion = "ap-southeast-4"
 	DestinationRedshiftUpdateS3BucketRegionCaCentral1   DestinationRedshiftUpdateS3BucketRegion = "ca-central-1"
+	DestinationRedshiftUpdateS3BucketRegionCaWest1      DestinationRedshiftUpdateS3BucketRegion = "ca-west-1"
 	DestinationRedshiftUpdateS3BucketRegionCnNorth1     DestinationRedshiftUpdateS3BucketRegion = "cn-north-1"
 	DestinationRedshiftUpdateS3BucketRegionCnNorthwest1 DestinationRedshiftUpdateS3BucketRegion = "cn-northwest-1"
 	DestinationRedshiftUpdateS3BucketRegionEuCentral1   DestinationRedshiftUpdateS3BucketRegion = "eu-central-1"
+	DestinationRedshiftUpdateS3BucketRegionEuCentral2   DestinationRedshiftUpdateS3BucketRegion = "eu-central-2"
 	DestinationRedshiftUpdateS3BucketRegionEuNorth1     DestinationRedshiftUpdateS3BucketRegion = "eu-north-1"
 	DestinationRedshiftUpdateS3BucketRegionEuSouth1     DestinationRedshiftUpdateS3BucketRegion = "eu-south-1"
+	DestinationRedshiftUpdateS3BucketRegionEuSouth2     DestinationRedshiftUpdateS3BucketRegion = "eu-south-2"
 	DestinationRedshiftUpdateS3BucketRegionEuWest1      DestinationRedshiftUpdateS3BucketRegion = "eu-west-1"
 	DestinationRedshiftUpdateS3BucketRegionEuWest2      DestinationRedshiftUpdateS3BucketRegion = "eu-west-2"
 	DestinationRedshiftUpdateS3BucketRegionEuWest3      DestinationRedshiftUpdateS3BucketRegion = "eu-west-3"
-	DestinationRedshiftUpdateS3BucketRegionSaEast1      DestinationRedshiftUpdateS3BucketRegion = "sa-east-1"
+	DestinationRedshiftUpdateS3BucketRegionIlCentral1   DestinationRedshiftUpdateS3BucketRegion = "il-central-1"
+	DestinationRedshiftUpdateS3BucketRegionMeCentral1   DestinationRedshiftUpdateS3BucketRegion = "me-central-1"
 	DestinationRedshiftUpdateS3BucketRegionMeSouth1     DestinationRedshiftUpdateS3BucketRegion = "me-south-1"
+	DestinationRedshiftUpdateS3BucketRegionSaEast1      DestinationRedshiftUpdateS3BucketRegion = "sa-east-1"
+	DestinationRedshiftUpdateS3BucketRegionUsEast1      DestinationRedshiftUpdateS3BucketRegion = "us-east-1"
+	DestinationRedshiftUpdateS3BucketRegionUsEast2      DestinationRedshiftUpdateS3BucketRegion = "us-east-2"
+	DestinationRedshiftUpdateS3BucketRegionUsGovEast1   DestinationRedshiftUpdateS3BucketRegion = "us-gov-east-1"
+	DestinationRedshiftUpdateS3BucketRegionUsGovWest1   DestinationRedshiftUpdateS3BucketRegion = "us-gov-west-1"
+	DestinationRedshiftUpdateS3BucketRegionUsWest1      DestinationRedshiftUpdateS3BucketRegion = "us-west-1"
+	DestinationRedshiftUpdateS3BucketRegionUsWest2      DestinationRedshiftUpdateS3BucketRegion = "us-west-2"
 )
 
 func (e DestinationRedshiftUpdateS3BucketRegion) ToPointer() *DestinationRedshiftUpdateS3BucketRegion {
@@ -574,19 +583,9 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 	switch v {
 	case "":
 		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		fallthrough
 	case "af-south-1":
 		fallthrough
 	case "ap-east-1":
-		fallthrough
-	case "ap-south-1":
 		fallthrough
 	case "ap-northeast-1":
 		fallthrough
@@ -594,11 +593,21 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 		fallthrough
 	case "ap-northeast-3":
 		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
 	case "ap-southeast-1":
 		fallthrough
 	case "ap-southeast-2":
 		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
 	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
 		fallthrough
 	case "cn-north-1":
 		fallthrough
@@ -606,9 +615,13 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 		fallthrough
 	case "eu-central-1":
 		fallthrough
+	case "eu-central-2":
+		fallthrough
 	case "eu-north-1":
 		fallthrough
 	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
 		fallthrough
 	case "eu-west-1":
 		fallthrough
@@ -616,9 +629,25 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 		fallthrough
 	case "eu-west-3":
 		fallthrough
-	case "sa-east-1":
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
 		fallthrough
 	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
+		fallthrough
+	case "us-gov-east-1":
+		fallthrough
+	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
 		*e = DestinationRedshiftUpdateS3BucketRegion(v)
 		return nil
 	default:
@@ -626,8 +655,8 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 	}
 }
 
-// S3Staging - <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
-type S3Staging struct {
+// AWSS3Staging - <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
+type AWSS3Staging struct {
 	// This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 	AccessKeyID string `json:"access_key_id"`
 	// How to encrypt the staging data
@@ -649,78 +678,78 @@ type S3Staging struct {
 	SecretAccessKey string `json:"secret_access_key"`
 }
 
-func (s S3Staging) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
+func (a AWSS3Staging) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (s *S3Staging) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+func (a *AWSS3Staging) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *S3Staging) GetAccessKeyID() string {
+func (o *AWSS3Staging) GetAccessKeyID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessKeyID
 }
 
-func (o *S3Staging) GetEncryption() *DestinationRedshiftUpdateEncryption {
+func (o *AWSS3Staging) GetEncryption() *DestinationRedshiftUpdateEncryption {
 	if o == nil {
 		return nil
 	}
 	return o.Encryption
 }
 
-func (o *S3Staging) GetFileBufferCount() *int64 {
+func (o *AWSS3Staging) GetFileBufferCount() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.FileBufferCount
 }
 
-func (o *S3Staging) GetFileNamePattern() *string {
+func (o *AWSS3Staging) GetFileNamePattern() *string {
 	if o == nil {
 		return nil
 	}
 	return o.FileNamePattern
 }
 
-func (o *S3Staging) GetMethod() DestinationRedshiftUpdateMethod {
+func (o *AWSS3Staging) GetMethod() DestinationRedshiftUpdateMethod {
 	return DestinationRedshiftUpdateMethodS3Staging
 }
 
-func (o *S3Staging) GetPurgeStagingData() *bool {
+func (o *AWSS3Staging) GetPurgeStagingData() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.PurgeStagingData
 }
 
-func (o *S3Staging) GetS3BucketName() string {
+func (o *AWSS3Staging) GetS3BucketName() string {
 	if o == nil {
 		return ""
 	}
 	return o.S3BucketName
 }
 
-func (o *S3Staging) GetS3BucketPath() *string {
+func (o *AWSS3Staging) GetS3BucketPath() *string {
 	if o == nil {
 		return nil
 	}
 	return o.S3BucketPath
 }
 
-func (o *S3Staging) GetS3BucketRegion() *DestinationRedshiftUpdateS3BucketRegion {
+func (o *AWSS3Staging) GetS3BucketRegion() *DestinationRedshiftUpdateS3BucketRegion {
 	if o == nil {
 		return nil
 	}
 	return o.S3BucketRegion
 }
 
-func (o *S3Staging) GetSecretAccessKey() string {
+func (o *AWSS3Staging) GetSecretAccessKey() string {
 	if o == nil {
 		return ""
 	}
@@ -730,23 +759,24 @@ func (o *S3Staging) GetSecretAccessKey() string {
 type UploadingMethodType string
 
 const (
-	UploadingMethodTypeS3Staging UploadingMethodType = "S3 Staging"
-	UploadingMethodTypeStandard  UploadingMethodType = "Standard"
+	UploadingMethodTypeAWSS3Staging UploadingMethodType = "AWS S3 Staging"
+	UploadingMethodTypeStandard     UploadingMethodType = "Standard"
 )
 
+// UploadingMethod - The way data will be uploaded to Redshift.
 type UploadingMethod struct {
-	S3Staging *S3Staging
-	Standard  *Standard
+	AWSS3Staging *AWSS3Staging
+	Standard     *Standard
 
 	Type UploadingMethodType
 }
 
-func CreateUploadingMethodS3Staging(s3Staging S3Staging) UploadingMethod {
-	typ := UploadingMethodTypeS3Staging
+func CreateUploadingMethodAWSS3Staging(awsS3Staging AWSS3Staging) UploadingMethod {
+	typ := UploadingMethodTypeAWSS3Staging
 
 	return UploadingMethod{
-		S3Staging: &s3Staging,
-		Type:      typ,
+		AWSS3Staging: &awsS3Staging,
+		Type:         typ,
 	}
 }
 
@@ -768,10 +798,10 @@ func (u *UploadingMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	s3Staging := new(S3Staging)
-	if err := utils.UnmarshalJSON(data, &s3Staging, "", true, true); err == nil {
-		u.S3Staging = s3Staging
-		u.Type = UploadingMethodTypeS3Staging
+	awsS3Staging := new(AWSS3Staging)
+	if err := utils.UnmarshalJSON(data, &awsS3Staging, "", true, true); err == nil {
+		u.AWSS3Staging = awsS3Staging
+		u.Type = UploadingMethodTypeAWSS3Staging
 		return nil
 	}
 
@@ -779,8 +809,8 @@ func (u *UploadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u UploadingMethod) MarshalJSON() ([]byte, error) {
-	if u.S3Staging != nil {
-		return utils.MarshalJSON(u.S3Staging, "", true)
+	if u.AWSS3Staging != nil {
+		return utils.MarshalJSON(u.AWSS3Staging, "", true)
 	}
 
 	if u.Standard != nil {
@@ -793,6 +823,10 @@ func (u UploadingMethod) MarshalJSON() ([]byte, error) {
 type DestinationRedshiftUpdate struct {
 	// Name of the database.
 	Database string `json:"database"`
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables
+	EnableIncrementalFinalTableUpdates *bool `default:"false" json:"enable_incremental_final_table_updates"`
 	// Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -801,6 +835,8 @@ type DestinationRedshiftUpdate struct {
 	Password string `json:"password"`
 	// Port of the database.
 	Port *int64 `default:"5439" json:"port"`
+	// The schema to write raw tables into
+	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
 	Schema *string `default:"public" json:"schema"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -829,6 +865,20 @@ func (o *DestinationRedshiftUpdate) GetDatabase() string {
 	return o.Database
 }
 
+func (o *DestinationRedshiftUpdate) GetDisableTypeDedupe() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DisableTypeDedupe
+}
+
+func (o *DestinationRedshiftUpdate) GetEnableIncrementalFinalTableUpdates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EnableIncrementalFinalTableUpdates
+}
+
 func (o *DestinationRedshiftUpdate) GetHost() string {
 	if o == nil {
 		return ""
@@ -855,6 +905,13 @@ func (o *DestinationRedshiftUpdate) GetPort() *int64 {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *DestinationRedshiftUpdate) GetRawDataSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RawDataSchema
 }
 
 func (o *DestinationRedshiftUpdate) GetSchema() *string {

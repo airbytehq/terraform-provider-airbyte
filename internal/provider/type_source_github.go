@@ -5,12 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGithub struct {
-	APIURL          types.String               `tfsdk:"api_url"`
-	Branch          types.String               `tfsdk:"branch"`
-	Branches        []types.String             `tfsdk:"branches"`
-	Credentials     SourceGithubAuthentication `tfsdk:"credentials"`
-	Repositories    []types.String             `tfsdk:"repositories"`
-	Repository      types.String               `tfsdk:"repository"`
-	RequestsPerHour types.Int64                `tfsdk:"requests_per_hour"`
-	StartDate       types.String               `tfsdk:"start_date"`
+	APIURL       types.String               `tfsdk:"api_url"`
+	Branch       types.String               `tfsdk:"branch"`
+	Branches     []types.String             `tfsdk:"branches"`
+	Credentials  SourceGithubAuthentication `tfsdk:"credentials"`
+	Repositories []types.String             `tfsdk:"repositories"`
+	Repository   types.String               `tfsdk:"repository"`
+	StartDate    types.String               `tfsdk:"start_date"`
 }

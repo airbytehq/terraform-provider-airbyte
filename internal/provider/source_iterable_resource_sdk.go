@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceIterableResourceModel) ToCreateSDKType() *shared.SourceIterableCreateRequest {
+func (r *SourceIterableResourceModel) ToSharedSourceIterableCreateRequest() *shared.SourceIterableCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIterable{
@@ -39,12 +39,14 @@ func (r *SourceIterableResourceModel) ToCreateSDKType() *shared.SourceIterableCr
 	return &out
 }
 
-func (r *SourceIterableResourceModel) ToGetSDKType() *shared.SourceIterableCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceIterableResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceIterableResourceModel) ToUpdateSDKType() *shared.SourceIterablePutRequest {
+func (r *SourceIterableResourceModel) ToSharedSourceIterablePutRequest() *shared.SourceIterablePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIterableUpdate{
@@ -59,20 +61,4 @@ func (r *SourceIterableResourceModel) ToUpdateSDKType() *shared.SourceIterablePu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceIterableResourceModel) ToDeleteSDKType() *shared.SourceIterableCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceIterableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceIterableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

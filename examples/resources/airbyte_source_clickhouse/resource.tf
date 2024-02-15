@@ -1,16 +1,17 @@
 resource "airbyte_source_clickhouse" "my_source_clickhouse" {
   configuration = {
-    database = "default"
-    host     = "...my_host..."
-    password = "...my_password..."
-    port     = 8123
+    database        = "default"
+    host            = "...my_host..."
+    jdbc_url_params = "...my_jdbc_url_params..."
+    password        = "...my_password..."
+    port            = 8123
     tunnel_method = {
-      source_clickhouse_no_tunnel = {}
+      no_tunnel = {}
     }
-    username = "Maximus28"
+    username = "Loy_Bartoletti"
   }
-  definition_id = "54cb2418-93e1-4da4-ac4f-685d205011b8"
-  name          = "Milton Crooks"
+  definition_id = "bdda328f-6c37-43e0-a663-420a6a3ab4d4"
+  name          = "Georgia Haley"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3b757391-0861-48e9-9445-d83c494a849c"
+  workspace_id  = "910e5c99-9e89-4cbd-8e8f-2a37cc1fbec8"
 }

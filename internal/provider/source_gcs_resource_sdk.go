@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateRequest {
+func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.SourceGcsCreateRequest {
 	bucket := r.Configuration.Bucket.ValueString()
 	serviceAccount := r.Configuration.ServiceAccount.ValueString()
 	startDate := new(time.Time)
@@ -228,12 +228,14 @@ func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateReques
 	return &out
 }
 
-func (r *SourceGcsResourceModel) ToGetSDKType() *shared.SourceGcsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGcsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGcsResourceModel) ToUpdateSDKType() *shared.SourceGcsPutRequest {
+func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcsPutRequest {
 	bucket := r.Configuration.Bucket.ValueString()
 	serviceAccount := r.Configuration.ServiceAccount.ValueString()
 	startDate := new(time.Time)
@@ -437,20 +439,4 @@ func (r *SourceGcsResourceModel) ToUpdateSDKType() *shared.SourceGcsPutRequest {
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGcsResourceModel) ToDeleteSDKType() *shared.SourceGcsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGcsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGcsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceWebflow struct {
-	APIKey types.String `tfsdk:"api_key"`
-	SiteID types.String `tfsdk:"site_id"`
+	AcceptVersion types.String `tfsdk:"accept_version"`
+	APIKey        types.String `tfsdk:"api_key"`
+	SiteID        types.String `tfsdk:"site_id"`
 }

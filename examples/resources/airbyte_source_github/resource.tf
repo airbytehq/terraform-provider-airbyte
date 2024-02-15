@@ -1,6 +1,6 @@
 resource "airbyte_source_github" "my_source_github" {
   configuration = {
-    api_url = "https://github.company.org"
+    api_url = "https://github.com"
     branch  = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     branches = [
       "...",
@@ -15,12 +15,11 @@ resource "airbyte_source_github" "my_source_github" {
     repositories = [
       "...",
     ]
-    repository        = "airbytehq/airbyte"
-    requests_per_hour = 10
-    start_date        = "2021-03-01T00:00:00Z"
+    repository = "airbytehq/airbyte"
+    start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "e017f905-2f20-440e-8692-82dd6a12cb01"
-  name          = "Bennie Stroman"
+  definition_id = "c14a349f-de89-4ab2-b6cb-ad00caee12c4"
+  name          = "Angel Haley"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aeeda058-2852-4791-bedf-cf9c9058e69d"
+  workspace_id  = "7e54a27b-617a-4012-a6bf-68e1922df283"
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceTwilioTaskrouterResourceModel) ToCreateSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
+func (r *SourceTwilioTaskrouterResourceModel) ToSharedSourceTwilioTaskrouterCreateRequest() *shared.SourceTwilioTaskrouterCreateRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
 	configuration := shared.SourceTwilioTaskrouter{
@@ -38,12 +38,14 @@ func (r *SourceTwilioTaskrouterResourceModel) ToCreateSDKType() *shared.SourceTw
 	return &out
 }
 
-func (r *SourceTwilioTaskrouterResourceModel) ToGetSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTwilioTaskrouterResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTwilioTaskrouterResourceModel) ToUpdateSDKType() *shared.SourceTwilioTaskrouterPutRequest {
+func (r *SourceTwilioTaskrouterResourceModel) ToSharedSourceTwilioTaskrouterPutRequest() *shared.SourceTwilioTaskrouterPutRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
 	configuration := shared.SourceTwilioTaskrouterUpdate{
@@ -58,20 +60,4 @@ func (r *SourceTwilioTaskrouterResourceModel) ToUpdateSDKType() *shared.SourceTw
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTwilioTaskrouterResourceModel) ToDeleteSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTwilioTaskrouterResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTwilioTaskrouterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

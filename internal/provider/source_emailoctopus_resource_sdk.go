@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailoctopusCreateRequest {
+func (r *SourceEmailoctopusResourceModel) ToSharedSourceEmailoctopusCreateRequest() *shared.SourceEmailoctopusCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceEmailoctopus{
 		APIKey: apiKey,
@@ -36,12 +36,14 @@ func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailo
 	return &out
 }
 
-func (r *SourceEmailoctopusResourceModel) ToGetSDKType() *shared.SourceEmailoctopusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceEmailoctopusResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceEmailoctopusResourceModel) ToUpdateSDKType() *shared.SourceEmailoctopusPutRequest {
+func (r *SourceEmailoctopusResourceModel) ToSharedSourceEmailoctopusPutRequest() *shared.SourceEmailoctopusPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceEmailoctopusUpdate{
 		APIKey: apiKey,
@@ -54,20 +56,4 @@ func (r *SourceEmailoctopusResourceModel) ToUpdateSDKType() *shared.SourceEmailo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceEmailoctopusResourceModel) ToDeleteSDKType() *shared.SourceEmailoctopusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceEmailoctopusResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceEmailoctopusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

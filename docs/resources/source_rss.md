@@ -17,10 +17,10 @@ resource "airbyte_source_rss" "my_source_rss" {
   configuration = {
     url = "...my_url..."
   }
-  definition_id = "da21f739-86a7-41e9-92c2-b81056bc977a"
-  name          = "Alison Wunsch"
+  definition_id = "fcb06318-4072-4944-8d2b-8965caababee"
+  name          = "Clint Jaskolski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ff8dd835-d804-427d-a3a4-e1d8c723c8e5"
+  workspace_id  = "8e7243c0-21bc-4073-abf4-dfebd414e5a6"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_rss" "my_source_rss" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCreateRequest {
+func (r *SourceRkiCovidResourceModel) ToSharedSourceRkiCovidCreateRequest() *shared.SourceRkiCovidCreateRequest {
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRkiCovid{
 		StartDate: startDate,
@@ -36,12 +36,14 @@ func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCr
 	return &out
 }
 
-func (r *SourceRkiCovidResourceModel) ToGetSDKType() *shared.SourceRkiCovidCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceRkiCovidResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceRkiCovidResourceModel) ToUpdateSDKType() *shared.SourceRkiCovidPutRequest {
+func (r *SourceRkiCovidResourceModel) ToSharedSourceRkiCovidPutRequest() *shared.SourceRkiCovidPutRequest {
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRkiCovidUpdate{
 		StartDate: startDate,
@@ -54,20 +56,4 @@ func (r *SourceRkiCovidResourceModel) ToUpdateSDKType() *shared.SourceRkiCovidPu
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceRkiCovidResourceModel) ToDeleteSDKType() *shared.SourceRkiCovidCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceRkiCovidResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceRkiCovidResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -78,6 +78,8 @@ type SourceJira struct {
 	ExpandIssueTransition *bool `default:"false" json:"expand_issue_transition"`
 	// Select fields to Expand the `Issues` stream when replicating with:
 	IssuesStreamExpandWith []SourceJiraIssuesStreamExpandWith `json:"issues_stream_expand_with,omitempty"`
+	// When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced.
+	LookbackWindowMinutes *int64 `default:"0" json:"lookback_window_minutes"`
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 	Projects []string `json:"projects,omitempty"`
 	// (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
@@ -145,6 +147,13 @@ func (o *SourceJira) GetIssuesStreamExpandWith() []SourceJiraIssuesStreamExpandW
 		return nil
 	}
 	return o.IssuesStreamExpandWith
+}
+
+func (o *SourceJira) GetLookbackWindowMinutes() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindowMinutes
 }
 
 func (o *SourceJira) GetProjects() []string {

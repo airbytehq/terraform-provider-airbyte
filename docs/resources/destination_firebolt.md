@@ -30,9 +30,9 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
     password = "...my_password..."
     username = "username@email.com"
   }
-  definition_id = "d37ea6e5-cbc1-4c07-86ea-3ea494c42020"
-  name          = "Jared Spencer"
-  workspace_id  = "d1afa414-5a8e-4ad6-8436-1fa9c0130565"
+  definition_id = "7e4a59e7-bfd1-4d49-abd1-4d08d4a7d5d4"
+  name          = "Ernest Torp III"
+  workspace_id  = "3b42c32f-48f6-4e54-ba0f-0f39a6c151a7"
 }
 ```
 
@@ -47,7 +47,7 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -75,8 +75,8 @@ Optional:
 
 Optional:
 
-- `external_table_via_s3` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--external_table_via_s3))
-- `sql_inserts` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--sql_inserts))
+- `external_table_via_s3` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--external_table_via_s3))
+- `sql_inserts` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--sql_inserts))
 
 <a id="nestedatt--configuration--loading_method--external_table_via_s3"></a>
 ### Nested Schema for `configuration.loading_method.external_table_via_s3`

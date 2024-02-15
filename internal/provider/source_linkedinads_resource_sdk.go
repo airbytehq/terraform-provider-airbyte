@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedinAdsCreateRequest {
+func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest() *shared.SourceLinkedinAdsCreateRequest {
 	var accountIds []int64 = nil
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
@@ -86,12 +86,14 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	return &out
 }
 
-func (r *SourceLinkedinAdsResourceModel) ToGetSDKType() *shared.SourceLinkedinAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceLinkedinAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedinAdsPutRequest {
+func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsPutRequest() *shared.SourceLinkedinAdsPutRequest {
 	var accountIds []int64 = nil
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
@@ -153,20 +155,4 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceLinkedinAdsResourceModel) ToDeleteSDKType() *shared.SourceLinkedinAdsCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceLinkedinAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceLinkedinAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

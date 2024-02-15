@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *WorkspaceDataSourceModel) RefreshFromGetResponse(resp *shared.WorkspaceResponse) {
+func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
 	if resp.DataResidency != nil {
 		r.DataResidency = types.StringValue(string(*resp.DataResidency))
 	} else {

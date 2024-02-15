@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRedisCreateRequest {
+func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() *shared.DestinationRedisCreateRequest {
 	cacheType := new(shared.DestinationRedisCacheType)
 	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
 		*cacheType = shared.DestinationRedisCacheType(r.Configuration.CacheType.ValueString())
@@ -154,12 +154,14 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 	return &out
 }
 
-func (r *DestinationRedisResourceModel) ToGetSDKType() *shared.DestinationRedisCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationRedisResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRedisPutRequest {
+func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *shared.DestinationRedisPutRequest {
 	cacheType := new(shared.CacheType)
 	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
 		*cacheType = shared.CacheType(r.Configuration.CacheType.ValueString())
@@ -297,20 +299,4 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationRedisResourceModel) ToDeleteSDKType() *shared.DestinationRedisCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationRedisResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationRedisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

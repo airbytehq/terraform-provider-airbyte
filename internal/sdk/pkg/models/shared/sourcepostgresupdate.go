@@ -97,19 +97,19 @@ func (o *DetectChangesWithXminSystemColumn) GetMethod() SourcePostgresUpdateSche
 	return SourcePostgresUpdateSchemasMethodXmin
 }
 
-// SourcePostgresUpdateLSNCommitBehaviour - Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type SourcePostgresUpdateLSNCommitBehaviour string
+// LSNCommitBehaviour - Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type LSNCommitBehaviour string
 
 const (
-	SourcePostgresUpdateLSNCommitBehaviourWhileReadingData                 SourcePostgresUpdateLSNCommitBehaviour = "While reading Data"
-	SourcePostgresUpdateLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresUpdateLSNCommitBehaviour = "After loading Data in the destination"
+	LSNCommitBehaviourWhileReadingData                 LSNCommitBehaviour = "While reading Data"
+	LSNCommitBehaviourAfterLoadingDataInTheDestination LSNCommitBehaviour = "After loading Data in the destination"
 )
 
-func (e SourcePostgresUpdateLSNCommitBehaviour) ToPointer() *SourcePostgresUpdateLSNCommitBehaviour {
+func (e LSNCommitBehaviour) ToPointer() *LSNCommitBehaviour {
 	return &e
 }
 
-func (e *SourcePostgresUpdateLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
+func (e *LSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -118,10 +118,10 @@ func (e *SourcePostgresUpdateLSNCommitBehaviour) UnmarshalJSON(data []byte) erro
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourcePostgresUpdateLSNCommitBehaviour(v)
+		*e = LSNCommitBehaviour(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateLSNCommitBehaviour: %v", v)
+		return fmt.Errorf("invalid value for LSNCommitBehaviour: %v", v)
 	}
 }
 
@@ -149,41 +149,43 @@ func (e *SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod) Unmarsh
 	}
 }
 
-// SourcePostgresUpdatePlugin - A logical decoding plugin installed on the PostgreSQL server.
-type SourcePostgresUpdatePlugin string
+// Plugin - A logical decoding plugin installed on the PostgreSQL server.
+type Plugin string
 
 const (
-	SourcePostgresUpdatePluginPgoutput SourcePostgresUpdatePlugin = "pgoutput"
+	PluginPgoutput Plugin = "pgoutput"
 )
 
-func (e SourcePostgresUpdatePlugin) ToPointer() *SourcePostgresUpdatePlugin {
+func (e Plugin) ToPointer() *Plugin {
 	return &e
 }
 
-func (e *SourcePostgresUpdatePlugin) UnmarshalJSON(data []byte) error {
+func (e *Plugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pgoutput":
-		*e = SourcePostgresUpdatePlugin(v)
+		*e = Plugin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdatePlugin: %v", v)
+		return fmt.Errorf("invalid value for Plugin: %v", v)
 	}
 }
 
 // ReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
 type ReadChangesUsingWriteAheadLogCDC struct {
 	AdditionalProperties interface{} `additionalProperties:"true" json:"-"`
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
+	// Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting.
+	HeartbeatActionQuery *string `default:"" json:"heartbeat_action_query"`
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+	InitialWaitingSeconds *int64 `default:"1200" json:"initial_waiting_seconds"`
 	// Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourcePostgresUpdateLSNCommitBehaviour                        `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
+	LsnCommitBehaviour *LSNCommitBehaviour                                            `default:"After loading Data in the destination" json:"lsn_commit_behaviour"`
 	method             SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethod `const:"CDC" json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourcePostgresUpdatePlugin `default:"pgoutput" json:"plugin"`
+	Plugin *Plugin `default:"pgoutput" json:"plugin"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
@@ -210,6 +212,13 @@ func (o *ReadChangesUsingWriteAheadLogCDC) GetAdditionalProperties() interface{}
 	return o.AdditionalProperties
 }
 
+func (o *ReadChangesUsingWriteAheadLogCDC) GetHeartbeatActionQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HeartbeatActionQuery
+}
+
 func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
 	if o == nil {
 		return nil
@@ -217,7 +226,7 @@ func (o *ReadChangesUsingWriteAheadLogCDC) GetInitialWaitingSeconds() *int64 {
 	return o.InitialWaitingSeconds
 }
 
-func (o *ReadChangesUsingWriteAheadLogCDC) GetLsnCommitBehaviour() *SourcePostgresUpdateLSNCommitBehaviour {
+func (o *ReadChangesUsingWriteAheadLogCDC) GetLsnCommitBehaviour() *LSNCommitBehaviour {
 	if o == nil {
 		return nil
 	}
@@ -228,7 +237,7 @@ func (o *ReadChangesUsingWriteAheadLogCDC) GetMethod() SourcePostgresUpdateSchem
 	return SourcePostgresUpdateSchemasReplicationMethodUpdateMethodMethodCdc
 }
 
-func (o *ReadChangesUsingWriteAheadLogCDC) GetPlugin() *SourcePostgresUpdatePlugin {
+func (o *ReadChangesUsingWriteAheadLogCDC) GetPlugin() *Plugin {
 	if o == nil {
 		return nil
 	}
@@ -264,6 +273,7 @@ const (
 	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateScanChangesWithUserDefinedCursor SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Scan Changes with User Defined Cursor"
 )
 
+// SourcePostgresUpdateUpdateMethod - Configures how data is extracted from the database.
 type SourcePostgresUpdateUpdateMethod struct {
 	ReadChangesUsingWriteAheadLogCDC                     *ReadChangesUsingWriteAheadLogCDC
 	DetectChangesWithXminSystemColumn                    *DetectChangesWithXminSystemColumn
@@ -736,6 +746,9 @@ const (
 	SourcePostgresUpdateSSLModesTypeSourcePostgresUpdateVerifyFull SourcePostgresUpdateSSLModesType = "source-postgres-update_verify-full"
 )
 
+// SourcePostgresUpdateSSLModes - SSL connection modes.
+//
+//	Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 type SourcePostgresUpdateSSLModes struct {
 	SourcePostgresUpdateDisable    *SourcePostgresUpdateDisable
 	SourcePostgresUpdateAllow      *SourcePostgresUpdateAllow
@@ -901,7 +914,6 @@ func (e *SourcePostgresUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data
 	}
 }
 
-// SourcePostgresUpdatePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresUpdatePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -983,7 +995,6 @@ func (e *SourcePostgresUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SourcePostgresUpdateSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresUpdateSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -1065,7 +1076,6 @@ func (e *SourcePostgresUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePostgresUpdateNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresUpdateNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourcePostgresUpdateTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -1094,6 +1104,7 @@ const (
 	SourcePostgresUpdateSSHTunnelMethodTypeSourcePostgresUpdatePasswordAuthentication SourcePostgresUpdateSSHTunnelMethodType = "source-postgres-update_Password Authentication"
 )
 
+// SourcePostgresUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresUpdateSSHTunnelMethod struct {
 	SourcePostgresUpdateNoTunnel               *SourcePostgresUpdateNoTunnel
 	SourcePostgresUpdateSSHKeyAuthentication   *SourcePostgresUpdateSSHKeyAuthentication

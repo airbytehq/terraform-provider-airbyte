@@ -15,7 +15,7 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
     password = "...my_password..."
     username = "username@email.com"
   }
-  definition_id = "d37ea6e5-cbc1-4c07-86ea-3ea494c42020"
-  name          = "Jared Spencer"
-  workspace_id  = "d1afa414-5a8e-4ad6-8436-1fa9c0130565"
+  definition_id = "7e4a59e7-bfd1-4d49-abd1-4d08d4a7d5d4"
+  name          = "Ernest Torp III"
+  workspace_id  = "3b42c32f-48f6-4e54-ba0f-0f39a6c151a7"
 }

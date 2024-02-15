@@ -34,7 +34,6 @@ func (e *SourceNotionUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNotionUpdateAccessToken - Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information.
 type SourceNotionUpdateAccessToken struct {
 	authType SourceNotionUpdateSchemasAuthType `const:"token" json:"auth_type"`
 	// The Access Token for your private Notion integration. See the <a href='https://docs.airbyte.com/integrations/sources/notion#step-1-create-an-integration-in-notion'>docs</a> for more information on how to obtain this token.
@@ -87,7 +86,6 @@ func (e *SourceNotionUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNotionUpdateOAuth20 - Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information.
 type SourceNotionUpdateOAuth20 struct {
 	// The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 	AccessToken string                     `json:"access_token"`
@@ -141,6 +139,7 @@ const (
 	SourceNotionUpdateAuthenticationMethodTypeSourceNotionUpdateAccessToken SourceNotionUpdateAuthenticationMethodType = "source-notion-update_Access Token"
 )
 
+// SourceNotionUpdateAuthenticationMethod - Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information.
 type SourceNotionUpdateAuthenticationMethod struct {
 	SourceNotionUpdateOAuth20     *SourceNotionUpdateOAuth20
 	SourceNotionUpdateAccessToken *SourceNotionUpdateAccessToken

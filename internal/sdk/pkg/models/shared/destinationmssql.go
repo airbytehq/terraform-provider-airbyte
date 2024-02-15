@@ -137,6 +137,7 @@ const (
 	DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedVerifyCertificate      DestinationMssqlSSLMethodType = "destination-mssql_Encrypted (verify certificate)"
 )
 
+// DestinationMssqlSSLMethod - The encryption method which is used to communicate with the database.
 type DestinationMssqlSSLMethod struct {
 	DestinationMssqlEncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate
 	DestinationMssqlEncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate
@@ -218,7 +219,6 @@ func (e *DestinationMssqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []b
 	}
 }
 
-// DestinationMssqlPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMssqlPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -300,7 +300,6 @@ func (e *DestinationMssqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMssqlSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMssqlSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -382,7 +381,6 @@ func (e *DestinationMssqlTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMssqlNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMssqlNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationMssqlTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -411,6 +409,7 @@ const (
 	DestinationMssqlSSHTunnelMethodTypeDestinationMssqlPasswordAuthentication DestinationMssqlSSHTunnelMethodType = "destination-mssql_Password Authentication"
 )
 
+// DestinationMssqlSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMssqlSSHTunnelMethod struct {
 	DestinationMssqlNoTunnel               *DestinationMssqlNoTunnel
 	DestinationMssqlSSHKeyAuthentication   *DestinationMssqlSSHKeyAuthentication

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurveymonkeyCreateRequest {
+func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateRequest() *shared.SourceSurveymonkeyCreateRequest {
 	var credentials *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
@@ -71,12 +71,14 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	return &out
 }
 
-func (r *SourceSurveymonkeyResourceModel) ToGetSDKType() *shared.SourceSurveymonkeyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceSurveymonkeyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurveymonkeyPutRequest {
+func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest() *shared.SourceSurveymonkeyPutRequest {
 	var credentials *shared.SurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
@@ -123,20 +125,4 @@ func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurvey
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceSurveymonkeyResourceModel) ToDeleteSDKType() *shared.SourceSurveymonkeyCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceSurveymonkeyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceSurveymonkeyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

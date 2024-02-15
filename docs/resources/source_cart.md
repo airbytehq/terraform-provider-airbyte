@@ -18,16 +18,16 @@ resource "airbyte_source_cart" "my_source_cart" {
     credentials = {
       central_api_router = {
         site_id     = "...my_site_id..."
-        user_name   = "Ethyl.Bosco18"
+        user_name   = "Emelia_Glover12"
         user_secret = "...my_user_secret..."
       }
     }
     start_date = "2021-01-01T00:00:00Z"
   }
-  definition_id = "3ec1224a-7ffb-4268-9c18-7087d37ac99f"
-  name          = "Jamie Macejkovic III"
+  definition_id = "41893e1d-a46c-44f6-85d2-05011b886247"
+  name          = "Melody Konopelski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "12305e0c-1f4b-465d-9ebd-757e5946981c"
+  workspace_id  = "39108618-e914-445d-83c4-94a849cd517f"
 }
 ```
 
@@ -42,8 +42,8 @@ resource "airbyte_source_cart" "my_source_cart" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

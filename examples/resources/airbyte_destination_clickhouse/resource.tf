@@ -8,9 +8,9 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Rhianna_Leannon"
+    username = "Adah75"
   }
-  definition_id = "2c276398-b468-48ad-b426-53c327fa18b5"
-  name          = "Gerardo Corwin"
-  workspace_id  = "4f41e22e-39b6-461a-89af-71290b2c6d65"
+  definition_id = "6d65d335-e03a-4beb-b71b-58e872ec68b6"
+  name          = "Shawn Olson"
+  workspace_id  = "48b53694-1566-4f22-bd30-a28af8c1d27b"
 }

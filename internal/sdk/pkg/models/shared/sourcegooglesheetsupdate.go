@@ -33,7 +33,6 @@ func (e *SourceGoogleSheetsUpdateSchemasAuthType) UnmarshalJSON(data []byte) err
 	}
 }
 
-// SourceGoogleSheetsUpdateServiceAccountKeyAuthentication - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsUpdateServiceAccountKeyAuthentication struct {
 	authType SourceGoogleSheetsUpdateSchemasAuthType `const:"Service" json:"auth_type"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
@@ -86,7 +85,6 @@ func (e *SourceGoogleSheetsUpdateAuthType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth struct {
 	authType SourceGoogleSheetsUpdateAuthType `const:"Client" json:"auth_type"`
 	// Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
@@ -140,6 +138,7 @@ const (
 	SourceGoogleSheetsUpdateAuthenticationTypeSourceGoogleSheetsUpdateServiceAccountKeyAuthentication SourceGoogleSheetsUpdateAuthenticationType = "source-google-sheets-update_Service Account Key Authentication"
 )
 
+// SourceGoogleSheetsUpdateAuthentication - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsUpdateAuthentication struct {
 	SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth      *SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth
 	SourceGoogleSheetsUpdateServiceAccountKeyAuthentication *SourceGoogleSheetsUpdateServiceAccountKeyAuthentication

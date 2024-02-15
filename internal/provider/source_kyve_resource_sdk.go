@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceKyveResourceModel) ToCreateSDKType() *shared.SourceKyveCreateRequest {
+func (r *SourceKyveResourceModel) ToSharedSourceKyveCreateRequest() *shared.SourceKyveCreateRequest {
 	maxPages := new(int64)
 	if !r.Configuration.MaxPages.IsUnknown() && !r.Configuration.MaxPages.IsNull() {
 		*maxPages = r.Configuration.MaxPages.ValueInt64()
@@ -59,12 +59,14 @@ func (r *SourceKyveResourceModel) ToCreateSDKType() *shared.SourceKyveCreateRequ
 	return &out
 }
 
-func (r *SourceKyveResourceModel) ToGetSDKType() *shared.SourceKyveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceKyveResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceKyveResourceModel) ToUpdateSDKType() *shared.SourceKyvePutRequest {
+func (r *SourceKyveResourceModel) ToSharedSourceKyvePutRequest() *shared.SourceKyvePutRequest {
 	maxPages := new(int64)
 	if !r.Configuration.MaxPages.IsUnknown() && !r.Configuration.MaxPages.IsNull() {
 		*maxPages = r.Configuration.MaxPages.ValueInt64()
@@ -100,20 +102,4 @@ func (r *SourceKyveResourceModel) ToUpdateSDKType() *shared.SourceKyvePutRequest
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceKyveResourceModel) ToDeleteSDKType() *shared.SourceKyveCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceKyveResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceKyveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

@@ -17,10 +17,10 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
   configuration = {
     api_token = "...my_api_token..."
   }
-  definition_id = "2e85afcc-9acc-46e7-a95c-9a7c9f197511"
-  name          = "Franklin D'Amore"
+  definition_id = "13ed5606-ac59-4e7c-8aee-eb09ffd3753f"
+  name          = "Francisco Kautzer I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "96585095-001a-4ad5-a5f9-cfb0d1e8d3ac"
+  workspace_id  = "03ba1bd8-103c-4fb4-a284-9b585759fd79"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

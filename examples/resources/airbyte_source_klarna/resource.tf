@@ -1,12 +1,12 @@
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
     password   = "...my_password..."
-    playground = true
-    region     = "oc"
-    username   = "Lessie_Beatty"
+    playground = false
+    region     = "us"
+    username   = "Dock.Muller2"
   }
-  definition_id = "ed1087b9-882d-454c-a598-cc59eb952f06"
-  name          = "Carmen Bins"
+  definition_id = "ea69f1b1-a975-4dd1-b5a0-295b197bbb02"
+  name          = "Stella Schuster"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7fd8f9d1-baac-46e0-9b1e-50c14468d231"
+  workspace_id  = "5c3155f7-31c6-4e6b-81ca-f166aee78925"
 }

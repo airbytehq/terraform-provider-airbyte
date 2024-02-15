@@ -5,15 +5,16 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -55,6 +56,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
@@ -70,7 +74,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"password": schema.StringAttribute{
-						Optional:    true,
+						Required:    true,
 						Sensitive:   true,
 						Description: `The password associated with the username.`,
 					},
@@ -84,32 +88,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							"read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"data_to_sync": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]; Default: "Existing and New"` + "\n" +
-											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Existing and New",
-												"New Changes Only",
-											),
-										},
-									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 300` + "\n" +
-											`The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
-									},
-									"snapshot_isolation": schema.StringAttribute{
-										Optional: true,
-										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]; Default: "Snapshot"` + "\n" +
-											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Snapshot",
-												"Read Committed",
-											),
-										},
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(300),
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
@@ -129,6 +112,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
+						Validators: []validator.List{
+							listvalidator.UniqueValues(),
+						},
 					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -141,12 +127,21 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							"encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"certificate": schema.StringAttribute{
+										Optional:    true,
+										Description: `certificate of the server, or of the CA that signed the server certificate`,
+									},
 									"host_name_in_certificate": schema.StringAttribute{
 										Optional:    true,
 										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
+							},
+							"unencrypted": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
+								Description: `Data transfer will not be encrypted.`,
 							},
 						},
 						Description: `The encryption method which is used when communicating with the database.`,
@@ -158,9 +153,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"no_tunnel": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+								Optional:   true,
+								Attributes: map[string]schema.Attribute{},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -170,9 +164,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
@@ -184,7 +179,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -199,16 +193,16 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Optional: true,
-										MarkdownDescription: `Default: 22` + "\n" +
-											`Port on the proxy/jump server that accepts inbound ssh connections.`,
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(22),
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections. Default: 22`,
 									},
 									"tunnel_user": schema.StringAttribute{
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 						},
 						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -224,40 +218,40 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -287,14 +281,14 @@ func (r *SourceMssqlResource) Configure(ctx context.Context, req resource.Config
 
 func (r *SourceMssqlResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceMssqlResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -303,7 +297,7 @@ func (r *SourceMssqlResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceMssqlCreateRequest()
 	res, err := r.client.Sources.CreateSourceMssql(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -324,7 +318,34 @@ func (r *SourceMssqlResource) Create(ctx context.Context, req resource.CreateReq
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceMssqlRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceMssql(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -372,7 +393,7 @@ func (r *SourceMssqlResource) Read(ctx context.Context, req resource.ReadRequest
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -380,12 +401,19 @@ func (r *SourceMssqlResource) Read(ctx context.Context, req resource.ReadRequest
 
 func (r *SourceMssqlResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceMssqlResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceMssqlPutRequest := data.ToUpdateSDKType()
+	sourceMssqlPutRequest := data.ToSharedSourceMssqlPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceMssqlRequest{
 		SourceMssqlPutRequest: sourceMssqlPutRequest,
@@ -407,31 +435,33 @@ func (r *SourceMssqlResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceMssqlRequest{
+	request1 := operations.GetSourceMssqlRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceMssql(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceMssql(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

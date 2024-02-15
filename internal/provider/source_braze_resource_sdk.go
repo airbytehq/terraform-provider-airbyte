@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRequest {
+func (r *SourceBrazeResourceModel) ToSharedSourceBrazeCreateRequest() *shared.SourceBrazeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
@@ -41,12 +41,14 @@ func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRe
 	return &out
 }
 
-func (r *SourceBrazeResourceModel) ToGetSDKType() *shared.SourceBrazeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceBrazeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceBrazeResourceModel) ToUpdateSDKType() *shared.SourceBrazePutRequest {
+func (r *SourceBrazeResourceModel) ToSharedSourceBrazePutRequest() *shared.SourceBrazePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
@@ -63,20 +65,4 @@ func (r *SourceBrazeResourceModel) ToUpdateSDKType() *shared.SourceBrazePutReque
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceBrazeResourceModel) ToDeleteSDKType() *shared.SourceBrazeCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceBrazeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceBrazeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

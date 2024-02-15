@@ -34,7 +34,6 @@ func (e *SourceSlackUpdateSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSlackUpdateAPIToken - Choose how to authenticate into Slack
 type SourceSlackUpdateAPIToken struct {
 	// A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
 	APIToken    string                              `json:"api_token"`
@@ -87,7 +86,6 @@ func (e *SourceSlackUpdateOptionTitle) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SignInViaSlackOAuth - Choose how to authenticate into Slack
 type SignInViaSlackOAuth struct {
 	// Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
 	AccessToken string `json:"access_token"`
@@ -141,6 +139,7 @@ const (
 	SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAPIToken SourceSlackUpdateAuthenticationMechanismType = "source-slack-update_API Token"
 )
 
+// SourceSlackUpdateAuthenticationMechanism - Choose how to authenticate into Slack
 type SourceSlackUpdateAuthenticationMechanism struct {
 	SignInViaSlackOAuth       *SignInViaSlackOAuth
 	SourceSlackUpdateAPIToken *SourceSlackUpdateAPIToken

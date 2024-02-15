@@ -5,16 +5,18 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-
+	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -55,12 +57,16 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_type": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["Seller", "Vendor"]; Default: "Seller"` + "\n" +
-							`Type of the Account you're going to authorize the Airbyte application by`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("Seller"),
+						Description: `Type of the Account you're going to authorize the Airbyte application by. must be one of ["Seller", "Vendor"]; Default: "Seller"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"Seller",
@@ -68,14 +74,11 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 							),
 						},
 					},
-					"advanced_stream_options": schema.StringAttribute{
-						Optional:    true,
-						Description: `Additional information to configure report options. This varies by report type, not every report implement this kind of feature. Must be a valid json string.`,
-					},
 					"aws_environment": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"` + "\n" +
-							`Select the AWS Environment.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("PRODUCTION"),
+						Description: `Select the AWS Environment. must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"PRODUCTION",
@@ -92,9 +95,10 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Description: `Your Login with Amazon Client Secret.`,
 					},
 					"period_in_days": schema.Int64Attribute{
-						Optional: true,
-						MarkdownDescription: `Default: 90` + "\n" +
-							`Will be used for stream slicing for initial full_refresh sync when no updated state is present for reports that support sliced incremental sync.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(90),
+						Description: `For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Required:    true,
@@ -102,9 +106,10 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Description: `The Refresh Token obtained via OAuth flow authorization.`,
 					},
 					"region": schema.StringAttribute{
-						Optional: true,
-						MarkdownDescription: `must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"` + "\n" +
-							`Select the AWS Region.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("US"),
+						Description: `Select the AWS Region. must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"AE",
@@ -140,54 +145,124 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"replication_start_date": schema.StringAttribute{
-						Required:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
+						Optional:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
-					"report_options": schema.StringAttribute{
-						Optional:    true,
-						Description: `Additional information passed to reports. This varies by report type. Must be a valid json string.`,
+					"report_options_list": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"options_list": schema.ListNestedAttribute{
+									Required: true,
+									NestedObject: schema.NestedAttributeObject{
+										Attributes: map[string]schema.Attribute{
+											"option_name": schema.StringAttribute{
+												Required: true,
+											},
+											"option_value": schema.StringAttribute{
+												Required: true,
+											},
+										},
+									},
+									Description: `List of options`,
+								},
+								"stream_name": schema.StringAttribute{
+									Required:    true,
+									Description: `must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT", "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT", "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SALES_AND_TRAFFIC_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_VENDOR_INVENTORY_REPORT", "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT", "GET_VENDOR_TRAFFIC_REPORT", "GET_VENDOR_SALES_REPORT", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA"]`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"GET_AFN_INVENTORY_DATA",
+											"GET_AFN_INVENTORY_DATA_BY_COUNTRY",
+											"GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL",
+											"GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT",
+											"GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT",
+											"GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT",
+											"GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA",
+											"GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA",
+											"GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA",
+											"GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA",
+											"GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA",
+											"GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA",
+											"GET_FBA_INVENTORY_PLANNING_DATA",
+											"GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA",
+											"GET_FBA_REIMBURSEMENTS_DATA",
+											"GET_FBA_SNS_FORECAST_DATA",
+											"GET_FBA_SNS_PERFORMANCE_DATA",
+											"GET_FBA_STORAGE_FEE_CHARGES_DATA",
+											"GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING",
+											"GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL",
+											"GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL",
+											"GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE",
+											"GET_FLAT_FILE_OPEN_LISTINGS_DATA",
+											"GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE",
+											"GET_LEDGER_DETAIL_VIEW_DATA",
+											"GET_LEDGER_SUMMARY_VIEW_DATA",
+											"GET_MERCHANT_CANCELLED_LISTINGS_DATA",
+											"GET_MERCHANT_LISTINGS_ALL_DATA",
+											"GET_MERCHANT_LISTINGS_DATA",
+											"GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT",
+											"GET_MERCHANT_LISTINGS_INACTIVE_DATA",
+											"GET_MERCHANTS_LISTINGS_FYP_REPORT",
+											"GET_ORDER_REPORT_DATA_SHIPPING",
+											"GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT",
+											"GET_SALES_AND_TRAFFIC_REPORT",
+											"GET_SELLER_FEEDBACK_DATA",
+											"GET_STRANDED_INVENTORY_UI_DATA",
+											"GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE",
+											"GET_VENDOR_INVENTORY_REPORT",
+											"GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT",
+											"GET_VENDOR_TRAFFIC_REPORT",
+											"GET_VENDOR_SALES_REPORT",
+											"GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL",
+											"GET_XML_BROWSE_TREE_DATA",
+										),
+									},
+								},
+							},
+						},
+						Description: `Additional information passed to reports. This varies by report type.`,
 					},
 				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.`,
+				Description: `The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed. `,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
 				Description: `Name of the source e.g. dev-mysql-instance.`,
 			},
 			"secret_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+					stringplanmodifier.RequiresReplaceIfConfigured(),
 				},
 				Optional:    true,
-				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed. `,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(),
+					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required: true,
 			},
@@ -217,14 +292,14 @@ func (r *SourceAmazonSellerPartnerResource) Configure(ctx context.Context, req r
 
 func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
 	var data *SourceAmazonSellerPartnerResourceModel
-	var item types.Object
+	var plan types.Object
 
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
+	resp.Diagnostics.Append(plan.As(ctx, &data, basetypes.ObjectAsOptions{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
 	})...)
@@ -233,7 +308,7 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		return
 	}
 
-	request := data.ToCreateSDKType()
+	request := data.ToSharedSourceAmazonSellerPartnerCreateRequest()
 	res, err := r.client.Sources.CreateSourceAmazonSellerPartner(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -254,7 +329,34 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromCreateResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceID := data.SourceID.ValueString()
+	request1 := operations.GetSourceAmazonSellerPartnerRequest{
+		SourceID: sourceID,
+	}
+	res1, err := r.client.Sources.GetSourceAmazonSellerPartner(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -302,7 +404,7 @@ func (r *SourceAmazonSellerPartnerResource) Read(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(res.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -310,12 +412,19 @@ func (r *SourceAmazonSellerPartnerResource) Read(ctx context.Context, req resour
 
 func (r *SourceAmazonSellerPartnerResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *SourceAmazonSellerPartnerResourceModel
+	var plan types.Object
+
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &plan)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	sourceAmazonSellerPartnerPutRequest := data.ToUpdateSDKType()
+	sourceAmazonSellerPartnerPutRequest := data.ToSharedSourceAmazonSellerPartnerPutRequest()
 	sourceID := data.SourceID.ValueString()
 	request := operations.PutSourceAmazonSellerPartnerRequest{
 		SourceAmazonSellerPartnerPutRequest: sourceAmazonSellerPartnerPutRequest,
@@ -337,31 +446,33 @@ func (r *SourceAmazonSellerPartnerResource) Update(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 	sourceId1 := data.SourceID.ValueString()
-	getRequest := operations.GetSourceAmazonSellerPartnerRequest{
+	request1 := operations.GetSourceAmazonSellerPartnerRequest{
 		SourceID: sourceId1,
 	}
-	getResponse, err := r.client.Sources.GetSourceAmazonSellerPartner(ctx, getRequest)
+	res1, err := r.client.Sources.GetSourceAmazonSellerPartner(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		if res != nil && res.RawResponse != nil {
-			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
 		}
 		return
 	}
-	if getResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
 		return
 	}
-	if getResponse.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
+	if res1.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromGetResponse(getResponse.SourceResponse)
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

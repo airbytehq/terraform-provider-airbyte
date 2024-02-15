@@ -18,7 +18,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
     auth_type = {
       login_password = {
         password = "...my_password..."
-        username = "Emmalee.Towne89"
+        username = "Selina_Armstrong"
       }
     }
     database = "...my_database..."
@@ -29,12 +29,12 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       }
     }
     tunnel_method = {
-      destination_mongodb_no_tunnel = {}
+      no_tunnel = {}
     }
   }
-  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
-  name          = "Adrienne Lockman"
-  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
+  definition_id = "2448e4e4-2a53-4050-a9af-bc66c913a5b7"
+  name          = "Donald Jast"
+  workspace_id  = "6a13d9b7-f635-498f-bb04-2924faeae501"
 }
 ```
 
@@ -49,7 +49,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided. Requires replacement if changed.
 
 ### Read-Only
 
@@ -96,9 +96,9 @@ Required:
 
 Optional:
 
-- `mongo_db_atlas` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--mongo_db_atlas))
-- `replica_set` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--replica_set))
-- `standalone_mongo_db_instance` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--standalone_mongo_db_instance))
+- `mongo_db_atlas` (Attributes) (see [below for nested schema](#nestedatt--configuration--instance_type--mongo_db_atlas))
+- `replica_set` (Attributes) (see [below for nested schema](#nestedatt--configuration--instance_type--replica_set))
+- `standalone_mongo_db_instance` (Attributes) (see [below for nested schema](#nestedatt--configuration--instance_type--standalone_mongo_db_instance))
 
 <a id="nestedatt--configuration--instance_type--mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.mongo_db_atlas`
@@ -135,8 +135,7 @@ Required:
 Optional:
 
 - `instance` (String) must be one of ["standalone"]; Default: "standalone"
-- `port` (Number) Default: 27017
-The Port of a Mongo database to be replicated.
+- `port` (Number) The Port of a Mongo database to be replicated. Default: 27017
 
 
 
@@ -145,9 +144,9 @@ The Port of a Mongo database to be replicated.
 
 Optional:
 
-- `no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
+- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
+- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
+- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
 
 <a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.no_tunnel`
@@ -164,8 +163,7 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
 <a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
@@ -179,7 +177,6 @@ Required:
 
 Optional:
 
-- `tunnel_port` (Number) Default: 22
-Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 

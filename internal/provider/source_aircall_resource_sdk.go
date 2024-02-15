@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCreateRequest {
+func (r *SourceAircallResourceModel) ToSharedSourceAircallCreateRequest() *shared.SourceAircallCreateRequest {
 	apiID := r.Configuration.APIID.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -41,12 +41,14 @@ func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCrea
 	return &out
 }
 
-func (r *SourceAircallResourceModel) ToGetSDKType() *shared.SourceAircallCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceAircallResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceAircallResourceModel) ToUpdateSDKType() *shared.SourceAircallPutRequest {
+func (r *SourceAircallResourceModel) ToSharedSourceAircallPutRequest() *shared.SourceAircallPutRequest {
 	apiID := r.Configuration.APIID.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -63,20 +65,4 @@ func (r *SourceAircallResourceModel) ToUpdateSDKType() *shared.SourceAircallPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceAircallResourceModel) ToDeleteSDKType() *shared.SourceAircallCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceAircallResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceAircallResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

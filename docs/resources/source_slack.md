@@ -19,18 +19,18 @@ resource "airbyte_source_slack" "my_source_slack" {
       "...",
     ]
     credentials = {
-      source_slack_api_token = {
+      api_token = {
         api_token = "...my_api_token..."
       }
     }
-    join_channels   = true
+    join_channels   = false
     lookback_window = 14
     start_date      = "2017-01-25T00:00:00Z"
   }
-  definition_id = "dd581ac6-4878-476f-8ad6-15bcace687b3"
-  name          = "Ms. Marian Bergstrom"
+  definition_id = "b6a93532-6188-42dc-aea3-77e2f3a67448"
+  name          = "Billie Murphy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "986a7b02-fd25-4c77-a7b3-6354281d3e7f"
+  workspace_id  = "b04beae9-e175-4304-865f-646723901f87"
 }
 ```
 
@@ -45,8 +45,8 @@ resource "airbyte_source_slack" "my_source_slack" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -64,18 +64,16 @@ Optional:
 
 - `channel_filter` (List of String) A channel name list (without leading '#' char) which limit the channels from which you'd like to sync. Empty list means no filter.
 - `credentials` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials))
-- `join_channels` (Boolean) Default: true
-Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
-- `lookback_window` (Number) Default: 0
-How far into the past to look for messages in threads, default is 0 days
+- `join_channels` (Boolean) Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages. . Default: true
+- `lookback_window` (Number) How far into the past to look for messages in threads, default is 0 days. Default: 0
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `api_token` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
-- `sign_in_via_slack_o_auth` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--sign_in_via_slack_o_auth))
+- `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
+- `sign_in_via_slack_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--sign_in_via_slack_o_auth))
 
 <a id="nestedatt--configuration--credentials--api_token"></a>
 ### Nested Schema for `configuration.credentials.api_token`

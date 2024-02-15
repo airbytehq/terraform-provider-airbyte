@@ -9,19 +9,20 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
     }
     indexing = {
       auth = {
-        destination_milvus_api_token = {
+        api_token = {
           token = "...my_token..."
         }
       }
       collection   = "...my_collection..."
       db           = "...my_db..."
-      host         = "tcp://my-local-milvus:19530"
+      host         = "tcp://host.docker.internal:19530"
       text_field   = "...my_text_field..."
       vector_field = "...my_vector_field..."
     }
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 5
+      chunk_overlap = 2
+      chunk_size    = 6
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -36,12 +37,12 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 7
+          split_level = 10
         }
       }
     }
   }
-  definition_id = "6683bb76-cbdd-442c-84b7-b603cc8cd887"
-  name          = "Mr. Karl Jacobson"
-  workspace_id  = "13ef7fc0-d176-4e5f-8145-49f1242182d1"
+  definition_id = "a0e10165-90e1-4a2b-87de-0ff637374915"
+  name          = "Jacob Walker"
+  workspace_id  = "2cd950e3-6acc-41e6-b129-15604b55b326"
 }

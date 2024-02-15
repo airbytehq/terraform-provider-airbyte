@@ -674,6 +674,8 @@ type SourceFacebookMarketingInsightConfig struct {
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// A list of chosen fields for fields parameter
 	Fields []SourceFacebookMarketingValidEnums `json:"fields,omitempty"`
+	// The insights job timeout
+	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
 	// The attribution window
 	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
 	// Chosen level for API
@@ -730,6 +732,13 @@ func (o *SourceFacebookMarketingInsightConfig) GetFields() []SourceFacebookMarke
 		return nil
 	}
 	return o.Fields
+}
+
+func (o *SourceFacebookMarketingInsightConfig) GetInsightsJobTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsJobTimeout
 }
 
 func (o *SourceFacebookMarketingInsightConfig) GetInsightsLookbackWindow() *int64 {
@@ -794,8 +803,8 @@ func (e *FacebookMarketing) UnmarshalJSON(data []byte) error {
 type SourceFacebookMarketing struct {
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 	AccessToken string `json:"access_token"`
-	// The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
-	AccountID string `json:"account_id"`
+	// The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
+	AccountIds []string `json:"account_ids"`
 	// Allows action_breakdowns to be an empty list
 	ActionBreakdownsAllowEmpty *bool `default:"true" json:"action_breakdowns_allow_empty"`
 	// The Client Id for your OAuth app
@@ -810,6 +819,8 @@ type SourceFacebookMarketing struct {
 	FetchThumbnailImages *bool `default:"false" json:"fetch_thumbnail_images"`
 	// Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.
 	IncludeDeleted *bool `default:"false" json:"include_deleted"`
+	// Insights Job Timeout establishes the maximum amount of time (in minutes) of waiting for the report job to complete. When timeout is reached the job is considered failed and we are trying to request smaller amount of data by breaking the job to few smaller ones. If you definitely know that 60 minutes is not enough for your report to be processed then you can decrease the timeout value, so we start breaking job to smaller parts faster.
+	InsightsJobTimeout *int64 `default:"60" json:"insights_job_timeout"`
 	// The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
 	InsightsLookbackWindow *int64 `default:"28" json:"insights_lookback_window"`
 	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
@@ -837,11 +848,11 @@ func (o *SourceFacebookMarketing) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *SourceFacebookMarketing) GetAccountID() string {
+func (o *SourceFacebookMarketing) GetAccountIds() []string {
 	if o == nil {
-		return ""
+		return []string{}
 	}
-	return o.AccountID
+	return o.AccountIds
 }
 
 func (o *SourceFacebookMarketing) GetActionBreakdownsAllowEmpty() *bool {
@@ -891,6 +902,13 @@ func (o *SourceFacebookMarketing) GetIncludeDeleted() *bool {
 		return nil
 	}
 	return o.IncludeDeleted
+}
+
+func (o *SourceFacebookMarketing) GetInsightsJobTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsJobTimeout
 }
 
 func (o *SourceFacebookMarketing) GetInsightsLookbackWindow() *int64 {

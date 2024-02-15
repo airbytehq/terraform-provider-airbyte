@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationTimeplusResourceModel) ToCreateSDKType() *shared.DestinationTimeplusCreateRequest {
+func (r *DestinationTimeplusResourceModel) ToSharedDestinationTimeplusCreateRequest() *shared.DestinationTimeplusCreateRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
@@ -36,12 +36,14 @@ func (r *DestinationTimeplusResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
-func (r *DestinationTimeplusResourceModel) ToGetSDKType() *shared.DestinationTimeplusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *DestinationTimeplusResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *DestinationTimeplusResourceModel) ToUpdateSDKType() *shared.DestinationTimeplusPutRequest {
+func (r *DestinationTimeplusResourceModel) ToSharedDestinationTimeplusPutRequest() *shared.DestinationTimeplusPutRequest {
 	apikey := r.Configuration.Apikey.ValueString()
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
@@ -61,20 +63,4 @@ func (r *DestinationTimeplusResourceModel) ToUpdateSDKType() *shared.Destination
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *DestinationTimeplusResourceModel) ToDeleteSDKType() *shared.DestinationTimeplusCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *DestinationTimeplusResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *DestinationTimeplusResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
-	r.RefreshFromGetResponse(resp)
 }

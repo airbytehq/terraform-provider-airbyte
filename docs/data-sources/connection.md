@@ -28,14 +28,12 @@ data "airbyte_connection" "my_connection" {
 ### Read-Only
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]; Default: "auto"
+- `data_residency` (String) must be one of ["auto", "us", "eu"]
 - `destination_id` (String)
 - `name` (String)
-- `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]; Default: "destination"
-Define the location where the data will be stored in the destination
+- `namespace_definition` (String) Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String)
-- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"
-Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
+- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
 - `prefix` (String)
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)

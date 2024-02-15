@@ -140,6 +140,7 @@ const (
 	AuthenticationMethodTypeUsernamePassword AuthenticationMethodType = "Username/Password"
 )
 
+// AuthenticationMethod - The type of authentication to be used
 type AuthenticationMethod struct {
 	APIKeySecret     *APIKeySecret
 	UsernamePassword *UsernamePassword

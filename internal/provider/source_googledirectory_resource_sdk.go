@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoogleDirectoryCreateRequest {
+func (r *SourceGoogleDirectoryResourceModel) ToSharedSourceGoogleDirectoryCreateRequest() *shared.SourceGoogleDirectoryCreateRequest {
 	var credentials *shared.SourceGoogleDirectoryGoogleCredentials
 	if r.Configuration.Credentials != nil {
 		var sourceGoogleDirectorySignInViaGoogleOAuth *shared.SourceGoogleDirectorySignInViaGoogleOAuth
@@ -68,12 +68,14 @@ func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoo
 	return &out
 }
 
-func (r *SourceGoogleDirectoryResourceModel) ToGetSDKType() *shared.SourceGoogleDirectoryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceGoogleDirectoryResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceGoogleDirectoryResourceModel) ToUpdateSDKType() *shared.SourceGoogleDirectoryPutRequest {
+func (r *SourceGoogleDirectoryResourceModel) ToSharedSourceGoogleDirectoryPutRequest() *shared.SourceGoogleDirectoryPutRequest {
 	var credentials *shared.SourceGoogleDirectoryUpdateGoogleCredentials
 	if r.Configuration.Credentials != nil {
 		var signInViaGoogleOAuth *shared.SignInViaGoogleOAuth
@@ -118,20 +120,4 @@ func (r *SourceGoogleDirectoryResourceModel) ToUpdateSDKType() *shared.SourceGoo
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceGoogleDirectoryResourceModel) ToDeleteSDKType() *shared.SourceGoogleDirectoryCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceGoogleDirectoryResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceGoogleDirectoryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

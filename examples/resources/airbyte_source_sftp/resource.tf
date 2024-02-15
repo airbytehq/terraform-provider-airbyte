@@ -1,7 +1,7 @@
 resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
-      source_sftp_password_authentication = {
+      password_authentication = {
         auth_user_password = "...my_auth_user_password..."
       }
     }
@@ -12,8 +12,8 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "8a56e1f7-b10c-46dd-9e62-eb5fcf365dcc"
-  name          = "Rogelio Schoen"
+  definition_id = "0c9cb870-eb98-4050-839e-7450657bfd1c"
+  name          = "Jesus Schultz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e41cbe1d-2ecd-4015-81d5-2f6c56d3cf89"
+  workspace_id  = "aae6c20a-c9c1-49db-be1c-883c55acce5c"
 }

@@ -122,6 +122,7 @@ const (
 	DestinationMongodbAuthorizationTypeTypeDestinationMongodbLoginPassword DestinationMongodbAuthorizationTypeType = "destination-mongodb_Login/Password"
 )
 
+// DestinationMongodbAuthorizationType - Authorization type.
 type DestinationMongodbAuthorizationType struct {
 	DestinationMongodbNone          *DestinationMongodbNone
 	DestinationMongodbLoginPassword *DestinationMongodbLoginPassword
@@ -226,7 +227,6 @@ func (e *DestinationMongodbSchemasInstanceTypeInstance) UnmarshalJSON(data []byt
 	}
 }
 
-// DestinationMongodbMongoDBAtlas - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type DestinationMongodbMongoDBAtlas struct {
 	// URL of a cluster to connect to.
 	ClusterURL string                                         `json:"cluster_url"`
@@ -282,7 +282,6 @@ func (e *DestinationMongodbSchemasInstance) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMongodbReplicaSet - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type DestinationMongodbReplicaSet struct {
 	Instance *DestinationMongodbSchemasInstance `default:"replica" json:"instance"`
 	// A replica set name.
@@ -347,7 +346,6 @@ func (e *DestinationMongodbInstance) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMongodbStandaloneMongoDbInstance - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type DestinationMongodbStandaloneMongoDbInstance struct {
 	// The Host of a Mongo database to be replicated.
 	Host     string                      `json:"host"`
@@ -396,6 +394,7 @@ const (
 	DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBAtlas              DestinationMongodbMongoDbInstanceTypeType = "destination-mongodb_MongoDB Atlas"
 )
 
+// DestinationMongodbMongoDbInstanceType - MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type DestinationMongodbMongoDbInstanceType struct {
 	DestinationMongodbStandaloneMongoDbInstance *DestinationMongodbStandaloneMongoDbInstance
 	DestinationMongodbReplicaSet                *DestinationMongodbReplicaSet
@@ -498,7 +497,6 @@ func (e *DestinationMongodbSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data [
 	}
 }
 
-// DestinationMongodbPasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -580,7 +578,6 @@ func (e *DestinationMongodbSchemasTunnelMethod) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationMongodbSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -662,7 +659,6 @@ func (e *DestinationMongodbTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationMongodbNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod DestinationMongodbTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -691,6 +687,7 @@ const (
 	DestinationMongodbSSHTunnelMethodTypeDestinationMongodbPasswordAuthentication DestinationMongodbSSHTunnelMethodType = "destination-mongodb_Password Authentication"
 )
 
+// DestinationMongodbSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMongodbSSHTunnelMethod struct {
 	DestinationMongodbNoTunnel               *DestinationMongodbNoTunnel
 	DestinationMongodbSSHKeyAuthentication   *DestinationMongodbSSHKeyAuthentication

@@ -1,13 +1,13 @@
 resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
   configuration = {
     api_key   = "...my_api_key..."
-    data_type = "historical"
+    data_type = "latest"
     symbols = [
       "...",
     ]
   }
-  definition_id = "a1361d3c-00cf-4e1b-a68d-340502b96029"
-  name          = "Pat Robel"
+  definition_id = "81ee6770-fa8e-4c1b-a804-bd6457a40e88"
+  name          = "Heather Murray"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9e6abf17-c2d5-40cb-ae6f-f332bdf14577"
+  workspace_id  = "41ba6f5d-90d5-4a8a-b49e-2072bdff3818"
 }

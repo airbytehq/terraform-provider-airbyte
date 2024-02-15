@@ -16,13 +16,13 @@ SourceLinkedinAds Resource
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      6,
+      4,
     ]
     ad_analytics_reports = [
       {
-        name             = "Dwayne Zboncak"
-        pivot_by         = "IMPRESSION_DEVICE_TYPE"
-        time_granularity = "MONTHLY"
+        name             = "Abraham Greenholt MD"
+        pivot_by         = "CONVERSATION_NODE"
+        time_granularity = "YEARLY"
       },
     ]
     credentials = {
@@ -32,10 +32,10 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     }
     start_date = "2021-05-17"
   }
-  definition_id = "4672645c-fb24-449e-af87-64eb4b875ea1"
-  name          = "Blake Howell"
+  definition_id = "61a4e466-849f-47bb-aaae-f524043cb4c4"
+  name          = "Tracy Watsica"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6c0fac14-03cf-4d91-9cc5-3ae1f1c37b35"
+  workspace_id  = "7bd59151-74a5-453f-9a41-daf7626ef51c"
 }
 ```
 
@@ -50,8 +50,8 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -77,10 +77,8 @@ Optional:
 Required:
 
 - `name` (String) The name for the custom report.
-- `pivot_by` (String) must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]
-Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
-- `time_granularity` (String) must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]
-Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
+- `pivot_by` (String) Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives. must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE", "MEMBER_JOB_FUNCTION", "MEMBER_COUNTRY_V2", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]
+- `time_granularity` (String) Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods. must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]
 
 
 <a id="nestedatt--configuration--credentials"></a>

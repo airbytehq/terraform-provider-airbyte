@@ -23,10 +23,10 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
     environment = "Production"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  definition_id = "3d75c669-3a6b-492e-b166-50e4c3120d77"
-  name          = "Bill Howell"
+  definition_id = "5647eb6b-abc0-4f9b-98b2-eafdc453fb6a"
+  name          = "Joan Moen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c796fdac-1f48-4b8f-8670-1054c1db1ce4"
+  workspace_id  = "447712b4-a020-4883-8aab-effb8d976510"
 }
 ```
 
@@ -41,8 +41,8 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 
@@ -59,16 +59,15 @@ Required:
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `environment` (String) must be one of ["Production", "Sandbox"]; Default: "Sandbox"
-The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.
+- `environment` (String) The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use. must be one of ["Production", "Sandbox"]; Default: "Sandbox"
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Optional:
 
-- `authenticate_via_lever_api_key` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_lever_api_key))
-- `authenticate_via_lever_o_auth` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_lever_o_auth))
+- `authenticate_via_lever_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_lever_api_key))
+- `authenticate_via_lever_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_lever_o_auth))
 
 <a id="nestedatt--configuration--credentials--authenticate_via_lever_api_key"></a>
 ### Nested Schema for `configuration.credentials.authenticate_via_lever_api_key`

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest {
+func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3CreateRequest {
 	awsAccessKeyID := new(string)
 	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
 		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
@@ -224,6 +224,12 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		} else {
 			pathPrefix = nil
 		}
+		roleArn := new(string)
+		if !r.Configuration.Provider.RoleArn.IsUnknown() && !r.Configuration.Provider.RoleArn.IsNull() {
+			*roleArn = r.Configuration.Provider.RoleArn.ValueString()
+		} else {
+			roleArn = nil
+		}
 		startDate := new(time.Time)
 		if !r.Configuration.Provider.StartDate.IsUnknown() && !r.Configuration.Provider.StartDate.IsNull() {
 			*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Provider.StartDate.ValueString())
@@ -236,8 +242,15 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 			Bucket:             bucket1,
 			Endpoint:           endpoint1,
 			PathPrefix:         pathPrefix,
+			RoleArn:            roleArn,
 			StartDate:          startDate,
 		}
+	}
+	roleArn1 := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn1 = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn1 = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -430,14 +443,34 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		}
 		var sourceS3DocumentFileTypeFormatExperimental *shared.SourceS3DocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.SourceS3Processing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var sourceS3Local *shared.SourceS3Local
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					sourceS3Local = &shared.SourceS3Local{}
+				}
+				if sourceS3Local != nil {
+					processing = &shared.SourceS3Processing{
+						SourceS3Local: sourceS3Local,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceS3ParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			sourceS3DocumentFileTypeFormatExperimental = &shared.SourceS3DocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if sourceS3DocumentFileTypeFormatExperimental != nil {
@@ -501,6 +534,7 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		Format:             format,
 		PathPattern:        pathPattern,
 		Provider:           provider,
+		RoleArn:            roleArn1,
 		Schema:             schema,
 		StartDate:          startDate1,
 		Streams:            streams,
@@ -529,12 +563,14 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 	return &out
 }
 
-func (r *SourceS3ResourceModel) ToGetSDKType() *shared.SourceS3CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceS3ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
+func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3PutRequest {
 	awsAccessKeyID := new(string)
 	if !r.Configuration.AwsAccessKeyID.IsUnknown() && !r.Configuration.AwsAccessKeyID.IsNull() {
 		*awsAccessKeyID = r.Configuration.AwsAccessKeyID.ValueString()
@@ -750,6 +786,12 @@ func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 		} else {
 			pathPrefix = nil
 		}
+		roleArn := new(string)
+		if !r.Configuration.Provider.RoleArn.IsUnknown() && !r.Configuration.Provider.RoleArn.IsNull() {
+			*roleArn = r.Configuration.Provider.RoleArn.ValueString()
+		} else {
+			roleArn = nil
+		}
 		startDate := new(time.Time)
 		if !r.Configuration.Provider.StartDate.IsUnknown() && !r.Configuration.Provider.StartDate.IsNull() {
 			*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.Provider.StartDate.ValueString())
@@ -762,8 +804,15 @@ func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 			Bucket:             bucket1,
 			Endpoint:           endpoint1,
 			PathPrefix:         pathPrefix,
+			RoleArn:            roleArn,
 			StartDate:          startDate,
 		}
+	}
+	roleArn1 := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn1 = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn1 = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -956,14 +1005,34 @@ func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 		}
 		var sourceS3UpdateDocumentFileTypeFormatExperimental *shared.SourceS3UpdateDocumentFileTypeFormatExperimental
 		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
-			skipUnprocessableFileTypes := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.IsNull() {
-				*skipUnprocessableFileTypes = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFileTypes.ValueBool()
+			var processing *shared.SourceS3UpdateProcessing
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+				var sourceS3UpdateLocal *shared.SourceS3UpdateLocal
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+					sourceS3UpdateLocal = &shared.SourceS3UpdateLocal{}
+				}
+				if sourceS3UpdateLocal != nil {
+					processing = &shared.SourceS3UpdateProcessing{
+						SourceS3UpdateLocal: sourceS3UpdateLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
-				skipUnprocessableFileTypes = nil
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceS3UpdateParsingStrategy)
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			} else {
+				strategy = nil
 			}
 			sourceS3UpdateDocumentFileTypeFormatExperimental = &shared.SourceS3UpdateDocumentFileTypeFormatExperimental{
-				SkipUnprocessableFileTypes: skipUnprocessableFileTypes,
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
 			}
 		}
 		if sourceS3UpdateDocumentFileTypeFormatExperimental != nil {
@@ -1027,6 +1096,7 @@ func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 		Format:             format,
 		PathPattern:        pathPattern,
 		Provider:           provider,
+		RoleArn:            roleArn1,
 		Schema:             schema,
 		StartDate:          startDate1,
 		Streams:            streams,
@@ -1039,20 +1109,4 @@ func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceS3ResourceModel) ToDeleteSDKType() *shared.SourceS3CreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceS3ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceS3ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

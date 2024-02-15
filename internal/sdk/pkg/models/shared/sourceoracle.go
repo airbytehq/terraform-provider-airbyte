@@ -35,7 +35,7 @@ func (e *SourceOracleSchemasConnectionType) UnmarshalJSON(data []byte) error {
 
 // SourceOracleSystemIDSID - Use SID (Oracle System Identifier)
 type SourceOracleSystemIDSID struct {
-	connectionType *SourceOracleSchemasConnectionType `const:"sid" json:"connection_type"`
+	connectionType *SourceOracleSchemasConnectionType `const:"sid" json:"connection_type,omitempty"`
 	Sid            string                             `json:"sid"`
 }
 
@@ -87,7 +87,7 @@ func (e *SourceOracleConnectionType) UnmarshalJSON(data []byte) error {
 
 // SourceOracleServiceName - Use service name
 type SourceOracleServiceName struct {
-	connectionType *SourceOracleConnectionType `const:"service_name" json:"connection_type"`
+	connectionType *SourceOracleConnectionType `const:"service_name" json:"connection_type,omitempty"`
 	ServiceName    string                      `json:"service_name"`
 }
 
@@ -120,6 +120,7 @@ const (
 	SourceOracleConnectByTypeSourceOracleSystemIDSID SourceOracleConnectByType = "source-oracle_System ID (SID)"
 )
 
+// SourceOracleConnectBy - Connect data that will be used for DB connection
 type SourceOracleConnectBy struct {
 	SourceOracleServiceName *SourceOracleServiceName
 	SourceOracleSystemIDSID *SourceOracleSystemIDSID
@@ -202,7 +203,7 @@ func (e *SourceOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
 
 // SourceOracleTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type SourceOracleTLSEncryptedVerifyCertificate struct {
-	encryptionMethod *SourceOracleSchemasEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
+	encryptionMethod SourceOracleSchemasEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
 }
@@ -218,8 +219,8 @@ func (s *SourceOracleTLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (o *SourceOracleTLSEncryptedVerifyCertificate) GetEncryptionMethod() *SourceOracleSchemasEncryptionMethod {
-	return SourceOracleSchemasEncryptionMethodEncryptedVerifyCertificate.ToPointer()
+func (o *SourceOracleTLSEncryptedVerifyCertificate) GetEncryptionMethod() SourceOracleSchemasEncryptionMethod {
+	return SourceOracleSchemasEncryptionMethodEncryptedVerifyCertificate
 }
 
 func (o *SourceOracleTLSEncryptedVerifyCertificate) GetSslCertificate() string {
@@ -288,7 +289,7 @@ func (e *SourceOracleEncryptionMethod) UnmarshalJSON(data []byte) error {
 type SourceOracleNativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
 	EncryptionAlgorithm *SourceOracleEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	encryptionMethod    *SourceOracleEncryptionMethod    `const:"client_nne" json:"encryption_method"`
+	encryptionMethod    SourceOracleEncryptionMethod     `const:"client_nne" json:"encryption_method"`
 }
 
 func (s SourceOracleNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -309,8 +310,8 @@ func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *Sourc
 	return o.EncryptionAlgorithm
 }
 
-func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceOracleEncryptionMethod {
-	return SourceOracleEncryptionMethodClientNne.ToPointer()
+func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() SourceOracleEncryptionMethod {
+	return SourceOracleEncryptionMethodClientNne
 }
 
 type SourceOracleEncryptionType string
@@ -320,6 +321,7 @@ const (
 	SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "source-oracle_TLS Encrypted (verify certificate)"
 )
 
+// SourceOracleEncryption - The encryption method with is used when communicating with the database.
 type SourceOracleEncryption struct {
 	SourceOracleNativeNetworkEncryptionNNE    *SourceOracleNativeNetworkEncryptionNNE
 	SourceOracleTLSEncryptedVerifyCertificate *SourceOracleTLSEncryptedVerifyCertificate
@@ -425,7 +427,6 @@ func (e *SourceOracleSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte)
 	}
 }
 
-// SourceOraclePasswordAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOraclePasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -507,7 +508,6 @@ func (e *SourceOracleSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOracleSSHKeyAuthentication - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleSSHKeyAuthentication struct {
 	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 	SSHKey string `json:"ssh_key"`
@@ -589,7 +589,6 @@ func (e *SourceOracleTunnelMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOracleNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleNoTunnel struct {
 	// No ssh tunnel needed to connect to database
 	tunnelMethod SourceOracleTunnelMethod `const:"NO_TUNNEL" json:"tunnel_method"`
@@ -618,6 +617,7 @@ const (
 	SourceOracleSSHTunnelMethodTypeSourceOraclePasswordAuthentication SourceOracleSSHTunnelMethodType = "source-oracle_Password Authentication"
 )
 
+// SourceOracleSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceOracleSSHTunnelMethod struct {
 	SourceOracleNoTunnel               *SourceOracleNoTunnel
 	SourceOracleSSHKeyAuthentication   *SourceOracleSSHKeyAuthentication

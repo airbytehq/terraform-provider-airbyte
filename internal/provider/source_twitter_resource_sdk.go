@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCreateRequest {
+func (r *SourceTwitterResourceModel) ToSharedSourceTwitterCreateRequest() *shared.SourceTwitterCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -53,12 +53,14 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 	return &out
 }
 
-func (r *SourceTwitterResourceModel) ToGetSDKType() *shared.SourceTwitterCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceTwitterResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceTwitterResourceModel) ToUpdateSDKType() *shared.SourceTwitterPutRequest {
+func (r *SourceTwitterResourceModel) ToSharedSourceTwitterPutRequest() *shared.SourceTwitterPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -87,20 +89,4 @@ func (r *SourceTwitterResourceModel) ToUpdateSDKType() *shared.SourceTwitterPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceTwitterResourceModel) ToDeleteSDKType() *shared.SourceTwitterCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceTwitterResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceTwitterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

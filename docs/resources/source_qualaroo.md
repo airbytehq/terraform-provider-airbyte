@@ -22,10 +22,10 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  definition_id = "9af7c7e9-c462-409e-a52c-707cb05c4a8d"
-  name          = "Cheryl Schmitt"
+  definition_id = "fd6e7ec4-8816-4b0c-a2b8-975147c3e6c8"
+  name          = "Drew Bosco"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4658e520-f854-4a56-b309-cc0ee4bba7fa"
+  workspace_id  = "cad3b1c4-0652-4931-9364-8ca783b58652"
 }
 ```
 
@@ -40,8 +40,8 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

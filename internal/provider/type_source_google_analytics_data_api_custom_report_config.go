@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleAnalyticsDataAPICustomReportConfig struct {
+	CohortSpec      *SourceGoogleAnalyticsDataAPICohortReports    `tfsdk:"cohort_spec"`
 	DimensionFilter *SourceGoogleAnalyticsDataAPIDimensionsFilter `tfsdk:"dimension_filter"`
 	Dimensions      []types.String                                `tfsdk:"dimensions"`
 	MetricFilter    *SourceGoogleAnalyticsDataAPIDimensionsFilter `tfsdk:"metric_filter"`

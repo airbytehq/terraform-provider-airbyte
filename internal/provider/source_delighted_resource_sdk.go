@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (r *SourceDelightedResourceModel) ToCreateSDKType() *shared.SourceDelightedCreateRequest {
+func (r *SourceDelightedResourceModel) ToSharedSourceDelightedCreateRequest() *shared.SourceDelightedCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	since, _ := time.Parse(time.RFC3339Nano, r.Configuration.Since.ValueString())
 	configuration := shared.SourceDelighted{
@@ -39,12 +39,14 @@ func (r *SourceDelightedResourceModel) ToCreateSDKType() *shared.SourceDelighted
 	return &out
 }
 
-func (r *SourceDelightedResourceModel) ToGetSDKType() *shared.SourceDelightedCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceDelightedResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceDelightedResourceModel) ToUpdateSDKType() *shared.SourceDelightedPutRequest {
+func (r *SourceDelightedResourceModel) ToSharedSourceDelightedPutRequest() *shared.SourceDelightedPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	since, _ := time.Parse(time.RFC3339Nano, r.Configuration.Since.ValueString())
 	configuration := shared.SourceDelightedUpdate{
@@ -59,20 +61,4 @@ func (r *SourceDelightedResourceModel) ToUpdateSDKType() *shared.SourceDelighted
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceDelightedResourceModel) ToDeleteSDKType() *shared.SourceDelightedCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceDelightedResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceDelightedResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

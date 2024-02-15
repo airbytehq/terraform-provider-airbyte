@@ -2,8 +2,8 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
   configuration = {
     docker_username = "airbyte"
   }
-  definition_id = "fd51b66e-c345-4b5c-9bae-74726a8cd9c5"
-  name          = "Ernesto Swaniawski"
+  definition_id = "0a2cef78-1247-45bc-a9a4-804a9e0ddc31"
+  name          = "Katie Powlowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "afda11e1-0d00-42e1-873f-9ba1e39a63be"
+  workspace_id  = "fd5d6c69-da54-497a-9d71-ffdea586a097"
 }

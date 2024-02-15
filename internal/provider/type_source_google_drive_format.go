@@ -3,9 +3,9 @@
 package provider
 
 type SourceGoogleDriveFormat struct {
-	AvroFormat                         *AvroFormat                                               `tfsdk:"avro_format"`
-	CSVFormat                          *SourceGoogleDriveCSVFormat                               `tfsdk:"csv_format"`
-	DocumentFileTypeFormatExperimental *DocumentFileTypeFormatExperimental                       `tfsdk:"document_file_type_format_experimental"`
-	JsonlFormat                        *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"jsonl_format"`
-	ParquetFormat                      *ParquetFormat                                            `tfsdk:"parquet_format"`
+	AvroFormat                         *AvroFormat                         `tfsdk:"avro_format"`
+	CSVFormat                          *SourceGoogleDriveCSVFormat         `tfsdk:"csv_format"`
+	DocumentFileTypeFormatExperimental *DocumentFileTypeFormatExperimental `tfsdk:"document_file_type_format_experimental"`
+	JsonlFormat                        *Fake                               `tfsdk:"jsonl_format"`
+	ParquetFormat                      *ParquetFormat                      `tfsdk:"parquet_format"`
 }

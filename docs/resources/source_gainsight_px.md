@@ -17,10 +17,10 @@ resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "32b37f6f-ec5c-4d0a-8fda-52f69543b862"
-  name          = "Cristina McKenzie"
+  definition_id = "fe7e017f-9052-4f20-80e0-69282dd6a12c"
+  name          = "Robert Bosco"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "50480aaa-f77a-4e08-bd2c-af83f045910a"
+  workspace_id  = "d9faeeda-0582-4852-b913-edfcf9c9058e"
 }
 ```
 
@@ -35,8 +35,8 @@ resource "airbyte_source_gainsight_px" "my_source_gainsightpx" {
 
 ### Optional
 
-- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
+- `definition_id` (String) The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided. Requires replacement if changed.
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow. Requires replacement if changed.
 
 ### Read-Only
 

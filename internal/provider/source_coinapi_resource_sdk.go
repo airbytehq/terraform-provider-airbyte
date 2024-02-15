@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICreateRequest {
+func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPICreateRequest() *shared.SourceCoinAPICreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -63,12 +63,14 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	return &out
 }
 
-func (r *SourceCoinAPIResourceModel) ToGetSDKType() *shared.SourceCoinAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceCoinAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceCoinAPIResourceModel) ToUpdateSDKType() *shared.SourceCoinAPIPutRequest {
+func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPIPutRequest() *shared.SourceCoinAPIPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -108,20 +110,4 @@ func (r *SourceCoinAPIResourceModel) ToUpdateSDKType() *shared.SourceCoinAPIPutR
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceCoinAPIResourceModel) ToDeleteSDKType() *shared.SourceCoinAPICreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceCoinAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceCoinAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }

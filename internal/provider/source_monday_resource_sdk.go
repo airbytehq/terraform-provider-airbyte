@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreateRequest {
+func (r *SourceMondayResourceModel) ToSharedSourceMondayCreateRequest() *shared.SourceMondayCreateRequest {
 	var credentials *shared.SourceMondayAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceMondayOAuth20 *shared.SourceMondayOAuth20
@@ -73,12 +73,14 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 	return &out
 }
 
-func (r *SourceMondayResourceModel) ToGetSDKType() *shared.SourceMondayCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
+func (r *SourceMondayResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
-func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutRequest {
+func (r *SourceMondayResourceModel) ToSharedSourceMondayPutRequest() *shared.SourceMondayPutRequest {
 	var credentials *shared.SourceMondayUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceMondayUpdateOAuth20 *shared.SourceMondayUpdateOAuth20
@@ -128,20 +130,4 @@ func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutReq
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-}
-
-func (r *SourceMondayResourceModel) ToDeleteSDKType() *shared.SourceMondayCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
-func (r *SourceMondayResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-}
-
-func (r *SourceMondayResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
-	r.RefreshFromGetResponse(resp)
 }
