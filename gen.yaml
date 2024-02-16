@@ -9,7 +9,7 @@ generation:
     requestResponseComponentNamesFeb2024: false
   telemetryEnabled: true
 terraform:
-  version: 0.4.0
+  version: 0.4.1
   author: airbytehq
   imports:
     option: openapi

@@ -4,9 +4,9 @@ management:
   docChecksum: 205fc0e95ba320673e34a7d5f0d98ec5
   docVersion: 1.0.0
   speakeasyVersion: internal
-  generationVersion: 2.259.1
-  releaseVersion: 0.4.0
-  configChecksum: bdd94b9cf9bf8a534abcb0c84a8a15f7
+  generationVersion: 2.262.2
+  releaseVersion: 0.4.1
+  configChecksum: 085609745da39881f18584bf5df25308
 features:
   terraform:
     additionalProperties: 0.1.2
