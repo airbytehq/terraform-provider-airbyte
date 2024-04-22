@@ -1,0 +1,10 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    my-source:
+        inputs:
+            - location: ./airbyte.yaml
+targets:
+    terraform-provider-airbyte:
+        target: terraform
+        source: my-source
