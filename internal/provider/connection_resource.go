@@ -98,7 +98,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 								},
 								"primary_key": schema.ListAttribute{
-									Computed: true,
+									Computed: false,
 									PlanModifiers: []planmodifier.List{
 										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
