@@ -228,8 +228,8 @@ paths:
           description: "Not allowed"
         "404":
           description: "Not found"
-      operationId: "listSourcesj"
-      x-speakeasy-alias: "listSourcesj"
+      operationId: "listSources"
+      x-speakeasy-alias: "listSources"
       summary: "List sources"
       parameters:
       - name: "workspaceIds"
@@ -376,7 +376,8 @@ paths:
           description: "Not allowed"
         "404":
           description: "Not found"
-      operationId: null
+      operationId: "patchSource"
+      x-speakeasy-alias: "patchSource"
       summary: "Update a Source"
     put:
       tags:
