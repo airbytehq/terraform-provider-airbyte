@@ -17801,6 +17801,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /sources#Custom:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceCustomCreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSourceCustom"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\
+        \ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Custom#create
+  /sources/{sourceId}#Custom:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSourceCustom"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Custom#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceCustomPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSourceCustom"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Custom#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSourceCustom"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Custom#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /destinations#Astra:
     post:
       requestBody:
@@ -20804,6 +20890,92 @@ paths:
       summary: "Delete a Destination"
       x-use-speakeasy-middleware: true
       x-speakeasy-entity-operation: Destination_Yellowbrick#delete
+    parameters:
+      - name: "destinationId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
+  /destinations#Custom:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationCustomCreateRequest"
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createDestinationCustom"
+      summary: "Create a destination"
+      description:
+        "Creates a destination given a name, workspace id, and a json blob containing\
+        \ the configuration for the destination."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Custom#create
+  /destinations/{destinationId}#Custom:
+    get:
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Get a Destination by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getDestinationCustom"
+      summary: "Get Destination details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Custom#read
+    put:
+      tags:
+        - "Destinations"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationCustomPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putDestinationCustom"
+      summary: "Update a Destination fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Custom#update
+    delete:
+      tags:
+        - "Destinations"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteDestinationCustom"
+      summary: "Delete a Destination"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Custom#delete
     parameters:
       - name: "destinationId"
         schema:
@@ -48223,7 +48395,6 @@ components:
           minimum: 1
           maximum: 31
     source-lemlist:
-      title: "Lemlist Spec"
       type: "object"
       required:
       - "api_key"
@@ -48231,9 +48402,11 @@ components:
       properties:
         api_key:
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           title": "API key"
           description: "Lemlist API key,"
-          airbyte_secret: true
+          order: 0
           x-speakeasy-param-sensitive: true
         sourceType:
           title: "lemlist"
@@ -48243,16 +48416,17 @@ components:
           order: 0
           type: "string"
     source-lemlist-update:
-      title: "Lemlist Spec"
       type: "object"
       required:
       - "api_key"
       properties:
         api_key:
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           title": "API key"
           description: "Lemlist API key,"
-          airbyte_secret: true
+          order: 0
     source-pexels-api:
       title: "Pexel API Spec"
       type: "object"
@@ -50661,7 +50835,6 @@ components:
           order: 1
           format: "date-time"
     source-coinmarketcap:
-      title: "Coinmarketcap Spec"
       type: "object"
       required:
       - "api_key"
@@ -50669,15 +50842,16 @@ components:
       - "sourceType"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Your API Key. See <a href=\"https://coinmarketcap.com/api/documentation/v1/#section/Authentication\"\
             >here</a>. The token is case sensitive."
-          airbyte_secret: true
+          order: 0
           x-speakeasy-param-sensitive: true
         data_type:
-          title: "Data type"
           type: "string"
+          title: "Data type"
           enum:
           - "latest"
           - "historical"
@@ -50685,9 +50859,10 @@ components:
             \ and exchanges. /historical: Intervals of historic market data like OHLCV\
             \ data or data for use in charting libraries. See <a href=\"https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview\"\
             >here</a>."
+          order: 1
         symbols:
-          title: "Symbol"
           type: "array"
+          title: "Symbol"
           items:
             type: "string"
           description: "Cryptocurrency symbols. (only used for quotes stream)"
@@ -50695,6 +50870,7 @@ components:
           examples:
           - "AVAX"
           - "BTC"
+          order: 2
         sourceType:
           title: "coinmarketcap"
           const: "coinmarketcap"
@@ -50703,21 +50879,21 @@ components:
           order: 0
           type: "string"
     source-coinmarketcap-update:
-      title: "Coinmarketcap Spec"
       type: "object"
       required:
       - "api_key"
       - "data_type"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Your API Key. See <a href=\"https://coinmarketcap.com/api/documentation/v1/#section/Authentication\"\
             >here</a>. The token is case sensitive."
-          airbyte_secret: true
+          order: 0
         data_type:
-          title: "Data type"
           type: "string"
+          title: "Data type"
           enum:
           - "latest"
           - "historical"
@@ -50725,9 +50901,10 @@ components:
             \ and exchanges. /historical: Intervals of historic market data like OHLCV\
             \ data or data for use in charting libraries. See <a href=\"https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview\"\
             >here</a>."
+          order: 1
         symbols:
-          title: "Symbol"
           type: "array"
+          title: "Symbol"
           items:
             type: "string"
           description: "Cryptocurrency symbols. (only used for quotes stream)"
@@ -50735,6 +50912,7 @@ components:
           examples:
           - "AVAX"
           - "BTC"
+          order: 2
     source-dixa:
       type: "object"
       required:
@@ -52822,23 +53000,24 @@ components:
       title: "Firebolt Spec"
       type: "object"
       required:
-      - "username"
-      - "password"
+      - "client_id"
+      - "client_secret"
+      - "account"
       - "database"
+      - "engine"
       - "sourceType"
       properties:
-        username:
+        client_id:
           type: "string"
-          title: "Username"
-          description: "Firebolt email address you use to login."
+          title: "Client ID"
+          description: "Firebolt service account ID."
           examples:
-          - "username@email.com"
-        password:
+          - "bbl9qth066hmxkwyb0hy2iwk8ktez9dz"
+        client_secret:
           type: "string"
-          title: "Password"
-          description: "Firebolt password."
+          title: "Client Secret"
+          description: "Firebolt secret, corresponding to the service account ID."
           airbyte_secret: true
-          x-speakeasy-param-sensitive: true
         account:
           type: "string"
           title: "Account"
@@ -52856,7 +53035,7 @@ components:
         engine:
           type: "string"
           title: "Engine"
-          description: "Engine name or url to connect to."
+          description: "Engine name to connect to."
         sourceType:
           title: "firebolt"
           const: "firebolt"
@@ -52868,20 +53047,22 @@ components:
       title: "Firebolt Spec"
       type: "object"
       required:
-      - "username"
-      - "password"
+      - "client_id"
+      - "client_secret"
+      - "account"
       - "database"
+      - "engine"
       properties:
-        username:
+        client_id:
           type: "string"
-          title: "Username"
-          description: "Firebolt email address you use to login."
+          title: "Client ID"
+          description: "Firebolt service account ID."
           examples:
-          - "username@email.com"
-        password:
+          - "bbl9qth066hmxkwyb0hy2iwk8ktez9dz"
+        client_secret:
           type: "string"
-          title: "Password"
-          description: "Firebolt password."
+          title: "Client Secret"
+          description: "Firebolt secret, corresponding to the service account ID."
           airbyte_secret: true
         account:
           type: "string"
@@ -52900,7 +53081,7 @@ components:
         engine:
           type: "string"
           title: "Engine"
-          description: "Engine name or url to connect to."
+          description: "Engine name to connect to."
     source-outreach:
       title: "Source Outreach Spec"
       type: "object"
@@ -80020,6 +80201,32 @@ components:
           type: "string"
       x-speakeasy-entity: Source_Zoom
       x-speakeasy-param-suppress-computed-diff: true
+    SourceCustomCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-custom"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\
+            \ flow."
+          type: "string"
+      x-speakeasy-entity: Source_Custom
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAstraCreateRequest:
       required:
         - name
@@ -80754,6 +80961,27 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-yellowbrick"
       x-speakeasy-entity: Destination_Yellowbrick
+      x-speakeasy-param-suppress-computed-diff: true
+    DestinationCustomCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the destination e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/destination-custom"
+      x-speakeasy-entity: Destination_Custom
       x-speakeasy-param-suppress-computed-diff: true
     SourceAhaPutRequest:
       required:
@@ -83843,6 +84071,22 @@ components:
           $ref: "#/components/schemas/source-zoom-update"
       x-speakeasy-entity: Source_Zoom
       x-speakeasy-param-suppress-computed-diff: true
+    SourceCustomPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-custom-update"
+      x-speakeasy-entity: Source_Custom
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAstraPutRequest:
       required:
         - "name"
@@ -84403,6 +84647,32 @@ components:
           $ref: "#/components/schemas/destination-yellowbrick-update"
       x-speakeasy-entity: Destination_Yellowbrick
       x-speakeasy-param-suppress-computed-diff: true
+    DestinationCustomPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/destination-custom-update"
+      x-speakeasy-entity: Destination_Custom
+      x-speakeasy-param-suppress-computed-diff: true
+    source-custom:
+      description: The values required to configure the source.
+      example: { user: "charles" }
+    destination-custom:
+      description: The values required to configure the destination.
+      example: { user: "charles" }
+    source-custom-update:
+      title: "Custom Spec"
+    destination-custom-update:
+      title: "Custom Spec"
     SourceConfiguration:
       description: The values required to configure the source.
       example: { user: "charles" }
@@ -84421,7 +84691,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: https://cloud.airbyte.io/api/v1/applications/token
+          tokenUrl: /api/v1/applications/token
           scopes: {}
 security:
   - bearerAuth: []
