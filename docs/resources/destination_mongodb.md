@@ -18,7 +18,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
     auth_type = {
       login_password = {
         password = "...my_password..."
-        username = "Selina_Armstrong"
+        username = "Brandyn_Gerhold"
       }
     }
     database = "...my_database..."
@@ -32,9 +32,9 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       no_tunnel = {}
     }
   }
-  definition_id = "2448e4e4-2a53-4050-a9af-bc66c913a5b7"
-  name          = "Donald Jast"
-  workspace_id  = "6a13d9b7-f635-498f-bb04-2924faeae501"
+  definition_id = "60128338-4bd8-47b5-8ce3-614854333df2"
+  name          = "Kendra Hauck"
+  workspace_id  = "09f45252-1a04-4787-8c25-4cd184fd116e"
 }
 ```
 
@@ -179,4 +179,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_mongodb.my_airbyte_destination_mongodb ""
+```

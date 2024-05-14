@@ -17,14 +17,14 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "snaptravel"
-    requests_per_minute = 8
+    requests_per_minute = 6
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 7
+    sync_lag_minutes    = 2
   }
-  definition_id = "4fda52f6-9543-4b86-a0d9-bb50480aaaf7"
-  name          = "Ms. Inez Veum"
+  definition_id = "8fbb0cdd-cf80-42e3-a601-65466352da9b"
+  name          = "Leslie Tillman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d2caf83f-0459-410a-bc57-0570b889169d"
+  workspace_id  = "c5d5cf50-fbf7-4134-a4ed-5bf6d67306cc"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 - `start_date` (String) UTC date and time. Any data created after this date will be replicated.
 - `sync_lag_minutes` (Number) Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_freshcaller.my_airbyte_source_freshcaller ""
+```

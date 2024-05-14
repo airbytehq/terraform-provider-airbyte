@@ -4,12 +4,12 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "linear-carnival.net"
+    hostname     = "another-sponsor.org"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "40ec9291-353f-4954-9bcc-34d389bbf5d2"
-  name          = "Essie Hane Jr."
+  definition_id = "87dfe701-edbd-40d1-8cf5-7eb672b8aa55"
+  name          = "Milton Fahey"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "64e1dc4a-01d4-44fb-9761-0a4d0de91eaa"
+  workspace_id  = "2a63da09-17a6-4151-bac3-e8ec69babb33"
 }

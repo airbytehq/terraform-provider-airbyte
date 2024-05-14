@@ -18,19 +18,19 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     cache_type = "hash"
     host       = "localhost,127.0.0.1"
     password   = "...my_password..."
-    port       = 3
-    ssl        = true
+    port       = 7
+    ssl        = false
     ssl_mode = {
       disable = {}
     }
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Julia.Schuster11"
+    username = "Lane.Thiel"
   }
-  definition_id = "c7ed17b1-d5b0-4028-9a0d-c02329a5cae9"
-  name          = "Alfred Littel"
-  workspace_id  = "495eab20-ebb3-405f-b624-c43900725fa3"
+  definition_id = "b83f63d3-4837-40e1-b3ec-9d4f32d3e192"
+  name          = "Guy O'Hara"
+  workspace_id  = "c0f29f7c-bd12-4b32-8943-801c3678d42b"
 }
 ```
 
@@ -137,4 +137,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_redis.my_airbyte_destination_redis ""
+```

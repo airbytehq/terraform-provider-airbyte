@@ -20,10 +20,10 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     domain_url    = "https://000-AAA-000.mktorest.com"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  definition_id = "b93b4991-11a3-420c-8ad5-adc1330ef574"
-  name          = "Guy Farrell"
+  definition_id = "49f7bbea-aef5-4240-83cb-4c473e8c7bd5"
+  name          = "Ms. Dennis Hintz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b5ae0423-a624-49a5-9495-5fa2ea25a51d"
+  workspace_id  = "a553fda4-1daf-4762-aef5-1c5fa52e0c6c"
 }
 ```
 
@@ -56,4 +56,10 @@ Required:
 - `domain_url` (String) Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_marketo.my_airbyte_source_marketo ""
+```

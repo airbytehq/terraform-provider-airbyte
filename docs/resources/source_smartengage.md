@@ -17,10 +17,10 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "3d24dfd3-d512-4342-b997-d059d38a2e5f"
-  name          = "Terrell Mueller"
+  definition_id = "487876fc-ad61-45bc-ace6-87b337106698"
+  name          = "Lee Kohler Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "41876fa0-cbc1-4b99-ae1e-96056605b0d5"
+  workspace_id  = "fd25c772-7b36-4354-a81d-3e7f0bc649fe"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) API Key
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_smartengage.my_airbyte_source_smartengage ""
+```

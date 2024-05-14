@@ -16,25 +16,25 @@ SourceJira Resource
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "jira.<your-domain>.com"
-    email                       = "Jaquelin_Padberg90@yahoo.com"
-    enable_experimental_streams = false
-    expand_issue_changelog      = false
-    expand_issue_transition     = false
+    domain                      = "<your-domain>.atlassian.net"
+    email                       = "Antonietta61@yahoo.com"
+    enable_experimental_streams = true
+    expand_issue_changelog      = true
+    expand_issue_transition     = true
     issues_stream_expand_with = [
-      "transitions",
+      "changelog",
     ]
     lookback_window_minutes = 60
     projects = [
       "...",
     ]
-    render_fields = false
+    render_fields = true
     start_date    = "2021-03-01T00:00:00Z"
   }
-  definition_id = "fd0612ff-d3df-4119-b8b3-85957e3c921c"
-  name          = "Perry Cronin"
+  definition_id = "70eb17cb-4fc2-4400-aca0-d01711f25a28"
+  name          = "Mrs. Marty Treutel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a21155c5-4910-4609-be9a-984e4b07bcaf"
+  workspace_id  = "9ce3be57-bfa4-4612-b442-775ed08074e1"
 }
 ```
 
@@ -77,4 +77,10 @@ Optional:
 - `render_fields` (Boolean) (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format. Default: false
 - `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_jira.my_airbyte_source_jira ""
+```

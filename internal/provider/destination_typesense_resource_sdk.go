@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -16,6 +16,12 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRe
 		batchSize = nil
 	}
 	host := r.Configuration.Host.ValueString()
+	path := new(string)
+	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
+		*path = r.Configuration.Path.ValueString()
+	} else {
+		path = nil
+	}
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueString()
@@ -32,6 +38,7 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRe
 		APIKey:    apiKey,
 		BatchSize: batchSize,
 		Host:      host,
+		Path:      path,
 		Port:      port,
 		Protocol:  protocol,
 	}
@@ -53,10 +60,12 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRe
 }
 
 func (r *DestinationTypesenseResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutRequest() *shared.DestinationTypesensePutRequest {
@@ -68,6 +77,12 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutReque
 		batchSize = nil
 	}
 	host := r.Configuration.Host.ValueString()
+	path := new(string)
+	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
+		*path = r.Configuration.Path.ValueString()
+	} else {
+		path = nil
+	}
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueString()
@@ -84,6 +99,7 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutReque
 		APIKey:    apiKey,
 		BatchSize: batchSize,
 		Host:      host,
+		Path:      path,
 		Port:      port,
 		Protocol:  protocol,
 	}

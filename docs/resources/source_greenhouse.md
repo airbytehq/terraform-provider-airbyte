@@ -17,10 +17,10 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "1e868df1-f2c5-4ad8-8a46-153eb240d626"
-  name          = "Ricky Lakin"
+  definition_id = "9b799d63-199b-4d6b-868c-85ec21a9ab56"
+  name          = "Tabitha Braun"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ccaaf58e-0f5c-4115-9d60-149910eecfc7"
+  workspace_id  = "77e51fa7-73fc-4f1a-8306-e082909d97bf"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_greenhouse.my_airbyte_source_greenhouse ""
+```

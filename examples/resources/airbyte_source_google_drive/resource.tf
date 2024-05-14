@@ -11,7 +11,7 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 2
+        days_to_sync_if_history_is_full = 5
         format = {
           avro_format = {
             double_as_string = true
@@ -21,15 +21,15 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Delores Turner DVM"
+        name              = "Terry Zieme MD"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
+        schemaless        = false
         validation_policy = "Skip Record"
       },
     ]
   }
-  definition_id = "73fcf1a4-306e-4082-909d-97bfabbad367"
-  name          = "Amelia Marks"
+  definition_id = "183b00ec-7045-4956-803e-c7b8b68fdfc0"
+  name          = "Miriam Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1d9c174f-ee41-4455-a2d2-7576235e52bb"
+  workspace_id  = "fd673f59-a8d0-4acc-9948-b0061059fac1"
 }

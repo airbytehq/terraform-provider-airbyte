@@ -5,12 +5,13 @@ package provider
 import (
 	"context"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"net/http"
 )
 
 var _ provider.Provider = &AirbyteProvider{}
@@ -24,10 +25,11 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	ServerURL  types.String `tfsdk:"server_url"`
-	Password   types.String `tfsdk:"password"`
-	Username   types.String `tfsdk:"username"`
-	BearerAuth types.String `tfsdk:"bearer_auth"`
+	ServerURL         types.String `tfsdk:"server_url"`
+	Password          types.String `tfsdk:"password"`
+	Username          types.String `tfsdk:"username"`
+	BearerAuth        types.String `tfsdk:"bearer_auth"`
+	ClientCredentials types.String `tfsdk:"client_credentials"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -53,6 +55,10 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				Sensitive: true,
 			},
 			"bearer_auth": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
+			},
+			"client_credentials": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
 			},
@@ -88,14 +94,22 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	} else {
 		bearerAuth = nil
 	}
+	clientCredentials := new(string)
+	if !data.ClientCredentials.IsUnknown() && !data.ClientCredentials.IsNull() {
+		*clientCredentials = data.ClientCredentials.ValueString()
+	} else {
+		clientCredentials = nil
+	}
 	security := shared.Security{
-		BasicAuth:  basicAuth,
-		BearerAuth: bearerAuth,
+		BasicAuth:         basicAuth,
+		BearerAuth:        bearerAuth,
+		ClientCredentials: clientCredentials,
 	}
 
 	opts := []sdk.SDKOption{
 		sdk.WithServerURL(ServerURL),
 		sdk.WithSecurity(security),
+		sdk.WithClient(http.DefaultClient),
 	}
 	client := sdk.New(opts...)
 
@@ -104,28 +118,22 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 }
 
 func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{
-		NewConnectionResource,
+	return []func() resource.Resource{NewConnectionResource,
 		NewDestinationAstraResource,
 		NewDestinationAwsDatalakeResource,
 		NewDestinationAzureBlobStorageResource,
 		NewDestinationBigqueryResource,
 		NewDestinationClickhouseResource,
 		NewDestinationConvexResource,
-		NewDestinationCumulioResource,
 		NewDestinationCustomResource,
-		NewDestinationDatabendResource,
 		NewDestinationDatabricksResource,
 		NewDestinationDevNullResource,
 		NewDestinationDuckdbResource,
 		NewDestinationDynamodbResource,
 		NewDestinationElasticsearchResource,
-		NewDestinationFireboltResource,
 		NewDestinationFirestoreResource,
 		NewDestinationGcsResource,
 		NewDestinationGoogleSheetsResource,
-		NewDestinationKeenResource,
-		NewDestinationKinesisResource,
 		NewDestinationLangchainResource,
 		NewDestinationMilvusResource,
 		NewDestinationMongodbResource,
@@ -143,12 +151,11 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewDestinationSftpJSONResource,
 		NewDestinationSnowflakeResource,
 		NewDestinationTeradataResource,
-		NewDestinationTimeplusResource,
 		NewDestinationTypesenseResource,
 		NewDestinationVectaraResource,
-		NewDestinationVerticaResource,
 		NewDestinationWeaviateResource,
-		NewDestinationXataResource,
+		NewDestinationYellowbrickResource,
+		NewPermissionResource,
 		NewSourceAhaResource,
 		NewSourceAircallResource,
 		NewSourceAirtableResource,
@@ -214,7 +221,6 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceGoogleSearchConsoleResource,
 		NewSourceGoogleSheetsResource,
 		NewSourceGoogleWebfontsResource,
-		NewSourceGoogleWorkspaceAdminReportsResource,
 		NewSourceGreenhouseResource,
 		NewSourceGridlyResource,
 		NewSourceHarvestResource,
@@ -236,12 +242,14 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceLeverHiringResource,
 		NewSourceLinkedinAdsResource,
 		NewSourceLinkedinPagesResource,
+		NewSourceLinnworksResource,
 		NewSourceLokaliseResource,
 		NewSourceMailchimpResource,
 		NewSourceMailgunResource,
 		NewSourceMailjetSmsResource,
 		NewSourceMarketoResource,
 		NewSourceMetabaseResource,
+		NewSourceMicrosoftOnedriveResource,
 		NewSourceMicrosoftSharepointResource,
 		NewSourceMicrosoftTeamsResource,
 		NewSourceMixpanelResource,
@@ -279,11 +287,11 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourcePunkAPIResource,
 		NewSourcePypiResource,
 		NewSourceQualarooResource,
-		NewSourceQuickbooksResource,
 		NewSourceRailzResource,
 		NewSourceRechargeResource,
 		NewSourceRecreationResource,
 		NewSourceRecruiteeResource,
+		NewSourceRecurlyResource,
 		NewSourceRedshiftResource,
 		NewSourceRetentlyResource,
 		NewSourceRkiCovidResource,
@@ -347,28 +355,22 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 }
 
 func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{
-		NewConnectionDataSource,
+	return []func() datasource.DataSource{NewConnectionDataSource,
 		NewDestinationAstraDataSource,
 		NewDestinationAwsDatalakeDataSource,
 		NewDestinationAzureBlobStorageDataSource,
 		NewDestinationBigqueryDataSource,
 		NewDestinationClickhouseDataSource,
 		NewDestinationConvexDataSource,
-		NewDestinationCumulioDataSource,
 		NewDestinationCustomDataSource,
-		NewDestinationDatabendDataSource,
 		NewDestinationDatabricksDataSource,
 		NewDestinationDevNullDataSource,
 		NewDestinationDuckdbDataSource,
 		NewDestinationDynamodbDataSource,
 		NewDestinationElasticsearchDataSource,
-		NewDestinationFireboltDataSource,
 		NewDestinationFirestoreDataSource,
 		NewDestinationGcsDataSource,
 		NewDestinationGoogleSheetsDataSource,
-		NewDestinationKeenDataSource,
-		NewDestinationKinesisDataSource,
 		NewDestinationLangchainDataSource,
 		NewDestinationMilvusDataSource,
 		NewDestinationMongodbDataSource,
@@ -386,12 +388,10 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewDestinationSftpJSONDataSource,
 		NewDestinationSnowflakeDataSource,
 		NewDestinationTeradataDataSource,
-		NewDestinationTimeplusDataSource,
 		NewDestinationTypesenseDataSource,
 		NewDestinationVectaraDataSource,
-		NewDestinationVerticaDataSource,
 		NewDestinationWeaviateDataSource,
-		NewDestinationXataDataSource,
+		NewDestinationYellowbrickDataSource,
 		NewSourceAhaDataSource,
 		NewSourceAircallDataSource,
 		NewSourceAirtableDataSource,
@@ -457,7 +457,6 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceGoogleSearchConsoleDataSource,
 		NewSourceGoogleSheetsDataSource,
 		NewSourceGoogleWebfontsDataSource,
-		NewSourceGoogleWorkspaceAdminReportsDataSource,
 		NewSourceGreenhouseDataSource,
 		NewSourceGridlyDataSource,
 		NewSourceHarvestDataSource,
@@ -479,12 +478,14 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceLeverHiringDataSource,
 		NewSourceLinkedinAdsDataSource,
 		NewSourceLinkedinPagesDataSource,
+		NewSourceLinnworksDataSource,
 		NewSourceLokaliseDataSource,
 		NewSourceMailchimpDataSource,
 		NewSourceMailgunDataSource,
 		NewSourceMailjetSmsDataSource,
 		NewSourceMarketoDataSource,
 		NewSourceMetabaseDataSource,
+		NewSourceMicrosoftOnedriveDataSource,
 		NewSourceMicrosoftSharepointDataSource,
 		NewSourceMicrosoftTeamsDataSource,
 		NewSourceMixpanelDataSource,
@@ -522,11 +523,11 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourcePunkAPIDataSource,
 		NewSourcePypiDataSource,
 		NewSourceQualarooDataSource,
-		NewSourceQuickbooksDataSource,
 		NewSourceRailzDataSource,
 		NewSourceRechargeDataSource,
 		NewSourceRecreationDataSource,
 		NewSourceRecruiteeDataSource,
+		NewSourceRecurlyDataSource,
 		NewSourceRedshiftDataSource,
 		NewSourceRetentlyDataSource,
 		NewSourceRkiCovidDataSource,

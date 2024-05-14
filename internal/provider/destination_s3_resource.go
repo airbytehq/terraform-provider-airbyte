@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationS3Resource struct {
 
 // DestinationS3ResourceModel describes the resource data model.
 type DestinationS3ResourceModel struct {
-	Configuration   DestinationS3 `tfsdk:"configuration"`
-	DefinitionID    types.String  `tfsdk:"definition_id"`
-	DestinationID   types.String  `tfsdk:"destination_id"`
-	DestinationType types.String  `tfsdk:"destination_type"`
-	Name            types.String  `tfsdk:"name"`
-	WorkspaceID     types.String  `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationS3 `tfsdk:"configuration"`
+	DefinitionID    types.String          `tfsdk:"definition_id"`
+	DestinationID   types.String          `tfsdk:"destination_id"`
+	DestinationType types.String          `tfsdk:"destination_type"`
+	Name            types.String          `tfsdk:"name"`
+	WorkspaceID     types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationS3Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationS3Resource) Metadata(ctx context.Context, req resource.Metad
 func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationS3 Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -95,6 +96,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"deflate": schema.SingleNestedAttribute{
 												Optional: true,
@@ -117,6 +127,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														Description: `0: no compression & fastest, 9: best compression & slowest. Default: 0`,
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -133,6 +152,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"snappy": schema.SingleNestedAttribute{
 												Optional: true,
@@ -148,6 +176,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
 												},
 											},
 											"xz": schema.SingleNestedAttribute{
@@ -170,6 +207,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														Default:     int64default.StaticInt64(6),
 														Description: `See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6`,
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
 												},
 											},
 											"zstandard": schema.SingleNestedAttribute{
@@ -199,6 +245,15 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														Description: `If true, include a checksum with each data block. Default: false`,
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+													}...),
+												},
 											},
 										},
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -217,6 +272,13 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
 								},
 							},
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
@@ -240,6 +302,11 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -255,6 +322,11 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
 												},
 											},
 										},
@@ -287,6 +359,13 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
+								},
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
@@ -309,6 +388,11 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -324,6 +408,11 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
 												},
 											},
 										},
@@ -355,6 +444,13 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
 								},
 							},
 							"parquet_columnar_storage": schema.SingleNestedAttribute{
@@ -418,6 +514,13 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										Default:     int64default.StaticInt64(1024),
 										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+									}...),
 								},
 							},
 						},
@@ -655,6 +758,10 @@ func (r *DestinationS3Resource) Read(ctx context.Context, req resource.ReadReque
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

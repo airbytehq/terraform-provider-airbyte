@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -36,13 +38,13 @@ type SourceGitlabResource struct {
 
 // SourceGitlabResourceModel describes the resource data model.
 type SourceGitlabResourceModel struct {
-	Configuration SourceGitlab `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGitlab `tfsdk:"configuration"`
+	DefinitionID  types.String         `tfsdk:"definition_id"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGitlabResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *SourceGitlabResource) Metadata(ctx context.Context, req resource.Metada
 func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGitlab Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -99,6 +100,11 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("private_token"),
+									}...),
+								},
 							},
 							"private_token": schema.SingleNestedAttribute{
 								Optional: true,
@@ -108,6 +114,11 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										Sensitive:   true,
 										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 						},
@@ -309,6 +320,10 @@ func (r *SourceGitlabResource) Read(ctx context.Context, req resource.ReadReques
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

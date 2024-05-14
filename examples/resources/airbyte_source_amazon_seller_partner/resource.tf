@@ -1,12 +1,12 @@
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
     account_type           = "Vendor"
-    aws_environment        = "PRODUCTION"
+    aws_environment        = "SANDBOX"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
-    period_in_days         = 7
+    period_in_days         = 2
     refresh_token          = "...my_refresh_token..."
-    region                 = "UK"
+    region                 = "FR"
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -17,12 +17,12 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
             option_value = "...my_option_value..."
           },
         ]
-        stream_name = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+        stream_name = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
       },
     ]
   }
-  definition_id = "a73356f3-9bea-45e2-889f-0e8905c8543b"
-  name          = "Justin Luettgen"
+  definition_id = "4517930e-d8d4-43c0-9abb-a6ef9fc3c374"
+  name          = "Melba Schumm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ac7dcada-d293-48da-9765-e7880f00a30d"
+  workspace_id  = "2e57aa67-3d28-4259-b0c2-20e39e10d6ef"
 }

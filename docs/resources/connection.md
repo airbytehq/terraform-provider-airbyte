@@ -82,4 +82,10 @@ Read-Only:
 
 - `basic_timing` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_connection.my_airbyte_connection ""
+```

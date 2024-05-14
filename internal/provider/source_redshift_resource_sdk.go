@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -23,7 +23,7 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftCreateRequest() *sha
 	} else {
 		port = nil
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
@@ -62,10 +62,12 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftCreateRequest() *sha
 }
 
 func (r *SourceRedshiftResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftPutRequest() *shared.SourceRedshiftPutRequest {
@@ -84,7 +86,7 @@ func (r *SourceRedshiftResourceModel) ToSharedSourceRedshiftPutRequest() *shared
 	} else {
 		port = nil
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}

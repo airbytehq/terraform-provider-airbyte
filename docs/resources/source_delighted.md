@@ -18,10 +18,10 @@ resource "airbyte_source_delighted" "my_source_delighted" {
     api_key = "...my_api_key..."
     since   = "2022-05-30T04:50:23Z"
   }
-  definition_id = "a2c2618f-e1b9-41dc-8e8e-649d7675fb58"
-  name          = "Rachel Champlin"
+  definition_id = "7a40e885-1a35-441b-a6f5-d90d5a8a349e"
+  name          = "Deborah Kris"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6a8ac655-36a2-405f-9e4d-309ea5800594"
+  workspace_id  = "dff3818d-be50-4fcb-b2a7-8173abb82e6a"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `api_key` (String, Sensitive) A Delighted API key.
 - `since` (String) The date from which you'd like to replicate the data
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_delighted.my_airbyte_source_delighted ""
+```

@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -36,13 +38,13 @@ type SourceMondayResource struct {
 
 // SourceMondayResourceModel describes the resource data model.
 type SourceMondayResourceModel struct {
-	Configuration SourceMonday `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMonday `tfsdk:"configuration"`
+	DefinitionID  types.String         `tfsdk:"definition_id"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMondayResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *SourceMondayResource) Metadata(ctx context.Context, req resource.Metada
 func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMonday Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -71,6 +72,11 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Sensitive:   true,
 										Description: `API Token for making authenticated requests.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
@@ -95,6 +101,11 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 										Default:     stringdefault.StaticString(""),
 										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com. Default: ""`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("api_token"),
+									}...),
 								},
 							},
 						},
@@ -271,6 +282,10 @@ func (r *SourceMondayResource) Read(ctx context.Context, req resource.ReadReques
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

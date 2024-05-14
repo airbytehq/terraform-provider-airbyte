@@ -15,15 +15,14 @@ DestinationRedshift Resource
 ```terraform
 resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
-    database                               = "...my_database..."
-    disable_type_dedupe                    = true
-    enable_incremental_final_table_updates = true
-    host                                   = "...my_host..."
-    jdbc_url_params                        = "...my_jdbc_url_params..."
-    password                               = "...my_password..."
-    port                                   = 5439
-    raw_data_schema                        = "...my_raw_data_schema..."
-    schema                                 = "public"
+    database            = "...my_database..."
+    disable_type_dedupe = false
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
+    password            = "...my_password..."
+    port                = 5439
+    raw_data_schema     = "...my_raw_data_schema..."
+    schema              = "public"
     tunnel_method = {
       no_tunnel = {}
     }
@@ -35,20 +34,19 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_buffer_count  = 10
-        file_name_pattern  = "{date}"
-        purge_staging_data = true
+        file_name_pattern  = "{timestamp}"
+        purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "sa-east-1"
+        s3_bucket_region   = "eu-west-1"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Tatyana.Spinka"
+    username = "Dario.Brakus57"
   }
-  definition_id = "f8e06ef6-fed3-4651-a7d5-496735da213c"
-  name          = "Milton Ondricka"
-  workspace_id  = "9fef8f53-876e-43de-b0a8-6e4df19faac8"
+  definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
+  name          = "Jessie Brown"
+  workspace_id  = "86b73990-fea6-49be-ba7d-c7cde8f8d839"
 }
 ```
 
@@ -83,10 +81,9 @@ Required:
 Optional:
 
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
-- `enable_incremental_final_table_updates` (Boolean) When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `port` (Number) Port of the database. Default: 5439
-- `raw_data_schema` (String) The schema to write raw tables into
+- `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal).
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public". Default: "public"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 - `uploading_method` (Attributes) The way data will be uploaded to Redshift. (see [below for nested schema](#nestedatt--configuration--uploading_method))
@@ -153,7 +150,6 @@ Required:
 Optional:
 
 - `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--encryption))
-- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects. Default: 10
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
 - `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details. Default: true
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
@@ -184,4 +180,10 @@ Optional:
 <a id="nestedatt--configuration--uploading_method--standard"></a>
 ### Nested Schema for `configuration.uploading_method.standard`
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_redshift.my_airbyte_destination_redshift ""
+```

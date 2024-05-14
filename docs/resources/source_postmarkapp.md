@@ -18,10 +18,10 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  definition_id = "b9304d3e-bf32-4902-9e61-711be882924e"
-  name          = "Jimmie Aufderhar"
+  definition_id = "21b21ea9-bc9d-41c8-8f1e-e12f8a7db098"
+  name          = "Mr. Cory Green"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2980d847-13eb-4ef0-94dd-9af7c7e9c462"
+  workspace_id  = "6a87d389-094e-4fa6-bbbe-a9f5a35d1bd0"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `x_postmark_account_token` (String) API Key for account
 - `x_postmark_server_token` (String) API Key for server
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_postmarkapp.my_airbyte_source_postmarkapp ""
+```

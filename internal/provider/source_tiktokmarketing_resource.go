@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -38,13 +40,13 @@ type SourceTiktokMarketingResource struct {
 
 // SourceTiktokMarketingResourceModel describes the resource data model.
 type SourceTiktokMarketingResourceModel struct {
-	Configuration SourceTiktokMarketing `tfsdk:"configuration"`
-	DefinitionID  types.String          `tfsdk:"definition_id"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceTiktokMarketing `tfsdk:"configuration"`
+	DefinitionID  types.String                  `tfsdk:"definition_id"`
+	Name          types.String                  `tfsdk:"name"`
+	SecretID      types.String                  `tfsdk:"secret_id"`
+	SourceID      types.String                  `tfsdk:"source_id"`
+	SourceType    types.String                  `tfsdk:"source_type"`
+	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTiktokMarketingResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *SourceTiktokMarketingResource) Metadata(ctx context.Context, req resour
 func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceTiktokMarketing Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -92,6 +93,11 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Description: `The Developer Application Secret.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("sandbox_access_token"),
+									}...),
+								},
 							},
 							"sandbox_access_token": schema.SingleNestedAttribute{
 								Optional: true,
@@ -105,6 +111,11 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 						},
@@ -304,6 +315,10 @@ func (r *SourceTiktokMarketingResource) Read(ctx context.Context, req resource.R
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

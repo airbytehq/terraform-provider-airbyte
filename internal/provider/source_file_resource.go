@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -38,13 +40,13 @@ type SourceFileResource struct {
 
 // SourceFileResourceModel describes the resource data model.
 type SourceFileResourceModel struct {
-	Configuration SourceFile   `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceFile `tfsdk:"configuration"`
+	DefinitionID  types.String       `tfsdk:"definition_id"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFileResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *SourceFileResource) Metadata(ctx context.Context, req resource.Metadata
 func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceFile Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -106,6 +107,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
+								},
 							},
 							"gcs_google_cloud_storage": schema.SingleNestedAttribute{
 								Optional: true,
@@ -114,6 +125,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Optional:    true,
 										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
 								},
 							},
 							"https_public_web": schema.SingleNestedAttribute{
@@ -125,6 +146,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Default:     booldefault.StaticBool(false),
 										Description: `Add User-Agent to request. Default: false`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
 								},
 							},
 							"s3_amazon_web_services": schema.SingleNestedAttribute{
@@ -140,6 +171,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Sensitive:   true,
 										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
 								},
 							},
 							"scp_secure_copy_protocol": schema.SingleNestedAttribute{
@@ -162,6 +203,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Required: true,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
+								},
 							},
 							"sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
 								Optional: true,
@@ -183,6 +234,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Required: true,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("ssh_secure_shell"),
+									}...),
+								},
 							},
 							"ssh_secure_shell": schema.SingleNestedAttribute{
 								Optional: true,
@@ -203,6 +264,16 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 									"user": schema.StringAttribute{
 										Required: true,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("az_blob_azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("gcs_google_cloud_storage"),
+										path.MatchRelative().AtParent().AtName("https_public_web"),
+										path.MatchRelative().AtParent().AtName("s3_amazon_web_services"),
+										path.MatchRelative().AtParent().AtName("scp_secure_copy_protocol"),
+										path.MatchRelative().AtParent().AtName("sftp_secure_file_transfer_protocol"),
+									}...),
 								},
 							},
 						},
@@ -388,6 +459,10 @@ func (r *SourceFileResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -36,13 +37,13 @@ type SourceGoogleAdsResource struct {
 
 // SourceGoogleAdsResourceModel describes the resource data model.
 type SourceGoogleAdsResourceModel struct {
-	Configuration SourceGoogleAds `tfsdk:"configuration"`
-	DefinitionID  types.String    `tfsdk:"definition_id"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGoogleAds `tfsdk:"configuration"`
+	DefinitionID  types.String            `tfsdk:"definition_id"`
+	Name          types.String            `tfsdk:"name"`
+	SecretID      types.String            `tfsdk:"secret_id"`
+	SourceID      types.String            `tfsdk:"source_id"`
+	SourceType    types.String            `tfsdk:"source_type"`
+	WorkspaceID   types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleAdsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +53,6 @@ func (r *SourceGoogleAdsResource) Metadata(ctx context.Context, req resource.Met
 func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGoogleAds Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -301,6 +301,10 @@ func (r *SourceGoogleAdsResource) Read(ctx context.Context, req resource.ReadReq
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

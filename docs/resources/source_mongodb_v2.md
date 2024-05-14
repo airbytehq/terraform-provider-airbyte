@@ -22,18 +22,20 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         connection_string     = "mongodb+srv://cluster0.abcd1.mongodb.net/"
         database              = "...my_database..."
         password              = "...my_password..."
-        schema_enforced       = true
-        username              = "Juvenal53"
+        schema_enforced       = false
+        username              = "Ray12"
       }
     }
-    discover_sample_size    = 6
-    initial_waiting_seconds = 9
-    queue_size              = 4
+    discover_sample_size                 = 6
+    initial_waiting_seconds              = 4
+    invalid_cdc_cursor_position_behavior = "Re-sync data"
+    queue_size                           = 7
+    update_capture_mode                  = "Post Image"
   }
-  definition_id = "fcbb78be-d982-412c-b04a-e19387527d5e"
-  name          = "Eloise Willms"
+  definition_id = "203cb787-6e75-4a53-9f3b-4802a3b9d674"
+  name          = "Lance Kautzer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "46d0c0b7-968b-4724-a137-fe2e9e26c4c1"
+  workspace_id  = "e116c781-16c7-40bf-b326-67c47d503616"
 }
 ```
 
@@ -67,7 +69,9 @@ Optional:
 
 - `discover_sample_size` (Number) The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300
+- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
+- `update_capture_mode` (String) Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images. must be one of ["Lookup", "Post Image"]; Default: "Lookup"
 
 <a id="nestedatt--configuration--database_config"></a>
 ### Nested Schema for `configuration.database_config`
@@ -110,4 +114,10 @@ Optional:
 - `schema_enforced` (Boolean) When enabled, syncs will validate and structure records against the stream's schema. Default: true
 - `username` (String) The username which is used to access the database.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_mongodb_v2.my_airbyte_source_mongodb_v2 ""
+```

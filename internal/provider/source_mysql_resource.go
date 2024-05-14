@@ -7,14 +7,18 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -36,13 +40,13 @@ type SourceMysqlResource struct {
 
 // SourceMysqlResourceModel describes the resource data model.
 type SourceMysqlResourceModel struct {
-	Configuration SourceMysql  `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMysql `tfsdk:"configuration"`
+	DefinitionID  types.String        `tfsdk:"definition_id"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMysqlResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +56,6 @@ func (r *SourceMysqlResource) Metadata(ctx context.Context, req resource.Metadat
 func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMysql Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -95,17 +98,39 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Default:     int64default.StaticInt64(300),
 										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300`,
 									},
+									"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("Fail sync"),
+										Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Fail sync",
+												"Re-sync data",
+											),
+										},
+									},
 									"server_time_zone": schema.StringAttribute{
 										Optional:    true,
 										Description: `Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.`,
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("scan_changes_with_user_defined_cursor"),
+									}...),
+								},
 							},
 							"scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("read_changes_using_binary_log_cdc"),
+									}...),
+								},
 							},
 						},
 						Description: `Configures how data is extracted from the database.`,
@@ -120,11 +145,25 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("required"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_identity"),
+									}...),
+								},
 							},
 							"required": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("preferred"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_identity"),
+									}...),
+								},
 							},
 							"verify_ca": schema.SingleNestedAttribute{
 								Optional: true,
@@ -149,6 +188,13 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("preferred"),
+										path.MatchRelative().AtParent().AtName("required"),
+										path.MatchRelative().AtParent().AtName("verify_identity"),
+									}...),
+								},
 							},
 							"verify_identity": schema.SingleNestedAttribute{
 								Optional: true,
@@ -173,6 +219,13 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("preferred"),
+										path.MatchRelative().AtParent().AtName("required"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+									}...),
+								},
 							},
 						},
 						Description: `SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.`,
@@ -186,6 +239,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -210,6 +269,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -233,6 +298,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -414,6 +485,10 @@ func (r *SourceMysqlResource) Read(ctx context.Context, req resource.ReadRequest
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

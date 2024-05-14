@@ -4,6 +4,8 @@ sources:
     my-source:
         inputs:
             - location: ./airbyte.yaml
+        registry:
+            location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
 targets:
     terraform-provider-airbyte:
         target: terraform

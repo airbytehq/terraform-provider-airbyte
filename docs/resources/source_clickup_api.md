@@ -22,10 +22,10 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
     space_id             = "...my_space_id..."
     team_id              = "...my_team_id..."
   }
-  definition_id = "3da2fecd-2cab-429e-8bc6-002c3cc123e8"
-  name          = "Brandy Doyle"
+  definition_id = "9b9fbaef-8e47-4490-988d-0e2939574a68"
+  name          = "Delia Watsica"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0d4d2b80-c50d-4c34-8f66-cbf0e9a05e99"
+  workspace_id  = "4b87a1fb-187d-4332-a3d8-0bb99362d2f4"
 }
 ```
 
@@ -63,4 +63,10 @@ Optional:
 - `space_id` (String) The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
 - `team_id` (String) The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_clickup_api.my_airbyte_source_clickup_api ""
+```

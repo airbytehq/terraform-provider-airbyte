@@ -21,7 +21,7 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     gcs_bucket_path   = "data_sync/test"
     gcs_bucket_region = "us-east4"
   }
-  definition_id = "3f0d76fb-78bf-474f-a22d-e12791b5f134"
-  name          = "Ms. Jose Bechtelar"
-  workspace_id  = "9774ae87-c308-492f-bb0f-41f82248d601"
+  definition_id = "fa9c0130-5655-43a4-a50c-dde3bcff11f6"
+  name          = "Angela Will"
+  workspace_id  = "23b2f88e-15f8-468b-b037-297dcd66bcb9"
 }

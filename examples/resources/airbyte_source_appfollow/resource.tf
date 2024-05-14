@@ -2,8 +2,8 @@ resource "airbyte_source_appfollow" "my_source_appfollow" {
   configuration = {
     api_secret = "...my_api_secret..."
   }
-  definition_id = "acdf8db6-a4f7-4e23-b11b-260f5d38a1ed"
-  name          = "Abraham Franey"
+  definition_id = "628652e0-ff83-4c21-b517-b16f1f8846bc"
+  name          = "Zachary Breitenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "da3d51cb-c156-423e-8645-3ce6c3cf0d0e"
+  workspace_id  = "451945c4-3360-4526-ae8a-a3c4f287913b"
 }

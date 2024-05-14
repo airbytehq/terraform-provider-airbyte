@@ -7,10 +7,10 @@ resource "airbyte_source_square" "my_source_square" {
     }
     include_deleted_objects = false
     is_sandbox              = true
-    start_date              = "2020-10-10"
+    start_date              = "2022-12-22"
   }
-  definition_id = "6d5dc1e2-50f8-40fb-8595-c3777bccfe70"
-  name          = "Marlon Bruen"
+  definition_id = "aa0804c9-71e6-4023-9dc0-9fadad73b79d"
+  name          = "Lisa Rohan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e293c7a4-b2d7-4bbc-a90e-f00ad5372256"
+  workspace_id  = "acfdc6fb-504a-412b-b723-cbf0223ae822"
 }

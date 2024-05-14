@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -30,7 +30,7 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	} else {
 		expandIssueTransition = nil
 	}
-	var issuesStreamExpandWith []shared.SourceJiraIssuesStreamExpandWith = nil
+	var issuesStreamExpandWith []shared.SourceJiraIssuesStreamExpandWith = []shared.SourceJiraIssuesStreamExpandWith{}
 	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
 		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.SourceJiraIssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
 	}
@@ -40,7 +40,7 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	} else {
 		lookbackWindowMinutes = nil
 	}
-	var projects []string = nil
+	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
 	}
@@ -94,10 +94,12 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 }
 
 func (r *SourceJiraResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJiraPutRequest {
@@ -122,7 +124,7 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	} else {
 		expandIssueTransition = nil
 	}
-	var issuesStreamExpandWith []shared.IssuesStreamExpandWith = nil
+	var issuesStreamExpandWith []shared.IssuesStreamExpandWith = []shared.IssuesStreamExpandWith{}
 	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
 		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.IssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
 	}
@@ -132,7 +134,7 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	} else {
 		lookbackWindowMinutes = nil
 	}
-	var projects []string = nil
+	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
 	}

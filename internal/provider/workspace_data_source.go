@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -100,7 +100,7 @@ func (r *WorkspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 	request := operations.GetWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Workspaces.GetWorkspace(ctx, request)
+	res, err := r.client.Public.GetWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -110,6 +110,10 @@ func (r *WorkspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

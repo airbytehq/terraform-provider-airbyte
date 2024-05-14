@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -37,6 +37,12 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		} else {
 			initialWaitingSeconds = nil
 		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceMysqlInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
 		serverTimeZone := new(string)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
 			*serverTimeZone = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
@@ -44,8 +50,9 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			serverTimeZone = nil
 		}
 		sourceMysqlReadChangesUsingBinaryLogCDC = &shared.SourceMysqlReadChangesUsingBinaryLogCDC{
-			InitialWaitingSeconds: initialWaitingSeconds,
-			ServerTimeZone:        serverTimeZone,
+			InitialWaitingSeconds:            initialWaitingSeconds,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+			ServerTimeZone:                   serverTimeZone,
 		}
 	}
 	if sourceMysqlReadChangesUsingBinaryLogCDC != nil {
@@ -244,10 +251,12 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 }
 
 func (r *SourceMysqlResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.SourceMysqlPutRequest {
@@ -280,6 +289,12 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		} else {
 			initialWaitingSeconds = nil
 		}
+		invalidCdcCursorPositionBehavior := new(shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced)
+		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+			*invalidCdcCursorPositionBehavior = shared.SourceMysqlUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+		} else {
+			invalidCdcCursorPositionBehavior = nil
+		}
 		serverTimeZone := new(string)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
 			*serverTimeZone = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
@@ -287,8 +302,9 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			serverTimeZone = nil
 		}
 		readChangesUsingBinaryLogCDC = &shared.ReadChangesUsingBinaryLogCDC{
-			InitialWaitingSeconds: initialWaitingSeconds,
-			ServerTimeZone:        serverTimeZone,
+			InitialWaitingSeconds:            initialWaitingSeconds,
+			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+			ServerTimeZone:                   serverTimeZone,
 		}
 	}
 	if readChangesUsingBinaryLogCDC != nil {

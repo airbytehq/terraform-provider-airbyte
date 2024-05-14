@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,13 +41,13 @@ type SourceOracleResource struct {
 
 // SourceOracleResourceModel describes the resource data model.
 type SourceOracleResourceModel struct {
-	Configuration SourceOracle `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceOracle `tfsdk:"configuration"`
+	DefinitionID  types.String         `tfsdk:"definition_id"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceOracleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,7 +57,6 @@ func (r *SourceOracleResource) Metadata(ctx context.Context, req resource.Metada
 func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceOracle Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -74,6 +75,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 								},
 								Description: `Use service name`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("system_idsid"),
+									}...),
+								},
 							},
 							"system_idsid": schema.SingleNestedAttribute{
 								Optional: true,
@@ -83,6 +89,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 								},
 								Description: `Use SID (Oracle System Identifier)`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_name"),
+									}...),
+								},
 							},
 						},
 						Description: `Connect data that will be used for DB connection`,
@@ -111,6 +122,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("tls_encrypted_verify_certificate"),
+									}...),
+								},
 							},
 							"tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
@@ -121,6 +137,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("native_network_encryption_nne"),
+									}...),
+								},
 							},
 						},
 						Description: `The encryption method with is used when communicating with the database.`,
@@ -166,6 +187,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -190,6 +217,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -213,6 +246,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -394,6 +433,10 @@ func (r *SourceOracleResource) Read(ctx context.Context, req resource.ReadReques
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

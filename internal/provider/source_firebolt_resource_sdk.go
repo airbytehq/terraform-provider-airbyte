@@ -3,39 +3,29 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFireboltResourceModel) ToSharedSourceFireboltCreateRequest() *shared.SourceFireboltCreateRequest {
-	account := new(string)
-	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
-		*account = r.Configuration.Account.ValueString()
-	} else {
-		account = nil
-	}
+	account := r.Configuration.Account.ValueString()
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	database := r.Configuration.Database.ValueString()
-	engine := new(string)
-	if !r.Configuration.Engine.IsUnknown() && !r.Configuration.Engine.IsNull() {
-		*engine = r.Configuration.Engine.ValueString()
-	} else {
-		engine = nil
-	}
+	engine := r.Configuration.Engine.ValueString()
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
 		*host = r.Configuration.Host.ValueString()
 	} else {
 		host = nil
 	}
-	password := r.Configuration.Password.ValueString()
-	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceFirebolt{
-		Account:  account,
-		Database: database,
-		Engine:   engine,
-		Host:     host,
-		Password: password,
-		Username: username,
+		Account:      account,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		Database:     database,
+		Engine:       engine,
+		Host:         host,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -62,41 +52,33 @@ func (r *SourceFireboltResourceModel) ToSharedSourceFireboltCreateRequest() *sha
 }
 
 func (r *SourceFireboltResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceFireboltResourceModel) ToSharedSourceFireboltPutRequest() *shared.SourceFireboltPutRequest {
-	account := new(string)
-	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
-		*account = r.Configuration.Account.ValueString()
-	} else {
-		account = nil
-	}
+	account := r.Configuration.Account.ValueString()
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	database := r.Configuration.Database.ValueString()
-	engine := new(string)
-	if !r.Configuration.Engine.IsUnknown() && !r.Configuration.Engine.IsNull() {
-		*engine = r.Configuration.Engine.ValueString()
-	} else {
-		engine = nil
-	}
+	engine := r.Configuration.Engine.ValueString()
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
 		*host = r.Configuration.Host.ValueString()
 	} else {
 		host = nil
 	}
-	password := r.Configuration.Password.ValueString()
-	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceFireboltUpdate{
-		Account:  account,
-		Database: database,
-		Engine:   engine,
-		Host:     host,
-		Password: password,
-		Username: username,
+		Account:      account,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		Database:     database,
+		Engine:       engine,
+		Host:         host,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationBigqueryResource struct {
 
 // DestinationBigqueryResourceModel describes the resource data model.
 type DestinationBigqueryResourceModel struct {
-	Configuration   DestinationBigquery `tfsdk:"configuration"`
-	DefinitionID    types.String        `tfsdk:"definition_id"`
-	DestinationID   types.String        `tfsdk:"destination_id"`
-	DestinationType types.String        `tfsdk:"destination_type"`
-	Name            types.String        `tfsdk:"name"`
-	WorkspaceID     types.String        `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationBigquery `tfsdk:"configuration"`
+	DefinitionID    types.String                `tfsdk:"definition_id"`
+	DestinationID   types.String                `tfsdk:"destination_id"`
+	DestinationType types.String                `tfsdk:"destination_type"`
+	Name            types.String                `tfsdk:"name"`
+	WorkspaceID     types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationBigqueryResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationBigqueryResource) Metadata(ctx context.Context, req resource
 func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationBigquery Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -186,11 +187,21 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `<i>(recommended)</i> Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. Provides best-in-class speed, reliability and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("standard_inserts"),
+									}...),
+								},
 							},
 							"standard_inserts": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `<i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use GCS staging.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("gcs_staging"),
+									}...),
+								},
 							},
 						},
 						Description: `The way data will be uploaded to BigQuery.`,
@@ -380,6 +391,10 @@ func (r *DestinationBigqueryResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

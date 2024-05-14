@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,6 +11,18 @@ import (
 func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCreateRequest() *shared.SourcePaypalTransactionCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
+	disputeStartDate := new(time.Time)
+	if !r.Configuration.DisputeStartDate.IsUnknown() && !r.Configuration.DisputeStartDate.IsNull() {
+		*disputeStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.DisputeStartDate.ValueString())
+	} else {
+		disputeStartDate = nil
+	}
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -31,12 +43,14 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCr
 		timeWindow = nil
 	}
 	configuration := shared.SourcePaypalTransaction{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		IsSandbox:    isSandbox,
-		RefreshToken: refreshToken,
-		StartDate:    startDate,
-		TimeWindow:   timeWindow,
+		ClientID:         clientID,
+		ClientSecret:     clientSecret,
+		DisputeStartDate: disputeStartDate,
+		EndDate:          endDate,
+		IsSandbox:        isSandbox,
+		RefreshToken:     refreshToken,
+		StartDate:        startDate,
+		TimeWindow:       timeWindow,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -63,15 +77,29 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCr
 }
 
 func (r *SourcePaypalTransactionResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPutRequest() *shared.SourcePaypalTransactionPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
+	disputeStartDate := new(time.Time)
+	if !r.Configuration.DisputeStartDate.IsUnknown() && !r.Configuration.DisputeStartDate.IsNull() {
+		*disputeStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.DisputeStartDate.ValueString())
+	} else {
+		disputeStartDate = nil
+	}
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -92,12 +120,14 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPu
 		timeWindow = nil
 	}
 	configuration := shared.SourcePaypalTransactionUpdate{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		IsSandbox:    isSandbox,
-		RefreshToken: refreshToken,
-		StartDate:    startDate,
-		TimeWindow:   timeWindow,
+		ClientID:         clientID,
+		ClientSecret:     clientSecret,
+		DisputeStartDate: disputeStartDate,
+		EndDate:          endDate,
+		IsSandbox:        isSandbox,
+		RefreshToken:     refreshToken,
+		StartDate:        startDate,
+		TimeWindow:       timeWindow,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

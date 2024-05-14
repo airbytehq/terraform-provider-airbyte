@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceHarvestResource struct {
 
 // SourceHarvestResourceModel describes the resource data model.
 type SourceHarvestResourceModel struct {
-	Configuration SourceHarvest `tfsdk:"configuration"`
-	DefinitionID  types.String  `tfsdk:"definition_id"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceHarvest `tfsdk:"configuration"`
+	DefinitionID  types.String          `tfsdk:"definition_id"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceHarvestResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceHarvestResource) Metadata(ctx context.Context, req resource.Metad
 func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceHarvest Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -90,6 +91,11 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										Description: `Refresh Token to renew the expired Access Token.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_with_personal_access_token"),
+									}...),
+								},
 							},
 							"authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
@@ -106,6 +112,11 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										Sensitive:   true,
 										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_harvest_o_auth"),
+									}...),
 								},
 							},
 						},
@@ -297,6 +308,10 @@ func (r *SourceHarvestResource) Read(ctx context.Context, req resource.ReadReque
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

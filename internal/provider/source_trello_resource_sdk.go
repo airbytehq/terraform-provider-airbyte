@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceTrelloResourceModel) ToSharedSourceTrelloCreateRequest() *shared.SourceTrelloCreateRequest {
-	var boardIds []string = nil
+	var boardIds []string = []string{}
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
@@ -47,14 +47,16 @@ func (r *SourceTrelloResourceModel) ToSharedSourceTrelloCreateRequest() *shared.
 }
 
 func (r *SourceTrelloResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceTrelloResourceModel) ToSharedSourceTrelloPutRequest() *shared.SourceTrelloPutRequest {
-	var boardIds []string = nil
+	var boardIds []string = []string{}
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}

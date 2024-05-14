@@ -34,7 +34,7 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
           token = "...my_token..."
         }
       }
-      batch_size         = 9
+      batch_size         = 1
       default_vectorizer = "text2vec-contextionary"
       host               = "https://my-cluster.weaviate.network"
       tenant_id          = "...my_tenant_id..."
@@ -42,8 +42,8 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 9
+      chunk_overlap = 4
+      chunk_size    = 3
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -58,14 +58,14 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 2
+          split_level = 1
         }
       }
     }
   }
-  definition_id = "bbde9f2b-b80c-4d3f-a4ad-282938c45275"
-  name          = "April Friesen IV"
-  workspace_id  = "930ed8d4-3c0d-4abb-a6ef-9fc3c3744fd2"
+  definition_id = "4bb490aa-753a-4d11-902b-a188860231ad"
+  name          = "Sabrina Dooley"
+  workspace_id  = "491985c9-2d33-4cae-bedb-401c239e69c6"
 }
 ```
 
@@ -294,4 +294,10 @@ Optional:
 - `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_weaviate.my_airbyte_destination_weaviate ""
+```

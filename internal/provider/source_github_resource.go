@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -37,13 +39,13 @@ type SourceGithubResource struct {
 
 // SourceGithubResourceModel describes the resource data model.
 type SourceGithubResourceModel struct {
-	Configuration SourceGithub `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGithub `tfsdk:"configuration"`
+	DefinitionID  types.String         `tfsdk:"definition_id"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGithubResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *SourceGithubResource) Metadata(ctx context.Context, req resource.Metada
 func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGithub Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -96,6 +97,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `OAuth Client secret`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("personal_access_token"),
+									}...),
+								},
 							},
 							"personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
@@ -105,6 +111,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										Sensitive:   true,
 										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth"),
+									}...),
 								},
 							},
 						},
@@ -116,7 +127,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 					"repositories": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
-						Description: `List of GitHub organizations/repositories, e.g. ` + "`" + `airbytehq/airbyte` + "`" + ` for single repository, ` + "`" + `airbytehq/*` + "`" + ` for get all repositories from organization and ` + "`" + `airbytehq/airbyte airbytehq/another-repo` + "`" + ` for multiple repositories.`,
+						Description: `List of GitHub organizations/repositories, e.g. ` + "`" + `airbytehq/airbyte` + "`" + ` for single repository, ` + "`" + `airbytehq/*` + "`" + ` for get all repositories from organization and ` + "`" + `airbytehq/a* for matching multiple repositories by pattern.`,
 						Validators: []validator.List{
 							listvalidator.SizeAtLeast(1),
 						},
@@ -301,6 +312,10 @@ func (r *SourceGithubResource) Read(ctx context.Context, req resource.ReadReques
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

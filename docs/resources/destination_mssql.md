@@ -20,6 +20,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 1433
+    raw_data_schema = "...my_raw_data_schema..."
     schema          = "public"
     ssl_method = {
       encrypted_trust_server_certificate = {}
@@ -27,11 +28,11 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Orville59"
+    username = "Fermin76"
   }
-  definition_id = "374090ef-b22d-4b6f-a086-4a856a04170f"
-  name          = "Bob Hamill"
-  workspace_id  = "dc323359-77b0-47bf-8728-b7077558c673"
+  definition_id = "50c9ec76-747b-406c-b86f-e4a6f8bb810e"
+  name          = "Brad Gutkowski"
+  workspace_id  = "802e7b21-83b2-4bc4-b6db-7afdacad2c14"
 }
 ```
 
@@ -67,6 +68,7 @@ Optional:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with this username.
 - `port` (Number) The port of the MSSQL database. Default: 1433
+- `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
 - `ssl_method` (Attributes) The encryption method which is used to communicate with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
@@ -132,4 +134,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_mssql.my_airbyte_destination_mssql ""
+```

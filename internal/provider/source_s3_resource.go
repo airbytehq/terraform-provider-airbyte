@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -40,13 +42,13 @@ type SourceS3Resource struct {
 
 // SourceS3ResourceModel describes the resource data model.
 type SourceS3ResourceModel struct {
-	Configuration SourceS3     `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceS3 `tfsdk:"configuration"`
+	DefinitionID  types.String     `tfsdk:"definition_id"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceS3Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,7 +58,6 @@ func (r *SourceS3Resource) Metadata(ctx context.Context, req resource.MetadataRe
 func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceS3 Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -95,6 +96,13 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("csv"),
+										path.MatchRelative().AtParent().AtName("jsonl"),
+										path.MatchRelative().AtParent().AtName("parquet"),
+									}...),
+								},
 							},
 							"csv": schema.SingleNestedAttribute{
 								Optional: true,
@@ -155,6 +163,13 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro"),
+										path.MatchRelative().AtParent().AtName("jsonl"),
+										path.MatchRelative().AtParent().AtName("parquet"),
+									}...),
+								},
 							},
 							"jsonl": schema.SingleNestedAttribute{
 								Optional: true,
@@ -186,6 +201,13 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 								},
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro"),
+										path.MatchRelative().AtParent().AtName("csv"),
+										path.MatchRelative().AtParent().AtName("parquet"),
+									}...),
+								},
 							},
 							"parquet": schema.SingleNestedAttribute{
 								Optional: true,
@@ -209,6 +231,13 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro"),
+										path.MatchRelative().AtParent().AtName("csv"),
+										path.MatchRelative().AtParent().AtName("jsonl"),
+									}...),
+								},
 							},
 						},
 						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate`,
@@ -249,6 +278,10 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Default:     stringdefault.StaticString(""),
 								Description: `By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate. Default: ""`,
 							},
+							"region_name": schema.StringAttribute{
+								Optional:    true,
+								Description: `AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.`,
+							},
 							"role_arn": schema.StringAttribute{
 								Optional:    true,
 								Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.`,
@@ -262,6 +295,10 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 						},
 						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services`,
+					},
+					"region_name": schema.StringAttribute{
+						Optional:    true,
+						Description: `AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.`,
 					},
 					"role_arn": schema.StringAttribute{
 						Optional:    true,
@@ -303,6 +340,14 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers. Default: false`,
 												},
 											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"csv_format": schema.SingleNestedAttribute{
 											Optional: true,
@@ -343,10 +388,22 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 														"autogenerated": schema.SingleNestedAttribute{
 															Optional:   true,
 															Attributes: map[string]schema.Attribute{},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("from_csv"),
+																	path.MatchRelative().AtParent().AtName("user_provided"),
+																}...),
+															},
 														},
 														"from_csv": schema.SingleNestedAttribute{
 															Optional:   true,
 															Attributes: map[string]schema.Attribute{},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("autogenerated"),
+																	path.MatchRelative().AtParent().AtName("user_provided"),
+																}...),
+															},
 														},
 														"user_provided": schema.SingleNestedAttribute{
 															Optional: true,
@@ -357,12 +414,24 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 																	Description: `The column names that will be used while emitting the CSV records`,
 																},
 															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("autogenerated"),
+																	path.MatchRelative().AtParent().AtName("from_csv"),
+																}...),
+															},
 														},
 													},
 													Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 													Validators: []validator.Object{
 														validators.ExactlyOneChild(),
 													},
+												},
+												"ignore_errors_on_fields_mismatch": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
 												},
 												"inference_type": schema.StringAttribute{
 													Computed:    true,
@@ -417,6 +486,14 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													},
 												},
 											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"document_file_type_format_experimental": schema.SingleNestedAttribute{
 											Optional: true,
@@ -457,10 +534,26 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												},
 											},
 											Description: `Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"jsonl_format": schema.SingleNestedAttribute{
 											Optional:   true,
 											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"parquet_format": schema.SingleNestedAttribute{
 											Optional: true,
@@ -471,6 +564,14 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													Default:     booldefault.StaticBool(false),
 													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
 												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+												}...),
 											},
 										},
 									},
@@ -695,6 +796,10 @@ func (r *SourceS3Resource) Read(ctx context.Context, req resource.ReadRequest, r
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

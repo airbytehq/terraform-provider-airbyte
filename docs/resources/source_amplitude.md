@@ -16,15 +16,15 @@ SourceAmplitude Resource
 resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
-    data_region        = "Standard Server"
-    request_time_range = 3
+    data_region        = "EU Residency Server"
+    request_time_range = 5
     secret_key         = "...my_secret_key..."
     start_date         = "2021-01-25T00:00:00Z"
   }
-  definition_id = "ce17ccd6-b10d-4638-8d4f-dfb9af007bc0"
-  name          = "Miss Ashley Mayer"
+  definition_id = "c566b1d1-d8bb-457b-b001-ddb3cf074d62"
+  name          = "Mr. Mona Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b057f07c-5466-421b-9ba9-0354f51ed0a8"
+  workspace_id  = "0d069bb2-6e6b-49f2-9aa9-f8c7d4107048"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 - `data_region` (String) Amplitude data region server. must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"
 - `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours. Default: 24
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_amplitude.my_airbyte_source_amplitude ""
+```

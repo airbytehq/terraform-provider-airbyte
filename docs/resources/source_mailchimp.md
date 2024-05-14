@@ -15,18 +15,18 @@ SourceMailchimp Resource
 ```terraform
 resource "airbyte_source_mailchimp" "my_source_mailchimp" {
   configuration = {
-    campaign_id = "...my_campaign_id..."
     credentials = {
       api_key = {
         apikey = "...my_apikey..."
       }
     }
-    start_date = "2020-01-01T00:00:00.000Z"
+    data_center = "...my_data_center..."
+    start_date  = "2020-01-01T00:00:00.000Z"
   }
-  definition_id = "de8da443-bfaa-4dd2-9a6d-ff6cb6bf32fa"
-  name          = "Ken Champlin"
+  definition_id = "6c0fac14-03cf-4d91-9cc5-3ae1f1c37b35"
+  name          = "Tasha Reilly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ea4ec87a-affe-4b9e-a290-f7e9f4166b42"
+  workspace_id  = "981c89f9-63f1-4e61-a4cc-8788ff77a589"
 }
 ```
 
@@ -54,8 +54,8 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
 
 Optional:
 
-- `campaign_id` (String)
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `data_center` (String) Technical fields used to identify datacenter to send request to
 - `start_date` (String) The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -86,4 +86,10 @@ Optional:
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_mailchimp.my_airbyte_source_mailchimp ""
+```

@@ -18,10 +18,10 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
     account_sid = "...my_account_sid..."
     auth_token  = "...my_auth_token..."
   }
-  definition_id = "ddbd797d-2eb8-494f-9682-a677b1b8dbba"
-  name          = "Johnathan Metz"
+  definition_id = "ceb9e0d5-4b08-494b-9d98-fe3f92c06a9a"
+  name          = "Cory Daniel Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c2e2ee8b-85f4-41cf-aefd-5ed605e9e4de"
+  workspace_id  = "875abb88-c398-4d79-a660-80f3ecae3cb4"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `account_sid` (String) Twilio Account ID
 - `auth_token` (String, Sensitive) Twilio Auth Token
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_twilio_taskrouter.my_airbyte_source_twilio_taskrouter ""
+```

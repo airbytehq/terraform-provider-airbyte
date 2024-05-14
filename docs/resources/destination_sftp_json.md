@@ -19,11 +19,11 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Agustin14"
+    username         = "Shaina_Casper89"
   }
-  definition_id = "a47524bb-490a-4a75-bad1-1902ba188860"
-  name          = "Sylvia Bode"
-  workspace_id  = "193af491-985c-492d-b3ca-e7edb401c239"
+  definition_id = "af9a8e21-57a8-4560-889e-77fd0c202086"
+  name          = "Norman Maggio"
+  workspace_id  = "e60f942f-937a-43c5-9508-dd11c7ed17b1"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `port` (Number) Port of the SFTP server. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_sftp_json.my_airbyte_destination_sftp_json ""
+```

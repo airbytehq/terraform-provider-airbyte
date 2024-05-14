@@ -17,7 +17,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.4.1"
+      version = "0.4.3"
     }
   }
 }
@@ -33,6 +33,7 @@ provider "airbyte" {
 ### Optional
 
 - `bearer_auth` (String, Sensitive)
+- `client_credentials` (String, Sensitive)
 - `password` (String, Sensitive)
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
 - `username` (String, Sensitive)

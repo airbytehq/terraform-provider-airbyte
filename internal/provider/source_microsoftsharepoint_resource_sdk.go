@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -14,7 +14,12 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
 		clientID := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+		refreshToken := new(string)
+		if !r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.IsNull() {
+			*refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+		} else {
+			refreshToken = nil
+		}
 		tenantID := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
 		sourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth = &shared.SourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth{
 			ClientID:     clientID,
@@ -46,14 +51,25 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			SourceMicrosoftSharepointServiceKeyAuthentication: sourceMicrosoftSharepointServiceKeyAuthentication,
 		}
 	}
-	folderPath := r.Configuration.FolderPath.ValueString()
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	searchScope := new(shared.SourceMicrosoftSharepointSearchScope)
+	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
+		*searchScope = shared.SourceMicrosoftSharepointSearchScope(r.Configuration.SearchScope.ValueString())
+	} else {
+		searchScope = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceMicrosoftSharepointFileBasedStreamConfig = nil
+	var streams []shared.SourceMicrosoftSharepointFileBasedStreamConfig = []shared.SourceMicrosoftSharepointFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -105,7 +121,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -131,7 +147,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				}
 				var sourceMicrosoftSharepointUserProvided *shared.SourceMicrosoftSharepointUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -145,7 +161,13 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 					}
 				}
 			}
-			var nullValues []string = nil
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -173,23 +195,24 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceMicrosoftSharepointCSVFormat = &shared.SourceMicrosoftSharepointCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftSharepointCSVFormat != nil {
@@ -260,7 +283,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				SourceMicrosoftSharepointDocumentFileTypeFormatExperimental: sourceMicrosoftSharepointDocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -303,6 +326,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 	configuration := shared.SourceMicrosoftSharepoint{
 		Credentials: credentials,
 		FolderPath:  folderPath,
+		SearchScope: searchScope,
 		StartDate:   startDate,
 		Streams:     streams,
 	}
@@ -331,58 +355,76 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 }
 
 func (r *SourceMicrosoftSharepointResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepointPutRequest() *shared.SourceMicrosoftSharepointPutRequest {
 	var credentials shared.SourceMicrosoftSharepointUpdateAuthentication
-	var authenticateViaMicrosoftOAuth *shared.AuthenticateViaMicrosoftOAuth
+	var sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth *shared.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
 	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
 		clientID := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+		refreshToken := new(string)
+		if !r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.IsNull() {
+			*refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+		} else {
+			refreshToken = nil
+		}
 		tenantID := r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
-		authenticateViaMicrosoftOAuth = &shared.AuthenticateViaMicrosoftOAuth{
+		sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth = &shared.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
 			RefreshToken: refreshToken,
 			TenantID:     tenantID,
 		}
 	}
-	if authenticateViaMicrosoftOAuth != nil {
+	if sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth != nil {
 		credentials = shared.SourceMicrosoftSharepointUpdateAuthentication{
-			AuthenticateViaMicrosoftOAuth: authenticateViaMicrosoftOAuth,
+			SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth: sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth,
 		}
 	}
-	var serviceKeyAuthentication *shared.ServiceKeyAuthentication
+	var sourceMicrosoftSharepointUpdateServiceKeyAuthentication *shared.SourceMicrosoftSharepointUpdateServiceKeyAuthentication
 	if r.Configuration.Credentials.ServiceKeyAuthentication != nil {
 		clientId1 := r.Configuration.Credentials.ServiceKeyAuthentication.ClientID.ValueString()
 		clientSecret1 := r.Configuration.Credentials.ServiceKeyAuthentication.ClientSecret.ValueString()
 		tenantId1 := r.Configuration.Credentials.ServiceKeyAuthentication.TenantID.ValueString()
 		userPrincipalName := r.Configuration.Credentials.ServiceKeyAuthentication.UserPrincipalName.ValueString()
-		serviceKeyAuthentication = &shared.ServiceKeyAuthentication{
+		sourceMicrosoftSharepointUpdateServiceKeyAuthentication = &shared.SourceMicrosoftSharepointUpdateServiceKeyAuthentication{
 			ClientID:          clientId1,
 			ClientSecret:      clientSecret1,
 			TenantID:          tenantId1,
 			UserPrincipalName: userPrincipalName,
 		}
 	}
-	if serviceKeyAuthentication != nil {
+	if sourceMicrosoftSharepointUpdateServiceKeyAuthentication != nil {
 		credentials = shared.SourceMicrosoftSharepointUpdateAuthentication{
-			ServiceKeyAuthentication: serviceKeyAuthentication,
+			SourceMicrosoftSharepointUpdateServiceKeyAuthentication: sourceMicrosoftSharepointUpdateServiceKeyAuthentication,
 		}
 	}
-	folderPath := r.Configuration.FolderPath.ValueString()
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	searchScope := new(shared.SourceMicrosoftSharepointUpdateSearchScope)
+	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
+		*searchScope = shared.SourceMicrosoftSharepointUpdateSearchScope(r.Configuration.SearchScope.ValueString())
+	} else {
+		searchScope = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceMicrosoftSharepointUpdateFileBasedStreamConfig = nil
+	var streams []shared.SourceMicrosoftSharepointUpdateFileBasedStreamConfig = []shared.SourceMicrosoftSharepointUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -434,7 +476,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -460,7 +502,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				}
 				var sourceMicrosoftSharepointUpdateUserProvided *shared.SourceMicrosoftSharepointUpdateUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -474,7 +516,13 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 					}
 				}
 			}
-			var nullValues []string = nil
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -502,23 +550,24 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceMicrosoftSharepointUpdateCSVFormat = &shared.SourceMicrosoftSharepointUpdateCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftSharepointUpdateCSVFormat != nil {
@@ -589,7 +638,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental: sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -632,6 +681,7 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 	configuration := shared.SourceMicrosoftSharepointUpdate{
 		Credentials: credentials,
 		FolderPath:  folderPath,
+		SearchScope: searchScope,
 		StartDate:   startDate,
 		Streams:     streams,
 	}

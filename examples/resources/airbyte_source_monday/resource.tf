@@ -6,8 +6,8 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "c990f9b2-ce7a-467a-8515-0ea86120cd61"
-  name          = "Woodrow Kuphal"
+  definition_id = "3a6249a5-1495-45fa-aea2-5a51d7622e38"
+  name          = "Lucas Schaefer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "806812ca-7b26-4952-a155-53a713498a3f"
+  workspace_id  = "00a4abb3-299a-4611-8c7b-e3e8ba7188dc"
 }

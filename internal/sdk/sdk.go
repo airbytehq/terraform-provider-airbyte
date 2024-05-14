@@ -5,8 +5,9 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/utils"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"net/http"
 	"time"
 )
@@ -41,8 +42,7 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient     HTTPClient
-	SecurityClient    HTTPClient
+	Client            HTTPClient
 	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
@@ -52,6 +52,7 @@ type sdkConfiguration struct {
 	GenVersion        string
 	UserAgent         string
 	RetryConfig       *utils.RetryConfig
+	Hooks             *hooks.Hooks
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -64,12 +65,21 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	Connections  *Connections
-	Destinations *Destinations
-	Jobs         *Jobs
-	Sources      *Sources
-	Streams      *Streams
-	Workspaces   *Workspaces
+	PublicConnections  *PublicConnections
+	Public             *Public
+	Connections        *Connections
+	PublicDestinations *PublicDestinations
+	Destinations       *Destinations
+	PublicJobs         *PublicJobs
+	Jobs               *Jobs
+	PublicPermissions  *PublicPermissions
+	Permissions        *Permissions
+	PublicSources      *PublicSources
+	Sources            *Sources
+	PublicStreams      *PublicStreams
+	Streams            *Streams
+	PublicWorkspaces   *PublicWorkspaces
+	Workspaces         *Workspaces
 
 	sdkConfiguration sdkConfiguration
 }
@@ -108,13 +118,13 @@ func WithServerIndex(serverIndex int) SDKOption {
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *SDK) {
-		sdk.sdkConfiguration.DefaultClient = client
+		sdk.sdkConfiguration.Client = client
 	}
 }
 
 func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
 	return func(context.Context) (interface{}, error) {
-		return &security, nil
+		return security, nil
 	}
 }
 
@@ -146,9 +156,10 @@ func New(opts ...SDKOption) *SDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.4.1",
-			GenVersion:        "2.262.2",
-			UserAgent:         "speakeasy-sdk/go 0.4.1 2.262.2 1.0.0 airbyte",
+			SDKVersion:        "0.0.1",
+			GenVersion:        "2.331.0",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.331.0 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			Hooks:             hooks.New(),
 		},
 	}
 	for _, opt := range opts {
@@ -156,26 +167,44 @@ func New(opts ...SDKOption) *SDK {
 	}
 
 	// Use WithClient to override the default client if you would like to customize the timeout
-	if sdk.sdkConfiguration.DefaultClient == nil {
-		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
+	if sdk.sdkConfiguration.Client == nil {
+		sdk.sdkConfiguration.Client = &http.Client{Timeout: 60 * time.Second}
 	}
-	if sdk.sdkConfiguration.SecurityClient == nil {
-		if sdk.sdkConfiguration.Security != nil {
-			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
-		} else {
-			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
-		}
+
+	currentServerURL, _ := sdk.sdkConfiguration.GetServerDetails()
+	serverURL := currentServerURL
+	serverURL, sdk.sdkConfiguration.Client = sdk.sdkConfiguration.Hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
+	if serverURL != currentServerURL {
+		sdk.sdkConfiguration.ServerURL = serverURL
 	}
+
+	sdk.PublicConnections = newPublicConnections(sdk.sdkConfiguration)
+
+	sdk.Public = newPublic(sdk.sdkConfiguration)
 
 	sdk.Connections = newConnections(sdk.sdkConfiguration)
 
+	sdk.PublicDestinations = newPublicDestinations(sdk.sdkConfiguration)
+
 	sdk.Destinations = newDestinations(sdk.sdkConfiguration)
+
+	sdk.PublicJobs = newPublicJobs(sdk.sdkConfiguration)
 
 	sdk.Jobs = newJobs(sdk.sdkConfiguration)
 
+	sdk.PublicPermissions = newPublicPermissions(sdk.sdkConfiguration)
+
+	sdk.Permissions = newPermissions(sdk.sdkConfiguration)
+
+	sdk.PublicSources = newPublicSources(sdk.sdkConfiguration)
+
 	sdk.Sources = newSources(sdk.sdkConfiguration)
 
+	sdk.PublicStreams = newPublicStreams(sdk.sdkConfiguration)
+
 	sdk.Streams = newStreams(sdk.sdkConfiguration)
+
+	sdk.PublicWorkspaces = newPublicWorkspaces(sdk.sdkConfiguration)
 
 	sdk.Workspaces = newWorkspaces(sdk.sdkConfiguration)
 

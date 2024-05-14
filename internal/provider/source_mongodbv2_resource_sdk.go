@@ -4,7 +4,7 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -106,17 +106,31 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	} else {
 		initialWaitingSeconds = nil
 	}
+	invalidCdcCursorPositionBehavior := new(shared.SourceMongodbV2InvalidCDCPositionBehaviorAdvanced)
+	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
+		*invalidCdcCursorPositionBehavior = shared.SourceMongodbV2InvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
+	} else {
+		invalidCdcCursorPositionBehavior = nil
+	}
 	queueSize := new(int64)
 	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
 		*queueSize = r.Configuration.QueueSize.ValueInt64()
 	} else {
 		queueSize = nil
 	}
+	updateCaptureMode := new(shared.SourceMongodbV2CaptureModeAdvanced)
+	if !r.Configuration.UpdateCaptureMode.IsUnknown() && !r.Configuration.UpdateCaptureMode.IsNull() {
+		*updateCaptureMode = shared.SourceMongodbV2CaptureModeAdvanced(r.Configuration.UpdateCaptureMode.ValueString())
+	} else {
+		updateCaptureMode = nil
+	}
 	configuration := shared.SourceMongodbV2{
-		DatabaseConfig:        databaseConfig,
-		DiscoverSampleSize:    discoverSampleSize,
-		InitialWaitingSeconds: initialWaitingSeconds,
-		QueueSize:             queueSize,
+		DatabaseConfig:                   databaseConfig,
+		DiscoverSampleSize:               discoverSampleSize,
+		InitialWaitingSeconds:            initialWaitingSeconds,
+		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+		QueueSize:                        queueSize,
+		UpdateCaptureMode:                updateCaptureMode,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -143,10 +157,12 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 }
 
 func (r *SourceMongodbV2ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shared.SourceMongodbV2PutRequest {
@@ -247,17 +263,31 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	} else {
 		initialWaitingSeconds = nil
 	}
+	invalidCdcCursorPositionBehavior := new(shared.InvalidCDCPositionBehaviorAdvanced)
+	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
+		*invalidCdcCursorPositionBehavior = shared.InvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
+	} else {
+		invalidCdcCursorPositionBehavior = nil
+	}
 	queueSize := new(int64)
 	if !r.Configuration.QueueSize.IsUnknown() && !r.Configuration.QueueSize.IsNull() {
 		*queueSize = r.Configuration.QueueSize.ValueInt64()
 	} else {
 		queueSize = nil
 	}
+	updateCaptureMode := new(shared.CaptureModeAdvanced)
+	if !r.Configuration.UpdateCaptureMode.IsUnknown() && !r.Configuration.UpdateCaptureMode.IsNull() {
+		*updateCaptureMode = shared.CaptureModeAdvanced(r.Configuration.UpdateCaptureMode.ValueString())
+	} else {
+		updateCaptureMode = nil
+	}
 	configuration := shared.SourceMongodbV2Update{
-		DatabaseConfig:        databaseConfig,
-		DiscoverSampleSize:    discoverSampleSize,
-		InitialWaitingSeconds: initialWaitingSeconds,
-		QueueSize:             queueSize,
+		DatabaseConfig:                   databaseConfig,
+		DiscoverSampleSize:               discoverSampleSize,
+		InitialWaitingSeconds:            initialWaitingSeconds,
+		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+		QueueSize:                        queueSize,
+		UpdateCaptureMode:                updateCaptureMode,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

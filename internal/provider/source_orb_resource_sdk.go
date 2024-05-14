@@ -3,19 +3,25 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.SourceOrbCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
 	} else {
 		lookbackWindowDays = nil
 	}
-	var numericEventPropertiesKeys []string = nil
+	var numericEventPropertiesKeys []string = []string{}
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
 	}
@@ -26,7 +32,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 		planID = nil
 	}
 	startDate := r.Configuration.StartDate.ValueString()
-	var stringEventPropertiesKeys []string = nil
+	var stringEventPropertiesKeys []string = []string{}
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
 	}
@@ -38,6 +44,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 	}
 	configuration := shared.SourceOrb{
 		APIKey:                       apiKey,
+		EndDate:                      endDate,
 		LookbackWindowDays:           lookbackWindowDays,
 		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
 		PlanID:                       planID,
@@ -70,21 +77,29 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 }
 
 func (r *SourceOrbResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrbPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
 	} else {
 		lookbackWindowDays = nil
 	}
-	var numericEventPropertiesKeys []string = nil
+	var numericEventPropertiesKeys []string = []string{}
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
 	}
@@ -95,7 +110,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 		planID = nil
 	}
 	startDate := r.Configuration.StartDate.ValueString()
-	var stringEventPropertiesKeys []string = nil
+	var stringEventPropertiesKeys []string = []string{}
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
 	}
@@ -107,6 +122,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 	}
 	configuration := shared.SourceOrbUpdate{
 		APIKey:                       apiKey,
+		EndDate:                      endDate,
 		LookbackWindowDays:           lookbackWindowDays,
 		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
 		PlanID:                       planID,

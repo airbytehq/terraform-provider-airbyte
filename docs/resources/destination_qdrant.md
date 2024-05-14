@@ -29,15 +29,15 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
         }
       }
       collection      = "...my_collection..."
-      distance_metric = "dot"
+      distance_metric = "euc"
       prefer_grpc     = false
       text_field      = "...my_text_field..."
       url             = "...my_url..."
     }
     omit_raw_text = false
     processing = {
-      chunk_overlap = 5
-      chunk_size    = 1
+      chunk_overlap = 9
+      chunk_size    = 7
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -52,14 +52,14 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 4
+          split_level = 8
         }
       }
     }
   }
-  definition_id = "ed560cd3-f9e1-4f9e-af9a-8e2157a8560c"
-  name          = "Austin Vandervort"
-  workspace_id  = "fd0c2020-86d3-496d-a60f-942f937a3c59"
+  definition_id = "4fabbf19-9438-4202-bb4d-e2c1a7f288ad"
+  name          = "Rosalie Stroman"
+  workspace_id  = "c9d6fa94-b74b-4938-b85c-e1dfc1b2798d"
 }
 ```
 
@@ -253,4 +253,10 @@ Optional:
 - `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_qdrant.my_airbyte_destination_qdrant ""
+```

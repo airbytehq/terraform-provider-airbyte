@@ -15,18 +15,18 @@ SourceWikipediaPageviews Resource
 ```terraform
 resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
   configuration = {
-    access  = "all-access"
-    agent   = "user"
+    access  = "mobile-app"
+    agent   = "spider"
     article = "Are_You_the_One%3F"
-    country = "IN"
+    country = "FR"
     end     = "...my_end..."
-    project = "www.mediawiki.org"
+    project = "commons.wikimedia.org"
     start   = "...my_start..."
   }
-  definition_id = "54523f36-dab5-4122-890f-3e992c2a3f4c"
-  name          = "Mr. Dominick Rowe"
+  definition_id = "60c3a7ba-3362-448b-a45d-fad9324f6ab9"
+  name          = "Daryl Effertz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c7cc4eaf-dab4-4c1b-8af6-6c12869f984d"
+  workspace_id  = "526eae71-eb75-49d7-9d0b-f2f57219578f"
 }
 ```
 
@@ -62,4 +62,10 @@ Required:
 - `project` (String) If you want to filter by project, use the domain of any Wikimedia project.
 - `start` (String) The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_wikipedia_pageviews.my_airbyte_source_wikipedia_pageviews ""
+```

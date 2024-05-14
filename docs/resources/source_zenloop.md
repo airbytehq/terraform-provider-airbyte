@@ -20,10 +20,10 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  definition_id = "312d0cbf-e39d-4f03-a297-d6f5cf39b34f"
-  name          = "Ronnie Lynch"
+  definition_id = "f9e67bad-f74d-423a-87a4-2abf6ae57802"
+  name          = "Neal O'Kon"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "42198f32-822b-482a-959e-bc2b7c1d3540"
+  workspace_id  = "1998eac7-526c-40e6-8d41-f29478bd831a"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `survey_group_id` (String) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
 - `survey_id` (String) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_zenloop.my_airbyte_source_zenloop ""
+```

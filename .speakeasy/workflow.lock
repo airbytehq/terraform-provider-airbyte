@@ -1,0 +1,29 @@
+speakeasyVersion: 1.289.0
+sources:
+    my-source:
+        sourceNamespace: my-source
+        sourceRevisionDigest: sha256:5ee89f975931d19768e775a2b302dd5fa2bdb6081ab9a1c83f23f30b0e3b4d70
+        sourceBlobDigest: sha256:033de2d39099afbee88acef9189c12046deea7b710471529733fd643a32ae4ad
+        tags:
+            - latest
+            - main
+targets:
+    terraform-provider-airbyte:
+        source: my-source
+        sourceNamespace: my-source
+        sourceRevisionDigest: sha256:5ee89f975931d19768e775a2b302dd5fa2bdb6081ab9a1c83f23f30b0e3b4d70
+        sourceBlobDigest: sha256:033de2d39099afbee88acef9189c12046deea7b710471529733fd643a32ae4ad
+        outLocation: /github/workspace/repo
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        my-source:
+            inputs:
+                - location: ./airbyte.yaml
+            registry:
+                location: registry.speakeasyapi.dev/airbyte/airbyte-prod/my-source
+    targets:
+        terraform-provider-airbyte:
+            target: terraform
+            source: my-source

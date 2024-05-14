@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -21,7 +21,7 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	} else {
 		branch = nil
 	}
-	var branches []string = nil
+	var branches []string = []string{}
 	for _, branchesItem := range r.Configuration.Branches {
 		branches = append(branches, branchesItem.ValueString())
 	}
@@ -64,7 +64,7 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 			SourceGithubPersonalAccessToken: sourceGithubPersonalAccessToken,
 		}
 	}
-	var repositories []string = nil
+	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
 	}
@@ -114,10 +114,12 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 }
 
 func (r *SourceGithubResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.SourceGithubPutRequest {
@@ -133,7 +135,7 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 	} else {
 		branch = nil
 	}
-	var branches []string = nil
+	var branches []string = []string{}
 	for _, branchesItem := range r.Configuration.Branches {
 		branches = append(branches, branchesItem.ValueString())
 	}
@@ -176,7 +178,7 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 			SourceGithubUpdatePersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
 		}
 	}
-	var repositories []string = nil
+	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
 	}

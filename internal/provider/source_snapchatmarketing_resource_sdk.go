@@ -3,12 +3,18 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCreateRequest() *shared.SourceSnapchatMarketingCreateRequest {
+	actionReportTime := new(shared.SourceSnapchatMarketingActionReportTime)
+	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
+		*actionReportTime = shared.SourceSnapchatMarketingActionReportTime(r.Configuration.ActionReportTime.ValueString())
+	} else {
+		actionReportTime = nil
+	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	endDate := new(customTypes.Date)
@@ -24,12 +30,27 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCr
 	} else {
 		startDate = nil
 	}
+	swipeUpAttributionWindow := new(shared.SourceSnapchatMarketingSwipeUpAttributionWindow)
+	if !r.Configuration.SwipeUpAttributionWindow.IsUnknown() && !r.Configuration.SwipeUpAttributionWindow.IsNull() {
+		*swipeUpAttributionWindow = shared.SourceSnapchatMarketingSwipeUpAttributionWindow(r.Configuration.SwipeUpAttributionWindow.ValueString())
+	} else {
+		swipeUpAttributionWindow = nil
+	}
+	viewAttributionWindow := new(shared.SourceSnapchatMarketingViewAttributionWindow)
+	if !r.Configuration.ViewAttributionWindow.IsUnknown() && !r.Configuration.ViewAttributionWindow.IsNull() {
+		*viewAttributionWindow = shared.SourceSnapchatMarketingViewAttributionWindow(r.Configuration.ViewAttributionWindow.ValueString())
+	} else {
+		viewAttributionWindow = nil
+	}
 	configuration := shared.SourceSnapchatMarketing{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		EndDate:      endDate,
-		RefreshToken: refreshToken,
-		StartDate:    startDate,
+		ActionReportTime:         actionReportTime,
+		ClientID:                 clientID,
+		ClientSecret:             clientSecret,
+		EndDate:                  endDate,
+		RefreshToken:             refreshToken,
+		StartDate:                startDate,
+		SwipeUpAttributionWindow: swipeUpAttributionWindow,
+		ViewAttributionWindow:    viewAttributionWindow,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -56,13 +77,21 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingCr
 }
 
 func (r *SourceSnapchatMarketingResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPutRequest() *shared.SourceSnapchatMarketingPutRequest {
+	actionReportTime := new(shared.ActionReportTime)
+	if !r.Configuration.ActionReportTime.IsUnknown() && !r.Configuration.ActionReportTime.IsNull() {
+		*actionReportTime = shared.ActionReportTime(r.Configuration.ActionReportTime.ValueString())
+	} else {
+		actionReportTime = nil
+	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	endDate := new(customTypes.Date)
@@ -78,12 +107,27 @@ func (r *SourceSnapchatMarketingResourceModel) ToSharedSourceSnapchatMarketingPu
 	} else {
 		startDate = nil
 	}
+	swipeUpAttributionWindow := new(shared.SwipeUpAttributionWindow)
+	if !r.Configuration.SwipeUpAttributionWindow.IsUnknown() && !r.Configuration.SwipeUpAttributionWindow.IsNull() {
+		*swipeUpAttributionWindow = shared.SwipeUpAttributionWindow(r.Configuration.SwipeUpAttributionWindow.ValueString())
+	} else {
+		swipeUpAttributionWindow = nil
+	}
+	viewAttributionWindow := new(shared.ViewAttributionWindow)
+	if !r.Configuration.ViewAttributionWindow.IsUnknown() && !r.Configuration.ViewAttributionWindow.IsNull() {
+		*viewAttributionWindow = shared.ViewAttributionWindow(r.Configuration.ViewAttributionWindow.ValueString())
+	} else {
+		viewAttributionWindow = nil
+	}
 	configuration := shared.SourceSnapchatMarketingUpdate{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		EndDate:      endDate,
-		RefreshToken: refreshToken,
-		StartDate:    startDate,
+		ActionReportTime:         actionReportTime,
+		ClientID:                 clientID,
+		ClientSecret:             clientSecret,
+		EndDate:                  endDate,
+		RefreshToken:             refreshToken,
+		StartDate:                startDate,
+		SwipeUpAttributionWindow: swipeUpAttributionWindow,
+		ViewAttributionWindow:    viewAttributionWindow,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

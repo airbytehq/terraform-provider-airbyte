@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -30,7 +30,13 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 	} else {
 		startDate = nil
 	}
-	var streamsCriteria []shared.SourceSalesforceStreamsCriteria = nil
+	streamSliceStep := new(string)
+	if !r.Configuration.StreamSliceStep.IsUnknown() && !r.Configuration.StreamSliceStep.IsNull() {
+		*streamSliceStep = r.Configuration.StreamSliceStep.ValueString()
+	} else {
+		streamSliceStep = nil
+	}
+	var streamsCriteria []shared.SourceSalesforceStreamsCriteria = []shared.SourceSalesforceStreamsCriteria{}
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
 		criteria := new(shared.SourceSalesforceSearchCriteria)
 		if !streamsCriteriaItem.Criteria.IsUnknown() && !streamsCriteriaItem.Criteria.IsNull() {
@@ -51,6 +57,7 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		StartDate:       startDate,
+		StreamSliceStep: streamSliceStep,
 		StreamsCriteria: streamsCriteria,
 	}
 	definitionID := new(string)
@@ -78,10 +85,12 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforceCreateRequest() 
 }
 
 func (r *SourceSalesforceResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *shared.SourceSalesforcePutRequest {
@@ -106,7 +115,13 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *sh
 	} else {
 		startDate = nil
 	}
-	var streamsCriteria []shared.StreamsCriteria = nil
+	streamSliceStep := new(string)
+	if !r.Configuration.StreamSliceStep.IsUnknown() && !r.Configuration.StreamSliceStep.IsNull() {
+		*streamSliceStep = r.Configuration.StreamSliceStep.ValueString()
+	} else {
+		streamSliceStep = nil
+	}
+	var streamsCriteria []shared.StreamsCriteria = []shared.StreamsCriteria{}
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
 		criteria := new(shared.SearchCriteria)
 		if !streamsCriteriaItem.Criteria.IsUnknown() && !streamsCriteriaItem.Criteria.IsNull() {
@@ -127,6 +142,7 @@ func (r *SourceSalesforceResourceModel) ToSharedSourceSalesforcePutRequest() *sh
 		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		StartDate:       startDate,
+		StreamSliceStep: streamSliceStep,
 		StreamsCriteria: streamsCriteria,
 	}
 	name := r.Name.ValueString()

@@ -18,10 +18,10 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
     api_key    = "...my_api_key..."
     project_id = "...my_project_id..."
   }
-  definition_id = "ccdd2e95-af6e-4d3c-87c1-4160113c2d3c"
-  name          = "Derek Thiel"
+  definition_id = "1f48b8f8-6701-4054-81db-1ce49a8fc7f8"
+  name          = "Clarence Goldner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "64b86a42-dbbb-4853-ac4b-5e6a18b0d790"
+  workspace_id  = "2645cfb2-449e-4ef8-b64e-b4b875ea1fa6"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `api_key` (String, Sensitive) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 - `project_id` (String) Lokalise project ID. Available at Project Settings > General.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_lokalise.my_airbyte_source_lokalise ""
+```

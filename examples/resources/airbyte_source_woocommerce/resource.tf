@@ -5,8 +5,8 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "3828542b-b37a-4458-bacd-1771a16fff1f"
-  name          = "Eva O'Reilly"
+  definition_id = "e9226a95-4fff-493d-92e3-92ce90b9169f"
+  name          = "Nathan Beier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bc306c4f-3397-4c20-875f-aadeba481e41"
+  workspace_id  = "2efb21ef-2bc4-48bf-87f2-e7721366646f"
 }

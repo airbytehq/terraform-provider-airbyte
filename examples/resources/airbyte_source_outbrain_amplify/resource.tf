@@ -6,12 +6,12 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "region"
-    report_granularity     = "monthly"
+    geo_location_breakdown = "country"
+    report_granularity     = "weekly"
     start_date             = "...my_start_date..."
   }
-  definition_id = "3b6433cb-82b3-42ad-83fd-9a9d8ba9b0df"
-  name          = "Mrs. Charlie Hayes"
+  definition_id = "ff19f388-685d-4894-9e7d-b0723f94739c"
+  name          = "Jaime Bashirian"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4743ee79-bd13-4e20-8659-bbdc56c2f2e2"
+  workspace_id  = "5b712257-78f7-4a02-bc1e-08d80f694c48"
 }

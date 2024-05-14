@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -54,7 +54,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 	} else {
 		groups = nil
 	}
-	var groupsList []string = nil
+	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
 	}
@@ -64,7 +64,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 	} else {
 		projects = nil
 	}
-	var projectsList []string = nil
+	var projectsList []string = []string{}
 	for _, projectsListItem := range r.Configuration.ProjectsList {
 		projectsList = append(projectsList, projectsListItem.ValueString())
 	}
@@ -108,10 +108,12 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 }
 
 func (r *SourceGitlabResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.SourceGitlabPutRequest {
@@ -160,7 +162,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 	} else {
 		groups = nil
 	}
-	var groupsList []string = nil
+	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
 	}
@@ -170,7 +172,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 	} else {
 		projects = nil
 	}
-	var projectsList []string = nil
+	var projectsList []string = []string{}
 	for _, projectsListItem := range r.Configuration.ProjectsList {
 		projectsList = append(projectsList, projectsListItem.ValueString())
 	}

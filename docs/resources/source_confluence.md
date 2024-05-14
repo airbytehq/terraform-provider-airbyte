@@ -19,10 +19,10 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     domain_name = "...my_domain_name..."
     email       = "abc@example.com"
   }
-  definition_id = "365d687e-087e-4390-9b6a-417faeb4f73b"
-  name          = "Patti Lehner"
+  definition_id = "f2d42750-6042-4c1c-a566-1b2485a06023"
+  name          = "Percy Reilly I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "371ecbee-1051-41b4-b9ed-171c9d9f9b47"
+  workspace_id  = "61d3c00c-fe1b-4a68-9340-502b96029feb"
 }
 ```
 
@@ -54,4 +54,10 @@ Required:
 - `domain_name` (String) Your Confluence domain name
 - `email` (String) Your Confluence login email
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_confluence.my_airbyte_source_confluence ""
+```

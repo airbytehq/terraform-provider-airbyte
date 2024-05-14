@@ -16,15 +16,15 @@ SourceNytimes Resource
 resource "airbyte_source_nytimes" "my_source_nytimes" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2022-08"
+    end_date   = "1851-01"
     period     = "1"
     share_type = "facebook"
-    start_date = "2022-08"
+    start_date = "1851-01"
   }
-  definition_id = "db92c72d-541f-4538-928a-50561c1cc629"
-  name          = "Sandy Boyle"
+  definition_id = "5f386d0a-c5af-43c6-958d-9b03d25bee3d"
+  name          = "Dana Skiles"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7b3d761e-29ef-426a-a07d-2b59ab56edb5"
+  workspace_id  = "77cb62b5-9b9f-41ee-8249-578a5bcbbc2c"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 - `end_date` (String) End date to stop the article retrieval (format YYYY-MM)
 - `share_type` (String) Share Type. must be one of ["facebook"]
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_nytimes.my_airbyte_source_nytimes ""
+```

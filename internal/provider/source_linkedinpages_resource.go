@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceLinkedinPagesResource struct {
 
 // SourceLinkedinPagesResourceModel describes the resource data model.
 type SourceLinkedinPagesResourceModel struct {
-	Configuration SourceLinkedinPages `tfsdk:"configuration"`
-	DefinitionID  types.String        `tfsdk:"definition_id"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceLinkedinPages `tfsdk:"configuration"`
+	DefinitionID  types.String                `tfsdk:"definition_id"`
+	Name          types.String                `tfsdk:"name"`
+	SecretID      types.String                `tfsdk:"secret_id"`
+	SourceID      types.String                `tfsdk:"source_id"`
+	SourceType    types.String                `tfsdk:"source_type"`
+	WorkspaceID   types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *SourceLinkedinPagesResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceLinkedinPagesResource) Metadata(ctx context.Context, req resource
 func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceLinkedinPages Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -71,6 +72,11 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
+								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
@@ -88,6 +94,11 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 										Sensitive:   true,
 										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("access_token"),
+									}...),
 								},
 							},
 						},
@@ -268,6 +279,10 @@ func (r *SourceLinkedinPagesResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

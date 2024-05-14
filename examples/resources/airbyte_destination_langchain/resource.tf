@@ -10,14 +10,14 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
       }
     }
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 5
+      chunk_overlap = 10
+      chunk_size    = 0
       text_fields = [
         "...",
       ]
     }
   }
-  definition_id = "2d15ef4e-895c-4921-a618-452d1432f338"
-  name          = "Allan Witting"
-  workspace_id  = "4ca4c8c4-bf88-4272-9c3c-6bc39a6d3f39"
+  definition_id = "f39a6c15-1a78-4cf1-bc35-89bc3eaba63d"
+  name          = "Lindsay Labadie"
+  workspace_id  = "09ed832d-18dd-4dbe-b1f8-7bb5069e16a5"
 }

@@ -25,10 +25,10 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
     enable_experimental_streams = false
     start_date                  = "2017-01-25T00:00:00Z"
   }
-  definition_id = "56253a66-e5ad-4391-9293-14c65ed70eb1"
-  name          = "Myra Reinger"
+  definition_id = "4734e30b-46b9-459e-8e75-8ac09227119b"
+  name          = "Jorge Prosacco DDS"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c24002ca-0d01-4711-b25a-28dde04a9ce3"
+  workspace_id  = "98bb7037-ab55-461c-a1bb-1cadaa0e328a"
 }
 ```
 
@@ -57,11 +57,11 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
 Required:
 
 - `credentials` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
 - `enable_experimental_streams` (Boolean) If enabled then experimental streams become available for sync. Default: false
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If not set, "2006-06-01T00:00:00Z" (Hubspot creation date) will be used as start date. It's recommended to provide relevant to your data start date value to optimize synchronization.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -88,4 +88,10 @@ Required:
 
 - `access_token` (String, Sensitive) HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_hubspot.my_airbyte_source_hubspot ""
+```

@@ -14,7 +14,8 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name = "Latoya Bartell"
+  name            = "Cody Satterfield"
+  organization_id = "512764ed-e9cd-4819-acc3-7ba1700ba64d"
 }
 ```
 
@@ -25,9 +26,19 @@ resource "airbyte_workspace" "my_workspace" {
 
 - `name` (String) Name of the workspace
 
+### Optional
+
+- `organization_id` (String) ID of organization to add workspace to. Requires replacement if changed.
+
 ### Read-Only
 
 - `data_residency` (String) must be one of ["auto", "us", "eu"]
 - `workspace_id` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_workspace.my_airbyte_workspace ""
+```

@@ -24,10 +24,10 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "74976dbe-116c-4781-96c7-0bfb32667c47"
-  name          = "Derek Bauch"
+  definition_id = "b49c82f2-83fd-4f1b-b62a-3ef9cacc879b"
+  name          = "Darren Muller Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "16107c03-f839-4206-b4c9-db1c42670928"
+  workspace_id  = "647dc7c2-71c5-4044-a25a-4f7e4eabe3a9"
 }
 ```
 
@@ -89,4 +89,10 @@ Required:
 - `refresh_token` (String, Sensitive) A Refresh Token to renew the expired Access Token.
 - `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_microsoft_teams.my_airbyte_source_microsoft_teams ""
+```

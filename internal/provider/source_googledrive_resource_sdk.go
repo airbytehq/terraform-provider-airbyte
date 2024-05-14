@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -45,7 +45,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceGoogleDriveFileBasedStreamConfig = nil
+	var streams []shared.SourceGoogleDriveFileBasedStreamConfig = []shared.SourceGoogleDriveFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -97,7 +97,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -123,7 +123,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 				}
 				var sourceGoogleDriveUserProvided *shared.SourceGoogleDriveUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -137,7 +137,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 					}
 				}
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -165,7 +165,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
@@ -252,7 +252,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 				SourceGoogleDriveDocumentFileTypeFormatExperimental: sourceGoogleDriveDocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -323,10 +323,12 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 }
 
 func (r *SourceGoogleDriveResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *shared.SourceGoogleDrivePutRequest {
@@ -366,7 +368,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceGoogleDriveUpdateFileBasedStreamConfig = nil
+	var streams []shared.SourceGoogleDriveUpdateFileBasedStreamConfig = []shared.SourceGoogleDriveUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -418,7 +420,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -444,7 +446,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 				}
 				var sourceGoogleDriveUpdateUserProvided *shared.SourceGoogleDriveUpdateUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -458,7 +460,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 					}
 				}
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -486,7 +488,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
@@ -573,7 +575,7 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 				SourceGoogleDriveUpdateDocumentFileTypeFormatExperimental: sourceGoogleDriveUpdateDocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}

@@ -7,7 +7,7 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-11-28T11:02:53.211Z"
+        token_expiry_date = "2022-05-28T09:23:18.706Z"
       }
     }
     groups = "airbyte.io"
@@ -20,8 +20,8 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "13a52314-031f-4d7b-82b3-c164c1950da3"
-  name          = "Leigh Rempel"
+  definition_id = "51741425-e4d3-48a3-8ea5-6cdfa27fbf62"
+  name          = "Regina Price"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d9b5a75a-7c5f-4c21-9722-b310b676fb73"
+  workspace_id  = "ae611122-113e-487b-890e-cc6bf7516116"
 }

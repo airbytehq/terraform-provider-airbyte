@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -34,12 +35,12 @@ type DestinationSftpJSONResource struct {
 
 // DestinationSftpJSONResourceModel describes the resource data model.
 type DestinationSftpJSONResourceModel struct {
-	Configuration   DestinationSftpJSON `tfsdk:"configuration"`
-	DefinitionID    types.String        `tfsdk:"definition_id"`
-	DestinationID   types.String        `tfsdk:"destination_id"`
-	DestinationType types.String        `tfsdk:"destination_type"`
-	Name            types.String        `tfsdk:"name"`
-	WorkspaceID     types.String        `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationSftpJSON `tfsdk:"configuration"`
+	DefinitionID    types.String                `tfsdk:"definition_id"`
+	DestinationID   types.String                `tfsdk:"destination_id"`
+	DestinationType types.String                `tfsdk:"destination_type"`
+	Name            types.String                `tfsdk:"name"`
+	WorkspaceID     types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationSftpJSONResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -49,7 +50,6 @@ func (r *DestinationSftpJSONResource) Metadata(ctx context.Context, req resource
 func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationSftpJSON Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -242,6 +242,10 @@ func (r *DestinationSftpJSONResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

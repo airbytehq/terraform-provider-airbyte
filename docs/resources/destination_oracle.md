@@ -19,16 +19,17 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 1521
+    raw_data_schema = "...my_raw_data_schema..."
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Pearl82"
+    username = "Eleanore_Toy"
   }
-  definition_id = "fc1b2798-db19-4e64-b83f-63d348370e17"
-  name          = "Lorena Schowalter"
-  workspace_id  = "4f32d3e1-92a8-4a43-80f2-9f7cbd12b320"
+  definition_id = "5c921261-8452-4d14-b2f3-3897fec4ca4c"
+  name          = "Garrett Gerhold"
+  workspace_id  = "882725c3-c6bc-439a-ad3f-396b39ea0e10"
 }
 ```
 
@@ -64,6 +65,7 @@ Optional:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) The port of the database. Default: 1521
+- `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
@@ -107,4 +109,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_oracle.my_airbyte_destination_oracle ""
+```

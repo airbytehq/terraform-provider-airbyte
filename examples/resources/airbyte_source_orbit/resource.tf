@@ -4,8 +4,8 @@ resource "airbyte_source_orbit" "my_source_orbit" {
     start_date = "...my_start_date..."
     workspace  = "...my_workspace..."
   }
-  definition_id = "9f94f985-aa22-4e67-bc77-be4e4244a41c"
-  name          = "Warren Dare"
+  definition_id = "f9cf17c9-c1c9-4188-a190-0dfc35041fcd"
+  name          = "Shaun Schimmel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4893048e-9c1a-4f99-a1b1-c883a572712d"
+  workspace_id  = "262ef24d-9236-49b1-bf5a-7ba288f10a06"
 }

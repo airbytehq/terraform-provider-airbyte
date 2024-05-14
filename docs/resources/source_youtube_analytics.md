@@ -22,10 +22,10 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "c9bce387-d664-444a-9867-97a763e10f99"
-  name          = "Donald Beahan"
+  definition_id = "ab4c1bca-f66c-4128-a9f9-84d613828542"
+  name          = "Wm Dickens"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9e49484a-7485-4520-a44a-ee427f93df9b"
+  workspace_id  = "458facd1-771a-416f-bf1f-04aeebc306c4"
 }
 ```
 
@@ -68,4 +68,10 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_youtube_analytics.my_airbyte_source_youtube_analytics ""
+```

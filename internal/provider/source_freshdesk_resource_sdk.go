@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -11,6 +11,12 @@ import (
 func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskCreateRequest() *shared.SourceFreshdeskCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domain := r.Configuration.Domain.ValueString()
+	lookbackWindowInDays := new(int64)
+	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
+		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
+	} else {
+		lookbackWindowInDays = nil
+	}
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
 		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
@@ -24,10 +30,11 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskCreateRequest() *s
 		startDate = nil
 	}
 	configuration := shared.SourceFreshdesk{
-		APIKey:            apiKey,
-		Domain:            domain,
-		RequestsPerMinute: requestsPerMinute,
-		StartDate:         startDate,
+		APIKey:               apiKey,
+		Domain:               domain,
+		LookbackWindowInDays: lookbackWindowInDays,
+		RequestsPerMinute:    requestsPerMinute,
+		StartDate:            startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -54,15 +61,23 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskCreateRequest() *s
 }
 
 func (r *SourceFreshdeskResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskPutRequest() *shared.SourceFreshdeskPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domain := r.Configuration.Domain.ValueString()
+	lookbackWindowInDays := new(int64)
+	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
+		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
+	} else {
+		lookbackWindowInDays = nil
+	}
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
 		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
@@ -76,10 +91,11 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskPutRequest() *shar
 		startDate = nil
 	}
 	configuration := shared.SourceFreshdeskUpdate{
-		APIKey:            apiKey,
-		Domain:            domain,
-		RequestsPerMinute: requestsPerMinute,
-		StartDate:         startDate,
+		APIKey:               apiKey,
+		Domain:               domain,
+		LookbackWindowInDays: lookbackWindowInDays,
+		RequestsPerMinute:    requestsPerMinute,
+		StartDate:            startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

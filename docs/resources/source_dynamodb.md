@@ -15,16 +15,22 @@ SourceDynamodb Resource
 ```terraform
 resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
-    access_key_id            = "A012345678910EXAMPLE"
-    endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "eu-south-1"
-    reserved_attribute_names = "name, field_name, field-name"
-    secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
+    credentials = {
+      authenticate_via_access_keys = {
+        access_key_id         = "A012345678910EXAMPLE"
+        additional_properties = "{ \"see\": \"documentation\" }"
+        secret_access_key     = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
+      }
+    }
+    endpoint                               = "https://{aws_dynamo_db_url}.com"
+    ignore_missing_read_permissions_tables = false
+    region                                 = "ca-west-1"
+    reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "642f3c2f-e19c-432e-9fee-92bc3373ad2c"
-  name          = "Ken Kihn"
+  definition_id = "a8cd9c5a-ad47-4afd-a11e-10d002e1c73f"
+  name          = "Dr. Willis Padberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8ef975a7-b102-4e54-8791-5a2f449e5b0b"
+  workspace_id  = "9a63be20-9caa-4593-ab80-8ec8c0a1f116"
 }
 ```
 
@@ -50,6 +56,25 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
+Optional:
+
+- `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
+- `endpoint` (String) the URL of the Dynamodb database. Default: ""
+- `ignore_missing_read_permissions_tables` (Boolean) Ignore tables with missing scan/read permissions. Default: false
+- `region` (String) The region of the Dynamodb database. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
+
+<a id="nestedatt--configuration--credentials"></a>
+### Nested Schema for `configuration.credentials`
+
+Optional:
+
+- `authenticate_via_access_keys` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_access_keys))
+- `role_based_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--role_based_authentication))
+
+<a id="nestedatt--configuration--credentials--authenticate_via_access_keys"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_access_keys`
+
 Required:
 
 - `access_key_id` (String, Sensitive) The access key id to access Dynamodb. Airbyte requires read permissions to the database
@@ -57,8 +82,20 @@ Required:
 
 Optional:
 
-- `endpoint` (String) the URL of the Dynamodb database. Default: ""
-- `region` (String) The region of the Dynamodb database. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
-- `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
+- `additional_properties` (String) Parsed as JSON.
 
 
+<a id="nestedatt--configuration--credentials--role_based_authentication"></a>
+### Nested Schema for `configuration.credentials.role_based_authentication`
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_dynamodb.my_airbyte_source_dynamodb ""
+```

@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -20,9 +20,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 			RefreshToken: refreshToken,
 		}
 	}
-	var customReports []shared.SourcePinterestReportConfig = nil
+	var customReports []shared.SourcePinterestReportConfig = []shared.SourcePinterestReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		var attributionTypes []shared.SourcePinterestValidEnums = nil
+		var attributionTypes []shared.SourcePinterestValidEnums = []shared.SourcePinterestValidEnums{}
 		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
 			attributionTypes = append(attributionTypes, shared.SourcePinterestValidEnums(attributionTypesItem.ValueString()))
 		}
@@ -32,7 +32,7 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 		} else {
 			clickWindowDays = nil
 		}
-		var columns []shared.SourcePinterestSchemasValidEnums = nil
+		var columns []shared.SourcePinterestSchemasValidEnums = []shared.SourcePinterestSchemasValidEnums{}
 		for _, columnsItem := range customReportsItem.Columns {
 			columns = append(columns, shared.SourcePinterestSchemasValidEnums(columnsItem.ValueString()))
 		}
@@ -92,7 +92,7 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 	} else {
 		startDate1 = nil
 	}
-	var status []shared.SourcePinterestStatus = nil
+	var status []shared.SourcePinterestStatus = []shared.SourcePinterestStatus{}
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.SourcePinterestStatus(statusItem.ValueString()))
 	}
@@ -127,10 +127,12 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestCreateRequest() *s
 }
 
 func (r *SourcePinterestResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shared.SourcePinterestPutRequest {
@@ -145,9 +147,9 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 			RefreshToken: refreshToken,
 		}
 	}
-	var customReports []shared.ReportConfig = nil
+	var customReports []shared.ReportConfig = []shared.ReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
-		var attributionTypes []shared.SourcePinterestUpdateValidEnums = nil
+		var attributionTypes []shared.SourcePinterestUpdateValidEnums = []shared.SourcePinterestUpdateValidEnums{}
 		for _, attributionTypesItem := range customReportsItem.AttributionTypes {
 			attributionTypes = append(attributionTypes, shared.SourcePinterestUpdateValidEnums(attributionTypesItem.ValueString()))
 		}
@@ -157,7 +159,7 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 		} else {
 			clickWindowDays = nil
 		}
-		var columns []shared.SourcePinterestUpdateSchemasValidEnums = nil
+		var columns []shared.SourcePinterestUpdateSchemasValidEnums = []shared.SourcePinterestUpdateSchemasValidEnums{}
 		for _, columnsItem := range customReportsItem.Columns {
 			columns = append(columns, shared.SourcePinterestUpdateSchemasValidEnums(columnsItem.ValueString()))
 		}
@@ -217,7 +219,7 @@ func (r *SourcePinterestResourceModel) ToSharedSourcePinterestPutRequest() *shar
 	} else {
 		startDate1 = nil
 	}
-	var status []shared.Status = nil
+	var status []shared.Status = []shared.Status{}
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.Status(statusItem.ValueString()))
 	}

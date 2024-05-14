@@ -21,10 +21,10 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  definition_id = "81ee6770-fa8e-4c1b-a804-bd6457a40e88"
-  name          = "Heather Murray"
+  definition_id = "6663420a-6a3a-4b4d-8475-5b910e5c999e"
+  name          = "Rene Ruecker"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "41ba6f5d-90d5-4a8a-b49e-2072bdff3818"
+  workspace_id  = "0e8f2a37-cc1f-4bec-883d-a2fecd2cab29"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `symbols` (List of String) Cryptocurrency symbols. (only used for quotes stream)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_coinmarketcap.my_airbyte_source_coinmarketcap ""
+```

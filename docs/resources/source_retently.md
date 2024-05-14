@@ -24,10 +24,10 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "0427d23a-4e1d-48c7-a3c8-e5e259fe4ef6"
-  name          = "Kristina Donnelly"
+  definition_id = "f5d1d34f-0cce-4548-aa3a-161dc53f6414"
+  name          = "Ernesto Schmitt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5b5a324c-6128-4aab-bad0-730782c3e822"
+  workspace_id  = "b41d5bf9-4a01-4397-93df-d90aff660497"
 }
 ```
 
@@ -90,4 +90,10 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_retently.my_airbyte_source_retently ""
+```

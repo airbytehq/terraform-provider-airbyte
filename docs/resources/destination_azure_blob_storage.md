@@ -86,4 +86,10 @@ Optional:
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.json_lines_newline_delimited_json`
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_azure_blob_storage.my_airbyte_destination_azure_blob_storage ""
+```

@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -36,12 +38,12 @@ type DestinationClickhouseResource struct {
 
 // DestinationClickhouseResourceModel describes the resource data model.
 type DestinationClickhouseResourceModel struct {
-	Configuration   DestinationClickhouse `tfsdk:"configuration"`
-	DefinitionID    types.String          `tfsdk:"definition_id"`
-	DestinationID   types.String          `tfsdk:"destination_id"`
-	DestinationType types.String          `tfsdk:"destination_type"`
-	Name            types.String          `tfsdk:"name"`
-	WorkspaceID     types.String          `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationClickhouse `tfsdk:"configuration"`
+	DefinitionID    types.String                  `tfsdk:"definition_id"`
+	DestinationID   types.String                  `tfsdk:"destination_id"`
+	DestinationType types.String                  `tfsdk:"destination_type"`
+	Name            types.String                  `tfsdk:"name"`
+	WorkspaceID     types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationClickhouseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *DestinationClickhouseResource) Metadata(ctx context.Context, req resour
 func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationClickhouse Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -82,12 +83,22 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 						Default:     int64default.StaticInt64(8123),
 						Description: `HTTP port of the database. Default: 8123`,
 					},
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `The schema to write raw tables into (default: airbyte_internal)`,
+					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -112,6 +123,12 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -135,6 +152,12 @@ func (r *DestinationClickhouseResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -309,6 +332,10 @@ func (r *DestinationClickhouseResource) Read(ctx context.Context, req resource.R
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

@@ -15,10 +15,10 @@ SourceCustom Resource
 ```terraform
 resource "airbyte_source_custom" "my_source_custom" {
   configuration = { "user" : "charles" }
-  definition_id = "ec345b5c-1bae-4747-a6a8-cd9c5aad47af"
-  name          = "Dr. Dana Botsford Jr."
+  definition_id = "3c351689-ddb3-4b3d-b401-39dc2cf2cb41"
+  name          = "Bertha Haag"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d002e1c7-3f9b-4a1e-b9a6-3be209caa593"
+  workspace_id  = "85f5b638-2e70-4e18-a817-2f932271c9f9"
 }
 ```
 
@@ -41,4 +41,10 @@ resource "airbyte_source_custom" "my_source_custom" {
 - `source_id` (String)
 - `source_type` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_custom.my_airbyte_source_custom ""
+```

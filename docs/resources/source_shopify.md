@@ -15,18 +15,20 @@ SourceShopify Resource
 ```terraform
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
+    bulk_window_in_days = 1
     credentials = {
       api_password = {
         api_password = "...my_api_password..."
       }
     }
-    shop       = "my-store"
-    start_date = "2022-01-27"
+    fetch_transactions_user_id = false
+    shop                       = "my-store"
+    start_date                 = "2022-02-12"
   }
-  definition_id = "b02fd25c-7727-4b36-b542-81d3e7f0bc64"
-  name          = "Moses Thiel"
+  definition_id = "b5fcf365-dcca-4ec2-8e41-cbe1d2ecd015"
+  name          = "Carolyn Smith"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "08c82dc4-0ca1-4ab7-a639-716f1b8331df"
+  workspace_id  = "f6c56d3c-f89e-4692-9ce0-c7a6ecf05091"
 }
 ```
 
@@ -58,7 +60,9 @@ Required:
 
 Optional:
 
+- `bulk_window_in_days` (Number) Defines what would be a date range per single BULK Job. Default: 30
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
+- `fetch_transactions_user_id` (Boolean) Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch. Default: false
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -86,4 +90,10 @@ Optional:
 - `client_id` (String) The Client ID of the Shopify developer application.
 - `client_secret` (String) The Client Secret of the Shopify developer application.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_shopify.my_airbyte_source_shopify ""
+```

@@ -22,10 +22,10 @@ resource "airbyte_source_trello" "my_source_trello" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "a7270287-5abb-488c-b98d-79666080f3ec"
-  name          = "Lamar Douglas"
+  definition_id = "418c27e2-e49f-4be8-8753-d48e30cccb1d"
+  name          = "Sherri Stoltenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "491ea799-2cd6-43d3-b81e-fe3f7d5a433d"
+  workspace_id  = "c649b7a5-8a56-4364-9fd3-38f322856cd8"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 
 - `board_ids` (List of String) IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated. Please note that this is not the 8-character ID in the board's shortLink (URL of the board). Rather, what is required here is the 24-character ID usually returned by the API
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_trello.my_airbyte_source_trello ""
+```

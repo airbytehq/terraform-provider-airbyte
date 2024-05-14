@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *shared.SourceBingAdsCreateRequest {
-	var accountNames []shared.SourceBingAdsAccountNames = nil
+	var accountNames []shared.SourceBingAdsAccountNames = []shared.SourceBingAdsAccountNames{}
 	for _, accountNamesItem := range r.Configuration.AccountNames {
 		name := accountNamesItem.Name.ValueString()
 		operator := shared.SourceBingAdsOperator(accountNamesItem.Operator.ValueString())
@@ -25,7 +25,7 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *share
 	} else {
 		clientSecret = nil
 	}
-	var customReports []shared.SourceBingAdsCustomReportConfig = nil
+	var customReports []shared.SourceBingAdsCustomReportConfig = []shared.SourceBingAdsCustomReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
 		name1 := customReportsItem.Name.ValueString()
 		reportAggregation := new(string)
@@ -34,7 +34,7 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *share
 		} else {
 			reportAggregation = nil
 		}
-		var reportColumns []string = nil
+		var reportColumns []string = []string{}
 		for _, reportColumnsItem := range customReportsItem.ReportColumns {
 			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
 		}
@@ -102,14 +102,16 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *share
 }
 
 func (r *SourceBingAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.SourceBingAdsPutRequest {
-	var accountNames []shared.AccountNames = nil
+	var accountNames []shared.AccountNames = []shared.AccountNames{}
 	for _, accountNamesItem := range r.Configuration.AccountNames {
 		name := accountNamesItem.Name.ValueString()
 		operator := shared.Operator(accountNamesItem.Operator.ValueString())
@@ -125,7 +127,7 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.S
 	} else {
 		clientSecret = nil
 	}
-	var customReports []shared.CustomReportConfig = nil
+	var customReports []shared.CustomReportConfig = []shared.CustomReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
 		name1 := customReportsItem.Name.ValueString()
 		reportAggregation := new(string)
@@ -134,7 +136,7 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.S
 		} else {
 			reportAggregation = nil
 		}
-		var reportColumns []string = nil
+		var reportColumns []string = []string{}
 		for _, reportColumnsItem := range customReportsItem.ReportColumns {
 			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
 		}

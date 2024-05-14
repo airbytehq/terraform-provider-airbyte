@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -33,13 +34,13 @@ type SourceVantageResource struct {
 
 // SourceVantageResourceModel describes the resource data model.
 type SourceVantageResourceModel struct {
-	Configuration OAuth2AccessToken `tfsdk:"configuration"`
-	DefinitionID  types.String      `tfsdk:"definition_id"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration tfTypes.OAuth2AccessToken `tfsdk:"configuration"`
+	DefinitionID  types.String              `tfsdk:"definition_id"`
+	Name          types.String              `tfsdk:"name"`
+	SecretID      types.String              `tfsdk:"secret_id"`
+	SourceID      types.String              `tfsdk:"source_id"`
+	SourceType    types.String              `tfsdk:"source_type"`
+	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *SourceVantageResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -49,7 +50,6 @@ func (r *SourceVantageResource) Metadata(ctx context.Context, req resource.Metad
 func (r *SourceVantageResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceVantage Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -231,6 +231,10 @@ func (r *SourceVantageResource) Read(ctx context.Context, req resource.ReadReque
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

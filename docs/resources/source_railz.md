@@ -19,10 +19,10 @@ resource "airbyte_source_railz" "my_source_railz" {
     secret_key = "...my_secret_key..."
     start_date = "...my_start_date..."
   }
-  definition_id = "c463b838-dc5f-4976-935f-73a45535fff5"
-  name          = "Gerald Swift"
+  definition_id = "c7e9c462-09ea-452c-b07c-b05c4a8d21cf"
+  name          = "Ellen Hudson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f0cce548-6a3a-4161-9c53-f64148acb8b4"
+  workspace_id  = "e520f854-a567-4309-8c0e-e4bba7faed57"
 }
 ```
 
@@ -54,4 +54,10 @@ Required:
 - `secret_key` (String, Sensitive) Secret key (secret_key)
 - `start_date` (String) Start date
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_railz.my_airbyte_source_railz ""
+```

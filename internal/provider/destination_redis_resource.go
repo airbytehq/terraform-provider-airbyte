@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationRedisResource struct {
 
 // DestinationRedisResourceModel describes the resource data model.
 type DestinationRedisResourceModel struct {
-	Configuration   DestinationRedis `tfsdk:"configuration"`
-	DefinitionID    types.String     `tfsdk:"definition_id"`
-	DestinationID   types.String     `tfsdk:"destination_id"`
-	DestinationType types.String     `tfsdk:"destination_type"`
-	Name            types.String     `tfsdk:"name"`
-	WorkspaceID     types.String     `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationRedis `tfsdk:"configuration"`
+	DefinitionID    types.String             `tfsdk:"definition_id"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationRedisResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationRedisResource) Metadata(ctx context.Context, req resource.Me
 func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationRedis Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -101,6 +102,11 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Disable SSL.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_full": schema.SingleNestedAttribute{
 								Optional: true,
@@ -125,6 +131,11 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 									},
 								},
 								Description: `Verify-full SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("disable"),
+									}...),
+								},
 							},
 						},
 						MarkdownDescription: `SSL connection modes. ` + "\n" +
@@ -139,6 +150,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -163,6 +180,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -186,6 +209,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -360,6 +389,10 @@ func (r *DestinationRedisResource) Read(ctx context.Context, req resource.ReadRe
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

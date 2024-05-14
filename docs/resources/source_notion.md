@@ -22,10 +22,10 @@ resource "airbyte_source_notion" "my_source_notion" {
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "c9c1a8da-b7e7-43a5-9718-14e4dc1f633a"
-  name          = "Salvatore Hermann"
+  definition_id = "7242137f-e2e9-4e26-84c1-04f1dbe3b1f2"
+  name          = "Daniel Fritsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "542d517f-c88b-4c49-98d7-5efedea337d5"
+  workspace_id  = "75738476-5c77-4418-814d-1f263651b77f"
 }
 ```
 
@@ -51,12 +51,9 @@ resource "airbyte_source_notion" "my_source_notion" {
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `credentials` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials))
-
 Optional:
 
+- `credentials` (Attributes) Choose either OAuth (recommended for Airbyte Cloud) or Access Token. See our <a href='https://docs.airbyte.com/integrations/sources/notion#setup-guide'>docs</a> for more information. (see [below for nested schema](#nestedatt--configuration--credentials))
 - `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:MM:SS.000Z. During incremental sync, any data generated before this date will not be replicated. If left blank, the start date will be set to 2 years before the present date.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -84,4 +81,10 @@ Required:
 - `client_id` (String) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 - `client_secret` (String) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_notion.my_airbyte_source_notion ""
+```

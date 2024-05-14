@@ -15,7 +15,7 @@ SourceGithub Resource
 ```terraform
 resource "airbyte_source_github" "my_source_github" {
   configuration = {
-    api_url = "https://github.com"
+    api_url = "https://github.company.org"
     branch  = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     branches = [
       "...",
@@ -30,13 +30,13 @@ resource "airbyte_source_github" "my_source_github" {
     repositories = [
       "...",
     ]
-    repository = "airbytehq/airbyte"
+    repository = "airbytehq/*"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "c14a349f-de89-4ab2-b6cb-ad00caee12c4"
-  name          = "Angel Haley"
+  definition_id = "e08fd2ca-f83f-4045-910a-7c570570b889"
+  name          = "Tara Medhurst"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7e54a27b-617a-4012-a6bf-68e1922df283"
+  workspace_id  = "4e6d7c2f-caa3-486d-a1d2-ddf0351c49c6"
 }
 ```
 
@@ -65,7 +65,7 @@ resource "airbyte_source_github" "my_source_github" {
 Required:
 
 - `credentials` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials))
-- `repositories` (List of String) List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
+- `repositories` (List of String) List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
 
 Optional:
 
@@ -103,4 +103,10 @@ Required:
 
 - `personal_access_token` (String, Sensitive) Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_github.my_airbyte_source_github ""
+```

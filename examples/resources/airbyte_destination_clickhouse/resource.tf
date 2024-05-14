@@ -5,6 +5,7 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 8123
+    raw_data_schema = "...my_raw_data_schema..."
     tunnel_method = {
       no_tunnel = {}
     }

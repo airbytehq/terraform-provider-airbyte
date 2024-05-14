@@ -16,12 +16,12 @@ SourceIp2whois Resource
 resource "airbyte_source_ip2whois" "my_source_ip2whois" {
   configuration = {
     api_key = "...my_api_key..."
-    domain  = "www.facebook.com"
+    domain  = "www.google.com"
   }
-  definition_id = "9882d54c-e598-4cc5-9eb9-52f06231c57f"
-  name          = "Ross Zboncak"
+  definition_id = "09c8206a-4b04-43ef-89e6-1b75b726765e"
+  name          = "Malcolm Block"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1baac6e0-5b1e-450c-9446-8d231cdd98f8"
+  workspace_id  = "842954bd-759b-4dc8-b93f-80b7f557094a"
 }
 ```
 
@@ -52,4 +52,10 @@ Optional:
 - `api_key` (String, Sensitive) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 - `domain` (String) Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_ip2whois.my_airbyte_source_ip2whois ""
+```

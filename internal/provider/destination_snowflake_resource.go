@@ -7,13 +7,16 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -36,12 +39,12 @@ type DestinationSnowflakeResource struct {
 
 // DestinationSnowflakeResourceModel describes the resource data model.
 type DestinationSnowflakeResourceModel struct {
-	Configuration   DestinationSnowflake `tfsdk:"configuration"`
-	DefinitionID    types.String         `tfsdk:"definition_id"`
-	DestinationID   types.String         `tfsdk:"destination_id"`
-	DestinationType types.String         `tfsdk:"destination_type"`
-	Name            types.String         `tfsdk:"name"`
-	WorkspaceID     types.String         `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationSnowflake `tfsdk:"configuration"`
+	DefinitionID    types.String                 `tfsdk:"definition_id"`
+	DestinationID   types.String                 `tfsdk:"destination_id"`
+	DestinationType types.String                 `tfsdk:"destination_type"`
+	Name            types.String                 `tfsdk:"name"`
+	WorkspaceID     types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationSnowflakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +54,6 @@ func (r *DestinationSnowflakeResource) Metadata(ctx context.Context, req resourc
 func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationSnowflake Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -76,6 +78,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Description: `Passphrase for private key`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("username_and_password"),
+									}...),
+								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
@@ -99,6 +107,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Description: `Enter your application's Refresh Token`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("key_pair_authentication"),
+										path.MatchRelative().AtParent().AtName("username_and_password"),
+									}...),
+								},
 							},
 							"username_and_password": schema.SingleNestedAttribute{
 								Optional: true,
@@ -108,6 +122,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Sensitive:   true,
 										Description: `Enter the password associated with the username.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("key_pair_authentication"),
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 						},
@@ -125,12 +145,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						Default:     booldefault.StaticBool(false),
 						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
 					},
-					"enable_incremental_final_table_updates": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false`,
-					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)`,
@@ -142,6 +156,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					"raw_data_schema": schema.StringAttribute{
 						Optional:    true,
 						Description: `The schema to write raw tables into (default: airbyte_internal)`,
+					},
+					"retention_period_days": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(1),
+						Description: `The number of days of Snowflake Time Travel to enable on the tables. See <a href="https://docs.snowflake.com/en/user-guide/data-time-travel#data-retention-period">Snowflake's documentation</a> for more information. Setting a nonzero value will incur increased storage costs in your Snowflake instance. Default: 1`,
 					},
 					"role": schema.StringAttribute{
 						Required:    true,
@@ -321,6 +341,10 @@ func (r *DestinationSnowflakeResource) Read(ctx context.Context, req resource.Re
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

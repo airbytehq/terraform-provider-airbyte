@@ -4,7 +4,7 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -40,7 +40,7 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaCreateRequest() *shared.So
 			}
 		}
 	}
-	var organizationExportIds []interface{} = nil
+	var organizationExportIds []interface{} = []interface{}{}
 	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
 		var organizationExportIdsTmp interface{}
 		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
@@ -82,10 +82,12 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaCreateRequest() *shared.So
 }
 
 func (r *SourceAsanaResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceAsanaResourceModel) ToSharedSourceAsanaPutRequest() *shared.SourceAsanaPutRequest {
@@ -120,7 +122,7 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaPutRequest() *shared.Sourc
 			}
 		}
 	}
-	var organizationExportIds []interface{} = nil
+	var organizationExportIds []interface{} = []interface{}{}
 	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
 		var organizationExportIdsTmp interface{}
 		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)

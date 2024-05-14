@@ -7,8 +7,8 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
     }
     org_id = "123456789"
   }
-  definition_id = "5fa52e0c-6c0c-4c93-a76e-9fdef541f06c"
-  name          = "Patrick Fadel PhD"
+  definition_id = "95b197bb-b022-47d6-a5c3-155f731c6e6b"
+  name          = "Joshua Rowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "89c1488f-aa41-41d9-9922-269c9d648f0b"
+  workspace_id  = "166aee78-9254-477f-b87c-53022ba4aed2"
 }

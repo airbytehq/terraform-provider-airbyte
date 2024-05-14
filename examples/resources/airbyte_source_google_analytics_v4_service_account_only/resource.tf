@@ -11,8 +11,8 @@ resource "airbyte_source_google_analytics_v4_service_account_only" "my_source_go
     view_id        = "...my_view_id..."
     window_in_days = 30
   }
-  definition_id = "1709ce4f-e165-4bc4-840e-7fb5df25477f"
-  name          = "Tanya Bailey DVM"
+  definition_id = "e6bf68e1-922d-4f28-ba61-4313a5231403"
+  name          = "Lucia Schuppe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c7c89bfb-0cb9-4d8d-bc27-a8c72c3eb5dc"
+  workspace_id  = "82b3c164-c195-40da-b1eb-ecd9b5a75a7c"
 }

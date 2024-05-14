@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceRetentlyResource struct {
 
 // SourceRetentlyResourceModel describes the resource data model.
 type SourceRetentlyResourceModel struct {
-	Configuration SourceRetently `tfsdk:"configuration"`
-	DefinitionID  types.String   `tfsdk:"definition_id"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceRetently `tfsdk:"configuration"`
+	DefinitionID  types.String           `tfsdk:"definition_id"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceRetentlyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceRetentlyResource) Metadata(ctx context.Context, req resource.Meta
 func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceRetently Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -86,6 +87,11 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_with_api_token"),
+									}...),
+								},
 							},
 							"authenticate_with_api_token": schema.SingleNestedAttribute{
 								Optional: true,
@@ -102,6 +108,11 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										Sensitive:   true,
 										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_retently_o_auth"),
+									}...),
 								},
 							},
 						},
@@ -279,6 +290,10 @@ func (r *SourceRetentlyResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

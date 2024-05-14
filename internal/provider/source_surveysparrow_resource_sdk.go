@@ -4,7 +4,7 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -31,7 +31,7 @@ func (r *SourceSurveySparrowResourceModel) ToSharedSourceSurveySparrowCreateRequ
 			}
 		}
 	}
-	var surveyID []interface{} = nil
+	var surveyID []interface{} = []interface{}{}
 	for _, surveyIDItem := range r.Configuration.SurveyID {
 		var surveyIDTmp interface{}
 		_ = json.Unmarshal([]byte(surveyIDItem.ValueString()), &surveyIDTmp)
@@ -67,10 +67,12 @@ func (r *SourceSurveySparrowResourceModel) ToSharedSourceSurveySparrowCreateRequ
 }
 
 func (r *SourceSurveySparrowResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSurveySparrowResourceModel) ToSharedSourceSurveySparrowPutRequest() *shared.SourceSurveySparrowPutRequest {
@@ -96,7 +98,7 @@ func (r *SourceSurveySparrowResourceModel) ToSharedSourceSurveySparrowPutRequest
 			}
 		}
 	}
-	var surveyID []interface{} = nil
+	var surveyID []interface{} = []interface{}{}
 	for _, surveyIDItem := range r.Configuration.SurveyID {
 		var surveyIDTmp interface{}
 		_ = json.Unmarshal([]byte(surveyIDItem.ValueString()), &surveyIDTmp)

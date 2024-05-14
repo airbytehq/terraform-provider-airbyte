@@ -21,14 +21,14 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "eu-south-2"
+    region               = "il-central-1"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     visibility_timeout   = 15
   }
-  definition_id = "90fa7f8f-441b-458d-bc55-9a0bee1c5ff2"
-  name          = "Tracy Donnelly"
+  definition_id = "49b0bdf3-d5ca-496c-a335-4ae1d23c3d11"
+  name          = "Amos Moore"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20422616-84e7-43ef-a02c-915f597cf589"
+  workspace_id  = "df0d756d-8b0d-490d-af91-86ab63a7b2e3"
 }
 ```
 
@@ -69,4 +69,10 @@ Optional:
 - `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages
 - `visibility_timeout` (Number) Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_amazon_sqs.my_airbyte_source_amazon_sqs ""
+```

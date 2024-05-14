@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,6 +27,12 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -128,6 +134,7 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		RawDataSchema: rawDataSchema,
 		Schema:        schema,
 		SslMethod:     sslMethod,
 		TunnelMethod:  tunnelMethod,
@@ -151,10 +158,12 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 }
 
 func (r *DestinationMssqlResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *shared.DestinationMssqlPutRequest {
@@ -177,6 +186,12 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -278,6 +293,7 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		RawDataSchema: rawDataSchema,
 		Schema:        schema,
 		SslMethod:     sslMethod,
 		TunnelMethod:  tunnelMethod,

@@ -3,14 +3,14 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateRequest() *shared.DestinationVectaraCreateRequest {
 	corpusName := r.Configuration.CorpusName.ValueString()
 	customerID := r.Configuration.CustomerID.ValueString()
-	var metadataFields []string = nil
+	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
@@ -26,7 +26,7 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateReques
 	} else {
 		parallelize = nil
 	}
-	var textFields []string = nil
+	var textFields []string = []string{}
 	for _, textFieldsItem := range r.Configuration.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
@@ -63,16 +63,18 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateReques
 }
 
 func (r *DestinationVectaraResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraPutRequest() *shared.DestinationVectaraPutRequest {
 	corpusName := r.Configuration.CorpusName.ValueString()
 	customerID := r.Configuration.CustomerID.ValueString()
-	var metadataFields []string = nil
+	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
@@ -88,7 +90,7 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraPutRequest()
 	} else {
 		parallelize = nil
 	}
-	var textFields []string = nil
+	var textFields []string = []string{}
 	for _, textFieldsItem := range r.Configuration.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}

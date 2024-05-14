@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceMailchimpResource struct {
 
 // SourceMailchimpResourceModel describes the resource data model.
 type SourceMailchimpResourceModel struct {
-	Configuration SourceMailchimp `tfsdk:"configuration"`
-	DefinitionID  types.String    `tfsdk:"definition_id"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMailchimp `tfsdk:"configuration"`
+	DefinitionID  types.String            `tfsdk:"definition_id"`
+	Name          types.String            `tfsdk:"name"`
+	SecretID      types.String            `tfsdk:"secret_id"`
+	SourceID      types.String            `tfsdk:"source_id"`
+	SourceType    types.String            `tfsdk:"source_type"`
+	WorkspaceID   types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailchimpResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceMailchimpResource) Metadata(ctx context.Context, req resource.Met
 func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMailchimp Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -59,9 +60,6 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"campaign_id": schema.StringAttribute{
-						Optional: true,
-					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
@@ -73,6 +71,11 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 										Sensitive:   true,
 										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
@@ -92,11 +95,20 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 										Description: `The Client Secret of your OAuth application.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("api_key"),
+									}...),
+								},
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+					},
+					"data_center": schema.StringAttribute{
+						Optional:    true,
+						Description: `Technical fields used to identify datacenter to send request to`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -274,6 +286,10 @@ func (r *SourceMailchimpResource) Read(ctx context.Context, req resource.ReadReq
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

@@ -133,4 +133,10 @@ Optional:
 - `compression_codec` (String) The compression algorithm used to compress data. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]; Default: "SNAPPY"
 - `format_type` (String) must be one of ["Parquet"]; Default: "Parquet"
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_aws_datalake.my_airbyte_destination_aws_datalake ""
+```

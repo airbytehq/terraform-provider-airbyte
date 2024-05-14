@@ -36,9 +36,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     gcs_bucket_path   = "data_sync/test"
     gcs_bucket_region = "us-east4"
   }
-  definition_id = "3f0d76fb-78bf-474f-a22d-e12791b5f134"
-  name          = "Ms. Jose Bechtelar"
-  workspace_id  = "9774ae87-c308-492f-bb0f-41f82248d601"
+  definition_id = "fa9c0130-5655-43a4-a50c-dde3bcff11f6"
+  name          = "Angela Will"
+  workspace_id  = "23b2f88e-15f8-468b-b037-297dcd66bcb9"
 }
 ```
 
@@ -264,4 +264,10 @@ Optional:
 - `max_padding_size_mb` (Number) Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB. Default: 8
 - `page_size_kb` (Number) The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_gcs.my_airbyte_destination_gcs ""
+```

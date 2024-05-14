@@ -7,8 +7,8 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  definition_id = "fd6e7ec4-8816-4b0c-a2b8-975147c3e6c8"
-  name          = "Drew Bosco"
+  definition_id = "ff5b31f2-b930-44d3-abf3-2902de61711b"
+  name          = "Nelson MacGyver"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cad3b1c4-0652-4931-9364-8ca783b58652"
+  workspace_id  = "24ee80aa-2980-4d84-b13e-bef014dd9af7"
 }

@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.SourceSlackCreateRequest {
-	var channelFilter []string = nil
+	var channelFilter []string = []string{}
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
 	}
@@ -44,6 +44,12 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 			}
 		}
 	}
+	includePrivateChannels := new(bool)
+	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
+		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
+	} else {
+		includePrivateChannels = nil
+	}
 	joinChannels := new(bool)
 	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
 		*joinChannels = r.Configuration.JoinChannels.ValueBool()
@@ -58,11 +64,12 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlack{
-		ChannelFilter:  channelFilter,
-		Credentials:    credentials,
-		JoinChannels:   joinChannels,
-		LookbackWindow: lookbackWindow,
-		StartDate:      startDate,
+		ChannelFilter:          channelFilter,
+		Credentials:            credentials,
+		IncludePrivateChannels: includePrivateChannels,
+		JoinChannels:           joinChannels,
+		LookbackWindow:         lookbackWindow,
+		StartDate:              startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -89,14 +96,16 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 }
 
 func (r *SourceSlackResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.SourceSlackPutRequest {
-	var channelFilter []string = nil
+	var channelFilter []string = []string{}
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
 	}
@@ -131,6 +140,12 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.Sourc
 			}
 		}
 	}
+	includePrivateChannels := new(bool)
+	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
+		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
+	} else {
+		includePrivateChannels = nil
+	}
 	joinChannels := new(bool)
 	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
 		*joinChannels = r.Configuration.JoinChannels.ValueBool()
@@ -145,11 +160,12 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.Sourc
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlackUpdate{
-		ChannelFilter:  channelFilter,
-		Credentials:    credentials,
-		JoinChannels:   joinChannels,
-		LookbackWindow: lookbackWindow,
-		StartDate:      startDate,
+		ChannelFilter:          channelFilter,
+		Credentials:            credentials,
+		IncludePrivateChannels: includePrivateChannels,
+		JoinChannels:           joinChannels,
+		LookbackWindow:         lookbackWindow,
+		StartDate:              startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

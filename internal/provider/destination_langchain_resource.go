@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -37,12 +39,12 @@ type DestinationLangchainResource struct {
 
 // DestinationLangchainResourceModel describes the resource data model.
 type DestinationLangchainResourceModel struct {
-	Configuration   DestinationLangchain `tfsdk:"configuration"`
-	DefinitionID    types.String         `tfsdk:"definition_id"`
-	DestinationID   types.String         `tfsdk:"destination_id"`
-	DestinationType types.String         `tfsdk:"destination_type"`
-	Name            types.String         `tfsdk:"name"`
-	WorkspaceID     types.String         `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationLangchain `tfsdk:"configuration"`
+	DefinitionID    types.String                 `tfsdk:"definition_id"`
+	DestinationID   types.String                 `tfsdk:"destination_id"`
+	DestinationType types.String                 `tfsdk:"destination_type"`
+	Name            types.String                 `tfsdk:"name"`
+	WorkspaceID     types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationLangchainResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *DestinationLangchainResource) Metadata(ctx context.Context, req resourc
 func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationLangchain Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -67,6 +68,11 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("open_ai"),
+									}...),
+								},
 							},
 							"open_ai": schema.SingleNestedAttribute{
 								Optional: true,
@@ -77,6 +83,11 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("fake"),
+									}...),
+								},
 							},
 						},
 						Description: `Embedding configuration`,
@@ -102,6 +113,12 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									},
 								},
 								Description: `Chroma is a popular vector store that can be used to store and retrieve embeddings. It will build its index in memory and persist it to disk by the end of the sync.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("doc_array_hnsw_search"),
+										path.MatchRelative().AtParent().AtName("pinecone"),
+									}...),
+								},
 							},
 							"doc_array_hnsw_search": schema.SingleNestedAttribute{
 								Optional: true,
@@ -112,6 +129,12 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									},
 								},
 								Description: `DocArrayHnswSearch is a lightweight Document Index implementation provided by Docarray that runs fully locally and is best suited for small- to medium-sized datasets. It stores vectors on disk in hnswlib, and stores all other data in SQLite.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("chroma_local_persistance"),
+										path.MatchRelative().AtParent().AtName("pinecone"),
+									}...),
+								},
 							},
 							"pinecone": schema.SingleNestedAttribute{
 								Optional: true,
@@ -130,6 +153,12 @@ func (r *DestinationLangchainResource) Schema(ctx context.Context, req resource.
 									},
 								},
 								Description: `Pinecone is a popular vector store that can be used to store and retrieve embeddings. It is a managed service and can also be queried from outside of langchain.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("chroma_local_persistance"),
+										path.MatchRelative().AtParent().AtName("doc_array_hnsw_search"),
+									}...),
+								},
 							},
 						},
 						Description: `Indexing configuration`,
@@ -319,6 +348,10 @@ func (r *DestinationLangchainResource) Read(ctx context.Context, req resource.Re
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

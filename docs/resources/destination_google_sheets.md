@@ -22,9 +22,9 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     }
     spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  definition_id = "283384bd-87b5-4cce-b614-854333df23c5"
-  name          = "Corey Abbott"
-  workspace_id  = "452521a0-4787-48c2-94cd-184fd116e75f"
+  definition_id = "a13f0bea-64a2-437e-8a59-e7bfd1d496bd"
+  name          = "Ms. Bertha Stoltenberg"
+  workspace_id  = "4a7d5d4b-2ee1-453b-82c3-2f48f6e543a0"
 }
 ```
 
@@ -63,4 +63,10 @@ Required:
 - `client_secret` (String) The Client Secret of your Google Sheets developer application.
 - `refresh_token` (String, Sensitive) The token for obtaining new access token.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_google_sheets.my_airbyte_destination_google_sheets ""
+```

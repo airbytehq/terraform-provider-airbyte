@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,12 +36,12 @@ type DestinationVectaraResource struct {
 
 // DestinationVectaraResourceModel describes the resource data model.
 type DestinationVectaraResourceModel struct {
-	Configuration   DestinationVectara `tfsdk:"configuration"`
-	DefinitionID    types.String       `tfsdk:"definition_id"`
-	DestinationID   types.String       `tfsdk:"destination_id"`
-	DestinationType types.String       `tfsdk:"destination_type"`
-	Name            types.String       `tfsdk:"name"`
-	WorkspaceID     types.String       `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationVectara `tfsdk:"configuration"`
+	DefinitionID    types.String               `tfsdk:"definition_id"`
+	DestinationID   types.String               `tfsdk:"destination_id"`
+	DestinationType types.String               `tfsdk:"destination_type"`
+	Name            types.String               `tfsdk:"name"`
+	WorkspaceID     types.String               `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationVectaraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -50,7 +51,6 @@ func (r *DestinationVectaraResource) Metadata(ctx context.Context, req resource.
 func (r *DestinationVectaraResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationVectara Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -265,6 +265,10 @@ func (r *DestinationVectaraResource) Read(ctx context.Context, req resource.Read
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

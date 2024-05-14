@@ -19,9 +19,9 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
       silent = {}
     }
   }
-  definition_id = "807f993e-fae2-4dca-b865-89dab1153f46"
-  name          = "Marta Kirlin DDS"
-  workspace_id  = "0855aa0d-b797-4942-be7e-5f1f78855663"
+  definition_id = "e802e071-29d4-4644-b9dd-3d54c7cfb82e"
+  name          = "Mr. Ralph Tremblay"
+  workspace_id  = "f57477c9-e2c8-45c9-84a2-03ff157a4711"
 }
 ```
 
@@ -60,4 +60,10 @@ Optional:
 <a id="nestedatt--configuration--test_destination--silent"></a>
 ### Nested Schema for `configuration.test_destination.silent`
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_dev_null.my_airbyte_destination_dev_null ""
+```

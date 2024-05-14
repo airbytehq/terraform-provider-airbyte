@@ -4,13 +4,13 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSonarCloudResourceModel) ToSharedSourceSonarCloudCreateRequest() *shared.SourceSonarCloudCreateRequest {
-	var componentKeys []interface{} = nil
+	var componentKeys []interface{} = []interface{}{}
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
 		_ = json.Unmarshal([]byte(componentKeysItem.ValueString()), &componentKeysTmp)
@@ -62,14 +62,16 @@ func (r *SourceSonarCloudResourceModel) ToSharedSourceSonarCloudCreateRequest() 
 }
 
 func (r *SourceSonarCloudResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSonarCloudResourceModel) ToSharedSourceSonarCloudPutRequest() *shared.SourceSonarCloudPutRequest {
-	var componentKeys []interface{} = nil
+	var componentKeys []interface{} = []interface{}{}
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
 		_ = json.Unmarshal([]byte(componentKeysItem.ValueString()), &componentKeysTmp)

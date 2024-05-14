@@ -5,8 +5,9 @@ package provider
 import (
 	"context"
 	"fmt"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,19 +29,19 @@ type ConnectionDataSource struct {
 
 // ConnectionDataSourceModel describes the data model.
 type ConnectionDataSourceModel struct {
-	Configurations                   StreamConfigurations       `tfsdk:"configurations"`
-	ConnectionID                     types.String               `tfsdk:"connection_id"`
-	DataResidency                    types.String               `tfsdk:"data_residency"`
-	DestinationID                    types.String               `tfsdk:"destination_id"`
-	Name                             types.String               `tfsdk:"name"`
-	NamespaceDefinition              types.String               `tfsdk:"namespace_definition"`
-	NamespaceFormat                  types.String               `tfsdk:"namespace_format"`
-	NonBreakingSchemaUpdatesBehavior types.String               `tfsdk:"non_breaking_schema_updates_behavior"`
-	Prefix                           types.String               `tfsdk:"prefix"`
-	Schedule                         ConnectionScheduleResponse `tfsdk:"schedule"`
-	SourceID                         types.String               `tfsdk:"source_id"`
-	Status                           types.String               `tfsdk:"status"`
-	WorkspaceID                      types.String               `tfsdk:"workspace_id"`
+	Configurations                   tfTypes.StreamConfigurations       `tfsdk:"configurations"`
+	ConnectionID                     types.String                       `tfsdk:"connection_id"`
+	DataResidency                    types.String                       `tfsdk:"data_residency"`
+	DestinationID                    types.String                       `tfsdk:"destination_id"`
+	Name                             types.String                       `tfsdk:"name"`
+	NamespaceDefinition              types.String                       `tfsdk:"namespace_definition"`
+	NamespaceFormat                  types.String                       `tfsdk:"namespace_format"`
+	NonBreakingSchemaUpdatesBehavior types.String                       `tfsdk:"non_breaking_schema_updates_behavior"`
+	Prefix                           types.String                       `tfsdk:"prefix"`
+	Schedule                         tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
+	SourceID                         types.String                       `tfsdk:"source_id"`
+	Status                           types.String                       `tfsdk:"status"`
+	WorkspaceID                      types.String                       `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -185,7 +186,7 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	request := operations.GetConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.Connections.GetConnection(ctx, request)
+	res, err := r.client.PublicConnections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -195,6 +196,10 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

@@ -19,10 +19,10 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     api_key        = "a very long hex sequence"
     site_id        = "a relatively long hex sequence"
   }
-  definition_id = "4c2d04c6-ceb0-4e44-8965-9dbf6ecaf35c"
-  name          = "Lorraine Predovic"
+  definition_id = "8b85f41c-f2ef-4d5e-9605-e9e4deda30dd"
+  name          = "Sadie Yundt MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "79d7e3dc-cb9f-4d6e-9ad7-470b8320ef50"
+  workspace_id  = "a2fad058-4130-4837-93e5-de43c907f63c"
 }
 ```
 
@@ -57,4 +57,10 @@ Optional:
 
 - `accept_version` (String) The version of the Webflow API to use. See https://developers.webflow.com/#versioning
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_webflow.my_airbyte_source_webflow ""
+```

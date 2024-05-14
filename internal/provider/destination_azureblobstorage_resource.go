@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -38,12 +40,12 @@ type DestinationAzureBlobStorageResource struct {
 
 // DestinationAzureBlobStorageResourceModel describes the resource data model.
 type DestinationAzureBlobStorageResourceModel struct {
-	Configuration   DestinationAzureBlobStorage `tfsdk:"configuration"`
-	DefinitionID    types.String                `tfsdk:"definition_id"`
-	DestinationID   types.String                `tfsdk:"destination_id"`
-	DestinationType types.String                `tfsdk:"destination_type"`
-	Name            types.String                `tfsdk:"name"`
-	WorkspaceID     types.String                `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationAzureBlobStorage `tfsdk:"configuration"`
+	DefinitionID    types.String                        `tfsdk:"definition_id"`
+	DestinationID   types.String                        `tfsdk:"destination_id"`
+	DestinationType types.String                        `tfsdk:"destination_type"`
+	Name            types.String                        `tfsdk:"name"`
+	WorkspaceID     types.String                        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAzureBlobStorageResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *DestinationAzureBlobStorageResource) Metadata(ctx context.Context, req 
 func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationAzureBlobStorage Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -111,10 +112,20 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 										},
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+									}...),
+								},
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+									}...),
+								},
 							},
 						},
 						Description: `Output data format`,
@@ -284,6 +295,10 @@ func (r *DestinationAzureBlobStorageResource) Read(ctx context.Context, req reso
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

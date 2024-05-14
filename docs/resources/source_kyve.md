@@ -15,16 +15,16 @@ SourceKyve Resource
 ```terraform
 resource "airbyte_source_kyve" "my_source_kyve" {
   configuration = {
-    max_pages = 2
+    max_pages = 3
     page_size = 0
-    pool_ids  = "0"
+    pool_ids  = "0,1"
     start_ids = "0"
-    url_base  = "https://api.korellia.kyve.network/"
+    url_base  = "https://api.kaon.kyve.network/"
   }
-  definition_id = "77a566ac-796f-4dac-9f48-b8f86701054c"
-  name          = "Miss Cristina Ratke"
+  definition_id = "01aad5e5-f9cf-4b0d-9e8d-3acce90aeed1"
+  name          = "Penny Koepp"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "49a8fc7f-8e24-4672-a45c-fb2449eef876"
+  workspace_id  = "882d54ce-598c-4c59-ab95-2f06231c57fd"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 - `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests. Default: 100
 - `url_base` (String) URL to the KYVE Chain API. Default: "https://api.kyve.network"
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_kyve.my_airbyte_source_kyve ""
+```

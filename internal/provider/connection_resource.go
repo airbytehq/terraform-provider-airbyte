@@ -8,8 +8,9 @@ import (
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,19 +39,19 @@ type ConnectionResource struct {
 
 // ConnectionResourceModel describes the resource data model.
 type ConnectionResourceModel struct {
-	Configurations                   *StreamConfigurations `tfsdk:"configurations"`
-	ConnectionID                     types.String          `tfsdk:"connection_id"`
-	DataResidency                    types.String          `tfsdk:"data_residency"`
-	DestinationID                    types.String          `tfsdk:"destination_id"`
-	Name                             types.String          `tfsdk:"name"`
-	NamespaceDefinition              types.String          `tfsdk:"namespace_definition"`
-	NamespaceFormat                  types.String          `tfsdk:"namespace_format"`
-	NonBreakingSchemaUpdatesBehavior types.String          `tfsdk:"non_breaking_schema_updates_behavior"`
-	Prefix                           types.String          `tfsdk:"prefix"`
-	Schedule                         *ConnectionSchedule   `tfsdk:"schedule"`
-	SourceID                         types.String          `tfsdk:"source_id"`
-	Status                           types.String          `tfsdk:"status"`
-	WorkspaceID                      types.String          `tfsdk:"workspace_id"`
+	Configurations                   *tfTypes.StreamConfigurations         `tfsdk:"configurations"`
+	ConnectionID                     types.String                          `tfsdk:"connection_id"`
+	DataResidency                    types.String                          `tfsdk:"data_residency"`
+	DestinationID                    types.String                          `tfsdk:"destination_id"`
+	Name                             types.String                          `tfsdk:"name"`
+	NamespaceDefinition              types.String                          `tfsdk:"namespace_definition"`
+	NamespaceFormat                  types.String                          `tfsdk:"namespace_format"`
+	NonBreakingSchemaUpdatesBehavior types.String                          `tfsdk:"non_breaking_schema_updates_behavior"`
+	Prefix                           types.String                          `tfsdk:"prefix"`
+	Schedule                         *tfTypes.AirbyteAPIConnectionSchedule `tfsdk:"schedule"`
+	SourceID                         types.String                          `tfsdk:"source_id"`
+	Status                           types.String                          `tfsdk:"status"`
+	WorkspaceID                      types.String                          `tfsdk:"workspace_id"`
 }
 
 func (r *ConnectionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,7 +61,6 @@ func (r *ConnectionResource) Metadata(ctx context.Context, req resource.Metadata
 func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Connection Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
@@ -327,7 +327,7 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	request := *data.ToSharedConnectionCreateRequest()
-	res, err := r.client.Connections.CreateConnection(ctx, request)
+	res, err := r.client.PublicConnections.CreateConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -376,7 +376,7 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 	request := operations.GetConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.Connections.GetConnection(ctx, request)
+	res, err := r.client.PublicConnections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -386,6 +386,10 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {
@@ -422,7 +426,7 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		ConnectionPatchRequest: connectionPatchRequest,
 		ConnectionID:           connectionID,
 	}
-	res, err := r.client.Connections.PatchConnection(ctx, request)
+	res, err := r.client.PublicConnections.PatchConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -471,7 +475,7 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 	request := operations.DeleteConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.Connections.DeleteConnection(ctx, request)
+	res, err := r.client.PublicConnections.DeleteConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

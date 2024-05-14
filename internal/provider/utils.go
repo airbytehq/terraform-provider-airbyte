@@ -11,13 +11,21 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"net/http"
 	"net/http/httputil"
 	"reflect"
 )
 
 func debugResponse(response *http.Response) string {
+	if v := response.Request.Header.Get("Authorization"); v != "" {
+		response.Request.Header.Set("Authorization", "(sensitive)")
+	}
+	if v := response.Request.Header.Get("password"); v != "" {
+		response.Request.Header.Set("password", "(sensitive)")
+	}
+	if v := response.Request.Header.Get("username"); v != "" {
+		response.Request.Header.Set("username", "(sensitive)")
+	}
 	dumpReq, err := httputil.DumpRequest(response.Request, true)
 	if err != nil {
 		dumpReq, err = httputil.DumpRequest(response.Request, false)
@@ -60,11 +68,15 @@ func merge(ctx context.Context, req resource.UpdateRequest, resp *resource.Updat
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	resp.Diagnostics.Append(state.As(ctx, target, basetypes.ObjectAsOptions{
+	val, err := state.ToTerraformValue(ctx)
+	if err != nil {
+		resp.Diagnostics.Append(diag.NewErrorDiagnostic("Object Conversion Error", "An unexpected error was encountered trying to convert object. This is always an error in the provider. Please report the following to the provider developer:\n\n"+err.Error()))
+		return
+	}
+	resp.Diagnostics.Append(tfReflect.Into(ctx, types.ObjectType{AttrTypes: state.AttributeTypes(ctx)}, val, target, tfReflect.Options{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
-	})...)
+	}, path.Empty())...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -82,5 +94,6 @@ func refreshPlan(ctx context.Context, plan types.Object, target interface{}, dia
 	diagnostics.Append(tfReflect.Into(ctx, obj, val, target, tfReflect.Options{
 		UnhandledNullAsEmpty:    true,
 		UnhandledUnknownAsEmpty: true,
+		SourceType:              tfReflect.SourceTypePlan,
 	}, path.Empty())...)
 }

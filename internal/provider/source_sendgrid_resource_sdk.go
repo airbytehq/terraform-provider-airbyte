@@ -3,22 +3,17 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSendgridResourceModel) ToSharedSourceSendgridCreateRequest() *shared.SourceSendgridCreateRequest {
-	apikey := r.Configuration.Apikey.ValueString()
-	startTime := new(time.Time)
-	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
-		*startTime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
-	} else {
-		startTime = nil
-	}
+	apiKey := r.Configuration.APIKey.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSendgrid{
-		Apikey:    apikey,
-		StartTime: startTime,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -45,23 +40,20 @@ func (r *SourceSendgridResourceModel) ToSharedSourceSendgridCreateRequest() *sha
 }
 
 func (r *SourceSendgridResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSendgridResourceModel) ToSharedSourceSendgridPutRequest() *shared.SourceSendgridPutRequest {
-	apikey := r.Configuration.Apikey.ValueString()
-	startTime := new(time.Time)
-	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
-		*startTime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
-	} else {
-		startTime = nil
-	}
+	apiKey := r.Configuration.APIKey.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSendgridUpdate{
-		Apikey:    apikey,
-		StartTime: startTime,
+		APIKey:    apiKey,
+		StartDate: startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

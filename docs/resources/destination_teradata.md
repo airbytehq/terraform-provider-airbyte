@@ -23,11 +23,11 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
     ssl_mode = {
       allow = {}
     }
-    username = "Rafaela55"
+    username = "Shea_Wilderman"
   }
-  definition_id = "10858467-e5cd-4333-a85c-7cc3fde334f7"
-  name          = "Ben Pacocha"
-  workspace_id  = "3aaf527f-e19e-4b1b-b8ee-2339467597e8"
+  definition_id = "ed3651e7-d549-4673-9da2-13c86a8b9fef"
+  name          = "Darnell Halvorson"
+  workspace_id  = "76e3de30-a86e-44df-99fa-ac84c31846ef"
 }
 ```
 
@@ -117,4 +117,10 @@ Required:
 - `ssl_ca_certificate` (String) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_teradata.my_airbyte_destination_teradata ""
+```

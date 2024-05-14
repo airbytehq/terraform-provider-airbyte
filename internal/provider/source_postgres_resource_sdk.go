@@ -4,7 +4,7 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -49,6 +49,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			} else {
 				initialWaitingSeconds = nil
 			}
+			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
 			lsnCommitBehaviour := new(shared.SourcePostgresLSNCommitBehaviour)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
 				*lsnCommitBehaviour = shared.SourcePostgresLSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
@@ -70,14 +76,15 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			}
 			replicationSlot := r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			sourcePostgresReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresReadChangesUsingWriteAheadLogCDC{
-				AdditionalProperties:  additionalProperties,
-				HeartbeatActionQuery:  heartbeatActionQuery,
-				InitialWaitingSeconds: initialWaitingSeconds,
-				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Plugin:                plugin,
-				Publication:           publication,
-				QueueSize:             queueSize,
-				ReplicationSlot:       replicationSlot,
+				AdditionalProperties:             additionalProperties,
+				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				LsnCommitBehaviour:               lsnCommitBehaviour,
+				Plugin:                           plugin,
+				Publication:                      publication,
+				QueueSize:                        queueSize,
+				ReplicationSlot:                  replicationSlot,
 			}
 		}
 		if sourcePostgresReadChangesUsingWriteAheadLogCDC != nil {
@@ -104,7 +111,7 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			}
 		}
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
@@ -343,10 +350,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 }
 
 func (r *SourcePostgresResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared.SourcePostgresPutRequest {
@@ -390,6 +399,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			} else {
 				initialWaitingSeconds = nil
 			}
+			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
 			lsnCommitBehaviour := new(shared.LSNCommitBehaviour)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
 				*lsnCommitBehaviour = shared.LSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
@@ -411,14 +426,15 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			}
 			replicationSlot := r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			readChangesUsingWriteAheadLogCDC = &shared.ReadChangesUsingWriteAheadLogCDC{
-				AdditionalProperties:  additionalProperties,
-				HeartbeatActionQuery:  heartbeatActionQuery,
-				InitialWaitingSeconds: initialWaitingSeconds,
-				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Plugin:                plugin,
-				Publication:           publication,
-				QueueSize:             queueSize,
-				ReplicationSlot:       replicationSlot,
+				AdditionalProperties:             additionalProperties,
+				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				LsnCommitBehaviour:               lsnCommitBehaviour,
+				Plugin:                           plugin,
+				Publication:                      publication,
+				QueueSize:                        queueSize,
+				ReplicationSlot:                  replicationSlot,
 			}
 		}
 		if readChangesUsingWriteAheadLogCDC != nil {
@@ -445,7 +461,7 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			}
 		}
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}

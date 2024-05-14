@@ -15,23 +15,23 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 1
+    attribution_window = 4
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
     }
-    date_window_size             = 10
+    date_window_size             = 4
     end_date                     = "2021-11-16"
-    project_timezone             = "US/Pacific"
+    project_timezone             = "UTC"
     region                       = "US"
-    select_properties_by_default = false
+    select_properties_by_default = true
     start_date                   = "2021-11-16"
   }
-  definition_id = "8729ff50-24b6-490b-a736-f2f7a3b95d4a"
-  name          = "Lucas Reichert"
+  definition_id = "5d144630-3318-4f29-8f10-b0742b93b499"
+  name          = "Doris Bergnaum"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dfbbab6a-d0e4-44a4-9c97-0c078573a20a"
+  workspace_id  = "20ccad5a-dc13-430e-b574-88395b5ae042"
 }
 ```
 
@@ -96,4 +96,10 @@ Required:
 - `secret` (String) Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 - `username` (String) Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_mixpanel.my_airbyte_source_mixpanel ""
+```

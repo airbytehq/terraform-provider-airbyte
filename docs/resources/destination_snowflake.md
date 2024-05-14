@@ -21,20 +21,20 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
         private_key_password = "...my_private_key_password..."
       }
     }
-    database                               = "AIRBYTE_DATABASE"
-    disable_type_dedupe                    = true
-    enable_incremental_final_table_updates = false
-    host                                   = "accountname.snowflakecomputing.com"
-    jdbc_url_params                        = "...my_jdbc_url_params..."
-    raw_data_schema                        = "...my_raw_data_schema..."
-    role                                   = "AIRBYTE_ROLE"
-    schema                                 = "AIRBYTE_SCHEMA"
-    username                               = "AIRBYTE_USER"
-    warehouse                              = "AIRBYTE_WAREHOUSE"
+    database              = "AIRBYTE_DATABASE"
+    disable_type_dedupe   = true
+    host                  = "accountname.us-east-2.aws.snowflakecomputing.com"
+    jdbc_url_params       = "...my_jdbc_url_params..."
+    raw_data_schema       = "...my_raw_data_schema..."
+    retention_period_days = 7
+    role                  = "AIRBYTE_ROLE"
+    schema                = "AIRBYTE_SCHEMA"
+    username              = "AIRBYTE_USER"
+    warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "d654173c-ccbb-4c51-a3ca-a62e557cba0d"
-  name          = "Mr. Sherry Leuschke"
-  workspace_id  = "a5767fcf-379f-4a40-91ea-e8db1144f7f4"
+  definition_id = "9a0dc023-29a5-4cae-9f38-88495eab20eb"
+  name          = "Philip Baumbach"
+  workspace_id  = "3624c439-0072-45fa-be33-722ced92f8e0"
 }
 ```
 
@@ -72,9 +72,9 @@ Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
-- `enable_incremental_final_table_updates` (Boolean) When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
+- `retention_period_days` (Number) The number of days of Snowflake Time Travel to enable on the tables. See <a href="https://docs.snowflake.com/en/user-guide/data-time-travel#data-retention-period">Snowflake's documentation</a> for more information. Setting a nonzero value will incur increased storage costs in your Snowflake instance. Default: 1
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -118,4 +118,10 @@ Required:
 
 - `password` (String, Sensitive) Enter the password associated with the username.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_snowflake.my_airbyte_destination_snowflake ""
+```

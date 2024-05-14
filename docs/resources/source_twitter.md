@@ -16,14 +16,14 @@ SourceTwitter Resource
 resource "airbyte_source_twitter" "my_source_twitter" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2021-02-14T11:13:26.293Z"
+    end_date   = "2022-10-03T19:41:47.524Z"
     query      = "...my_query..."
-    start_date = "2022-12-21T00:24:01.911Z"
+    start_date = "2020-12-11T04:40:49.366Z"
   }
-  definition_id = "dd3cfb0a-a2fa-4d05-8413-0837d3e5de43"
-  name          = "Rene Adams"
+  definition_id = "7992cd63-d338-41ef-a3f7-d5a433d30ca4"
+  name          = "Ernesto McClure"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "63cc02bc-2f7f-45df-b2c2-6b4986915d33"
+  workspace_id  = "84d9ab34-5ef3-4183-8b2e-52a86adbb57c"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `end_date` (String) The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
 - `start_date` (String) The start date for retrieving tweets cannot be more than 7 days in the past.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_twitter.my_airbyte_source_twitter ""
+```

@@ -21,10 +21,10 @@ resource "airbyte_source_braintree" "my_source_braintree" {
     public_key  = "...my_public_key..."
     start_date  = "2020-12-30"
   }
-  definition_id = "686308ea-db73-4c36-9be0-c12ece59b9fb"
-  name          = "Cornelius Weissnat"
+  definition_id = "a19738b2-18b7-4049-8da2-1b79cfd9baf3"
+  name          = "Bobby Brown"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "47490588-d0e2-4939-974a-681eea74b87a"
+  workspace_id  = "b7264dad-9e5f-4b53-9266-91bfb5db9ea2"
 }
 ```
 
@@ -61,4 +61,10 @@ Optional:
 
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_braintree.my_airbyte_source_braintree ""
+```

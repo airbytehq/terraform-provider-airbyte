@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -36,13 +38,13 @@ type SourceZendeskSupportResource struct {
 
 // SourceZendeskSupportResourceModel describes the resource data model.
 type SourceZendeskSupportResourceModel struct {
-	Configuration SourceZendeskSupport `tfsdk:"configuration"`
-	DefinitionID  types.String         `tfsdk:"definition_id"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceZendeskSupport `tfsdk:"configuration"`
+	DefinitionID  types.String                 `tfsdk:"definition_id"`
+	Name          types.String                 `tfsdk:"name"`
+	SecretID      types.String                 `tfsdk:"secret_id"`
+	SourceID      types.String                 `tfsdk:"source_id"`
+	SourceType    types.String                 `tfsdk:"source_type"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZendeskSupportResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *SourceZendeskSupportResource) Metadata(ctx context.Context, req resourc
 func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceZendeskSupport Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -83,6 +84,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Description: `The user email for your Zendesk account.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
+								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
@@ -107,6 +113,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Optional:    true,
 										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("api_token"),
+									}...),
 								},
 							},
 						},
@@ -301,6 +312,10 @@ func (r *SourceZendeskSupportResource) Read(ctx context.Context, req resource.Re
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

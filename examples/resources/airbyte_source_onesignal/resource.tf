@@ -11,8 +11,8 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  definition_id = "ee5b7122-5778-4f7a-823c-1e08d80f694c"
-  name          = "Nora Torphy"
+  definition_id = "bd591e25-444d-4223-8fd1-d8ea1c7d4332"
+  name          = "Shawna Pfeffer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0f84ccba-d71d-4ab0-b801-4a124b6e7b20"
+  workspace_id  = "c1a8dab7-e73a-4597-9814-e4dc1f633abc"
 }

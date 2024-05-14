@@ -8,19 +8,19 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     custom_reports = [
       {
         attribution_types = [
-          "HOUSEHOLD",
+          "INDIVIDUAL",
         ]
-        click_window_days = "1"
+        click_window_days = "0"
         columns = [
-          "TOTAL_WEB_SESSIONS",
+          "TOTAL_WEB_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR",
         ]
         conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "0"
-        granularity            = "HOUR"
-        level                  = "ADVERTISER_TARGETING"
-        name                   = "Dewey Bogisich"
+        engagement_window_days = "60"
+        granularity            = "WEEK"
+        level                  = "PRODUCT_GROUP_TARGETING"
+        name                   = "Jay Klein"
         start_date             = "2022-07-28"
-        view_window_days       = "60"
+        view_window_days       = "7"
       },
     ]
     start_date = "2022-07-28"
@@ -28,8 +28,8 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
       "ACTIVE",
     ]
   }
-  definition_id = "3fa02ef0-08f1-418d-8157-2f724d1e0e7e"
-  name          = "Sharon Labadie"
+  definition_id = "fa7262d2-a48f-4976-9d11-df09849375f6"
+  name          = "Rachel Kuphal"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f815bf9f-1370-4c28-b278-d25e4ee4a51a"
+  workspace_id  = "0d41f139-19c9-425e-b865-17a80112166a"
 }

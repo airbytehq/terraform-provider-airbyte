@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -21,7 +21,7 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 	} else {
 		endDate = nil
 	}
-	var in []shared.SourceGnewsIn = nil
+	var in []shared.SourceGnewsIn = []shared.SourceGnewsIn{}
 	for _, inItem := range r.Configuration.In {
 		in = append(in, shared.SourceGnewsIn(inItem.ValueString()))
 	}
@@ -31,7 +31,7 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 	} else {
 		language = nil
 	}
-	var nullable []shared.SourceGnewsNullable = nil
+	var nullable []shared.SourceGnewsNullable = []shared.SourceGnewsNullable{}
 	for _, nullableItem := range r.Configuration.Nullable {
 		nullable = append(nullable, shared.SourceGnewsNullable(nullableItem.ValueString()))
 	}
@@ -98,10 +98,12 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 }
 
 func (r *SourceGnewsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.SourceGnewsPutRequest {
@@ -118,7 +120,7 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.Sourc
 	} else {
 		endDate = nil
 	}
-	var in []shared.In = nil
+	var in []shared.In = []shared.In{}
 	for _, inItem := range r.Configuration.In {
 		in = append(in, shared.In(inItem.ValueString()))
 	}
@@ -128,7 +130,7 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.Sourc
 	} else {
 		language = nil
 	}
-	var nullable []shared.Nullable = nil
+	var nullable []shared.Nullable = []shared.Nullable{}
 	for _, nullableItem := range r.Configuration.Nullable {
 		nullable = append(nullable, shared.Nullable(nullableItem.ValueString()))
 	}

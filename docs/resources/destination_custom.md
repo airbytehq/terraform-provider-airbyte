@@ -15,9 +15,9 @@ DestinationCustom Resource
 ```terraform
 resource "airbyte_destination_custom" "my_destination_custom" {
   configuration = { "user" : "charles" }
-  definition_id = "9843cbfb-b560-45d7-b06c-fa6f60bfc11e"
-  name          = "Michele Wiza"
-  workspace_id  = "6d7a953e-98a4-4c04-9945-edd6e956416d"
+  definition_id = "a293962c-006a-4ece-a7c8-84619655998a"
+  name          = "Roy Grimes"
+  workspace_id  = "c560fc49-48d7-4191-bbd7-7158c7e04c57"
 }
 ```
 
@@ -39,4 +39,10 @@ resource "airbyte_destination_custom" "my_destination_custom" {
 - `destination_id` (String)
 - `destination_type` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_custom.my_airbyte_destination_custom ""
+```

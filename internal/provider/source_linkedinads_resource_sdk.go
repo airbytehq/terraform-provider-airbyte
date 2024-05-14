@@ -3,17 +3,17 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest() *shared.SourceLinkedinAdsCreateRequest {
-	var accountIds []int64 = nil
+	var accountIds []int64 = []int64{}
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
 	}
-	var adAnalyticsReports []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration = nil
+	var adAnalyticsReports []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration = []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration{}
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
 		pivotBy := shared.SourceLinkedinAdsPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
@@ -87,18 +87,20 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest(
 }
 
 func (r *SourceLinkedinAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsPutRequest() *shared.SourceLinkedinAdsPutRequest {
-	var accountIds []int64 = nil
+	var accountIds []int64 = []int64{}
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
 	}
-	var adAnalyticsReports []shared.AdAnalyticsReportConfiguration = nil
+	var adAnalyticsReports []shared.AdAnalyticsReportConfiguration = []shared.AdAnalyticsReportConfiguration{}
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
 		pivotBy := shared.PivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())

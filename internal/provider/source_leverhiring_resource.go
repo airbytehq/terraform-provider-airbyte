@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -37,13 +39,13 @@ type SourceLeverHiringResource struct {
 
 // SourceLeverHiringResourceModel describes the resource data model.
 type SourceLeverHiringResourceModel struct {
-	Configuration SourceLeverHiring `tfsdk:"configuration"`
-	DefinitionID  types.String      `tfsdk:"definition_id"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceLeverHiring `tfsdk:"configuration"`
+	DefinitionID  types.String              `tfsdk:"definition_id"`
+	Name          types.String              `tfsdk:"name"`
+	SecretID      types.String              `tfsdk:"secret_id"`
+	SourceID      types.String              `tfsdk:"source_id"`
+	SourceType    types.String              `tfsdk:"source_type"`
+	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *SourceLeverHiringResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *SourceLeverHiringResource) Metadata(ctx context.Context, req resource.M
 func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceLeverHiring Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -73,6 +74,11 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 										Description: `The Api Key of your Lever Hiring account.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_lever_o_auth"),
+									}...),
+								},
 							},
 							"authenticate_via_lever_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
@@ -90,6 +96,11 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 										Sensitive:   true,
 										Description: `The token for obtaining new access token.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_lever_api_key"),
+									}...),
 								},
 							},
 						},
@@ -283,6 +294,10 @@ func (r *SourceLeverHiringResource) Read(ctx context.Context, req resource.ReadR
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

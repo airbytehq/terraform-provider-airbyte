@@ -3,14 +3,25 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZoomResourceModel) ToSharedSourceZoomCreateRequest() *shared.SourceZoomCreateRequest {
-	jwtToken := r.Configuration.JwtToken.ValueString()
+	accountID := r.Configuration.AccountID.ValueString()
+	authorizationEndpoint := new(string)
+	if !r.Configuration.AuthorizationEndpoint.IsUnknown() && !r.Configuration.AuthorizationEndpoint.IsNull() {
+		*authorizationEndpoint = r.Configuration.AuthorizationEndpoint.ValueString()
+	} else {
+		authorizationEndpoint = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	configuration := shared.SourceZoom{
-		JwtToken: jwtToken,
+		AccountID:             accountID,
+		AuthorizationEndpoint: authorizationEndpoint,
+		ClientID:              clientID,
+		ClientSecret:          clientSecret,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -37,16 +48,29 @@ func (r *SourceZoomResourceModel) ToSharedSourceZoomCreateRequest() *shared.Sour
 }
 
 func (r *SourceZoomResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceZoomResourceModel) ToSharedSourceZoomPutRequest() *shared.SourceZoomPutRequest {
-	jwtToken := r.Configuration.JwtToken.ValueString()
+	accountID := r.Configuration.AccountID.ValueString()
+	authorizationEndpoint := new(string)
+	if !r.Configuration.AuthorizationEndpoint.IsUnknown() && !r.Configuration.AuthorizationEndpoint.IsNull() {
+		*authorizationEndpoint = r.Configuration.AuthorizationEndpoint.ValueString()
+	} else {
+		authorizationEndpoint = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	configuration := shared.SourceZoomUpdate{
-		JwtToken: jwtToken,
+		AccountID:             accountID,
+		AuthorizationEndpoint: authorizationEndpoint,
+		ClientID:              clientID,
+		ClientSecret:          clientSecret,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

@@ -18,10 +18,10 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "10ca67a8-27c3-4d34-9f44-4d8a8589d849"
-  name          = "Hope Russel"
+  definition_id = "82a682b0-a707-44f0-96f7-2127f33f8652"
+  name          = "Louis Hegmann MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ea550038-01e9-4f44-a900-c8feba7b45cf"
+  workspace_id  = "023ec122-4a7f-4fb2-a8dc-187087d37ac9"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `api_key` (String, Sensitive) Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_chartmogul.my_airbyte_source_chartmogul ""
+```

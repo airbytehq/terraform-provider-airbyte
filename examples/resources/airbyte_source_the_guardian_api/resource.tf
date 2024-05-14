@@ -2,13 +2,13 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
   configuration = {
     api_key    = "...my_api_key..."
     end_date   = "YYYY-MM-DD"
-    query      = "political"
-    section    = "housing-network"
+    query      = "environment AND political"
+    section    = "media"
     start_date = "YYYY-MM-DD"
-    tag        = "environment/recycling"
+    tag        = "environment/energyefficiency"
   }
-  definition_id = "b1ade2f4-984b-4fb0-a1b3-d2b89b26a883"
-  name          = "Delbert Zemlak"
+  definition_id = "a03eb3c0-afcc-43c8-ba6e-afbbc8e3e7db"
+  name          = "Blanche Douglas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "227f318d-4240-4654-b478-2740a2b5a462"
+  workspace_id  = "46fc1e0f-a91f-47ef-9f46-2d7c84461977"
 }

@@ -3,32 +3,29 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateRequest() *shared.SourceSurveymonkeyCreateRequest {
-	var credentials *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
-	if r.Configuration.Credentials != nil {
-		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		clientID := new(string)
-		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.ClientSecret.IsUnknown() && !r.Configuration.Credentials.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
-		credentials = &shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-		}
+	accessToken := r.Configuration.Credentials.AccessToken.ValueString()
+	clientID := new(string)
+	if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
+		*clientID = r.Configuration.Credentials.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.Credentials.ClientSecret.IsUnknown() && !r.Configuration.Credentials.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
+	credentials := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
+		AccessToken:  accessToken,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
 	}
 	origin := new(shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount)
 	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
@@ -37,7 +34,7 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateReques
 		origin = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var surveyIds []string = nil
+	var surveyIds []string = []string{}
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
@@ -72,33 +69,32 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyCreateReques
 }
 
 func (r *SourceSurveymonkeyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest() *shared.SourceSurveymonkeyPutRequest {
-	var credentials *shared.SurveyMonkeyAuthorizationMethod
-	if r.Configuration.Credentials != nil {
-		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		clientID := new(string)
-		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.ClientSecret.IsUnknown() && !r.Configuration.Credentials.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
-		credentials = &shared.SurveyMonkeyAuthorizationMethod{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-		}
+	accessToken := r.Configuration.Credentials.AccessToken.ValueString()
+	clientID := new(string)
+	if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
+		*clientID = r.Configuration.Credentials.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.Credentials.ClientSecret.IsUnknown() && !r.Configuration.Credentials.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
+	credentials := shared.SurveyMonkeyAuthorizationMethod{
+		AccessToken:  accessToken,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
 	}
 	origin := new(shared.OriginDatacenterOfTheSurveyMonkeyAccount)
 	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
@@ -107,7 +103,7 @@ func (r *SourceSurveymonkeyResourceModel) ToSharedSourceSurveymonkeyPutRequest()
 		origin = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var surveyIds []string = nil
+	var surveyIds []string = []string{}
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}

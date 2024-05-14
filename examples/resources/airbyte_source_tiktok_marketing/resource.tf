@@ -1,6 +1,6 @@
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 3
+    attribution_window = 7
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -9,12 +9,12 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-06-11"
-    include_deleted = true
-    start_date      = "2021-06-15"
+    end_date        = "2022-04-24"
+    include_deleted = false
+    start_date      = "2022-11-25"
   }
-  definition_id = "5c77eadf-0c9c-4e16-abe8-5fa64aee8d2b"
-  name          = "Merle Grant"
+  definition_id = "a5b009f2-9606-4a36-9ac9-9592aaeb21d8"
+  name          = "Geoffrey Franecki"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "efceb9e0-d54b-4089-8bdd-98fe3f92c06a"
+  workspace_id  = "558d4aa1-770f-4e21-a7b0-3b315af19bc4"
 }

@@ -12,7 +12,11 @@ generation:
   telemetryEnabled: true
 terraform:
   version: 0.4.3
+  additionalDataSources: []
+  additionalDependencies: {}
+  additionalResources: []
   author: airbytehq
+  environmentVariables: []
   imports:
     option: openapi
     paths:

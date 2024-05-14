@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -37,13 +39,13 @@ type SourceGoogleSearchConsoleResource struct {
 
 // SourceGoogleSearchConsoleResourceModel describes the resource data model.
 type SourceGoogleSearchConsoleResourceModel struct {
-	Configuration SourceGoogleSearchConsole `tfsdk:"configuration"`
-	DefinitionID  types.String              `tfsdk:"definition_id"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGoogleSearchConsole `tfsdk:"configuration"`
+	DefinitionID  types.String                      `tfsdk:"definition_id"`
+	Name          types.String                      `tfsdk:"name"`
+	SecretID      types.String                      `tfsdk:"secret_id"`
+	SourceID      types.String                      `tfsdk:"source_id"`
+	SourceType    types.String                      `tfsdk:"source_type"`
+	WorkspaceID   types.String                      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleSearchConsoleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *SourceGoogleSearchConsoleResource) Metadata(ctx context.Context, req re
 func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGoogleSearchConsole Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -86,6 +87,11 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										Description: `The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key_authentication"),
+									}...),
+								},
 							},
 							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -98,6 +104,11 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										Required:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth"),
+									}...),
 								},
 							},
 						},
@@ -328,6 +339,10 @@ func (r *SourceGoogleSearchConsoleResource) Read(ctx context.Context, req resour
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

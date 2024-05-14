@@ -7,12 +7,13 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -33,9 +34,10 @@ type WorkspaceResource struct {
 
 // WorkspaceResourceModel describes the resource data model.
 type WorkspaceResourceModel struct {
-	DataResidency types.String `tfsdk:"data_residency"`
-	Name          types.String `tfsdk:"name"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	DataResidency  types.String `tfsdk:"data_residency"`
+	Name           types.String `tfsdk:"name"`
+	OrganizationID types.String `tfsdk:"organization_id"`
+	WorkspaceID    types.String `tfsdk:"workspace_id"`
 }
 
 func (r *WorkspaceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -45,7 +47,6 @@ func (r *WorkspaceResource) Metadata(ctx context.Context, req resource.MetadataR
 func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "Workspace Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"data_residency": schema.StringAttribute{
 				Computed: true,
@@ -67,6 +68,13 @@ func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 				Required:    true,
 				Description: `Name of the workspace`,
+			},
+			"organization_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplaceIfConfigured(),
+				},
+				Optional:    true,
+				Description: `ID of organization to add workspace to. Requires replacement if changed. `,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
@@ -117,7 +125,7 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 	}
 
 	request := *data.ToSharedWorkspaceCreateRequest()
-	res, err := r.client.Workspaces.CreateWorkspace(ctx, request)
+	res, err := r.client.Public.CreateWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -138,6 +146,32 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 		return
 	}
 	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	workspaceID := data.WorkspaceID.ValueString()
+	request1 := operations.GetWorkspaceRequest{
+		WorkspaceID: workspaceID,
+	}
+	res1, err := r.client.Public.GetWorkspace(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if res1.WorkspaceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedWorkspaceResponse(res1.WorkspaceResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
@@ -166,7 +200,7 @@ func (r *WorkspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 	request := operations.GetWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Workspaces.GetWorkspace(ctx, request)
+	res, err := r.client.Public.GetWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -176,6 +210,10 @@ func (r *WorkspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {
@@ -212,7 +250,7 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		WorkspaceUpdateRequest: workspaceUpdateRequest,
 		WorkspaceID:            workspaceID,
 	}
-	res, err := r.client.Workspaces.UpdateWorkspace(ctx, request)
+	res, err := r.client.Public.UpdateWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -261,7 +299,7 @@ func (r *WorkspaceResource) Delete(ctx context.Context, req resource.DeleteReque
 	request := operations.DeleteWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Workspaces.DeleteWorkspace(ctx, request)
+	res, err := r.client.Public.DeleteWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

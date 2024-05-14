@@ -21,16 +21,16 @@ resource "airbyte_source_sftp" "my_source_sftp" {
       }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
-    file_types   = "csv,json"
+    file_types   = "csv"
     folder_path  = "/logs/2022"
     host         = "192.0.2.1"
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "0c9cb870-eb98-4050-839e-7450657bfd1c"
-  name          = "Jesus Schultz"
+  definition_id = "4cd0d539-af23-419a-af88-98d74d7cd067"
+  name          = "Lola Howe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aae6c20a-c9c1-49db-be1c-883c55acce5c"
+  workspace_id  = "633751f6-c544-4c20-a73f-23dc46e62d66"
 }
 ```
 
@@ -92,4 +92,10 @@ Required:
 
 - `auth_ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_sftp.my_airbyte_source_sftp ""
+```

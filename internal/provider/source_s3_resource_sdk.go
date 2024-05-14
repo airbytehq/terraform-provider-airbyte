@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -130,7 +130,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			} else {
 				bufferSize = nil
 			}
-			var columns []string = nil
+			var columns []string = []string{}
 			for _, columnsItem := range r.Configuration.Format.Parquet.Columns {
 				columns = append(columns, columnsItem.ValueString())
 			}
@@ -224,6 +224,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 		} else {
 			pathPrefix = nil
 		}
+		regionName := new(string)
+		if !r.Configuration.Provider.RegionName.IsUnknown() && !r.Configuration.Provider.RegionName.IsNull() {
+			*regionName = r.Configuration.Provider.RegionName.ValueString()
+		} else {
+			regionName = nil
+		}
 		roleArn := new(string)
 		if !r.Configuration.Provider.RoleArn.IsUnknown() && !r.Configuration.Provider.RoleArn.IsNull() {
 			*roleArn = r.Configuration.Provider.RoleArn.ValueString()
@@ -242,9 +248,16 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			Bucket:             bucket1,
 			Endpoint:           endpoint1,
 			PathPrefix:         pathPrefix,
+			RegionName:         regionName,
 			RoleArn:            roleArn,
 			StartDate:          startDate,
 		}
+	}
+	regionName1 := new(string)
+	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
+		*regionName1 = r.Configuration.RegionName.ValueString()
+	} else {
+		regionName1 = nil
 	}
 	roleArn1 := new(string)
 	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
@@ -264,7 +277,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 	} else {
 		startDate1 = nil
 	}
-	var streams []shared.SourceS3FileBasedStreamConfig = nil
+	var streams []shared.SourceS3FileBasedStreamConfig = []shared.SourceS3FileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -316,7 +329,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			} else {
 				escapeChar1 = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -342,7 +355,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				}
 				var sourceS3UserProvided *shared.SourceS3UserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -356,13 +369,19 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			inferenceType := new(shared.SourceS3InferenceType)
 			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
 				*inferenceType = shared.SourceS3InferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
 			} else {
 				inferenceType = nil
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -390,24 +409,25 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceS3CSVFormat = &shared.SourceS3CSVFormat{
-				Delimiter:            delimiter1,
-				DoubleQuote:          doubleQuote1,
-				Encoding:             encoding1,
-				EscapeChar:           escapeChar1,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				InferenceType:        inferenceType,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar1,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter1,
+				DoubleQuote:                  doubleQuote1,
+				Encoding:                     encoding1,
+				EscapeChar:                   escapeChar1,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				InferenceType:                inferenceType,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar1,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceS3CSVFormat != nil {
@@ -478,7 +498,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				SourceS3DocumentFileTypeFormatExperimental: sourceS3DocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -534,6 +554,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 		Format:             format,
 		PathPattern:        pathPattern,
 		Provider:           provider,
+		RegionName:         regionName1,
 		RoleArn:            roleArn1,
 		Schema:             schema,
 		StartDate:          startDate1,
@@ -564,10 +585,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 }
 
 func (r *SourceS3ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3PutRequest {
@@ -692,7 +715,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			} else {
 				bufferSize = nil
 			}
-			var columns []string = nil
+			var columns []string = []string{}
 			for _, columnsItem := range r.Configuration.Format.Parquet.Columns {
 				columns = append(columns, columnsItem.ValueString())
 			}
@@ -786,6 +809,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 		} else {
 			pathPrefix = nil
 		}
+		regionName := new(string)
+		if !r.Configuration.Provider.RegionName.IsUnknown() && !r.Configuration.Provider.RegionName.IsNull() {
+			*regionName = r.Configuration.Provider.RegionName.ValueString()
+		} else {
+			regionName = nil
+		}
 		roleArn := new(string)
 		if !r.Configuration.Provider.RoleArn.IsUnknown() && !r.Configuration.Provider.RoleArn.IsNull() {
 			*roleArn = r.Configuration.Provider.RoleArn.ValueString()
@@ -804,9 +833,16 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			Bucket:             bucket1,
 			Endpoint:           endpoint1,
 			PathPrefix:         pathPrefix,
+			RegionName:         regionName,
 			RoleArn:            roleArn,
 			StartDate:          startDate,
 		}
+	}
+	regionName1 := new(string)
+	if !r.Configuration.RegionName.IsUnknown() && !r.Configuration.RegionName.IsNull() {
+		*regionName1 = r.Configuration.RegionName.ValueString()
+	} else {
+		regionName1 = nil
 	}
 	roleArn1 := new(string)
 	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
@@ -826,7 +862,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 	} else {
 		startDate1 = nil
 	}
-	var streams []shared.SourceS3UpdateFileBasedStreamConfig = nil
+	var streams []shared.SourceS3UpdateFileBasedStreamConfig = []shared.SourceS3UpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -878,7 +914,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			} else {
 				escapeChar1 = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -904,7 +940,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				}
 				var sourceS3UpdateUserProvided *shared.SourceS3UpdateUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -918,13 +954,19 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			inferenceType := new(shared.SourceS3UpdateInferenceType)
 			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
 				*inferenceType = shared.SourceS3UpdateInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
 			} else {
 				inferenceType = nil
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -952,24 +994,25 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceS3UpdateCSVFormat = &shared.SourceS3UpdateCSVFormat{
-				Delimiter:            delimiter1,
-				DoubleQuote:          doubleQuote1,
-				Encoding:             encoding1,
-				EscapeChar:           escapeChar1,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				InferenceType:        inferenceType,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar1,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter1,
+				DoubleQuote:                  doubleQuote1,
+				Encoding:                     encoding1,
+				EscapeChar:                   escapeChar1,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				InferenceType:                inferenceType,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar1,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceS3UpdateCSVFormat != nil {
@@ -1040,7 +1083,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				SourceS3UpdateDocumentFileTypeFormatExperimental: sourceS3UpdateDocumentFileTypeFormatExperimental,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -1096,6 +1139,7 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 		Format:             format,
 		PathPattern:        pathPattern,
 		Provider:           provider,
+		RegionName:         regionName1,
 		RoleArn:            roleArn1,
 		Schema:             schema,
 		StartDate:          startDate1,

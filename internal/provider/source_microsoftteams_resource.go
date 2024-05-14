@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceMicrosoftTeamsResource struct {
 
 // SourceMicrosoftTeamsResourceModel describes the resource data model.
 type SourceMicrosoftTeamsResourceModel struct {
-	Configuration SourceMicrosoftTeams `tfsdk:"configuration"`
-	DefinitionID  types.String         `tfsdk:"definition_id"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMicrosoftTeams `tfsdk:"configuration"`
+	DefinitionID  types.String                 `tfsdk:"definition_id"`
+	Name          types.String                 `tfsdk:"name"`
+	SecretID      types.String                 `tfsdk:"secret_id"`
+	SourceID      types.String                 `tfsdk:"source_id"`
+	SourceType    types.String                 `tfsdk:"source_type"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMicrosoftTeamsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceMicrosoftTeamsResource) Metadata(ctx context.Context, req resourc
 func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMicrosoftTeams Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -78,6 +79,11 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_microsoft_o_auth20"),
+									}...),
+								},
 							},
 							"authenticate_via_microsoft_o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
@@ -99,6 +105,11 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 										Required:    true,
 										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_microsoft"),
+									}...),
 								},
 							},
 						},
@@ -280,6 +291,10 @@ func (r *SourceMicrosoftTeamsResource) Read(ctx context.Context, req resource.Re
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

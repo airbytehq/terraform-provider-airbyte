@@ -15,17 +15,19 @@ SourcePaypalTransaction Resource
 ```terraform
 resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
   configuration = {
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
-    is_sandbox    = true
-    refresh_token = "...my_refresh_token..."
-    start_date    = "2021-06-11T23:59:59+00:00"
-    time_window   = 8
+    client_id          = "...my_client_id..."
+    client_secret      = "...my_client_secret..."
+    dispute_start_date = "2021-06-11T23:59:59.000Z"
+    end_date           = "2021-06-11T23:59:59+00:00"
+    is_sandbox         = false
+    refresh_token      = "...my_refresh_token..."
+    start_date         = "2021-06-11T23:59:59Z"
+    time_window        = 6
   }
-  definition_id = "aacd8d2a-bfdc-40f3-b811-ddad7d79aa2a"
-  name          = "Cecil Langworth Jr."
+  definition_id = "72363e09-a2aa-4e62-99d7-7025755e6995"
+  name          = "Darrell Kuphal"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dcdadd47-9611-468b-8fa7-262d2a48f976"
+  workspace_id  = "2df19942-2b36-4299-b6b7-41dbfafbdd34"
 }
 ```
 
@@ -59,8 +61,16 @@ Required:
 
 Optional:
 
+- `dispute_start_date` (String) Start Date parameter for the list dispute endpoint in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This Start Date must be in range within 180 days before present time, and requires ONLY 3 miliseconds(mandatory). If you don't use this option, it defaults to a start date set 180 days in the past.
+- `end_date` (String) End Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This can be help you select specific range of time, mainly for test purposes  or data integrity tests. When this is not used, now_utc() is used by the streams. This does not apply to Disputes and Product streams.
 - `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment. Default: false
 - `refresh_token` (String, Sensitive) The key to refresh the expired access token.
 - `time_window` (Number) The number of days per request. Must be a number between 1 and 31. Default: 7
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_paypal_transaction.my_airbyte_source_paypal_transaction ""
+```

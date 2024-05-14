@@ -15,17 +15,17 @@ SourceFirebolt Resource
 ```terraform
 resource "airbyte_source_firebolt" "my_source_firebolt" {
   configuration = {
-    account  = "...my_account..."
-    database = "...my_database..."
-    engine   = "...my_engine..."
-    host     = "api.app.firebolt.io"
-    password = "...my_password..."
-    username = "username@email.com"
+    account       = "...my_account..."
+    client_id     = "bbl9qth066hmxkwyb0hy2iwk8ktez9dz"
+    client_secret = "...my_client_secret..."
+    database      = "...my_database..."
+    engine        = "...my_engine..."
+    host          = "api.app.firebolt.io"
   }
-  definition_id = "bba48ed6-d0ea-4f7f-94c7-c369f9cb0a3d"
-  name          = "Ms. Paul Beer"
+  definition_id = "61a05c5e-8899-477e-ae08-6e3c2d33082a"
+  name          = "Dr. Julian Greenfelder"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aef770c8-1f95-4c5b-8dd2-d32b37f6fec5"
+  workspace_id  = "6112c1fd-a021-40a5-8fbe-c287654f12bc"
 }
 ```
 
@@ -53,14 +53,20 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
 
 Required:
 
+- `account` (String) Firebolt account to login.
+- `client_id` (String) Firebolt service account ID.
+- `client_secret` (String) Firebolt secret, corresponding to the service account ID.
 - `database` (String) The database to connect to.
-- `password` (String, Sensitive) Firebolt password.
-- `username` (String) Firebolt email address you use to login.
+- `engine` (String) Engine name to connect to.
 
 Optional:
 
-- `account` (String) Firebolt account to login.
-- `engine` (String) Engine name or url to connect to.
 - `host` (String) The host name of your Firebolt database.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_firebolt.my_airbyte_source_firebolt ""
+```

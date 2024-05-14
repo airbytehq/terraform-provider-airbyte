@@ -17,13 +17,13 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
   configuration = {
     api_key                               = "...my_api_key..."
     custom_reports_fields                 = "...my_custom_reports_fields..."
-    custom_reports_include_default_fields = true
+    custom_reports_include_default_fields = false
     subdomain                             = "...my_subdomain..."
   }
-  definition_id = "d078a361-2fcb-45a7-bdd8-54e0c39c22fe"
-  name          = "Caroline Steuber"
+  definition_id = "8a1edcb3-6cda-43d5-9cbc-15623ec6453c"
+  name          = "Glen Schmidt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7adf1072-5ff7-4f1a-a7e8-fd2f193d4f9a"
+  workspace_id  = "f0d0e20d-e16b-48da-bb81-43f851cf99c7"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports. Default: ""
 - `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names. Default: true
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_bamboo_hr.my_airbyte_source_bamboo_hr ""
+```

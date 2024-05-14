@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -33,13 +34,13 @@ type SourceFireboltResource struct {
 
 // SourceFireboltResourceModel describes the resource data model.
 type SourceFireboltResourceModel struct {
-	Configuration SourceFirebolt `tfsdk:"configuration"`
-	DefinitionID  types.String   `tfsdk:"definition_id"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceFirebolt `tfsdk:"configuration"`
+	DefinitionID  types.String           `tfsdk:"definition_id"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFireboltResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -49,7 +50,6 @@ func (r *SourceFireboltResource) Metadata(ctx context.Context, req resource.Meta
 func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceFirebolt Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -58,29 +58,28 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account": schema.StringAttribute{
-						Optional:    true,
+						Required:    true,
 						Description: `Firebolt account to login.`,
+					},
+					"client_id": schema.StringAttribute{
+						Required:    true,
+						Description: `Firebolt service account ID.`,
+					},
+					"client_secret": schema.StringAttribute{
+						Required:    true,
+						Description: `Firebolt secret, corresponding to the service account ID.`,
 					},
 					"database": schema.StringAttribute{
 						Required:    true,
 						Description: `The database to connect to.`,
 					},
 					"engine": schema.StringAttribute{
-						Optional:    true,
-						Description: `Engine name or url to connect to.`,
+						Required:    true,
+						Description: `Engine name to connect to.`,
 					},
 					"host": schema.StringAttribute{
 						Optional:    true,
 						Description: `The host name of your Firebolt database.`,
-					},
-					"password": schema.StringAttribute{
-						Required:    true,
-						Sensitive:   true,
-						Description: `Firebolt password.`,
-					},
-					"username": schema.StringAttribute{
-						Required:    true,
-						Description: `Firebolt email address you use to login.`,
 					},
 				},
 			},
@@ -251,6 +250,10 @@ func (r *SourceFireboltResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {
