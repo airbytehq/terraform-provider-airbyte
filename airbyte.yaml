@@ -1232,8 +1232,10 @@ paths:
           description: "Not found"
         "422":
           description: "Data issue"
-      operationId: null
+      operationId: "getPermission"
       summary: "Get Permission details"
+      x-speakeasy-alias: "getPermission"
+      x-speakeasy-group: "Permissions"
       x-speakeasy-entity-operation: Permission#read
     patch:
       tags:
@@ -1261,8 +1263,10 @@ paths:
           description: "Not found"
         "422":
           description: "Data issue"
-      operationId: null
+      operationId: "updatePermission"
       summary: "Update a permission"
+      x-speakeasy-alias: "updatePermission"
+      x-speakeasy-group: "Permissions"
       x-speakeasy-entity-operation: Permission#update
     delete:
       tags:
@@ -1278,7 +1282,9 @@ paths:
           description: "Not found"
         "422":
           description: "Data issue"
-      operationId: null
+      operationId: "deletePermission"
+      x-speakeasy-alias: "deletePermission"
+      x-speakeasy-group: "Permissions"
       summary: "Delete a Permission"
       x-speakeasy-entity-operation: Permission#delete
   /permissions:
@@ -1301,12 +1307,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PermissionsResponse"
-          description: "List Permissions by user id."
+          description: "List Permissions."
         "403":
           description: "Not allowed"
         "404":
           description: "Not found"
-      operationId: null
+      operationId: "listPermissions"
+      x-speakeasy-alias: "listPermissions"
+      x-speakeasy-group: "Permissions"
       summary: "List Permissions by user id"
     post:
       tags:
@@ -21909,6 +21917,14 @@ components:
           $ref: "#/components/schemas/OrganizationId"
       x-speakeasy-entity: Permission
       x-speakeasy-param-suppress-computed-diff: true
+      x-speakeasy-component: true
+    PermissionScope:
+      description: "Scope of a single permission, e.g. workspace, organization"
+      type: "string"
+      enum:
+      - "workspace"
+      - "organization"
+      - "none"
       x-speakeasy-component: true
     PermissionResponseRead:
       title: "Root type for PermissionResponseRead"
