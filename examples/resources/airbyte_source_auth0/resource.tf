@@ -8,8 +8,8 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "8905c854-3b91-484c-ac7d-cadad2938da5"
-  name          = "Tonya Hand"
+  definition_id = "e1c5ff22-3389-4204-a261-684e73ef602c"
+  name          = "Raymond Halvorson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "880f00a3-0dde-4f9a-90fa-7f8f441b58df"
+  workspace_id  = "97cf5896-557c-4e17-8cd6-b10d6388d4fd"
 }

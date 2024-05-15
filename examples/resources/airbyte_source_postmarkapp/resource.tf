@@ -3,8 +3,8 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  definition_id = "21b21ea9-bc9d-41c8-8f1e-e12f8a7db098"
-  name          = "Mr. Cory Green"
+  definition_id = "f6b4ca64-72a5-4f8a-ac8f-edb8fc35367b"
+  name          = "Stewart Torphy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6a87d389-094e-4fa6-bbbe-a9f5a35d1bd0"
+  workspace_id  = "3e36b74e-8f7b-4837-976b-02a3d797c2fd"
 }

@@ -17,7 +17,6 @@ const (
 func (e Getlago) ToPointer() *Getlago {
 	return &e
 }
-
 func (e *Getlago) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

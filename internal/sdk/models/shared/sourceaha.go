@@ -17,7 +17,6 @@ const (
 func (e Aha) ToPointer() *Aha {
 	return &e
 }
-
 func (e *Aha) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

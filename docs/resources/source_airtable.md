@@ -21,14 +21,14 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-06-28T02:11:16.821Z"
+        token_expiry_date = "2022-09-01T07:21:46.506Z"
       }
     }
   }
-  definition_id = "d15373da-8d6e-4ef0-8757-630ddbc2dbf1"
-  name          = "Max Schuster"
+  definition_id = "cc193137-2214-4027-ae71-b638bd648d54"
+  name          = "Ryan Green"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bd57111a-c61d-4ffa-a9fe-7143a3e9a244"
+  workspace_id  = "eb93d4bb-de9f-42bb-80cd-3fe4ad282938"
 }
 ```
 

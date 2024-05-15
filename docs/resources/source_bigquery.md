@@ -19,10 +19,10 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     dataset_id       = "...my_dataset_id..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "fd70e504-57dc-4f4f-a487-4e62c58d8792"
-  name          = "Levi Gutmann"
+  definition_id = "a2d50959-a4fa-450e-807c-86bd0cbf5314"
+  name          = "Dr. Tomas Nolan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "87cb19c4-8ec8-4b45-b3d6-6d007e52a2e4"
+  workspace_id  = "21aa3736-7271-4c78-a9aa-9603df323c7d"
 }
 ```
 

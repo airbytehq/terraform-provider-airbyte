@@ -18,7 +18,6 @@ const (
 func (e AuthType) ToPointer() *AuthType {
 	return &e
 }
-
 func (e *AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -49,7 +48,6 @@ const (
 func (e SearchCriteria) ToPointer() *SearchCriteria {
 	return &e
 }
-
 func (e *SearchCriteria) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

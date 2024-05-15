@@ -18,7 +18,6 @@ const (
 func (e Sendgrid) ToPointer() *Sendgrid {
 	return &e
 }
-
 func (e *Sendgrid) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

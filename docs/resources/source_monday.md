@@ -21,10 +21,10 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "3a6249a5-1495-45fa-aea2-5a51d7622e38"
-  name          = "Lucas Schaefer"
+  definition_id = "92c2050f-df2b-4a7d-83d2-0d3384e15ed5"
+  name          = "Dolores Cruickshank"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "00a4abb3-299a-4611-8c7b-e3e8ba7188dc"
+  workspace_id  = "88faeaba-deb9-43c7-b287-9b6069b6a28d"
 }
 ```
 

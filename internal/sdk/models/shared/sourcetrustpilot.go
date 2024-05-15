@@ -19,7 +19,6 @@ const (
 func (e SourceTrustpilotSchemasAuthType) ToPointer() *SourceTrustpilotSchemasAuthType {
 	return &e
 }
-
 func (e *SourceTrustpilotSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -72,7 +71,6 @@ const (
 func (e SourceTrustpilotAuthType) ToPointer() *SourceTrustpilotAuthType {
 	return &e
 }
-
 func (e *SourceTrustpilotAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -223,7 +221,6 @@ const (
 func (e Trustpilot) ToPointer() *Trustpilot {
 	return &e
 }
-
 func (e *Trustpilot) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

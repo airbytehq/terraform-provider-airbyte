@@ -23,10 +23,10 @@ resource "airbyte_source_okta" "my_source_okta" {
     domain     = "...my_domain..."
     start_date = "2022-07-22T00:00:00Z"
   }
-  definition_id = "b83b2c4d-d4d4-4290-b741-ee0bbab0457d"
-  name          = "Clarence Huel"
+  definition_id = "05c5b711-2361-4f26-947b-86cdec1a2bc2"
+  name          = "Isaac Bruen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8e6ecd84-1e72-4a76-aa68-6faa512d8044"
+  workspace_id  = "5e3ceb6c-910d-4c95-a96c-b5f3bc4b3253"
 }
 ```
 

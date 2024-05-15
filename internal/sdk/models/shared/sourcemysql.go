@@ -18,7 +18,6 @@ const (
 func (e SourceMysqlSchemasMethod) ToPointer() *SourceMysqlSchemasMethod {
 	return &e
 }
-
 func (e *SourceMysqlSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -64,7 +63,6 @@ const (
 func (e SourceMysqlInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceMysqlInvalidCDCPositionBehaviorAdvanced {
 	return &e
 }
-
 func (e *SourceMysqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -90,7 +88,6 @@ const (
 func (e SourceMysqlMethod) ToPointer() *SourceMysqlMethod {
 	return &e
 }
-
 func (e *SourceMysqlMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -225,7 +222,6 @@ const (
 func (e SourceMysqlMysql) ToPointer() *SourceMysqlMysql {
 	return &e
 }
-
 func (e *SourceMysqlMysql) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -249,7 +245,6 @@ const (
 func (e SourceMysqlSchemasSSLModeSSLModesMode) ToPointer() *SourceMysqlSchemasSSLModeSSLModesMode {
 	return &e
 }
-
 func (e *SourceMysqlSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -329,7 +324,6 @@ const (
 func (e SourceMysqlSchemasSslModeMode) ToPointer() *SourceMysqlSchemasSslModeMode {
 	return &e
 }
-
 func (e *SourceMysqlSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -409,7 +403,6 @@ const (
 func (e SourceMysqlSchemasMode) ToPointer() *SourceMysqlSchemasMode {
 	return &e
 }
-
 func (e *SourceMysqlSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -453,7 +446,6 @@ const (
 func (e SourceMysqlMode) ToPointer() *SourceMysqlMode {
 	return &e
 }
-
 func (e *SourceMysqlMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -606,7 +598,6 @@ const (
 func (e SourceMysqlSchemasTunnelMethodTunnelMethod) ToPointer() *SourceMysqlSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourceMysqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -687,7 +678,6 @@ const (
 func (e SourceMysqlSchemasTunnelMethod) ToPointer() *SourceMysqlSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourceMysqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -768,7 +758,6 @@ const (
 func (e SourceMysqlTunnelMethod) ToPointer() *SourceMysqlTunnelMethod {
 	return &e
 }
-
 func (e *SourceMysqlTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

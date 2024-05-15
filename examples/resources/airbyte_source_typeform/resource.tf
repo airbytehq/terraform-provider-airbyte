@@ -6,7 +6,7 @@ resource "airbyte_source_typeform" "my_source_typeform" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-03-13T08:55:00.864Z"
+        token_expiry_date = "2022-10-08T22:41:37.886Z"
       }
     }
     form_ids = [
@@ -14,8 +14,8 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "7ccff9d0-7247-447a-8b37-eb205ddb7f1b"
-  name          = "Janet Bogisich"
+  definition_id = "1a0d51fb-8be0-4416-8b49-da06c239e7af"
+  name          = "Lynne Paucek"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e07e1036-43a6-4dfd-aa60-225b2ac62eb1"
+  workspace_id  = "c2a5392d-7458-4890-8090-47267ce86a32"
 }

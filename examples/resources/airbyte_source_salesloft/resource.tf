@@ -7,8 +7,8 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
     }
     start_date = "2020-11-16T00:00:00Z"
   }
-  definition_id = "c6128aab-bad0-4730-b82c-3e822825101e"
-  name          = "Casey Cole"
+  definition_id = "b06d3b49-9dcb-4dae-b4af-cb0631840729"
+  name          = "Clara Goldner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "69948d03-8885-41ec-86fd-3b8cc64e95a7"
+  workspace_id  = "b8965caa-babe-4e9d-a378-e7243c021bc0"
 }

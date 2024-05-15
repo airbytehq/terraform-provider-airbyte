@@ -9,10 +9,10 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 7
+    window_in_days = 5
   }
-  definition_id = "aba25784-141a-421c-8938-ad6fcbb78bed"
-  name          = "Mr. Ross Cole"
+  definition_id = "b7242137-fe2e-49e2-ac4c-104f1dbe3b1f"
+  name          = "Ramona Bahringer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "704ae193-8752-47d5-a3ef-7246d0c0b796"
+  workspace_id  = "77573847-65c7-4741-8014-d1f263651b77"
 }

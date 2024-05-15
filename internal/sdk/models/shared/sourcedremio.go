@@ -17,7 +17,6 @@ const (
 func (e Dremio) ToPointer() *Dremio {
 	return &e
 }
-
 func (e *Dremio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

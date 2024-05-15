@@ -1,10 +1,10 @@
 resource "airbyte_source_spacex_api" "my_source_spacexapi" {
   configuration = {
-    id      = "0cbc1b99-ee1e-4960-9660-5b0d51b3114e"
+    id      = "75abffba-2c1e-47b6-908e-cd761f19b60a"
     options = "...my_options..."
   }
-  definition_id = "9ed57541-c361-42b0-a8c8-cf11a0d25994"
-  name          = "Muriel Wunsch"
+  definition_id = "a0804c97-1e60-4235-9c09-fadad73b79d2"
+  name          = "Gayle Grady"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2a9e475a-bffb-4a2c-9e7b-6908ecd761f1"
+  workspace_id  = "cfdc6fb5-04a1-42b7-b23c-bf0223ae822e"
 }

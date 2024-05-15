@@ -25,11 +25,12 @@ type AirbyteProvider struct {
 
 // AirbyteProviderModel describes the provider data model.
 type AirbyteProviderModel struct {
-	ServerURL         types.String `tfsdk:"server_url"`
-	Password          types.String `tfsdk:"password"`
-	Username          types.String `tfsdk:"username"`
-	BearerAuth        types.String `tfsdk:"bearer_auth"`
-	ClientCredentials types.String `tfsdk:"client_credentials"`
+	ServerURL    types.String `tfsdk:"server_url"`
+	Password     types.String `tfsdk:"password"`
+	Username     types.String `tfsdk:"username"`
+	BearerAuth   types.String `tfsdk:"bearer_auth"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
 }
 
 func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -58,7 +59,11 @@ func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest
 				Optional:  true,
 				Sensitive: true,
 			},
-			"client_credentials": schema.StringAttribute{
+			"client_id": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
+			},
+			"client_secret": schema.StringAttribute{
 				Optional:  true,
 				Sensitive: true,
 			},
@@ -94,11 +99,14 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	} else {
 		bearerAuth = nil
 	}
-	clientCredentials := new(string)
-	if !data.ClientCredentials.IsUnknown() && !data.ClientCredentials.IsNull() {
-		*clientCredentials = data.ClientCredentials.ValueString()
-	} else {
-		clientCredentials = nil
+	var clientCredentials *shared.SchemeClientCredentials
+	clientID := data.ClientID.ValueString()
+	clientSecret := data.ClientSecret.ValueString()
+	if clientID != "" && clientSecret != "" {
+		clientCredentials = &shared.SchemeClientCredentials{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+		}
 	}
 	security := shared.Security{
 		BasicAuth:         basicAuth,
@@ -118,7 +126,8 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 }
 
 func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {
-	return []func() resource.Resource{NewConnectionResource,
+	return []func() resource.Resource{
+		NewConnectionResource,
 		NewDestinationAstraResource,
 		NewDestinationAwsDatalakeResource,
 		NewDestinationAzureBlobStorageResource,
@@ -150,6 +159,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewDestinationS3GlueResource,
 		NewDestinationSftpJSONResource,
 		NewDestinationSnowflakeResource,
+		NewDestinationSnowflakeCortexResource,
 		NewDestinationTeradataResource,
 		NewDestinationTypesenseResource,
 		NewDestinationVectaraResource,
@@ -355,7 +365,8 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 }
 
 func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{NewConnectionDataSource,
+	return []func() datasource.DataSource{
+		NewConnectionDataSource,
 		NewDestinationAstraDataSource,
 		NewDestinationAwsDatalakeDataSource,
 		NewDestinationAzureBlobStorageDataSource,
@@ -387,11 +398,13 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewDestinationS3GlueDataSource,
 		NewDestinationSftpJSONDataSource,
 		NewDestinationSnowflakeDataSource,
+		NewDestinationSnowflakeCortexDataSource,
 		NewDestinationTeradataDataSource,
 		NewDestinationTypesenseDataSource,
 		NewDestinationVectaraDataSource,
 		NewDestinationWeaviateDataSource,
 		NewDestinationYellowbrickDataSource,
+		NewPermissionDataSource,
 		NewSourceAhaDataSource,
 		NewSourceAircallDataSource,
 		NewSourceAirtableDataSource,

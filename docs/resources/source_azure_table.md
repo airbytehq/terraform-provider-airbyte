@@ -19,10 +19,10 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
     storage_account_name    = "...my_storage_account_name..."
     storage_endpoint_suffix = "core.chinacloudapi.cn"
   }
-  definition_id = "af2b0521-0208-4e03-ab26-8d758466c963"
-  name          = "Justin Bauch MD"
+  definition_id = "36cda3d5-1cbc-4156-a3ec-6453ce6c3cf0"
+  name          = "Joseph VonRueden PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "394b84ac-df8d-4b6a-8f7e-23711b260f5d"
+  workspace_id  = "e16b8da7-b814-43f8-91cf-99c7fd70e504"
 }
 ```
 

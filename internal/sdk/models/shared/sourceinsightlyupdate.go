@@ -2,14 +2,30 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
+)
+
 type SourceInsightlyUpdate struct {
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
-	StartDate *string `json:"start_date"`
+	StartDate *time.Time `json:"start_date"`
 	// Your Insightly API token.
 	Token *string `json:"token"`
 }
 
-func (o *SourceInsightlyUpdate) GetStartDate() *string {
+func (s SourceInsightlyUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceInsightlyUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceInsightlyUpdate) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}

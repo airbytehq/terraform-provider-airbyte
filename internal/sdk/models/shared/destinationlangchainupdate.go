@@ -18,7 +18,6 @@ const (
 func (e DestinationLangchainUpdateSchemasMode) ToPointer() *DestinationLangchainUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationLangchainUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -62,7 +61,6 @@ const (
 func (e DestinationLangchainUpdateMode) ToPointer() *DestinationLangchainUpdateMode {
 	return &e
 }
-
 func (e *DestinationLangchainUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -178,7 +176,6 @@ const (
 func (e DestinationLangchainUpdateSchemasIndexingIndexing3Mode) ToPointer() *DestinationLangchainUpdateSchemasIndexingIndexing3Mode {
 	return &e
 }
-
 func (e *DestinationLangchainUpdateSchemasIndexingIndexing3Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -240,7 +237,6 @@ const (
 func (e DestinationLangchainUpdateSchemasIndexingIndexingMode) ToPointer() *DestinationLangchainUpdateSchemasIndexingIndexingMode {
 	return &e
 }
-
 func (e *DestinationLangchainUpdateSchemasIndexingIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -293,7 +289,6 @@ const (
 func (e DestinationLangchainUpdateSchemasIndexingMode) ToPointer() *DestinationLangchainUpdateSchemasIndexingMode {
 	return &e
 }
-
 func (e *DestinationLangchainUpdateSchemasIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

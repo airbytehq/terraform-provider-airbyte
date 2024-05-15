@@ -20,7 +20,6 @@ const (
 func (e SourceHubspotSchemasAuthType) ToPointer() *SourceHubspotSchemasAuthType {
 	return &e
 }
-
 func (e *SourceHubspotSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -74,7 +73,6 @@ const (
 func (e SourceHubspotAuthType) ToPointer() *SourceHubspotAuthType {
 	return &e
 }
-
 func (e *SourceHubspotAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -209,7 +207,6 @@ const (
 func (e Hubspot) ToPointer() *Hubspot {
 	return &e
 }
-
 func (e *Hubspot) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

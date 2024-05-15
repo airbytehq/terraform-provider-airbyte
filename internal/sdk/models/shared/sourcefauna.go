@@ -18,7 +18,6 @@ const (
 func (e SourceFaunaSchemasCollectionDeletionMode) ToPointer() *SourceFaunaSchemasCollectionDeletionMode {
 	return &e
 }
-
 func (e *SourceFaunaSchemasCollectionDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceFaunaSchemasDeletionMode) ToPointer() *SourceFaunaSchemasDeletionMode {
 	return &e
 }
-
 func (e *SourceFaunaSchemasDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -218,7 +216,6 @@ const (
 func (e Fauna) ToPointer() *Fauna {
 	return &e
 }
-
 func (e *Fauna) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

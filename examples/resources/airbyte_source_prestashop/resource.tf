@@ -4,8 +4,8 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date = "2022-01-01"
     url        = "...my_url..."
   }
-  definition_id = "6321f6b4-ca64-472a-9f8a-ec8fedb8fc35"
-  name          = "Vanessa Kuhlman"
+  definition_id = "3950717b-206b-48fd-a8b4-8bf3f0e9631e"
+  name          = "Myron O'Reilly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ee523e36-b74e-48f7-b837-d76b02a3d797"
+  workspace_id  = "a2ee7a1e-0cb6-4197-895b-91e126100f09"
 }

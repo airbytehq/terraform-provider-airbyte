@@ -24,10 +24,10 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "f5d1d34f-0cce-4548-aa3a-161dc53f6414"
-  name          = "Ernesto Schmitt"
+  definition_id = "a7d8001c-be4b-47da-a2d7-b021550aada4"
+  name          = "Miss Dominick Barton"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b41d5bf9-4a01-4397-93df-d90aff660497"
+  workspace_id  = "56ee294a-dbc5-4bd3-8078-9cf0b8d2c041"
 }
 ```
 

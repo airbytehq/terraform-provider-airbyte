@@ -17,7 +17,6 @@ const (
 func (e Glassfrog) ToPointer() *Glassfrog {
 	return &e
 }
-
 func (e *Glassfrog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

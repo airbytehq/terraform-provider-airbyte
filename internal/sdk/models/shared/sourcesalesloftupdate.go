@@ -19,7 +19,6 @@ const (
 func (e SourceSalesloftUpdateSchemasAuthType) ToPointer() *SourceSalesloftUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceSalesloftUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceSalesloftUpdateAuthType) ToPointer() *SourceSalesloftUpdateAuthType {
 	return &e
 }
-
 func (e *SourceSalesloftUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

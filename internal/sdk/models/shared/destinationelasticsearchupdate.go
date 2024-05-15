@@ -18,7 +18,6 @@ const (
 func (e DestinationElasticsearchUpdateSchemasMethod) ToPointer() *DestinationElasticsearchUpdateSchemasMethod {
 	return &e
 }
-
 func (e *DestinationElasticsearchUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +79,6 @@ const (
 func (e DestinationElasticsearchUpdateMethod) ToPointer() *DestinationElasticsearchUpdateMethod {
 	return &e
 }
-
 func (e *DestinationElasticsearchUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

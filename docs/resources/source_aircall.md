@@ -19,10 +19,10 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     api_token  = "...my_api_token..."
     start_date = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "21854edb-75e7-4d1c-9ddc-2da362faf1b2"
-  name          = "Edmond Watsica"
+  definition_id = "8d6eef04-7576-430d-9bc2-dbf188dfabd5"
+  name          = "Miss Ann Bode"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb1bb055-0b4e-4344-926e-7f29336e2378"
+  workspace_id  = "61dffa69-fe71-443a-be9a-244d7bc1a5a6"
 }
 ```
 

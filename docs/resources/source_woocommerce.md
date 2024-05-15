@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "e9226a95-4fff-493d-92e3-92ce90b9169f"
-  name          = "Nathan Beier"
+  definition_id = "b2db7532-b28c-4b78-9b8d-4ad9bb4c2d04"
+  name          = "Lester Sawayn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2efb21ef-2bc4-48bf-87f2-e7721366646f"
+  workspace_id  = "0e440965-9dbf-46ec-af35-c15b3779d7e3"
 }
 ```
 

@@ -18,7 +18,6 @@ const (
 func (e Twitter) ToPointer() *Twitter {
 	return &e
 }
-
 func (e *Twitter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

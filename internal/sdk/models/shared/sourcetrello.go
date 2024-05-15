@@ -18,7 +18,6 @@ const (
 func (e Trello) ToPointer() *Trello {
 	return &e
 }
-
 func (e *Trello) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

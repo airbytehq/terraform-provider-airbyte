@@ -23,14 +23,14 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
       }
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
-    ignore_missing_read_permissions_tables = false
-    region                                 = "ca-west-1"
+    ignore_missing_read_permissions_tables = true
+    region                                 = "ap-southeast-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "a8cd9c5a-ad47-4afd-a11e-10d002e1c73f"
-  name          = "Dr. Willis Padberg"
+  definition_id = "c1959643-3e1d-4514-84aa-c586d055244c"
+  name          = "Michele Jones"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9a63be20-9caa-4593-ab80-8ec8c0a1f116"
+  workspace_id  = "457a2c26-18fe-41b9-9dcc-e8e649d7675f"
 }
 ```
 

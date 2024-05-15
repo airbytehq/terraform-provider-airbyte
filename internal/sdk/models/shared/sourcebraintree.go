@@ -22,7 +22,6 @@ const (
 func (e SourceBraintreeEnvironment) ToPointer() *SourceBraintreeEnvironment {
 	return &e
 }
-
 func (e *SourceBraintreeEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -52,7 +51,6 @@ const (
 func (e Braintree) ToPointer() *Braintree {
 	return &e
 }
-
 func (e *Braintree) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

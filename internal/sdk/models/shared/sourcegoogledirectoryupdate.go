@@ -19,7 +19,6 @@ const (
 func (e SourceGoogleDirectoryUpdateSchemasCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateSchemasCredentialsTitle {
 	return &e
 }
-
 func (e *SourceGoogleDirectoryUpdateSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -83,7 +82,6 @@ const (
 func (e SourceGoogleDirectoryUpdateCredentialsTitle) ToPointer() *SourceGoogleDirectoryUpdateCredentialsTitle {
 	return &e
 }
-
 func (e *SourceGoogleDirectoryUpdateCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -22,13 +22,13 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
         refresh_token = "refresh_token"
       }
     }
-    enable_experimental_streams = false
+    enable_experimental_streams = true
     start_date                  = "2017-01-25T00:00:00Z"
   }
-  definition_id = "4734e30b-46b9-459e-8e75-8ac09227119b"
-  name          = "Jorge Prosacco DDS"
+  definition_id = "e287b752-65fd-4ff2-9eb8-cbf2674a9203"
+  name          = "Jeannette Bergstrom"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "98bb7037-ab55-461c-a1bb-1cadaa0e328a"
+  workspace_id  = "fcc526af-10da-4401-bb0f-c52730b39994"
 }
 ```
 

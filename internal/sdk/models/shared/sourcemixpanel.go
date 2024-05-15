@@ -19,7 +19,6 @@ const (
 func (e SourceMixpanelSchemasOptionTitle) ToPointer() *SourceMixpanelSchemasOptionTitle {
 	return &e
 }
-
 func (e *SourceMixpanelSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceMixpanelOptionTitle) ToPointer() *SourceMixpanelOptionTitle {
 	return &e
 }
-
 func (e *SourceMixpanelOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -207,7 +205,6 @@ const (
 func (e SourceMixpanelRegion) ToPointer() *SourceMixpanelRegion {
 	return &e
 }
-
 func (e *SourceMixpanelRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -233,7 +230,6 @@ const (
 func (e Mixpanel) ToPointer() *Mixpanel {
 	return &e
 }
-
 func (e *Mixpanel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

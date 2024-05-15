@@ -19,10 +19,10 @@ resource "airbyte_source_dixa" "my_source_dixa" {
     batch_size = 1
     start_date = "YYYY-MM-DD"
   }
-  definition_id = "e9256d74-638d-4140-9463-9cf5dd4a0c05"
-  name          = "Floyd Feeney"
+  definition_id = "e8dc371e-cbee-4105-91b4-39ed171c9d9f"
+  name          = "Bennie Grimes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6b9b8b8f-8f6a-4fbf-b65d-687e087e3905"
+  workspace_id  = "3ac232bf-a41c-480b-a334-5c949a95559f"
 }
 ```
 

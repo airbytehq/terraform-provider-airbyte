@@ -26,10 +26,10 @@ resource "airbyte_source_google_analytics_v4_service_account_only" "my_source_go
     view_id        = "...my_view_id..."
     window_in_days = 30
   }
-  definition_id = "e6bf68e1-922d-4f28-ba61-4313a5231403"
-  name          = "Lucia Schuppe"
+  definition_id = "b676fb73-1c6d-4524-9e98-21d4fc03242c"
+  name          = "Kristopher Cormier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "82b3c164-c195-40da-b1eb-ecd9b5a75a7c"
+  workspace_id  = "3a0d30eb-91c3-4df2-9934-9552dc8258f3"
 }
 ```
 

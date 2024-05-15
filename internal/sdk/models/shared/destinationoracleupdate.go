@@ -19,7 +19,6 @@ const (
 func (e DestinationOracleUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationOracleUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -100,7 +99,6 @@ const (
 func (e DestinationOracleUpdateSchemasTunnelMethod) ToPointer() *DestinationOracleUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -181,7 +179,6 @@ const (
 func (e DestinationOracleUpdateTunnelMethod) ToPointer() *DestinationOracleUpdateTunnelMethod {
 	return &e
 }
-
 func (e *DestinationOracleUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

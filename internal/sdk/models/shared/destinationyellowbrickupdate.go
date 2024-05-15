@@ -18,7 +18,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode) ToPointer() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -98,7 +97,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode) ToPointer() *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasSSLModeSSLModes5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -160,7 +158,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasSSLModeSSLModesMode) ToPointer() *DestinationYellowbrickUpdateSchemasSSLModeSSLModesMode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -204,7 +201,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasSslModeMode) ToPointer() *DestinationYellowbrickUpdateSchemasSslModeMode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -248,7 +244,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasMode) ToPointer() *DestinationYellowbrickUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -292,7 +287,6 @@ const (
 func (e DestinationYellowbrickUpdateMode) ToPointer() *DestinationYellowbrickUpdateMode {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -497,7 +491,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -578,7 +571,6 @@ const (
 func (e DestinationYellowbrickUpdateSchemasTunnelMethod) ToPointer() *DestinationYellowbrickUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -659,7 +651,6 @@ const (
 func (e DestinationYellowbrickUpdateTunnelMethod) ToPointer() *DestinationYellowbrickUpdateTunnelMethod {
 	return &e
 }
-
 func (e *DestinationYellowbrickUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

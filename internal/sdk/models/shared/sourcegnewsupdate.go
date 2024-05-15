@@ -46,7 +46,6 @@ const (
 func (e Country) ToPointer() *Country {
 	return &e
 }
-
 func (e *Country) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -130,7 +129,6 @@ const (
 func (e In) ToPointer() *In {
 	return &e
 }
-
 func (e *In) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -179,7 +177,6 @@ const (
 func (e Language) ToPointer() *Language {
 	return &e
 }
-
 func (e *Language) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -247,7 +244,6 @@ const (
 func (e Nullable) ToPointer() *Nullable {
 	return &e
 }
-
 func (e *Nullable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -279,7 +275,6 @@ const (
 func (e SortBy) ToPointer() *SortBy {
 	return &e
 }
-
 func (e *SortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -314,7 +309,6 @@ const (
 func (e TopHeadlinesTopic) ToPointer() *TopHeadlinesTopic {
 	return &e
 }
-
 func (e *TopHeadlinesTopic) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

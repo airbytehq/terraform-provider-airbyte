@@ -16,12 +16,12 @@ SourceSendgrid Resource
 resource "airbyte_source_sendgrid" "my_source_sendgrid" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2022-02-02T23:10:02.911Z"
+    start_date = "2022-03-20T14:31:02.853Z"
   }
-  definition_id = "ad703a4e-eb23-4fe5-9394-2b58b6d0d209"
-  name          = "Ashley Shanahan"
+  definition_id = "5a7d2b46-09d4-4ec6-867c-968cce93394d"
+  name          = "Gerard Frami"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "88d8619e-c398-4117-86e4-4e5272c20971"
+  workspace_id  = "b32f900f-8cfe-4737-8a58-77022972e237"
 }
 ```
 

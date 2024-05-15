@@ -18,7 +18,6 @@ const (
 func (e SourceAmazonAdsAuthType) ToPointer() *SourceAmazonAdsAuthType {
 	return &e
 }
-
 func (e *SourceAmazonAdsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -45,7 +44,6 @@ const (
 func (e SourceAmazonAdsRegion) ToPointer() *SourceAmazonAdsRegion {
 	return &e
 }
-
 func (e *SourceAmazonAdsRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +78,6 @@ const (
 func (e SourceAmazonAdsReportRecordTypes) ToPointer() *SourceAmazonAdsReportRecordTypes {
 	return &e
 }
-
 func (e *SourceAmazonAdsReportRecordTypes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -118,7 +115,6 @@ const (
 func (e AmazonAds) ToPointer() *AmazonAds {
 	return &e
 }
-
 func (e *AmazonAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -144,7 +140,6 @@ const (
 func (e SourceAmazonAdsStateFilter) ToPointer() *SourceAmazonAdsStateFilter {
 	return &e
 }
-
 func (e *SourceAmazonAdsStateFilter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

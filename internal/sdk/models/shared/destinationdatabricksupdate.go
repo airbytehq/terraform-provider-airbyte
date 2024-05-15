@@ -18,7 +18,6 @@ const (
 func (e DestinationDatabricksUpdateSchemasDataSourceType) ToPointer() *DestinationDatabricksUpdateSchemasDataSourceType {
 	return &e
 }
-
 func (e *DestinationDatabricksUpdateSchemasDataSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -97,7 +96,6 @@ const (
 func (e DestinationDatabricksUpdateDataSourceType) ToPointer() *DestinationDatabricksUpdateDataSourceType {
 	return &e
 }
-
 func (e *DestinationDatabricksUpdateDataSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -147,7 +145,6 @@ const (
 func (e DestinationDatabricksUpdateS3BucketRegion) ToPointer() *DestinationDatabricksUpdateS3BucketRegion {
 	return &e
 }
-
 func (e *DestinationDatabricksUpdateS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -294,7 +291,6 @@ const (
 func (e DataSourceType) ToPointer() *DataSourceType {
 	return &e
 }
-
 func (e *DataSourceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -18,14 +18,14 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
     credentials = {
       service_account_key = {
         credentials_json = "...my_credentials_json..."
-        email            = "Wayne9@yahoo.com"
+        email            = "Makenzie.Cassin@gmail.com"
       }
     }
   }
-  definition_id = "d722b310-b676-4fb7-b1c6-d5241e9821d4"
-  name          = "Lucas Altenwerth"
+  definition_id = "83b00ec7-0459-456c-83ec-7b8b68fdfc06"
+  name          = "Shawn Quigley"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "42ccd276-3a0d-430e-b91c-3df259349552"
+  workspace_id  = "d673f59a-8d0a-4cc9-948b-0061059fac1d"
 }
 ```
 

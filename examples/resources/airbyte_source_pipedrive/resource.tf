@@ -3,8 +3,8 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     api_token              = "...my_api_token..."
     replication_start_date = "2017-01-25 00:00:00Z"
   }
-  definition_id = "5ec46f2b-ce2e-477b-bcce-f588ac548be8"
-  name          = "Ted O'Conner"
+  definition_id = "25b29252-a784-4d2d-8f17-07475e2d6a49"
+  name          = "Cassandra Bashirian"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bf52c792-93e2-48aa-8190-3348b38fe3b5"
+  workspace_id  = "1d6a28c6-eefe-459b-b2db-22407ce310da"
 }

@@ -18,7 +18,6 @@ const (
 func (e SourceClickhouseClickhouse) ToPointer() *SourceClickhouseClickhouse {
 	return &e
 }
-
 func (e *SourceClickhouseClickhouse) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,6 @@ const (
 func (e SourceClickhouseSchemasTunnelMethodTunnelMethod) ToPointer() *SourceClickhouseSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourceClickhouseSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -124,7 +122,6 @@ const (
 func (e SourceClickhouseSchemasTunnelMethod) ToPointer() *SourceClickhouseSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourceClickhouseSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +202,6 @@ const (
 func (e SourceClickhouseTunnelMethod) ToPointer() *SourceClickhouseTunnelMethod {
 	return &e
 }
-
 func (e *SourceClickhouseTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

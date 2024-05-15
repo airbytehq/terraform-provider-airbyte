@@ -38,12 +38,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 46.54
+                        value = 73.14
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 72.65
+                        value = 40.37
                       }
                     }
                   }
@@ -64,12 +64,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 3.03
+                        value = 7.66
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 70.68
+                        value = 46.24
                       }
                     }
                   }
@@ -81,7 +81,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Lucille Daugherty Jr."
+        name = "Kenneth Boyle"
       },
     ]
     date_ranges_start_date = "2021-01-01"
@@ -89,12 +89,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
     property_ids = [
       "...",
     ]
-    window_in_days = 60
+    window_in_days = 90
   }
-  definition_id = "ca706139-037c-47ee-b972-df3c14a349fd"
-  name          = "Clayton McClure"
+  definition_id = "e1922df2-83a6-4143-93a5-2314031fd7b8"
+  name          = "Lula Feil III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "276cbad0-0cae-4e12-84e6-5b57e54a27b6"
+  workspace_id  = "4c1950da-31eb-4ecd-9b5a-75a7c5fc21d7"
 }
 ```
 

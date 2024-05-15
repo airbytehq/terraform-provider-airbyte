@@ -19,7 +19,6 @@ const (
 func (e SourceHarvestSchemasAuthType) ToPointer() *SourceHarvestSchemasAuthType {
 	return &e
 }
-
 func (e *SourceHarvestSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e SourceHarvestAuthType) ToPointer() *SourceHarvestAuthType {
 	return &e
 }
-
 func (e *SourceHarvestAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -221,7 +219,6 @@ const (
 func (e Harvest) ToPointer() *Harvest {
 	return &e
 }
-
 func (e *Harvest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

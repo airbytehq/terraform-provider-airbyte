@@ -25,31 +25,31 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
     }
     drive_name   = "...my_drive_name..."
     folder_path  = "...my_folder_path..."
-    search_scope = "ACCESSIBLE_DRIVES"
+    search_scope = "ALL"
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 1
+        days_to_sync_if_history_is_full = 4
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Mr. Alma Barton"
+        name              = "Ramon Reinger"
         primary_key       = "...my_primary_key..."
-        schemaless        = false
-        validation_policy = "Emit Record"
+        schemaless        = true
+        validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "d3cb5eaa-64b8-46a4-adbb-b853ec4b5e6a"
-  name          = "Dr. Billie Predovic"
+  definition_id = "af825bea-4ec8-47aa-bfeb-9ea290f7e9f4"
+  name          = "Gertrude Hoeger"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9003de8d-a443-4bfa-add2-9a6dff6cb6bf"
+  workspace_id  = "2b69c61d-27bb-4ad3-b0bf-8ca743bfb150"
 }
 ```
 

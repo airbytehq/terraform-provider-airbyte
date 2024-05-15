@@ -19,7 +19,6 @@ const (
 func (e DestinationAwsDatalakeSchemasCredentialsTitle) ToPointer() *DestinationAwsDatalakeSchemasCredentialsTitle {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -82,7 +81,6 @@ const (
 func (e DestinationAwsDatalakeCredentialsTitle) ToPointer() *DestinationAwsDatalakeCredentialsTitle {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -199,7 +197,6 @@ const (
 func (e AwsDatalake) ToPointer() *AwsDatalake {
 	return &e
 }
-
 func (e *AwsDatalake) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -227,7 +224,6 @@ const (
 func (e DestinationAwsDatalakeSchemasCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeSchemasCompressionCodecOptional {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeSchemasCompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -257,7 +253,6 @@ const (
 func (e DestinationAwsDatalakeSchemasFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeSchemasFormatTypeWildcard {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeSchemasFormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -314,7 +309,6 @@ const (
 func (e DestinationAwsDatalakeCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeCompressionCodecOptional {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeCompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -340,7 +334,6 @@ const (
 func (e DestinationAwsDatalakeFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeFormatTypeWildcard {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeFormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -466,7 +459,6 @@ const (
 func (e DestinationAwsDatalakeChooseHowToPartitionData) ToPointer() *DestinationAwsDatalakeChooseHowToPartitionData {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeChooseHowToPartitionData) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -536,7 +528,6 @@ const (
 func (e DestinationAwsDatalakeS3BucketRegion) ToPointer() *DestinationAwsDatalakeS3BucketRegion {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

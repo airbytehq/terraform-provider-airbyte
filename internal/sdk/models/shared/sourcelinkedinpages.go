@@ -18,7 +18,6 @@ const (
 func (e SourceLinkedinPagesSchemasAuthMethod) ToPointer() *SourceLinkedinPagesSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceLinkedinPagesSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceLinkedinPagesAuthMethod) ToPointer() *SourceLinkedinPagesAuthMethod {
 	return &e
 }
-
 func (e *SourceLinkedinPagesAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -203,7 +201,6 @@ const (
 func (e LinkedinPages) ToPointer() *LinkedinPages {
 	return &e
 }
-
 func (e *LinkedinPages) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

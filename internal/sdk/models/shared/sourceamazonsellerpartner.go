@@ -20,7 +20,6 @@ const (
 func (e SourceAmazonSellerPartnerAWSSellerPartnerAccountType) ToPointer() *SourceAmazonSellerPartnerAWSSellerPartnerAccountType {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerAWSSellerPartnerAccountType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e SourceAmazonSellerPartnerAuthType) ToPointer() *SourceAmazonSellerPartnerAuthType {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -72,7 +70,6 @@ const (
 func (e SourceAmazonSellerPartnerAWSEnvironment) ToPointer() *SourceAmazonSellerPartnerAWSEnvironment {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerAWSEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -120,7 +117,6 @@ const (
 func (e SourceAmazonSellerPartnerAWSRegion) ToPointer() *SourceAmazonSellerPartnerAWSRegion {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerAWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -240,7 +236,6 @@ const (
 func (e SourceAmazonSellerPartnerStreamName) ToPointer() *SourceAmazonSellerPartnerStreamName {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerStreamName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -354,7 +349,6 @@ const (
 func (e AmazonSellerPartner) ToPointer() *AmazonSellerPartner {
 	return &e
 }
-
 func (e *AmazonSellerPartner) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

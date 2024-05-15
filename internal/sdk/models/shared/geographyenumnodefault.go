@@ -18,7 +18,6 @@ const (
 func (e GeographyEnumNoDefault) ToPointer() *GeographyEnumNoDefault {
 	return &e
 }
-
 func (e *GeographyEnumNoDefault) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

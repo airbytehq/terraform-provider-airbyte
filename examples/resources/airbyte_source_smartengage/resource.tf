@@ -2,8 +2,8 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "487876fc-ad61-45bc-ace6-87b337106698"
-  name          = "Lee Kohler Sr."
+  definition_id = "08c82dc4-0ca1-4ab7-a639-716f1b8331df"
+  name          = "Bonnie Heidenreich II"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fd25c772-7b36-4354-a81d-3e7f0bc649fe"
+  workspace_id  = "4586c7cd-fb55-48f8-b809-d3d1fcf2b675"
 }

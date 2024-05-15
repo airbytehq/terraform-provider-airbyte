@@ -17,7 +17,6 @@ const (
 func (e PunkAPI) ToPointer() *PunkAPI {
 	return &e
 }
-
 func (e *PunkAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

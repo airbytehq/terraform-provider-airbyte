@@ -50,7 +50,6 @@ const (
 func (e SourceAmazonSqsAWSRegion) ToPointer() *SourceAmazonSqsAWSRegion {
 	return &e
 }
-
 func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -138,7 +137,6 @@ const (
 func (e AmazonSqs) ToPointer() *AmazonSqs {
 	return &e
 }
-
 func (e *AmazonSqs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

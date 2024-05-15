@@ -7,8 +7,8 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "ab4c1bca-f66c-4128-a9f9-84d613828542"
-  name          = "Wm Dickens"
+  definition_id = "3397c204-75fa-4ade-ba48-1e413dd760cc"
+  name          = "Dr. Sandy Ullrich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "458facd1-771a-416f-bf1f-04aeebc306c4"
+  workspace_id  = "75ee978f-160f-4457-86ac-11eb0243724c"
 }

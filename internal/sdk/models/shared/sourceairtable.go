@@ -19,7 +19,6 @@ const (
 func (e SourceAirtableSchemasAuthMethod) ToPointer() *SourceAirtableSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceAirtableSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceAirtableAuthMethod) ToPointer() *SourceAirtableAuthMethod {
 	return &e
 }
-
 func (e *SourceAirtableAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -222,7 +220,6 @@ const (
 func (e Airtable) ToPointer() *Airtable {
 	return &e
 }
-
 func (e *Airtable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

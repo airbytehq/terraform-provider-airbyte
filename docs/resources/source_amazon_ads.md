@@ -22,22 +22,22 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       "...",
     ]
     profiles = [
-      8,
+      4,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "FE"
+    region        = "NA"
     report_record_types = [
-      "adGroups",
+      "asins_targets",
     ]
-    start_date = "2022-10-22"
+    start_date = "2022-10-10"
     state_filter = [
-      "paused",
+      "enabled",
     ]
   }
-  definition_id = "e1cc1931-3722-4140-a7ee-71b638bd648d"
-  name          = "Mrs. Gail Lesch"
+  definition_id = "517930ed-8d43-4c0d-abba-6ef9fc3c3744"
+  name          = "Bryant Christiansen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "feb93d4b-bde9-4f2b-b80c-d3fe4ad28293"
+  workspace_id  = "e57aa673-d282-459f-8c22-0e39e10d6ef0"
 }
 ```
 

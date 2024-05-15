@@ -73,6 +73,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Default:     booldefault.StaticBool(false),
 						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
 					},
+					"drop_cascade": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects. Default: false`,
+					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)`,

@@ -17,7 +17,6 @@ const (
 func (e Ip2whois) ToPointer() *Ip2whois {
 	return &e
 }
-
 func (e *Ip2whois) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

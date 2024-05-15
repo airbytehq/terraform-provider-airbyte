@@ -14,10 +14,10 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 3
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
@@ -25,15 +25,15 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Domingo Rath"
+        name              = "Brendan Crist II"
         primary_key       = "...my_primary_key..."
-        schemaless        = false
+        schemaless        = true
         validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "07bc0419-1beb-4057-b07c-546621bdba90"
-  name          = "Darlene Gleichner"
+  definition_id = "0208e036-b268-4d75-8466-c963e10b1b39"
+  name          = "Karla Luettgen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1ed0a818-1e6e-455f-99eb-e7b2f5ca6ecd"
+  workspace_id  = "cdf8db6a-4f7e-4237-91b2-60f5d38a1edc"
 }

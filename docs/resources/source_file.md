@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "excel"
+    format       = "excel_binary"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -24,13 +24,13 @@ resource "airbyte_source_file" "my_source_file" {
         storage_account = "...my_storage_account..."
       }
     }
-    reader_options = "{}"
-    url            = "gs://my-google-bucket/data.csv"
+    reader_options = "{\"sep\": \" \"}"
+    url            = "s3://gdelt-open-data/events/20190914.export.csv"
   }
-  definition_id = "7915a2f4-49e5-4b0b-a8d5-fb4b99e2f7dc"
-  name          = "Christy Feest"
+  definition_id = "ae086e3c-2d33-4082-ab84-0e56112c1fda"
+  name          = "Miss Denise Bins"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "76bbd55f-566b-44ad-a049-8ec40fd8ad91"
+  workspace_id  = "cfbec287-654f-412b-8840-28fbb0cddcf8"
 }
 ```
 

@@ -18,7 +18,6 @@ const (
 func (e Twilio) ToPointer() *Twilio {
 	return &e
 }
-
 func (e *Twilio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

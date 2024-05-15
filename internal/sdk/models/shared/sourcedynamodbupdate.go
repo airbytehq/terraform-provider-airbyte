@@ -18,7 +18,6 @@ const (
 func (e SourceDynamodbUpdateSchemasAuthType) ToPointer() *SourceDynamodbUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceDynamodbUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -69,7 +68,6 @@ const (
 func (e SourceDynamodbUpdateAuthType) ToPointer() *SourceDynamodbUpdateAuthType {
 	return &e
 }
-
 func (e *SourceDynamodbUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -236,7 +234,6 @@ const (
 func (e SourceDynamodbUpdateDynamodbRegion) ToPointer() *SourceDynamodbUpdateDynamodbRegion {
 	return &e
 }
-
 func (e *SourceDynamodbUpdateDynamodbRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

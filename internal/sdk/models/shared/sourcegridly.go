@@ -17,7 +17,6 @@ const (
 func (e Gridly) ToPointer() *Gridly {
 	return &e
 }
-
 func (e *Gridly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -19,7 +19,6 @@ const (
 func (e DestinationAwsDatalakeUpdateCredentialsTitle) ToPointer() *DestinationAwsDatalakeUpdateCredentialsTitle {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeUpdateCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -82,7 +81,6 @@ const (
 func (e CredentialsTitle) ToPointer() *CredentialsTitle {
 	return &e
 }
-
 func (e *CredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -203,7 +201,6 @@ const (
 func (e DestinationAwsDatalakeUpdateCompressionCodecOptional) ToPointer() *DestinationAwsDatalakeUpdateCompressionCodecOptional {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeUpdateCompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -233,7 +230,6 @@ const (
 func (e DestinationAwsDatalakeUpdateFormatTypeWildcard) ToPointer() *DestinationAwsDatalakeUpdateFormatTypeWildcard {
 	return &e
 }
-
 func (e *DestinationAwsDatalakeUpdateFormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -290,7 +286,6 @@ const (
 func (e CompressionCodecOptional) ToPointer() *CompressionCodecOptional {
 	return &e
 }
-
 func (e *CompressionCodecOptional) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -316,7 +311,6 @@ const (
 func (e FormatTypeWildcard) ToPointer() *FormatTypeWildcard {
 	return &e
 }
-
 func (e *FormatTypeWildcard) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -442,7 +436,6 @@ const (
 func (e ChooseHowToPartitionData) ToPointer() *ChooseHowToPartitionData {
 	return &e
 }
-
 func (e *ChooseHowToPartitionData) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -512,7 +505,6 @@ const (
 func (e S3BucketRegion) ToPointer() *S3BucketRegion {
 	return &e
 }
-
 func (e *S3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

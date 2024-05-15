@@ -19,7 +19,6 @@ const (
 func (e SourceTiktokMarketingUpdateSchemasAuthType) ToPointer() *SourceTiktokMarketingUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceTiktokMarketingUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +79,6 @@ const (
 func (e SourceTiktokMarketingUpdateAuthType) ToPointer() *SourceTiktokMarketingUpdateAuthType {
 	return &e
 }
-
 func (e *SourceTiktokMarketingUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

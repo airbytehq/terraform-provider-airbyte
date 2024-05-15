@@ -18,7 +18,6 @@ const (
 func (e SourceSalesforceAuthType) ToPointer() *SourceSalesforceAuthType {
 	return &e
 }
-
 func (e *SourceSalesforceAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e Salesforce) ToPointer() *Salesforce {
 	return &e
 }
-
 func (e *Salesforce) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -73,7 +71,6 @@ const (
 func (e SourceSalesforceSearchCriteria) ToPointer() *SourceSalesforceSearchCriteria {
 	return &e
 }
-
 func (e *SourceSalesforceSearchCriteria) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

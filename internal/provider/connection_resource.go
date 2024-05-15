@@ -327,7 +327,7 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	request := *data.ToSharedConnectionCreateRequest()
-	res, err := r.client.PublicConnections.CreateConnection(ctx, request)
+	res, err := r.client.Connections.CreateConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -376,7 +376,7 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 	request := operations.GetConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.PublicConnections.GetConnection(ctx, request)
+	res, err := r.client.Connections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -426,7 +426,7 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		ConnectionPatchRequest: connectionPatchRequest,
 		ConnectionID:           connectionID,
 	}
-	res, err := r.client.PublicConnections.PatchConnection(ctx, request)
+	res, err := r.client.Connections.PatchConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -475,7 +475,7 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 	request := operations.DeleteConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.PublicConnections.DeleteConnection(ctx, request)
+	res, err := r.client.Connections.DeleteConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

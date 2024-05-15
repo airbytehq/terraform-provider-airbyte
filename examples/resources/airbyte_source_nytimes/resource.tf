@@ -2,12 +2,12 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
   configuration = {
     api_key    = "...my_api_key..."
     end_date   = "1851-01"
-    period     = "1"
+    period     = "30"
     share_type = "facebook"
-    start_date = "1851-01"
+    start_date = "2022-08"
   }
-  definition_id = "5f386d0a-c5af-43c6-958d-9b03d25bee3d"
-  name          = "Dana Skiles"
+  definition_id = "83b2c4dd-4d42-4907-b41e-e0bbab0457d9"
+  name          = "Sue Durgan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "77cb62b5-9b9f-41ee-8249-578a5bcbbc2c"
+  workspace_id  = "e6ecd841-e72a-4766-a686-faa512d8044b"
 }

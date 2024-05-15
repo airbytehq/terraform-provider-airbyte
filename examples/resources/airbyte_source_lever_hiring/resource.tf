@@ -8,8 +8,8 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
     environment = "Sandbox"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  definition_id = "b385957e-3c92-41cc-9284-a21155c54910"
-  name          = "Linda Muller"
+  definition_id = "d3753fe4-6a14-403b-a1bd-8103cfb42284"
+  name          = "Jonathon Hermiston"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9a984e4b-07bc-4af1-bed5-606ac59e7c8a"
+  workspace_id  = "759fd79d-74aa-420e-a69f-1b1a975dd1b5"
 }

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 3c7cb95b4d2ffbb359db5ef4a5383937
+  docChecksum: 7510d1e1adcbbc1ce51b5790463794de
   docVersion: 1.0.0
-  speakeasyVersion: 1.289.0
-  generationVersion: 2.331.0
-  releaseVersion: 0.4.3
-  configChecksum: d4feb8ab18479ec25864368fd26fd64b
+  speakeasyVersion: 1.291.0
+  generationVersion: 2.332.4
+  releaseVersion: 0.5.0
+  configChecksum: 7553aaea74433c83d224b2e26c7afc9e
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -16,23 +16,18 @@ features:
     core: 3.21.0
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
+    groups: 2.81.2
     nullables: 0.0.0
+    oauth2ClientCredentials: 0.1.0
     unions: 2.81.13
 generatedFiles:
-  - internal/sdk/publicconnections.go
-  - internal/sdk/public.go
   - internal/sdk/connections.go
-  - internal/sdk/publicdestinations.go
   - internal/sdk/destinations.go
-  - internal/sdk/publicjobs.go
+  - internal/sdk/health.go
   - internal/sdk/jobs.go
-  - internal/sdk/publicpermissions.go
   - internal/sdk/permissions.go
-  - internal/sdk/publicsources.go
   - internal/sdk/sources.go
-  - internal/sdk/publicstreams.go
   - internal/sdk/streams.go
-  - internal/sdk/publicworkspaces.go
   - internal/sdk/workspaces.go
   - internal/sdk/sdk.go
   - internal/sdk/models/errors/sdkerror.go
@@ -56,31 +51,7 @@ generatedFiles:
   - internal/sdk/models/operations/getconnection.go
   - internal/sdk/models/operations/listconnections.go
   - internal/sdk/models/operations/patchconnection.go
-  - internal/sdk/models/operations/canceljob.go
   - internal/sdk/models/operations/createdestination.go
-  - internal/sdk/models/operations/createjob.go
-  - internal/sdk/models/operations/createorupdateworkspaceoauthcredentials.go
-  - internal/sdk/models/operations/createpermission.go
-  - internal/sdk/models/operations/createsource.go
-  - internal/sdk/models/operations/createworkspace.go
-  - internal/sdk/models/operations/deletedestination.go
-  - internal/sdk/models/operations/deletesource.go
-  - internal/sdk/models/operations/deleteworkspace.go
-  - internal/sdk/models/operations/getdestination.go
-  - internal/sdk/models/operations/getjob.go
-  - internal/sdk/models/operations/getsource.go
-  - internal/sdk/models/operations/getstreamproperties.go
-  - internal/sdk/models/operations/getworkspace.go
-  - internal/sdk/models/operations/initiateoauth.go
-  - internal/sdk/models/operations/listdestinations.go
-  - internal/sdk/models/operations/listjobs.go
-  - internal/sdk/models/operations/listsources.go
-  - internal/sdk/models/operations/listworkspaces.go
-  - internal/sdk/models/operations/patchdestination.go
-  - internal/sdk/models/operations/patchsource.go
-  - internal/sdk/models/operations/putdestination.go
-  - internal/sdk/models/operations/putsource.go
-  - internal/sdk/models/operations/updateworkspace.go
   - internal/sdk/models/operations/createdestinationastra.go
   - internal/sdk/models/operations/createdestinationawsdatalake.go
   - internal/sdk/models/operations/createdestinationazureblobstorage.go
@@ -112,11 +83,13 @@ generatedFiles:
   - internal/sdk/models/operations/createdestinations3glue.go
   - internal/sdk/models/operations/createdestinationsftpjson.go
   - internal/sdk/models/operations/createdestinationsnowflake.go
+  - internal/sdk/models/operations/createdestinationsnowflakecortex.go
   - internal/sdk/models/operations/createdestinationteradata.go
   - internal/sdk/models/operations/createdestinationtypesense.go
   - internal/sdk/models/operations/createdestinationvectara.go
   - internal/sdk/models/operations/createdestinationweaviate.go
   - internal/sdk/models/operations/createdestinationyellowbrick.go
+  - internal/sdk/models/operations/deletedestination.go
   - internal/sdk/models/operations/deletedestinationastra.go
   - internal/sdk/models/operations/deletedestinationawsdatalake.go
   - internal/sdk/models/operations/deletedestinationazureblobstorage.go
@@ -148,11 +121,13 @@ generatedFiles:
   - internal/sdk/models/operations/deletedestinations3glue.go
   - internal/sdk/models/operations/deletedestinationsftpjson.go
   - internal/sdk/models/operations/deletedestinationsnowflake.go
+  - internal/sdk/models/operations/deletedestinationsnowflakecortex.go
   - internal/sdk/models/operations/deletedestinationteradata.go
   - internal/sdk/models/operations/deletedestinationtypesense.go
   - internal/sdk/models/operations/deletedestinationvectara.go
   - internal/sdk/models/operations/deletedestinationweaviate.go
   - internal/sdk/models/operations/deletedestinationyellowbrick.go
+  - internal/sdk/models/operations/getdestination.go
   - internal/sdk/models/operations/getdestinationastra.go
   - internal/sdk/models/operations/getdestinationawsdatalake.go
   - internal/sdk/models/operations/getdestinationazureblobstorage.go
@@ -184,11 +159,15 @@ generatedFiles:
   - internal/sdk/models/operations/getdestinations3glue.go
   - internal/sdk/models/operations/getdestinationsftpjson.go
   - internal/sdk/models/operations/getdestinationsnowflake.go
+  - internal/sdk/models/operations/getdestinationsnowflakecortex.go
   - internal/sdk/models/operations/getdestinationteradata.go
   - internal/sdk/models/operations/getdestinationtypesense.go
   - internal/sdk/models/operations/getdestinationvectara.go
   - internal/sdk/models/operations/getdestinationweaviate.go
   - internal/sdk/models/operations/getdestinationyellowbrick.go
+  - internal/sdk/models/operations/listdestinations.go
+  - internal/sdk/models/operations/patchdestination.go
+  - internal/sdk/models/operations/putdestination.go
   - internal/sdk/models/operations/putdestinationastra.go
   - internal/sdk/models/operations/putdestinationawsdatalake.go
   - internal/sdk/models/operations/putdestinationazureblobstorage.go
@@ -220,11 +199,23 @@ generatedFiles:
   - internal/sdk/models/operations/putdestinations3glue.go
   - internal/sdk/models/operations/putdestinationsftpjson.go
   - internal/sdk/models/operations/putdestinationsnowflake.go
+  - internal/sdk/models/operations/putdestinationsnowflakecortex.go
   - internal/sdk/models/operations/putdestinationteradata.go
   - internal/sdk/models/operations/putdestinationtypesense.go
   - internal/sdk/models/operations/putdestinationvectara.go
   - internal/sdk/models/operations/putdestinationweaviate.go
   - internal/sdk/models/operations/putdestinationyellowbrick.go
+  - internal/sdk/models/operations/gethealthcheck.go
+  - internal/sdk/models/operations/canceljob.go
+  - internal/sdk/models/operations/createjob.go
+  - internal/sdk/models/operations/getjob.go
+  - internal/sdk/models/operations/listjobs.go
+  - internal/sdk/models/operations/createpermission.go
+  - internal/sdk/models/operations/deletepermission.go
+  - internal/sdk/models/operations/getpermission.go
+  - internal/sdk/models/operations/listpermissions.go
+  - internal/sdk/models/operations/updatepermission.go
+  - internal/sdk/models/operations/createsource.go
   - internal/sdk/models/operations/createsourceaha.go
   - internal/sdk/models/operations/createsourceaircall.go
   - internal/sdk/models/operations/createsourceairtable.go
@@ -419,6 +410,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcezenloop.go
   - internal/sdk/models/operations/createsourcezohocrm.go
   - internal/sdk/models/operations/createsourcezoom.go
+  - internal/sdk/models/operations/deletesource.go
   - internal/sdk/models/operations/deletesourceaha.go
   - internal/sdk/models/operations/deletesourceaircall.go
   - internal/sdk/models/operations/deletesourceairtable.go
@@ -613,6 +605,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcezenloop.go
   - internal/sdk/models/operations/deletesourcezohocrm.go
   - internal/sdk/models/operations/deletesourcezoom.go
+  - internal/sdk/models/operations/getsource.go
   - internal/sdk/models/operations/getsourceaha.go
   - internal/sdk/models/operations/getsourceaircall.go
   - internal/sdk/models/operations/getsourceairtable.go
@@ -807,6 +800,10 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcezenloop.go
   - internal/sdk/models/operations/getsourcezohocrm.go
   - internal/sdk/models/operations/getsourcezoom.go
+  - internal/sdk/models/operations/initiateoauth.go
+  - internal/sdk/models/operations/listsources.go
+  - internal/sdk/models/operations/patchsource.go
+  - internal/sdk/models/operations/putsource.go
   - internal/sdk/models/operations/putsourceaha.go
   - internal/sdk/models/operations/putsourceaircall.go
   - internal/sdk/models/operations/putsourceairtable.go
@@ -1001,6 +998,13 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcezenloop.go
   - internal/sdk/models/operations/putsourcezohocrm.go
   - internal/sdk/models/operations/putsourcezoom.go
+  - internal/sdk/models/operations/getstreamproperties.go
+  - internal/sdk/models/operations/createorupdateworkspaceoauthcredentials.go
+  - internal/sdk/models/operations/createworkspace.go
+  - internal/sdk/models/operations/deleteworkspace.go
+  - internal/sdk/models/operations/getworkspace.go
+  - internal/sdk/models/operations/listworkspaces.go
+  - internal/sdk/models/operations/updateworkspace.go
   - internal/sdk/models/shared/connectionresponse.go
   - internal/sdk/models/shared/connectionstatusenum.go
   - internal/sdk/models/shared/connectionscheduleresponse.go
@@ -1019,33 +1023,8 @@ generatedFiles:
   - internal/sdk/models/shared/nonbreakingschemaupdatesbehaviorenumnodefault.go
   - internal/sdk/models/shared/namespacedefinitionenumnodefault.go
   - internal/sdk/models/shared/geographyenumnodefault.go
-  - internal/sdk/models/shared/jobresponse.go
-  - internal/sdk/models/shared/jobstatusenum.go
-  - internal/sdk/models/shared/jobtypeenum.go
   - internal/sdk/models/shared/destinationresponse.go
   - internal/sdk/models/shared/destinationcreaterequest.go
-  - internal/sdk/models/shared/jobcreaterequest.go
-  - internal/sdk/models/shared/workspaceoauthcredentialsrequest.go
-  - internal/sdk/models/shared/oauthcredentialsconfiguration.go
-  - internal/sdk/models/shared/actortypeenum.go
-  - internal/sdk/models/shared/permissionresponse.go
-  - internal/sdk/models/shared/permissiontype.go
-  - internal/sdk/models/shared/permissioncreaterequest.go
-  - internal/sdk/models/shared/sourceresponse.go
-  - internal/sdk/models/shared/sourcecreaterequest.go
-  - internal/sdk/models/shared/workspaceresponse.go
-  - internal/sdk/models/shared/workspacecreaterequest.go
-  - internal/sdk/models/shared/streamproperties.go
-  - internal/sdk/models/shared/initiateoauthrequest.go
-  - internal/sdk/models/shared/destinationsresponse.go
-  - internal/sdk/models/shared/jobsresponse.go
-  - internal/sdk/models/shared/sourcesresponse.go
-  - internal/sdk/models/shared/workspacesresponse.go
-  - internal/sdk/models/shared/destinationpatchrequest.go
-  - internal/sdk/models/shared/sourcepatchrequest.go
-  - internal/sdk/models/shared/destinationputrequest.go
-  - internal/sdk/models/shared/sourceputrequest.go
-  - internal/sdk/models/shared/workspaceupdaterequest.go
   - internal/sdk/models/shared/destinationastracreaterequest.go
   - internal/sdk/models/shared/destinationastra.go
   - internal/sdk/models/shared/destinationawsdatalakecreaterequest.go
@@ -1107,6 +1086,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationsftpjson.go
   - internal/sdk/models/shared/destinationsnowflakecreaterequest.go
   - internal/sdk/models/shared/destinationsnowflake.go
+  - internal/sdk/models/shared/destinationsnowflakecortexcreaterequest.go
+  - internal/sdk/models/shared/destinationsnowflakecortex.go
   - internal/sdk/models/shared/destinationteradatacreaterequest.go
   - internal/sdk/models/shared/destinationteradata.go
   - internal/sdk/models/shared/destinationtypesensecreaterequest.go
@@ -1117,6 +1098,9 @@ generatedFiles:
   - internal/sdk/models/shared/destinationweaviate.go
   - internal/sdk/models/shared/destinationyellowbrickcreaterequest.go
   - internal/sdk/models/shared/destinationyellowbrick.go
+  - internal/sdk/models/shared/destinationsresponse.go
+  - internal/sdk/models/shared/destinationpatchrequest.go
+  - internal/sdk/models/shared/destinationputrequest.go
   - internal/sdk/models/shared/destinationastraputrequest.go
   - internal/sdk/models/shared/destinationastraupdate.go
   - internal/sdk/models/shared/destinationawsdatalakeputrequest.go
@@ -1178,6 +1162,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationsftpjsonupdate.go
   - internal/sdk/models/shared/destinationsnowflakeputrequest.go
   - internal/sdk/models/shared/destinationsnowflakeupdate.go
+  - internal/sdk/models/shared/destinationsnowflakecortexputrequest.go
+  - internal/sdk/models/shared/destinationsnowflakecortexupdate.go
   - internal/sdk/models/shared/destinationteradataputrequest.go
   - internal/sdk/models/shared/destinationteradataupdate.go
   - internal/sdk/models/shared/destinationtypesenseputrequest.go
@@ -1188,6 +1174,20 @@ generatedFiles:
   - internal/sdk/models/shared/destinationweaviateupdate.go
   - internal/sdk/models/shared/destinationyellowbrickputrequest.go
   - internal/sdk/models/shared/destinationyellowbrickupdate.go
+  - internal/sdk/models/shared/jobresponse.go
+  - internal/sdk/models/shared/jobstatusenum.go
+  - internal/sdk/models/shared/jobtypeenum.go
+  - internal/sdk/models/shared/jobcreaterequest.go
+  - internal/sdk/models/shared/jobsresponse.go
+  - internal/sdk/models/shared/permissionresponse.go
+  - internal/sdk/models/shared/permissiontype.go
+  - internal/sdk/models/shared/permissioncreaterequest.go
+  - internal/sdk/models/shared/permissionsresponse.go
+  - internal/sdk/models/shared/permissionresponseread.go
+  - internal/sdk/models/shared/permissionscope.go
+  - internal/sdk/models/shared/permissionupdaterequest.go
+  - internal/sdk/models/shared/sourceresponse.go
+  - internal/sdk/models/shared/sourcecreaterequest.go
   - internal/sdk/models/shared/sourceahacreaterequest.go
   - internal/sdk/models/shared/sourceaha.go
   - internal/sdk/models/shared/sourceaircallcreaterequest.go
@@ -1575,6 +1575,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcezohocrm.go
   - internal/sdk/models/shared/sourcezoomcreaterequest.go
   - internal/sdk/models/shared/sourcezoom.go
+  - internal/sdk/models/shared/initiateoauthrequest.go
+  - internal/sdk/models/shared/sourcesresponse.go
+  - internal/sdk/models/shared/sourcepatchrequest.go
+  - internal/sdk/models/shared/sourceputrequest.go
   - internal/sdk/models/shared/sourceahaputrequest.go
   - internal/sdk/models/shared/sourceahaupdate.go
   - internal/sdk/models/shared/sourceaircallputrequest.go
@@ -1962,12 +1966,22 @@ generatedFiles:
   - internal/sdk/models/shared/sourcezohocrmupdate.go
   - internal/sdk/models/shared/sourcezoomputrequest.go
   - internal/sdk/models/shared/sourcezoomupdate.go
+  - internal/sdk/models/shared/streamproperties.go
+  - internal/sdk/models/shared/workspaceoauthcredentialsrequest.go
+  - internal/sdk/models/shared/oauthcredentialsconfiguration.go
+  - internal/sdk/models/shared/actortypeenum.go
+  - internal/sdk/models/shared/workspaceresponse.go
+  - internal/sdk/models/shared/workspacecreaterequest.go
+  - internal/sdk/models/shared/workspacesresponse.go
+  - internal/sdk/models/shared/workspaceupdaterequest.go
   - internal/sdk/models/shared/security.go
+  - internal/sdk/models/shared/schemeclientcredentials.go
   - internal/sdk/models/shared/schemebasicauth.go
   - internal/sdk/.gitignore
   - internal/sdk/.gitattributes
   - internal/sdk/internal/hooks/registration.go
   - internal/sdk/internal/hooks/hooks.go
+  - internal/sdk/internal/hooks/clientcredentials.go
   - examples/README.md
   - go.mod
   - go.sum
@@ -2132,6 +2146,8 @@ generatedFiles:
   - internal/provider/types/username_and_password.go
   - internal/provider/types/destination_snowflake_authorization_method.go
   - internal/provider/types/destination_snowflake.go
+  - internal/provider/types/destination_snowflake_cortex_indexing.go
+  - internal/provider/types/destination_snowflake_cortex.go
   - internal/provider/types/destination_teradata_verify_ca.go
   - internal/provider/types/destination_teradata_ssl_modes.go
   - internal/provider/types/destination_teradata.go
@@ -2618,6 +2634,10 @@ generatedFiles:
   - internal/provider/destination_snowflake_resource.go
   - internal/provider/destination_snowflake_resource_sdk.go
   - examples/resources/airbyte_destination_snowflake/resource.tf
+  - examples/resources/airbyte_destination_snowflake_cortex/import.sh
+  - internal/provider/destination_snowflakecortex_resource.go
+  - internal/provider/destination_snowflakecortex_resource_sdk.go
+  - examples/resources/airbyte_destination_snowflake_cortex/resource.tf
   - examples/resources/airbyte_destination_teradata/import.sh
   - internal/provider/destination_teradata_resource.go
   - internal/provider/destination_teradata_resource_sdk.go
@@ -2638,6 +2658,7 @@ generatedFiles:
   - internal/provider/destination_yellowbrick_resource.go
   - internal/provider/destination_yellowbrick_resource_sdk.go
   - examples/resources/airbyte_destination_yellowbrick/resource.tf
+  - examples/resources/airbyte_permission/import.sh
   - internal/provider/permission_resource.go
   - internal/provider/permission_resource_sdk.go
   - examples/resources/airbyte_permission/resource.tf
@@ -3517,6 +3538,9 @@ generatedFiles:
   - internal/provider/destination_snowflake_data_source.go
   - internal/provider/destination_snowflake_data_source_sdk.go
   - examples/data-sources/airbyte_destination_snowflake/data-source.tf
+  - internal/provider/destination_snowflakecortex_data_source.go
+  - internal/provider/destination_snowflakecortex_data_source_sdk.go
+  - examples/data-sources/airbyte_destination_snowflake_cortex/data-source.tf
   - internal/provider/destination_teradata_data_source.go
   - internal/provider/destination_teradata_data_source_sdk.go
   - examples/data-sources/airbyte_destination_teradata/data-source.tf
@@ -3532,6 +3556,9 @@ generatedFiles:
   - internal/provider/destination_yellowbrick_data_source.go
   - internal/provider/destination_yellowbrick_data_source_sdk.go
   - examples/data-sources/airbyte_destination_yellowbrick/data-source.tf
+  - internal/provider/permission_data_source.go
+  - internal/provider/permission_data_source_sdk.go
+  - examples/data-sources/airbyte_permission/data-source.tf
   - internal/provider/source_aha_data_source.go
   - internal/provider/source_aha_data_source_sdk.go
   - examples/data-sources/airbyte_source_aha/data-source.tf

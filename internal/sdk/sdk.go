@@ -65,21 +65,14 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	PublicConnections  *PublicConnections
-	Public             *Public
-	Connections        *Connections
-	PublicDestinations *PublicDestinations
-	Destinations       *Destinations
-	PublicJobs         *PublicJobs
-	Jobs               *Jobs
-	PublicPermissions  *PublicPermissions
-	Permissions        *Permissions
-	PublicSources      *PublicSources
-	Sources            *Sources
-	PublicStreams      *PublicStreams
-	Streams            *Streams
-	PublicWorkspaces   *PublicWorkspaces
-	Workspaces         *Workspaces
+	Connections  *Connections
+	Destinations *Destinations
+	Health       *Health
+	Jobs         *Jobs
+	Permissions  *Permissions
+	Sources      *Sources
+	Streams      *Streams
+	Workspaces   *Workspaces
 
 	sdkConfiguration sdkConfiguration
 }
@@ -157,8 +150,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.331.0",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.331.0 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			GenVersion:        "2.332.4",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.332.4 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -178,33 +171,19 @@ func New(opts ...SDKOption) *SDK {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
-	sdk.PublicConnections = newPublicConnections(sdk.sdkConfiguration)
-
-	sdk.Public = newPublic(sdk.sdkConfiguration)
-
 	sdk.Connections = newConnections(sdk.sdkConfiguration)
-
-	sdk.PublicDestinations = newPublicDestinations(sdk.sdkConfiguration)
 
 	sdk.Destinations = newDestinations(sdk.sdkConfiguration)
 
-	sdk.PublicJobs = newPublicJobs(sdk.sdkConfiguration)
+	sdk.Health = newHealth(sdk.sdkConfiguration)
 
 	sdk.Jobs = newJobs(sdk.sdkConfiguration)
 
-	sdk.PublicPermissions = newPublicPermissions(sdk.sdkConfiguration)
-
 	sdk.Permissions = newPermissions(sdk.sdkConfiguration)
-
-	sdk.PublicSources = newPublicSources(sdk.sdkConfiguration)
 
 	sdk.Sources = newSources(sdk.sdkConfiguration)
 
-	sdk.PublicStreams = newPublicStreams(sdk.sdkConfiguration)
-
 	sdk.Streams = newStreams(sdk.sdkConfiguration)
-
-	sdk.PublicWorkspaces = newPublicWorkspaces(sdk.sdkConfiguration)
 
 	sdk.Workspaces = newWorkspaces(sdk.sdkConfiguration)
 

@@ -45,7 +45,6 @@ const (
 func (e Onesignal) ToPointer() *Onesignal {
 	return &e
 }
-
 func (e *Onesignal) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

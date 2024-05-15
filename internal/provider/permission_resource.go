@@ -7,7 +7,9 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -64,11 +66,10 @@ func (r *PermissionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"permission_type": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplaceIfConfigured(),
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Describes what actions/endpoints the permission entitles to. Requires replacement if changed. ; must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]`,
+				Description: `Describes what actions/endpoints the permission entitles to. must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"instance_admin",
@@ -143,7 +144,7 @@ func (r *PermissionResource) Create(ctx context.Context, req resource.CreateRequ
 	}
 
 	request := *data.ToSharedPermissionCreateRequest()
-	res, err := r.client.Public.CreatePermission(ctx, request)
+	res, err := r.client.Permissions.CreatePermission(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -188,7 +189,35 @@ func (r *PermissionResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	// Not Implemented; we rely entirely on CREATE API request response
+	permissionID := data.PermissionID.ValueString()
+	request := operations.GetPermissionRequest{
+		PermissionID: permissionID,
+	}
+	res, err := r.client.Permissions.GetPermission(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if res.PermissionResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -208,7 +237,34 @@ func (r *PermissionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	permissionUpdateRequest := *data.ToSharedPermissionUpdateRequest()
+	permissionID := data.PermissionID.ValueString()
+	request := operations.UpdatePermissionRequest{
+		PermissionUpdateRequest: permissionUpdateRequest,
+		PermissionID:            permissionID,
+	}
+	res, err := r.client.Permissions.UpdatePermission(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if res.PermissionResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -232,9 +288,29 @@ func (r *PermissionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	// Not Implemented; entity does not have a configured DELETE operation
+	permissionID := data.PermissionID.ValueString()
+	request := operations.DeletePermissionRequest{
+		PermissionID: permissionID,
+	}
+	res, err := r.client.Permissions.DeletePermission(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+
 }
 
 func (r *PermissionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resp.Diagnostics.AddError("Not Implemented", "No available import state operation is available for resource permission.")
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("permission_id"), req.ID)...)
 }

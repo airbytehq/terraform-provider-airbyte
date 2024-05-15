@@ -19,7 +19,6 @@ const (
 func (e SourceMailchimpUpdateSchemasAuthType) ToPointer() *SourceMailchimpUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceMailchimpUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceMailchimpUpdateAuthType) ToPointer() *SourceMailchimpUpdateAuthType {
 	return &e
 }
-
 func (e *SourceMailchimpUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

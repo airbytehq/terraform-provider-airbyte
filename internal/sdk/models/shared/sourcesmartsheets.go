@@ -19,7 +19,6 @@ const (
 func (e SourceSmartsheetsSchemasAuthType) ToPointer() *SourceSmartsheetsSchemasAuthType {
 	return &e
 }
-
 func (e *SourceSmartsheetsSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceSmartsheetsAuthType) ToPointer() *SourceSmartsheetsAuthType {
 	return &e
 }
-
 func (e *SourceSmartsheetsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -238,7 +236,6 @@ const (
 func (e SourceSmartsheetsValidenums) ToPointer() *SourceSmartsheetsValidenums {
 	return &e
 }
-
 func (e *SourceSmartsheetsValidenums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -294,7 +291,6 @@ const (
 func (e Smartsheets) ToPointer() *Smartsheets {
 	return &e
 }
-
 func (e *Smartsheets) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

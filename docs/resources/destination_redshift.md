@@ -17,6 +17,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = false
+    drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -34,15 +35,15 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_name_pattern  = "{timestamp}"
-        purge_staging_data = false
+        file_name_pattern  = "{date:yyyy_MM}"
+        purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "eu-west-1"
+        s3_bucket_region   = "ap-south-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Dario.Brakus57"
+    username = "Beau57"
   }
   definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
   name          = "Jessie Brown"
@@ -81,6 +82,7 @@ Required:
 Optional:
 
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
+- `drop_cascade` (Boolean) Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `port` (Number) Port of the database. Default: 5439
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal).

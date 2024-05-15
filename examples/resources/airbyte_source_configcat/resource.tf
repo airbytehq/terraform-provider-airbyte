@@ -1,10 +1,10 @@
 resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
     password = "...my_password..."
-    username = "Tremaine_Adams41"
+    username = "Jada39"
   }
-  definition_id = "002c3cc1-23e8-4783-950d-4d2b80c50dc3"
-  name          = "Anita West"
+  definition_id = "042c1c65-661b-4248-9a06-0238eba1361d"
+  name          = "Miss Alexandra Barton"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cbf0e9a0-5e99-44ac-a41d-c5b42f2a228e"
+  workspace_id  = "e1ba68d3-4050-42b9-a029-febd39e6abf1"
 }

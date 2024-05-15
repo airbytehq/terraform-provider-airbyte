@@ -18,7 +18,6 @@ const (
 func (e SourceCartSchemasAuthType) ToPointer() *SourceCartSchemasAuthType {
 	return &e
 }
-
 func (e *SourceCartSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e SourceCartAuthType) ToPointer() *SourceCartAuthType {
 	return &e
 }
-
 func (e *SourceCartAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -212,7 +210,6 @@ const (
 func (e Cart) ToPointer() *Cart {
 	return &e
 }
-
 func (e *Cart) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

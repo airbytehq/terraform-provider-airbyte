@@ -19,7 +19,6 @@ const (
 func (e DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -100,7 +99,6 @@ const (
 func (e DestinationRedshiftUpdateSchemasTunnelMethod) ToPointer() *DestinationRedshiftUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -181,7 +179,6 @@ const (
 func (e DestinationRedshiftUpdateTunnelMethod) ToPointer() *DestinationRedshiftUpdateTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -311,7 +308,6 @@ const (
 func (e DestinationRedshiftUpdateSchemasMethod) ToPointer() *DestinationRedshiftUpdateSchemasMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -355,7 +351,6 @@ const (
 func (e DestinationRedshiftUpdateEncryptionType) ToPointer() *DestinationRedshiftUpdateEncryptionType {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -408,7 +403,6 @@ const (
 func (e EncryptionType) ToPointer() *EncryptionType {
 	return &e
 }
-
 func (e *EncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -516,7 +510,6 @@ const (
 func (e DestinationRedshiftUpdateMethod) ToPointer() *DestinationRedshiftUpdateMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -574,7 +567,6 @@ const (
 func (e DestinationRedshiftUpdateS3BucketRegion) ToPointer() *DestinationRedshiftUpdateS3BucketRegion {
 	return &e
 }
-
 func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -816,6 +808,8 @@ type DestinationRedshiftUpdate struct {
 	Database string `json:"database"`
 	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
 	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
+	DropCascade *bool `default:"false" json:"drop_cascade"`
 	// Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -859,6 +853,13 @@ func (o *DestinationRedshiftUpdate) GetDisableTypeDedupe() *bool {
 		return nil
 	}
 	return o.DisableTypeDedupe
+}
+
+func (o *DestinationRedshiftUpdate) GetDropCascade() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DropCascade
 }
 
 func (o *DestinationRedshiftUpdate) GetHost() string {

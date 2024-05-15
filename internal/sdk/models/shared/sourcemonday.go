@@ -18,7 +18,6 @@ const (
 func (e SourceMondaySchemasAuthType) ToPointer() *SourceMondaySchemasAuthType {
 	return &e
 }
-
 func (e *SourceMondaySchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceMondayAuthType) ToPointer() *SourceMondayAuthType {
 	return &e
 }
-
 func (e *SourceMondayAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -212,7 +210,6 @@ const (
 func (e Monday) ToPointer() *Monday {
 	return &e
 }
-
 func (e *Monday) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

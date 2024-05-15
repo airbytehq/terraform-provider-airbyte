@@ -18,7 +18,6 @@ const (
 func (e SourcePinterestAuthMethod) ToPointer() *SourcePinterestAuthMethod {
 	return &e
 }
-
 func (e *SourcePinterestAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -90,7 +89,6 @@ const (
 func (e SourcePinterestValidEnums) ToPointer() *SourcePinterestValidEnums {
 	return &e
 }
-
 func (e *SourcePinterestValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -122,7 +120,6 @@ const (
 func (e SourcePinterestClickWindowDays) ToPointer() *SourcePinterestClickWindowDays {
 	return &e
 }
-
 func (e *SourcePinterestClickWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -268,7 +265,6 @@ const (
 func (e SourcePinterestSchemasValidEnums) ToPointer() *SourcePinterestSchemasValidEnums {
 	return &e
 }
-
 func (e *SourcePinterestSchemasValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -516,7 +512,6 @@ const (
 func (e SourcePinterestConversionReportTime) ToPointer() *SourcePinterestConversionReportTime {
 	return &e
 }
-
 func (e *SourcePinterestConversionReportTime) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -548,7 +543,6 @@ const (
 func (e SourcePinterestEngagementWindowDays) ToPointer() *SourcePinterestEngagementWindowDays {
 	return &e
 }
-
 func (e *SourcePinterestEngagementWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -587,7 +581,6 @@ const (
 func (e SourcePinterestGranularity) ToPointer() *SourcePinterestGranularity {
 	return &e
 }
-
 func (e *SourcePinterestGranularity) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -631,7 +624,6 @@ const (
 func (e SourcePinterestLevel) ToPointer() *SourcePinterestLevel {
 	return &e
 }
-
 func (e *SourcePinterestLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -683,7 +675,6 @@ const (
 func (e SourcePinterestViewWindowDays) ToPointer() *SourcePinterestViewWindowDays {
 	return &e
 }
-
 func (e *SourcePinterestViewWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -822,7 +813,6 @@ const (
 func (e Pinterest) ToPointer() *Pinterest {
 	return &e
 }
-
 func (e *Pinterest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -848,7 +838,6 @@ const (
 func (e SourcePinterestStatus) ToPointer() *SourcePinterestStatus {
 	return &e
 }
-
 func (e *SourcePinterestStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

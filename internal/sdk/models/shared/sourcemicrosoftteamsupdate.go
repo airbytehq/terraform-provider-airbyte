@@ -18,7 +18,6 @@ const (
 func (e SourceMicrosoftTeamsUpdateSchemasAuthType) ToPointer() *SourceMicrosoftTeamsUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftTeamsUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -88,7 +87,6 @@ const (
 func (e SourceMicrosoftTeamsUpdateAuthType) ToPointer() *SourceMicrosoftTeamsUpdateAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftTeamsUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

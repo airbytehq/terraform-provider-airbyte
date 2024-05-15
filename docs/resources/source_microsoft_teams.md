@@ -24,10 +24,10 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "b49c82f2-83fd-4f1b-b62a-3ef9cacc879b"
-  name          = "Darren Muller Jr."
+  definition_id = "68e79345-d144-4630-b318-f29cf10b0742"
+  name          = "Alejandro Dietrich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "647dc7c2-71c5-4044-a25a-4f7e4eabe3a9"
+  workspace_id  = "99111a32-0cca-4d5a-9c13-30ef57488395"
 }
 ```
 

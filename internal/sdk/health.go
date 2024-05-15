@@ -10,53 +10,42 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/errors"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"io"
 	"net/http"
 	"net/url"
 )
 
-type PublicPermissions struct {
+type Health struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPublicPermissions(sdkConfig sdkConfiguration) *PublicPermissions {
-	return &PublicPermissions{
+func newHealth(sdkConfig sdkConfiguration) *Health {
+	return &Health{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
-// CreatePermission - Create a permission
-func (s *PublicPermissions) CreatePermission(ctx context.Context, request shared.PermissionCreateRequest) (*operations.CreatePermissionResponse, error) {
+// GetHealthCheck - Health Check
+func (s *Health) GetHealthCheck(ctx context.Context) (*operations.GetHealthCheckResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
-		OperationID:    "createPermission",
+		OperationID:    "getHealthCheck",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: nil,
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	opURL, err := url.JoinPath(baseURL, "/permissions")
+	opURL, err := url.JoinPath(baseURL, "/health")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept", "*/*")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-	req.Header.Set("Content-Type", reqContentType)
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
 
 	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 	if err != nil {
@@ -87,7 +76,7 @@ func (s *PublicPermissions) CreatePermission(ctx context.Context, request shared
 		}
 	}
 
-	res := &operations.CreatePermissionResponse{
+	res := &operations.GetHealthCheckResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
@@ -102,20 +91,6 @@ func (s *PublicPermissions) CreatePermission(ctx context.Context, request shared
 
 	switch {
 	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			var out shared.PermissionResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.PermissionResponse = &out
-		default:
-			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 400:
-		fallthrough
-	case httpRes.StatusCode == 403:
 	default:
 		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
 	}

@@ -18,7 +18,6 @@ const (
 func (e SourceOktaSchemasAuthType) ToPointer() *SourceOktaSchemasAuthType {
 	return &e
 }
-
 func (e *SourceOktaSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceOktaAuthType) ToPointer() *SourceOktaAuthType {
 	return &e
 }
-
 func (e *SourceOktaAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -203,7 +201,6 @@ const (
 func (e Okta) ToPointer() *Okta {
 	return &e
 }
-
 func (e *Okta) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

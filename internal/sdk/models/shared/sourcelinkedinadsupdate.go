@@ -40,7 +40,6 @@ const (
 func (e PivotCategory) ToPointer() *PivotCategory {
 	return &e
 }
-
 func (e *PivotCategory) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -108,7 +107,6 @@ const (
 func (e TimeGranularity) ToPointer() *TimeGranularity {
 	return &e
 }
-
 func (e *TimeGranularity) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -169,7 +167,6 @@ const (
 func (e SourceLinkedinAdsUpdateSchemasAuthMethod) ToPointer() *SourceLinkedinAdsUpdateSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceLinkedinAdsUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -221,7 +218,6 @@ const (
 func (e SourceLinkedinAdsUpdateAuthMethod) ToPointer() *SourceLinkedinAdsUpdateAuthMethod {
 	return &e
 }
-
 func (e *SourceLinkedinAdsUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

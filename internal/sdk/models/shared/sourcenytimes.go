@@ -21,7 +21,6 @@ const (
 func (e SourceNytimesPeriodUsedForMostPopularStreams) ToPointer() *SourceNytimesPeriodUsedForMostPopularStreams {
 	return &e
 }
-
 func (e *SourceNytimesPeriodUsedForMostPopularStreams) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -50,7 +49,6 @@ const (
 func (e SourceNytimesShareTypeUsedForMostPopularSharedStream) ToPointer() *SourceNytimesShareTypeUsedForMostPopularSharedStream {
 	return &e
 }
-
 func (e *SourceNytimesShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -74,7 +72,6 @@ const (
 func (e Nytimes) ToPointer() *Nytimes {
 	return &e
 }
-
 func (e *Nytimes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

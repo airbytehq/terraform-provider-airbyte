@@ -20,7 +20,6 @@ const (
 func (e SourceBingAdsOperator) ToPointer() *SourceBingAdsOperator {
 	return &e
 }
-
 func (e *SourceBingAdsOperator) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -68,7 +67,6 @@ const (
 func (e SourceBingAdsAuthMethod) ToPointer() *SourceBingAdsAuthMethod {
 	return &e
 }
-
 func (e *SourceBingAdsAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -126,7 +124,6 @@ const (
 func (e SourceBingAdsReportingDataObject) ToPointer() *SourceBingAdsReportingDataObject {
 	return &e
 }
-
 func (e *SourceBingAdsReportingDataObject) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -266,7 +263,6 @@ const (
 func (e BingAds) ToPointer() *BingAds {
 	return &e
 }
-
 func (e *BingAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

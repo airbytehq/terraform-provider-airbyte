@@ -18,7 +18,6 @@ const (
 func (e SourcePostgresSchemasReplicationMethodMethod) ToPointer() *SourcePostgresSchemasReplicationMethodMethod {
 	return &e
 }
-
 func (e *SourcePostgresSchemasReplicationMethodMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -62,7 +61,6 @@ const (
 func (e SourcePostgresSchemasMethod) ToPointer() *SourcePostgresSchemasMethod {
 	return &e
 }
-
 func (e *SourcePostgresSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -108,7 +106,6 @@ const (
 func (e SourcePostgresInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourcePostgresInvalidCDCPositionBehaviorAdvanced {
 	return &e
 }
-
 func (e *SourcePostgresInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -136,7 +133,6 @@ const (
 func (e SourcePostgresLSNCommitBehaviour) ToPointer() *SourcePostgresLSNCommitBehaviour {
 	return &e
 }
-
 func (e *SourcePostgresLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -162,7 +158,6 @@ const (
 func (e SourcePostgresMethod) ToPointer() *SourcePostgresMethod {
 	return &e
 }
-
 func (e *SourcePostgresMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -187,7 +182,6 @@ const (
 func (e SourcePostgresPlugin) ToPointer() *SourcePostgresPlugin {
 	return &e
 }
-
 func (e *SourcePostgresPlugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -397,7 +391,6 @@ const (
 func (e SourcePostgresPostgres) ToPointer() *SourcePostgresPostgres {
 	return &e
 }
-
 func (e *SourcePostgresPostgres) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -421,7 +414,6 @@ const (
 func (e SourcePostgresSchemasSSLModeSSLModes6Mode) ToPointer() *SourcePostgresSchemasSSLModeSSLModes6Mode {
 	return &e
 }
-
 func (e *SourcePostgresSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -509,7 +501,6 @@ const (
 func (e SourcePostgresSchemasSSLModeSSLModes5Mode) ToPointer() *SourcePostgresSchemasSSLModeSSLModes5Mode {
 	return &e
 }
-
 func (e *SourcePostgresSchemasSSLModeSSLModes5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -597,7 +588,6 @@ const (
 func (e SourcePostgresSchemasSSLModeSSLModesMode) ToPointer() *SourcePostgresSchemasSSLModeSSLModesMode {
 	return &e
 }
-
 func (e *SourcePostgresSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -649,7 +639,6 @@ const (
 func (e SourcePostgresSchemasSslModeMode) ToPointer() *SourcePostgresSchemasSslModeMode {
 	return &e
 }
-
 func (e *SourcePostgresSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -701,7 +690,6 @@ const (
 func (e SourcePostgresSchemasMode) ToPointer() *SourcePostgresSchemasMode {
 	return &e
 }
-
 func (e *SourcePostgresSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -753,7 +741,6 @@ const (
 func (e SourcePostgresMode) ToPointer() *SourcePostgresMode {
 	return &e
 }
-
 func (e *SourcePostgresMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -960,7 +947,6 @@ const (
 func (e SourcePostgresSchemasTunnelMethodTunnelMethod) ToPointer() *SourcePostgresSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourcePostgresSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1041,7 +1027,6 @@ const (
 func (e SourcePostgresSchemasTunnelMethod) ToPointer() *SourcePostgresSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourcePostgresSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1122,7 +1107,6 @@ const (
 func (e SourcePostgresTunnelMethod) ToPointer() *SourcePostgresTunnelMethod {
 	return &e
 }
-
 func (e *SourcePostgresTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

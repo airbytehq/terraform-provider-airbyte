@@ -18,7 +18,6 @@ const (
 func (e DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode) ToPointer() *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -98,7 +97,6 @@ const (
 func (e DestinationPostgresUpdateSchemasSSLModeSSLModesMode) ToPointer() *DestinationPostgresUpdateSchemasSSLModeSSLModesMode {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -160,7 +158,6 @@ const (
 func (e DestinationPostgresUpdateSchemasSslModeMode) ToPointer() *DestinationPostgresUpdateSchemasSslModeMode {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -204,7 +201,6 @@ const (
 func (e DestinationPostgresUpdateSchemasMode) ToPointer() *DestinationPostgresUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -248,7 +244,6 @@ const (
 func (e DestinationPostgresUpdateMode) ToPointer() *DestinationPostgresUpdateMode {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -292,7 +287,6 @@ const (
 func (e Mode) ToPointer() *Mode {
 	return &e
 }
-
 func (e *Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -497,7 +491,6 @@ const (
 func (e DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -578,7 +571,6 @@ const (
 func (e DestinationPostgresUpdateSchemasTunnelMethod) ToPointer() *DestinationPostgresUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -659,7 +651,6 @@ const (
 func (e DestinationPostgresUpdateTunnelMethod) ToPointer() *DestinationPostgresUpdateTunnelMethod {
 	return &e
 }
-
 func (e *DestinationPostgresUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

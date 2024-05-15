@@ -17,7 +17,6 @@ const (
 func (e Emailoctopus) ToPointer() *Emailoctopus {
 	return &e
 }
-
 func (e *Emailoctopus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -19,15 +19,15 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
     client_secret      = "...my_client_secret..."
     dispute_start_date = "2021-06-11T23:59:59.000Z"
     end_date           = "2021-06-11T23:59:59+00:00"
-    is_sandbox         = false
+    is_sandbox         = true
     refresh_token      = "...my_refresh_token..."
-    start_date         = "2021-06-11T23:59:59Z"
+    start_date         = "2021-06-11T23:59:59+00:00"
     time_window        = 6
   }
-  definition_id = "72363e09-a2aa-4e62-99d7-7025755e6995"
-  name          = "Darrell Kuphal"
+  definition_id = "afd0cd95-bcfe-4334-adc4-02aef61635af"
+  name          = "Cary McCullough"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2df19942-2b36-4299-b6b7-41dbfafbdd34"
+  workspace_id  = "985aa22e-677c-477b-a4e4-244a41ce525b"
 }
 ```
 

@@ -17,7 +17,6 @@ const (
 func (e Metabase) ToPointer() *Metabase {
 	return &e
 }
-
 func (e *Metabase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

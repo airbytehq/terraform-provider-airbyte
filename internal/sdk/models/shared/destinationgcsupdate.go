@@ -18,7 +18,6 @@ const (
 func (e CredentialType) ToPointer() *CredentialType {
 	return &e
 }
-
 func (e *CredentialType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -131,7 +130,6 @@ const (
 func (e DestinationGcsUpdateCompressionCodec) ToPointer() *DestinationGcsUpdateCompressionCodec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateCompressionCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -167,7 +165,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatOutputFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatOutputFormatFormatType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -267,7 +264,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatCompressionType) ToPointer() *DestinationGcsUpdateSchemasFormatCompressionType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -313,7 +309,6 @@ const (
 func (e DestinationGcsUpdateSchemasCompressionType) ToPointer() *DestinationGcsUpdateSchemasCompressionType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -423,7 +418,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatFormatType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -478,7 +472,6 @@ const (
 func (e DestinationGcsUpdateCompressionType) ToPointer() *DestinationGcsUpdateCompressionType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -524,7 +517,6 @@ const (
 func (e CompressionType) ToPointer() *CompressionType {
 	return &e
 }
-
 func (e *CompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -636,7 +628,6 @@ const (
 func (e Normalization) ToPointer() *Normalization {
 	return &e
 }
-
 func (e *Normalization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -662,7 +653,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatType) ToPointer() *DestinationGcsUpdateSchemasFormatType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -726,7 +716,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatOutputFormat1Codec) ToPointer() *DestinationGcsUpdateSchemasFormatOutputFormat1Codec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatOutputFormat1Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -772,7 +761,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatOutputFormatCodec) ToPointer() *DestinationGcsUpdateSchemasFormatOutputFormatCodec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatOutputFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -836,7 +824,6 @@ const (
 func (e DestinationGcsUpdateSchemasFormatCodec) ToPointer() *DestinationGcsUpdateSchemasFormatCodec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -891,7 +878,6 @@ const (
 func (e DestinationGcsUpdateSchemasCodec) ToPointer() *DestinationGcsUpdateSchemasCodec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateSchemasCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -937,7 +923,6 @@ const (
 func (e DestinationGcsUpdateCodec) ToPointer() *DestinationGcsUpdateCodec {
 	return &e
 }
-
 func (e *DestinationGcsUpdateCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -992,7 +977,6 @@ const (
 func (e Codec) ToPointer() *Codec {
 	return &e
 }
-
 func (e *Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1190,7 +1174,6 @@ const (
 func (e DestinationGcsUpdateFormatType) ToPointer() *DestinationGcsUpdateFormatType {
 	return &e
 }
-
 func (e *DestinationGcsUpdateFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1388,7 +1371,6 @@ const (
 func (e GCSBucketRegion) ToPointer() *GCSBucketRegion {
 	return &e
 }
-
 func (e *GCSBucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

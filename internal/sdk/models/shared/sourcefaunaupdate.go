@@ -18,7 +18,6 @@ const (
 func (e SourceFaunaUpdateSchemasDeletionMode) ToPointer() *SourceFaunaUpdateSchemasDeletionMode {
 	return &e
 }
-
 func (e *SourceFaunaUpdateSchemasDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceFaunaUpdateDeletionMode) ToPointer() *SourceFaunaUpdateDeletionMode {
 	return &e
 }
-
 func (e *SourceFaunaUpdateDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

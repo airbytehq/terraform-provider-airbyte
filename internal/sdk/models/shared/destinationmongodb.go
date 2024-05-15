@@ -18,7 +18,6 @@ const (
 func (e DestinationMongodbSchemasAuthorization) ToPointer() *DestinationMongodbSchemasAuthorization {
 	return &e
 }
-
 func (e *DestinationMongodbSchemasAuthorization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +79,6 @@ const (
 func (e DestinationMongodbAuthorization) ToPointer() *DestinationMongodbAuthorization {
 	return &e
 }
-
 func (e *DestinationMongodbAuthorization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -188,7 +186,6 @@ const (
 func (e Mongodb) ToPointer() *Mongodb {
 	return &e
 }
-
 func (e *Mongodb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -212,7 +209,6 @@ const (
 func (e DestinationMongodbSchemasInstanceTypeInstance) ToPointer() *DestinationMongodbSchemasInstanceTypeInstance {
 	return &e
 }
-
 func (e *DestinationMongodbSchemasInstanceTypeInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -267,7 +263,6 @@ const (
 func (e DestinationMongodbSchemasInstance) ToPointer() *DestinationMongodbSchemasInstance {
 	return &e
 }
-
 func (e *DestinationMongodbSchemasInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -331,7 +326,6 @@ const (
 func (e DestinationMongodbInstance) ToPointer() *DestinationMongodbInstance {
 	return &e
 }
-
 func (e *DestinationMongodbInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -482,7 +476,6 @@ const (
 func (e DestinationMongodbSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationMongodbSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMongodbSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -563,7 +556,6 @@ const (
 func (e DestinationMongodbSchemasTunnelMethod) ToPointer() *DestinationMongodbSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMongodbSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -644,7 +636,6 @@ const (
 func (e DestinationMongodbTunnelMethod) ToPointer() *DestinationMongodbTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMongodbTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

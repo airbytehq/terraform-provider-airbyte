@@ -3,8 +3,8 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     api_key    = "...my_api_key..."
     start_date = "2021-01-01"
   }
-  definition_id = "011b8862-473b-4757-b910-8618e91445d8"
-  name          = "Myra Gusikowski"
+  definition_id = "22d15b82-8621-4a87-bd2e-625cdd80ba5f"
+  name          = "Darrell Erdman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a849cd51-7f0e-432c-ae30-2e6de92b3e43"
+  workspace_id  = "fc10ca67-a827-4c3d-b49f-444d8a8589d8"
 }

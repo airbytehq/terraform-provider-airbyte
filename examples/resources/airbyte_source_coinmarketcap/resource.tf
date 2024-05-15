@@ -6,8 +6,8 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  definition_id = "6663420a-6a3a-4b4d-8475-5b910e5c999e"
-  name          = "Rene Ruecker"
+  definition_id = "3e8783d5-0d4d-42b8-8c50-dc344f66cbf0"
+  name          = "Mrs. Perry Nicolas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0e8f2a37-cc1f-4bec-883d-a2fecd2cab29"
+  workspace_id  = "994ace41-dc5b-442f-aa22-8e88647f2d42"
 }

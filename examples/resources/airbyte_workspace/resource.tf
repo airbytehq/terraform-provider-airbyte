@@ -1,4 +1,4 @@
 resource "airbyte_workspace" "my_workspace" {
-  name            = "Cody Satterfield"
-  organization_id = "512764ed-e9cd-4819-acc3-7ba1700ba64d"
+  name            = "Constance Lindgren"
+  organization_id = "01d76f7d-d27a-4a6e-91f0-c20e4312d0cb"
 }

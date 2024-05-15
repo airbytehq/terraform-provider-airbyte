@@ -1,7 +1,7 @@
 resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
   configuration = {}
-  definition_id = "c02bc2f7-f5df-4b2c-a6b4-986915d3324b"
-  name          = "Marsha Bernier"
+  definition_id = "b11c60c3-a7ba-4336-a48b-e45dfad9324f"
+  name          = "Janie Rath"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f393429d-3165-4dd8-995e-9c61e20db5f4"
+  workspace_id  = "8334526e-ae71-4eb7-99d7-dd0bf2f57219"
 }

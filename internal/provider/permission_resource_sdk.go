@@ -40,3 +40,11 @@ func (r *PermissionResourceModel) RefreshFromSharedPermissionResponse(resp *shar
 		r.WorkspaceID = types.StringPointerValue(resp.WorkspaceID)
 	}
 }
+
+func (r *PermissionResourceModel) ToSharedPermissionUpdateRequest() *shared.PermissionUpdateRequest {
+	permissionType := shared.PermissionType(r.PermissionType.ValueString())
+	out := shared.PermissionUpdateRequest{
+		PermissionType: permissionType,
+	}
+	return &out
+}

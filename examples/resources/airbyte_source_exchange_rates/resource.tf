@@ -1,12 +1,12 @@
 resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
   configuration = {
     access_key      = "...my_access_key..."
-    base            = "USD"
+    base            = "EUR"
     ignore_weekends = false
     start_date      = "YYYY-MM-DD"
   }
-  definition_id = "8e649d76-75fb-4581-a2af-6a8ac65536a2"
-  name          = "Dr. Regina West"
+  definition_id = "36cf1afc-f94e-43c7-9cbe-ca1c7573a5bb"
+  name          = "Alfonso Kutch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d309ea58-0059-44fb-9866-314cace02f96"
+  workspace_id  = "4c0a2cef-7812-4475-bca9-a4804a9e0ddc"
 }

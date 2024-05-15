@@ -21,15 +21,15 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "sheetaccess_level",
+      "sheetversion",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00-07:00"
+    start_datetime = "2000-01-01T13:00:00"
   }
-  definition_id = "c82dc40c-a1ab-4766-b971-6f1b8331df02"
-  name          = "Alberta Bergstrom"
+  definition_id = "90ec6c18-f201-47e8-8b7a-8364f95e84ef"
+  name          = "Cecil O'Keefe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "586c7cdf-b558-4f87-809d-3d1fcf2b6755"
+  workspace_id  = "53261882-dc6e-4a37-be2f-3a6744848ac2"
 }
 ```
 
