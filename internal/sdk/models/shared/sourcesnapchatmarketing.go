@@ -20,7 +20,6 @@ const (
 func (e SourceSnapchatMarketingActionReportTime) ToPointer() *SourceSnapchatMarketingActionReportTime {
 	return &e
 }
-
 func (e *SourceSnapchatMarketingActionReportTime) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e SnapchatMarketing) ToPointer() *SnapchatMarketing {
 	return &e
 }
-
 func (e *SnapchatMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -73,7 +71,6 @@ const (
 func (e SourceSnapchatMarketingSwipeUpAttributionWindow) ToPointer() *SourceSnapchatMarketingSwipeUpAttributionWindow {
 	return &e
 }
-
 func (e *SourceSnapchatMarketingSwipeUpAttributionWindow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -106,7 +103,6 @@ const (
 func (e SourceSnapchatMarketingViewAttributionWindow) ToPointer() *SourceSnapchatMarketingViewAttributionWindow {
 	return &e
 }
-
 func (e *SourceSnapchatMarketingViewAttributionWindow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

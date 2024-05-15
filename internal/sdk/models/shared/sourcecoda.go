@@ -17,7 +17,6 @@ const (
 func (e Coda) ToPointer() *Coda {
 	return &e
 }
-
 func (e *Coda) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

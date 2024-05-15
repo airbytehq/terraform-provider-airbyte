@@ -17,7 +17,6 @@ const (
 func (e Recurly) ToPointer() *Recurly {
 	return &e
 }
-
 func (e *Recurly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -19,7 +19,6 @@ const (
 func (e SourceGoogleDriveSchemasAuthType) ToPointer() *SourceGoogleDriveSchemasAuthType {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceGoogleDriveAuthType) ToPointer() *SourceGoogleDriveAuthType {
 	return &e
 }
-
 func (e *SourceGoogleDriveAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +203,6 @@ const (
 func (e GoogleDrive) ToPointer() *GoogleDrive {
 	return &e
 }
-
 func (e *GoogleDrive) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -229,7 +226,6 @@ const (
 func (e SourceGoogleDriveSchemasStreamsFormatFormatFiletype) ToPointer() *SourceGoogleDriveSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -253,7 +249,6 @@ const (
 func (e SourceGoogleDriveMode) ToPointer() *SourceGoogleDriveMode {
 	return &e
 }
-
 func (e *SourceGoogleDriveMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -343,7 +338,6 @@ const (
 func (e SourceGoogleDriveParsingStrategy) ToPointer() *SourceGoogleDriveParsingStrategy {
 	return &e
 }
-
 func (e *SourceGoogleDriveParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -420,7 +414,6 @@ const (
 func (e SourceGoogleDriveSchemasStreamsFormatFiletype) ToPointer() *SourceGoogleDriveSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -472,7 +465,6 @@ const (
 func (e SourceGoogleDriveSchemasStreamsFiletype) ToPointer() *SourceGoogleDriveSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -515,7 +507,6 @@ const (
 func (e SourceGoogleDriveSchemasFiletype) ToPointer() *SourceGoogleDriveSchemasFiletype {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -539,7 +530,6 @@ const (
 func (e SourceGoogleDriveSchemasStreamsHeaderDefinitionType) ToPointer() *SourceGoogleDriveSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -591,7 +581,6 @@ const (
 func (e SourceGoogleDriveSchemasHeaderDefinitionType) ToPointer() *SourceGoogleDriveSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGoogleDriveSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -634,7 +623,6 @@ const (
 func (e SourceGoogleDriveHeaderDefinitionType) ToPointer() *SourceGoogleDriveHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGoogleDriveHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -890,7 +878,6 @@ const (
 func (e SourceGoogleDriveFiletype) ToPointer() *SourceGoogleDriveFiletype {
 	return &e
 }
-
 func (e *SourceGoogleDriveFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1075,7 +1062,6 @@ const (
 func (e SourceGoogleDriveValidationPolicy) ToPointer() *SourceGoogleDriveValidationPolicy {
 	return &e
 }
-
 func (e *SourceGoogleDriveValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

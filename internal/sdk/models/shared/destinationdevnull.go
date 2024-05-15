@@ -18,7 +18,6 @@ const (
 func (e DevNull) ToPointer() *DevNull {
 	return &e
 }
-
 func (e *DevNull) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e DestinationDevNullTestDestinationType) ToPointer() *DestinationDevNullTestDestinationType {
 	return &e
 }
-
 func (e *DestinationDevNullTestDestinationType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

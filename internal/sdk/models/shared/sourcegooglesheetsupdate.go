@@ -18,7 +18,6 @@ const (
 func (e SourceGoogleSheetsUpdateSchemasAuthType) ToPointer() *SourceGoogleSheetsUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceGoogleSheetsUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceGoogleSheetsUpdateAuthType) ToPointer() *SourceGoogleSheetsUpdateAuthType {
 	return &e
 }
-
 func (e *SourceGoogleSheetsUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

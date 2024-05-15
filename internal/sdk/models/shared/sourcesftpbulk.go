@@ -19,7 +19,6 @@ const (
 func (e SourceSftpBulkSchemasAuthType) ToPointer() *SourceSftpBulkSchemasAuthType {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceSftpBulkAuthType) ToPointer() *SourceSftpBulkAuthType {
 	return &e
 }
-
 func (e *SourceSftpBulkAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -187,7 +185,6 @@ const (
 func (e SftpBulk) ToPointer() *SftpBulk {
 	return &e
 }
-
 func (e *SftpBulk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -211,7 +208,6 @@ const (
 func (e SourceSftpBulkSchemasStreamsFormatFormatFiletype) ToPointer() *SourceSftpBulkSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -235,7 +231,6 @@ const (
 func (e SourceSftpBulkSchemasMode) ToPointer() *SourceSftpBulkSchemasMode {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -327,7 +322,6 @@ const (
 func (e SourceSftpBulkMode) ToPointer() *SourceSftpBulkMode {
 	return &e
 }
-
 func (e *SourceSftpBulkMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -439,7 +433,6 @@ const (
 func (e SourceSftpBulkParsingStrategy) ToPointer() *SourceSftpBulkParsingStrategy {
 	return &e
 }
-
 func (e *SourceSftpBulkParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -516,7 +509,6 @@ const (
 func (e SourceSftpBulkSchemasStreamsFormatFiletype) ToPointer() *SourceSftpBulkSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -568,7 +560,6 @@ const (
 func (e SourceSftpBulkSchemasStreamsFiletype) ToPointer() *SourceSftpBulkSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -611,7 +602,6 @@ const (
 func (e SourceSftpBulkSchemasFiletype) ToPointer() *SourceSftpBulkSchemasFiletype {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -635,7 +625,6 @@ const (
 func (e SourceSftpBulkSchemasStreamsHeaderDefinitionType) ToPointer() *SourceSftpBulkSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -687,7 +676,6 @@ const (
 func (e SourceSftpBulkSchemasHeaderDefinitionType) ToPointer() *SourceSftpBulkSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceSftpBulkSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -730,7 +718,6 @@ const (
 func (e SourceSftpBulkHeaderDefinitionType) ToPointer() *SourceSftpBulkHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceSftpBulkHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -861,7 +848,6 @@ const (
 func (e SourceSftpBulkInferenceType) ToPointer() *SourceSftpBulkInferenceType {
 	return &e
 }
-
 func (e *SourceSftpBulkInferenceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1032,7 +1018,6 @@ const (
 func (e SourceSftpBulkFiletype) ToPointer() *SourceSftpBulkFiletype {
 	return &e
 }
-
 func (e *SourceSftpBulkFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1217,7 +1202,6 @@ const (
 func (e SourceSftpBulkValidationPolicy) ToPointer() *SourceSftpBulkValidationPolicy {
 	return &e
 }
-
 func (e *SourceSftpBulkValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

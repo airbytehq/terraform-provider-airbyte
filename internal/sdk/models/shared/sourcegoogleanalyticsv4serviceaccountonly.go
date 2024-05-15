@@ -19,7 +19,6 @@ const (
 func (e SourceGoogleAnalyticsV4ServiceAccountOnlyAuthType) ToPointer() *SourceGoogleAnalyticsV4ServiceAccountOnlyAuthType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsV4ServiceAccountOnlyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -113,7 +112,6 @@ const (
 func (e GoogleAnalyticsV4ServiceAccountOnly) ToPointer() *GoogleAnalyticsV4ServiceAccountOnly {
 	return &e
 }
-
 func (e *GoogleAnalyticsV4ServiceAccountOnly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

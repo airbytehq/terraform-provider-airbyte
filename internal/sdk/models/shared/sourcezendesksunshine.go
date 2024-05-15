@@ -19,7 +19,6 @@ const (
 func (e SourceZendeskSunshineSchemasAuthMethod) ToPointer() *SourceZendeskSunshineSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceZendeskSunshineSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +79,6 @@ const (
 func (e SourceZendeskSunshineAuthMethod) ToPointer() *SourceZendeskSunshineAuthMethod {
 	return &e
 }
-
 func (e *SourceZendeskSunshineAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -213,7 +211,6 @@ const (
 func (e ZendeskSunshine) ToPointer() *ZendeskSunshine {
 	return &e
 }
-
 func (e *ZendeskSunshine) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

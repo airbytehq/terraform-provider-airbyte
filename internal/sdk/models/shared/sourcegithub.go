@@ -19,7 +19,6 @@ const (
 func (e SourceGithubSchemasOptionTitle) ToPointer() *SourceGithubSchemasOptionTitle {
 	return &e
 }
-
 func (e *SourceGithubSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceGithubOptionTitle) ToPointer() *SourceGithubOptionTitle {
 	return &e
 }
-
 func (e *SourceGithubOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +203,6 @@ const (
 func (e Github) ToPointer() *Github {
 	return &e
 }
-
 func (e *Github) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

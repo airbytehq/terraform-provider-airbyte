@@ -17,7 +17,6 @@ const (
 func (e Vectara) ToPointer() *Vectara {
 	return &e
 }
-
 func (e *Vectara) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

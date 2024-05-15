@@ -18,7 +18,6 @@ const (
 func (e Freshdesk) ToPointer() *Freshdesk {
 	return &e
 }
-
 func (e *Freshdesk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

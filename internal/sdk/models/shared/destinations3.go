@@ -18,7 +18,6 @@ const (
 func (e S3) ToPointer() *S3 {
 	return &e
 }
-
 func (e *S3) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -49,7 +48,6 @@ const (
 func (e DestinationS3SchemasCompressionCodec) ToPointer() *DestinationS3SchemasCompressionCodec {
 	return &e
 }
-
 func (e *DestinationS3SchemasCompressionCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -85,7 +83,6 @@ const (
 func (e DestinationS3SchemasFormatOutputFormatFormatType) ToPointer() *DestinationS3SchemasFormatOutputFormatFormatType {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -185,7 +182,6 @@ const (
 func (e DestinationS3SchemasFormatOutputFormat3CompressionCodecCodec) ToPointer() *DestinationS3SchemasFormatOutputFormat3CompressionCodecCodec {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatOutputFormat3CompressionCodecCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -231,7 +227,6 @@ const (
 func (e DestinationS3SchemasFormatOutputFormat3Codec) ToPointer() *DestinationS3SchemasFormatOutputFormat3Codec {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatOutputFormat3Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -295,7 +290,6 @@ const (
 func (e DestinationS3SchemasFormatOutputFormatCodec) ToPointer() *DestinationS3SchemasFormatOutputFormatCodec {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatOutputFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -350,7 +344,6 @@ const (
 func (e DestinationS3SchemasFormatCodec) ToPointer() *DestinationS3SchemasFormatCodec {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -396,7 +389,6 @@ const (
 func (e DestinationS3SchemasCodec) ToPointer() *DestinationS3SchemasCodec {
 	return &e
 }
-
 func (e *DestinationS3SchemasCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -451,7 +443,6 @@ const (
 func (e DestinationS3Codec) ToPointer() *DestinationS3Codec {
 	return &e
 }
-
 func (e *DestinationS3Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -649,7 +640,6 @@ const (
 func (e DestinationS3SchemasFormatFormatType) ToPointer() *DestinationS3SchemasFormatFormatType {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -704,7 +694,6 @@ const (
 func (e DestinationS3SchemasFormatOutputFormatCompressionType) ToPointer() *DestinationS3SchemasFormatOutputFormatCompressionType {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatOutputFormatCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -750,7 +739,6 @@ const (
 func (e DestinationS3SchemasFormatCompressionType) ToPointer() *DestinationS3SchemasFormatCompressionType {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -862,7 +850,6 @@ const (
 func (e DestinationS3SchemasFlattening) ToPointer() *DestinationS3SchemasFlattening {
 	return &e
 }
-
 func (e *DestinationS3SchemasFlattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -888,7 +875,6 @@ const (
 func (e DestinationS3SchemasFormatType) ToPointer() *DestinationS3SchemasFormatType {
 	return &e
 }
-
 func (e *DestinationS3SchemasFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -952,7 +938,6 @@ const (
 func (e DestinationS3SchemasCompressionType) ToPointer() *DestinationS3SchemasCompressionType {
 	return &e
 }
-
 func (e *DestinationS3SchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -998,7 +983,6 @@ const (
 func (e DestinationS3CompressionType) ToPointer() *DestinationS3CompressionType {
 	return &e
 }
-
 func (e *DestinationS3CompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1110,7 +1094,6 @@ const (
 func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
 	return &e
 }
-
 func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1136,7 +1119,6 @@ const (
 func (e DestinationS3FormatType) ToPointer() *DestinationS3FormatType {
 	return &e
 }
-
 func (e *DestinationS3FormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1342,7 +1324,6 @@ const (
 func (e DestinationS3S3BucketRegion) ToPointer() *DestinationS3S3BucketRegion {
 	return &e
 }
-
 func (e *DestinationS3S3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

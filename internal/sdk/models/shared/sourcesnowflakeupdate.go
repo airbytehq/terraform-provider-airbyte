@@ -18,7 +18,6 @@ const (
 func (e SourceSnowflakeUpdateSchemasAuthType) ToPointer() *SourceSnowflakeUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e SourceSnowflakeUpdateAuthType) ToPointer() *SourceSnowflakeUpdateAuthType {
 	return &e
 }
-
 func (e *SourceSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

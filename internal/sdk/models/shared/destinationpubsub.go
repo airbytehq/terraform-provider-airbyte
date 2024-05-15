@@ -17,7 +17,6 @@ const (
 func (e Pubsub) ToPointer() *Pubsub {
 	return &e
 }
-
 func (e *Pubsub) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

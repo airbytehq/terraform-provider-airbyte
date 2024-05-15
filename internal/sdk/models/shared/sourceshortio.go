@@ -17,7 +17,6 @@ const (
 func (e Shortio) ToPointer() *Shortio {
 	return &e
 }
-
 func (e *Shortio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

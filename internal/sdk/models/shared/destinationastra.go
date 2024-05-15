@@ -18,7 +18,6 @@ const (
 func (e Astra) ToPointer() *Astra {
 	return &e
 }
-
 func (e *Astra) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e DestinationAstraSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationAstraSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -121,7 +119,6 @@ const (
 func (e DestinationAstraSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationAstraSchemasEmbeddingEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -192,7 +189,6 @@ const (
 func (e DestinationAstraSchemasEmbeddingMode) ToPointer() *DestinationAstraSchemasEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -236,7 +232,6 @@ const (
 func (e DestinationAstraSchemasMode) ToPointer() *DestinationAstraSchemasMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -288,7 +283,6 @@ const (
 func (e DestinationAstraMode) ToPointer() *DestinationAstraMode {
 	return &e
 }
-
 func (e *DestinationAstraMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -547,7 +541,6 @@ const (
 func (e DestinationAstraLanguage) ToPointer() *DestinationAstraLanguage {
 	return &e
 }
-
 func (e *DestinationAstraLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -601,7 +594,6 @@ const (
 func (e DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -654,7 +646,6 @@ const (
 func (e DestinationAstraSchemasProcessingTextSplitterMode) ToPointer() *DestinationAstraSchemasProcessingTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -707,7 +698,6 @@ const (
 func (e DestinationAstraSchemasProcessingMode) ToPointer() *DestinationAstraSchemasProcessingMode {
 	return &e
 }
-
 func (e *DestinationAstraSchemasProcessingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

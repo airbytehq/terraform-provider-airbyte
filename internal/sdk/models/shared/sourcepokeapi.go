@@ -915,7 +915,6 @@ const (
 func (e SourcePokeapiPokemonName) ToPointer() *SourcePokeapiPokemonName {
 	return &e
 }
-
 func (e *SourcePokeapiPokemonName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2733,7 +2732,6 @@ const (
 func (e Pokeapi) ToPointer() *Pokeapi {
 	return &e
 }
-
 func (e *Pokeapi) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

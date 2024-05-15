@@ -18,7 +18,6 @@ const (
 func (e SourceSurveySparrowSchemasURLBase) ToPointer() *SourceSurveySparrowSchemasURLBase {
 	return &e
 }
-
 func (e *SourceSurveySparrowSchemasURLBase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -61,7 +60,6 @@ const (
 func (e SourceSurveySparrowURLBase) ToPointer() *SourceSurveySparrowURLBase {
 	return &e
 }
-
 func (e *SourceSurveySparrowURLBase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -168,7 +166,6 @@ const (
 func (e SurveySparrow) ToPointer() *SurveySparrow {
 	return &e
 }
-
 func (e *SurveySparrow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

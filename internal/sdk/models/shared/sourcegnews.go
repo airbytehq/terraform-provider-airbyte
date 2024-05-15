@@ -47,7 +47,6 @@ const (
 func (e SourceGnewsCountry) ToPointer() *SourceGnewsCountry {
 	return &e
 }
-
 func (e *SourceGnewsCountry) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -131,7 +130,6 @@ const (
 func (e SourceGnewsIn) ToPointer() *SourceGnewsIn {
 	return &e
 }
-
 func (e *SourceGnewsIn) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -180,7 +178,6 @@ const (
 func (e SourceGnewsLanguage) ToPointer() *SourceGnewsLanguage {
 	return &e
 }
-
 func (e *SourceGnewsLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -248,7 +245,6 @@ const (
 func (e SourceGnewsNullable) ToPointer() *SourceGnewsNullable {
 	return &e
 }
-
 func (e *SourceGnewsNullable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -280,7 +276,6 @@ const (
 func (e SourceGnewsSortBy) ToPointer() *SourceGnewsSortBy {
 	return &e
 }
-
 func (e *SourceGnewsSortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -306,7 +301,6 @@ const (
 func (e Gnews) ToPointer() *Gnews {
 	return &e
 }
-
 func (e *Gnews) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -339,7 +333,6 @@ const (
 func (e SourceGnewsTopHeadlinesTopic) ToPointer() *SourceGnewsTopHeadlinesTopic {
 	return &e
 }
-
 func (e *SourceGnewsTopHeadlinesTopic) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

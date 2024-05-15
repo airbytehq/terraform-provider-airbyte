@@ -19,7 +19,6 @@ const (
 func (e SourceGoogleSearchConsoleUpdateSchemasAuthType) ToPointer() *SourceGoogleSearchConsoleUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceGoogleSearchConsoleUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +79,6 @@ const (
 func (e SourceGoogleSearchConsoleUpdateAuthType) ToPointer() *SourceGoogleSearchConsoleUpdateAuthType {
 	return &e
 }
-
 func (e *SourceGoogleSearchConsoleUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -227,7 +225,6 @@ const (
 func (e SourceGoogleSearchConsoleUpdateValidEnums) ToPointer() *SourceGoogleSearchConsoleUpdateValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleSearchConsoleUpdateValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -282,7 +279,6 @@ const (
 func (e DataFreshness) ToPointer() *DataFreshness {
 	return &e
 }
-
 func (e *DataFreshness) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

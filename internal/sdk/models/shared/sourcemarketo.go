@@ -18,7 +18,6 @@ const (
 func (e Marketo) ToPointer() *Marketo {
 	return &e
 }
-
 func (e *Marketo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

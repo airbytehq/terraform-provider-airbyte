@@ -19,7 +19,6 @@ const (
 func (e SourceZendeskTalkSchemasAuthType) ToPointer() *SourceZendeskTalkSchemasAuthType {
 	return &e
 }
-
 func (e *SourceZendeskTalkSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -88,7 +87,6 @@ const (
 func (e SourceZendeskTalkAuthType) ToPointer() *SourceZendeskTalkAuthType {
 	return &e
 }
-
 func (e *SourceZendeskTalkAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -230,7 +228,6 @@ const (
 func (e ZendeskTalk) ToPointer() *ZendeskTalk {
 	return &e
 }
-
 func (e *ZendeskTalk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

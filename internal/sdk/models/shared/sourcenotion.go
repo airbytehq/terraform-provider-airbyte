@@ -19,7 +19,6 @@ const (
 func (e SourceNotionSchemasAuthType) ToPointer() *SourceNotionSchemasAuthType {
 	return &e
 }
-
 func (e *SourceNotionSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceNotionAuthType) ToPointer() *SourceNotionAuthType {
 	return &e
 }
-
 func (e *SourceNotionAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +203,6 @@ const (
 func (e Notion) ToPointer() *Notion {
 	return &e
 }
-
 func (e *Notion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

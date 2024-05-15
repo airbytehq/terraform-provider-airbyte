@@ -20,7 +20,6 @@ const (
 func (e SourceAmplitudeDataRegion) ToPointer() *SourceAmplitudeDataRegion {
 	return &e
 }
-
 func (e *SourceAmplitudeDataRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e Amplitude) ToPointer() *Amplitude {
 	return &e
 }
-
 func (e *Amplitude) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

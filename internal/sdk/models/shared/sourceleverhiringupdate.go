@@ -18,7 +18,6 @@ const (
 func (e SourceLeverHiringUpdateSchemasAuthType) ToPointer() *SourceLeverHiringUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceLeverHiringUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceLeverHiringUpdateAuthType) ToPointer() *SourceLeverHiringUpdateAuthType {
 	return &e
 }
-
 func (e *SourceLeverHiringUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -206,7 +204,6 @@ const (
 func (e SourceLeverHiringUpdateEnvironment) ToPointer() *SourceLeverHiringUpdateEnvironment {
 	return &e
 }
-
 func (e *SourceLeverHiringUpdateEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

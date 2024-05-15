@@ -3,10 +3,10 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 3c7cb95b4d2ffbb359db5ef4a5383937
   docVersion: 1.0.0
-  speakeasyVersion: 1.289.0
-  generationVersion: 2.331.0
-  releaseVersion: 0.4.3
-  configChecksum: d4feb8ab18479ec25864368fd26fd64b
+  speakeasyVersion: 1.291.0
+  generationVersion: 2.332.4
+  releaseVersion: 0.5.0
+  configChecksum: 7553aaea74433c83d224b2e26c7afc9e
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -17,6 +17,7 @@ features:
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
     nullables: 0.0.0
+    oauth2ClientCredentials: 0.1.0
     unions: 2.81.13
 generatedFiles:
   - internal/sdk/publicconnections.go
@@ -1963,11 +1964,13 @@ generatedFiles:
   - internal/sdk/models/shared/sourcezoomputrequest.go
   - internal/sdk/models/shared/sourcezoomupdate.go
   - internal/sdk/models/shared/security.go
+  - internal/sdk/models/shared/schemeclientcredentials.go
   - internal/sdk/models/shared/schemebasicauth.go
   - internal/sdk/.gitignore
   - internal/sdk/.gitattributes
   - internal/sdk/internal/hooks/registration.go
   - internal/sdk/internal/hooks/hooks.go
+  - internal/sdk/internal/hooks/clientcredentials.go
   - examples/README.md
   - go.mod
   - go.sum

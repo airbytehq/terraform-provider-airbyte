@@ -17,7 +17,6 @@ const (
 func (e MyHours) ToPointer() *MyHours {
 	return &e
 }
-
 func (e *MyHours) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -19,7 +19,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasAuthType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -100,7 +99,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateAuthType) ToPointer() *SourceMicrosoftSharepointUpdateAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -248,7 +246,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSearchScope) ToPointer() *SourceMicrosoftSharepointUpdateSearchScope {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSearchScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -276,7 +273,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -300,7 +296,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateMode) ToPointer() *SourceMicrosoftSharepointUpdateMode {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -390,7 +385,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateParsingStrategy) ToPointer() *SourceMicrosoftSharepointUpdateParsingStrategy {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -467,7 +461,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype) ToPointer() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -519,7 +512,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasStreamsFiletype) ToPointer() *SourceMicrosoftSharepointUpdateSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -562,7 +554,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasFiletype) ToPointer() *SourceMicrosoftSharepointUpdateSchemasFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -586,7 +577,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -638,7 +628,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateSchemasHeaderDefinitionType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -681,7 +670,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateHeaderDefinitionType) ToPointer() *SourceMicrosoftSharepointUpdateHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -946,7 +934,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateFiletype) ToPointer() *SourceMicrosoftSharepointUpdateFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1131,7 +1118,6 @@ const (
 func (e SourceMicrosoftSharepointUpdateValidationPolicy) ToPointer() *SourceMicrosoftSharepointUpdateValidationPolicy {
 	return &e
 }
-
 func (e *SourceMicrosoftSharepointUpdateValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

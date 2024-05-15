@@ -20,7 +20,6 @@ const (
 func (e SourceKlarnaUpdateRegion) ToPointer() *SourceKlarnaUpdateRegion {
 	return &e
 }
-
 func (e *SourceKlarnaUpdateRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

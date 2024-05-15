@@ -18,7 +18,6 @@ const (
 func (e SourceOracleSchemasConnectionType) ToPointer() *SourceOracleSchemasConnectionType {
 	return &e
 }
-
 func (e *SourceOracleSchemasConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceOracleConnectionType) ToPointer() *SourceOracleConnectionType {
 	return &e
 }
-
 func (e *SourceOracleConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -186,7 +184,6 @@ const (
 func (e SourceOracleSchemasEncryptionMethod) ToPointer() *SourceOracleSchemasEncryptionMethod {
 	return &e
 }
-
 func (e *SourceOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -242,7 +239,6 @@ const (
 func (e SourceOracleEncryptionAlgorithm) ToPointer() *SourceOracleEncryptionAlgorithm {
 	return &e
 }
-
 func (e *SourceOracleEncryptionAlgorithm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -270,7 +266,6 @@ const (
 func (e SourceOracleEncryptionMethod) ToPointer() *SourceOracleEncryptionMethod {
 	return &e
 }
-
 func (e *SourceOracleEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -387,7 +382,6 @@ const (
 func (e SourceOracleOracle) ToPointer() *SourceOracleOracle {
 	return &e
 }
-
 func (e *SourceOracleOracle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -412,7 +406,6 @@ const (
 func (e SourceOracleSchemasTunnelMethodTunnelMethod) ToPointer() *SourceOracleSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -493,7 +486,6 @@ const (
 func (e SourceOracleSchemasTunnelMethod) ToPointer() *SourceOracleSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -574,7 +566,6 @@ const (
 func (e SourceOracleTunnelMethod) ToPointer() *SourceOracleTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

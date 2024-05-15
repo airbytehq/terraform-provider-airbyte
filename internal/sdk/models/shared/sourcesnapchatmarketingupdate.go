@@ -20,7 +20,6 @@ const (
 func (e ActionReportTime) ToPointer() *ActionReportTime {
 	return &e
 }
-
 func (e *ActionReportTime) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -49,7 +48,6 @@ const (
 func (e SwipeUpAttributionWindow) ToPointer() *SwipeUpAttributionWindow {
 	return &e
 }
-
 func (e *SwipeUpAttributionWindow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -82,7 +80,6 @@ const (
 func (e ViewAttributionWindow) ToPointer() *ViewAttributionWindow {
 	return &e
 }
-
 func (e *ViewAttributionWindow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

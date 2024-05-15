@@ -20,7 +20,6 @@ const (
 func (e SourcePocketContentType) ToPointer() *SourcePocketContentType {
 	return &e
 }
-
 func (e *SourcePocketContentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -50,7 +49,6 @@ const (
 func (e SourcePocketDetailType) ToPointer() *SourcePocketDetailType {
 	return &e
 }
-
 func (e *SourcePocketDetailType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -80,7 +78,6 @@ const (
 func (e SourcePocketSortBy) ToPointer() *SourcePocketSortBy {
 	return &e
 }
-
 func (e *SourcePocketSortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -110,7 +107,6 @@ const (
 func (e Pocket) ToPointer() *Pocket {
 	return &e
 }
-
 func (e *Pocket) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -137,7 +133,6 @@ const (
 func (e SourcePocketState) ToPointer() *SourcePocketState {
 	return &e
 }
-
 func (e *SourcePocketState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

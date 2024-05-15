@@ -24,7 +24,6 @@ const (
 func (e SourceZohoCrmDataCenterLocation) ToPointer() *SourceZohoCrmDataCenterLocation {
 	return &e
 }
-
 func (e *SourceZohoCrmDataCenterLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -63,7 +62,6 @@ const (
 func (e SourceZohoCRMZohoCRMEdition) ToPointer() *SourceZohoCRMZohoCRMEdition {
 	return &e
 }
-
 func (e *SourceZohoCRMZohoCRMEdition) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -98,7 +96,6 @@ const (
 func (e SourceZohoCrmEnvironment) ToPointer() *SourceZohoCrmEnvironment {
 	return &e
 }
-
 func (e *SourceZohoCrmEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -126,7 +123,6 @@ const (
 func (e ZohoCrm) ToPointer() *ZohoCrm {
 	return &e
 }
-
 func (e *ZohoCrm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

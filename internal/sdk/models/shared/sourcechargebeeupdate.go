@@ -20,7 +20,6 @@ const (
 func (e ProductCatalog) ToPointer() *ProductCatalog {
 	return &e
 }
-
 func (e *ProductCatalog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

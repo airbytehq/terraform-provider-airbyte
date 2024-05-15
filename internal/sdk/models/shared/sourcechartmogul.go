@@ -18,7 +18,6 @@ const (
 func (e Chartmogul) ToPointer() *Chartmogul {
 	return &e
 }
-
 func (e *Chartmogul) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

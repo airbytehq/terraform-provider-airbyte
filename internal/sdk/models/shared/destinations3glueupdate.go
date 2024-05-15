@@ -18,7 +18,6 @@ const (
 func (e DestinationS3GlueUpdateSchemasCompressionType) ToPointer() *DestinationS3GlueUpdateSchemasCompressionType {
 	return &e
 }
-
 func (e *DestinationS3GlueUpdateSchemasCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -64,7 +63,6 @@ const (
 func (e DestinationS3GlueUpdateCompressionType) ToPointer() *DestinationS3GlueUpdateCompressionType {
 	return &e
 }
-
 func (e *DestinationS3GlueUpdateCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -176,7 +174,6 @@ const (
 func (e Flattening) ToPointer() *Flattening {
 	return &e
 }
-
 func (e *Flattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -202,7 +199,6 @@ const (
 func (e DestinationS3GlueUpdateFormatType) ToPointer() *DestinationS3GlueUpdateFormatType {
 	return &e
 }
-
 func (e *DestinationS3GlueUpdateFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -310,7 +306,6 @@ const (
 func (e SerializationLibrary) ToPointer() *SerializationLibrary {
 	return &e
 }
-
 func (e *SerializationLibrary) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -370,7 +365,6 @@ const (
 func (e DestinationS3GlueUpdateS3BucketRegion) ToPointer() *DestinationS3GlueUpdateS3BucketRegion {
 	return &e
 }
-
 func (e *DestinationS3GlueUpdateS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

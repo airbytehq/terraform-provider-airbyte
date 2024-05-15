@@ -17,7 +17,6 @@ const (
 func (e Omnisend) ToPointer() *Omnisend {
 	return &e
 }
-
 func (e *Omnisend) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

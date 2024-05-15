@@ -19,7 +19,6 @@ const (
 func (e SourceS3SchemasFormatFileFormatFiletype) ToPointer() *SourceS3SchemasFormatFileFormatFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasFormatFileFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e SourceS3UnexpectedFieldBehavior) ToPointer() *SourceS3UnexpectedFieldBehavior {
 	return &e
 }
-
 func (e *SourceS3UnexpectedFieldBehavior) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -121,7 +119,6 @@ const (
 func (e SourceS3SchemasFormatFiletype) ToPointer() *SourceS3SchemasFormatFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -165,7 +162,6 @@ const (
 func (e SourceS3SchemasFiletype) ToPointer() *SourceS3SchemasFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -236,7 +232,6 @@ const (
 func (e SourceS3Filetype) ToPointer() *SourceS3Filetype {
 	return &e
 }
-
 func (e *SourceS3Filetype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -565,7 +560,6 @@ const (
 func (e SourceS3S3) ToPointer() *SourceS3S3 {
 	return &e
 }
-
 func (e *SourceS3S3) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -589,7 +583,6 @@ const (
 func (e SourceS3SchemasStreamsFormatFormat5Filetype) ToPointer() *SourceS3SchemasStreamsFormatFormat5Filetype {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsFormatFormat5Filetype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -613,7 +606,6 @@ const (
 func (e SourceS3Mode) ToPointer() *SourceS3Mode {
 	return &e
 }
-
 func (e *SourceS3Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -703,7 +695,6 @@ const (
 func (e SourceS3ParsingStrategy) ToPointer() *SourceS3ParsingStrategy {
 	return &e
 }
-
 func (e *SourceS3ParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -780,7 +771,6 @@ const (
 func (e SourceS3SchemasStreamsFormatFormat4Filetype) ToPointer() *SourceS3SchemasStreamsFormatFormat4Filetype {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsFormatFormat4Filetype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -832,7 +822,6 @@ const (
 func (e SourceS3SchemasStreamsFormatFormatFiletype) ToPointer() *SourceS3SchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -875,7 +864,6 @@ const (
 func (e SourceS3SchemasStreamsFormatFiletype) ToPointer() *SourceS3SchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -899,7 +887,6 @@ const (
 func (e SourceS3SchemasStreamsHeaderDefinitionType) ToPointer() *SourceS3SchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -951,7 +938,6 @@ const (
 func (e SourceS3SchemasHeaderDefinitionType) ToPointer() *SourceS3SchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceS3SchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -994,7 +980,6 @@ const (
 func (e SourceS3HeaderDefinitionType) ToPointer() *SourceS3HeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceS3HeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1125,7 +1110,6 @@ const (
 func (e SourceS3InferenceType) ToPointer() *SourceS3InferenceType {
 	return &e
 }
-
 func (e *SourceS3InferenceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1296,7 +1280,6 @@ const (
 func (e SourceS3SchemasStreamsFiletype) ToPointer() *SourceS3SchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceS3SchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1481,7 +1464,6 @@ const (
 func (e SourceS3ValidationPolicy) ToPointer() *SourceS3ValidationPolicy {
 	return &e
 }
-
 func (e *SourceS3ValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -914,7 +914,6 @@ const (
 func (e PokemonName) ToPointer() *PokemonName {
 	return &e
 }
-
 func (e *PokemonName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

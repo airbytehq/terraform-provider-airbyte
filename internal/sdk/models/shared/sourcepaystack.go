@@ -18,7 +18,6 @@ const (
 func (e Paystack) ToPointer() *Paystack {
 	return &e
 }
-
 func (e *Paystack) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

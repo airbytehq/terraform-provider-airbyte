@@ -18,7 +18,6 @@ const (
 func (e AwsCloudtrail) ToPointer() *AwsCloudtrail {
 	return &e
 }
-
 func (e *AwsCloudtrail) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -17,7 +17,6 @@ const (
 func (e Clockify) ToPointer() *Clockify {
 	return &e
 }
-
 func (e *Clockify) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

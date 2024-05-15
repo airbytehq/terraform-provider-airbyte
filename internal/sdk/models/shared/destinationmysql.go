@@ -18,7 +18,6 @@ const (
 func (e Mysql) ToPointer() *Mysql {
 	return &e
 }
-
 func (e *Mysql) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,6 @@ const (
 func (e DestinationMysqlSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationMysqlSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMysqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -124,7 +122,6 @@ const (
 func (e DestinationMysqlSchemasTunnelMethod) ToPointer() *DestinationMysqlSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMysqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +202,6 @@ const (
 func (e DestinationMysqlTunnelMethod) ToPointer() *DestinationMysqlTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMysqlTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

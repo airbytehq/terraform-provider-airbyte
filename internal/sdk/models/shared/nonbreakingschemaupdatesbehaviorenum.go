@@ -20,7 +20,6 @@ const (
 func (e NonBreakingSchemaUpdatesBehaviorEnum) ToPointer() *NonBreakingSchemaUpdatesBehaviorEnum {
 	return &e
 }
-
 func (e *NonBreakingSchemaUpdatesBehaviorEnum) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

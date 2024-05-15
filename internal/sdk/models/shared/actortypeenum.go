@@ -18,7 +18,6 @@ const (
 func (e ActorTypeEnum) ToPointer() *ActorTypeEnum {
 	return &e
 }
-
 func (e *ActorTypeEnum) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

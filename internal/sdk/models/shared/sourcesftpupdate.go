@@ -19,7 +19,6 @@ const (
 func (e SourceSftpUpdateSchemasAuthMethod) ToPointer() *SourceSftpUpdateSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceSftpUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -73,7 +72,6 @@ const (
 func (e SourceSftpUpdateAuthMethod) ToPointer() *SourceSftpUpdateAuthMethod {
 	return &e
 }
-
 func (e *SourceSftpUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

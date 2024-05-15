@@ -18,7 +18,6 @@ const (
 func (e SourcePinterestUpdateAuthMethod) ToPointer() *SourcePinterestUpdateAuthMethod {
 	return &e
 }
-
 func (e *SourcePinterestUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -90,7 +89,6 @@ const (
 func (e SourcePinterestUpdateValidEnums) ToPointer() *SourcePinterestUpdateValidEnums {
 	return &e
 }
-
 func (e *SourcePinterestUpdateValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -122,7 +120,6 @@ const (
 func (e ClickWindowDays) ToPointer() *ClickWindowDays {
 	return &e
 }
-
 func (e *ClickWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -268,7 +265,6 @@ const (
 func (e SourcePinterestUpdateSchemasValidEnums) ToPointer() *SourcePinterestUpdateSchemasValidEnums {
 	return &e
 }
-
 func (e *SourcePinterestUpdateSchemasValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -516,7 +512,6 @@ const (
 func (e ConversionReportTime) ToPointer() *ConversionReportTime {
 	return &e
 }
-
 func (e *ConversionReportTime) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -548,7 +543,6 @@ const (
 func (e EngagementWindowDays) ToPointer() *EngagementWindowDays {
 	return &e
 }
-
 func (e *EngagementWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -587,7 +581,6 @@ const (
 func (e Granularity) ToPointer() *Granularity {
 	return &e
 }
-
 func (e *Granularity) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -631,7 +624,6 @@ const (
 func (e SourcePinterestUpdateLevel) ToPointer() *SourcePinterestUpdateLevel {
 	return &e
 }
-
 func (e *SourcePinterestUpdateLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -683,7 +675,6 @@ const (
 func (e ViewWindowDays) ToPointer() *ViewWindowDays {
 	return &e
 }
-
 func (e *ViewWindowDays) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -824,7 +815,6 @@ const (
 func (e Status) ToPointer() *Status {
 	return &e
 }
-
 func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

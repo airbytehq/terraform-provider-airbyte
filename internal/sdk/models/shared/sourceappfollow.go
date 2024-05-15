@@ -17,7 +17,6 @@ const (
 func (e Appfollow) ToPointer() *Appfollow {
 	return &e
 }
-
 func (e *Appfollow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -18,7 +18,6 @@ const (
 func (e SourceOracleUpdateConnectionType) ToPointer() *SourceOracleUpdateConnectionType {
 	return &e
 }
-
 func (e *SourceOracleUpdateConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e ConnectionType) ToPointer() *ConnectionType {
 	return &e
 }
-
 func (e *ConnectionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -186,7 +184,6 @@ const (
 func (e SourceOracleUpdateEncryptionMethod) ToPointer() *SourceOracleUpdateEncryptionMethod {
 	return &e
 }
-
 func (e *SourceOracleUpdateEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -242,7 +239,6 @@ const (
 func (e EncryptionAlgorithm) ToPointer() *EncryptionAlgorithm {
 	return &e
 }
-
 func (e *EncryptionAlgorithm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -270,7 +266,6 @@ const (
 func (e EncryptionMethod) ToPointer() *EncryptionMethod {
 	return &e
 }
-
 func (e *EncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -388,7 +383,6 @@ const (
 func (e SourceOracleUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *SourceOracleUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -469,7 +463,6 @@ const (
 func (e SourceOracleUpdateSchemasTunnelMethod) ToPointer() *SourceOracleUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -550,7 +543,6 @@ const (
 func (e SourceOracleUpdateTunnelMethod) ToPointer() *SourceOracleUpdateTunnelMethod {
 	return &e
 }
-
 func (e *SourceOracleUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

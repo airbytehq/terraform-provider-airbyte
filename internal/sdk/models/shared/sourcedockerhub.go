@@ -17,7 +17,6 @@ const (
 func (e Dockerhub) ToPointer() *Dockerhub {
 	return &e
 }
-
 func (e *Dockerhub) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

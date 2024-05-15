@@ -17,7 +17,6 @@ const (
 func (e Firestore) ToPointer() *Firestore {
 	return &e
 }
-
 func (e *Firestore) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

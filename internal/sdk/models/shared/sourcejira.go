@@ -20,7 +20,6 @@ const (
 func (e SourceJiraIssuesStreamExpandWith) ToPointer() *SourceJiraIssuesStreamExpandWith {
 	return &e
 }
-
 func (e *SourceJiraIssuesStreamExpandWith) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -48,7 +47,6 @@ const (
 func (e Jira) ToPointer() *Jira {
 	return &e
 }
-
 func (e *Jira) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

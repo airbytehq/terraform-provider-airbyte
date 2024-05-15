@@ -18,7 +18,6 @@ const (
 func (e Redshift) ToPointer() *Redshift {
 	return &e
 }
-
 func (e *Redshift) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,6 @@ const (
 func (e DestinationRedshiftSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedshiftSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -124,7 +122,6 @@ const (
 func (e DestinationRedshiftSchemasTunnelMethod) ToPointer() *DestinationRedshiftSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +202,6 @@ const (
 func (e DestinationRedshiftTunnelMethod) ToPointer() *DestinationRedshiftTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -335,7 +331,6 @@ const (
 func (e DestinationRedshiftSchemasMethod) ToPointer() *DestinationRedshiftSchemasMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -379,7 +374,6 @@ const (
 func (e DestinationRedshiftSchemasEncryptionType) ToPointer() *DestinationRedshiftSchemasEncryptionType {
 	return &e
 }
-
 func (e *DestinationRedshiftSchemasEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -432,7 +426,6 @@ const (
 func (e DestinationRedshiftEncryptionType) ToPointer() *DestinationRedshiftEncryptionType {
 	return &e
 }
-
 func (e *DestinationRedshiftEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -540,7 +533,6 @@ const (
 func (e DestinationRedshiftMethod) ToPointer() *DestinationRedshiftMethod {
 	return &e
 }
-
 func (e *DestinationRedshiftMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -598,7 +590,6 @@ const (
 func (e DestinationRedshiftS3BucketRegion) ToPointer() *DestinationRedshiftS3BucketRegion {
 	return &e
 }
-
 func (e *DestinationRedshiftS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

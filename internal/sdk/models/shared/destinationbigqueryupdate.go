@@ -62,7 +62,6 @@ const (
 func (e DatasetLocation) ToPointer() *DatasetLocation {
 	return &e
 }
-
 func (e *DatasetLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -172,7 +171,6 @@ const (
 func (e DestinationBigqueryUpdateMethod) ToPointer() *DestinationBigqueryUpdateMethod {
 	return &e
 }
-
 func (e *DestinationBigqueryUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -216,7 +214,6 @@ const (
 func (e DestinationBigqueryUpdateCredentialType) ToPointer() *DestinationBigqueryUpdateCredentialType {
 	return &e
 }
-
 func (e *DestinationBigqueryUpdateCredentialType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -321,7 +318,6 @@ const (
 func (e GCSTmpFilesAfterwardProcessing) ToPointer() *GCSTmpFilesAfterwardProcessing {
 	return &e
 }
-
 func (e *GCSTmpFilesAfterwardProcessing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -347,7 +343,6 @@ const (
 func (e Method) ToPointer() *Method {
 	return &e
 }
-
 func (e *Method) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -493,7 +488,6 @@ const (
 func (e TransformationQueryRunType) ToPointer() *TransformationQueryRunType {
 	return &e
 }
-
 func (e *TransformationQueryRunType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

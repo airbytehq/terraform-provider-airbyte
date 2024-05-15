@@ -17,7 +17,6 @@ const (
 func (e PexelsAPI) ToPointer() *PexelsAPI {
 	return &e
 }
-
 func (e *PexelsAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

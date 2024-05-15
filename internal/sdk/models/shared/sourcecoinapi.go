@@ -19,7 +19,6 @@ const (
 func (e SourceCoinAPIEnvironment) ToPointer() *SourceCoinAPIEnvironment {
 	return &e
 }
-
 func (e *SourceCoinAPIEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -45,7 +44,6 @@ const (
 func (e CoinAPI) ToPointer() *CoinAPI {
 	return &e
 }
-
 func (e *CoinAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

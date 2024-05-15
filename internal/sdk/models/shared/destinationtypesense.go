@@ -17,7 +17,6 @@ const (
 func (e Typesense) ToPointer() *Typesense {
 	return &e
 }
-
 func (e *Typesense) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

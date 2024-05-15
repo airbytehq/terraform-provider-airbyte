@@ -19,7 +19,6 @@ const (
 func (e DestinationRedisCacheType) ToPointer() *DestinationRedisCacheType {
 	return &e
 }
-
 func (e *DestinationRedisCacheType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,6 @@ const (
 func (e Redis) ToPointer() *Redis {
 	return &e
 }
-
 func (e *Redis) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -67,7 +65,6 @@ const (
 func (e DestinationRedisSchemasMode) ToPointer() *DestinationRedisSchemasMode {
 	return &e
 }
-
 func (e *DestinationRedisSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -147,7 +144,6 @@ const (
 func (e DestinationRedisMode) ToPointer() *DestinationRedisMode {
 	return &e
 }
-
 func (e *DestinationRedisMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -258,7 +254,6 @@ const (
 func (e DestinationRedisSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationRedisSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedisSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -339,7 +334,6 @@ const (
 func (e DestinationRedisSchemasTunnelMethod) ToPointer() *DestinationRedisSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedisSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -420,7 +414,6 @@ const (
 func (e DestinationRedisTunnelMethod) ToPointer() *DestinationRedisTunnelMethod {
 	return &e
 }
-
 func (e *DestinationRedisTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

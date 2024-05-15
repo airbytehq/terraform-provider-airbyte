@@ -18,7 +18,6 @@ const (
 func (e Recharge) ToPointer() *Recharge {
 	return &e
 }
-
 func (e *Recharge) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

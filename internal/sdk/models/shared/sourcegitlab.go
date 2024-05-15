@@ -19,7 +19,6 @@ const (
 func (e SourceGitlabSchemasAuthType) ToPointer() *SourceGitlabSchemasAuthType {
 	return &e
 }
-
 func (e *SourceGitlabSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceGitlabAuthType) ToPointer() *SourceGitlabAuthType {
 	return &e
 }
-
 func (e *SourceGitlabAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -222,7 +220,6 @@ const (
 func (e Gitlab) ToPointer() *Gitlab {
 	return &e
 }
-
 func (e *Gitlab) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

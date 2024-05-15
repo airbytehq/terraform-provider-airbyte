@@ -18,7 +18,6 @@ const (
 func (e SourceAuth0SchemasCredentialsAuthenticationMethod) ToPointer() *SourceAuth0SchemasCredentialsAuthenticationMethod {
 	return &e
 }
-
 func (e *SourceAuth0SchemasCredentialsAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -70,7 +69,6 @@ const (
 func (e SourceAuth0SchemasAuthenticationMethod) ToPointer() *SourceAuth0SchemasAuthenticationMethod {
 	return &e
 }
-
 func (e *SourceAuth0SchemasAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -203,7 +201,6 @@ const (
 func (e Auth0) ToPointer() *Auth0 {
 	return &e
 }
-
 func (e *Auth0) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
