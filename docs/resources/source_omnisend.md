@@ -17,10 +17,10 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "b05c5b71-1236-41f2-ad47-b86cdec1a2bc"
-  name          = "Dr. Olivia Lueilwitz"
+  definition_id = "e6bd591e-2544-44d2-a34f-d1d8ea1c7d43"
+  name          = "Rachel Ankunding"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5e3ceb6c-910d-4c95-a96c-b5f3bc4b3253"
+  workspace_id  = "c9c1a8da-b7e7-43a5-9718-14e4dc1f633a"
 }
 ```
 

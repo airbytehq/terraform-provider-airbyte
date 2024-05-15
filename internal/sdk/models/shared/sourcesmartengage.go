@@ -17,7 +17,6 @@ const (
 func (e Smartengage) ToPointer() *Smartengage {
 	return &e
 }
-
 func (e *Smartengage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

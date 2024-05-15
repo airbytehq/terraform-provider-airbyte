@@ -18,7 +18,6 @@ const (
 func (e AzureBlobStorage) ToPointer() *AzureBlobStorage {
 	return &e
 }
-
 func (e *AzureBlobStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e DestinationAzureBlobStorageSchemasFormatType) ToPointer() *DestinationAzureBlobStorageSchemasFormatType {
 	return &e
 }
-
 func (e *DestinationAzureBlobStorageSchemasFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -87,7 +85,6 @@ const (
 func (e DestinationAzureBlobStorageNormalizationFlattening) ToPointer() *DestinationAzureBlobStorageNormalizationFlattening {
 	return &e
 }
-
 func (e *DestinationAzureBlobStorageNormalizationFlattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -113,7 +110,6 @@ const (
 func (e DestinationAzureBlobStorageFormatType) ToPointer() *DestinationAzureBlobStorageFormatType {
 	return &e
 }
-
 func (e *DestinationAzureBlobStorageFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -3,8 +3,8 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "41225651-3936-41b0-8889-26ab9cfe2e85"
-  name          = "Emilio Roob"
+  definition_id = "d5e5f9cf-b0d1-4e8d-bacc-e90aeed1087b"
+  name          = "Everett Lang"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "acc6e7e9-5c9a-47c9-b197-511d62479658"
+  workspace_id  = "54ce598c-c59e-4b95-af06-231c57fd8f9d"
 }

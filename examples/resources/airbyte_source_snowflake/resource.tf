@@ -15,8 +15,8 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "eae9e175-3040-465f-a467-23901f87c9df"
-  name          = "Cecilia Yundt"
+  definition_id = "47d95358-a568-419d-aabe-c21d7e3d24df"
+  name          = "Luis Stiedemann Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5013d5d0-cf40-43b2-856e-98a6950f0007"
+  workspace_id  = "342f997d-059d-438a-ae5f-cf99c41876fa"
 }

@@ -17,7 +17,6 @@ const (
 func (e Convex) ToPointer() *Convex {
 	return &e
 }
-
 func (e *Convex) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

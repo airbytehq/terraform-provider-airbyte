@@ -18,7 +18,6 @@ const (
 func (e JobTypeEnum) ToPointer() *JobTypeEnum {
 	return &e
 }
-
 func (e *JobTypeEnum) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

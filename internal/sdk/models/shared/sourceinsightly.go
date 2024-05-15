@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type Insightly string
@@ -17,7 +18,6 @@ const (
 func (e Insightly) ToPointer() *Insightly {
 	return &e
 }
-
 func (e *Insightly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -35,7 +35,7 @@ func (e *Insightly) UnmarshalJSON(data []byte) error {
 type SourceInsightly struct {
 	sourceType Insightly `const:"insightly" json:"sourceType"`
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
-	StartDate *string `json:"start_date"`
+	StartDate *time.Time `json:"start_date"`
 	// Your Insightly API token.
 	Token *string `json:"token"`
 }
@@ -55,7 +55,7 @@ func (o *SourceInsightly) GetSourceType() Insightly {
 	return InsightlyInsightly
 }
 
-func (o *SourceInsightly) GetStartDate() *string {
+func (o *SourceInsightly) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}

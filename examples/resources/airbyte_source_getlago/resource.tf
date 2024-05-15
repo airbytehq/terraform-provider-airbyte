@@ -3,8 +3,8 @@ resource "airbyte_source_getlago" "my_source_getlago" {
     api_key = "...my_api_key..."
     api_url = "...my_api_url..."
   }
-  definition_id = "07daef77-0c81-4f95-85b8-dd2d32b37f6f"
-  name          = "Wilbert Hettinger"
+  definition_id = "83f04591-0a7c-4570-970b-889169da4e6d"
+  name          = "Brooke Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0a4fda52-f695-443b-8620-d9bb50480aaa"
+  workspace_id  = "aa386da1-d2dd-4f03-91c4-9c6869005174"
 }

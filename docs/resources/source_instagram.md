@@ -20,10 +20,10 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     client_secret = "...my_client_secret..."
     start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "730b3999-4a41-4e4a-8985-c78fa7d86bdf"
-  name          = "Kristy Wilderman MD"
+  definition_id = "0d626d48-87cc-4aaf-98e0-f5c1159d6014"
+  name          = "Dr. Fredrick Buckridge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb121083-728d-489e-b51e-868df1f2c5ad"
+  workspace_id  = "cfc7f384-ec60-4405-bd04-51918db5cccb"
 }
 ```
 

@@ -4,8 +4,8 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     api_url      = "...my_api_url..."
     workspace_id = "...my_workspace_id..."
   }
-  definition_id = "5974a2eb-c368-40ab-b376-bce66a7c0ce2"
-  name          = "Muriel O'Keefe"
+  definition_id = "b7573910-8618-4e91-845d-83c494a849cd"
+  name          = "Amanda Kunze DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9aab7145-4cb2-4418-93e1-da46c4f685d2"
+  workspace_id  = "32c2e302-e6de-492b-be43-098446f9835e"
 }

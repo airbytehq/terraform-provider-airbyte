@@ -19,7 +19,6 @@ const (
 func (e SourceAzureBlobStorageSchemasAuthType) ToPointer() *SourceAzureBlobStorageSchemasAuthType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceAzureBlobStorageAuthType) ToPointer() *SourceAzureBlobStorageAuthType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -214,7 +212,6 @@ const (
 func (e SourceAzureBlobStorageAzureBlobStorage) ToPointer() *SourceAzureBlobStorageAzureBlobStorage {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageAzureBlobStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -238,7 +235,6 @@ const (
 func (e SourceAzureBlobStorageSchemasStreamsFormatFormatFiletype) ToPointer() *SourceAzureBlobStorageSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -262,7 +258,6 @@ const (
 func (e SourceAzureBlobStorageMode) ToPointer() *SourceAzureBlobStorageMode {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -352,7 +347,6 @@ const (
 func (e SourceAzureBlobStorageParsingStrategy) ToPointer() *SourceAzureBlobStorageParsingStrategy {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -429,7 +423,6 @@ const (
 func (e SourceAzureBlobStorageSchemasStreamsFormatFiletype) ToPointer() *SourceAzureBlobStorageSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -481,7 +474,6 @@ const (
 func (e SourceAzureBlobStorageSchemasStreamsFiletype) ToPointer() *SourceAzureBlobStorageSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -524,7 +516,6 @@ const (
 func (e SourceAzureBlobStorageSchemasFiletype) ToPointer() *SourceAzureBlobStorageSchemasFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -548,7 +539,6 @@ const (
 func (e SourceAzureBlobStorageSchemasStreamsHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -600,7 +590,6 @@ const (
 func (e SourceAzureBlobStorageSchemasHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -643,7 +632,6 @@ const (
 func (e SourceAzureBlobStorageHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -774,7 +762,6 @@ const (
 func (e SourceAzureBlobStorageInferenceType) ToPointer() *SourceAzureBlobStorageInferenceType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageInferenceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -945,7 +932,6 @@ const (
 func (e SourceAzureBlobStorageFiletype) ToPointer() *SourceAzureBlobStorageFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1130,7 +1116,6 @@ const (
 func (e SourceAzureBlobStorageValidationPolicy) ToPointer() *SourceAzureBlobStorageValidationPolicy {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

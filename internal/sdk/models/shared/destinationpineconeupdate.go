@@ -18,7 +18,6 @@ const (
 func (e DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -97,7 +96,6 @@ const (
 func (e DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -168,7 +166,6 @@ const (
 func (e DestinationPineconeUpdateSchemasEmbeddingMode) ToPointer() *DestinationPineconeUpdateSchemasEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -212,7 +209,6 @@ const (
 func (e DestinationPineconeUpdateSchemasMode) ToPointer() *DestinationPineconeUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -264,7 +260,6 @@ const (
 func (e DestinationPineconeUpdateMode) ToPointer() *DestinationPineconeUpdateMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -514,7 +509,6 @@ const (
 func (e DestinationPineconeUpdateLanguage) ToPointer() *DestinationPineconeUpdateLanguage {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -568,7 +562,6 @@ const (
 func (e DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -621,7 +614,6 @@ const (
 func (e DestinationPineconeUpdateSchemasProcessingTextSplitterMode) ToPointer() *DestinationPineconeUpdateSchemasProcessingTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -674,7 +666,6 @@ const (
 func (e DestinationPineconeUpdateSchemasProcessingMode) ToPointer() *DestinationPineconeUpdateSchemasProcessingMode {
 	return &e
 }
-
 func (e *DestinationPineconeUpdateSchemasProcessingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

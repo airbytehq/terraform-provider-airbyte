@@ -5,12 +5,13 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceInsightlyResourceModel) ToSharedSourceInsightlyCreateRequest() *shared.SourceInsightlyCreateRequest {
-	startDate := new(string)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -58,9 +59,9 @@ func (r *SourceInsightlyResourceModel) RefreshFromSharedSourceResponse(resp *sha
 }
 
 func (r *SourceInsightlyResourceModel) ToSharedSourceInsightlyPutRequest() *shared.SourceInsightlyPutRequest {
-	startDate := new(string)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}

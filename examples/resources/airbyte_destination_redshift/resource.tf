@@ -2,6 +2,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = false
+    drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -19,15 +20,15 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_name_pattern  = "{timestamp}"
-        purge_staging_data = false
+        file_name_pattern  = "{date:yyyy_MM}"
+        purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "eu-west-1"
+        s3_bucket_region   = "ap-south-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Dario.Brakus57"
+    username = "Beau57"
   }
   definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
   name          = "Jessie Brown"

@@ -17,7 +17,6 @@ const (
 func (e ClickupAPI) ToPointer() *ClickupAPI {
 	return &e
 }
-
 func (e *ClickupAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

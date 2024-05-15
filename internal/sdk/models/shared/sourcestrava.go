@@ -18,7 +18,6 @@ const (
 func (e SourceStravaAuthType) ToPointer() *SourceStravaAuthType {
 	return &e
 }
-
 func (e *SourceStravaAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e Strava) ToPointer() *Strava {
 	return &e
 }
-
 func (e *Strava) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

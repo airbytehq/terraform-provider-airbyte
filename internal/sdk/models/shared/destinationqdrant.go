@@ -18,7 +18,6 @@ const (
 func (e Qdrant) ToPointer() *Qdrant {
 	return &e
 }
-
 func (e *Qdrant) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e DestinationQdrantSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -121,7 +119,6 @@ const (
 func (e DestinationQdrantSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationQdrantSchemasEmbeddingEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -192,7 +189,6 @@ const (
 func (e DestinationQdrantSchemasEmbeddingMode) ToPointer() *DestinationQdrantSchemasEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -236,7 +232,6 @@ const (
 func (e DestinationQdrantSchemasMode) ToPointer() *DestinationQdrantSchemasMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -288,7 +283,6 @@ const (
 func (e DestinationQdrantMode) ToPointer() *DestinationQdrantMode {
 	return &e
 }
-
 func (e *DestinationQdrantMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -470,7 +464,6 @@ const (
 func (e DestinationQdrantSchemasIndexingAuthMethodMode) ToPointer() *DestinationQdrantSchemasIndexingAuthMethodMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasIndexingAuthMethodMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -513,7 +506,6 @@ const (
 func (e DestinationQdrantSchemasIndexingMode) ToPointer() *DestinationQdrantSchemasIndexingMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -632,7 +624,6 @@ const (
 func (e DestinationQdrantDistanceMetric) ToPointer() *DestinationQdrantDistanceMetric {
 	return &e
 }
-
 func (e *DestinationQdrantDistanceMetric) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -766,7 +757,6 @@ const (
 func (e DestinationQdrantLanguage) ToPointer() *DestinationQdrantLanguage {
 	return &e
 }
-
 func (e *DestinationQdrantLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -820,7 +810,6 @@ const (
 func (e DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -873,7 +862,6 @@ const (
 func (e DestinationQdrantSchemasProcessingTextSplitterMode) ToPointer() *DestinationQdrantSchemasProcessingTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -926,7 +914,6 @@ const (
 func (e DestinationQdrantSchemasProcessingMode) ToPointer() *DestinationQdrantSchemasProcessingMode {
 	return &e
 }
-
 func (e *DestinationQdrantSchemasProcessingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -15,6 +15,12 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 	} else {
 		disableTypeDedupe = nil
 	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -189,6 +195,7 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 	configuration := shared.DestinationRedshift{
 		Database:          database,
 		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
 		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
 		Password:          password,
@@ -232,6 +239,12 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -407,6 +420,7 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 	configuration := shared.DestinationRedshiftUpdate{
 		Database:          database,
 		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
 		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
 		Password:          password,

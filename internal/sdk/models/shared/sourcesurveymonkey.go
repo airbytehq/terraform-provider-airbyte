@@ -18,7 +18,6 @@ const (
 func (e SourceSurveymonkeyAuthMethod) ToPointer() *SourceSurveymonkeyAuthMethod {
 	return &e
 }
-
 func (e *SourceSurveymonkeyAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -92,7 +91,6 @@ const (
 func (e SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount) ToPointer() *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount {
 	return &e
 }
-
 func (e *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -120,7 +118,6 @@ const (
 func (e Surveymonkey) ToPointer() *Surveymonkey {
 	return &e
 }
-
 func (e *Surveymonkey) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

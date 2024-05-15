@@ -7,6 +7,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationRedshift struct {
 	Database          types.String                          `tfsdk:"database"`
 	DisableTypeDedupe types.Bool                            `tfsdk:"disable_type_dedupe"`
+	DropCascade       types.Bool                            `tfsdk:"drop_cascade"`
 	Host              types.String                          `tfsdk:"host"`
 	JdbcURLParams     types.String                          `tfsdk:"jdbc_url_params"`
 	Password          types.String                          `tfsdk:"password"`

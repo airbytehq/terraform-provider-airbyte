@@ -25,15 +25,15 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
         attribution_types = [
           "INDIVIDUAL",
         ]
-        click_window_days = "0"
+        click_window_days = "14"
         columns = [
-          "TOTAL_WEB_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR",
+          "REPIN_RATE",
         ]
-        conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "60"
-        granularity            = "WEEK"
-        level                  = "PRODUCT_GROUP_TARGETING"
-        name                   = "Jay Klein"
+        conversion_report_time = "TIME_OF_AD_ACTION"
+        engagement_window_days = "0"
+        granularity            = "HOUR"
+        level                  = "KEYWORD"
+        name                   = "Mr. Daniel Bergstrom III"
         start_date             = "2022-07-28"
         view_window_days       = "7"
       },
@@ -43,10 +43,10 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
       "ACTIVE",
     ]
   }
-  definition_id = "fa7262d2-a48f-4976-9d11-df09849375f6"
-  name          = "Rachel Kuphal"
+  definition_id = "6f2bce2e-77bb-4cce-b588-ac548be8a7a9"
+  name          = "Rudolph Wilkinson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0d41f139-19c9-425e-b865-17a80112166a"
+  workspace_id  = "c79293e2-8aa8-4190-b348-b38fe3b52011"
 }
 ```
 

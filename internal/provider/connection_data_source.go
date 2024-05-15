@@ -186,7 +186,7 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	request := operations.GetConnectionRequest{
 		ConnectionID: connectionID,
 	}
-	res, err := r.client.PublicConnections.GetConnection(ctx, request)
+	res, err := r.client.Connections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

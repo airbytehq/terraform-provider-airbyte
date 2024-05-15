@@ -20,7 +20,6 @@ const (
 func (e SourceChargebeeProductCatalog) ToPointer() *SourceChargebeeProductCatalog {
 	return &e
 }
-
 func (e *SourceChargebeeProductCatalog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e Chargebee) ToPointer() *Chargebee {
 	return &e
 }
-
 func (e *Chargebee) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -17,10 +17,10 @@ resource "airbyte_source_tempo" "my_source_tempo" {
   configuration = {
     api_token = "...my_api_token..."
   }
-  definition_id = "d7bbc290-ef00-4ad5-b722-56fe50a2e7cf"
-  name          = "Reginald Zulauf"
+  definition_id = "a03eb3c0-afcc-43c8-ba6e-afbbc8e3e7db"
+  name          = "Blanche Douglas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "acc65c56-f5fa-4677-8e44-b91c615d1280"
+  workspace_id  = "46fc1e0f-a91f-47ef-9f46-2d7c84461977"
 }
 ```
 

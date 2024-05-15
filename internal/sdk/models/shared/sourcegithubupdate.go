@@ -19,7 +19,6 @@ const (
 func (e SourceGithubUpdateOptionTitle) ToPointer() *SourceGithubUpdateOptionTitle {
 	return &e
 }
-
 func (e *SourceGithubUpdateOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e OptionTitle) ToPointer() *OptionTitle {
 	return &e
 }
-
 func (e *OptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

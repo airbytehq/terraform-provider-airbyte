@@ -18,7 +18,6 @@ const (
 func (e DestinationMilvusUpdateSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationMilvusUpdateSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -97,7 +96,6 @@ const (
 func (e DestinationMilvusUpdateSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationMilvusUpdateSchemasEmbeddingEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -168,7 +166,6 @@ const (
 func (e DestinationMilvusUpdateSchemasEmbeddingMode) ToPointer() *DestinationMilvusUpdateSchemasEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -212,7 +209,6 @@ const (
 func (e DestinationMilvusUpdateSchemasMode) ToPointer() *DestinationMilvusUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -264,7 +260,6 @@ const (
 func (e DestinationMilvusUpdateMode) ToPointer() *DestinationMilvusUpdateMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -446,7 +441,6 @@ const (
 func (e DestinationMilvusUpdateSchemasIndexingAuthAuthenticationMode) ToPointer() *DestinationMilvusUpdateSchemasIndexingAuthAuthenticationMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasIndexingAuthAuthenticationMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -490,7 +484,6 @@ const (
 func (e DestinationMilvusUpdateSchemasIndexingAuthMode) ToPointer() *DestinationMilvusUpdateSchemasIndexingAuthMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasIndexingAuthMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -552,7 +545,6 @@ const (
 func (e DestinationMilvusUpdateSchemasIndexingMode) ToPointer() *DestinationMilvusUpdateSchemasIndexingMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -797,7 +789,6 @@ const (
 func (e DestinationMilvusUpdateLanguage) ToPointer() *DestinationMilvusUpdateLanguage {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -851,7 +842,6 @@ const (
 func (e DestinationMilvusUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationMilvusUpdateSchemasProcessingTextSplitterTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -904,7 +894,6 @@ const (
 func (e DestinationMilvusUpdateSchemasProcessingTextSplitterMode) ToPointer() *DestinationMilvusUpdateSchemasProcessingTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -957,7 +946,6 @@ const (
 func (e DestinationMilvusUpdateSchemasProcessingMode) ToPointer() *DestinationMilvusUpdateSchemasProcessingMode {
 	return &e
 }
-
 func (e *DestinationMilvusUpdateSchemasProcessingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -19,10 +19,10 @@ resource "airbyte_source_recurly" "my_source_recurly" {
     begin_time = "2021-12-01T00:00:00"
     end_time   = "2021-12-01T00:00:00"
   }
-  definition_id = "c8bd1ccc-ad3b-41c4-8652-93193648ca78"
-  name          = "Mamie Hettinger"
+  definition_id = "1fcb26b9-0cc0-4df9-8191-9892a209c167"
+  name          = "Tommie Koelpin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "52384bdb-821f-49c8-afa4-0dc207c50e6f"
+  workspace_id  = "34c463b8-38dc-45f9-b653-5f73a45535ff"
 }
 ```
 

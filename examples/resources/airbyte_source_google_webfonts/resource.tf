@@ -5,8 +5,8 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
   }
-  definition_id = "89bfb0cb-9d8d-4fc2-ba8c-72c3eb5dc557"
-  name          = "Charlotte Shields IV"
+  definition_id = "d6b468c8-5ec2-41a9-ab56-7f13c77e51fa"
+  name          = "Bessie Ebert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d7698733-386b-453a-879a-0805ff1793bf"
+  workspace_id  = "f1a4306e-0829-409d-97bf-abbad3671a9c"
 }

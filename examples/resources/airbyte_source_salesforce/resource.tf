@@ -3,19 +3,19 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     client_id          = "...my_client_id..."
     client_secret      = "...my_client_secret..."
     force_use_bulk_api = true
-    is_sandbox         = true
+    is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
-    start_date         = "2021-07-25T00:00:00Z"
+    start_date         = "2021-07-25"
     stream_slice_step  = "PT12H"
     streams_criteria = [
       {
-        criteria = "ends not with"
+        criteria = "ends with"
         value    = "...my_value..."
       },
     ]
   }
-  definition_id = "81056bc9-77a3-4bf4-9ff8-dd835d80427d"
-  name          = "Edna Nicolas"
+  definition_id = "8aabbad0-7307-482c-be82-2825101e3e25"
+  name          = "Ruben McClure"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1d8c723c-8e5e-4259-be4e-f6493875b5a3"
+  workspace_id  = "8d038885-1ec0-46fd-bb8c-c64e95a7a369"
 }

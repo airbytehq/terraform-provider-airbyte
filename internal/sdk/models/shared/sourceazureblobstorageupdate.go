@@ -19,7 +19,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasAuthType) ToPointer() *SourceAzureBlobStorageUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceAzureBlobStorageUpdateAuthType) ToPointer() *SourceAzureBlobStorageUpdateAuthType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -214,7 +212,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -238,7 +235,6 @@ const (
 func (e SourceAzureBlobStorageUpdateMode) ToPointer() *SourceAzureBlobStorageUpdateMode {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -328,7 +324,6 @@ const (
 func (e ParsingStrategy) ToPointer() *ParsingStrategy {
 	return &e
 }
-
 func (e *ParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -405,7 +400,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasStreamsFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -457,7 +451,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -500,7 +493,6 @@ const (
 func (e SourceAzureBlobStorageUpdateFiletype) ToPointer() *SourceAzureBlobStorageUpdateFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -524,7 +516,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -576,7 +567,6 @@ const (
 func (e SourceAzureBlobStorageUpdateHeaderDefinitionType) ToPointer() *SourceAzureBlobStorageUpdateHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -619,7 +609,6 @@ const (
 func (e HeaderDefinitionType) ToPointer() *HeaderDefinitionType {
 	return &e
 }
-
 func (e *HeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -750,7 +739,6 @@ const (
 func (e InferenceType) ToPointer() *InferenceType {
 	return &e
 }
-
 func (e *InferenceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -921,7 +909,6 @@ const (
 func (e SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1106,7 +1093,6 @@ const (
 func (e ValidationPolicy) ToPointer() *ValidationPolicy {
 	return &e
 }
-
 func (e *ValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

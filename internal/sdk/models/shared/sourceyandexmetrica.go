@@ -18,7 +18,6 @@ const (
 func (e YandexMetrica) ToPointer() *YandexMetrica {
 	return &e
 }
-
 func (e *YandexMetrica) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

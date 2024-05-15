@@ -14,10 +14,10 @@ Permission Resource
 
 ```terraform
 resource "airbyte_permission" "my_permission" {
-  organization_id = "b2810858-467e-45cd-b332-85c7cc3fde33"
-  permission_type = "organization_editor"
-  user_id         = "f786aae3-aaf5-427f-a19e-b1bf8ee23394"
-  workspace_id    = "67597e80-1e67-4689-a46f-396c7c6bf737"
+  organization_id = "9a46f396-c7c6-4bf7-b724-213ca1059f1e"
+  permission_type = "organization_admin"
+  user_id         = "0360fc0e-aa50-4681-bc3a-db090c013842"
+  workspace_id    = "c101e265-eebc-4230-b150-94cc21854edb"
 }
 ```
 
@@ -26,7 +26,7 @@ resource "airbyte_permission" "my_permission" {
 
 ### Required
 
-- `permission_type` (String) Describes what actions/endpoints the permission entitles to. Requires replacement if changed. ; must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]
+- `permission_type` (String) Describes what actions/endpoints the permission entitles to. must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]
 - `user_id` (String) Internal Airbyte user ID. Requires replacement if changed.
 
 ### Optional
@@ -38,4 +38,10 @@ resource "airbyte_permission" "my_permission" {
 
 - `permission_id` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_permission.my_airbyte_permission ""
+```

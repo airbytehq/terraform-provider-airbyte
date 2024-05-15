@@ -18,7 +18,6 @@ const (
 func (e BothUsernameAndPasswordIsRequiredForAuthenticationRequest) ToPointer() *BothUsernameAndPasswordIsRequiredForAuthenticationRequest {
 	return &e
 }
-
 func (e *BothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e AccessTokenIsRequiredForAuthenticationRequests) ToPointer() *AccessTokenIsRequiredForAuthenticationRequests {
 	return &e
 }
-
 func (e *AccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -198,7 +196,6 @@ const (
 func (e GranularityForGeoLocationRegion) ToPointer() *GranularityForGeoLocationRegion {
 	return &e
 }
-
 func (e *GranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -229,7 +226,6 @@ const (
 func (e GranularityForPeriodicReports) ToPointer() *GranularityForPeriodicReports {
 	return &e
 }
-
 func (e *GranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

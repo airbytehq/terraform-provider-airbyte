@@ -19,7 +19,6 @@ const (
 func (e SourceShopifyUpdateSchemasAuthMethod) ToPointer() *SourceShopifyUpdateSchemasAuthMethod {
 	return &e
 }
-
 func (e *SourceShopifyUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -72,7 +71,6 @@ const (
 func (e SourceShopifyUpdateAuthMethod) ToPointer() *SourceShopifyUpdateAuthMethod {
 	return &e
 }
-
 func (e *SourceShopifyUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

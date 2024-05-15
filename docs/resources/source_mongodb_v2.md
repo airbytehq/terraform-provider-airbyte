@@ -23,19 +23,19 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         database              = "...my_database..."
         password              = "...my_password..."
         schema_enforced       = false
-        username              = "Ray12"
+        username              = "Era40"
       }
     }
-    discover_sample_size                 = 6
+    discover_sample_size                 = 1
     initial_waiting_seconds              = 4
-    invalid_cdc_cursor_position_behavior = "Re-sync data"
-    queue_size                           = 7
-    update_capture_mode                  = "Post Image"
+    invalid_cdc_cursor_position_behavior = "Fail sync"
+    queue_size                           = 0
+    update_capture_mode                  = "Lookup"
   }
-  definition_id = "203cb787-6e75-4a53-9f3b-4802a3b9d674"
-  name          = "Lance Kautzer"
+  definition_id = "c03f8392-0634-4c9d-b1c4-26709282f0b3"
+  name          = "Nora Waelchi"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e116c781-16c7-40bf-b326-67c47d503616"
+  workspace_id  = "729ff502-4b69-40b2-b36f-2f7a3b95d4ab"
 }
 ```
 

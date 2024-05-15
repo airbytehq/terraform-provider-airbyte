@@ -18,7 +18,6 @@ const (
 func (e Klaviyo) ToPointer() *Klaviyo {
 	return &e
 }
-
 func (e *Klaviyo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

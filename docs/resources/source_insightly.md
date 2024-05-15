@@ -18,10 +18,10 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "3bd5563e-04de-4287-b752-65fdff2deb8c"
-  name          = "Elijah Connelly"
+  definition_id = "1e4a8985-c78f-4a7d-86bd-f5bf91acb121"
+  name          = "Gwendolyn Durgan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4a92033b-17bf-4cc5-a6af-10da401fb0fc"
+  workspace_id  = "8d89e351-e868-4df1-b2c5-ad84a46153eb"
 }
 ```
 

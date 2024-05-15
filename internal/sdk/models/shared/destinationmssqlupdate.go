@@ -18,7 +18,6 @@ const (
 func (e DestinationMssqlUpdateSchemasSslMethod) ToPointer() *DestinationMssqlUpdateSchemasSslMethod {
 	return &e
 }
-
 func (e *DestinationMssqlUpdateSchemasSslMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e DestinationMssqlUpdateSslMethod) ToPointer() *DestinationMssqlUpdateSslMethod {
 	return &e
 }
-
 func (e *DestinationMssqlUpdateSslMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -180,7 +178,6 @@ const (
 func (e DestinationMssqlUpdateSchemasTunnelMethodTunnelMethod) ToPointer() *DestinationMssqlUpdateSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMssqlUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -261,7 +258,6 @@ const (
 func (e DestinationMssqlUpdateSchemasTunnelMethod) ToPointer() *DestinationMssqlUpdateSchemasTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMssqlUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -342,7 +338,6 @@ const (
 func (e DestinationMssqlUpdateTunnelMethod) ToPointer() *DestinationMssqlUpdateTunnelMethod {
 	return &e
 }
-
 func (e *DestinationMssqlUpdateTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

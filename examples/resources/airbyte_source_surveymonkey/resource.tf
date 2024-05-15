@@ -11,8 +11,8 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       "...",
     ]
   }
-  definition_id = "48f1e4b3-0469-4b6c-a0b3-03cf017cd978"
-  name          = "Vanessa Dickens DDS"
+  definition_id = "3a8ae78e-1e53-47d9-aeb6-d5dc1e250f80"
+  name          = "Robin Schimmel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e7e9b4aa-bfc5-4ff7-946c-36bb7337bf0b"
+  workspace_id  = "5c3777bc-cfe7-40cf-947e-293c7a4b2d7b"
 }

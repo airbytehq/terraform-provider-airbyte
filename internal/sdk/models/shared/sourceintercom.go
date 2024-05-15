@@ -18,7 +18,6 @@ const (
 func (e Intercom) ToPointer() *Intercom {
 	return &e
 }
-
 func (e *Intercom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

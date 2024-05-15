@@ -125,7 +125,7 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 	}
 
 	request := *data.ToSharedWorkspaceCreateRequest()
-	res, err := r.client.Public.CreateWorkspace(ctx, request)
+	res, err := r.client.Workspaces.CreateWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -151,7 +151,7 @@ func (r *WorkspaceResource) Create(ctx context.Context, req resource.CreateReque
 	request1 := operations.GetWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res1, err := r.client.Public.GetWorkspace(ctx, request1)
+	res1, err := r.client.Workspaces.GetWorkspace(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -200,7 +200,7 @@ func (r *WorkspaceResource) Read(ctx context.Context, req resource.ReadRequest, 
 	request := operations.GetWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Public.GetWorkspace(ctx, request)
+	res, err := r.client.Workspaces.GetWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -250,7 +250,7 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		WorkspaceUpdateRequest: workspaceUpdateRequest,
 		WorkspaceID:            workspaceID,
 	}
-	res, err := r.client.Public.UpdateWorkspace(ctx, request)
+	res, err := r.client.Workspaces.UpdateWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -299,7 +299,7 @@ func (r *WorkspaceResource) Delete(ctx context.Context, req resource.DeleteReque
 	request := operations.DeleteWorkspaceRequest{
 		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Public.DeleteWorkspace(ctx, request)
+	res, err := r.client.Workspaces.DeleteWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

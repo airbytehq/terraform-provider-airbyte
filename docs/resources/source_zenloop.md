@@ -20,10 +20,10 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  definition_id = "f9e67bad-f74d-423a-87a4-2abf6ae57802"
-  name          = "Neal O'Kon"
+  definition_id = "af6a030f-2320-4a84-882f-eed35fd47126"
+  name          = "Darlene Cronin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1998eac7-526c-40e6-8d41-f29478bd831a"
+  workspace_id  = "78122421-4e97-49a9-b873-ec6ec23f8936"
 }
 ```
 

@@ -17,7 +17,6 @@ const (
 func (e AzureTable) ToPointer() *AzureTable {
 	return &e
 }
-
 func (e *AzureTable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

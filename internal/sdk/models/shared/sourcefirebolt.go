@@ -17,7 +17,6 @@ const (
 func (e Firebolt) ToPointer() *Firebolt {
 	return &e
 }
-
 func (e *Firebolt) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

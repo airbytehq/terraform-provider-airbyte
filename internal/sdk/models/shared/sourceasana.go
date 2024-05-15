@@ -19,7 +19,6 @@ const (
 func (e SourceAsanaSchemasCredentialsTitle) ToPointer() *SourceAsanaSchemasCredentialsTitle {
 	return &e
 }
-
 func (e *SourceAsanaSchemasCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -73,7 +72,6 @@ const (
 func (e SourceAsanaCredentialsTitle) ToPointer() *SourceAsanaCredentialsTitle {
 	return &e
 }
-
 func (e *SourceAsanaCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +203,6 @@ const (
 func (e Asana) ToPointer() *Asana {
 	return &e
 }
-
 func (e *Asana) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

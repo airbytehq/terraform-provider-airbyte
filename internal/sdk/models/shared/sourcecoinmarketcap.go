@@ -19,7 +19,6 @@ const (
 func (e SourceCoinmarketcapDataType) ToPointer() *SourceCoinmarketcapDataType {
 	return &e
 }
-
 func (e *SourceCoinmarketcapDataType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -45,7 +44,6 @@ const (
 func (e Coinmarketcap) ToPointer() *Coinmarketcap {
 	return &e
 }
-
 func (e *Coinmarketcap) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

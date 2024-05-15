@@ -17,7 +17,6 @@ const (
 func (e Vantage) ToPointer() *Vantage {
 	return &e
 }
-
 func (e *Vantage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

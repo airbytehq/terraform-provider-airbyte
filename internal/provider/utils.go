@@ -20,6 +20,12 @@ func debugResponse(response *http.Response) string {
 	if v := response.Request.Header.Get("Authorization"); v != "" {
 		response.Request.Header.Set("Authorization", "(sensitive)")
 	}
+	if v := response.Request.Header.Get("clientID"); v != "" {
+		response.Request.Header.Set("clientID", "(sensitive)")
+	}
+	if v := response.Request.Header.Get("clientSecret"); v != "" {
+		response.Request.Header.Set("clientSecret", "(sensitive)")
+	}
 	if v := response.Request.Header.Get("password"); v != "" {
 		response.Request.Header.Set("password", "(sensitive)")
 	}

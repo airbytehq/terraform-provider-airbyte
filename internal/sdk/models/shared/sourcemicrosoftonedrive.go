@@ -19,7 +19,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasAuthType) ToPointer() *SourceMicrosoftOnedriveSchemasAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -100,7 +99,6 @@ const (
 func (e SourceMicrosoftOnedriveAuthType) ToPointer() *SourceMicrosoftOnedriveAuthType {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -248,7 +246,6 @@ const (
 func (e SourceMicrosoftOnedriveSearchScope) ToPointer() *SourceMicrosoftOnedriveSearchScope {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSearchScope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -276,7 +273,6 @@ const (
 func (e MicrosoftOnedrive) ToPointer() *MicrosoftOnedrive {
 	return &e
 }
-
 func (e *MicrosoftOnedrive) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -300,7 +296,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype) ToPointer() *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -324,7 +319,6 @@ const (
 func (e SourceMicrosoftOnedriveMode) ToPointer() *SourceMicrosoftOnedriveMode {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -414,7 +408,6 @@ const (
 func (e SourceMicrosoftOnedriveParsingStrategy) ToPointer() *SourceMicrosoftOnedriveParsingStrategy {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveParsingStrategy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -491,7 +484,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasStreamsFormatFiletype) ToPointer() *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -543,7 +535,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasStreamsFiletype) ToPointer() *SourceMicrosoftOnedriveSchemasStreamsFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -586,7 +577,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasFiletype) ToPointer() *SourceMicrosoftOnedriveSchemasFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -610,7 +600,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType) ToPointer() *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -662,7 +651,6 @@ const (
 func (e SourceMicrosoftOnedriveSchemasHeaderDefinitionType) ToPointer() *SourceMicrosoftOnedriveSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -705,7 +693,6 @@ const (
 func (e SourceMicrosoftOnedriveHeaderDefinitionType) ToPointer() *SourceMicrosoftOnedriveHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -961,7 +948,6 @@ const (
 func (e SourceMicrosoftOnedriveFiletype) ToPointer() *SourceMicrosoftOnedriveFiletype {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1146,7 +1132,6 @@ const (
 func (e SourceMicrosoftOnedriveValidationPolicy) ToPointer() *SourceMicrosoftOnedriveValidationPolicy {
 	return &e
 }
-
 func (e *SourceMicrosoftOnedriveValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -18,10 +18,10 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
     api_key     = "...my_api_key..."
     domain_name = "mydomain.myfreshworks.com"
   }
-  definition_id = "777324c6-ca7f-4cda-8638-7854b69c42e8"
-  name          = "Wade Nikolaus"
+  definition_id = "b11448c1-cd3a-4fe5-af85-381e22d9fe1b"
+  name          = "Roy Conroy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4c06fe5a-2e94-4eff-a11a-dfc721dd1f80"
+  workspace_id  = "121e6315-be30-46a4-a839-94413a7c75d4"
 }
 ```
 

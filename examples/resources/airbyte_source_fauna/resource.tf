@@ -11,8 +11,8 @@ resource "airbyte_source_fauna" "my_source_fauna" {
     scheme = "...my_scheme..."
     secret = "...my_secret..."
   }
-  definition_id = "2e6bc1e2-2381-4cdc-ae96-42f3c2fe19c3"
-  name          = "Jana Stroman"
+  definition_id = "b0b68d5f-b4b9-49e2-b7dc-2833c76bbd55"
+  name          = "Jon Howell"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e92bc337-3ad2-4c88-bf28-ef975a7b102e"
+  workspace_id  = "4ade0498-ec40-4fd8-ad91-61a05c5e8899"
 }

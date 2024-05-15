@@ -23,10 +23,10 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "eca93a8a-e78e-41e5-b7d9-6eb6d5dc1e25"
-  name          = "Dr. Marta Lindgren"
+  definition_id = "bc290ef0-0ad5-4372-a56f-e50a2e7cfe6f"
+  name          = "Danielle Nitzsche"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c595c377-7bcc-4fe7-8cf1-47e293c7a4b2"
+  workspace_id  = "65c56f5f-a677-48e4-8b91-c615d128040b"
 }
 ```
 

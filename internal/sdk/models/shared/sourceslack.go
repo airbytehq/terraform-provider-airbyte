@@ -19,7 +19,6 @@ const (
 func (e SourceSlackSchemasOptionTitle) ToPointer() *SourceSlackSchemasOptionTitle {
 	return &e
 }
-
 func (e *SourceSlackSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceSlackOptionTitle) ToPointer() *SourceSlackOptionTitle {
 	return &e
 }
-
 func (e *SourceSlackOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -205,7 +203,6 @@ const (
 func (e Slack) ToPointer() *Slack {
 	return &e
 }
-
 func (e *Slack) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

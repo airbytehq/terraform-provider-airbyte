@@ -17,7 +17,6 @@ const (
 func (e Orbit) ToPointer() *Orbit {
 	return &e
 }
-
 func (e *Orbit) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

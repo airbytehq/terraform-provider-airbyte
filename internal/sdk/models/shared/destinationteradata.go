@@ -18,7 +18,6 @@ const (
 func (e Teradata) ToPointer() *Teradata {
 	return &e
 }
-
 func (e *Teradata) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -42,7 +41,6 @@ const (
 func (e DestinationTeradataSchemasSSLModeSSLModes6Mode) ToPointer() *DestinationTeradataSchemasSSLModeSSLModes6Mode {
 	return &e
 }
-
 func (e *DestinationTeradataSchemasSSLModeSSLModes6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -96,7 +94,6 @@ const (
 func (e DestinationTeradataSchemasSSLModeSSLModes5Mode) ToPointer() *DestinationTeradataSchemasSSLModeSSLModes5Mode {
 	return &e
 }
-
 func (e *DestinationTeradataSchemasSSLModeSSLModes5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -150,7 +147,6 @@ const (
 func (e DestinationTeradataSchemasSSLModeSSLModesMode) ToPointer() *DestinationTeradataSchemasSSLModeSSLModesMode {
 	return &e
 }
-
 func (e *DestinationTeradataSchemasSSLModeSSLModesMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -194,7 +190,6 @@ const (
 func (e DestinationTeradataSchemasSslModeMode) ToPointer() *DestinationTeradataSchemasSslModeMode {
 	return &e
 }
-
 func (e *DestinationTeradataSchemasSslModeMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -238,7 +233,6 @@ const (
 func (e DestinationTeradataSchemasMode) ToPointer() *DestinationTeradataSchemasMode {
 	return &e
 }
-
 func (e *DestinationTeradataSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -282,7 +276,6 @@ const (
 func (e DestinationTeradataMode) ToPointer() *DestinationTeradataMode {
 	return &e
 }
-
 func (e *DestinationTeradataMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

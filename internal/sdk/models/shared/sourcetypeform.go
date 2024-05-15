@@ -19,7 +19,6 @@ const (
 func (e SourceTypeformSchemasAuthType) ToPointer() *SourceTypeformSchemasAuthType {
 	return &e
 }
-
 func (e *SourceTypeformSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceTypeformAuthType) ToPointer() *SourceTypeformAuthType {
 	return &e
 }
-
 func (e *SourceTypeformAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -222,7 +220,6 @@ const (
 func (e Typeform) ToPointer() *Typeform {
 	return &e
 }
-
 func (e *Typeform) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

@@ -20,7 +20,6 @@ const (
 func (e IssuesStreamExpandWith) ToPointer() *IssuesStreamExpandWith {
 	return &e
 }
-
 func (e *IssuesStreamExpandWith) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

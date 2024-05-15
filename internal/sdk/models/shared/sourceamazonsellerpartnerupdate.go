@@ -20,7 +20,6 @@ const (
 func (e AWSSellerPartnerAccountType) ToPointer() *AWSSellerPartnerAccountType {
 	return &e
 }
-
 func (e *AWSSellerPartnerAccountType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -46,7 +45,6 @@ const (
 func (e SourceAmazonSellerPartnerUpdateAuthType) ToPointer() *SourceAmazonSellerPartnerUpdateAuthType {
 	return &e
 }
-
 func (e *SourceAmazonSellerPartnerUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -72,7 +70,6 @@ const (
 func (e AWSEnvironment) ToPointer() *AWSEnvironment {
 	return &e
 }
-
 func (e *AWSEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -120,7 +117,6 @@ const (
 func (e AWSRegion) ToPointer() *AWSRegion {
 	return &e
 }
-
 func (e *AWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -240,7 +236,6 @@ const (
 func (e StreamName) ToPointer() *StreamName {
 	return &e
 }
-
 func (e *StreamName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

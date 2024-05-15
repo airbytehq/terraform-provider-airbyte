@@ -8,8 +8,8 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
     start_date   = "YYYY-MM-DD"
     user_token   = "...my_user_token..."
   }
-  definition_id = "47d95358-a568-419d-aabe-c21d7e3d24df"
-  name          = "Luis Stiedemann Sr."
+  definition_id = "1b99ee1e-9605-4660-9b0d-51b3114e9ed5"
+  name          = "Dr. Sally Hackett"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "342f997d-059d-438a-ae5f-cf99c41876fa"
+  workspace_id  = "612b0e8c-8cf1-41a0-9259-943dfa52a9e4"
 }

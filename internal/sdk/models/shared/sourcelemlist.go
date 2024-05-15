@@ -17,7 +17,6 @@ const (
 func (e Lemlist) ToPointer() *Lemlist {
 	return &e
 }
-
 func (e *Lemlist) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

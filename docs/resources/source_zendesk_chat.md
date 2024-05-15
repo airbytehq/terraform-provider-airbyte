@@ -23,10 +23,10 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
     start_date = "2021-02-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "397c2047-5faa-4deb-a481-e413dd760cc3"
-  name          = "Bert Brakus"
+  definition_id = "a90b3fc5-8aed-4966-be07-de9609725c6d"
+  name          = "Angie Hartmann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "75ee978f-160f-4457-86ac-11eb0243724c"
+  workspace_id  = "35039f4e-4098-4bb8-82a2-3b3c01346218"
 }
 ```
 

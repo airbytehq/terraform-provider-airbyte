@@ -18,7 +18,6 @@ const (
 func (e SourceOutbrainAmplifyBothUsernameAndPasswordIsRequiredForAuthenticationRequest) ToPointer() *SourceOutbrainAmplifyBothUsernameAndPasswordIsRequiredForAuthenticationRequest {
 	return &e
 }
-
 func (e *SourceOutbrainAmplifyBothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e SourceOutbrainAmplifyAccessTokenIsRequiredForAuthenticationRequests) ToPointer() *SourceOutbrainAmplifyAccessTokenIsRequiredForAuthenticationRequests {
 	return &e
 }
-
 func (e *SourceOutbrainAmplifyAccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -198,7 +196,6 @@ const (
 func (e SourceOutbrainAmplifyGranularityForGeoLocationRegion) ToPointer() *SourceOutbrainAmplifyGranularityForGeoLocationRegion {
 	return &e
 }
-
 func (e *SourceOutbrainAmplifyGranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -229,7 +226,6 @@ const (
 func (e SourceOutbrainAmplifyGranularityForPeriodicReports) ToPointer() *SourceOutbrainAmplifyGranularityForPeriodicReports {
 	return &e
 }
-
 func (e *SourceOutbrainAmplifyGranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -257,7 +253,6 @@ const (
 func (e OutbrainAmplify) ToPointer() *OutbrainAmplify {
 	return &e
 }
-
 func (e *OutbrainAmplify) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

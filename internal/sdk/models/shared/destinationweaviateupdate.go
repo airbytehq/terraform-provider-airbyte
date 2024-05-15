@@ -18,7 +18,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasEmbeddingEmbedding7Mode) ToPointer() *DestinationWeaviateUpdateSchemasEmbeddingEmbedding7Mode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbedding7Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -97,7 +96,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasEmbeddingEmbedding6Mode) ToPointer() *DestinationWeaviateUpdateSchemasEmbeddingEmbedding6Mode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbedding6Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -141,7 +139,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode) ToPointer() *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -203,7 +200,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode) ToPointer() *DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -255,7 +251,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasEmbeddingMode) ToPointer() *DestinationWeaviateUpdateSchemasEmbeddingMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasEmbeddingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -307,7 +302,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasMode) ToPointer() *DestinationWeaviateUpdateSchemasMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -378,7 +372,6 @@ const (
 func (e DestinationWeaviateUpdateMode) ToPointer() *DestinationWeaviateUpdateMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -615,7 +608,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasIndexingAuthAuthenticationMode) ToPointer() *DestinationWeaviateUpdateSchemasIndexingAuthAuthenticationMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasIndexingAuthAuthenticationMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -659,7 +651,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasIndexingAuthMode) ToPointer() *DestinationWeaviateUpdateSchemasIndexingAuthMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasIndexingAuthMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -721,7 +712,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasIndexingMode) ToPointer() *DestinationWeaviateUpdateSchemasIndexingMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasIndexingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -868,7 +858,6 @@ const (
 func (e DefaultVectorizer) ToPointer() *DefaultVectorizer {
 	return &e
 }
-
 func (e *DefaultVectorizer) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1021,7 +1010,6 @@ const (
 func (e DestinationWeaviateUpdateLanguage) ToPointer() *DestinationWeaviateUpdateLanguage {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1075,7 +1063,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1128,7 +1115,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasProcessingTextSplitterMode) ToPointer() *DestinationWeaviateUpdateSchemasProcessingTextSplitterMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1181,7 +1167,6 @@ const (
 func (e DestinationWeaviateUpdateSchemasProcessingMode) ToPointer() *DestinationWeaviateUpdateSchemasProcessingMode {
 	return &e
 }
-
 func (e *DestinationWeaviateUpdateSchemasProcessingMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

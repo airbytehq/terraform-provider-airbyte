@@ -19,7 +19,6 @@ const (
 func (e SourceZendeskChatSchemasCredentials) ToPointer() *SourceZendeskChatSchemasCredentials {
 	return &e
 }
-
 func (e *SourceZendeskChatSchemasCredentials) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceZendeskChatCredentials) ToPointer() *SourceZendeskChatCredentials {
 	return &e
 }
-
 func (e *SourceZendeskChatCredentials) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -213,7 +211,6 @@ const (
 func (e ZendeskChat) ToPointer() *ZendeskChat {
 	return &e
 }
-
 func (e *ZendeskChat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

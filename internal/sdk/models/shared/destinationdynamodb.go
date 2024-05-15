@@ -17,7 +17,6 @@ const (
 func (e Dynamodb) ToPointer() *Dynamodb {
 	return &e
 }
-
 func (e *Dynamodb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -75,7 +74,6 @@ const (
 func (e DestinationDynamodbDynamoDBRegion) ToPointer() *DestinationDynamodbDynamoDBRegion {
 	return &e
 }
-
 func (e *DestinationDynamodbDynamoDBRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

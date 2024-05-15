@@ -31,15 +31,15 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     ]
     customer_id = "6783948572,5839201945"
     customer_status_filter = [
-      "ENABLED",
+      "SUSPENDED",
     ]
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "2c84cd8b-c607-46e7-94fb-f0cfd3aed54e"
-  name          = "Eugene Gislason PhD"
+  definition_id = "c47ca706-1390-437c-beef-972df3c14a34"
+  name          = "Emilio Senger"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e80e3db9-0502-4015-92de-4b8db33d2b3a"
+  workspace_id  = "9ab276cb-ad00-4cae-a12c-4e65b57e54a2"
 }
 ```
 

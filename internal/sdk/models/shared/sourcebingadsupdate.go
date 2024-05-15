@@ -20,7 +20,6 @@ const (
 func (e Operator) ToPointer() *Operator {
 	return &e
 }
-
 func (e *Operator) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -68,7 +67,6 @@ const (
 func (e AuthMethod) ToPointer() *AuthMethod {
 	return &e
 }
-
 func (e *AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -126,7 +124,6 @@ const (
 func (e ReportingDataObject) ToPointer() *ReportingDataObject {
 	return &e
 }
-
 func (e *ReportingDataObject) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

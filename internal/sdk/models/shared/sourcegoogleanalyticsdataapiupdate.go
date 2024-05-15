@@ -19,7 +19,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -71,7 +70,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateAuthType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateAuthType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -258,7 +256,6 @@ const (
 func (e Dimension) ToPointer() *Dimension {
 	return &e
 }
-
 func (e *Dimension) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -315,7 +312,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateGranularity) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateGranularity {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateGranularity) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -375,7 +371,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -443,7 +438,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateEnabled) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateEnabled {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateEnabled) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -550,7 +544,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -574,7 +567,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -625,7 +617,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -739,7 +730,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -790,7 +780,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -939,7 +928,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -968,7 +956,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1002,7 +989,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1053,7 +1039,6 @@ const (
 func (e ValueType) ToPointer() *ValueType {
 	return &e
 }
-
 func (e *ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1202,7 +1187,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1261,7 +1245,6 @@ const (
 func (e FilterName) ToPointer() *FilterName {
 	return &e
 }
-
 func (e *FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1291,7 +1274,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1477,7 +1459,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1537,7 +1518,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1561,7 +1541,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1612,7 +1591,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1726,7 +1704,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ToValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ToValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ToValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1777,7 +1754,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1926,7 +1902,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1955,7 +1930,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -1989,7 +1963,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2040,7 +2013,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2189,7 +2161,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2248,7 +2219,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2278,7 +2248,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2483,7 +2452,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasFilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasFilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasFilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2535,7 +2503,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2559,7 +2526,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2610,7 +2576,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2724,7 +2689,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ToValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ToValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ToValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2775,7 +2739,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2924,7 +2887,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2953,7 +2915,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -2987,7 +2948,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3038,7 +2998,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3187,7 +3146,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3246,7 +3204,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3276,7 +3233,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3481,7 +3437,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateFilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateFilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateFilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3533,7 +3488,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3557,7 +3511,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3608,7 +3561,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3722,7 +3674,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ToValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ToValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ToValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3773,7 +3724,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3922,7 +3872,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3951,7 +3900,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -3985,7 +3933,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4036,7 +3983,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4185,7 +4131,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4244,7 +4189,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4274,7 +4218,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4479,7 +4422,6 @@ const (
 func (e FilterType) ToPointer() *FilterType {
 	return &e
 }
-
 func (e *FilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4639,7 +4581,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4663,7 +4604,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4714,7 +4654,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4828,7 +4767,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -4879,7 +4817,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5028,7 +4965,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5057,7 +4993,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5091,7 +5026,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5142,7 +5076,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5291,7 +5224,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5350,7 +5282,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5380,7 +5311,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5566,7 +5496,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4FilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5626,7 +5555,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5650,7 +5578,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5701,7 +5628,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5815,7 +5741,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ToValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ToValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ToValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -5866,7 +5791,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6015,7 +5939,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6044,7 +5967,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6078,7 +6000,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6129,7 +6050,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6278,7 +6198,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6337,7 +6256,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6367,7 +6285,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6572,7 +6489,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3FilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6624,7 +6540,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6648,7 +6563,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6699,7 +6613,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6813,7 +6726,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ToValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ToValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ToValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -6864,7 +6776,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7013,7 +6924,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7042,7 +6952,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7076,7 +6985,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7127,7 +7035,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7276,7 +7183,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7335,7 +7241,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7365,7 +7270,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7570,7 +7474,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7622,7 +7525,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7646,7 +7548,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7697,7 +7598,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7811,7 +7711,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -7862,7 +7761,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8011,7 +7909,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1FilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1FilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1FilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8040,7 +7937,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8074,7 +7970,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8125,7 +8020,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilter3ValueType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8274,7 +8168,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8333,7 +8226,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterName) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterName {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8363,7 +8255,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -8568,7 +8459,6 @@ const (
 func (e SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterType) ToPointer() *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterType {
 	return &e
 }
-
 func (e *SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

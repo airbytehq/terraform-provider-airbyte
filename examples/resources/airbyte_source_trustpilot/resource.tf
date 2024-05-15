@@ -10,8 +10,8 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     }
     start_date = "%Y-%m-%dT%H:%M:%S"
   }
-  definition_id = "8e7e494b-9e58-430e-9efb-f412cdcae9f8"
-  name          = "Mr. Francis Klein"
+  definition_id = "48acadc0-6400-4b7b-98d1-3a2ccf2b1ade"
+  name          = "Ollie Gleason"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "380526f8-856c-4df3-bdef-be1999214f3f"
+  workspace_id  = "4bfb0e1b-3d2b-489b-a6a8-838cf8d227f3"
 }

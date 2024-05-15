@@ -20,14 +20,14 @@ resource "airbyte_source_square" "my_source_square" {
         api_key = "...my_api_key..."
       }
     }
-    include_deleted_objects = false
+    include_deleted_objects = true
     is_sandbox              = true
-    start_date              = "2022-12-22"
+    start_date              = "2022-07-20"
   }
-  definition_id = "aa0804c9-71e6-4023-9dc0-9fadad73b79d"
-  name          = "Lisa Rohan"
+  definition_id = "d8cbc054-7dc9-43d7-9762-8c47813582a6"
+  name          = "Gordon Durgan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "acfdc6fb-504a-412b-b723-cbf0223ae822"
+  workspace_id  = "9dfc7f45-8565-4e71-95c9-f06b5482c9eb"
 }
 ```
 

@@ -6,8 +6,8 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "e9d0f84c-cbad-471d-ab03-8014a124b6e7"
-  name          = "Phillip Bartoletti"
+  definition_id = "18021619-8723-463e-89a2-aae62d9d7702"
+  name          = "Tanya Hand"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a37b0c99-2762-4a38-aa73-d79a85cb7246"
+  workspace_id  = "6995c576-52df-4199-822b-3629976b741d"
 }

@@ -18,7 +18,6 @@ const (
 func (e SourceRetentlySchemasAuthType) ToPointer() *SourceRetentlySchemasAuthType {
 	return &e
 }
-
 func (e *SourceRetentlySchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -78,7 +77,6 @@ const (
 func (e SourceRetentlyAuthType) ToPointer() *SourceRetentlyAuthType {
 	return &e
 }
-
 func (e *SourceRetentlyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -220,7 +218,6 @@ const (
 func (e Retently) ToPointer() *Retently {
 	return &e
 }
-
 func (e *Retently) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

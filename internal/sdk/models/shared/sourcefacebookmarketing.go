@@ -30,7 +30,6 @@ const (
 func (e SourceFacebookMarketingValidAdStatuses) ToPointer() *SourceFacebookMarketingValidAdStatuses {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidAdStatuses) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -83,7 +82,6 @@ const (
 func (e SourceFacebookMarketingValidAdSetStatuses) ToPointer() *SourceFacebookMarketingValidAdSetStatuses {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidAdSetStatuses) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -125,7 +123,6 @@ const (
 func (e SourceFacebookMarketingValidCampaignStatuses) ToPointer() *SourceFacebookMarketingValidCampaignStatuses {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidCampaignStatuses) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -170,7 +167,6 @@ const (
 func (e SourceFacebookMarketingValidActionBreakdowns) ToPointer() *SourceFacebookMarketingValidActionBreakdowns {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidActionBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -217,7 +213,6 @@ const (
 func (e SourceFacebookMarketingActionReportTime) ToPointer() *SourceFacebookMarketingActionReportTime {
 	return &e
 }
-
 func (e *SourceFacebookMarketingActionReportTime) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -288,7 +283,6 @@ const (
 func (e SourceFacebookMarketingValidBreakdowns) ToPointer() *SourceFacebookMarketingValidBreakdowns {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -530,7 +524,6 @@ const (
 func (e SourceFacebookMarketingValidEnums) ToPointer() *SourceFacebookMarketingValidEnums {
 	return &e
 }
-
 func (e *SourceFacebookMarketingValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -824,7 +817,6 @@ const (
 func (e SourceFacebookMarketingLevel) ToPointer() *SourceFacebookMarketingLevel {
 	return &e
 }
-
 func (e *SourceFacebookMarketingLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -968,7 +960,6 @@ const (
 func (e FacebookMarketing) ToPointer() *FacebookMarketing {
 	return &e
 }
-
 func (e *FacebookMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

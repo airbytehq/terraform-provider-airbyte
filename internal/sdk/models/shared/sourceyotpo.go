@@ -18,7 +18,6 @@ const (
 func (e Yotpo) ToPointer() *Yotpo {
 	return &e
 }
-
 func (e *Yotpo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

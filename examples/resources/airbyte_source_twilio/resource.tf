@@ -5,8 +5,8 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     lookback_window = 60
     start_date      = "2020-10-01T00:00:00Z"
   }
-  definition_id = "4240654f-4782-4740-a2b5-a462428ebc5c"
-  name          = "Tamara Weber"
+  definition_id = "b9e0d54b-0894-4bdd-98fe-3f92c06a9aa7"
+  name          = "Jo Bayer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f0c9ce16-ebe8-45fa-a4ae-e8d2bde48eef"
+  workspace_id  = "75abb88c-398d-4796-a608-0f3ecae3cb49"
 }

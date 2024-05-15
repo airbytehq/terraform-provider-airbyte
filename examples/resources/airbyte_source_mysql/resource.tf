@@ -7,8 +7,8 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     port            = 3306
     replication_method = {
       read_changes_using_binary_log_cdc = {
-        initial_waiting_seconds              = 4
-        invalid_cdc_cursor_position_behavior = "Re-sync data"
+        initial_waiting_seconds              = 7
+        invalid_cdc_cursor_position_behavior = "Fail sync"
         server_time_zone                     = "...my_server_time_zone..."
       }
     }
@@ -18,10 +18,10 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Freddie.Deckow"
+    username = "Ursula_King"
   }
-  definition_id = "5553a713-498a-43f9-b99a-12d6e33e66d7"
-  name          = "Melissa Stoltenberg"
+  definition_id = "ba257841-41a2-41c8-938a-d6fcbb78bed9"
+  name          = "Bruce Buckridge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "72456d0d-26d9-4147-bb35-66ca647ba4f7"
+  workspace_id  = "704ae193-8752-47d5-a3ef-7246d0c0b796"
 }

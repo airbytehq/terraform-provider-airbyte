@@ -18,7 +18,6 @@ const (
 func (e SourceMssqlSchemasMethod) ToPointer() *SourceMssqlSchemasMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -64,7 +63,6 @@ const (
 func (e SourceMssqlInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
 	return &e
 }
-
 func (e *SourceMssqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -90,7 +88,6 @@ const (
 func (e SourceMssqlMethod) ToPointer() *SourceMssqlMethod {
 	return &e
 }
-
 func (e *SourceMssqlMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -225,7 +222,6 @@ const (
 func (e SourceMssqlMssql) ToPointer() *SourceMssqlMssql {
 	return &e
 }
-
 func (e *SourceMssqlMssql) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -249,7 +245,6 @@ const (
 func (e SourceMssqlSchemasSSLMethodSSLMethodSSLMethod) ToPointer() *SourceMssqlSchemasSSLMethodSSLMethodSSLMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasSSLMethodSSLMethodSSLMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -311,7 +306,6 @@ const (
 func (e SourceMssqlSchemasSslMethodSslMethod) ToPointer() *SourceMssqlSchemasSslMethodSslMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasSslMethodSslMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -355,7 +349,6 @@ const (
 func (e SourceMssqlSchemasSslMethod) ToPointer() *SourceMssqlSchemasSslMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasSslMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -486,7 +479,6 @@ const (
 func (e SourceMssqlSchemasTunnelMethodTunnelMethod) ToPointer() *SourceMssqlSchemasTunnelMethodTunnelMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -567,7 +559,6 @@ const (
 func (e SourceMssqlSchemasTunnelMethod) ToPointer() *SourceMssqlSchemasTunnelMethod {
 	return &e
 }
-
 func (e *SourceMssqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -648,7 +639,6 @@ const (
 func (e SourceMssqlTunnelMethod) ToPointer() *SourceMssqlTunnelMethod {
 	return &e
 }
-
 func (e *SourceMssqlTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

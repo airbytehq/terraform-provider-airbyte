@@ -20,7 +20,6 @@ const (
 func (e Categories) ToPointer() *Categories {
 	return &e
 }
-
 func (e *Categories) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -53,7 +52,6 @@ const (
 func (e Strategies) ToPointer() *Strategies {
 	return &e
 }
-
 func (e *Strategies) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

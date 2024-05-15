@@ -18,7 +18,6 @@ const (
 func (e SourceMongodbV2UpdateSchemasClusterType) ToPointer() *SourceMongodbV2UpdateSchemasClusterType {
 	return &e
 }
-
 func (e *SourceMongodbV2UpdateSchemasClusterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -124,7 +123,6 @@ const (
 func (e SourceMongodbV2UpdateClusterType) ToPointer() *SourceMongodbV2UpdateClusterType {
 	return &e
 }
-
 func (e *SourceMongodbV2UpdateClusterType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -296,7 +294,6 @@ const (
 func (e InvalidCDCPositionBehaviorAdvanced) ToPointer() *InvalidCDCPositionBehaviorAdvanced {
 	return &e
 }
-
 func (e *InvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -324,7 +321,6 @@ const (
 func (e CaptureModeAdvanced) ToPointer() *CaptureModeAdvanced {
 	return &e
 }
-
 func (e *CaptureModeAdvanced) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

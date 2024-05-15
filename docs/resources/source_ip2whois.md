@@ -18,10 +18,10 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
     api_key = "...my_api_key..."
     domain  = "www.google.com"
   }
-  definition_id = "09c8206a-4b04-43ef-89e6-1b75b726765e"
-  name          = "Malcolm Block"
+  definition_id = "91630fd2-f131-4d4f-bef2-53f33ac135dc"
+  name          = "Kevin Weissnat"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "842954bd-759b-4dc8-b93f-80b7f557094a"
+  workspace_id  = "794a97d5-acf5-4625-ba66-e5ad39192931"
 }
 ```
 

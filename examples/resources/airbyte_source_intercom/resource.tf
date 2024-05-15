@@ -5,8 +5,8 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     client_secret = "...my_client_secret..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "918db5cc-cbbb-4db3-9196-4f99d67745af"
-  name          = "Cecil Hermann IV"
+  definition_id = "043ef09e-61b7-45b7-a676-5eab1ad84295"
+  name          = "Juana Stroman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20bd7a7e-c191-4626-87e6-80e4417c6f4b"
+  workspace_id  = "9bdc8b93-f80b-47f5-9709-4a97b6356d53"
 }

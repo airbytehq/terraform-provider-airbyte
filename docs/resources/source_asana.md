@@ -25,12 +25,12 @@ resource "airbyte_source_asana" "my_source_asana" {
     organization_export_ids = [
       "{ \"see\": \"documentation\" }",
     ]
-    test_mode = true
+    test_mode = false
   }
-  definition_id = "668105e1-180f-4b2a-875a-1ca190e95bd1"
-  name          = "Mattie Cormier IV"
+  definition_id = "3b9184ca-c7dc-4ada-9293-8da5765e7880"
+  name          = "Matthew Bednar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eb0af63d-efa7-4335-af39-bea5e2089f0e"
+  workspace_id  = "0ddef9a9-0fa7-4f8f-841b-58dfc559a0be"
 }
 ```
 

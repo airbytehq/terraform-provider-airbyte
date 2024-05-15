@@ -14,18 +14,18 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         dimensions = [
           "device",
         ]
-        name = "Grace Rodriguez"
+        name = "Darren Rosenbaum"
       },
     ]
-    data_state = "all"
+    data_state = "final"
     end_date   = "2021-12-12"
     site_urls = [
       "...",
     ]
-    start_date = "2021-02-09"
+    start_date = "2022-01-24"
   }
-  definition_id = "2fd145f4-8d36-4313-9855-39f352d3206a"
-  name          = "Rudolph Dickinson"
+  definition_id = "5baddd27-47bb-4c7f-a417-09ce4fe165bc"
+  name          = "Dr. Billie Hahn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "24a60d40-134e-4588-b6cb-030a128ae06a"
+  workspace_id  = "fb5df254-77f3-470b-8ec7-c89bfb0cb9d8"
 }

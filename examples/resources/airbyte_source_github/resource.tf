@@ -1,6 +1,6 @@
 resource "airbyte_source_github" "my_source_github" {
   configuration = {
-    api_url = "https://github.company.org"
+    api_url = "https://github.com"
     branch  = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     branches = [
       "...",
@@ -15,11 +15,11 @@ resource "airbyte_source_github" "my_source_github" {
     repositories = [
       "...",
     ]
-    repository = "airbytehq/*"
+    repository = "airbytehq/airbyte airbytehq/another-repo"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "e08fd2ca-f83f-4045-910a-7c570570b889"
-  name          = "Tara Medhurst"
+  definition_id = "e4d38a30-ea56-4cdf-a27f-bf6225b4bae6"
+  name          = "Martha Bergnaum"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4e6d7c2f-caa3-486d-a1d2-ddf0351c49c6"
+  workspace_id  = "113e87b4-90ec-4c6b-b751-6116fc803c83"
 }

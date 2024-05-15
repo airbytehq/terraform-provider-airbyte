@@ -15,15 +15,15 @@ SourceChargebee Resource
 ```terraform
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
-    product_catalog = "2.0"
+    product_catalog = "1.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
     start_date      = "2021-01-25T00:00:00Z"
   }
-  definition_id = "10725ff7-f1a2-47e8-bd2f-193d4f9ab29a"
-  name          = "Lucia Little IV"
+  definition_id = "a7074f01-6f72-4127-b33f-8652b2551b02"
+  name          = "Mr. Jana Runolfsson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dec4e3ea-b02c-4cb9-8852-3df16a0cc499"
+  workspace_id  = "4a7ffb26-8dc1-4870-87d3-7ac99fd78516"
 }
 ```
 

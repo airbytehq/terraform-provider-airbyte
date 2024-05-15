@@ -18,7 +18,6 @@ const (
 func (e Linnworks) ToPointer() *Linnworks {
 	return &e
 }
-
 func (e *Linnworks) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

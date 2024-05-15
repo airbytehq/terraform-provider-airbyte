@@ -4,9 +4,9 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     aws_environment        = "SANDBOX"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
-    period_in_days         = 2
+    period_in_days         = 7
     refresh_token          = "...my_refresh_token..."
-    region                 = "FR"
+    region                 = "IT"
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -17,12 +17,12 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
             option_value = "...my_option_value..."
           },
         ]
-        stream_name = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
+        stream_name = "GET_MERCHANT_LISTINGS_DATA"
       },
     ]
   }
-  definition_id = "4517930e-d8d4-43c0-9abb-a6ef9fc3c374"
-  name          = "Melba Schumm"
+  definition_id = "df3d5ca9-6c63-4354-ae1d-23c3d11ff934"
+  name          = "Irvin Berge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2e57aa67-3d28-4259-b0c2-20e39e10d6ef"
+  workspace_id  = "56d8b0d9-0daf-4918-aab6-3a7b2e3879ec"
 }

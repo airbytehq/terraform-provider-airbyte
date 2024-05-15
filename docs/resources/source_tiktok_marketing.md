@@ -15,7 +15,7 @@ SourceTiktokMarketing Resource
 ```terraform
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 7
+    attribution_window = 8
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -24,14 +24,14 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-04-24"
+    end_date        = "2022-03-21"
     include_deleted = false
-    start_date      = "2022-11-25"
+    start_date      = "2022-09-26"
   }
-  definition_id = "a5b009f2-9606-4a36-9ac9-9592aaeb21d8"
-  name          = "Geoffrey Franecki"
+  definition_id = "18c27e2e-49fb-4e84-b53d-48e30cccb1d3"
+  name          = "Jody Spencer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "558d4aa1-770f-4e21-a7b0-3b315af19bc4"
+  workspace_id  = "649b7a58-a563-4641-bd33-8f322856cd88"
 }
 ```
 

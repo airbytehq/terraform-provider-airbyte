@@ -17,7 +17,6 @@ const (
 func (e Duckdb) ToPointer() *Duckdb {
 	return &e
 }
-
 func (e *Duckdb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

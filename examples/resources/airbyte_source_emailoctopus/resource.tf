@@ -2,8 +2,8 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "71a56d06-8f4b-45e4-8195-96433e1d5148"
-  name          = "Jodi Nitzsche"
+  definition_id = "b58122af-6a8a-4c65-936a-205f1e4d309e"
+  name          = "Mr. Darrell Lowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "86d05524-4c54-465b-857a-2c2618fe1b91"
+  workspace_id  = "94fbd866-314c-4ace-82f9-6b833556f7e4"
 }

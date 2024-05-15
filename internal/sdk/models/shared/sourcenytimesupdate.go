@@ -21,7 +21,6 @@ const (
 func (e PeriodUsedForMostPopularStreams) ToPointer() *PeriodUsedForMostPopularStreams {
 	return &e
 }
-
 func (e *PeriodUsedForMostPopularStreams) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -50,7 +49,6 @@ const (
 func (e ShareTypeUsedForMostPopularSharedStream) ToPointer() *ShareTypeUsedForMostPopularSharedStream {
 	return &e
 }
-
 func (e *ShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

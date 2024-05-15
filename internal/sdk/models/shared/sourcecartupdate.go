@@ -18,7 +18,6 @@ const (
 func (e SourceCartUpdateSchemasAuthType) ToPointer() *SourceCartUpdateSchemasAuthType {
 	return &e
 }
-
 func (e *SourceCartUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -79,7 +78,6 @@ const (
 func (e SourceCartUpdateAuthType) ToPointer() *SourceCartUpdateAuthType {
 	return &e
 }
-
 func (e *SourceCartUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

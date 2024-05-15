@@ -19,7 +19,6 @@ const (
 func (e SourceGcsUpdateFiletype) ToPointer() *SourceGcsUpdateFiletype {
 	return &e
 }
-
 func (e *SourceGcsUpdateFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -43,7 +42,6 @@ const (
 func (e SourceGcsUpdateSchemasStreamsHeaderDefinitionType) ToPointer() *SourceGcsUpdateSchemasStreamsHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGcsUpdateSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -95,7 +93,6 @@ const (
 func (e SourceGcsUpdateSchemasHeaderDefinitionType) ToPointer() *SourceGcsUpdateSchemasHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGcsUpdateSchemasHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -138,7 +135,6 @@ const (
 func (e SourceGcsUpdateHeaderDefinitionType) ToPointer() *SourceGcsUpdateHeaderDefinitionType {
 	return &e
 }
-
 func (e *SourceGcsUpdateHeaderDefinitionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -269,7 +265,6 @@ const (
 func (e SourceGcsUpdateInferenceType) ToPointer() *SourceGcsUpdateInferenceType {
 	return &e
 }
-
 func (e *SourceGcsUpdateInferenceType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -485,7 +480,6 @@ const (
 func (e SourceGcsUpdateValidationPolicy) ToPointer() *SourceGcsUpdateValidationPolicy {
 	return &e
 }
-
 func (e *SourceGcsUpdateValidationPolicy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

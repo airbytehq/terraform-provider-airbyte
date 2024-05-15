@@ -20,7 +20,6 @@ const (
 func (e SourceKlarnaRegion) ToPointer() *SourceKlarnaRegion {
 	return &e
 }
-
 func (e *SourceKlarnaRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -48,7 +47,6 @@ const (
 func (e Klarna) ToPointer() *Klarna {
 	return &e
 }
-
 func (e *Klarna) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

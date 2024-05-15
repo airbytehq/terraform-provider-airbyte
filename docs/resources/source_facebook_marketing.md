@@ -21,48 +21,48 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     ]
     action_breakdowns_allow_empty = false
     ad_statuses = [
-      "IN_PROCESS",
+      "ACTIVE",
     ]
     adset_statuses = [
-      "ARCHIVED",
+      "CAMPAIGN_PAUSED",
     ]
     campaign_statuses = [
-      "ARCHIVED",
+      "DELETED",
     ]
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
     custom_insights = [
       {
         action_breakdowns = [
-          "action_destination",
+          "action_type",
         ]
-        action_report_time = "impression"
+        action_report_time = "conversion"
         breakdowns = [
-          "impression_device",
+          "standard_event_content_type",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "video_play_curve_actions",
+          "cost_per_inline_post_engagement",
         ]
-        insights_job_timeout     = 2
-        insights_lookback_window = 0
-        level                    = "campaign"
-        name                     = "Melody Dicki"
+        insights_job_timeout     = 9
+        insights_lookback_window = 4
+        level                    = "account"
+        name                     = "Ramona Spencer"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 7
+        time_increment           = 4
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    insights_job_timeout     = 6
-    insights_lookback_window = 3
-    page_size                = 9
+    insights_job_timeout     = 5
+    insights_lookback_window = 0
+    page_size                = 10
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "79cbeca1-c757-43a5-bbba-82d4c0a2cef7"
-  name          = "Douglas Crona"
+  definition_id = "ea586a09-709e-4dce-b2c4-357e7eb149e6"
+  name          = "Terence Miller"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5bca9a48-04a9-4e0d-9c31-56b2ffd5d6c6"
+  workspace_id  = "6bd271d6-f7a7-47e5-9b04-b8d52e6bc1e2"
 }
 ```
 

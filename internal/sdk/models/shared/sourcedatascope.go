@@ -17,7 +17,6 @@ const (
 func (e Datascope) ToPointer() *Datascope {
 	return &e
 }
-
 func (e *Datascope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

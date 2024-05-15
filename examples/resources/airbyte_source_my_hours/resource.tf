@@ -5,8 +5,8 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     password        = "...my_password..."
     start_date      = "%Y-%m-%d"
   }
-  definition_id = "e44a4dc9-70c0-4785-b3a2-0ac990f9b2ce"
-  name          = "Kristi Jaskolski"
+  definition_id = "95261555-3a71-4349-8a3f-9799a12d6e33"
+  name          = "Franklin Jerde"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "85150ea8-6120-4cd6-98d7-42806812ca7b"
+  workspace_id  = "00d47724-56d0-4d26-9914-7bb3566ca647"
 }

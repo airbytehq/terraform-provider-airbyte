@@ -21,7 +21,6 @@ const (
 func (e SourceGooglePagespeedInsightsCategories) ToPointer() *SourceGooglePagespeedInsightsCategories {
 	return &e
 }
-
 func (e *SourceGooglePagespeedInsightsCategories) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -53,7 +52,6 @@ const (
 func (e GooglePagespeedInsights) ToPointer() *GooglePagespeedInsights {
 	return &e
 }
-
 func (e *GooglePagespeedInsights) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -78,7 +76,6 @@ const (
 func (e SourceGooglePagespeedInsightsStrategies) ToPointer() *SourceGooglePagespeedInsightsStrategies {
 	return &e
 }
-
 func (e *SourceGooglePagespeedInsightsStrategies) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

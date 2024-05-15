@@ -1,7 +1,7 @@
 resource "airbyte_source_xkcd" "my_source_xkcd" {
   configuration = {}
-  definition_id = "a9b2db75-32b2-48cb-b85b-8d4ad9bb4c2d"
-  name          = "April Schmeler"
+  definition_id = "dccb9fd6-e1ad-4747-8b83-20ef50a8ca76"
+  name          = "Jeffrey Kuvalis"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eb0e4409-659d-4bf6-acaf-35c15b3779d7"
+  workspace_id  = "a280df18-04a6-47b9-b3e5-8149512957c2"
 }

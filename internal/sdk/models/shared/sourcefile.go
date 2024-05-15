@@ -27,7 +27,6 @@ const (
 func (e SourceFileFileFormat) ToPointer() *SourceFileFileFormat {
 	return &e
 }
-
 func (e *SourceFileFileFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -67,7 +66,6 @@ const (
 func (e SourceFileSchemasProviderStorageProvider7Storage) ToPointer() *SourceFileSchemasProviderStorageProvider7Storage {
 	return &e
 }
-
 func (e *SourceFileSchemasProviderStorageProvider7Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -142,7 +140,6 @@ const (
 func (e SourceFileSchemasProviderStorageProvider6Storage) ToPointer() *SourceFileSchemasProviderStorageProvider6Storage {
 	return &e
 }
-
 func (e *SourceFileSchemasProviderStorageProvider6Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -217,7 +214,6 @@ const (
 func (e SourceFileSchemasProviderStorageProvider5Storage) ToPointer() *SourceFileSchemasProviderStorageProvider5Storage {
 	return &e
 }
-
 func (e *SourceFileSchemasProviderStorageProvider5Storage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -292,7 +288,6 @@ const (
 func (e SourceFileSchemasProviderStorageProviderStorage) ToPointer() *SourceFileSchemasProviderStorageProviderStorage {
 	return &e
 }
-
 func (e *SourceFileSchemasProviderStorageProviderStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -362,7 +357,6 @@ const (
 func (e SourceFileSchemasProviderStorage) ToPointer() *SourceFileSchemasProviderStorage {
 	return &e
 }
-
 func (e *SourceFileSchemasProviderStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -423,7 +417,6 @@ const (
 func (e SourceFileSchemasStorage) ToPointer() *SourceFileSchemasStorage {
 	return &e
 }
-
 func (e *SourceFileSchemasStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -475,7 +468,6 @@ const (
 func (e SourceFileStorage) ToPointer() *SourceFileStorage {
 	return &e
 }
-
 func (e *SourceFileStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -701,7 +693,6 @@ const (
 func (e File) ToPointer() *File {
 	return &e
 }
-
 func (e *File) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
