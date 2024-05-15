@@ -7,6 +7,19 @@ servers:
 - url: "https://api.airbyte.com/v1"
   description: "Airbyte API v1"
 paths:
+  /health:
+    get:
+      tags:
+      - "public_health"
+      - "public"
+      responses:
+        "200":
+          description: "Successful operation"
+      operationId: "getHealthCheck"
+      summary: "Health Check"
+      security: []
+      x-speakeasy-alias: "getHealthCheck"
+      x-speakeasy-group: "Health"
   /jobs:
     get:
       tags:
@@ -122,6 +135,7 @@ paths:
       operationId: "listJobs"
       summary: "List Jobs by sync type"
       x-speakeasy-alias: "listJobs"
+      x-speakeasy-group: "Jobs"
     post:
       requestBody:
         content:
@@ -159,6 +173,7 @@ paths:
       operationId: "createJob"
       summary: "Trigger a sync or reset job of a connection"
       x-speakeasy-alias: "createJob"
+      x-speakeasy-group: "Jobs"
   /jobs/{jobId}:
     get:
       tags:
@@ -184,6 +199,7 @@ paths:
           description: "Not found"
       operationId: "getJob"
       x-speakeasy-alias: "getJob"
+      x-speakeasy-group: "Jobs"
       summary: "Get Job status and details"
     delete:
       tags:
@@ -203,6 +219,7 @@ paths:
           description: "Not found"
       operationId: "cancelJob"
       x-speakeasy-alias: "cancelJob"
+      x-speakeasy-group: "Jobs"
       summary: "Cancel a running Job"
     parameters:
     - name: "jobId"
@@ -230,6 +247,7 @@ paths:
           description: "Not found"
       operationId: "listSources"
       x-speakeasy-alias: "listSources"
+      x-speakeasy-group: "Sources"
       summary: "List sources"
       parameters:
       - name: "workspaceIds"
@@ -307,6 +325,7 @@ paths:
           description: "Not allowed"
       operationId: "createSource"
       x-speakeasy-alias: "createSource"
+      x-speakeasy-group: "Sources"
       summary: "Create a source"
       description: "Creates a source given a name, workspace id, and a json blob containing\
         \ the configuration for the source."
@@ -336,6 +355,7 @@ paths:
           description: "Not found"
       operationId: "getSource"
       x-speakeasy-alias: "getSource"
+      x-speakeasy-group: "Sources"
       summary: "Get Source details"
     patch:
       tags:
@@ -378,6 +398,7 @@ paths:
           description: "Not found"
       operationId: "patchSource"
       x-speakeasy-alias: "patchSource"
+      x-speakeasy-group: "Sources"
       summary: "Update a Source"
     put:
       tags:
@@ -420,6 +441,7 @@ paths:
           description: "Not found"
       operationId: "putSource"
       x-speakeasy-alias: "putSource"
+      x-speakeasy-group: "Sources"
       summary: "Update a Source and fully overwrite it"
       x-speakeasy-entity-operation: Source#update
     delete:
@@ -436,6 +458,7 @@ paths:
           description: "Not found"
       operationId: "deleteSource"
       x-speakeasy-alias: "deleteSource"
+      x-speakeasy-group: "Sources"
       summary: "Delete a Source"
     parameters:
     - name: "sourceId"
@@ -463,6 +486,7 @@ paths:
           description: "Not found"
       operationId: "listDestinations"
       x-speakeasy-alias: "listDestinations"
+      x-speakeasy-group: "Destinations"
       summary: "List destinations"
       parameters:
       - name: "workspaceIds"
@@ -547,6 +571,7 @@ paths:
           description: "Not found"
       operationId: "createDestination"
       x-speakeasy-alias: "createDestination"
+      x-speakeasy-group: "Destinations"
       summary: "Create a destination"
       description: "Creates a destination given a name, workspace id, and a json blob\
         \ containing the configuration for the source."
@@ -581,6 +606,7 @@ paths:
           description: "Not found"
       operationId: "getDestination"
       x-speakeasy-alias: "getDestination"
+      x-speakeasy-group: "Destinations"
       summary: "Get Destination details"
     delete:
       tags:
@@ -596,6 +622,7 @@ paths:
           description: "Not found"
       operationId: "deleteDestination"
       x-speakeasy-alias: "deleteDestination"
+      x-speakeasy-group: "Destinations"
       summary: "Delete a Destination"
     patch:
       tags:
@@ -641,6 +668,7 @@ paths:
           description: "Not found"
       operationId: "patchDestination"
       x-speakeasy-alias: "patchDestination"
+      x-speakeasy-group: "Destinations"
       summary: "Update a Destination"
     put:
       tags:
@@ -686,6 +714,7 @@ paths:
           description: "Not found"
       operationId: "putDestination"
       x-speakeasy-alias: "putDestination"
+      x-speakeasy-group: "Destinations"
       summary: "Update a Destination and fully overwrite it"
       x-speakeasy-entity-operation: Destination#update
     parameters:
@@ -716,6 +745,7 @@ paths:
           description: "API key is invalid."
       operationId: "initiateOAuth"
       x-speakeasy-alias: "initiateOAuth"
+      x-speakeasy-group: "Sources"
       summary: "Initiate OAuth for a source"
       description: "Given a source ID, workspace ID, and redirect URL, initiates OAuth\
         \ for the source.\n\nThis returns a fully formed URL for performing user authentication\
@@ -760,6 +790,7 @@ paths:
           description: "Not allowed"
       operationId: "createConnection"
       x-speakeasy-alias: "createConnection"
+      x-speakeasy-group: "Connections"
       summary: "Create a connection"
       x-speakeasy-entity-operation: Connection#create
     get:
@@ -780,6 +811,7 @@ paths:
           description: "Not found"
       operationId: "listConnections"
       x-speakeasy-alias: "listConnections"
+      x-speakeasy-group: "Connections"
       summary: "List connections"
       x-speakeasy-entity-operation: Connection#list
       parameters:
@@ -845,6 +877,7 @@ paths:
           description: "Not found"
       operationId: "getConnection"
       x-speakeasy-alias: "getConnection"
+      x-speakeasy-group: "Connections"
       summary: "Get Connection details"
       x-speakeasy-entity-operation: Connection#read
     patch:
@@ -884,6 +917,7 @@ paths:
           description: "Not found"
       operationId: "patchConnection"
       x-speakeasy-alias: "patchConnection"
+      x-speakeasy-group: "Connections"
       summary: "Update Connection details"
       x-speakeasy-entity-operation: Connection#update
     delete:
@@ -900,6 +934,7 @@ paths:
           description: "Not found"
       operationId: "deleteConnection"
       x-speakeasy-alias: "deleteConnection"
+      x-speakeasy-group: "Connections"
       summary: "Delete a Connection"
       x-speakeasy-entity-operation: Connection#delete
     parameters:
@@ -931,6 +966,7 @@ paths:
           description: "Not found"
       operationId: "getStreamProperties"
       x-speakeasy-alias: "getStreamProperties"
+      x-speakeasy-group: "Streams"
       summary: "Get stream properties"
       parameters:
       - name: "sourceId"
@@ -974,6 +1010,7 @@ paths:
           description: "Not found"
       operationId: "listWorkspaces"
       x-speakeasy-alias: "listWorkspaces"
+      x-speakeasy-group: "Workspaces"
       summary: "List workspaces"
       x-speakeasy-entity-operation: Workspace#list
       parameters:
@@ -1045,6 +1082,7 @@ paths:
           description: "Not allowed"
       operationId: "createWorkspace"
       x-speakeasy-alias: "createWorkspace"
+      x-speakeasy-group: "Workspaces"
       summary: "Create a workspace"
       x-speakeasy-entity-operation: Workspace#create
   /workspaces/{workspaceId}:
@@ -1079,6 +1117,7 @@ paths:
           description: "Not found"
       operationId: "getWorkspace"
       x-speakeasy-alias: "getWorkspace"
+      x-speakeasy-group: "Workspaces"
       summary: "Get Workspace details"
       x-speakeasy-entity-operation: Workspace#read
     patch:
@@ -1113,6 +1152,7 @@ paths:
           description: "Not allowed"
       operationId: "updateWorkspace"
       x-speakeasy-alias: "updateWorkspace"
+      x-speakeasy-group: "Workspaces"
       summary: "Update a workspace"
       x-speakeasy-entity-operation: Workspace#update
     delete:
@@ -1129,6 +1169,7 @@ paths:
           description: "Not found"
       operationId: "deleteWorkspace"
       x-speakeasy-alias: "deleteWorkspace"
+      x-speakeasy-group: "Workspaces"
       summary: "Delete a Workspace"
       x-speakeasy-entity-operation: Workspace#delete
   /workspaces/{workspaceId}/oauthCredentials:
@@ -1152,6 +1193,7 @@ paths:
           description: "API key is invalid."
       operationId: "createOrUpdateWorkspaceOAuthCredentials"
       x-speakeasy-alias: "createOrUpdateWorkspaceOAuthCredentials"
+      x-speakeasy-group: "Workspaces"
       summary: "Create OAuth override credentials for a workspace and source type."
       description: "Create/update a set of OAuth credentials to override the Airbyte-provided\
         \ OAuth credentials used for source/destination OAuth.\nIn order to determine\
@@ -1164,7 +1206,108 @@ paths:
         type: "string"
       in: "path"
       required: true
+  /permissions/{permissionId}:
+    parameters:
+    - name: "permissionId"
+      schema:
+        format: "UUID"
+        type: "string"
+      in: "path"
+      required: true
+    get:
+      tags:
+      - "public_permissions"
+      - "public"
+      - "Permissions"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+          description: "Get a Permission by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+        "422":
+          description: "Data issue"
+      operationId: null
+      summary: "Get Permission details"
+      x-speakeasy-entity-operation: Permission#read
+    patch:
+      tags:
+      - "public_permissions"
+      - "public"
+      - "Permissions"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PermissionUpdateRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionResponse"
+          description: "Successful updated"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+        "422":
+          description: "Data issue"
+      operationId: null
+      summary: "Update a permission"
+      x-speakeasy-entity-operation: Permission#update
+    delete:
+      tags:
+      - "public_permissions"
+      - "public"
+      - "Permissions"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+        "422":
+          description: "Data issue"
+      operationId: null
+      summary: "Delete a Permission"
+      x-speakeasy-entity-operation: Permission#delete
   /permissions:
+    get:
+      tags:
+      - "public_permissions"
+      - "public"
+      - "Permissions"
+      parameters:
+      - name: "userId"
+        description: "User Id in permission."
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "query"
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PermissionsResponse"
+          description: "List Permissions by user id."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: null
+      summary: "List Permissions by user id"
     post:
       tags:
       - "public_permissions"
@@ -1201,6 +1344,7 @@ paths:
           description: "Not allowed"
       operationId: "createPermission"
       x-speakeasy-alias: "createPermission"
+      x-speakeasy-group: "Permissions"
       summary: "Create a permission"
       x-speakeasy-entity-operation: Permission#create
   /sources#Aha:
@@ -20467,6 +20611,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /destinations#SnowflakeCortex:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationSnowflakeCortexCreateRequest"
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createDestinationSnowflakeCortex"
+      summary: "Create a destination"
+      description:
+        "Creates a destination given a name, workspace id, and a json blob containing\
+        \ the configuration for the destination."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_SnowflakeCortex#create
+  /destinations/{destinationId}#SnowflakeCortex:
+    get:
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Get a Destination by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getDestinationSnowflakeCortex"
+      summary: "Get Destination details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_SnowflakeCortex#read
+    put:
+      tags:
+        - "Destinations"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationSnowflakeCortexPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putDestinationSnowflakeCortex"
+      summary: "Update a Destination fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_SnowflakeCortex#update
+    delete:
+      tags:
+        - "Destinations"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteDestinationSnowflakeCortex"
+      summary: "Delete a Destination"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_SnowflakeCortex#delete
+    parameters:
+      - name: "destinationId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /destinations#Teradata:
     post:
       requestBody:
@@ -21647,6 +21877,16 @@ components:
       x-speakeasy-entity: Permission
       x-speakeasy-param-suppress-computed-diff: true
       x-speakeasy-component: true
+    PermissionUpdateRequest:
+      required:
+      - "permissionType"
+      type: "object"
+      properties:
+        permissionType:
+          $ref: "#/components/schemas/PermissionType"
+      x-speakeasy-entity: Permission
+      x-speakeasy-param-suppress-computed-diff: true
+      x-speakeasy-component: true
     PermissionResponse:
       title: "Root Type for PermissionResponse"
       description: "Provides details of a single permission."
@@ -21669,6 +21909,44 @@ components:
           $ref: "#/components/schemas/OrganizationId"
       x-speakeasy-entity: Permission
       x-speakeasy-param-suppress-computed-diff: true
+      x-speakeasy-component: true
+    PermissionResponseRead:
+      title: "Root type for PermissionResponseRead"
+      description: "Reformat PermissionResponse with permission scope"
+      type: "object"
+      required:
+      - "permissionId"
+      - "permissionType"
+      - "userId"
+      - "scope"
+      - "scopeId"
+      properties:
+        permissionId:
+          type: "string"
+          format: "uuid"
+        permissionType:
+          $ref: "#/components/schemas/PermissionType"
+        userId:
+          $ref: "#/components/schemas/UserId"
+        scopeId:
+          type: "string"
+          format: "uuid"
+        scope:
+          $ref: "#/components/schemas/PermissionScope"
+      x-speakeasy-entity: Permission
+      x-speakeasy-param-suppress-computed-diff: true
+      x-speakeasy-component: true
+    PermissionsResponse:
+      title: "Root Type for PermissionsResponse"
+      description: "List/Array of multiple permissions"
+      required:
+      - "data"
+      type: "object"
+      properties:
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PermissionResponseRead"
       x-speakeasy-component: true
     ConnectionsResponse:
       title: "Root Type for ConnectionsResponse"
@@ -34863,9 +35141,9 @@ components:
           order: 1
           x-speakeasy-param-sensitive: true
         domain_name:
+          type: "string"
           title: "Domain name"
           description: "Your Confluence domain name"
-          type: "string"
           order: 2
         sourceType:
           title: "confluence"
@@ -34897,9 +35175,9 @@ components:
           airbyte_secret: true
           order: 1
         domain_name:
+          type: "string"
           title: "Domain name"
           description: "Your Confluence domain name"
-          type: "string"
           order: 2
     source-coin-api:
       title: "Coin API Spec"
@@ -50023,13 +50301,25 @@ components:
             >here</a>."
           airbyte_secret: true
     source-insightly:
-      title: "Insightly Spec"
       type: "object"
       required:
-      - "token"
       - "start_date"
+      - "token"
       - "sourceType"
       properties:
+        start_date:
+          type:
+          - "string"
+          - "null"
+          title: "Start Date"
+          format: "date-time"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "The date from which you'd like to replicate data for Insightly\
+            \ in the format YYYY-MM-DDT00:00:00Z. All data generated after this date\
+            \ will be replicated. Note that it will be used only for incremental streams."
+          examples:
+          - "2021-03-01T00:00:00Z"
+          order: 0
         token:
           type:
           - "string"
@@ -50037,18 +50327,8 @@ components:
           title: "API Token"
           description: "Your Insightly API token."
           airbyte_secret: true
+          order: 1
           x-speakeasy-param-sensitive: true
-        start_date:
-          type:
-          - "string"
-          - "null"
-          title: "Start Date"
-          description: "The date from which you'd like to replicate data for Insightly\
-            \ in the format YYYY-MM-DDT00:00:00Z. All data generated after this date\
-            \ will be replicated. Note that it will be used only for incremental streams."
-          examples:
-          - "2021-03-01T00:00:00Z"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
         sourceType:
           title: "insightly"
           const: "insightly"
@@ -50057,12 +50337,24 @@ components:
           order: 0
           type: "string"
     source-insightly-update:
-      title: "Insightly Spec"
       type: "object"
       required:
-      - "token"
       - "start_date"
+      - "token"
       properties:
+        start_date:
+          type:
+          - "string"
+          - "null"
+          title: "Start Date"
+          format: "date-time"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "The date from which you'd like to replicate data for Insightly\
+            \ in the format YYYY-MM-DDT00:00:00Z. All data generated after this date\
+            \ will be replicated. Note that it will be used only for incremental streams."
+          examples:
+          - "2021-03-01T00:00:00Z"
+          order: 0
         token:
           type:
           - "string"
@@ -50070,17 +50362,7 @@ components:
           title: "API Token"
           description: "Your Insightly API token."
           airbyte_secret: true
-        start_date:
-          type:
-          - "string"
-          - "null"
-          title: "Start Date"
-          description: "The date from which you'd like to replicate data for Insightly\
-            \ in the format YYYY-MM-DDT00:00:00Z. All data generated after this date\
-            \ will be replicated. Note that it will be used only for incremental streams."
-          examples:
-          - "2021-03-01T00:00:00Z"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          order: 1
     source-cart:
       title: "Cart.com Spec"
       type: "object"
@@ -50778,7 +51060,6 @@ components:
           description: "API Key provided by Appfollow"
           airbyte_secret: true
     source-chartmogul:
-      title: "Chartmogul Spec"
       type: "object"
       required:
       - "api_key"
@@ -50811,7 +51092,6 @@ components:
           order: 0
           type: "string"
     source-chartmogul-update:
-      title: "Chartmogul Spec"
       type: "object"
       required:
       - "api_key"
@@ -51135,7 +51415,6 @@ components:
             \ `2021-01` API version, or use `2021-11`, otherwise."
           default: true
     source-aha:
-      title: "Aha Spec"
       type: "object"
       required:
       - "api_key"
@@ -51144,14 +51423,16 @@ components:
       properties:
         api_key:
           type: "string"
-          description: "API Key"
           title: "API Bearer Token"
           airbyte_secret: true
+          description: "API Key"
+          order: 0
           x-speakeasy-param-sensitive: true
         url:
           type: "string"
           description: "URL"
           title: "Aha Url Instance"
+          order: 1
         sourceType:
           title: "aha"
           const: "aha"
@@ -51160,7 +51441,6 @@ components:
           order: 0
           type: "string"
     source-aha-update:
-      title: "Aha Spec"
       type: "object"
       required:
       - "api_key"
@@ -51168,13 +51448,15 @@ components:
       properties:
         api_key:
           type: "string"
-          description: "API Key"
           title: "API Bearer Token"
           airbyte_secret: true
+          description: "API Key"
+          order: 0
         url:
           type: "string"
           description: "URL"
           title: "Aha Url Instance"
+          order: 1
     source-datascope:
       title: "Datascope Spec"
       type: "object"
@@ -53170,7 +53452,6 @@ components:
           - "2020-11-16T00:00:00Z"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
     source-pokeapi:
-      title: "Pokeapi Spec"
       type: "object"
       required:
       - "pokemon_name"
@@ -54084,6 +54365,7 @@ components:
           - "ditto"
           - "luxray"
           - "snorlax"
+          order: 0
         sourceType:
           title: "pokeapi"
           const: "pokeapi"
@@ -54092,7 +54374,6 @@ components:
           order: 0
           type: "string"
     source-pokeapi-update:
-      title: "Pokeapi Spec"
       type: "object"
       required:
       - "pokemon_name"
@@ -55005,6 +55286,7 @@ components:
           - "ditto"
           - "luxray"
           - "snorlax"
+          order: 0
     source-senseforce:
       title: "Senseforce Source Spec"
       type: "object"
@@ -64699,6 +64981,875 @@ components:
                 default: "SILENT"
                 enum:
                 - "SILENT"
+    destination-snowflake-cortex:
+      title: "Destination Config"
+      description: "The configuration model for the Vector DB based destinations.\
+        \ This model is used to generate the UI for the destination configuration,\n\
+        as well as to provide type safety for the configuration passed to the destination.\n\
+        \nThe configuration model is composed of four parts:\n* Processing configuration\n\
+        * Embedding configuration\n* Indexing configuration\n* Advanced configuration\n\
+        \nProcessing, embedding and advanced configuration are provided by this base\
+        \ class, while the indexing configuration is provided by the destination connector\
+        \ in the sub class."
+      type: "object"
+      properties:
+        embedding:
+          title: "Embedding"
+          description: "Embedding configuration"
+          group: "embedding"
+          type: "object"
+          oneOf:
+          - title: "OpenAI"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "openai"
+                const: "openai"
+                enum:
+                - "openai"
+                type: "string"
+              openai_key:
+                title: "OpenAI API key"
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+            required:
+            - "openai_key"
+            - "mode"
+            description: "Use the OpenAI API to embed text. This option is using the\
+              \ text-embedding-ada-002 model with 1536 embedding dimensions."
+          - title: "Cohere"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "cohere"
+                const: "cohere"
+                enum:
+                - "cohere"
+                type: "string"
+              cohere_key:
+                title: "Cohere API key"
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+            required:
+            - "cohere_key"
+            - "mode"
+            description: "Use the Cohere API to embed text."
+          - title: "Fake"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "fake"
+                const: "fake"
+                enum:
+                - "fake"
+                type: "string"
+            description: "Use a fake embedding made out of random vectors with 1536\
+              \ embedding dimensions. This is useful for testing the data pipeline\
+              \ without incurring any costs."
+            required:
+            - "mode"
+          - title: "Azure OpenAI"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "azure_openai"
+                const: "azure_openai"
+                enum:
+                - "azure_openai"
+                type: "string"
+              openai_key:
+                title: "Azure OpenAI API key"
+                description: "The API key for your Azure OpenAI resource.  You can\
+                  \ find this in the Azure portal under your Azure OpenAI resource"
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+              api_base:
+                title: "Resource base URL"
+                description: "The base URL for your Azure OpenAI resource.  You can\
+                  \ find this in the Azure portal under your Azure OpenAI resource"
+                examples:
+                - "https://your-resource-name.openai.azure.com"
+                type: "string"
+              deployment:
+                title: "Deployment"
+                description: "The deployment for your Azure OpenAI resource.  You\
+                  \ can find this in the Azure portal under your Azure OpenAI resource"
+                examples:
+                - "your-resource-name"
+                type: "string"
+            required:
+            - "openai_key"
+            - "api_base"
+            - "deployment"
+            - "mode"
+            description: "Use the Azure-hosted OpenAI API to embed text. This option\
+              \ is using the text-embedding-ada-002 model with 1536 embedding dimensions."
+          - title: "OpenAI-compatible"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "openai_compatible"
+                const: "openai_compatible"
+                enum:
+                - "openai_compatible"
+                type: "string"
+              api_key:
+                title: "API key"
+                default: ""
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+              base_url:
+                title: "Base URL"
+                description: "The base URL for your OpenAI-compatible service"
+                examples:
+                - "https://your-service-name.com"
+                type: "string"
+              model_name:
+                title: "Model name"
+                description: "The name of the model to use for embedding"
+                default: "text-embedding-ada-002"
+                examples:
+                - "text-embedding-ada-002"
+                type: "string"
+              dimensions:
+                title: "Embedding dimensions"
+                description: "The number of dimensions the embedding model is generating"
+                examples:
+                - 1536
+                - 384
+                type: "integer"
+            required:
+            - "base_url"
+            - "dimensions"
+            - "mode"
+            description: "Use a service that's compatible with the OpenAI API to embed\
+              \ text."
+        processing:
+          title: "ProcessingConfigModel"
+          type: "object"
+          properties:
+            chunk_size:
+              title: "Chunk size"
+              description: "Size of chunks in tokens to store in vector store (make\
+                \ sure it is not too big for the context if your LLM)"
+              maximum: 8191
+              minimum: 1
+              type: "integer"
+            chunk_overlap:
+              title: "Chunk overlap"
+              description: "Size of overlap between chunks in tokens to store in vector\
+                \ store to better capture relevant context"
+              default: 0
+              type: "integer"
+            text_fields:
+              title: "Text fields to embed"
+              description: "List of fields in the record that should be used to calculate\
+                \ the embedding. The field list is applied to all streams in the same\
+                \ way and non-existing fields are ignored. If none are defined, all\
+                \ fields are considered text fields. When specifying text fields,\
+                \ you can access nested fields in the record by using dot notation,\
+                \ e.g. `user.name` will access the `name` field in the `user` object.\
+                \ It's also possible to use wildcards to access all fields in an object,\
+                \ e.g. `users.*.name` will access all `names` fields in all entries\
+                \ of the `users` array."
+              default: []
+              always_show: true
+              examples:
+              - "text"
+              - "user.name"
+              - "users.*.name"
+              type: "array"
+              items:
+                type: "string"
+            metadata_fields:
+              title: "Fields to store as metadata"
+              description: "List of fields in the record that should be stored as\
+                \ metadata. The field list is applied to all streams in the same way\
+                \ and non-existing fields are ignored. If none are defined, all fields\
+                \ are considered metadata fields. When specifying text fields, you\
+                \ can access nested fields in the record by using dot notation, e.g.\
+                \ `user.name` will access the `name` field in the `user` object. It's\
+                \ also possible to use wildcards to access all fields in an object,\
+                \ e.g. `users.*.name` will access all `names` fields in all entries\
+                \ of the `users` array. When specifying nested paths, all matching\
+                \ values are flattened into an array set to a field named by the path."
+              default: []
+              always_show: true
+              examples:
+              - "age"
+              - "user"
+              - "user.name"
+              type: "array"
+              items:
+                type: "string"
+            text_splitter:
+              title: "Text splitter"
+              description: "Split text fields into chunks based on the specified method."
+              type: "object"
+              oneOf:
+              - title: "By Separator"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "separator"
+                    const: "separator"
+                    enum:
+                    - "separator"
+                    type: "string"
+                  separators:
+                    title: "Separators"
+                    description: "List of separator strings to split text fields by.\
+                      \ The separator itself needs to be wrapped in double quotes,\
+                      \ e.g. to split by the dot character, use \".\". To split by\
+                      \ a newline, use \"\\n\"."
+                    default:
+                    - "\"\\n\\n\""
+                    - "\"\\n\""
+                    - "\" \""
+                    - "\"\""
+                    type: "array"
+                    items:
+                      type: "string"
+                  keep_separator:
+                    title: "Keep separator"
+                    description: "Whether to keep the separator in the resulting chunks"
+                    default: false
+                    type: "boolean"
+                description: "Split the text by the list of separators until the chunk\
+                  \ size is reached, using the earlier mentioned separators where\
+                  \ possible. This is useful for splitting text fields by paragraphs,\
+                  \ sentences, words, etc."
+                required:
+                - "mode"
+              - title: "By Markdown header"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "markdown"
+                    const: "markdown"
+                    enum:
+                    - "markdown"
+                    type: "string"
+                  split_level:
+                    title: "Split level"
+                    description: "Level of markdown headers to split text fields by.\
+                      \ Headings down to the specified level will be used as split\
+                      \ points"
+                    default: 1
+                    minimum: 1
+                    maximum: 6
+                    type: "integer"
+                description: "Split the text by Markdown headers down to the specified\
+                  \ header level. If the chunk size fits multiple sections, they will\
+                  \ be combined into a single chunk."
+                required:
+                - "mode"
+              - title: "By Programming Language"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "code"
+                    const: "code"
+                    enum:
+                    - "code"
+                    type: "string"
+                  language:
+                    title: "Language"
+                    description: "Split code in suitable places based on the programming\
+                      \ language"
+                    enum:
+                    - "cpp"
+                    - "go"
+                    - "java"
+                    - "js"
+                    - "php"
+                    - "proto"
+                    - "python"
+                    - "rst"
+                    - "ruby"
+                    - "rust"
+                    - "scala"
+                    - "swift"
+                    - "markdown"
+                    - "latex"
+                    - "html"
+                    - "sol"
+                    type: "string"
+                required:
+                - "language"
+                - "mode"
+                description: "Split the text by suitable delimiters based on the programming\
+                  \ language. This is useful for splitting code into chunks."
+            field_name_mappings:
+              title: "Field name mappings"
+              description: "List of fields to rename. Not applicable for nested fields,\
+                \ but can be used to rename fields already flattened via dot notation."
+              default: []
+              type: "array"
+              items:
+                title: "FieldNameMappingConfigModel"
+                type: "object"
+                properties:
+                  from_field:
+                    title: "From field name"
+                    description: "The field name in the source"
+                    type: "string"
+                  to_field:
+                    title: "To field name"
+                    description: "The field name to use in the destination"
+                    type: "string"
+                required:
+                - "from_field"
+                - "to_field"
+          required:
+          - "chunk_size"
+          group: "processing"
+        omit_raw_text:
+          title: "Do not store raw text"
+          description: "Do not store the text that gets embedded along with the vector\
+            \ and the metadata in the destination. If set to true, only the vector\
+            \ and the metadata will be stored - in this case raw text for LLM use\
+            \ cases needs to be retrieved from another source."
+          default: false
+          group: "advanced"
+          type: "boolean"
+        indexing:
+          title: "Indexing"
+          type: "object"
+          properties:
+            host:
+              title: "Host"
+              description: "Enter the account name you want to use to access the database.\
+                \ This is usually the identifier before .snowflakecomputing.com"
+              order: 1
+              examples:
+              - "AIRBYTE_ACCOUNT"
+              type: "string"
+            role:
+              title: "Role"
+              description: "Enter the role that you want to use to access Snowflake"
+              order: 2
+              examples:
+              - "AIRBYTE_ROLE"
+              - "ACCOUNTADMIN"
+              type: "string"
+            warehouse:
+              title: "Warehouse"
+              description: "Enter the name of the warehouse that you want to sync\
+                \ data into"
+              order: 3
+              examples:
+              - "AIRBYTE_WAREHOUSE"
+              type: "string"
+            database:
+              title: "Database"
+              description: "Enter the name of the database that you want to sync data\
+                \ into"
+              order: 4
+              examples:
+              - "AIRBYTE_DATABASE"
+              type: "string"
+            default_schema:
+              title: "Default Schema"
+              description: "Enter the name of the default schema"
+              order: 5
+              examples:
+              - "AIRBYTE_SCHEMA"
+              type: "string"
+            username:
+              title: "Username"
+              description: "Enter the name of the user you want to use to access the\
+                \ database"
+              order: 6
+              examples:
+              - "AIRBYTE_USER"
+              type: "string"
+            credentials:
+              title: "Credentials"
+              type: "object"
+              properties:
+                password:
+                  title: "Password"
+                  description: "Enter the password you want to use to access the database"
+                  airbyte_secret: true
+                  examples:
+                  - "AIRBYTE_PASSWORD"
+                  order: 7
+                  type: "string"
+                  x-speakeasy-param-sensitive: true
+              required:
+              - "password"
+          required:
+          - "host"
+          - "role"
+          - "warehouse"
+          - "database"
+          - "default_schema"
+          - "username"
+          - "credentials"
+          description: "Snowflake can be used to store vector data and retrieve embeddings."
+          group: "indexing"
+        destinationType:
+          title: "snowflake-cortex"
+          const: "snowflake-cortex"
+          enum:
+          - "snowflake-cortex"
+          order: 0
+          type: "string"
+      required:
+      - "embedding"
+      - "processing"
+      - "indexing"
+      - "destinationType"
+      groups:
+      - id: "processing"
+        title: "Processing"
+      - id: "embedding"
+        title: "Embedding"
+      - id: "indexing"
+        title: "Indexing"
+      - id: "advanced"
+        title: "Advanced"
+    destination-snowflake-cortex-update:
+      title: "Destination Config"
+      description: "The configuration model for the Vector DB based destinations.\
+        \ This model is used to generate the UI for the destination configuration,\n\
+        as well as to provide type safety for the configuration passed to the destination.\n\
+        \nThe configuration model is composed of four parts:\n* Processing configuration\n\
+        * Embedding configuration\n* Indexing configuration\n* Advanced configuration\n\
+        \nProcessing, embedding and advanced configuration are provided by this base\
+        \ class, while the indexing configuration is provided by the destination connector\
+        \ in the sub class."
+      type: "object"
+      properties:
+        embedding:
+          title: "Embedding"
+          description: "Embedding configuration"
+          group: "embedding"
+          type: "object"
+          oneOf:
+          - title: "OpenAI"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "openai"
+                const: "openai"
+                enum:
+                - "openai"
+                type: "string"
+              openai_key:
+                title: "OpenAI API key"
+                airbyte_secret: true
+                type: "string"
+            required:
+            - "openai_key"
+            - "mode"
+            description: "Use the OpenAI API to embed text. This option is using the\
+              \ text-embedding-ada-002 model with 1536 embedding dimensions."
+          - title: "Cohere"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "cohere"
+                const: "cohere"
+                enum:
+                - "cohere"
+                type: "string"
+              cohere_key:
+                title: "Cohere API key"
+                airbyte_secret: true
+                type: "string"
+            required:
+            - "cohere_key"
+            - "mode"
+            description: "Use the Cohere API to embed text."
+          - title: "Fake"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "fake"
+                const: "fake"
+                enum:
+                - "fake"
+                type: "string"
+            description: "Use a fake embedding made out of random vectors with 1536\
+              \ embedding dimensions. This is useful for testing the data pipeline\
+              \ without incurring any costs."
+            required:
+            - "mode"
+          - title: "Azure OpenAI"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "azure_openai"
+                const: "azure_openai"
+                enum:
+                - "azure_openai"
+                type: "string"
+              openai_key:
+                title: "Azure OpenAI API key"
+                description: "The API key for your Azure OpenAI resource.  You can\
+                  \ find this in the Azure portal under your Azure OpenAI resource"
+                airbyte_secret: true
+                type: "string"
+              api_base:
+                title: "Resource base URL"
+                description: "The base URL for your Azure OpenAI resource.  You can\
+                  \ find this in the Azure portal under your Azure OpenAI resource"
+                examples:
+                - "https://your-resource-name.openai.azure.com"
+                type: "string"
+              deployment:
+                title: "Deployment"
+                description: "The deployment for your Azure OpenAI resource.  You\
+                  \ can find this in the Azure portal under your Azure OpenAI resource"
+                examples:
+                - "your-resource-name"
+                type: "string"
+            required:
+            - "openai_key"
+            - "api_base"
+            - "deployment"
+            - "mode"
+            description: "Use the Azure-hosted OpenAI API to embed text. This option\
+              \ is using the text-embedding-ada-002 model with 1536 embedding dimensions."
+          - title: "OpenAI-compatible"
+            type: "object"
+            properties:
+              mode:
+                title: "Mode"
+                default: "openai_compatible"
+                const: "openai_compatible"
+                enum:
+                - "openai_compatible"
+                type: "string"
+              api_key:
+                title: "API key"
+                default: ""
+                airbyte_secret: true
+                type: "string"
+              base_url:
+                title: "Base URL"
+                description: "The base URL for your OpenAI-compatible service"
+                examples:
+                - "https://your-service-name.com"
+                type: "string"
+              model_name:
+                title: "Model name"
+                description: "The name of the model to use for embedding"
+                default: "text-embedding-ada-002"
+                examples:
+                - "text-embedding-ada-002"
+                type: "string"
+              dimensions:
+                title: "Embedding dimensions"
+                description: "The number of dimensions the embedding model is generating"
+                examples:
+                - 1536
+                - 384
+                type: "integer"
+            required:
+            - "base_url"
+            - "dimensions"
+            - "mode"
+            description: "Use a service that's compatible with the OpenAI API to embed\
+              \ text."
+        processing:
+          title: "ProcessingConfigModel"
+          type: "object"
+          properties:
+            chunk_size:
+              title: "Chunk size"
+              description: "Size of chunks in tokens to store in vector store (make\
+                \ sure it is not too big for the context if your LLM)"
+              maximum: 8191
+              minimum: 1
+              type: "integer"
+            chunk_overlap:
+              title: "Chunk overlap"
+              description: "Size of overlap between chunks in tokens to store in vector\
+                \ store to better capture relevant context"
+              default: 0
+              type: "integer"
+            text_fields:
+              title: "Text fields to embed"
+              description: "List of fields in the record that should be used to calculate\
+                \ the embedding. The field list is applied to all streams in the same\
+                \ way and non-existing fields are ignored. If none are defined, all\
+                \ fields are considered text fields. When specifying text fields,\
+                \ you can access nested fields in the record by using dot notation,\
+                \ e.g. `user.name` will access the `name` field in the `user` object.\
+                \ It's also possible to use wildcards to access all fields in an object,\
+                \ e.g. `users.*.name` will access all `names` fields in all entries\
+                \ of the `users` array."
+              default: []
+              always_show: true
+              examples:
+              - "text"
+              - "user.name"
+              - "users.*.name"
+              type: "array"
+              items:
+                type: "string"
+            metadata_fields:
+              title: "Fields to store as metadata"
+              description: "List of fields in the record that should be stored as\
+                \ metadata. The field list is applied to all streams in the same way\
+                \ and non-existing fields are ignored. If none are defined, all fields\
+                \ are considered metadata fields. When specifying text fields, you\
+                \ can access nested fields in the record by using dot notation, e.g.\
+                \ `user.name` will access the `name` field in the `user` object. It's\
+                \ also possible to use wildcards to access all fields in an object,\
+                \ e.g. `users.*.name` will access all `names` fields in all entries\
+                \ of the `users` array. When specifying nested paths, all matching\
+                \ values are flattened into an array set to a field named by the path."
+              default: []
+              always_show: true
+              examples:
+              - "age"
+              - "user"
+              - "user.name"
+              type: "array"
+              items:
+                type: "string"
+            text_splitter:
+              title: "Text splitter"
+              description: "Split text fields into chunks based on the specified method."
+              type: "object"
+              oneOf:
+              - title: "By Separator"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "separator"
+                    const: "separator"
+                    enum:
+                    - "separator"
+                    type: "string"
+                  separators:
+                    title: "Separators"
+                    description: "List of separator strings to split text fields by.\
+                      \ The separator itself needs to be wrapped in double quotes,\
+                      \ e.g. to split by the dot character, use \".\". To split by\
+                      \ a newline, use \"\\n\"."
+                    default:
+                    - "\"\\n\\n\""
+                    - "\"\\n\""
+                    - "\" \""
+                    - "\"\""
+                    type: "array"
+                    items:
+                      type: "string"
+                  keep_separator:
+                    title: "Keep separator"
+                    description: "Whether to keep the separator in the resulting chunks"
+                    default: false
+                    type: "boolean"
+                description: "Split the text by the list of separators until the chunk\
+                  \ size is reached, using the earlier mentioned separators where\
+                  \ possible. This is useful for splitting text fields by paragraphs,\
+                  \ sentences, words, etc."
+                required:
+                - "mode"
+              - title: "By Markdown header"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "markdown"
+                    const: "markdown"
+                    enum:
+                    - "markdown"
+                    type: "string"
+                  split_level:
+                    title: "Split level"
+                    description: "Level of markdown headers to split text fields by.\
+                      \ Headings down to the specified level will be used as split\
+                      \ points"
+                    default: 1
+                    minimum: 1
+                    maximum: 6
+                    type: "integer"
+                description: "Split the text by Markdown headers down to the specified\
+                  \ header level. If the chunk size fits multiple sections, they will\
+                  \ be combined into a single chunk."
+                required:
+                - "mode"
+              - title: "By Programming Language"
+                type: "object"
+                properties:
+                  mode:
+                    title: "Mode"
+                    default: "code"
+                    const: "code"
+                    enum:
+                    - "code"
+                    type: "string"
+                  language:
+                    title: "Language"
+                    description: "Split code in suitable places based on the programming\
+                      \ language"
+                    enum:
+                    - "cpp"
+                    - "go"
+                    - "java"
+                    - "js"
+                    - "php"
+                    - "proto"
+                    - "python"
+                    - "rst"
+                    - "ruby"
+                    - "rust"
+                    - "scala"
+                    - "swift"
+                    - "markdown"
+                    - "latex"
+                    - "html"
+                    - "sol"
+                    type: "string"
+                required:
+                - "language"
+                - "mode"
+                description: "Split the text by suitable delimiters based on the programming\
+                  \ language. This is useful for splitting code into chunks."
+            field_name_mappings:
+              title: "Field name mappings"
+              description: "List of fields to rename. Not applicable for nested fields,\
+                \ but can be used to rename fields already flattened via dot notation."
+              default: []
+              type: "array"
+              items:
+                title: "FieldNameMappingConfigModel"
+                type: "object"
+                properties:
+                  from_field:
+                    title: "From field name"
+                    description: "The field name in the source"
+                    type: "string"
+                  to_field:
+                    title: "To field name"
+                    description: "The field name to use in the destination"
+                    type: "string"
+                required:
+                - "from_field"
+                - "to_field"
+          required:
+          - "chunk_size"
+          group: "processing"
+        omit_raw_text:
+          title: "Do not store raw text"
+          description: "Do not store the text that gets embedded along with the vector\
+            \ and the metadata in the destination. If set to true, only the vector\
+            \ and the metadata will be stored - in this case raw text for LLM use\
+            \ cases needs to be retrieved from another source."
+          default: false
+          group: "advanced"
+          type: "boolean"
+        indexing:
+          title: "Indexing"
+          type: "object"
+          properties:
+            host:
+              title: "Host"
+              description: "Enter the account name you want to use to access the database.\
+                \ This is usually the identifier before .snowflakecomputing.com"
+              order: 1
+              examples:
+              - "AIRBYTE_ACCOUNT"
+              type: "string"
+            role:
+              title: "Role"
+              description: "Enter the role that you want to use to access Snowflake"
+              order: 2
+              examples:
+              - "AIRBYTE_ROLE"
+              - "ACCOUNTADMIN"
+              type: "string"
+            warehouse:
+              title: "Warehouse"
+              description: "Enter the name of the warehouse that you want to sync\
+                \ data into"
+              order: 3
+              examples:
+              - "AIRBYTE_WAREHOUSE"
+              type: "string"
+            database:
+              title: "Database"
+              description: "Enter the name of the database that you want to sync data\
+                \ into"
+              order: 4
+              examples:
+              - "AIRBYTE_DATABASE"
+              type: "string"
+            default_schema:
+              title: "Default Schema"
+              description: "Enter the name of the default schema"
+              order: 5
+              examples:
+              - "AIRBYTE_SCHEMA"
+              type: "string"
+            username:
+              title: "Username"
+              description: "Enter the name of the user you want to use to access the\
+                \ database"
+              order: 6
+              examples:
+              - "AIRBYTE_USER"
+              type: "string"
+            credentials:
+              title: "Credentials"
+              type: "object"
+              properties:
+                password:
+                  title: "Password"
+                  description: "Enter the password you want to use to access the database"
+                  airbyte_secret: true
+                  examples:
+                  - "AIRBYTE_PASSWORD"
+                  order: 7
+                  type: "string"
+              required:
+              - "password"
+          required:
+          - "host"
+          - "role"
+          - "warehouse"
+          - "database"
+          - "default_schema"
+          - "username"
+          - "credentials"
+          description: "Snowflake can be used to store vector data and retrieve embeddings."
+          group: "indexing"
+      required:
+      - "embedding"
+      - "processing"
+      - "indexing"
+      groups:
+      - id: "processing"
+        title: "Processing"
+      - id: "embedding"
+        title: "Embedding"
+      - id: "indexing"
+        title: "Indexing"
+      - id: "advanced"
+        title: "Advanced"
     destination-convex:
       title: "Destination Convex"
       type: "object"
@@ -65050,6 +66201,14 @@ components:
             \ table schema might change between versions)"
           order: 11
           group: "connection"
+        drop_cascade:
+          type: "boolean"
+          default: false
+          description: "Drop tables with CASCADE. WARNING! This will delete all data\
+            \ in all dependent objects (views, etc.). Use with caution. This option\
+            \ is intended for usecases which can easily rebuild the dependent objects."
+          title: "Drop tables with CASCADE. (WARNING! Risk of unrecoverable data loss)"
+          order: 12
         tunnel_method:
           type: "object"
           title: "SSH Tunnel Method"
@@ -65426,6 +66585,14 @@ components:
             \ table schema might change between versions)"
           order: 11
           group: "connection"
+        drop_cascade:
+          type: "boolean"
+          default: false
+          description: "Drop tables with CASCADE. WARNING! This will delete all data\
+            \ in all dependent objects (views, etc.). Use with caution. This option\
+            \ is intended for usecases which can easily rebuild the dependent objects."
+          title: "Drop tables with CASCADE. (WARNING! Risk of unrecoverable data loss)"
+          order: 12
         tunnel_method:
           type: "object"
           title: "SSH Tunnel Method"
@@ -80857,6 +82024,27 @@ components:
           $ref: "#/components/schemas/destination-snowflake"
       x-speakeasy-entity: Destination_Snowflake
       x-speakeasy-param-suppress-computed-diff: true
+    DestinationSnowflakeCortexCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the destination e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/destination-snowflake-cortex"
+      x-speakeasy-entity: Destination_SnowflakeCortex
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationTeradataCreateRequest:
       required:
         - name
@@ -84566,6 +85754,22 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-snowflake-update"
       x-speakeasy-entity: Destination_Snowflake
+      x-speakeasy-param-suppress-computed-diff: true
+    DestinationSnowflakeCortexPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/destination-snowflake-cortex-update"
+      x-speakeasy-entity: Destination_SnowflakeCortex
       x-speakeasy-param-suppress-computed-diff: true
     DestinationTeradataPutRequest:
       required:
