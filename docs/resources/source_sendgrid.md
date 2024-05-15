@@ -15,13 +15,13 @@ SourceSendgrid Resource
 ```terraform
 resource "airbyte_source_sendgrid" "my_source_sendgrid" {
   configuration = {
-    apikey     = "...my_apikey..."
-    start_time = "2020-01-01T01:01:01Z"
+    api_key    = "...my_api_key..."
+    start_date = "2022-02-02T23:10:02.911Z"
   }
-  definition_id = "51f6c544-c20e-473f-a3dc-46e62d66e727"
-  name          = "Christy Stoltenberg"
+  definition_id = "ad703a4e-eb23-4fe5-9394-2b58b6d0d209"
+  name          = "Ashley Shanahan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b92d16e1-dcb0-46fc-9f7a-171f7c1d8bfd"
+  workspace_id  = "88d8619e-c398-4117-86e4-4e5272c20971"
 }
 ```
 
@@ -49,10 +49,13 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
 
 Required:
 
-- `apikey` (String, Sensitive) API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
+- `api_key` (String, Sensitive) Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
-Optional:
+## Import
 
-- `start_time` (String) Start time in ISO8601 format. Any data before this time point will not be replicated.
+Import is supported using the following syntax:
 
-
+```shell
+terraform import airbyte_source_sendgrid.my_airbyte_source_sendgrid ""
+```

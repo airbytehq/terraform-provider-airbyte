@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -37,13 +38,13 @@ type SourcePaypalTransactionResource struct {
 
 // SourcePaypalTransactionResourceModel describes the resource data model.
 type SourcePaypalTransactionResourceModel struct {
-	Configuration SourcePaypalTransaction `tfsdk:"configuration"`
-	DefinitionID  types.String            `tfsdk:"definition_id"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourcePaypalTransaction `tfsdk:"configuration"`
+	DefinitionID  types.String                    `tfsdk:"definition_id"`
+	Name          types.String                    `tfsdk:"name"`
+	SecretID      types.String                    `tfsdk:"secret_id"`
+	SourceID      types.String                    `tfsdk:"source_id"`
+	SourceType    types.String                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePaypalTransactionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +54,6 @@ func (r *SourcePaypalTransactionResource) Metadata(ctx context.Context, req reso
 func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourcePaypalTransaction Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -68,6 +68,20 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 					"client_secret": schema.StringAttribute{
 						Required:    true,
 						Description: `The Client Secret of your Paypal developer application.`,
+					},
+					"dispute_start_date": schema.StringAttribute{
+						Optional:    true,
+						Description: `Start Date parameter for the list dispute endpoint in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This Start Date must be in range within 180 days before present time, and requires ONLY 3 miliseconds(mandatory). If you don't use this option, it defaults to a start date set 180 days in the past.`,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
+					},
+					"end_date": schema.StringAttribute{
+						Optional:    true,
+						Description: `End Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This can be help you select specific range of time, mainly for test purposes  or data integrity tests. When this is not used, now_utc() is used by the streams. This does not apply to Disputes and Product streams.`,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
 					},
 					"is_sandbox": schema.BoolAttribute{
 						Computed:    true,
@@ -262,6 +276,10 @@ func (r *SourcePaypalTransactionResource) Read(ctx context.Context, req resource
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

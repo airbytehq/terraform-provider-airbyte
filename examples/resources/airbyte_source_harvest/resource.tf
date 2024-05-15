@@ -12,8 +12,8 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "e680e441-7c6f-44b5-89c8-206a4b043ef0"
-  name          = "Miss Tomas Homenick"
+  definition_id = "929e4d23-a00b-4494-b7d6-8d64a810b295"
+  name          = "Derrick Leannon"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5b726765-eab1-4ad8-8295-4bd759bdc8b9"
+  workspace_id  = "d0c47c0f-9ce3-43c0-b294-c11e4e993d29"
 }

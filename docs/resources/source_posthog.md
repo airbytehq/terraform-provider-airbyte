@@ -17,13 +17,13 @@ resource "airbyte_source_posthog" "my_source_posthog" {
   configuration = {
     api_key          = "...my_api_key..."
     base_url         = "https://posthog.example.com"
-    events_time_step = 10
+    events_time_step = 5
     start_date       = "2021-01-01T00:00:00Z"
   }
-  definition_id = "3ddb2a95-937c-4ed0-862e-7b59a4e78152"
-  name          = "Ira Strosin"
+  definition_id = "f33bbc2f-8e75-4b95-ae5d-d11c77a4e3aa"
+  name          = "Nadine Breitenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6e4c12d0-5e7f-458d-8a06-25cbff5b31f2"
+  workspace_id  = "4fcd7d93-9b8b-46b2-8092-0aa8be086075"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `base_url` (String) Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com). Default: "https://app.posthog.com"
 - `events_time_step` (Number) Set lower value in case of failing long running sync of events stream. Default: 30
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_posthog.my_airbyte_source_posthog ""
+```

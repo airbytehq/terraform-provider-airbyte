@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -151,7 +151,7 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(
 		chunkOverlap = nil
 	}
 	chunkSize := r.Configuration.Processing.ChunkSize.ValueInt64()
-	var fieldNameMappings []shared.DestinationQdrantFieldNameMappingConfigModel = nil
+	var fieldNameMappings []shared.DestinationQdrantFieldNameMappingConfigModel = []shared.DestinationQdrantFieldNameMappingConfigModel{}
 	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
 		fromField := fieldNameMappingsItem.FromField.ValueString()
 		toField := fieldNameMappingsItem.ToField.ValueString()
@@ -160,11 +160,11 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(
 			ToField:   toField,
 		})
 	}
-	var metadataFields []string = nil
+	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
-	var textFields []string = nil
+	var textFields []string = []string{}
 	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
@@ -178,7 +178,7 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(
 			} else {
 				keepSeparator = nil
 			}
-			var separators []string = nil
+			var separators []string = []string{}
 			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
 				separators = append(separators, separatorsItem.ValueString())
 			}
@@ -254,10 +254,12 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(
 }
 
 func (r *DestinationQdrantResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *shared.DestinationQdrantPutRequest {
@@ -404,7 +406,7 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *
 		chunkOverlap = nil
 	}
 	chunkSize := r.Configuration.Processing.ChunkSize.ValueInt64()
-	var fieldNameMappings []shared.DestinationQdrantUpdateFieldNameMappingConfigModel = nil
+	var fieldNameMappings []shared.DestinationQdrantUpdateFieldNameMappingConfigModel = []shared.DestinationQdrantUpdateFieldNameMappingConfigModel{}
 	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
 		fromField := fieldNameMappingsItem.FromField.ValueString()
 		toField := fieldNameMappingsItem.ToField.ValueString()
@@ -413,11 +415,11 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *
 			ToField:   toField,
 		})
 	}
-	var metadataFields []string = nil
+	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
-	var textFields []string = nil
+	var textFields []string = []string{}
 	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
 		textFields = append(textFields, textFieldsItem.ValueString())
 	}
@@ -431,7 +433,7 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *
 			} else {
 				keepSeparator = nil
 			}
-			var separators []string = nil
+			var separators []string = []string{}
 			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
 				separators = append(separators, separatorsItem.ValueString())
 			}

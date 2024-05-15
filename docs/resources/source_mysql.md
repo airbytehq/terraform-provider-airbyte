@@ -22,8 +22,9 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     port            = 3306
     replication_method = {
       read_changes_using_binary_log_cdc = {
-        initial_waiting_seconds = 2
-        server_time_zone        = "...my_server_time_zone..."
+        initial_waiting_seconds              = 4
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
+        server_time_zone                     = "...my_server_time_zone..."
       }
     }
     ssl_mode = {
@@ -32,12 +33,12 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Fernando_Kuhn18"
+    username = "Freddie.Deckow"
   }
-  definition_id = "6398e6ec-d841-4e72-a766-a686faa512d8"
-  name          = "Valerie Greenfelder II"
+  definition_id = "5553a713-498a-43f9-b99a-12d6e33e66d7"
+  name          = "Melissa Stoltenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c5b71123-61f2-46d4-bb86-cdec1a2bc2b8"
+  workspace_id  = "72456d0d-26d9-4147-bb35-66ca647ba4f7"
 }
 ```
 
@@ -92,6 +93,7 @@ Optional:
 Optional:
 
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300
+- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `server_time_zone` (String) Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 
 
@@ -187,4 +189,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_mysql.my_airbyte_source_mysql ""
+```

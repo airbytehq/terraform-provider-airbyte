@@ -4,8 +4,8 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     api_token  = "...my_api_token..."
     start_date = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "d627d201-b0d0-469b-b26e-6b9f25aa9f8c"
-  name          = "Mr. Cristina Friesen"
+  definition_id = "21854edb-75e7-4d1c-9ddc-2da362faf1b2"
+  name          = "Edmond Watsica"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "048d9ffe-8959-4afe-af69-ead1e5d3690e"
+  workspace_id  = "cb1bb055-0b4e-4344-926e-7f29336e2378"
 }

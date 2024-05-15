@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,15 +14,15 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToSharedSourceGooglePagespe
 	} else {
 		apiKey = nil
 	}
-	var categories []shared.SourceGooglePagespeedInsightsCategories = nil
+	var categories []shared.SourceGooglePagespeedInsightsCategories = []shared.SourceGooglePagespeedInsightsCategories{}
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.SourceGooglePagespeedInsightsCategories(categoriesItem.ValueString()))
 	}
-	var strategies []shared.SourceGooglePagespeedInsightsStrategies = nil
+	var strategies []shared.SourceGooglePagespeedInsightsStrategies = []shared.SourceGooglePagespeedInsightsStrategies{}
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.SourceGooglePagespeedInsightsStrategies(strategiesItem.ValueString()))
 	}
-	var urls []string = nil
+	var urls []string = []string{}
 	for _, urlsItem := range r.Configuration.Urls {
 		urls = append(urls, urlsItem.ValueString())
 	}
@@ -57,10 +57,12 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToSharedSourceGooglePagespe
 }
 
 func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGooglePagespeedInsightsResourceModel) ToSharedSourceGooglePagespeedInsightsPutRequest() *shared.SourceGooglePagespeedInsightsPutRequest {
@@ -70,15 +72,15 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToSharedSourceGooglePagespe
 	} else {
 		apiKey = nil
 	}
-	var categories []shared.Categories = nil
+	var categories []shared.Categories = []shared.Categories{}
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.Categories(categoriesItem.ValueString()))
 	}
-	var strategies []shared.Strategies = nil
+	var strategies []shared.Strategies = []shared.Strategies{}
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.Strategies(strategiesItem.ValueString()))
 	}
-	var urls []string = nil
+	var urls []string = []string{}
 	for _, urlsItem := range r.Configuration.Urls {
 		urls = append(urls, urlsItem.ValueString())
 	}

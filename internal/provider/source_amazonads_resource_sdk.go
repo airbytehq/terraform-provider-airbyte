@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -17,11 +17,11 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	} else {
 		lookBackWindow = nil
 	}
-	var marketplaceIds []string = nil
+	var marketplaceIds []string = []string{}
 	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
 		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
 	}
-	var profiles []int64 = nil
+	var profiles []int64 = []int64{}
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
 	}
@@ -32,7 +32,7 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	} else {
 		region = nil
 	}
-	var reportRecordTypes []shared.SourceAmazonAdsReportRecordTypes = nil
+	var reportRecordTypes []shared.SourceAmazonAdsReportRecordTypes = []shared.SourceAmazonAdsReportRecordTypes{}
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
 		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
@@ -42,7 +42,7 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	} else {
 		startDate = nil
 	}
-	var stateFilter []shared.SourceAmazonAdsStateFilter = nil
+	var stateFilter []shared.SourceAmazonAdsStateFilter = []shared.SourceAmazonAdsStateFilter{}
 	for _, stateFilterItem := range r.Configuration.StateFilter {
 		stateFilter = append(stateFilter, shared.SourceAmazonAdsStateFilter(stateFilterItem.ValueString()))
 	}
@@ -83,10 +83,12 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 }
 
 func (r *SourceAmazonAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shared.SourceAmazonAdsPutRequest {
@@ -98,11 +100,11 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	} else {
 		lookBackWindow = nil
 	}
-	var marketplaceIds []string = nil
+	var marketplaceIds []string = []string{}
 	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
 		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
 	}
-	var profiles []int64 = nil
+	var profiles []int64 = []int64{}
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
 	}
@@ -113,7 +115,7 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	} else {
 		region = nil
 	}
-	var reportRecordTypes []shared.ReportRecordTypes = nil
+	var reportRecordTypes []shared.ReportRecordTypes = []shared.ReportRecordTypes{}
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
 		reportRecordTypes = append(reportRecordTypes, shared.ReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
@@ -123,7 +125,7 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	} else {
 		startDate = nil
 	}
-	var stateFilter []shared.StateFilter = nil
+	var stateFilter []shared.StateFilter = []shared.StateFilter{}
 	for _, stateFilterItem := range r.Configuration.StateFilter {
 		stateFilter = append(stateFilter, shared.StateFilter(stateFilterItem.ValueString()))
 	}

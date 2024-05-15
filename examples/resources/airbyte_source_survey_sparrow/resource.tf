@@ -8,8 +8,8 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "ccb1d39d-dfc6-449b-ba58-a563641fd338"
-  name          = "Tony Collier"
+  definition_id = "eca93a8a-e78e-41e5-b7d9-6eb6d5dc1e25"
+  name          = "Dr. Marta Lindgren"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "56cd88e7-e494-4b9e-9830-e9efbf412cdc"
+  workspace_id  = "c595c377-7bcc-4fe7-8cf1-47e293c7a4b2"
 }

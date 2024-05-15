@@ -17,13 +17,13 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
   configuration = {
     access_key_id              = "A012345678910EXAMPLE"
     dynamodb_endpoint          = "http://localhost:9000"
-    dynamodb_region            = "us-gov-west-1"
+    dynamodb_region            = "ap-south-2"
     dynamodb_table_name_prefix = "airbyte_sync"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "fb7ef5d3-7ea6-4e5c-bc1c-0786ea3ea494"
-  name          = "Mr. Ray Cummerata V"
-  workspace_id  = "7dcad1af-a414-45a8-aad6-44361fa9c013"
+  definition_id = "9f4b807f-993e-4fae-adca-f86589dab115"
+  name          = "Tami Gottlieb"
+  workspace_id  = "f790b085-5aa0-4db7-9794-2be7e5f1f788"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `dynamodb_endpoint` (String) This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty). Default: ""
 - `dynamodb_region` (String) The region of the DynamoDB. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_dynamodb.my_airbyte_destination_dynamodb ""
+```

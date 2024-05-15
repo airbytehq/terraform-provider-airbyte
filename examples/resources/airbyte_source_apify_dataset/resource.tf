@@ -3,8 +3,8 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
     dataset_id = "rHuMdwm6xCFt6WiGU"
     token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  definition_id = "181e6e55-fd9e-4be7-b2f5-ca6ecdfaf2b0"
-  name          = "Mr. Andrea Bogan IV"
+  definition_id = "d9ffe895-9afe-4ef6-9ead-1e5d3690efc6"
+  name          = "Morris Davis"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e036b268-d758-4466-8963-e10b1b394b84"
+  workspace_id  = "1d2ddb5d-aa9e-4a92-bcae-7b29c85e6b85"
 }

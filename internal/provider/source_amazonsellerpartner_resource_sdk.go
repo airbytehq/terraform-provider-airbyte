@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -48,9 +48,9 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		replicationStartDate = nil
 	}
-	var reportOptionsList []shared.SourceAmazonSellerPartnerReportOptions = nil
+	var reportOptionsList []shared.SourceAmazonSellerPartnerReportOptions = []shared.SourceAmazonSellerPartnerReportOptions{}
 	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
-		var optionsList []shared.SourceAmazonSellerPartnerOptionsList = nil
+		var optionsList []shared.SourceAmazonSellerPartnerOptionsList = []shared.SourceAmazonSellerPartnerOptionsList{}
 		for _, optionsListItem := range reportOptionsListItem.OptionsList {
 			optionName := optionsListItem.OptionName.ValueString()
 			optionValue := optionsListItem.OptionValue.ValueString()
@@ -102,10 +102,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 }
 
 func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartnerPutRequest() *shared.SourceAmazonSellerPartnerPutRequest {
@@ -148,9 +150,9 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		replicationStartDate = nil
 	}
-	var reportOptionsList []shared.ReportOptions = nil
+	var reportOptionsList []shared.ReportOptions = []shared.ReportOptions{}
 	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
-		var optionsList []shared.OptionsList = nil
+		var optionsList []shared.OptionsList = []shared.OptionsList{}
 		for _, optionsListItem := range reportOptionsListItem.OptionsList {
 			optionName := optionsListItem.OptionName.ValueString()
 			optionValue := optionsListItem.OptionValue.ValueString()

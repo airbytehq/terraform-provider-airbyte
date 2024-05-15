@@ -16,15 +16,15 @@ SourceFaker Resource
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
     always_updated    = false
-    count             = 3
-    parallelism       = 8
-    records_per_slice = 2
-    seed              = 1
+    count             = 9
+    parallelism       = 7
+    records_per_slice = 3
+    seed              = 3
   }
-  definition_id = "8b10c62a-eeab-46a1-abc0-f1be55677773"
-  name          = "Rhonda Schmidt"
+  definition_id = "97add71f-fdea-4586-a097-09edcef2c435"
+  name          = "Sophia Kuphal"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a7fcdac6-3878-454b-a9c4-2e8b9a534c06"
+  workspace_id  = "149e6fe9-a76b-4d27-9d6f-7a77e51b04b8"
 }
 ```
 
@@ -53,9 +53,15 @@ resource "airbyte_source_faker" "my_source_faker" {
 Optional:
 
 - `always_updated` (Boolean) Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted. Default: true
-- `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream. Default: 1000
+- `count` (Number) How many users should be generated in total. The purchases table will be scaled to match, with 10 purchases created per 10 users. This setting does not apply to the products stream. Default: 1000
 - `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source. Default: 4
 - `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?. Default: 1000
 - `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random). Default: -1
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_faker.my_airbyte_source_faker ""
+```

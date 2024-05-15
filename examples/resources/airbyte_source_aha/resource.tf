@@ -3,8 +3,8 @@ resource "airbyte_source_aha" "my_source_aha" {
     api_key = "...my_api_key..."
     url     = "...my_url..."
   }
-  definition_id = "1ff934df-0d75-46d8-b0d9-0daf9186ab63"
-  name          = "Lance Pollich"
+  definition_id = "24213ca1-059f-41e3-8360-fc0eaa50681b"
+  name          = "Jimmy Oberbrunner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3879ec56-6b1d-41d8-bb57-bf001ddb3cf0"
+  workspace_id  = "090c0138-42c1-401e-a65e-ebc230b15094"
 }

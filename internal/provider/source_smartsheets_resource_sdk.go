@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -42,7 +42,7 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 			SourceSmartsheetsAPIAccessToken: sourceSmartsheetsAPIAccessToken,
 		}
 	}
-	var metadataFields []shared.SourceSmartsheetsValidenums = nil
+	var metadataFields []shared.SourceSmartsheetsValidenums = []shared.SourceSmartsheetsValidenums{}
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, shared.SourceSmartsheetsValidenums(metadataFieldsItem.ValueString()))
 	}
@@ -84,10 +84,12 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 }
 
 func (r *SourceSmartsheetsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *shared.SourceSmartsheetsPutRequest {
@@ -124,7 +126,7 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *
 			APIAccessToken: apiAccessToken,
 		}
 	}
-	var metadataFields []shared.Validenums = nil
+	var metadataFields []shared.Validenums = []shared.Validenums{}
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, shared.Validenums(metadataFieldsItem.ValueString()))
 	}

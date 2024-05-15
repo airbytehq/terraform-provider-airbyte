@@ -121,4 +121,10 @@ Required:
 <a id="nestedatt--configuration--loading_method--standard_inserts"></a>
 ### Nested Schema for `configuration.loading_method.standard_inserts`
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_bigquery.my_airbyte_destination_bigquery ""
+```

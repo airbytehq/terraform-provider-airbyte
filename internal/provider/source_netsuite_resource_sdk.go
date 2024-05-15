@@ -3,14 +3,14 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuiteCreateRequest() *shared.SourceNetsuiteCreateRequest {
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	consumerSecret := r.Configuration.ConsumerSecret.ValueString()
-	var objectTypes []string = nil
+	var objectTypes []string = []string{}
 	for _, objectTypesItem := range r.Configuration.ObjectTypes {
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}
@@ -59,16 +59,18 @@ func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuiteCreateRequest() *sha
 }
 
 func (r *SourceNetsuiteResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuitePutRequest() *shared.SourceNetsuitePutRequest {
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	consumerSecret := r.Configuration.ConsumerSecret.ValueString()
-	var objectTypes []string = nil
+	var objectTypes []string = []string{}
 	for _, objectTypesItem := range r.Configuration.ObjectTypes {
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}

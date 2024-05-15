@@ -50,4 +50,10 @@ Required:
 - `access_key` (String, Sensitive) API access key used to send data to a Convex deployment.
 - `deployment_url` (String) URL of the Convex deployment that is the destination
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_convex.my_airbyte_destination_convex ""
+```

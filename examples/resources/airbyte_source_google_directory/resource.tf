@@ -3,12 +3,12 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
     credentials = {
       service_account_key = {
         credentials_json = "...my_credentials_json..."
-        email            = "Frida25@yahoo.com"
+        email            = "Wayne9@yahoo.com"
       }
     }
   }
-  definition_id = "db07d769-8733-4386-b53a-479a0805ff17"
-  name          = "Sean Predovic"
+  definition_id = "d722b310-b676-4fb7-b1c6-d5241e9821d4"
+  name          = "Lucas Altenwerth"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b799d631-99bd-46b4-a8c8-5ec21a9ab567"
+  workspace_id  = "42ccd276-3a0d-430e-b91c-3df259349552"
 }

@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationGcsResource struct {
 
 // DestinationGcsResourceModel describes the resource data model.
 type DestinationGcsResourceModel struct {
-	Configuration   DestinationGcs `tfsdk:"configuration"`
-	DefinitionID    types.String   `tfsdk:"definition_id"`
-	DestinationID   types.String   `tfsdk:"destination_id"`
-	DestinationType types.String   `tfsdk:"destination_type"`
-	Name            types.String   `tfsdk:"name"`
-	WorkspaceID     types.String   `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationGcs `tfsdk:"configuration"`
+	DefinitionID    types.String           `tfsdk:"definition_id"`
+	DestinationID   types.String           `tfsdk:"destination_id"`
+	DestinationType types.String           `tfsdk:"destination_type"`
+	Name            types.String           `tfsdk:"name"`
+	WorkspaceID     types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationGcsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationGcsResource) Metadata(ctx context.Context, req resource.Meta
 func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationGcs Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -121,6 +122,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"deflate": schema.SingleNestedAttribute{
 												Optional: true,
@@ -143,6 +153,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Description: `0: no compression & fastest, 9: best compression & slowest. Default: 0`,
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -159,6 +178,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
+												},
 											},
 											"snappy": schema.SingleNestedAttribute{
 												Optional: true,
@@ -174,6 +202,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("xz"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
 												},
 											},
 											"xz": schema.SingleNestedAttribute{
@@ -196,6 +233,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Default:     int64default.StaticInt64(6),
 														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6`,
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("zstandard"),
+													}...),
 												},
 											},
 											"zstandard": schema.SingleNestedAttribute{
@@ -225,6 +271,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														Description: `If true, include a checksum with each data block. Default: false`,
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("bzip2"),
+														path.MatchRelative().AtParent().AtName("deflate"),
+														path.MatchRelative().AtParent().AtName("no_compression"),
+														path.MatchRelative().AtParent().AtName("snappy"),
+														path.MatchRelative().AtParent().AtName("xz"),
+													}...),
+												},
 											},
 										},
 										Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -243,6 +298,13 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 											),
 										},
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
 								},
 							},
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
@@ -266,6 +328,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -281,6 +348,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
 												},
 											},
 										},
@@ -313,6 +385,13 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
+								},
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
@@ -335,6 +414,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -350,6 +434,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
 												},
 											},
 										},
@@ -369,6 +458,13 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 											),
 										},
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
 								},
 							},
 							"parquet_columnar_storage": schema.SingleNestedAttribute{
@@ -432,6 +528,13 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Default:     int64default.StaticInt64(1024),
 										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("avro_apache_avro"),
+										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+									}...),
 								},
 							},
 						},
@@ -655,6 +758,10 @@ func (r *DestinationGcsResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

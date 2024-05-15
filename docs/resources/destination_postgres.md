@@ -17,6 +17,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = false
+    drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -29,11 +30,11 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Meagan_Treutel48"
+    username = "Madalyn0"
   }
-  definition_id = "dc7cde8f-8d83-492a-ab15-fb458bad9ea7"
-  name          = "Marlene Brekke"
-  workspace_id  = "852a459d-e520-4ce3-820a-295e5c099628"
+  definition_id = "50a9afbc-66c9-413a-9b78-062a6a13d9b7"
+  name          = "Brent Fahey"
+  workspace_id  = "8ffb0429-24fa-4eae-9018-c319374090ef"
 }
 ```
 
@@ -67,6 +68,7 @@ Required:
 Optional:
 
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
+- `drop_cascade` (Boolean) Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 5432
@@ -177,4 +179,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_postgres.my_airbyte_destination_postgres ""
+```

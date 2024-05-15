@@ -15,6 +15,7 @@ SourceGoogleSheets Resource
 ```terraform
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
+    batch_size = 3
     credentials = {
       authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
@@ -22,13 +23,13 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
         refresh_token = "...my_refresh_token..."
       }
     }
-    names_conversion = true
+    names_conversion = false
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "6950935a-d536-4c50-8473-4e30b46b959e"
-  name          = "Kerry Kulas"
+  definition_id = "c7c577af-1e5b-4add-9274-7bbc7f241709"
+  name          = "Merle Greenfelder"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ac092271-19b9-45b6-8c98-bb7037ab5561"
+  workspace_id  = "165bc484-0e7f-4b5d-b254-77f370b0ec7c"
 }
 ```
 
@@ -61,6 +62,7 @@ Required:
 
 Optional:
 
+- `batch_size` (Number) Default value is 200. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 200 would process rows 1-201, then 201-401 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value. Default value should cover most of the cases, but if a google sheet has over 100,000 records or more, consider increasing batch_size value. Default: 200
 - `names_conversion` (Boolean) Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based. Default: false
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -88,4 +90,10 @@ Required:
 
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_google_sheets.my_airbyte_source_google_sheets ""
+```

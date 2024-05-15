@@ -1,14 +1,13 @@
 resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
-    database                               = "...my_database..."
-    disable_type_dedupe                    = true
-    enable_incremental_final_table_updates = true
-    host                                   = "...my_host..."
-    jdbc_url_params                        = "...my_jdbc_url_params..."
-    password                               = "...my_password..."
-    port                                   = 5439
-    raw_data_schema                        = "...my_raw_data_schema..."
-    schema                                 = "public"
+    database            = "...my_database..."
+    disable_type_dedupe = false
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
+    password            = "...my_password..."
+    port                = 5439
+    raw_data_schema     = "...my_raw_data_schema..."
+    schema              = "public"
     tunnel_method = {
       no_tunnel = {}
     }
@@ -20,18 +19,17 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_buffer_count  = 10
-        file_name_pattern  = "{date}"
-        purge_staging_data = true
+        file_name_pattern  = "{timestamp}"
+        purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "sa-east-1"
+        s3_bucket_region   = "eu-west-1"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Tatyana.Spinka"
+    username = "Dario.Brakus57"
   }
-  definition_id = "f8e06ef6-fed3-4651-a7d5-496735da213c"
-  name          = "Milton Ondricka"
-  workspace_id  = "9fef8f53-876e-43de-b0a8-6e4df19faac8"
+  definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
+  name          = "Jessie Brown"
+  workspace_id  = "86b73990-fea6-49be-ba7d-c7cde8f8d839"
 }

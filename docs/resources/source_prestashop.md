@@ -19,10 +19,10 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date = "2022-01-01"
     url        = "...my_url..."
   }
-  definition_id = "ea52c707-cb05-4c4a-8d21-cf34658e520f"
-  name          = "Maurice Gorczany"
+  definition_id = "6321f6b4-ca64-472a-9f8a-ec8fedb8fc35"
+  name          = "Vanessa Kuhlman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "67309cc0-ee4b-4ba7-baed-572054daa84a"
+  workspace_id  = "ee523e36-b74e-48f7-b837-d76b02a3d797"
 }
 ```
 
@@ -54,4 +54,10 @@ Required:
 - `start_date` (String) The Start date in the format YYYY-MM-DD.
 - `url` (String) Shop URL without trailing slash.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_prestashop.my_airbyte_source_prestashop ""
+```

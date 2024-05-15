@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -35,13 +37,13 @@ type SourceGoogleDirectoryResource struct {
 
 // SourceGoogleDirectoryResourceModel describes the resource data model.
 type SourceGoogleDirectoryResourceModel struct {
-	Configuration SourceGoogleDirectory `tfsdk:"configuration"`
-	DefinitionID  types.String          `tfsdk:"definition_id"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGoogleDirectory `tfsdk:"configuration"`
+	DefinitionID  types.String                  `tfsdk:"definition_id"`
+	Name          types.String                  `tfsdk:"name"`
+	SecretID      types.String                  `tfsdk:"secret_id"`
+	SourceID      types.String                  `tfsdk:"source_id"`
+	SourceType    types.String                  `tfsdk:"source_type"`
+	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleDirectoryResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +53,6 @@ func (r *SourceGoogleDirectoryResource) Metadata(ctx context.Context, req resour
 func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGoogleDirectory Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -75,6 +76,11 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 									},
 								},
 								Description: `For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("sign_in_via_google_o_auth"),
+									}...),
+								},
 							},
 							"sign_in_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
@@ -94,6 +100,11 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 									},
 								},
 								Description: `For these scenario user only needs to give permission to read Google Directory data.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key"),
+									}...),
+								},
 							},
 						},
 						Description: `Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.`,
@@ -270,6 +281,10 @@ func (r *SourceGoogleDirectoryResource) Read(ctx context.Context, req resource.R
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

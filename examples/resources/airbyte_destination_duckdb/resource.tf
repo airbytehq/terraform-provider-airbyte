@@ -4,7 +4,7 @@ resource "airbyte_destination_duckdb" "my_destination_duckdb" {
     motherduck_api_key = "...my_motherduck_api_key..."
     schema             = "main"
   }
-  definition_id = "457da65e-d465-4e75-8afd-2ad38ed7ed0e"
-  name          = "Raquel Cole Sr."
-  workspace_id  = "dc7d0e4e-5095-4ed9-8b4e-cb397d064562"
+  definition_id = "db1eeca9-f91e-4b58-8332-57456993f062"
+  name          = "Carole Hackett"
+  workspace_id  = "0d1987ed-52cb-4ff0-9858-935bdfe27505"
 }

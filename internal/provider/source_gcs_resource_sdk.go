@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -17,7 +17,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceGCSSourceGCSStreamConfig = nil
+	var streams []shared.SourceGCSSourceGCSStreamConfig = []shared.SourceGCSSourceGCSStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -52,7 +52,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -78,7 +78,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 				}
 				var sourceGcsUserProvided *shared.SourceGcsUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -92,13 +92,19 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			inferenceType := new(shared.SourceGcsInferenceType)
 			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
 				*inferenceType = shared.SourceGcsInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
 			} else {
 				inferenceType = nil
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -126,24 +132,25 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceGcsCSVFormat = &shared.SourceGcsCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				InferenceType:        inferenceType,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				InferenceType:                inferenceType,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGcsCSVFormat != nil {
@@ -151,7 +158,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 				SourceGcsCSVFormat: sourceGcsCSVFormat,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}
@@ -229,10 +236,12 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 }
 
 func (r *SourceGcsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcsPutRequest {
@@ -244,7 +253,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 	} else {
 		startDate = nil
 	}
-	var streams []shared.SourceGCSStreamConfig = nil
+	var streams []shared.SourceGCSStreamConfig = []shared.SourceGCSStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
@@ -279,7 +288,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			} else {
 				escapeChar = nil
 			}
-			var falseValues []string = nil
+			var falseValues []string = []string{}
 			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
 				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
@@ -305,7 +314,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 				}
 				var sourceGcsUpdateUserProvided *shared.SourceGcsUpdateUserProvided
 				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = nil
+					var columnNames []string = []string{}
 					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
 						columnNames = append(columnNames, columnNamesItem.ValueString())
 					}
@@ -319,13 +328,19 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			inferenceType := new(shared.SourceGcsUpdateInferenceType)
 			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
 				*inferenceType = shared.SourceGcsUpdateInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
 			} else {
 				inferenceType = nil
 			}
-			var nullValues []string = nil
+			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
 			}
@@ -353,24 +368,25 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			} else {
 				stringsCanBeNull = nil
 			}
-			var trueValues []string = nil
+			var trueValues []string = []string{}
 			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceGcsUpdateCSVFormat = &shared.SourceGcsUpdateCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				InferenceType:        inferenceType,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				InferenceType:                inferenceType,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGcsUpdateCSVFormat != nil {
@@ -378,7 +394,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 				SourceGcsUpdateCSVFormat: sourceGcsUpdateCSVFormat,
 			}
 		}
-		var globs []string = nil
+		var globs []string = []string{}
 		for _, globsItem := range streamsItem.Globs {
 			globs = append(globs, globsItem.ValueString())
 		}

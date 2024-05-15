@@ -20,10 +20,10 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     password        = "...my_password..."
     start_date      = "%Y-%m-%d"
   }
-  definition_id = "bee3dbad-c477-4cb6-ab59-b9f1ee424957"
-  name          = "Hubert Hilpert"
+  definition_id = "e44a4dc9-70c0-4785-b3a2-0ac990f9b2ce"
+  name          = "Kristi Jaskolski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bbc2cb83-b2c4-4dd4-9429-07741ee0bbab"
+  workspace_id  = "85150ea8-6120-4cd6-98d7-42806812ca7b"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `logs_batch_size` (Number) Pagination size used for retrieving logs in days. Default: 30
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_my_hours.my_airbyte_source_my_hours ""
+```

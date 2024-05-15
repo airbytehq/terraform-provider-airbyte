@@ -2,17 +2,17 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
   configuration = {
     api_key = "...my_api_key..."
     categories = [
-      "performance",
+      "seo",
     ]
     strategies = [
-      "mobile",
+      "desktop",
     ]
     urls = [
       "...",
     ]
   }
-  definition_id = "dc8fd2a7-f940-4dec-84e2-16dff8929e4d"
-  name          = "Mr. Florence O'Reilly"
+  definition_id = "c9b0f0f3-5d94-4270-8e93-ebb36d8aaea0"
+  name          = "Johanna Beier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "494f7d68-d64a-4810-b295-9587ed0c47c0"
+  workspace_id  = "c84b89e6-25ba-4e87-aa32-dc31e1b4b67e"
 }

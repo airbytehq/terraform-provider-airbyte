@@ -18,12 +18,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    username         = "Jerad12"
+    username         = "Alva_Sanford24"
   }
-  definition_id = "e389cc42-00a4-4abb-b299-a611cc7be3e8"
-  name          = "Ms. Matt Kohler"
+  definition_id = "e76e9fde-f541-4f06-8a13-b1e89c1488fa"
+  name          = "Dr. Randall Casper"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dc05c92c-2050-4fdf-aba7-d43d20d3384e"
+  workspace_id  = "d922269c-9d64-48f0-bccd-d2e95af6ed3c"
 }
 ```
 
@@ -64,4 +64,10 @@ Optional:
 Note that by default, sessions are good for 14 days and needs to be regenerated.
 - `username` (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_metabase.my_airbyte_source_metabase ""
+```

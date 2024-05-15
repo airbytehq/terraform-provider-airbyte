@@ -21,10 +21,10 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "0259c6b1-3998-4d3f-8543-0ae066d4a91b"
-  name          = "Rickey Satterfield"
+  definition_id = "e9d0f84c-cbad-471d-ab03-8014a124b6e7"
+  name          = "Phillip Bartoletti"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ba892b6d-5805-4ab7-b933-1a5ddafad6ab"
+  workspace_id  = "a37b0c99-2762-4a38-aa73-d79a85cb7246"
 }
 ```
 
@@ -58,4 +58,10 @@ Required:
 - `refresh_token` (String, Sensitive) The token for obtaining the new access token.
 - `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_outreach.my_airbyte_source_outreach ""
+```

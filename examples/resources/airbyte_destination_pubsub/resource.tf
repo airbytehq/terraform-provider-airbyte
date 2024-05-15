@@ -1,15 +1,15 @@
 resource "airbyte_destination_pubsub" "my_destination_pubsub" {
   configuration = {
-    batching_delay_threshold         = 5
-    batching_element_count_threshold = 4
-    batching_enabled                 = true
-    batching_request_bytes_threshold = 0
+    batching_delay_threshold         = 7
+    batching_element_count_threshold = 1
+    batching_enabled                 = false
+    batching_request_bytes_threshold = 8
     credentials_json                 = "...my_credentials_json..."
-    ordering_enabled                 = false
+    ordering_enabled                 = true
     project_id                       = "...my_project_id..."
     topic_id                         = "...my_topic_id..."
   }
-  definition_id = "7a098753-4412-4bc3-a17a-cbe2ad9f3186"
-  name          = "Brandy Huels"
-  workspace_id  = "7b23d6b8-48f4-4034-ac04-b193fb28918e"
+  definition_id = "6fe0864a-856a-4041-b0ff-8566dc323359"
+  name          = "Ms. Lillie Powlowski"
+  workspace_id  = "f0728b70-7755-48c6-b348-eaa4356f389a"
 }

@@ -15,15 +15,15 @@ SourceChargebee Resource
 ```terraform
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
-    product_catalog = "1.0"
+    product_catalog = "2.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
     start_date      = "2021-01-25T00:00:00Z"
   }
-  definition_id = "2c2e302e-6de9-42b3-a430-98446f9835e6"
-  name          = "Andrea Cruickshank III"
+  definition_id = "10725ff7-f1a2-47e8-bd2f-193d4f9ab29a"
+  name          = "Lucia Little IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b828621a-877d-42e6-a5cd-d80ba5ff53c6"
+  workspace_id  = "dec4e3ea-b02c-4cb9-8852-3df16a0cc499"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `product_catalog` (String) Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0. must be one of ["1.0", "2.0"]; Default: "2.0"
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_chargebee.my_airbyte_source_chargebee ""
+```

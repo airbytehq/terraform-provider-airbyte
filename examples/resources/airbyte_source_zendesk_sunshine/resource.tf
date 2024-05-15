@@ -3,14 +3,14 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
     credentials = {
       api_token = {
         api_token = "...my_api_token..."
-        email     = "Elna.Schamberger@yahoo.com"
+        email     = "Kamille_Jast@gmail.com"
       }
     }
     start_date = "2021-01-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "ed35fd47-1260-4525-9781-224214e979a9"
-  name          = "Brandy Kuphal"
+  definition_id = "18dbd5eb-ee01-44e0-bead-c6f53d253db8"
+  name          = "Lawrence Towne"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c6ec23f8-9368-434b-b7f2-56aa2eed97a7"
+  workspace_id  = "d437be8f-4cf7-497f-a8ae-012beba22c99"
 }

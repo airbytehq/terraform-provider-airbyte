@@ -3,16 +3,18 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
-	if resp.DataResidency != nil {
-		r.DataResidency = types.StringValue(string(*resp.DataResidency))
-	} else {
-		r.DataResidency = types.StringNull()
+	if resp != nil {
+		if resp.DataResidency != nil {
+			r.DataResidency = types.StringValue(string(*resp.DataResidency))
+		} else {
+			r.DataResidency = types.StringNull()
+		}
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,20 +7,20 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       "...",
     ]
     profiles = [
-      3,
+      8,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "NA"
+    region        = "FE"
     report_record_types = [
-      "asins",
+      "adGroups",
     ]
-    start_date = "2022-10-10"
+    start_date = "2022-10-22"
     state_filter = [
-      "enabled",
+      "paused",
     ]
   }
-  definition_id = "945c4336-0526-4ae8-aa3c-4f287913b866"
-  name          = "Willie Bayer"
+  definition_id = "e1cc1931-3722-4140-a7ee-71b638bd648d"
+  name          = "Mrs. Gail Lesch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1180fb2a-875a-41ca-990e-95bd1182a17e"
+  workspace_id  = "feb93d4b-bde9-4f2b-b80c-d3fe4ad28293"
 }

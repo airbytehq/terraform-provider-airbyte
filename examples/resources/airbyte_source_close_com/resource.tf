@@ -3,8 +3,8 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     api_key    = "...my_api_key..."
     start_date = "2021-01-01"
   }
-  definition_id = "fe1ba68d-3405-402b-9602-9febd39e6abf"
-  name          = "Maureen Roob"
+  definition_id = "011b8862-473b-4757-b910-8618e91445d8"
+  name          = "Myra Gusikowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "50cb6e6f-f332-4bdf-9457-75fcbb81a746"
+  workspace_id  = "a849cd51-7f0e-432c-ae30-2e6de92b3e43"
 }

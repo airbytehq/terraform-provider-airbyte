@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -27,6 +27,12 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	var tunnelMethod *shared.DestinationClickhouseSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -93,6 +99,7 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		RawDataSchema: rawDataSchema,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}
@@ -114,10 +121,12 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 }
 
 func (r *DestinationClickhouseResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutRequest() *shared.DestinationClickhousePutRequest {
@@ -140,6 +149,12 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	var tunnelMethod *shared.SSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -206,6 +221,7 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		RawDataSchema: rawDataSchema,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}

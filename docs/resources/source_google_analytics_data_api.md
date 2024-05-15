@@ -38,12 +38,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 27.51
+                        value = 46.54
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 50.41
+                        value = 72.65
                       }
                     }
                   }
@@ -64,12 +64,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 85.84
+                        value = 3.03
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 24.53
+                        value = 70.68
                       }
                     }
                   }
@@ -81,7 +81,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Connie Boyer"
+        name = "Lucille Daugherty Jr."
       },
     ]
     date_ranges_start_date = "2021-01-01"
@@ -91,10 +91,10 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
     ]
     window_in_days = 60
   }
-  definition_id = "f352d320-6afb-43a7-a4a6-0d40134e5887"
-  name          = "Mrs. Jody Rogahn MD"
+  definition_id = "ca706139-037c-47ee-b972-df3c14a349fd"
+  name          = "Clayton McClure"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "128ae06a-57c7-4c57-baf1-e5baddd2747b"
+  workspace_id  = "276cbad0-0cae-4e12-84e6-5b57e54a27b6"
 }
 ```
 
@@ -1414,4 +1414,10 @@ Optional:
 - `case_sensitive` (Boolean)
 - `match_type` (List of String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_google_analytics_data_api.my_airbyte_source_google_analytics_data_api ""
+```

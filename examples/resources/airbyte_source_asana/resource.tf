@@ -12,8 +12,8 @@ resource "airbyte_source_asana" "my_source_asana" {
     ]
     test_mode = true
   }
-  definition_id = "0de16b8d-a7b8-4143-b851-cf99c7fd70e5"
-  name          = "Esther Heaney"
+  definition_id = "668105e1-180f-4b2a-875a-1ca190e95bd1"
+  name          = "Mattie Cormier IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cf4f6487-4e62-4c58-9879-2fd48887cb19"
+  workspace_id  = "eb0af63d-efa7-4335-af39-bea5e2089f0e"
 }

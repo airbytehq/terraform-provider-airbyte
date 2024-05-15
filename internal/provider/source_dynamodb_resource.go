@@ -7,12 +7,16 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -36,13 +40,13 @@ type SourceDynamodbResource struct {
 
 // SourceDynamodbResourceModel describes the resource data model.
 type SourceDynamodbResourceModel struct {
-	Configuration SourceDynamodb `tfsdk:"configuration"`
-	DefinitionID  types.String   `tfsdk:"definition_id"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceDynamodb `tfsdk:"configuration"`
+	DefinitionID  types.String           `tfsdk:"definition_id"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceDynamodbResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +56,6 @@ func (r *SourceDynamodbResource) Metadata(ctx context.Context, req resource.Meta
 func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceDynamodb Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -60,16 +63,70 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"access_key_id": schema.StringAttribute{
-						Required:    true,
-						Sensitive:   true,
-						Description: `The access key id to access Dynamodb. Airbyte requires read permissions to the database`,
+					"credentials": schema.SingleNestedAttribute{
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"authenticate_via_access_keys": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_key_id": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The access key id to access Dynamodb. Airbyte requires read permissions to the database`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"secret_access_key": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The corresponding secret to the access key id.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("role_based_authentication"),
+									}...),
+								},
+							},
+							"role_based_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_access_keys"),
+									}...),
+								},
+							},
+						},
+						Description: `Credentials for the service`,
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
 					},
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString(""),
 						Description: `the URL of the Dynamodb database. Default: ""`,
+					},
+					"ignore_missing_read_permissions_tables": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Ignore tables with missing scan/read permissions. Default: false`,
 					},
 					"region": schema.StringAttribute{
 						Computed:    true,
@@ -118,11 +175,6 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 					"reserved_attribute_names": schema.StringAttribute{
 						Optional:    true,
 						Description: `Comma separated reserved attribute names present in your tables`,
-					},
-					"secret_access_key": schema.StringAttribute{
-						Required:    true,
-						Sensitive:   true,
-						Description: `The corresponding secret to the access key id.`,
 					},
 				},
 			},
@@ -293,6 +345,10 @@ func (r *SourceDynamodbResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

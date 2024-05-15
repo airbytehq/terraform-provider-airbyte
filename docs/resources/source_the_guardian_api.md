@@ -17,15 +17,15 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
   configuration = {
     api_key    = "...my_api_key..."
     end_date   = "YYYY-MM-DD"
-    query      = "political"
-    section    = "housing-network"
+    query      = "environment AND political"
+    section    = "media"
     start_date = "YYYY-MM-DD"
-    tag        = "environment/recycling"
+    tag        = "environment/energyefficiency"
   }
-  definition_id = "b1ade2f4-984b-4fb0-a1b3-d2b89b26a883"
-  name          = "Delbert Zemlak"
+  definition_id = "a03eb3c0-afcc-43c8-ba6e-afbbc8e3e7db"
+  name          = "Blanche Douglas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "227f318d-4240-4654-b478-2740a2b5a462"
+  workspace_id  = "46fc1e0f-a91f-47ef-9f46-2d7c84461977"
 }
 ```
 
@@ -63,4 +63,10 @@ Optional:
 - `section` (String) (Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.
 - `tag` (String) (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_the_guardian_api.my_airbyte_source_the_guardian_api ""
+```

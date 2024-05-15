@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -38,12 +40,12 @@ type DestinationAwsDatalakeResource struct {
 
 // DestinationAwsDatalakeResourceModel describes the resource data model.
 type DestinationAwsDatalakeResourceModel struct {
-	Configuration   DestinationAwsDatalake `tfsdk:"configuration"`
-	DefinitionID    types.String           `tfsdk:"definition_id"`
-	DestinationID   types.String           `tfsdk:"destination_id"`
-	DestinationType types.String           `tfsdk:"destination_type"`
-	Name            types.String           `tfsdk:"name"`
-	WorkspaceID     types.String           `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationAwsDatalake `tfsdk:"configuration"`
+	DefinitionID    types.String                   `tfsdk:"definition_id"`
+	DestinationID   types.String                   `tfsdk:"destination_id"`
+	DestinationType types.String                   `tfsdk:"destination_type"`
+	Name            types.String                   `tfsdk:"name"`
+	WorkspaceID     types.String                   `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAwsDatalakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *DestinationAwsDatalakeResource) Metadata(ctx context.Context, req resou
 func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationAwsDatalake Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -84,6 +85,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `Will assume this role to write data to s3`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("iam_user"),
+									}...),
+								},
 							},
 							"iam_user": schema.SingleNestedAttribute{
 								Optional: true,
@@ -98,6 +104,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Sensitive:   true,
 										Description: `Secret Access Key`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("iam_role"),
+									}...),
 								},
 							},
 						},
@@ -136,6 +147,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										},
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("parquet_columnar_storage"),
+									}...),
+								},
 							},
 							"parquet_columnar_storage": schema.SingleNestedAttribute{
 								Optional: true,
@@ -165,6 +181,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 											),
 										},
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("json_lines_newline_delimited_json"),
+									}...),
 								},
 							},
 						},
@@ -421,6 +442,10 @@ func (r *DestinationAwsDatalakeResource) Read(ctx context.Context, req resource.
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

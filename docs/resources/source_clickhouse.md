@@ -23,12 +23,12 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Loy_Bartoletti"
+    username = "Triston_Strosin"
   }
-  definition_id = "bdda328f-6c37-43e0-a663-420a6a3ab4d4"
-  name          = "Georgia Haley"
+  definition_id = "51612305-e0c1-4f4b-a5d9-ebd757e59469"
+  name          = "Jerry Runolfsson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "910e5c99-9e89-4cbd-8e8f-2a37cc1fbec8"
+  workspace_id  = "60869168-6308-4ead-b73c-369be0c12ece"
 }
 ```
 
@@ -107,4 +107,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_clickhouse.my_airbyte_source_clickhouse ""
+```

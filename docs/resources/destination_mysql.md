@@ -15,19 +15,21 @@ DestinationMysql Resource
 ```terraform
 resource "airbyte_destination_mysql" "my_destination_mysql" {
   configuration = {
-    database        = "...my_database..."
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 3306
+    database            = "...my_database..."
+    disable_type_dedupe = true
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
+    password            = "...my_password..."
+    port                = 3306
+    raw_data_schema     = "...my_raw_data_schema..."
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Katrine_Wehner29"
+    username = "Barbara.Kunde41"
   }
-  definition_id = "356f389a-d49d-4bc4-babb-f1994382023b"
-  name          = "Angelina Tremblay"
-  workspace_id  = "1a7f288a-d3cd-4e3c-9d6f-a94b74b938f8"
+  definition_id = "83bb76cb-dd42-4c04-b7b6-03cc8cd887e7"
+  name          = "Susan Dickinson I"
+  workspace_id  = "ef7fc0d1-76e5-4f41-8549-f1242182d15e"
 }
 ```
 
@@ -60,9 +62,11 @@ Required:
 
 Optional:
 
+- `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
+- `raw_data_schema` (String) The database to write raw tables into
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
@@ -105,4 +109,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_mysql.my_airbyte_destination_mysql ""
+```

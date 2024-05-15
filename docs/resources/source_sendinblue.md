@@ -17,10 +17,10 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "db09b9a9-03f6-40eb-8a54-b7cf533c55d6"
-  name          = "Pablo Hamill"
+  definition_id = "d544a65a-7d2b-4460-9d4e-c6467c968cce"
+  name          = "Nathan Emmerich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1f7b10c6-dd1e-462e-b5fc-f365dccaec2c"
+  workspace_id  = "d8a35db3-2f90-40f8-8fe7-378a58770229"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_sendinblue.my_airbyte_source_sendinblue ""
+```

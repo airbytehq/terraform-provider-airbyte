@@ -7,12 +7,15 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -36,12 +39,12 @@ type DestinationMysqlResource struct {
 
 // DestinationMysqlResourceModel describes the resource data model.
 type DestinationMysqlResourceModel struct {
-	Configuration   DestinationClickhouse `tfsdk:"configuration"`
-	DefinitionID    types.String          `tfsdk:"definition_id"`
-	DestinationID   types.String          `tfsdk:"destination_id"`
-	DestinationType types.String          `tfsdk:"destination_type"`
-	Name            types.String          `tfsdk:"name"`
-	WorkspaceID     types.String          `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationMysql `tfsdk:"configuration"`
+	DefinitionID    types.String             `tfsdk:"definition_id"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMysqlResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +54,6 @@ func (r *DestinationMysqlResource) Metadata(ctx context.Context, req resource.Me
 func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationMysql Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -62,6 +64,12 @@ func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.Sche
 					"database": schema.StringAttribute{
 						Required:    true,
 						Description: `Name of the database.`,
+					},
+					"disable_type_dedupe": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -82,12 +90,22 @@ func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.Sche
 						Default:     int64default.StaticInt64(3306),
 						Description: `Port of the database. Default: 3306`,
 					},
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `The database to write raw tables into`,
+					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -112,6 +130,12 @@ func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.Sche
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -135,6 +159,12 @@ func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.Sche
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -309,6 +339,10 @@ func (r *DestinationMysqlResource) Read(ctx context.Context, req resource.ReadRe
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

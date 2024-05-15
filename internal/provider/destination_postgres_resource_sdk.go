@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,6 +14,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -189,6 +195,7 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 	configuration := shared.DestinationPostgres{
 		Database:          database,
 		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
 		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
 		Password:          password,
@@ -217,10 +224,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 }
 
 func (r *DestinationPostgresResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest() *shared.DestinationPostgresPutRequest {
@@ -230,6 +239,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -405,6 +420,7 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 	configuration := shared.DestinationPostgresUpdate{
 		Database:          database,
 		DisableTypeDedupe: disableTypeDedupe,
+		DropCascade:       dropCascade,
 		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
 		Password:          password,

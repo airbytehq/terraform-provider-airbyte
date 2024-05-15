@@ -17,7 +17,7 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
   configuration = {
     account_names = [
       {
-        name     = "Mandy Lakin"
+        name     = "Velma Hodkiewicz"
         operator = "Contains"
       },
     ]
@@ -25,24 +25,24 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     client_secret = "...my_client_secret..."
     custom_reports = [
       {
-        name               = "custom report"
+        name               = "Account Performance"
         report_aggregation = "...my_report_aggregation..."
         report_columns = [
           "...",
         ]
-        reporting_object = "AgeGenderAudienceReportRequest"
+        reporting_object = "DestinationUrlPerformanceReportRequest"
       },
     ]
     developer_token    = "...my_developer_token..."
-    lookback_window    = 9
+    lookback_window    = 0
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-08-17"
+    reports_start_date = "2022-05-16"
     tenant_id          = "...my_tenant_id..."
   }
-  definition_id = "224a7ffb-268d-4c18-b087-d37ac99fd785"
-  name          = "Willie Bogisich"
+  definition_id = "9a4fa50e-807c-486b-90cb-f5314eea0fa2"
+  name          = "Kayla Okuneva"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "05e0c1f4-b65d-49eb-9757-e5946981cb46"
+  workspace_id  = "367271c7-8a9a-4a96-83df-323c7d7845b7"
 }
 ```
 
@@ -105,4 +105,10 @@ Optional:
 
 - `report_aggregation` (String) A list of available aggregations. Default: "[Hourly]"
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_bing_ads.my_airbyte_source_bing_ads ""
+```

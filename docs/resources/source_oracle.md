@@ -28,19 +28,19 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 2
+    port            = 6
     schemas = [
       "...",
     ]
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Marlon_Ernser"
+    username = "Louie13"
   }
-  definition_id = "0c992762-a38a-4a73-979a-85cb72465180"
-  name          = "Ms. Amanda Jacobs"
+  definition_id = "d517fc88-bc49-498d-b5ef-edea337d55b1"
+  name          = "Roberta Mueller"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "72363e09-a2aa-4e62-99d7-7025755e6995"
+  workspace_id  = "b92c72d5-41f5-4389-a8a5-0561c1cc6291"
 }
 ```
 
@@ -175,4 +175,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_oracle.my_airbyte_source_oracle ""
+```

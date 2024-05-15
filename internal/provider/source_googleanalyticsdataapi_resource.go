@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,13 +41,13 @@ type SourceGoogleAnalyticsDataAPIResource struct {
 
 // SourceGoogleAnalyticsDataAPIResourceModel describes the resource data model.
 type SourceGoogleAnalyticsDataAPIResourceModel struct {
-	Configuration SourceGoogleAnalyticsDataAPI `tfsdk:"configuration"`
-	DefinitionID  types.String                 `tfsdk:"definition_id"`
-	Name          types.String                 `tfsdk:"name"`
-	SecretID      types.String                 `tfsdk:"secret_id"`
-	SourceID      types.String                 `tfsdk:"source_id"`
-	SourceType    types.String                 `tfsdk:"source_type"`
-	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGoogleAnalyticsDataAPI `tfsdk:"configuration"`
+	DefinitionID  types.String                         `tfsdk:"definition_id"`
+	Name          types.String                         `tfsdk:"name"`
+	SecretID      types.String                         `tfsdk:"secret_id"`
+	SourceID      types.String                         `tfsdk:"source_id"`
+	SourceType    types.String                         `tfsdk:"source_type"`
+	WorkspaceID   types.String                         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleAnalyticsDataAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,7 +57,6 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Metadata(ctx context.Context, req
 func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGoogleAnalyticsDataAPI Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -94,6 +95,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 										Description: `The token for obtaining a new access token.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key_authentication"),
+									}...),
+								},
 							},
 							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -102,6 +108,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 										Required:    true,
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_google_oauth"),
+									}...),
 								},
 							},
 						},
@@ -120,6 +131,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 										"disabled": schema.SingleNestedAttribute{
 											Optional:   true,
 											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("enabled"),
+												}...),
+											},
 										},
 										"enabled": schema.SingleNestedAttribute{
 											Optional: true,
@@ -197,6 +213,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 													},
 												},
 											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("disabled"),
+												}...),
+											},
 										},
 									},
 									Description: `Cohort reports creates a time series of user retention for the cohort.`,
@@ -233,6 +254,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -240,6 +266,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							"value": schema.StringAttribute{
 																								Required: true,
 																							},
+																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
 																						},
 																					},
 																				},
@@ -257,6 +288,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -265,12 +301,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"in_list_filter": schema.SingleNestedAttribute{
@@ -286,6 +334,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					listvalidator.SizeAtLeast(1),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"numeric_filter": schema.SingleNestedAttribute{
@@ -305,6 +360,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -313,12 +373,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"string_filter": schema.SingleNestedAttribute{
@@ -335,6 +407,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				Required: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			}...),
+																		},
 																	},
 																},
 																Validators: []validator.Object{
@@ -346,6 +425,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpressions in andGroup have an AND relationship.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"filter": schema.SingleNestedAttribute{
 											Optional: true,
@@ -369,6 +455,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -376,6 +467,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"value": schema.StringAttribute{
 																					Required: true,
 																				},
+																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
 																			},
 																		},
 																	},
@@ -393,6 +489,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -401,12 +502,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
+																			},
 																		},
 																	},
 																	Validators: []validator.Object{
 																		validators.ExactlyOneChild(),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"in_list_filter": schema.SingleNestedAttribute{
@@ -422,6 +535,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		listvalidator.SizeAtLeast(1),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"numeric_filter": schema.SingleNestedAttribute{
@@ -441,6 +561,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -449,12 +574,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
+																			},
 																		},
 																	},
 																	Validators: []validator.Object{
 																		validators.ExactlyOneChild(),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"string_filter": schema.SingleNestedAttribute{
@@ -471,6 +608,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																	Required: true,
 																},
 															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																}...),
+															},
 														},
 													},
 													Validators: []validator.Object{
@@ -479,6 +623,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all dimensions.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"not_expression": schema.SingleNestedAttribute{
 											Optional: true,
@@ -505,6 +656,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -512,6 +668,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																						"value": schema.StringAttribute{
 																							Required: true,
 																						},
+																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
 																					},
 																				},
 																			},
@@ -529,6 +690,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -537,12 +703,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
+																					},
 																				},
 																			},
 																			Validators: []validator.Object{
 																				validators.ExactlyOneChild(),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"in_list_filter": schema.SingleNestedAttribute{
@@ -558,6 +736,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				listvalidator.SizeAtLeast(1),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"numeric_filter": schema.SingleNestedAttribute{
@@ -577,6 +762,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -585,12 +775,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
+																					},
 																				},
 																			},
 																			Validators: []validator.Object{
 																				validators.ExactlyOneChild(),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"string_filter": schema.SingleNestedAttribute{
@@ -607,6 +809,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			Required: true,
 																		},
 																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																		}...),
+																	},
 																},
 															},
 															Validators: []validator.Object{
@@ -617,6 +826,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpression is NOT of notExpression.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"or_group": schema.SingleNestedAttribute{
 											Optional: true,
@@ -644,6 +860,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -651,6 +872,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							"value": schema.StringAttribute{
 																								Required: true,
 																							},
+																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
 																						},
 																					},
 																				},
@@ -668,6 +894,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -676,12 +907,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"in_list_filter": schema.SingleNestedAttribute{
@@ -697,6 +940,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					listvalidator.SizeAtLeast(1),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"numeric_filter": schema.SingleNestedAttribute{
@@ -716,6 +966,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -724,12 +979,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"string_filter": schema.SingleNestedAttribute{
@@ -746,6 +1013,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				Required: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			}...),
+																		},
 																	},
 																},
 																Validators: []validator.Object{
@@ -757,6 +1031,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpressions in orGroup have an OR relationship.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+												}...),
+											},
 										},
 									},
 									Description: `Dimensions filter`,
@@ -801,6 +1082,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -808,6 +1094,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							"value": schema.StringAttribute{
 																								Required: true,
 																							},
+																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
 																						},
 																					},
 																				},
@@ -825,6 +1116,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -833,12 +1129,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"in_list_filter": schema.SingleNestedAttribute{
@@ -854,6 +1162,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					listvalidator.SizeAtLeast(1),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"numeric_filter": schema.SingleNestedAttribute{
@@ -873,6 +1188,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -881,12 +1201,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"string_filter": schema.SingleNestedAttribute{
@@ -903,6 +1235,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				Required: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			}...),
+																		},
 																	},
 																},
 																Validators: []validator.Object{
@@ -914,6 +1253,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpressions in andGroup have an AND relationship.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"filter": schema.SingleNestedAttribute{
 											Optional: true,
@@ -937,6 +1283,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -944,6 +1295,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"value": schema.StringAttribute{
 																					Required: true,
 																				},
+																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
 																			},
 																		},
 																	},
@@ -961,6 +1317,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -969,12 +1330,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
+																			},
 																		},
 																	},
 																	Validators: []validator.Object{
 																		validators.ExactlyOneChild(),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"in_list_filter": schema.SingleNestedAttribute{
@@ -990,6 +1363,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		listvalidator.SizeAtLeast(1),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"numeric_filter": schema.SingleNestedAttribute{
@@ -1009,6 +1389,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("int64_value"),
+																				}...),
+																			},
 																		},
 																		"int64_value": schema.SingleNestedAttribute{
 																			Optional: true,
@@ -1017,12 +1402,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					Required: true,
 																				},
 																			},
+																			Validators: []validator.Object{
+																				objectvalidator.ConflictsWith(path.Expressions{
+																					path.MatchRelative().AtParent().AtName("double_value"),
+																				}...),
+																			},
 																		},
 																	},
 																	Validators: []validator.Object{
 																		validators.ExactlyOneChild(),
 																	},
 																},
+															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("string_filter"),
+																}...),
 															},
 														},
 														"string_filter": schema.SingleNestedAttribute{
@@ -1039,6 +1436,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																	Required: true,
 																},
 															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("between_filter"),
+																	path.MatchRelative().AtParent().AtName("in_list_filter"),
+																	path.MatchRelative().AtParent().AtName("numeric_filter"),
+																}...),
+															},
 														},
 													},
 													Validators: []validator.Object{
@@ -1047,6 +1451,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `A primitive filter. In the same FilterExpression, all of the filter's field names need to be either all metrics.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"not_expression": schema.SingleNestedAttribute{
 											Optional: true,
@@ -1073,6 +1484,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -1080,6 +1496,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																						"value": schema.StringAttribute{
 																							Required: true,
 																						},
+																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
 																					},
 																				},
 																			},
@@ -1097,6 +1518,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -1105,12 +1531,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
+																					},
 																				},
 																			},
 																			Validators: []validator.Object{
 																				validators.ExactlyOneChild(),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"in_list_filter": schema.SingleNestedAttribute{
@@ -1126,6 +1564,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				listvalidator.SizeAtLeast(1),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"numeric_filter": schema.SingleNestedAttribute{
@@ -1145,6 +1590,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("int64_value"),
+																						}...),
+																					},
 																				},
 																				"int64_value": schema.SingleNestedAttribute{
 																					Optional: true,
@@ -1153,12 +1603,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							Required: true,
 																						},
 																					},
+																					Validators: []validator.Object{
+																						objectvalidator.ConflictsWith(path.Expressions{
+																							path.MatchRelative().AtParent().AtName("double_value"),
+																						}...),
+																					},
 																				},
 																			},
 																			Validators: []validator.Object{
 																				validators.ExactlyOneChild(),
 																			},
 																		},
+																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("string_filter"),
+																		}...),
 																	},
 																},
 																"string_filter": schema.SingleNestedAttribute{
@@ -1175,6 +1637,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																			Required: true,
 																		},
 																	},
+																	Validators: []validator.Object{
+																		objectvalidator.ConflictsWith(path.Expressions{
+																			path.MatchRelative().AtParent().AtName("between_filter"),
+																			path.MatchRelative().AtParent().AtName("in_list_filter"),
+																			path.MatchRelative().AtParent().AtName("numeric_filter"),
+																		}...),
+																	},
 																},
 															},
 															Validators: []validator.Object{
@@ -1185,6 +1654,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpression is NOT of notExpression.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("or_group"),
+												}...),
+											},
 										},
 										"or_group": schema.SingleNestedAttribute{
 											Optional: true,
@@ -1212,6 +1688,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -1219,6 +1700,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																							"value": schema.StringAttribute{
 																								Required: true,
 																							},
+																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
 																						},
 																					},
 																				},
@@ -1236,6 +1722,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -1244,12 +1735,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"in_list_filter": schema.SingleNestedAttribute{
@@ -1265,6 +1768,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					listvalidator.SizeAtLeast(1),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"numeric_filter": schema.SingleNestedAttribute{
@@ -1284,6 +1794,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("int64_value"),
+																							}...),
+																						},
 																					},
 																					"int64_value": schema.SingleNestedAttribute{
 																						Optional: true,
@@ -1292,12 +1807,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																								Required: true,
 																							},
 																						},
+																						Validators: []validator.Object{
+																							objectvalidator.ConflictsWith(path.Expressions{
+																								path.MatchRelative().AtParent().AtName("double_value"),
+																							}...),
+																						},
 																					},
 																				},
 																				Validators: []validator.Object{
 																					validators.ExactlyOneChild(),
 																				},
 																			},
+																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("string_filter"),
+																			}...),
 																		},
 																	},
 																	"string_filter": schema.SingleNestedAttribute{
@@ -1314,6 +1841,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				Required: true,
 																			},
 																		},
+																		Validators: []validator.Object{
+																			objectvalidator.ConflictsWith(path.Expressions{
+																				path.MatchRelative().AtParent().AtName("between_filter"),
+																				path.MatchRelative().AtParent().AtName("in_list_filter"),
+																				path.MatchRelative().AtParent().AtName("numeric_filter"),
+																			}...),
+																		},
 																	},
 																},
 																Validators: []validator.Object{
@@ -1325,6 +1859,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												},
 											},
 											Description: `The FilterExpressions in orGroup have an OR relationship.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("and_group"),
+													path.MatchRelative().AtParent().AtName("filter"),
+													path.MatchRelative().AtParent().AtName("not_expression"),
+												}...),
+											},
 										},
 									},
 									Description: `Metrics filter`,
@@ -1541,6 +2082,10 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Read(ctx context.Context, req res
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

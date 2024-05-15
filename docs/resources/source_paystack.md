@@ -15,14 +15,14 @@ SourcePaystack Resource
 ```terraform
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 9
+    lookback_window_days = 6
     secret_key           = "...my_secret_key..."
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "1df09849-375f-4622-b890-d41f13919c92"
-  name          = "Alexis Dickens"
+  definition_id = "d0cd95bc-fe33-442d-8402-aef61635af9f"
+  name          = "Jim Zieme"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "517a8011-2166-4a5e-846f-2bce2e77bbcc"
+  workspace_id  = "5aa22e67-7c77-4be4-a424-4a41ce525b48"
 }
 ```
 
@@ -57,4 +57,10 @@ Optional:
 
 - `lookback_window_days` (Number) When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation. Default: 0
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_paystack.my_airbyte_source_paystack ""
+```

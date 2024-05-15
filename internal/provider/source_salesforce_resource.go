@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,13 +39,13 @@ type SourceSalesforceResource struct {
 
 // SourceSalesforceResourceModel describes the resource data model.
 type SourceSalesforceResourceModel struct {
-	Configuration SourceSalesforce `tfsdk:"configuration"`
-	DefinitionID  types.String     `tfsdk:"definition_id"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceSalesforce `tfsdk:"configuration"`
+	DefinitionID  types.String             `tfsdk:"definition_id"`
+	Name          types.String             `tfsdk:"name"`
+	SecretID      types.String             `tfsdk:"secret_id"`
+	SourceID      types.String             `tfsdk:"source_id"`
+	SourceType    types.String             `tfsdk:"source_type"`
+	WorkspaceID   types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSalesforceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +55,6 @@ func (r *SourceSalesforceResource) Metadata(ctx context.Context, req resource.Me
 func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceSalesforce Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -93,6 +93,12 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+					},
+					"stream_slice_step": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("P30D"),
+						Description: `The size of the time window (ISO8601 duration) to slice requests. Default: "P30D"`,
 					},
 					"streams_criteria": schema.ListNestedAttribute{
 						Optional: true,
@@ -292,6 +298,10 @@ func (r *SourceSalesforceResource) Read(ctx context.Context, req resource.ReadRe
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

@@ -3,11 +3,17 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateRequest() *shared.SourceGoogleSheetsCreateRequest {
+	batchSize := new(int64)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
 	var credentials shared.SourceGoogleSheetsAuthentication
 	var sourceGoogleSheetsAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -45,6 +51,7 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateReques
 	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheets{
+		BatchSize:       batchSize,
 		Credentials:     credentials,
 		NamesConversion: namesConversion,
 		SpreadsheetID:   spreadsheetID,
@@ -74,13 +81,21 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateReques
 }
 
 func (r *SourceGoogleSheetsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsPutRequest() *shared.SourceGoogleSheetsPutRequest {
+	batchSize := new(int64)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
 	var credentials shared.SourceGoogleSheetsUpdateAuthentication
 	var sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -118,6 +133,7 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsPutRequest()
 	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheetsUpdate{
+		BatchSize:       batchSize,
 		Credentials:     credentials,
 		NamesConversion: namesConversion,
 		SpreadsheetID:   spreadsheetID,

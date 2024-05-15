@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "csv"
+    format       = "excel"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -24,13 +24,13 @@ resource "airbyte_source_file" "my_source_file" {
         storage_account = "...my_storage_account..."
       }
     }
-    reader_options = "{\"sep\": \"\t\", \"header\": 0, \"names\": [\"column1\", \"column2\"] }"
-    url            = "s3://gdelt-open-data/events/20190914.export.csv"
+    reader_options = "{}"
+    url            = "gs://my-google-bucket/data.csv"
   }
-  definition_id = "2224121e-6315-4be3-86a4-e83994413a7c"
-  name          = "Beatrice Spencer"
+  definition_id = "7915a2f4-49e5-4b0b-a8d5-fb4b99e2f7dc"
+  name          = "Christy Feest"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "70b5882c-881a-4087-8bfd-f7e2fa4a6362"
+  workspace_id  = "76bbd55f-566b-44ad-a049-8ec40fd8ad91"
 }
 ```
 
@@ -159,4 +159,10 @@ Optional:
 - `password` (String, Sensitive)
 - `port` (String) Default: "22"
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_file.my_airbyte_source_file ""
+```

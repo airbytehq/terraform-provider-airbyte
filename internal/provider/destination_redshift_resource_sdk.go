@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -14,12 +14,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
-	}
-	enableIncrementalFinalTableUpdates := new(bool)
-	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
-		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
-	} else {
-		enableIncrementalFinalTableUpdates = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -139,12 +133,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 					}
 				}
 			}
-			fileBufferCount := new(int64)
-			if !r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.IsNull() {
-				*fileBufferCount = r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.ValueInt64()
-			} else {
-				fileBufferCount = nil
-			}
 			fileNamePattern := new(string)
 			if !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsNull() {
 				*fileNamePattern = r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.ValueString()
@@ -174,7 +162,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 			destinationRedshiftAWSS3Staging = &shared.DestinationRedshiftAWSS3Staging{
 				AccessKeyID:      accessKeyID,
 				Encryption:       encryption,
-				FileBufferCount:  fileBufferCount,
 				FileNamePattern:  fileNamePattern,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,
@@ -200,18 +187,17 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationRedshift{
-		Database:                           database,
-		DisableTypeDedupe:                  disableTypeDedupe,
-		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
-		Host:                               host,
-		JdbcURLParams:                      jdbcURLParams,
-		Password:                           password,
-		Port:                               port,
-		RawDataSchema:                      rawDataSchema,
-		Schema:                             schema,
-		TunnelMethod:                       tunnelMethod,
-		UploadingMethod:                    uploadingMethod,
-		Username:                           username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		TunnelMethod:      tunnelMethod,
+		UploadingMethod:   uploadingMethod,
+		Username:          username,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -231,10 +217,12 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 }
 
 func (r *DestinationRedshiftResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest() *shared.DestinationRedshiftPutRequest {
@@ -244,12 +232,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
 	} else {
 		disableTypeDedupe = nil
-	}
-	enableIncrementalFinalTableUpdates := new(bool)
-	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
-		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
-	} else {
-		enableIncrementalFinalTableUpdates = nil
 	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -369,12 +351,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 					}
 				}
 			}
-			fileBufferCount := new(int64)
-			if !r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.IsNull() {
-				*fileBufferCount = r.Configuration.UploadingMethod.AWSS3Staging.FileBufferCount.ValueInt64()
-			} else {
-				fileBufferCount = nil
-			}
 			fileNamePattern := new(string)
 			if !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsNull() {
 				*fileNamePattern = r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.ValueString()
@@ -404,7 +380,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 			awsS3Staging = &shared.AWSS3Staging{
 				AccessKeyID:      accessKeyID,
 				Encryption:       encryption,
-				FileBufferCount:  fileBufferCount,
 				FileNamePattern:  fileNamePattern,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,
@@ -430,18 +405,17 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationRedshiftUpdate{
-		Database:                           database,
-		DisableTypeDedupe:                  disableTypeDedupe,
-		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
-		Host:                               host,
-		JdbcURLParams:                      jdbcURLParams,
-		Password:                           password,
-		Port:                               port,
-		RawDataSchema:                      rawDataSchema,
-		Schema:                             schema,
-		TunnelMethod:                       tunnelMethod,
-		UploadingMethod:                    uploadingMethod,
-		Username:                           username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		Schema:            schema,
+		TunnelMethod:      tunnelMethod,
+		UploadingMethod:   uploadingMethod,
+		Username:          username,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

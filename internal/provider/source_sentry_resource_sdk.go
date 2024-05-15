@@ -4,13 +4,13 @@ package provider
 
 import (
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSentryResourceModel) ToSharedSourceSentryCreateRequest() *shared.SourceSentryCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
-	var discoverFields []interface{} = nil
+	var discoverFields []interface{} = []interface{}{}
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
 		var discoverFieldsTmp interface{}
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)
@@ -56,15 +56,17 @@ func (r *SourceSentryResourceModel) ToSharedSourceSentryCreateRequest() *shared.
 }
 
 func (r *SourceSentryResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceSentryResourceModel) ToSharedSourceSentryPutRequest() *shared.SourceSentryPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
-	var discoverFields []interface{} = nil
+	var discoverFields []interface{} = []interface{}{}
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
 		var discoverFieldsTmp interface{}
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)

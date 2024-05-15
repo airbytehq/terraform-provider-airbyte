@@ -4,14 +4,15 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 1521
+    raw_data_schema = "...my_raw_data_schema..."
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Pearl82"
+    username = "Eleanore_Toy"
   }
-  definition_id = "fc1b2798-db19-4e64-b83f-63d348370e17"
-  name          = "Lorena Schowalter"
-  workspace_id  = "4f32d3e1-92a8-4a43-80f2-9f7cbd12b320"
+  definition_id = "5c921261-8452-4d14-b2f3-3897fec4ca4c"
+  name          = "Garrett Gerhold"
+  workspace_id  = "882725c3-c6bc-439a-ad3f-396b39ea0e10"
 }

@@ -22,7 +22,7 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
     omit_raw_text = false
     processing = {
       chunk_overlap = 2
-      chunk_size    = 6
+      chunk_size    = 3
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -37,12 +37,12 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 10
+          split_level = 7
         }
       }
     }
   }
-  definition_id = "a0e10165-90e1-4a2b-87de-0ff637374915"
-  name          = "Jacob Walker"
-  workspace_id  = "2cd950e3-6acc-41e6-b129-15604b55b326"
+  definition_id = "4e180123-f0d7-46fb-b8bf-74fa22de1279"
+  name          = "Mamie Hills I"
+  workspace_id  = "4d000749-774a-4e87-8308-92ffb0f41f82"
 }

@@ -15,7 +15,7 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = true
+    accept_terms = false
     data_source = {
       recommended_managed_tables = {}
     }
@@ -24,13 +24,13 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_personal_access_token = "dapi0123456789abcdefghij0123456789AB"
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
-    enable_schema_evolution          = true
+    enable_schema_evolution          = false
     purge_staging_data               = true
     schema                           = "default"
   }
-  definition_id = "eca9f91e-b58c-4332-9745-6993f0626846"
-  name          = "Ms. Betty Shanahan"
-  workspace_id  = "7ed52cbf-f018-4589-b5bd-fe2750539f4b"
+  definition_id = "3cbfbb56-05d7-4306-8fa6-f60bfc11e74f"
+  name          = "Thelma Johnston"
+  workspace_id  = "a953e98a-4c04-4994-9edd-6e956416d119"
 }
 ```
 
@@ -113,4 +113,10 @@ Optional:
 <a id="nestedatt--configuration--data_source--recommended_managed_tables"></a>
 ### Nested Schema for `configuration.data_source.recommended_managed_tables`
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_databricks.my_airbyte_destination_databricks ""
+```

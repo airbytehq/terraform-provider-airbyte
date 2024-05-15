@@ -19,10 +19,10 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     dataset_id       = "...my_dataset_id..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "b29a2f83-17de-4c4e-beab-02ccb908523d"
-  name          = "Willie Jacobs DDS"
+  definition_id = "fd70e504-57dc-4f4f-a487-4e62c58d8792"
+  name          = "Levi Gutmann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c4991982-a682-4b0a-b074-f016f72127f3"
+  workspace_id  = "87cb19c4-8ec8-4b45-b3d6-6d007e52a2e4"
 }
 ```
 
@@ -57,4 +57,10 @@ Optional:
 
 - `dataset_id` (String) The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_bigquery.my_airbyte_source_bigquery ""
+```

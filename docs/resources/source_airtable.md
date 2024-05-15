@@ -21,14 +21,14 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2020-08-03T12:00:22.257Z"
+        token_expiry_date = "2022-06-28T02:11:16.821Z"
       }
     }
   }
-  definition_id = "6e828b1d-2ddb-45da-a9ea-927cae7b29c8"
-  name          = "Casey Hoeger"
+  definition_id = "d15373da-8d6e-4ef0-8757-630ddbc2dbf1"
+  name          = "Max Schuster"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5628652e-0ff8-43c2-9b51-7b16f1f8846b"
+  workspace_id  = "bd57111a-c61d-4ffa-a9fe-7143a3e9a244"
 }
 ```
 
@@ -88,4 +88,10 @@ Required:
 
 - `api_key` (String, Sensitive) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_airtable.my_airbyte_source_airtable ""
+```

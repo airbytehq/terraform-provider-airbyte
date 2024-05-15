@@ -23,14 +23,15 @@ resource "airbyte_source_slack" "my_source_slack" {
         api_token = "...my_api_token..."
       }
     }
-    join_channels   = false
-    lookback_window = 14
-    start_date      = "2017-01-25T00:00:00Z"
+    include_private_channels = false
+    join_channels            = false
+    lookback_window          = 7
+    start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "b6a93532-6188-42dc-aea3-77e2f3a67448"
-  name          = "Billie Murphy"
+  definition_id = "4fb97610-a4d0-4de9-9eaa-4a70c9cb870e"
+  name          = "Mrs. Wendell Lueilwitz DDS"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b04beae9-e175-4304-865f-646723901f87"
+  workspace_id  = "39e74506-57bf-4d1c-b4db-2aae6c20ac9c"
 }
 ```
 
@@ -64,6 +65,7 @@ Optional:
 
 - `channel_filter` (List of String) A channel name list (without leading '#' char) which limit the channels from which you'd like to sync. Empty list means no filter.
 - `credentials` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials))
+- `include_private_channels` (Boolean) Whether to read information from private channels that the bot is already in.  If false, only public channels will be read.  If true, the bot must be manually added to private channels. . Default: false
 - `join_channels` (Boolean) Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages. . Default: true
 - `lookback_window` (Number) How far into the past to look for messages in threads, default is 0 days. Default: 0
 
@@ -92,4 +94,10 @@ Required:
 - `client_id` (String) Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
 - `client_secret` (String) Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_slack.my_airbyte_source_slack ""
+```

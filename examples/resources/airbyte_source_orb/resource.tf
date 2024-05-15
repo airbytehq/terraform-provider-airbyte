@@ -1,7 +1,8 @@
 resource "airbyte_source_orb" "my_source_orb" {
   configuration = {
     api_key              = "...my_api_key..."
-    lookback_window_days = 8
+    end_date             = "2024-03-01T00:00:00Z"
+    lookback_window_days = 7
     numeric_event_properties_keys = [
       "...",
     ]
@@ -12,8 +13,8 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  definition_id = "57652df1-9942-42b3-a299-76b741dbfafb"
-  name          = "Josh Feeney"
+  definition_id = "1ad7b3d7-61e2-49ef-a6ae-07d2b59ab56e"
+  name          = "Roderick Heathcote"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "afd0cd95-bcfe-4334-adc4-02aef61635af"
+  workspace_id  = "000ccdee-d12b-4d5e-b73d-022a608737f9"
 }

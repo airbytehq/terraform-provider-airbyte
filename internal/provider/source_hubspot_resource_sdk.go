@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -44,7 +44,12 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotCreateRequest() *share
 	} else {
 		enableExperimentalStreams = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceHubspot{
 		Credentials:               credentials,
 		EnableExperimentalStreams: enableExperimentalStreams,
@@ -75,10 +80,12 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotCreateRequest() *share
 }
 
 func (r *SourceHubspotResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceHubspotResourceModel) ToSharedSourceHubspotPutRequest() *shared.SourceHubspotPutRequest {
@@ -117,7 +124,12 @@ func (r *SourceHubspotResourceModel) ToSharedSourceHubspotPutRequest() *shared.S
 	} else {
 		enableExperimentalStreams = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceHubspotUpdate{
 		Credentials:               credentials,
 		EnableExperimentalStreams: enableExperimentalStreams,

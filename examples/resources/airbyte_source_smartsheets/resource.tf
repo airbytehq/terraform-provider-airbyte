@@ -6,13 +6,13 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "sheetid",
+      "sheetaccess_level",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
     start_datetime = "2000-01-01T13:00:00-07:00"
   }
-  definition_id = "14e9ed57-541c-4361-ab0e-8c8cf11a0d25"
-  name          = "Jeremiah Fritsch"
+  definition_id = "c82dc40c-a1ab-4766-b971-6f1b8331df02"
+  name          = "Alberta Bergstrom"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fa52a9e4-75ab-4ffb-a2c1-e7b6908ecd76"
+  workspace_id  = "586c7cdf-b558-4f87-809d-3d1fcf2b6755"
 }

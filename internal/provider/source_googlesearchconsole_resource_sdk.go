@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -53,9 +53,9 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		customReports = nil
 	}
-	var customReportsArray []shared.SourceGoogleSearchConsoleCustomReportConfig = nil
+	var customReportsArray []shared.SourceGoogleSearchConsoleCustomReportConfig = []shared.SourceGoogleSearchConsoleCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var dimensions []shared.SourceGoogleSearchConsoleValidEnums = nil
+		var dimensions []shared.SourceGoogleSearchConsoleValidEnums = []shared.SourceGoogleSearchConsoleValidEnums{}
 		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
 			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleValidEnums(dimensionsItem.ValueString()))
 		}
@@ -77,7 +77,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		endDate = nil
 	}
-	var siteUrls []string = nil
+	var siteUrls []string = []string{}
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}
@@ -121,10 +121,12 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 }
 
 func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConsolePutRequest() *shared.SourceGoogleSearchConsolePutRequest {
@@ -172,9 +174,9 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		customReports = nil
 	}
-	var customReportsArray []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig = nil
+	var customReportsArray []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig = []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var dimensions []shared.SourceGoogleSearchConsoleUpdateValidEnums = nil
+		var dimensions []shared.SourceGoogleSearchConsoleUpdateValidEnums = []shared.SourceGoogleSearchConsoleUpdateValidEnums{}
 		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
 			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleUpdateValidEnums(dimensionsItem.ValueString()))
 		}
@@ -196,7 +198,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		endDate = nil
 	}
-	var siteUrls []string = nil
+	var siteUrls []string = []string{}
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}

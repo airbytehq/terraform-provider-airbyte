@@ -3,8 +3,8 @@ resource "airbyte_source_dremio" "my_source_dremio" {
     api_key  = "...my_api_key..."
     base_url = "...my_base_url..."
   }
-  definition_id = "09edcef2-c435-47e7-ab14-9e6fe9a76bd2"
-  name          = "Mildred Sipes"
+  definition_id = "23345c94-9a95-4559-b5a3-4ff680c88d8e"
+  name          = "Dominick Koss"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7a77e51b-04b8-4d52-a6bc-1e22381cdc2e"
+  workspace_id  = "1721e422-7fd5-41b6-aec3-45b5c1bae747"
 }

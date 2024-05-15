@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationQdrantResource struct {
 
 // DestinationQdrantResourceModel describes the resource data model.
 type DestinationQdrantResourceModel struct {
-	Configuration   DestinationQdrant `tfsdk:"configuration"`
-	DefinitionID    types.String      `tfsdk:"definition_id"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationQdrant `tfsdk:"configuration"`
+	DefinitionID    types.String              `tfsdk:"definition_id"`
+	DestinationID   types.String              `tfsdk:"destination_id"`
+	DestinationType types.String              `tfsdk:"destination_type"`
+	Name            types.String              `tfsdk:"name"`
+	WorkspaceID     types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationQdrantResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationQdrantResource) Metadata(ctx context.Context, req resource.M
 func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationQdrant Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -83,6 +84,14 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 								Description: `Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("cohere"),
+										path.MatchRelative().AtParent().AtName("fake"),
+										path.MatchRelative().AtParent().AtName("open_ai"),
+										path.MatchRelative().AtParent().AtName("open_ai_compatible"),
+									}...),
+								},
 							},
 							"cohere": schema.SingleNestedAttribute{
 								Optional: true,
@@ -93,11 +102,27 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 								Description: `Use the Cohere API to embed text.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("azure_open_ai"),
+										path.MatchRelative().AtParent().AtName("fake"),
+										path.MatchRelative().AtParent().AtName("open_ai"),
+										path.MatchRelative().AtParent().AtName("open_ai_compatible"),
+									}...),
+								},
 							},
 							"fake": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Use a fake embedding made out of random vectors with 1536 embedding dimensions. This is useful for testing the data pipeline without incurring any costs.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("azure_open_ai"),
+										path.MatchRelative().AtParent().AtName("cohere"),
+										path.MatchRelative().AtParent().AtName("open_ai"),
+										path.MatchRelative().AtParent().AtName("open_ai_compatible"),
+									}...),
+								},
 							},
 							"open_ai": schema.SingleNestedAttribute{
 								Optional: true,
@@ -108,6 +133,14 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 								Description: `Use the OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("azure_open_ai"),
+										path.MatchRelative().AtParent().AtName("cohere"),
+										path.MatchRelative().AtParent().AtName("fake"),
+										path.MatchRelative().AtParent().AtName("open_ai_compatible"),
+									}...),
+								},
 							},
 							"open_ai_compatible": schema.SingleNestedAttribute{
 								Optional: true,
@@ -135,6 +168,14 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 								Description: `Use a service that's compatible with the OpenAI API to embed text.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("azure_open_ai"),
+										path.MatchRelative().AtParent().AtName("cohere"),
+										path.MatchRelative().AtParent().AtName("fake"),
+										path.MatchRelative().AtParent().AtName("open_ai"),
+									}...),
+								},
 							},
 						},
 						Description: `Embedding configuration`,
@@ -157,10 +198,20 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 												Description: `API Key for the Qdrant instance`,
 											},
 										},
+										Validators: []validator.Object{
+											objectvalidator.ConflictsWith(path.Expressions{
+												path.MatchRelative().AtParent().AtName("no_auth"),
+											}...),
+										},
 									},
 									"no_auth": schema.SingleNestedAttribute{
 										Optional:   true,
 										Attributes: map[string]schema.Attribute{},
+										Validators: []validator.Object{
+											objectvalidator.ConflictsWith(path.Expressions{
+												path.MatchRelative().AtParent().AtName("api_key_auth"),
+											}...),
+										},
 									},
 								},
 								Description: `Method to authenticate with the Qdrant Instance`,
@@ -263,6 +314,12 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 											},
 										},
 										Description: `Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.`,
+										Validators: []validator.Object{
+											objectvalidator.ConflictsWith(path.Expressions{
+												path.MatchRelative().AtParent().AtName("by_programming_language"),
+												path.MatchRelative().AtParent().AtName("by_separator"),
+											}...),
+										},
 									},
 									"by_programming_language": schema.SingleNestedAttribute{
 										Optional: true,
@@ -293,6 +350,12 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 											},
 										},
 										Description: `Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.`,
+										Validators: []validator.Object{
+											objectvalidator.ConflictsWith(path.Expressions{
+												path.MatchRelative().AtParent().AtName("by_markdown_header"),
+												path.MatchRelative().AtParent().AtName("by_separator"),
+											}...),
+										},
 									},
 									"by_separator": schema.SingleNestedAttribute{
 										Optional: true,
@@ -310,6 +373,12 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 											},
 										},
 										Description: `Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.`,
+										Validators: []validator.Object{
+											objectvalidator.ConflictsWith(path.Expressions{
+												path.MatchRelative().AtParent().AtName("by_markdown_header"),
+												path.MatchRelative().AtParent().AtName("by_programming_language"),
+											}...),
+										},
 									},
 								},
 								Description: `Split text fields into chunks based on the specified method.`,
@@ -491,6 +560,10 @@ func (r *DestinationQdrantResource) Read(ctx context.Context, req resource.ReadR
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

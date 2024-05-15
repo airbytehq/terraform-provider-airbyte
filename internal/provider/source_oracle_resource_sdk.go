@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -84,7 +84,7 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 	} else {
 		port = nil
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
@@ -183,10 +183,12 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 }
 
 func (r *SourceOracleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.SourceOraclePutRequest {
@@ -266,7 +268,7 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 	} else {
 		port = nil
 	}
-	var schemas []string = nil
+	var schemas []string = []string{}
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}

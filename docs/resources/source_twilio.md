@@ -20,10 +20,10 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     lookback_window = 60
     start_date      = "2020-10-01T00:00:00Z"
   }
-  definition_id = "39e7af3c-a2cc-42a5-b92d-745889040904"
-  name          = "Lois Howe"
+  definition_id = "4240654f-4782-4740-a2b5-a462428ebc5c"
+  name          = "Tamara Weber"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e86a322e-02b7-4e6d-949d-f5c3592a5dd7"
+  workspace_id  = "f0c9ce16-ebe8-45fa-a4ae-e8d2bde48eef"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `lookback_window` (Number) How far into the past to look for records. (in minutes). Default: 0
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_twilio.my_airbyte_source_twilio ""
+```

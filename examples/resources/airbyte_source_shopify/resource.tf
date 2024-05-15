@@ -1,15 +1,17 @@
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
+    bulk_window_in_days = 1
     credentials = {
       api_password = {
         api_password = "...my_api_password..."
       }
     }
-    shop       = "my-store"
-    start_date = "2022-01-27"
+    fetch_transactions_user_id = false
+    shop                       = "my-store"
+    start_date                 = "2022-02-12"
   }
-  definition_id = "b02fd25c-7727-4b36-b542-81d3e7f0bc64"
-  name          = "Moses Thiel"
+  definition_id = "b5fcf365-dcca-4ec2-8e41-cbe1d2ecd015"
+  name          = "Carolyn Smith"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "08c82dc4-0ca1-4ab7-a639-716f1b8331df"
+  workspace_id  = "f6c56d3c-f89e-4692-9ce0-c7a6ecf05091"
 }

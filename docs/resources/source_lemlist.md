@@ -17,10 +17,10 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "64cc8788-ff77-4a58-933f-7738d63dc7b7"
-  name          = "Ms. Hugh Reynolds"
+  definition_id = "9d149f3b-04e3-42dc-a49b-6bc8e2c7d0de"
+  name          = "Faith Leuschke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6167f1e8-f004-42f9-a210-b5c8f204e6a7"
+  workspace_id  = "b57adde2-0e75-4111-bd06-12ffd3df1197"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) Lemlist API key,
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_lemlist.my_airbyte_source_lemlist ""
+```

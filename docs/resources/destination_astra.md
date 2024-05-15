@@ -221,4 +221,10 @@ Optional:
 - `keep_separator` (Boolean) Whether to keep the separator in the resulting chunks. Default: false
 - `separators` (List of String) List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_astra.my_airbyte_destination_astra ""
+```

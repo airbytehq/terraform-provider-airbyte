@@ -17,10 +17,10 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
   configuration = {
     api_token = "...my_api_token..."
   }
-  definition_id = "13ed5606-ac59-4e7c-8aee-eb09ffd3753f"
-  name          = "Francisco Kautzer I"
+  definition_id = "7a648857-11ab-494f-a75a-513e00977793"
+  name          = "Harry King III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "03ba1bd8-103c-4fb4-a284-9b585759fd79"
+  workspace_id  = "dd86b4fb-de6a-4e53-9551-08cd8df8fdda"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_token` (String, Sensitive) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_k6_cloud.my_airbyte_source_k6_cloud ""
+```

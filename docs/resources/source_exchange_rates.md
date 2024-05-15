@@ -20,10 +20,10 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
     ignore_weekends = false
     start_date      = "YYYY-MM-DD"
   }
-  definition_id = "6e3c2d33-082a-4b84-8e56-112c1fda0210"
-  name          = "Darrell Schaefer"
+  definition_id = "8e649d76-75fb-4581-a2af-6a8ac65536a2"
+  name          = "Dr. Regina West"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ec287654-f12b-4c84-828f-bb0cddcf802e"
+  workspace_id  = "d309ea58-0059-44fb-9866-314cace02f96"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `base` (String) ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
 - `ignore_weekends` (Boolean) Ignore weekends? (Exchanges don't run on weekends). Default: true
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_exchange_rates.my_airbyte_source_exchange_rates ""
+```

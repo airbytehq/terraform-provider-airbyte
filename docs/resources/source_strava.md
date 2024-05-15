@@ -21,10 +21,10 @@ resource "airbyte_source_strava" "my_source_strava" {
     refresh_token = "fc6243f283e51f6ca989aab298b17da125496f50"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  definition_id = "0a2e7cfe-6f34-4acc-a5c5-6f5fa6778e44"
-  name          = "Alejandro Carroll"
+  definition_id = "27d8cbc0-547d-4c93-97d7-628c47813582"
+  name          = "Edgar Williamson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "15d12804-0ba0-43eb-bc0a-fcc3c8fa6eaf"
+  workspace_id  = "7d9dfc7f-4585-465e-b155-c9f06b5482c9"
 }
 ```
 
@@ -58,4 +58,10 @@ Required:
 - `refresh_token` (String, Sensitive) The Refresh Token with the activity: read_all permissions.
 - `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_strava.my_airbyte_source_strava ""
+```

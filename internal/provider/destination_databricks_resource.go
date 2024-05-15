@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -38,12 +40,12 @@ type DestinationDatabricksResource struct {
 
 // DestinationDatabricksResourceModel describes the resource data model.
 type DestinationDatabricksResourceModel struct {
-	Configuration   DestinationDatabricks `tfsdk:"configuration"`
-	DefinitionID    types.String          `tfsdk:"definition_id"`
-	DestinationID   types.String          `tfsdk:"destination_id"`
-	DestinationType types.String          `tfsdk:"destination_type"`
-	Name            types.String          `tfsdk:"name"`
-	WorkspaceID     types.String          `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationDatabricks `tfsdk:"configuration"`
+	DefinitionID    types.String                  `tfsdk:"definition_id"`
+	DestinationID   types.String                  `tfsdk:"destination_id"`
+	DestinationType types.String                  `tfsdk:"destination_type"`
+	Name            types.String                  `tfsdk:"name"`
+	WorkspaceID     types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationDatabricksResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *DestinationDatabricksResource) Metadata(ctx context.Context, req resour
 func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationDatabricks Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -73,6 +74,12 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 							"recommended_managed_tables": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("amazon_s3"),
+										path.MatchRelative().AtParent().AtName("azure_blob_storage"),
+									}...),
+								},
 							},
 							"amazon_s3": schema.SingleNestedAttribute{
 								Optional: true,
@@ -136,6 +143,12 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The corresponding secret to the above access key id.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("recommended_managed_tables"),
+										path.MatchRelative().AtParent().AtName("azure_blob_storage"),
+									}...),
+								},
 							},
 							"azure_blob_storage": schema.SingleNestedAttribute{
 								Optional: true,
@@ -159,6 +172,12 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Sensitive:   true,
 										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("recommended_managed_tables"),
+										path.MatchRelative().AtParent().AtName("amazon_s3"),
+									}...),
 								},
 							},
 						},
@@ -370,6 +389,10 @@ func (r *DestinationDatabricksResource) Read(ctx context.Context, req resource.R
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

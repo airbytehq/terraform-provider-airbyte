@@ -1,9 +1,12 @@
 resource "airbyte_source_zoom" "my_source_zoom" {
   configuration = {
-    jwt_token = "...my_jwt_token..."
+    account_id             = "...my_account_id..."
+    authorization_endpoint = "...my_authorization_endpoint..."
+    client_id              = "...my_client_id..."
+    client_secret          = "...my_client_secret..."
   }
-  definition_id = "a568aa6d-c340-4bb1-9469-57c123858702"
-  name          = "Austin Lang"
+  definition_id = "7f256aa2-eed9-47a7-ac93-ce2101f692ef"
+  name          = "Clayton Strosin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "32c86dad-817e-4f75-b417-c7a0b7ebf790"
+  workspace_id  = "65047283-0aac-4e29-8d7b-3b358aff5206"
 }

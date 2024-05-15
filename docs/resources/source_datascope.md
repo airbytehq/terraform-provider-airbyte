@@ -18,10 +18,10 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     api_key    = "...my_api_key..."
     start_date = "dd/mm/YYYY HH:MM"
   }
-  definition_id = "eb808ec8-c0a1-4f11-a71a-56d068f4b5e4"
-  name          = "Douglas McGlynn"
+  definition_id = "cbaa542e-6e08-4096-9d84-c3fbc24f860f"
+  name          = "Elias Lockman V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6433e1d5-1484-4aac-986d-055244c5465b"
+  workspace_id  = "8c116e72-6581-4ee6-b70f-a8ec1ba804bd"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `api_key` (String, Sensitive) API Key
 - `start_date` (String) Start date for the data to be replicated
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_datascope.my_airbyte_source_datascope ""
+```

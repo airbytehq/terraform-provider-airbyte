@@ -27,9 +27,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     custom_reports_array = [
       {
         dimensions = [
-          "query",
+          "device",
         ]
-        name = "Roosevelt Waters"
+        name = "Grace Rodriguez"
       },
     ]
     data_state = "all"
@@ -37,12 +37,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2022-05-23"
+    start_date = "2021-02-09"
   }
-  definition_id = "4c11e4e9-93d2-4947-8281-bb54dff6cf9b"
-  name          = "Velma Volkman"
+  definition_id = "2fd145f4-8d36-4313-9855-39f352d3206a"
+  name          = "Rudolph Dickinson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2888b6bd-e251-454a-92da-80f2bfa49853"
+  workspace_id  = "24a60d40-134e-4588-b6cb-030a128ae06a"
 }
 ```
 
@@ -121,4 +121,10 @@ Required:
 - `dimensions` (List of String) A list of available dimensions. Please note, that for technical reasons `date` is the default dimension which will be included in your query whether you specify it or not. Primary key will consist of your custom dimensions and the default dimension along with `site_url` and `search_type`.
 - `name` (String) The name of the custom report, this name would be used as stream name
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_google_search_console.my_airbyte_source_google_search_console ""
+```

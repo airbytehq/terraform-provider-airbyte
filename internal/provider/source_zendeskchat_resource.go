@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -36,13 +38,13 @@ type SourceZendeskChatResource struct {
 
 // SourceZendeskChatResourceModel describes the resource data model.
 type SourceZendeskChatResourceModel struct {
-	Configuration SourceZendeskChat `tfsdk:"configuration"`
-	DefinitionID  types.String      `tfsdk:"definition_id"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceZendeskChat `tfsdk:"configuration"`
+	DefinitionID  types.String              `tfsdk:"definition_id"`
+	Name          types.String              `tfsdk:"name"`
+	SecretID      types.String              `tfsdk:"secret_id"`
+	SourceID      types.String              `tfsdk:"source_id"`
+	SourceType    types.String              `tfsdk:"source_type"`
+	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZendeskChatResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *SourceZendeskChatResource) Metadata(ctx context.Context, req resource.M
 func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceZendeskChat Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -71,6 +72,11 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 										Sensitive:   true,
 										Description: `The Access Token to make authenticated requests.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
 								},
 							},
 							"o_auth20": schema.SingleNestedAttribute{
@@ -94,6 +100,11 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 										Sensitive:   true,
 										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("access_token"),
+									}...),
 								},
 							},
 						},
@@ -283,6 +294,10 @@ func (r *SourceZendeskChatResource) Read(ctx context.Context, req resource.ReadR
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

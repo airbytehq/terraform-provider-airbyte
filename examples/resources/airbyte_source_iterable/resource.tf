@@ -3,8 +3,8 @@ resource "airbyte_source_iterable" "my_source_iterable" {
     api_key    = "...my_api_key..."
     start_date = "2021-04-01T00:00:00Z"
   }
-  definition_id = "deee1be4-e723-4eea-b419-bc59e04a869e"
-  name          = "Sammy Braun"
+  definition_id = "b6356d53-3916-430f-92f1-31d4fbef253f"
+  name          = "Florence Padberg I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f3b04e32-dc64-49b6-bc8e-2c7d0de0f8a2"
+  workspace_id  = "5dc90f63-794a-497d-9acf-56253a66e5ad"
 }

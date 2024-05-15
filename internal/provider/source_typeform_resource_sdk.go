@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
@@ -42,7 +42,7 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformCreateRequest() *sha
 			SourceTypeformPrivateToken: sourceTypeformPrivateToken,
 		}
 	}
-	var formIds []string = nil
+	var formIds []string = []string{}
 	for _, formIdsItem := range r.Configuration.FormIds {
 		formIds = append(formIds, formIdsItem.ValueString())
 	}
@@ -82,10 +82,12 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformCreateRequest() *sha
 }
 
 func (r *SourceTypeformResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceTypeformResourceModel) ToSharedSourceTypeformPutRequest() *shared.SourceTypeformPutRequest {
@@ -122,7 +124,7 @@ func (r *SourceTypeformResourceModel) ToSharedSourceTypeformPutRequest() *shared
 			SourceTypeformUpdatePrivateToken: sourceTypeformUpdatePrivateToken,
 		}
 	}
-	var formIds []string = nil
+	var formIds []string = []string{}
 	for _, formIdsItem := range r.Configuration.FormIds {
 		formIds = append(formIds, formIdsItem.ValueString())
 	}

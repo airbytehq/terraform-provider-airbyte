@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -37,12 +39,12 @@ type DestinationS3GlueResource struct {
 
 // DestinationS3GlueResourceModel describes the resource data model.
 type DestinationS3GlueResourceModel struct {
-	Configuration   DestinationS3Glue `tfsdk:"configuration"`
-	DefinitionID    types.String      `tfsdk:"definition_id"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationS3Glue `tfsdk:"configuration"`
+	DefinitionID    types.String              `tfsdk:"definition_id"`
+	DestinationID   types.String              `tfsdk:"destination_id"`
+	DestinationType types.String              `tfsdk:"destination_type"`
+	Name            types.String              `tfsdk:"name"`
+	WorkspaceID     types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationS3GlueResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *DestinationS3GlueResource) Metadata(ctx context.Context, req resource.M
 func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationS3Glue Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -93,6 +94,11 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 														},
 													},
 												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_compression"),
+													}...),
+												},
 											},
 											"no_compression": schema.SingleNestedAttribute{
 												Optional: true,
@@ -108,6 +114,11 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 															),
 														},
 													},
+												},
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("gzip"),
+													}...),
 												},
 											},
 										},
@@ -392,6 +403,10 @@ func (r *DestinationS3GlueResource) Read(ctx context.Context, req resource.ReadR
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

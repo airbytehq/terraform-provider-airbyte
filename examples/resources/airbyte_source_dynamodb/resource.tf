@@ -1,13 +1,19 @@
 resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
-    access_key_id            = "A012345678910EXAMPLE"
-    endpoint                 = "https://{aws_dynamo_db_url}.com"
-    region                   = "eu-south-1"
-    reserved_attribute_names = "name, field_name, field-name"
-    secret_access_key        = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
+    credentials = {
+      authenticate_via_access_keys = {
+        access_key_id         = "A012345678910EXAMPLE"
+        additional_properties = "{ \"see\": \"documentation\" }"
+        secret_access_key     = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
+      }
+    }
+    endpoint                               = "https://{aws_dynamo_db_url}.com"
+    ignore_missing_read_permissions_tables = false
+    region                                 = "ca-west-1"
+    reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "642f3c2f-e19c-432e-9fee-92bc3373ad2c"
-  name          = "Ken Kihn"
+  definition_id = "a8cd9c5a-ad47-4afd-a11e-10d002e1c73f"
+  name          = "Dr. Willis Padberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8ef975a7-b102-4e54-8791-5a2f449e5b0b"
+  workspace_id  = "9a63be20-9caa-4593-ab80-8ec8c0a1f116"
 }

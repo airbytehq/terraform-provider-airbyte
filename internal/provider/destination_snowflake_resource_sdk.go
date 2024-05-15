@@ -3,7 +3,7 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -77,12 +77,6 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 	} else {
 		disableTypeDedupe = nil
 	}
-	enableIncrementalFinalTableUpdates := new(bool)
-	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
-		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
-	} else {
-		enableIncrementalFinalTableUpdates = nil
-	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -96,22 +90,28 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 	} else {
 		rawDataSchema = nil
 	}
+	retentionPeriodDays := new(int64)
+	if !r.Configuration.RetentionPeriodDays.IsUnknown() && !r.Configuration.RetentionPeriodDays.IsNull() {
+		*retentionPeriodDays = r.Configuration.RetentionPeriodDays.ValueInt64()
+	} else {
+		retentionPeriodDays = nil
+	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflake{
-		Credentials:                        credentials,
-		Database:                           database,
-		DisableTypeDedupe:                  disableTypeDedupe,
-		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
-		Host:                               host,
-		JdbcURLParams:                      jdbcURLParams,
-		RawDataSchema:                      rawDataSchema,
-		Role:                               role,
-		Schema:                             schema,
-		Username:                           username,
-		Warehouse:                          warehouse,
+		Credentials:         credentials,
+		Database:            database,
+		DisableTypeDedupe:   disableTypeDedupe,
+		Host:                host,
+		JdbcURLParams:       jdbcURLParams,
+		RawDataSchema:       rawDataSchema,
+		RetentionPeriodDays: retentionPeriodDays,
+		Role:                role,
+		Schema:              schema,
+		Username:            username,
+		Warehouse:           warehouse,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -131,10 +131,12 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 }
 
 func (r *DestinationSnowflakeResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutRequest() *shared.DestinationSnowflakePutRequest {
@@ -207,12 +209,6 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 	} else {
 		disableTypeDedupe = nil
 	}
-	enableIncrementalFinalTableUpdates := new(bool)
-	if !r.Configuration.EnableIncrementalFinalTableUpdates.IsUnknown() && !r.Configuration.EnableIncrementalFinalTableUpdates.IsNull() {
-		*enableIncrementalFinalTableUpdates = r.Configuration.EnableIncrementalFinalTableUpdates.ValueBool()
-	} else {
-		enableIncrementalFinalTableUpdates = nil
-	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -226,22 +222,28 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 	} else {
 		rawDataSchema = nil
 	}
+	retentionPeriodDays := new(int64)
+	if !r.Configuration.RetentionPeriodDays.IsUnknown() && !r.Configuration.RetentionPeriodDays.IsNull() {
+		*retentionPeriodDays = r.Configuration.RetentionPeriodDays.ValueInt64()
+	} else {
+		retentionPeriodDays = nil
+	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflakeUpdate{
-		Credentials:                        credentials,
-		Database:                           database,
-		DisableTypeDedupe:                  disableTypeDedupe,
-		EnableIncrementalFinalTableUpdates: enableIncrementalFinalTableUpdates,
-		Host:                               host,
-		JdbcURLParams:                      jdbcURLParams,
-		RawDataSchema:                      rawDataSchema,
-		Role:                               role,
-		Schema:                             schema,
-		Username:                           username,
-		Warehouse:                          warehouse,
+		Credentials:         credentials,
+		Database:            database,
+		DisableTypeDedupe:   disableTypeDedupe,
+		Host:                host,
+		JdbcURLParams:       jdbcURLParams,
+		RawDataSchema:       rawDataSchema,
+		RetentionPeriodDays: retentionPeriodDays,
+		Role:                role,
+		Schema:              schema,
+		Username:            username,
+		Warehouse:           warehouse,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

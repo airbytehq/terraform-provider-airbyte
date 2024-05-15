@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -40,13 +41,13 @@ type SourceFacebookMarketingResource struct {
 
 // SourceFacebookMarketingResourceModel describes the resource data model.
 type SourceFacebookMarketingResourceModel struct {
-	Configuration SourceFacebookMarketing `tfsdk:"configuration"`
-	DefinitionID  types.String            `tfsdk:"definition_id"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceFacebookMarketing `tfsdk:"configuration"`
+	DefinitionID  types.String                    `tfsdk:"definition_id"`
+	Name          types.String                    `tfsdk:"name"`
+	SecretID      types.String                    `tfsdk:"secret_id"`
+	SourceID      types.String                    `tfsdk:"source_id"`
+	SourceType    types.String                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFacebookMarketingResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,7 +57,6 @@ func (r *SourceFacebookMarketingResource) Metadata(ctx context.Context, req reso
 func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceFacebookMarketing Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -83,6 +83,21 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Optional:    true,
 						Default:     booldefault.StaticBool(true),
 						Description: `Allows action_breakdowns to be an empty list. Default: true`,
+					},
+					"ad_statuses": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+						Description: `Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.`,
+					},
+					"adset_statuses": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+						Description: `Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.`,
+					},
+					"campaign_statuses": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+						Description: `Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.`,
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
@@ -190,12 +205,6 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false`,
-					},
-					"include_deleted": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `Set to active if you want to include data from deleted Campaigns, Ads, and AdSets. Default: false`,
 					},
 					"insights_job_timeout": schema.Int64Attribute{
 						Computed:    true,
@@ -391,6 +400,10 @@ func (r *SourceFacebookMarketingResource) Read(ctx context.Context, req resource
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

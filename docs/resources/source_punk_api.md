@@ -17,12 +17,12 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
   configuration = {
     brewed_after  = "MM-YYYY"
     brewed_before = "MM-YYYY"
-    id            = 1
+    id            = 22
   }
-  definition_id = "001e515b-2e74-4052-aa67-dad65e8ae1d2"
-  name          = "Dr. Bessie Rolfson"
+  definition_id = "9631ebca-faa2-4ee7-a1e0-cb6197095b91"
+  name          = "Justin Cummerata Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "be7d2d34-33ea-4862-b99c-ad5c4b833469"
+  workspace_id  = "0f09eb70-6bb0-416e-a0ac-6bfae2b40c17"
 }
 ```
 
@@ -57,4 +57,10 @@ Optional:
 
 - `id` (String) To extract specific data with Unique ID
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_punk_api.my_airbyte_source_punk_api ""
+```

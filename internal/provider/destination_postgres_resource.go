@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -38,12 +40,12 @@ type DestinationPostgresResource struct {
 
 // DestinationPostgresResourceModel describes the resource data model.
 type DestinationPostgresResourceModel struct {
-	Configuration   DestinationPostgres `tfsdk:"configuration"`
-	DefinitionID    types.String        `tfsdk:"definition_id"`
-	DestinationID   types.String        `tfsdk:"destination_id"`
-	DestinationType types.String        `tfsdk:"destination_type"`
-	Name            types.String        `tfsdk:"name"`
-	WorkspaceID     types.String        `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationPostgres `tfsdk:"configuration"`
+	DefinitionID    types.String                `tfsdk:"definition_id"`
+	DestinationID   types.String                `tfsdk:"destination_id"`
+	DestinationType types.String                `tfsdk:"destination_type"`
+	Name            types.String                `tfsdk:"name"`
+	WorkspaceID     types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationPostgresResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,7 +55,6 @@ func (r *DestinationPostgresResource) Metadata(ctx context.Context, req resource
 func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationPostgres Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -70,6 +71,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
+					},
+					"drop_cascade": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects. Default: false`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -107,21 +114,57 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Allow SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"disable": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Disable SSL.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"prefer": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Prefer SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"require": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Require SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_ca": schema.SingleNestedAttribute{
 								Optional: true,
@@ -137,6 +180,15 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_full": schema.SingleNestedAttribute{
 								Optional: true,
@@ -161,6 +213,15 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `Verify-full SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+									}...),
+								},
 							},
 						},
 						MarkdownDescription: `SSL connection modes. ` + "\n" +
@@ -181,6 +242,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -205,6 +272,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -228,6 +301,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -402,6 +481,10 @@ func (r *DestinationPostgresResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

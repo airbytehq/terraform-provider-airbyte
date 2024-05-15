@@ -18,10 +18,10 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     api_token              = "...my_api_token..."
     replication_start_date = "2017-01-25 00:00:00Z"
   }
-  definition_id = "be7bbe4e-8da5-4f86-bba5-cf8db48a2cc4"
-  name          = "Carrie Kulas Sr."
+  definition_id = "5ec46f2b-ce2e-477b-bcce-f588ac548be8"
+  name          = "Ted O'Conner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0c3ecc15-58e9-483f-b3bb-c2f8e75b95ee"
+  workspace_id  = "bf52c792-93e2-48aa-8190-3348b38fe3b5"
 }
 ```
 
@@ -52,4 +52,10 @@ Required:
 - `api_token` (String, Sensitive) The Pipedrive API Token.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_pipedrive.my_airbyte_source_pipedrive ""
+```

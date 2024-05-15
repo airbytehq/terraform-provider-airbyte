@@ -34,12 +34,12 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Lee8"
+    username = "Ursula46"
   }
-  definition_id = "ebcafaa2-ee7a-41e0-8b61-97095b91e126"
-  name          = "Patricia Beatty V"
+  definition_id = "0c28b278-d25e-44ee-8a51-abe7bbe4e8da"
+  name          = "Lana Littel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eb706bb0-16ea-40ac-abfa-e2b40c173d4d"
+  workspace_id  = "ba5cf8db-48a2-4cc4-847b-120c3ecc1558"
 }
 ```
 
@@ -108,6 +108,7 @@ Optional:
 - `additional_properties` (String) Parsed as JSON.
 - `heartbeat_action_query` (String) Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200
+- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `lsn_commit_behaviour` (String) Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
 - `plugin` (String) A logical decoding plugin installed on the PostgreSQL server. must be one of ["pgoutput"]; Default: "pgoutput"
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
@@ -233,4 +234,10 @@ Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_postgres.my_airbyte_source_postgres ""
+```

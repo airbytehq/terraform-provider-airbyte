@@ -3,39 +3,41 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceNotionResourceModel) ToSharedSourceNotionCreateRequest() *shared.SourceNotionCreateRequest {
-	var credentials shared.SourceNotionAuthenticationMethod
-	var sourceNotionOAuth20 *shared.SourceNotionOAuth20
-	if r.Configuration.Credentials.OAuth20 != nil {
-		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-		sourceNotionOAuth20 = &shared.SourceNotionOAuth20{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+	var credentials *shared.SourceNotionAuthenticationMethod
+	if r.Configuration.Credentials != nil {
+		var sourceNotionOAuth20 *shared.SourceNotionOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			sourceNotionOAuth20 = &shared.SourceNotionOAuth20{
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceNotionOAuth20 != nil {
-		credentials = shared.SourceNotionAuthenticationMethod{
-			SourceNotionOAuth20: sourceNotionOAuth20,
+		if sourceNotionOAuth20 != nil {
+			credentials = &shared.SourceNotionAuthenticationMethod{
+				SourceNotionOAuth20: sourceNotionOAuth20,
+			}
 		}
-	}
-	var sourceNotionAccessToken *shared.SourceNotionAccessToken
-	if r.Configuration.Credentials.AccessToken != nil {
-		token := r.Configuration.Credentials.AccessToken.Token.ValueString()
-		sourceNotionAccessToken = &shared.SourceNotionAccessToken{
-			Token: token,
+		var sourceNotionAccessToken *shared.SourceNotionAccessToken
+		if r.Configuration.Credentials.AccessToken != nil {
+			token := r.Configuration.Credentials.AccessToken.Token.ValueString()
+			sourceNotionAccessToken = &shared.SourceNotionAccessToken{
+				Token: token,
+			}
 		}
-	}
-	if sourceNotionAccessToken != nil {
-		credentials = shared.SourceNotionAuthenticationMethod{
-			SourceNotionAccessToken: sourceNotionAccessToken,
+		if sourceNotionAccessToken != nil {
+			credentials = &shared.SourceNotionAuthenticationMethod{
+				SourceNotionAccessToken: sourceNotionAccessToken,
+			}
 		}
 	}
 	startDate := new(time.Time)
@@ -73,40 +75,44 @@ func (r *SourceNotionResourceModel) ToSharedSourceNotionCreateRequest() *shared.
 }
 
 func (r *SourceNotionResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceNotionResourceModel) ToSharedSourceNotionPutRequest() *shared.SourceNotionPutRequest {
-	var credentials shared.SourceNotionUpdateAuthenticationMethod
-	var sourceNotionUpdateOAuth20 *shared.SourceNotionUpdateOAuth20
-	if r.Configuration.Credentials.OAuth20 != nil {
-		accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-		clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
-		sourceNotionUpdateOAuth20 = &shared.SourceNotionUpdateOAuth20{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+	var credentials *shared.SourceNotionUpdateAuthenticationMethod
+	if r.Configuration.Credentials != nil {
+		var sourceNotionUpdateOAuth20 *shared.SourceNotionUpdateOAuth20
+		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			clientID := r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+			sourceNotionUpdateOAuth20 = &shared.SourceNotionUpdateOAuth20{
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceNotionUpdateOAuth20 != nil {
-		credentials = shared.SourceNotionUpdateAuthenticationMethod{
-			SourceNotionUpdateOAuth20: sourceNotionUpdateOAuth20,
+		if sourceNotionUpdateOAuth20 != nil {
+			credentials = &shared.SourceNotionUpdateAuthenticationMethod{
+				SourceNotionUpdateOAuth20: sourceNotionUpdateOAuth20,
+			}
 		}
-	}
-	var sourceNotionUpdateAccessToken *shared.SourceNotionUpdateAccessToken
-	if r.Configuration.Credentials.AccessToken != nil {
-		token := r.Configuration.Credentials.AccessToken.Token.ValueString()
-		sourceNotionUpdateAccessToken = &shared.SourceNotionUpdateAccessToken{
-			Token: token,
+		var sourceNotionUpdateAccessToken *shared.SourceNotionUpdateAccessToken
+		if r.Configuration.Credentials.AccessToken != nil {
+			token := r.Configuration.Credentials.AccessToken.Token.ValueString()
+			sourceNotionUpdateAccessToken = &shared.SourceNotionUpdateAccessToken{
+				Token: token,
+			}
 		}
-	}
-	if sourceNotionUpdateAccessToken != nil {
-		credentials = shared.SourceNotionUpdateAuthenticationMethod{
-			SourceNotionUpdateAccessToken: sourceNotionUpdateAccessToken,
+		if sourceNotionUpdateAccessToken != nil {
+			credentials = &shared.SourceNotionUpdateAuthenticationMethod{
+				SourceNotionUpdateAccessToken: sourceNotionUpdateAccessToken,
+			}
 		}
 	}
 	startDate := new(time.Time)

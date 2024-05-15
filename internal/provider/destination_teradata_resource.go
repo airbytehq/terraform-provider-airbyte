@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -37,12 +39,12 @@ type DestinationTeradataResource struct {
 
 // DestinationTeradataResourceModel describes the resource data model.
 type DestinationTeradataResourceModel struct {
-	Configuration   DestinationTeradata `tfsdk:"configuration"`
-	DefinitionID    types.String        `tfsdk:"definition_id"`
-	DestinationID   types.String        `tfsdk:"destination_id"`
-	DestinationType types.String        `tfsdk:"destination_type"`
-	Name            types.String        `tfsdk:"name"`
-	WorkspaceID     types.String        `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationTeradata `tfsdk:"configuration"`
+	DefinitionID    types.String                `tfsdk:"definition_id"`
+	DestinationID   types.String                `tfsdk:"destination_id"`
+	DestinationType types.String                `tfsdk:"destination_type"`
+	Name            types.String                `tfsdk:"name"`
+	WorkspaceID     types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationTeradataResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *DestinationTeradataResource) Metadata(ctx context.Context, req resource
 func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationTeradata Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -92,21 +93,57 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Allow SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"disable": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Disable SSL.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"prefer": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Prefer SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"require": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Require SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_ca": schema.SingleNestedAttribute{
 								Optional: true,
@@ -118,6 +155,15 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_full": schema.SingleNestedAttribute{
 								Optional: true,
@@ -129,6 +175,15 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `Verify-full SSL mode.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+									}...),
+								},
 							},
 						},
 						MarkdownDescription: `SSL connection modes. ` + "\n" +
@@ -309,6 +364,10 @@ func (r *DestinationTeradataResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

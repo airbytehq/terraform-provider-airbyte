@@ -7,8 +7,8 @@ resource "airbyte_source_notion" "my_source_notion" {
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "c9c1a8da-b7e7-43a5-9718-14e4dc1f633a"
-  name          = "Salvatore Hermann"
+  definition_id = "7242137f-e2e9-4e26-84c1-04f1dbe3b1f2"
+  name          = "Daniel Fritsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "542d517f-c88b-4c49-98d7-5efedea337d5"
+  workspace_id  = "75738476-5c77-4418-814d-1f263651b77f"
 }

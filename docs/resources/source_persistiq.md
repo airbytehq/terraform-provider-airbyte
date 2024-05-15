@@ -17,10 +17,10 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "f1707475-e2d6-4a49-b80b-a1d6a28c6eef"
-  name          = "Dustin Medhurst"
+  definition_id = "c4743ee7-9bd1-43e2-8465-9bbdc56c2f2e"
+  name          = "Mary Cummings"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2db22407-ce31-40da-b633-150acfec241f"
+  workspace_id  = "c6b13998-d3fc-4543-8ae0-66d4a91bbbc3"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_persistiq.my_airbyte_source_persistiq ""
+```

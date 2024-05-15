@@ -10,7 +10,7 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     endpoint       = "...my_endpoint..."
     upsert         = false
   }
-  definition_id = "56553a4e-50cd-4de3-bcff-11f630fa923b"
-  name          = "Elisa Lakin"
-  workspace_id  = "15f868bf-0372-497d-8d66-bcb9a13f0bea"
+  definition_id = "56635457-da65-4ed4-a5e7-58afd2ad38ed"
+  name          = "Dr. Lila Stiedemann"
+  workspace_id  = "e2212dc7-d0e4-4e50-95ed-94b4ecb397d0"
 }

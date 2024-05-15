@@ -8,8 +8,8 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "c48ec8b4-573d-466d-807e-52a2e4396e74"
-  name          = "Tiffany Waters"
+  definition_id = "8905c854-3b91-484c-ac7d-cadad2938da5"
+  name          = "Tonya Hand"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d50959a4-fa50-4e80-bc86-bd0cbf5314ee"
+  workspace_id  = "880f00a3-0dde-4f9a-90fa-7f8f441b58df"
 }

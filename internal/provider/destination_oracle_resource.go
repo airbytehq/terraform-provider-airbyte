@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -37,12 +39,12 @@ type DestinationOracleResource struct {
 
 // DestinationOracleResourceModel describes the resource data model.
 type DestinationOracleResourceModel struct {
-	Configuration   DestinationOracle `tfsdk:"configuration"`
-	DefinitionID    types.String      `tfsdk:"definition_id"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationOracle `tfsdk:"configuration"`
+	DefinitionID    types.String              `tfsdk:"definition_id"`
+	DestinationID   types.String              `tfsdk:"destination_id"`
+	DestinationType types.String              `tfsdk:"destination_type"`
+	Name            types.String              `tfsdk:"name"`
+	WorkspaceID     types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationOracleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *DestinationOracleResource) Metadata(ctx context.Context, req resource.M
 func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationOracle Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -79,6 +80,10 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 						Default:     int64default.StaticInt64(1521),
 						Description: `The port of the database. Default: 1521`,
 					},
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `The schema to write raw tables into (default: airbyte_internal)`,
+					},
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
@@ -95,6 +100,12 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -119,6 +130,12 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -142,6 +159,12 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -316,6 +339,10 @@ func (r *DestinationOracleResource) Read(ctx context.Context, req resource.ReadR
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

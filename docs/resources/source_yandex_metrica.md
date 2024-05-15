@@ -20,10 +20,10 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     end_date   = "2022-01-01"
     start_date = "2022-01-01"
   }
-  definition_id = "725c6d5a-5da3-4503-9f4e-4098bb8c2a23"
-  name          = "Mr. Travis Roob"
+  definition_id = "cb9fd6e1-ad74-470b-8320-ef50a8ca76b0"
+  name          = "Stanley Toy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4621866c-f518-4dbd-9ebe-e014e07eadc6"
+  workspace_id  = "80df1804-a67b-49f3-a581-49512957c298"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 
 - `end_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_yandex_metrica.my_airbyte_source_yandex_metrica ""
+```

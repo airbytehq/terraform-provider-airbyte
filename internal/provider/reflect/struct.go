@@ -73,7 +73,7 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 
 	// collect a map of fields that are defined in the tags of the struct
 	// passed in
-	targetFields, err := getStructTags(ctx, target, path)
+	targetFields, err := getStructTags(ctx, target, path, opts)
 	if err != nil {
 		diags.Append(diag.WithPath(path, DiagIntoIncompatibleType{
 			Val:        object,
@@ -125,7 +125,8 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 	} else {
 		result = reflect.New(target.Type()).Elem()
 	}
-	// Fork End
+	structType := trueReflectValue(target).Type()
+
 	for field, structFieldPos := range targetFields {
 		attrType, ok := attrTypes[field]
 		if !ok {
@@ -136,6 +137,13 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 			}))
 			return target, diags
 		}
+
+		fieldReflected := structType.Field(structFieldPos)
+		if opts.SourceType == SourceTypeState && fieldReflected.Tag.Get(`tfPlanOnly`) == "true" {
+			// skip explicitly excluded fields
+			continue
+		}
+		// Fork End
 		structField := result.Field(structFieldPos)
 		fieldVal, fieldValDiags := BuildValue(ctx, attrType, objectFields[field], structField, opts, path.AtName(field))
 		diags.Append(fieldValDiags...)
@@ -162,7 +170,7 @@ func FromStruct(ctx context.Context, typ attr.TypeWithAttributeTypes, val reflec
 
 	// collect a map of fields that are defined in the tags of the struct
 	// passed in
-	targetFields, err := getStructTags(ctx, val, path)
+	targetFields, err := getStructTags(ctx, val, path, Options{})
 	if err != nil {
 		err = fmt.Errorf("error retrieving field names from struct tags: %w", err)
 		diags.AddAttributeError(

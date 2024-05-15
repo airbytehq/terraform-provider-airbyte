@@ -7,9 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -38,13 +41,13 @@ type SourceMongodbV2Resource struct {
 
 // SourceMongodbV2ResourceModel describes the resource data model.
 type SourceMongodbV2ResourceModel struct {
-	Configuration SourceMongodbV2 `tfsdk:"configuration"`
-	DefinitionID  types.String    `tfsdk:"definition_id"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMongodbV2 `tfsdk:"configuration"`
+	DefinitionID  types.String            `tfsdk:"definition_id"`
+	Name          types.String            `tfsdk:"name"`
+	SecretID      types.String            `tfsdk:"secret_id"`
+	SourceID      types.String            `tfsdk:"source_id"`
+	SourceType    types.String            `tfsdk:"source_type"`
+	WorkspaceID   types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMongodbV2Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +57,6 @@ func (r *SourceMongodbV2Resource) Metadata(ctx context.Context, req resource.Met
 func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMongodbV2 Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -106,6 +108,11 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								Description: `MongoDB Atlas-hosted cluster configured as a replica set`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("self_managed_replica_set"),
+									}...),
+								},
 							},
 							"self_managed_replica_set": schema.SingleNestedAttribute{
 								Optional: true,
@@ -148,6 +155,11 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 								Description: `MongoDB self-hosted cluster configured as a replica set`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("mongo_db_atlas_replica_set"),
+									}...),
+								},
 							},
 						},
 						Description: `Configures the MongoDB cluster type.`,
@@ -167,11 +179,35 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 						Default:     int64default.StaticInt64(300),
 						Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300`,
 					},
+					"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("Fail sync"),
+						Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"Fail sync",
+								"Re-sync data",
+							),
+						},
+					},
 					"queue_size": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     int64default.StaticInt64(10000),
 						Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000`,
+					},
+					"update_capture_mode": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("Lookup"),
+						Description: `Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images. must be one of ["Lookup", "Post Image"]; Default: "Lookup"`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"Lookup",
+								"Post Image",
+							),
+						},
 					},
 				},
 			},
@@ -342,6 +378,10 @@ func (r *SourceMongodbV2Resource) Read(ctx context.Context, req resource.ReadReq
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

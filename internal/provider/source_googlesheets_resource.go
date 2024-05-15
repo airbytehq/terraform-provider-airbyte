@@ -7,13 +7,16 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -36,13 +39,13 @@ type SourceGoogleSheetsResource struct {
 
 // SourceGoogleSheetsResourceModel describes the resource data model.
 type SourceGoogleSheetsResourceModel struct {
-	Configuration SourceGoogleSheets `tfsdk:"configuration"`
-	DefinitionID  types.String       `tfsdk:"definition_id"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceGoogleSheets `tfsdk:"configuration"`
+	DefinitionID  types.String               `tfsdk:"definition_id"`
+	Name          types.String               `tfsdk:"name"`
+	SecretID      types.String               `tfsdk:"secret_id"`
+	SourceID      types.String               `tfsdk:"source_id"`
+	SourceType    types.String               `tfsdk:"source_type"`
+	WorkspaceID   types.String               `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleSheetsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +55,6 @@ func (r *SourceGoogleSheetsResource) Metadata(ctx context.Context, req resource.
 func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceGoogleSheets Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -60,6 +62,12 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"batch_size": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(200),
+						Description: `Default value is 200. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 200 would process rows 1-201, then 201-401 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value. Default value should cover most of the cases, but if a google sheet has over 100,000 records or more, consider increasing batch_size value. Default: 200`,
+					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
@@ -80,6 +88,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 										Description: `Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key_authentication"),
+									}...),
+								},
 							},
 							"service_account_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -88,6 +101,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 										Required:    true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_google_o_auth"),
+									}...),
 								},
 							},
 						},
@@ -275,6 +293,10 @@ func (r *SourceGoogleSheetsResource) Read(ctx context.Context, req resource.Read
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

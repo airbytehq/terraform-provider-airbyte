@@ -7,8 +7,9 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -35,13 +36,13 @@ type SourceSendgridResource struct {
 
 // SourceSendgridResourceModel describes the resource data model.
 type SourceSendgridResourceModel struct {
-	Configuration SourceSendgrid `tfsdk:"configuration"`
-	DefinitionID  types.String   `tfsdk:"definition_id"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceChartmogul `tfsdk:"configuration"`
+	DefinitionID  types.String             `tfsdk:"definition_id"`
+	Name          types.String             `tfsdk:"name"`
+	SecretID      types.String             `tfsdk:"secret_id"`
+	SourceID      types.String             `tfsdk:"source_id"`
+	SourceType    types.String             `tfsdk:"source_type"`
+	WorkspaceID   types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSendgridResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,7 +52,6 @@ func (r *SourceSendgridResource) Metadata(ctx context.Context, req resource.Meta
 func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceSendgrid Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -59,14 +59,14 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"apikey": schema.StringAttribute{
+					"api_key": schema.StringAttribute{
 						Required:    true,
 						Sensitive:   true,
-						Description: `API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.`,
+						Description: `Sendgrid API Key, use <a href=\"https://app.sendgrid.com/settings/api_keys/\">admin</a> to generate this key.`,
 					},
-					"start_time": schema.StringAttribute{
-						Optional:    true,
-						Description: `Start time in ISO8601 format. Any data before this time point will not be replicated.`,
+					"start_date": schema.StringAttribute{
+						Required:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
@@ -240,6 +240,10 @@ func (r *SourceSendgridResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

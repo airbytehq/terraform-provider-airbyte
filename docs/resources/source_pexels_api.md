@@ -17,15 +17,15 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
     color       = "red"
-    locale      = "en-US"
-    orientation = "square"
-    query       = "people"
-    size        = "large"
+    locale      = "pt-BR"
+    orientation = "landscape"
+    query       = "oceans"
+    size        = "small"
   }
-  definition_id = "e1c87958-3a59-4a82-9531-0140178456a4"
-  name          = "Jonathan Bode"
+  definition_id = "2b6d5805-ab7b-4933-9a5d-dafad6ab5ec8"
+  name          = "Neal Nitzsche"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "de2c277a-8e23-488f-9012-0f62c51a2676"
+  workspace_id  = "8d2abfdc-0f33-4811-9dad-7d79aa2af68e"
 }
 ```
 
@@ -63,4 +63,10 @@ Optional:
 - `orientation` (String) Optional, Desired photo orientation. The current supported orientations are landscape, portrait or square
 - `size` (String) Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_pexels_api.my_airbyte_source_pexels_api ""
+```

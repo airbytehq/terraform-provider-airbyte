@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,13 +41,13 @@ type SourcePostgresResource struct {
 
 // SourcePostgresResourceModel describes the resource data model.
 type SourcePostgresResourceModel struct {
-	Configuration SourcePostgres `tfsdk:"configuration"`
-	DefinitionID  types.String   `tfsdk:"definition_id"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourcePostgres `tfsdk:"configuration"`
+	DefinitionID  types.String           `tfsdk:"definition_id"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePostgresResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,7 +57,6 @@ func (r *SourcePostgresResource) Metadata(ctx context.Context, req resource.Meta
 func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourcePostgres Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -93,6 +94,12 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("read_changes_using_write_ahead_log_cdc"),
+										path.MatchRelative().AtParent().AtName("scan_changes_with_user_defined_cursor"),
+									}...),
+								},
 							},
 							"read_changes_using_write_ahead_log_cdc": schema.SingleNestedAttribute{
 								Optional: true,
@@ -115,6 +122,18 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Optional:    true,
 										Default:     int64default.StaticInt64(1200),
 										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200`,
+									},
+									"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("Fail sync"),
+										Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Fail sync",
+												"Re-sync data",
+											),
+										},
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed:    true,
@@ -155,11 +174,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("detect_changes_with_xmin_system_column"),
+										path.MatchRelative().AtParent().AtName("scan_changes_with_user_defined_cursor"),
+									}...),
+								},
 							},
 							"scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("detect_changes_with_xmin_system_column"),
+										path.MatchRelative().AtParent().AtName("read_changes_using_write_ahead_log_cdc"),
+									}...),
+								},
 							},
 						},
 						Description: `Configures how data is extracted from the database.`,
@@ -190,6 +221,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Enables encryption only when required by the source database.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"disable": schema.SingleNestedAttribute{
 								Optional: true,
@@ -203,6 +243,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Disables encryption of communication between Airbyte and source database.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"prefer": schema.SingleNestedAttribute{
 								Optional: true,
@@ -216,6 +265,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"require": schema.SingleNestedAttribute{
 								Optional: true,
@@ -229,6 +287,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_ca": schema.SingleNestedAttribute{
 								Optional: true,
@@ -260,6 +327,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_full"),
+									}...),
+								},
 							},
 							"verify_full": schema.SingleNestedAttribute{
 								Optional: true,
@@ -291,6 +367,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("allow"),
+										path.MatchRelative().AtParent().AtName("disable"),
+										path.MatchRelative().AtParent().AtName("prefer"),
+										path.MatchRelative().AtParent().AtName("require"),
+										path.MatchRelative().AtParent().AtName("verify_ca"),
+									}...),
+								},
 							},
 						},
 						MarkdownDescription: `SSL connection modes. ` + "\n" +
@@ -305,6 +390,12 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -329,6 +420,12 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -352,6 +449,12 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -533,6 +636,10 @@ func (r *SourcePostgresResource) Read(ctx context.Context, req resource.ReadRequ
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

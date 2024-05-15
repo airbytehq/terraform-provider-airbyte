@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -39,12 +41,12 @@ type DestinationRedshiftResource struct {
 
 // DestinationRedshiftResourceModel describes the resource data model.
 type DestinationRedshiftResourceModel struct {
-	Configuration   DestinationRedshift `tfsdk:"configuration"`
-	DefinitionID    types.String        `tfsdk:"definition_id"`
-	DestinationID   types.String        `tfsdk:"destination_id"`
-	DestinationType types.String        `tfsdk:"destination_type"`
-	Name            types.String        `tfsdk:"name"`
-	WorkspaceID     types.String        `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationRedshift `tfsdk:"configuration"`
+	DefinitionID    types.String                `tfsdk:"definition_id"`
+	DestinationID   types.String                `tfsdk:"destination_id"`
+	DestinationType types.String                `tfsdk:"destination_type"`
+	Name            types.String                `tfsdk:"name"`
+	WorkspaceID     types.String                `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationRedshiftResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,7 +56,6 @@ func (r *DestinationRedshiftResource) Metadata(ctx context.Context, req resource
 func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationRedshift Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -71,12 +72,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false`,
-					},
-					"enable_incremental_final_table_updates": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `When enabled your data will load into your final tables incrementally while your data is still being synced. When Disabled (the default), your data loads into your final tables once at the end of a sync. Note that this option only applies if you elect to create Final tables. Default: false`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -99,7 +94,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"raw_data_schema": schema.StringAttribute{
 						Optional:    true,
-						Description: `The schema to write raw tables into`,
+						Description: `The schema to write raw tables into (default: airbyte_internal).`,
 					},
 					"schema": schema.StringAttribute{
 						Computed:    true,
@@ -113,6 +108,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -137,6 +138,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -160,6 +167,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -192,23 +205,27 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_encryption"),
+													}...),
+												},
 											},
 											"no_encryption": schema.SingleNestedAttribute{
 												Optional:    true,
 												Attributes:  map[string]schema.Attribute{},
 												Description: `Staging data will be stored in plaintext.`,
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("aescbc_envelope_encryption"),
+													}...),
+												},
 											},
 										},
 										Description: `How to encrypt the staging data`,
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
-									},
-									"file_buffer_count": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(10),
-										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects. Default: 10`,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
@@ -279,11 +296,21 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 								},
 								Description: `<i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("standard"),
+									}...),
+								},
 							},
 							"standard": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `<i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("awss3_staging"),
+									}...),
+								},
 							},
 						},
 						Description: `The way data will be uploaded to Redshift.`,
@@ -457,6 +484,10 @@ func (r *DestinationRedshiftResource) Read(ctx context.Context, req resource.Rea
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

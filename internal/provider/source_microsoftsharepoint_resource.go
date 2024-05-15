@@ -7,10 +7,12 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -40,13 +42,13 @@ type SourceMicrosoftSharepointResource struct {
 
 // SourceMicrosoftSharepointResourceModel describes the resource data model.
 type SourceMicrosoftSharepointResourceModel struct {
-	Configuration SourceMicrosoftSharepoint `tfsdk:"configuration"`
-	DefinitionID  types.String              `tfsdk:"definition_id"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceMicrosoftSharepoint `tfsdk:"configuration"`
+	DefinitionID  types.String                      `tfsdk:"definition_id"`
+	Name          types.String                      `tfsdk:"name"`
+	SecretID      types.String                      `tfsdk:"secret_id"`
+	SourceID      types.String                      `tfsdk:"source_id"`
+	SourceType    types.String                      `tfsdk:"source_type"`
+	WorkspaceID   types.String                      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMicrosoftSharepointResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,7 +58,6 @@ func (r *SourceMicrosoftSharepointResource) Metadata(ctx context.Context, req re
 func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "SourceMicrosoftSharepoint Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -79,7 +80,7 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required:    true,
+										Optional:    true,
 										Sensitive:   true,
 										Description: `Refresh Token of your Microsoft developer application`,
 									},
@@ -90,6 +91,11 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 								},
 								MarkdownDescription: `OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.` + "\n" +
 									`This class uses pydantic for data validation and settings management.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_key_authentication"),
+									}...),
+								},
 							},
 							"service_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -113,6 +119,11 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 								},
 								MarkdownDescription: `ServiceCredentials class for service key authentication.` + "\n" +
 									`This class is structured similarly to OAuthCredentials but for a different authentication method.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_microsoft_o_auth"),
+									}...),
+								},
 							},
 						},
 						Description: `Credentials for connecting to the One Drive API`,
@@ -121,8 +132,23 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"folder_path": schema.StringAttribute{
-						Required:    true,
-						Description: `Path to folder of the Microsoft SharePoint drive where the file(s) exist.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("."),
+						Description: `Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items. Default: "."`,
+					},
+					"search_scope": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("ALL"),
+						Description: `Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both. must be one of ["ACCESSIBLE_DRIVES", "SHARED_ITEMS", "ALL"]; Default: "ALL"`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"ACCESSIBLE_DRIVES",
+								"SHARED_ITEMS",
+								"ALL",
+							),
+						},
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -153,6 +179,14 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 													Default:     booldefault.StaticBool(false),
 													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers. Default: false`,
 												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
 											},
 										},
 										"csv_format": schema.SingleNestedAttribute{
@@ -194,10 +228,22 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 														"autogenerated": schema.SingleNestedAttribute{
 															Optional:   true,
 															Attributes: map[string]schema.Attribute{},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("from_csv"),
+																	path.MatchRelative().AtParent().AtName("user_provided"),
+																}...),
+															},
 														},
 														"from_csv": schema.SingleNestedAttribute{
 															Optional:   true,
 															Attributes: map[string]schema.Attribute{},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("autogenerated"),
+																	path.MatchRelative().AtParent().AtName("user_provided"),
+																}...),
+															},
 														},
 														"user_provided": schema.SingleNestedAttribute{
 															Optional: true,
@@ -208,12 +254,24 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 																	Description: `The column names that will be used while emitting the CSV records`,
 																},
 															},
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("autogenerated"),
+																	path.MatchRelative().AtParent().AtName("from_csv"),
+																}...),
+															},
 														},
 													},
 													Description: `How headers will be defined. ` + "`" + `User Provided` + "`" + ` assumes the CSV does not have a header row and uses the headers provided and ` + "`" + `Autogenerated` + "`" + ` assumes the CSV does not have a header row and the CDK will generate headers using for ` + "`" + `f{i}` + "`" + ` where ` + "`" + `i` + "`" + ` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.`,
 													Validators: []validator.Object{
 														validators.ExactlyOneChild(),
 													},
+												},
+												"ignore_errors_on_fields_mismatch": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
 												},
 												"null_values": schema.ListAttribute{
 													Optional:    true,
@@ -256,6 +314,14 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 													},
 												},
 											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"document_file_type_format_experimental": schema.SingleNestedAttribute{
 											Optional: true,
@@ -296,10 +362,26 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 												},
 											},
 											Description: `Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"jsonl_format": schema.SingleNestedAttribute{
 											Optional:   true,
 											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 										"parquet_format": schema.SingleNestedAttribute{
 											Optional: true,
@@ -310,6 +392,14 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 													Default:     booldefault.StaticBool(false),
 													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
 												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+												}...),
 											},
 										},
 									},
@@ -530,6 +620,10 @@ func (r *SourceMicrosoftSharepointResource) Read(ctx context.Context, req resour
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

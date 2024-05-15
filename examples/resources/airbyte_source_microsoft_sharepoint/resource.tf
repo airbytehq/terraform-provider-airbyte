@@ -8,29 +8,30 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
         tenant_id     = "...my_tenant_id..."
       }
     }
-    folder_path = "...my_folder_path..."
-    start_date  = "2021-01-01T00:00:00.000000Z"
+    folder_path  = "...my_folder_path..."
+    search_scope = "ACCESSIBLE_DRIVES"
+    start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 10
+        days_to_sync_if_history_is_full = 7
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Josephine Heaney"
+        name              = "Nicholas Hartmann"
         primary_key       = "...my_primary_key..."
         schemaless        = true
-        validation_policy = "Skip Record"
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "8faeabad-eb93-4c77-a879-b6069b6a28df"
-  name          = "Katherine McDermott"
+  definition_id = "ec87aaff-eb9e-4a29-8f7e-9f4166b42b69"
+  name          = "Elmer Brekke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a9203cb7-876e-475a-931f-3b4802a3b9d6"
+  workspace_id  = "7bbad3f0-bf8c-4a74-bbfb-1506e5d6deb8"
 }

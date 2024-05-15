@@ -3,12 +3,18 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *shared.SourceShopifyCreateRequest {
+	bulkWindowInDays := new(int64)
+	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
+		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
+	} else {
+		bulkWindowInDays = nil
+	}
 	var credentials *shared.SourceShopifyShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyOAuth20 *shared.SourceShopifyOAuth20
@@ -55,6 +61,12 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 			}
 		}
 	}
+	fetchTransactionsUserID := new(bool)
+	if !r.Configuration.FetchTransactionsUserID.IsUnknown() && !r.Configuration.FetchTransactionsUserID.IsNull() {
+		*fetchTransactionsUserID = r.Configuration.FetchTransactionsUserID.ValueBool()
+	} else {
+		fetchTransactionsUserID = nil
+	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -63,9 +75,11 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 		startDate = nil
 	}
 	configuration := shared.SourceShopify{
-		Credentials: credentials,
-		Shop:        shop,
-		StartDate:   startDate,
+		BulkWindowInDays:        bulkWindowInDays,
+		Credentials:             credentials,
+		FetchTransactionsUserID: fetchTransactionsUserID,
+		Shop:                    shop,
+		StartDate:               startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -92,13 +106,21 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 }
 
 func (r *SourceShopifyResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.SourceShopifyPutRequest {
+	bulkWindowInDays := new(int64)
+	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
+		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
+	} else {
+		bulkWindowInDays = nil
+	}
 	var credentials *shared.ShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyUpdateOAuth20 *shared.SourceShopifyUpdateOAuth20
@@ -145,6 +167,12 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 			}
 		}
 	}
+	fetchTransactionsUserID := new(bool)
+	if !r.Configuration.FetchTransactionsUserID.IsUnknown() && !r.Configuration.FetchTransactionsUserID.IsNull() {
+		*fetchTransactionsUserID = r.Configuration.FetchTransactionsUserID.ValueBool()
+	} else {
+		fetchTransactionsUserID = nil
+	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -153,9 +181,11 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 		startDate = nil
 	}
 	configuration := shared.SourceShopifyUpdate{
-		Credentials: credentials,
-		Shop:        shop,
-		StartDate:   startDate,
+		BulkWindowInDays:        bulkWindowInDays,
+		Credentials:             credentials,
+		FetchTransactionsUserID: fetchTransactionsUserID,
+		Shop:                    shop,
+		StartDate:               startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

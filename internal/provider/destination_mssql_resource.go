@@ -7,9 +7,11 @@ import (
 	"fmt"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -37,12 +39,12 @@ type DestinationMssqlResource struct {
 
 // DestinationMssqlResourceModel describes the resource data model.
 type DestinationMssqlResourceModel struct {
-	Configuration   DestinationMssql `tfsdk:"configuration"`
-	DefinitionID    types.String     `tfsdk:"definition_id"`
-	DestinationID   types.String     `tfsdk:"destination_id"`
-	DestinationType types.String     `tfsdk:"destination_type"`
-	Name            types.String     `tfsdk:"name"`
-	WorkspaceID     types.String     `tfsdk:"workspace_id"`
+	Configuration   tfTypes.DestinationMssql `tfsdk:"configuration"`
+	DefinitionID    types.String             `tfsdk:"definition_id"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMssqlResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,7 +54,6 @@ func (r *DestinationMssqlResource) Metadata(ctx context.Context, req resource.Me
 func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		MarkdownDescription: "DestinationMssql Resource",
-
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
 				PlanModifiers: []planmodifier.Object{
@@ -83,6 +84,10 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 						Default:     int64default.StaticInt64(1433),
 						Description: `The port of the MSSQL database. Default: 1433`,
 					},
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `The schema to write raw tables into (default: airbyte_internal)`,
+					},
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
@@ -96,6 +101,11 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("encrypted_verify_certificate"),
+									}...),
+								},
 							},
 							"encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
@@ -106,6 +116,11 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("encrypted_trust_server_certificate"),
+									}...),
+								},
 							},
 						},
 						Description: `The encryption method which is used to communicate with the database.`,
@@ -119,6 +134,12 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 							"no_tunnel": schema.SingleNestedAttribute{
 								Optional:   true,
 								Attributes: map[string]schema.Attribute{},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -143,6 +164,12 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("ssh_key_authentication"),
+									}...),
+								},
 							},
 							"ssh_key_authentication": schema.SingleNestedAttribute{
 								Optional: true,
@@ -166,6 +193,12 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 										Required:    true,
 										Description: `OS-level username for logging into the jump server host.`,
 									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("no_tunnel"),
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
 								},
 							},
 						},
@@ -340,6 +373,10 @@ func (r *DestinationMssqlResource) Read(ctx context.Context, req resource.ReadRe
 	}
 	if res == nil {
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode == 404 {
+		resp.State.RemoveResource(ctx)
 		return
 	}
 	if res.StatusCode != 200 {

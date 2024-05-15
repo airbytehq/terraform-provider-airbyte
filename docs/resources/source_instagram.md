@@ -20,10 +20,10 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     client_secret = "...my_client_secret..."
     start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "fbde6ae5-3955-4108-8d8d-f8fddacae826"
-  name          = "Jan Willms"
+  definition_id = "730b3999-4a41-4e4a-8985-c78fa7d86bdf"
+  name          = "Kristy Wilderman MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9bb4850d-654b-4e1e-b85d-e7e327e77875"
+  workspace_id  = "cb121083-728d-489e-b51e-868df1f2c5ad"
 }
 ```
 
@@ -59,4 +59,10 @@ Optional:
 - `client_secret` (String) The Client Secret for your Oauth application
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_instagram.my_airbyte_source_instagram ""
+```

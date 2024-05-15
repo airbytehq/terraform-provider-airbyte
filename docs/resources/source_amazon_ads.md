@@ -22,22 +22,22 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       "...",
     ]
     profiles = [
-      3,
+      8,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "NA"
+    region        = "FE"
     report_record_types = [
-      "asins",
+      "adGroups",
     ]
-    start_date = "2022-10-10"
+    start_date = "2022-10-22"
     state_filter = [
-      "enabled",
+      "paused",
     ]
   }
-  definition_id = "945c4336-0526-4ae8-aa3c-4f287913b866"
-  name          = "Willie Bayer"
+  definition_id = "e1cc1931-3722-4140-a7ee-71b638bd648d"
+  name          = "Mrs. Gail Lesch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1180fb2a-875a-41ca-990e-95bd1182a17e"
+  workspace_id  = "feb93d4b-bde9-4f2b-b80c-d3fe4ad28293"
 }
 ```
 
@@ -73,10 +73,16 @@ Optional:
 
 - `look_back_window` (Number) The amount of days to go back in time to get the updated data from Amazon Ads. Default: 3
 - `marketplace_ids` (List of String) Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
-- `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
+- `profiles` (List of Number) Profile IDs you want to fetch data for. The Amazon Ads source connector supports only profiles with seller and vendor type, profiles with agency type will be ignored. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 - `region` (String) Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details. must be one of ["NA", "EU", "FE"]; Default: "NA"
 - `report_record_types` (List of String) Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
 - `start_date` (String) The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 - `state_filter` (List of String) Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_amazon_ads.my_airbyte_source_amazon_ads ""
+```

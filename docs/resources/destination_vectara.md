@@ -30,9 +30,9 @@ resource "airbyte_destination_vectara" "my_destination_vectara" {
     ]
     title_field = "document_key"
   }
-  definition_id = "50b4e344-126e-47f2-9336-e237818d1537"
-  name          = "Christie Pfeffer"
-  workspace_id  = "6eef0475-7630-4ddb-82db-f188dfabd571"
+  definition_id = "28dce71d-7fd7-4136-a4c8-ab088c248e91"
+  name          = "Bobbie Johns"
+  workspace_id  = "407545d5-0068-46d0-8e60-8039bc7eb073"
 }
 ```
 
@@ -78,4 +78,10 @@ Required:
 - `client_id` (String) OAuth2.0 client id
 - `client_secret` (String) OAuth2.0 client secret
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_destination_vectara.my_airbyte_destination_vectara ""
+```

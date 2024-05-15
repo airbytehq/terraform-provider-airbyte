@@ -3,8 +3,8 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -32,7 +32,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *s
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueriesArray []shared.SourceGoogleAdsCustomQueriesArray = nil
+	var customQueriesArray []shared.SourceGoogleAdsCustomQueriesArray = []shared.SourceGoogleAdsCustomQueriesArray{}
 	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
 		query := customQueriesArrayItem.Query.ValueString()
 		tableName := customQueriesArrayItem.TableName.ValueString()
@@ -47,7 +47,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *s
 	} else {
 		customerID = nil
 	}
-	var customerStatusFilter []shared.SourceGoogleAdsCustomerStatus = nil
+	var customerStatusFilter []shared.SourceGoogleAdsCustomerStatus = []shared.SourceGoogleAdsCustomerStatus{}
 	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
 		customerStatusFilter = append(customerStatusFilter, shared.SourceGoogleAdsCustomerStatus(customerStatusFilterItem.ValueString()))
 	}
@@ -97,10 +97,12 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *s
 }
 
 func (r *SourceGoogleAdsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shared.SourceGoogleAdsPutRequest {
@@ -127,7 +129,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shar
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueriesArray []shared.CustomQueriesArray = nil
+	var customQueriesArray []shared.CustomQueriesArray = []shared.CustomQueriesArray{}
 	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
 		query := customQueriesArrayItem.Query.ValueString()
 		tableName := customQueriesArrayItem.TableName.ValueString()
@@ -142,7 +144,7 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shar
 	} else {
 		customerID = nil
 	}
-	var customerStatusFilter []shared.CustomerStatus = nil
+	var customerStatusFilter []shared.CustomerStatus = []shared.CustomerStatus{}
 	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
 		customerStatusFilter = append(customerStatusFilter, shared.CustomerStatus(customerStatusFilterItem.ValueString()))
 	}

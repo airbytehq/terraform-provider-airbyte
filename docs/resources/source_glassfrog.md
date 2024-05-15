@@ -17,10 +17,10 @@ resource "airbyte_source_glassfrog" "my_source_glassfrog" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "1c6d5241-e982-41d4-bc03-242ccd2763a0"
-  name          = "Allen Beier"
+  definition_id = "fc803c83-11a9-47a1-ae89-49629432a02c"
+  name          = "Doug Rowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "91c3df25-9349-4552-9c82-58f30a27183b"
+  workspace_id  = "7e017f90-52f2-4040-a069-282dd6a12cb0"
 }
 ```
 
@@ -50,4 +50,10 @@ Required:
 
 - `api_key` (String, Sensitive) API key provided by Glassfrog
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import airbyte_source_glassfrog.my_airbyte_source_glassfrog ""
+```

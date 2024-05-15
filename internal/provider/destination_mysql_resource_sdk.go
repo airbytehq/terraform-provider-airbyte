@@ -3,12 +3,18 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() *shared.DestinationMysqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -27,6 +33,12 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -88,13 +100,15 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationMysql{
-		Database:      database,
-		Host:          host,
-		JdbcURLParams: jdbcURLParams,
-		Password:      password,
-		Port:          port,
-		TunnelMethod:  tunnelMethod,
-		Username:      username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -114,14 +128,22 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 }
 
 func (r *DestinationMysqlResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	r.DestinationID = types.StringValue(resp.DestinationID)
-	r.DestinationType = types.StringValue(resp.DestinationType)
-	r.Name = types.StringValue(resp.Name)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *shared.DestinationMysqlPutRequest {
 	database := r.Configuration.Database.ValueString()
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -140,6 +162,12 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -201,13 +229,15 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationMysqlUpdate{
-		Database:      database,
-		Host:          host,
-		JdbcURLParams: jdbcURLParams,
-		Password:      password,
-		Port:          port,
-		TunnelMethod:  tunnelMethod,
-		Username:      username,
+		Database:          database,
+		DisableTypeDedupe: disableTypeDedupe,
+		Host:              host,
+		JdbcURLParams:     jdbcURLParams,
+		Password:          password,
+		Port:              port,
+		RawDataSchema:     rawDataSchema,
+		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

@@ -2,6 +2,11 @@
 
 package reflect
 
+const (
+	SourceTypeState = iota
+	SourceTypePlan
+)
+
 // Options provides configuration settings for how the reflection behavior
 // works, letting callers tweak different behaviors based on their needs.
 type Options struct {
@@ -19,4 +24,8 @@ type Options struct {
 	// perfectly in the types they're being stored in, rather than
 	// returning errors. Numbers will always be rounded towards 0.
 	AllowRoundingNumbers bool
+	// SourceType informs the reflection system what the source is
+	// such that it can make decisions based on the tfPlanOnly annotation
+	// The default is SourceTypeState
+	SourceType int
 }

@@ -3,13 +3,13 @@
 package provider
 
 import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/pkg/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalCreateRequest() *shared.SourceOnesignalCreateRequest {
-	var applications []shared.SourceOnesignalApplications = nil
+	var applications []shared.SourceOnesignalApplications = []shared.SourceOnesignalApplications{}
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
 		appID := applicationsItem.AppID.ValueString()
@@ -59,14 +59,16 @@ func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalCreateRequest() *s
 }
 
 func (r *SourceOnesignalResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	r.Name = types.StringValue(resp.Name)
-	r.SourceID = types.StringValue(resp.SourceID)
-	r.SourceType = types.StringValue(resp.SourceType)
-	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	if resp != nil {
+		r.Name = types.StringValue(resp.Name)
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
 }
 
 func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalPutRequest() *shared.SourceOnesignalPutRequest {
-	var applications []shared.Applications = nil
+	var applications []shared.Applications = []shared.Applications{}
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
 		appID := applicationsItem.AppID.ValueString()
