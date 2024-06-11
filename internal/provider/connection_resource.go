@@ -7,6 +7,7 @@ import (
 	"fmt"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
@@ -69,10 +70,10 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
-					"streams": schema.ListNestedAttribute{
+					"streams": schema.SetNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+						PlanModifiers: []planmodifier.Set{
+							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
 						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{

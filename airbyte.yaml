@@ -22533,6 +22533,7 @@ components:
       properties:
         streams:
           type: "array"
+          format: "set"
           items:
             $ref: "#/components/schemas/StreamConfiguration"
       x-speakeasy-component: true
