@@ -179,7 +179,7 @@ func (u *SourceGithubAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGithubAuthentication", string(data))
 }
 
 func (u SourceGithubAuthentication) MarshalJSON() ([]byte, error) {
@@ -191,7 +191,7 @@ func (u SourceGithubAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGithubPersonalAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGithubAuthentication: all fields are null")
 }
 
 type Github string
@@ -226,6 +226,8 @@ type SourceGithub struct {
 	Branches []string `json:"branches,omitempty"`
 	// Choose how to authenticate to GitHub
 	Credentials SourceGithubAuthentication `json:"credentials"`
+	// Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync
+	MaxWaitingTime *int64 `default:"10" json:"max_waiting_time"`
 	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
 	Repositories []string `json:"repositories"`
 	// (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
@@ -272,6 +274,13 @@ func (o *SourceGithub) GetCredentials() SourceGithubAuthentication {
 		return SourceGithubAuthentication{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceGithub) GetMaxWaitingTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitingTime
 }
 
 func (o *SourceGithub) GetRepositories() []string {

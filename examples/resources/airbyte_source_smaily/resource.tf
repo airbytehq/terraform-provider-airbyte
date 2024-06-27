@@ -4,8 +4,8 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_subdomain = "...my_api_subdomain..."
     api_username  = "...my_api_username..."
   }
-  definition_id = "7876fcad-615b-4cac-a687-b3371066986a"
-  name          = "Dr. Maryann Armstrong"
+  definition_id = "b7a8364f-95e8-44ef-b6a9-353261882dc6"
+  name          = "Hubert Dickens"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "25c7727b-3635-4428-9d3e-7f0bc649fe5b"
+  workspace_id  = "e2f3a674-4848-4ac2-b04b-eae9e1753040"
 }

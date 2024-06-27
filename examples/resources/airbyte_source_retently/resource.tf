@@ -9,8 +9,8 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "a7d8001c-be4b-47da-a2d7-b021550aada4"
-  name          = "Miss Dominick Barton"
+  definition_id = "1cd73d2c-f401-436d-9989-e7dbace4005a"
+  name          = "Sheila Bahringer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "56ee294a-dbc5-4bd3-8078-9cf0b8d2c041"
+  workspace_id  = "76c58b5d-a21f-4739-86a7-1e992c2b8105"
 }

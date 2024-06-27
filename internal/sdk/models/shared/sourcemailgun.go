@@ -9,6 +9,33 @@ import (
 	"time"
 )
 
+// SourceMailgunDomainRegionCode - Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+type SourceMailgunDomainRegionCode string
+
+const (
+	SourceMailgunDomainRegionCodeUs SourceMailgunDomainRegionCode = "US"
+	SourceMailgunDomainRegionCodeEu SourceMailgunDomainRegionCode = "EU"
+)
+
+func (e SourceMailgunDomainRegionCode) ToPointer() *SourceMailgunDomainRegionCode {
+	return &e
+}
+func (e *SourceMailgunDomainRegionCode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "US":
+		fallthrough
+	case "EU":
+		*e = SourceMailgunDomainRegionCode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMailgunDomainRegionCode: %v", v)
+	}
+}
+
 type Mailgun string
 
 const (
@@ -34,7 +61,7 @@ func (e *Mailgun) UnmarshalJSON(data []byte) error {
 
 type SourceMailgun struct {
 	// Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
-	DomainRegion *string `default:"US" json:"domain_region"`
+	DomainRegion *SourceMailgunDomainRegionCode `default:"US" json:"domain_region"`
 	// Primary account API key to access your Mailgun data.
 	PrivateKey string  `json:"private_key"`
 	sourceType Mailgun `const:"mailgun" json:"sourceType"`
@@ -53,7 +80,7 @@ func (s *SourceMailgun) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMailgun) GetDomainRegion() *string {
+func (o *SourceMailgun) GetDomainRegion() *SourceMailgunDomainRegionCode {
 	if o == nil {
 		return nil
 	}

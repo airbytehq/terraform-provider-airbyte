@@ -66,7 +66,16 @@ Optional:
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
 - `name` (String) Not Null
 - `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
+- `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
 - `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+
+<a id="nestedatt--configurations--streams--selected_fields"></a>
+### Nested Schema for `configurations.streams.selected_fields`
+
+Optional:
+
+- `field_path` (List of String)
+
 
 
 

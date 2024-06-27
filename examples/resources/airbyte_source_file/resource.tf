@@ -9,11 +9,11 @@ resource "airbyte_source_file" "my_source_file" {
         storage_account = "...my_storage_account..."
       }
     }
-    reader_options = "{\"sep\": \" \"}"
-    url            = "s3://gdelt-open-data/events/20190914.export.csv"
+    reader_options = "{}"
+    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
   }
-  definition_id = "ae086e3c-2d33-4082-ab84-0e56112c1fda"
-  name          = "Miss Denise Bins"
+  definition_id = "e3e60165-4663-452d-a9b0-4e26c5d5cf50"
+  name          = "Robin Wolf I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfbec287-654f-412b-8840-28fbb0cddcf8"
+  workspace_id  = "464ed5bf-6d67-4306-8c54-8e68cfaeff48"
 }

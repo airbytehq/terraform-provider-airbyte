@@ -18,8 +18,7 @@ func PopulateHeaders(_ context.Context, req *http.Request, headers interface{}, 
 }
 
 func populateHeaders(headers interface{}, globals interface{}, reqHeaders http.Header, skipFields []string) []string {
-	headerParamsStructType := reflect.TypeOf(headers)
-	headerParamsValType := reflect.ValueOf(headers)
+	headerParamsStructType, headerParamsValType := dereferencePointers(reflect.TypeOf(headers), reflect.ValueOf(headers))
 
 	globalsAlreadyPopulated := []string{}
 

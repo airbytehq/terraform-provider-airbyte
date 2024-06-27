@@ -188,7 +188,7 @@ func (u *SourceGoogleAnalyticsDataAPICredentials) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPICredentials", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPICredentials) MarshalJSON() ([]byte, error) {
@@ -200,7 +200,7 @@ func (u SourceGoogleAnalyticsDataAPICredentials) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPICredentials: all fields are null")
 }
 
 // SourceGoogleAnalyticsDataAPICohortReportSettings - Optional settings for a cohort report.
@@ -520,7 +520,7 @@ func (u *SourceGoogleAnalyticsDataAPICohortReports) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPICohortReports", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPICohortReports) MarshalJSON() ([]byte, error) {
@@ -532,7 +532,7 @@ func (u SourceGoogleAnalyticsDataAPICohortReports) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasEnabled, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPICohortReports: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilterName string
@@ -706,7 +706,7 @@ func (u *SourceGoogleAnalyticsDataAPIFromValue) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPIFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPIFromValue) MarshalJSON() ([]byte, error) {
@@ -718,7 +718,7 @@ func (u SourceGoogleAnalyticsDataAPIFromValue) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPIFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter4ValueType string
@@ -869,7 +869,7 @@ func (u *SourceGoogleAnalyticsDataAPIToValue) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPIToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPIToValue) MarshalJSON() ([]byte, error) {
@@ -881,7 +881,7 @@ func (u SourceGoogleAnalyticsDataAPIToValue) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPIToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPIBetweenFilter struct {
@@ -1128,7 +1128,7 @@ func (u *SourceGoogleAnalyticsDataAPIValue) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPIValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPIValue) MarshalJSON() ([]byte, error) {
@@ -1140,7 +1140,7 @@ func (u SourceGoogleAnalyticsDataAPIValue) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPIValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPINumericFilter struct {
@@ -1427,7 +1427,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter) UnmarshalJ
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter) MarshalJSON() ([]byte, error) {
@@ -1447,7 +1447,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter) MarshalJSON
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilterType string
@@ -1680,7 +1680,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue) Unmarsh
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue) MarshalJSON() ([]byte, error) {
@@ -1692,7 +1692,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue) MarshalJ
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterFilter4ToValueValueType string
@@ -1843,7 +1843,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue) Unmarshal
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue) MarshalJSON() ([]byte, error) {
@@ -1855,7 +1855,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue) MarshalJSO
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter struct {
@@ -2102,7 +2102,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue) UnmarshalJS
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue) MarshalJSON() ([]byte, error) {
@@ -2114,7 +2114,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue) MarshalJSON(
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayNumericFilter struct {
@@ -2401,7 +2401,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter) MarshalJSON() ([]byte, error) {
@@ -2421,7 +2421,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDime
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayExpression struct {
@@ -2665,7 +2665,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue) MarshalJSON() ([]byte, error) {
@@ -2677,7 +2677,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDime
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ExpressionsFilterFilter4ToValueValueType string
@@ -2828,7 +2828,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue) MarshalJSON() ([]byte, error) {
@@ -2840,7 +2840,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDime
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter struct {
@@ -3087,7 +3087,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue) MarshalJSON() ([]byte, error) {
@@ -3099,7 +3099,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDime
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterNumericFilter struct {
@@ -3386,7 +3386,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDim
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter) MarshalJSON() ([]byte, error) {
@@ -3406,7 +3406,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDime
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasExpression struct {
@@ -3650,7 +3650,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFro
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue) MarshalJSON() ([]byte, error) {
@@ -3662,7 +3662,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFrom
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValueType string
@@ -3813,7 +3813,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToV
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue) MarshalJSON() ([]byte, error) {
@@ -3825,7 +3825,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToVa
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter struct {
@@ -4072,7 +4072,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterVal
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue) MarshalJSON() ([]byte, error) {
@@ -4084,7 +4084,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValu
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterNumericFilter struct {
@@ -4371,7 +4371,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFil
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter) MarshalJSON() ([]byte, error) {
@@ -4391,7 +4391,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilt
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPIExpression struct {
@@ -4549,7 +4549,7 @@ func (u *SourceGoogleAnalyticsDataAPIDimensionsFilter) UnmarshalJSON(data []byte
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPIDimensionsFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPIDimensionsFilter) MarshalJSON() ([]byte, error) {
@@ -4569,7 +4569,7 @@ func (u SourceGoogleAnalyticsDataAPIDimensionsFilter) MarshalJSON() ([]byte, err
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPIFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPIDimensionsFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilterName string
@@ -4743,7 +4743,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasFromValue) UnmarshalJSON(data []byte
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasFromValue) MarshalJSON() ([]byte, error) {
@@ -4755,7 +4755,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasFromValue) MarshalJSON() ([]byte, err
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4FilterFilter4ValueType string
@@ -4906,7 +4906,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasToValue) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasToValue) MarshalJSON() ([]byte, error) {
@@ -4918,7 +4918,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasToValue) MarshalJSON() ([]byte, error
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasBetweenFilter struct {
@@ -5165,7 +5165,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasValue) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasValue) MarshalJSON() ([]byte, error) {
@@ -5177,7 +5177,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasValue) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasNumericFilter struct {
@@ -5464,7 +5464,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter) MarshalJSON() ([]byte, error) {
@@ -5484,7 +5484,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter)
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter4FilterType string
@@ -5717,7 +5717,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue) MarshalJSON() ([]byte, error) {
@@ -5729,7 +5729,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3FromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterFilter4ToValueValueType string
@@ -5880,7 +5880,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue) MarshalJSON() ([]byte, error) {
@@ -5892,7 +5892,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter struct {
@@ -6139,7 +6139,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value) MarshalJSON() ([]byte, error) {
@@ -6151,7 +6151,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Value: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter struct {
@@ -6438,7 +6438,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter) MarshalJSON() ([]byte, error) {
@@ -6458,7 +6458,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Expression struct {
@@ -6702,7 +6702,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue) MarshalJSON() ([]byte, error) {
@@ -6714,7 +6714,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterFilter4ToValueValueType string
@@ -6865,7 +6865,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue) MarshalJSON() ([]byte, error) {
@@ -6877,7 +6877,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter struct {
@@ -7124,7 +7124,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue) MarshalJSON() ([]byte, error) {
@@ -7136,7 +7136,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter struct {
@@ -7423,7 +7423,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter) MarshalJSON() ([]byte, error) {
@@ -7443,7 +7443,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterExpression struct {
@@ -7687,7 +7687,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromVa
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue) MarshalJSON() ([]byte, error) {
@@ -7699,7 +7699,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromVal
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFromValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterFilterValueType string
@@ -7850,7 +7850,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValu
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue) MarshalJSON() ([]byte, error) {
@@ -7862,7 +7862,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterToValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter struct {
@@ -8109,7 +8109,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue)
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue) MarshalJSON() ([]byte, error) {
@@ -8121,7 +8121,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue) 
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterValue: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterNumericFilter struct {
@@ -8408,7 +8408,7 @@ func (u *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetric
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter) MarshalJSON() ([]byte, error) {
@@ -8428,7 +8428,7 @@ func (u SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetrics
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterBetweenFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1Filter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterExpression struct {
@@ -8586,7 +8586,7 @@ func (u *SourceGoogleAnalyticsDataAPIMetricsFilter) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsDataAPIMetricsFilter", string(data))
 }
 
 func (u SourceGoogleAnalyticsDataAPIMetricsFilter) MarshalJSON() ([]byte, error) {
@@ -8606,7 +8606,7 @@ func (u SourceGoogleAnalyticsDataAPIMetricsFilter) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsDataAPISchemasFilter, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsDataAPIMetricsFilter: all fields are null")
 }
 
 type SourceGoogleAnalyticsDataAPICustomReportConfig struct {
@@ -8700,6 +8700,8 @@ type SourceGoogleAnalyticsDataAPI struct {
 	DateRangesStartDate *types.Date `json:"date_ranges_start_date,omitempty"`
 	// If false, each row with all metrics equal to 0 will not be returned. If true, these rows will be returned if they are not separately removed by a filter. More information is available in <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#request-body">the documentation</a>.
 	KeepEmptyRows *bool `default:"false" json:"keep_empty_rows"`
+	// Since attribution changes after the event date, and Google Analytics has a data processing latency, we should specify how many days in the past we should refresh the data in every run. So if you set it at 5 days, in every sync it will fetch the last bookmark date minus 5 days.
+	LookbackWindow *int64 `default:"2" json:"lookback_window"`
 	// A list of your Property IDs. The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 	PropertyIds []string               `json:"property_ids"`
 	sourceType  GoogleAnalyticsDataAPI `const:"google-analytics-data-api" json:"sourceType"`
@@ -8751,6 +8753,13 @@ func (o *SourceGoogleAnalyticsDataAPI) GetKeepEmptyRows() *bool {
 		return nil
 	}
 	return o.KeepEmptyRows
+}
+
+func (o *SourceGoogleAnalyticsDataAPI) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
 }
 
 func (o *SourceGoogleAnalyticsDataAPI) GetPropertyIds() []string {

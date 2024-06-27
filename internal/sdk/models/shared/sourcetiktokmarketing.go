@@ -197,7 +197,7 @@ func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceTiktokMarketingAuthenticationMethod", string(data))
 }
 
 func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -209,7 +209,7 @@ func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceTiktokMarketingSandboxAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceTiktokMarketingAuthenticationMethod: all fields are null")
 }
 
 type TiktokMarketing string

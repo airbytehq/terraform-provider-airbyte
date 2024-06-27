@@ -15,7 +15,7 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = false
+    accept_terms = true
     data_source = {
       recommended_managed_tables = {}
     }
@@ -28,9 +28,9 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     purge_staging_data               = true
     schema                           = "default"
   }
-  definition_id = "3cbfbb56-05d7-4306-8fa6-f60bfc11e74f"
-  name          = "Thelma Johnston"
-  workspace_id  = "a953e98a-4c04-4994-9edd-6e956416d119"
+  definition_id = "bfbb5605-d730-46cf-a6f6-0bfc11e74f73"
+  name          = "Janis Kohler"
+  workspace_id  = "53e98a4c-0499-445e-9d6e-956416d119e8"
 }
 ```
 

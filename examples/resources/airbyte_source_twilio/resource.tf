@@ -5,8 +5,8 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     lookback_window = 60
     start_date      = "2020-10-01T00:00:00Z"
   }
-  definition_id = "b9e0d54b-0894-4bdd-98fe-3f92c06a9aa7"
-  name          = "Jo Bayer"
+  definition_id = "a4b37eb2-05dd-4b7f-9b71-195e07e10364"
+  name          = "Angie Jenkins"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "75abb88c-398d-4796-a608-0f3ecae3cb49"
+  workspace_id  = "d2a60225-b2ac-462e-b10f-1a0d51fb8be0"
 }

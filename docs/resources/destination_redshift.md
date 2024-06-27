@@ -17,7 +17,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = false
-    drop_cascade        = false
+    drop_cascade        = true
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -35,19 +35,19 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_name_pattern  = "{date:yyyy_MM}"
-        purge_staging_data = true
+        file_name_pattern  = "{timestamp}"
+        purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "ap-south-2"
+        s3_bucket_region   = "eu-central-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Beau57"
+    username = "Clark65"
   }
-  definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
-  name          = "Jessie Brown"
-  workspace_id  = "86b73990-fea6-49be-ba7d-c7cde8f8d839"
+  definition_id = "ab15fb45-8bad-49ea-b671-d5852a459de5"
+  name          = "Jessica Runolfsdottir"
+  workspace_id  = "420a295e-5c09-4962-877b-187a09875344"
 }
 ```
 
@@ -138,7 +138,6 @@ Optional:
 Optional:
 
 - `awss3_staging` (Attributes) <i>(recommended)</i> Uploads data to S3 and then uses a COPY to insert the data into Redshift. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging))
-- `standard` (Attributes) <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading. (see [below for nested schema](#nestedatt--configuration--uploading_method--standard))
 
 <a id="nestedatt--configuration--uploading_method--awss3_staging"></a>
 ### Nested Schema for `configuration.uploading_method.awss3_staging`
@@ -175,12 +174,6 @@ Optional:
 
 <a id="nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--no_encryption"></a>
 ### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region.no_encryption`
-
-
-
-
-<a id="nestedatt--configuration--uploading_method--standard"></a>
-### Nested Schema for `configuration.uploading_method.standard`
 
 ## Import
 

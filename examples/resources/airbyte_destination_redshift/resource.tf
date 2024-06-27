@@ -2,7 +2,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = false
-    drop_cascade        = false
+    drop_cascade        = true
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -20,17 +20,17 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
             key_encrypting_key = "...my_key_encrypting_key..."
           }
         }
-        file_name_pattern  = "{date:yyyy_MM}"
-        purge_staging_data = true
+        file_name_pattern  = "{timestamp}"
+        purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "ap-south-2"
+        s3_bucket_region   = "eu-central-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Beau57"
+    username = "Clark65"
   }
-  definition_id = "aaf3c680-70ec-4a15-b704-2295e6e54dc3"
-  name          = "Jessie Brown"
-  workspace_id  = "86b73990-fea6-49be-ba7d-c7cde8f8d839"
+  definition_id = "ab15fb45-8bad-49ea-b671-d5852a459de5"
+  name          = "Jessica Runolfsdottir"
+  workspace_id  = "420a295e-5c09-4962-877b-187a09875344"
 }

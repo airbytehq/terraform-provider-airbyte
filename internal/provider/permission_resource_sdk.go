@@ -14,7 +14,7 @@ func (r *PermissionResourceModel) ToSharedPermissionCreateRequest() *shared.Perm
 	} else {
 		organizationID = nil
 	}
-	permissionType := shared.PermissionType(r.PermissionType.ValueString())
+	permissionType := shared.PublicPermissionType(r.PermissionType.ValueString())
 	userID := r.UserID.ValueString()
 	workspaceID := new(string)
 	if !r.WorkspaceID.IsUnknown() && !r.WorkspaceID.IsNull() {

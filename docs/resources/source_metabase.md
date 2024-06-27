@@ -18,12 +18,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    username         = "Jamil27"
+    username         = "Fatima_Simonis"
   }
-  definition_id = "160113c2-d3cb-45ea-a64b-86a42dbbb853"
-  name          = "Lucas Goodwin"
+  definition_id = "eb8b49c8-2f28-43fd-b1b3-62a3ef9cacc8"
+  name          = "Misty Price"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e6a18b0d-7900-43de-8da4-43bfaadd29a6"
+  workspace_id  = "ac01647d-c7c2-471c-9044-a25a4f7e4eab"
 }
 ```
 

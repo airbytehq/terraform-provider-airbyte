@@ -4,8 +4,8 @@ package provider
 
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *shared.SourceMixpanelCreateRequest {
@@ -50,9 +50,9 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 	} else {
 		dateWindowSize = nil
 	}
-	endDate := new(customTypes.Date)
+	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
@@ -74,9 +74,9 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 	} else {
 		selectPropertiesByDefault = nil
 	}
-	startDate := new(customTypes.Date)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -165,9 +165,9 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 	} else {
 		dateWindowSize = nil
 	}
-	endDate := new(customTypes.Date)
+	endDate := new(time.Time)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
@@ -189,9 +189,9 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 	} else {
 		selectPropertiesByDefault = nil
 	}
-	startDate := new(customTypes.Date)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}

@@ -10,6 +10,7 @@ import (
 
 func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *shared.ConnectionResponse) {
 	if resp != nil {
+		r.Configurations.Streams = []tfTypes.StreamConfiguration{}
 		if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
 			r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
 		}
@@ -29,6 +30,19 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 				}
 				streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
 			}
+			streams1.SelectedFields = []tfTypes.SelectedFieldInfo{}
+			for selectedFieldsCount, selectedFieldsItem := range streamsItem.SelectedFields {
+				var selectedFields1 tfTypes.SelectedFieldInfo
+				selectedFields1.FieldPath = []types.String{}
+				for _, v := range selectedFieldsItem.FieldPath {
+					selectedFields1.FieldPath = append(selectedFields1.FieldPath, types.StringValue(v))
+				}
+				if selectedFieldsCount+1 > len(streams1.SelectedFields) {
+					streams1.SelectedFields = append(streams1.SelectedFields, selectedFields1)
+				} else {
+					streams1.SelectedFields[selectedFieldsCount].FieldPath = selectedFields1.FieldPath
+				}
+			}
 			if streamsItem.SyncMode != nil {
 				streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
 			} else {
@@ -40,6 +54,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
 				r.Configurations.Streams[streamsCount].Name = streams1.Name
 				r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+				r.Configurations.Streams[streamsCount].SelectedFields = streams1.SelectedFields
 				r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
 			}
 		}

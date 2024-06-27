@@ -33,7 +33,9 @@ func (e *DestinationAzureBlobStorageUpdateFormatType) UnmarshalJSON(data []byte)
 }
 
 type DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON struct {
-	formatType DestinationAzureBlobStorageUpdateFormatType `const:"JSONL" json:"format_type"`
+	// Add file extensions to the output file.
+	FileExtension *bool                                       `default:"false" json:"file_extension"`
+	formatType    DestinationAzureBlobStorageUpdateFormatType `const:"JSONL" json:"format_type"`
 }
 
 func (d DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
@@ -45,6 +47,13 @@ func (d *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) Unmarsh
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFileExtension() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FileExtension
 }
 
 func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() DestinationAzureBlobStorageUpdateFormatType {
@@ -102,6 +111,8 @@ func (e *FormatType) UnmarshalJSON(data []byte) error {
 }
 
 type CSVCommaSeparatedValues struct {
+	// Add file extensions to the output file.
+	FileExtension *bool `default:"false" json:"file_extension"`
 	// Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 	Flattening *NormalizationFlattening `default:"No flattening" json:"flattening"`
 	formatType FormatType               `const:"CSV" json:"format_type"`
@@ -116,6 +127,13 @@ func (c *CSVCommaSeparatedValues) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *CSVCommaSeparatedValues) GetFileExtension() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.FileExtension
 }
 
 func (o *CSVCommaSeparatedValues) GetFlattening() *NormalizationFlattening {
@@ -178,7 +196,7 @@ func (u *OutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OutputFormat", string(data))
 }
 
 func (u OutputFormat) MarshalJSON() ([]byte, error) {
@@ -190,7 +208,7 @@ func (u OutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type OutputFormat: all fields are null")
 }
 
 type DestinationAzureBlobStorageUpdate struct {

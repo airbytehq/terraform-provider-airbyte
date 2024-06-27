@@ -19,12 +19,12 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     account_ids = [
       "...",
     ]
-    action_breakdowns_allow_empty = false
+    action_breakdowns_allow_empty = true
     ad_statuses = [
-      "ACTIVE",
+      "ADSET_PAUSED",
     ]
     adset_statuses = [
-      "CAMPAIGN_PAUSED",
+      "PAUSED",
     ]
     campaign_statuses = [
       "DELETED",
@@ -34,35 +34,35 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_type",
-        ]
-        action_report_time = "conversion"
-        breakdowns = [
           "standard_event_content_type",
+        ]
+        action_report_time = "impression"
+        breakdowns = [
+          "media_text_content",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "cost_per_inline_post_engagement",
+          "video_play_curve_actions",
         ]
-        insights_job_timeout     = 9
-        insights_lookback_window = 4
-        level                    = "account"
-        name                     = "Ramona Spencer"
+        insights_job_timeout     = 3
+        insights_lookback_window = 1
+        level                    = "campaign"
+        name                     = "Eleanor Prosacco"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 4
+        time_increment           = 10
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    insights_job_timeout     = 5
-    insights_lookback_window = 0
-    page_size                = 10
+    insights_job_timeout     = 1
+    insights_lookback_window = 9
+    page_size                = 2
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "ea586a09-709e-4dce-b2c4-357e7eb149e6"
-  name          = "Terence Miller"
+  definition_id = "81cdc2e9-642f-43c2-be19-c32edfee92bc"
+  name          = "Wendy Kunze"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6bd271d6-f7a7-47e5-9b04-b8d52e6bc1e2"
+  workspace_id  = "d2c887f2-8ef9-475a-bb10-2e5487915a2f"
 }
 ```
 
@@ -90,11 +90,11 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
 
 Required:
 
-- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 - `account_ids` (List of String) The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 
 Optional:
 
+- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 - `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list. Default: true
 - `ad_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 - `adset_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
@@ -127,7 +127,7 @@ Optional:
 - `insights_lookback_window` (Number) The attribution window. Default: 28
 - `level` (String) Chosen level for API. must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"
 - `start_date` (String) The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
-- `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). Default: 1
+- `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89. Default: 1
 
 ## Import
 

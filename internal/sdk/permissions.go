@@ -121,6 +121,7 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 	}
 
 	return res, nil
+
 }
 
 // DeletePermission - Delete a Permission
@@ -204,6 +205,7 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // GetPermission - Get Permission details
@@ -297,6 +299,7 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 	}
 
 	return res, nil
+
 }
 
 // ListPermissions - List Permissions by user id
@@ -392,6 +395,7 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 	}
 
 	return res, nil
+
 }
 
 // UpdatePermission - Update a permission
@@ -493,4 +497,5 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 	}
 
 	return res, nil
+
 }

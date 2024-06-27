@@ -181,15 +181,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 				DestinationRedshiftAWSS3Staging: destinationRedshiftAWSS3Staging,
 			}
 		}
-		var destinationRedshiftStandard *shared.DestinationRedshiftStandard
-		if r.Configuration.UploadingMethod.Standard != nil {
-			destinationRedshiftStandard = &shared.DestinationRedshiftStandard{}
-		}
-		if destinationRedshiftStandard != nil {
-			uploadingMethod = &shared.DestinationRedshiftUploadingMethod{
-				DestinationRedshiftStandard: destinationRedshiftStandard,
-			}
-		}
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationRedshift{
@@ -404,15 +395,6 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 		if awsS3Staging != nil {
 			uploadingMethod = &shared.UploadingMethod{
 				AWSS3Staging: awsS3Staging,
-			}
-		}
-		var standard *shared.Standard
-		if r.Configuration.UploadingMethod.Standard != nil {
-			standard = &shared.Standard{}
-		}
-		if standard != nil {
-			uploadingMethod = &shared.UploadingMethod{
-				Standard: standard,
 			}
 		}
 	}

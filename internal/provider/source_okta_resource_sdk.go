@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceOktaResourceModel) ToSharedSourceOktaCreateRequest() *shared.SourceOktaCreateRequest {
@@ -45,9 +46,9 @@ func (r *SourceOktaResourceModel) ToSharedSourceOktaCreateRequest() *shared.Sour
 	} else {
 		domain = nil
 	}
-	startDate := new(string)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -127,9 +128,9 @@ func (r *SourceOktaResourceModel) ToSharedSourceOktaPutRequest() *shared.SourceO
 	} else {
 		domain = nil
 	}
-	startDate := new(string)
+	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}

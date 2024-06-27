@@ -229,7 +229,7 @@ func (u *DestinationRedisSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedisSSLModes", string(data))
 }
 
 func (u DestinationRedisSSLModes) MarshalJSON() ([]byte, error) {
@@ -241,7 +241,7 @@ func (u DestinationRedisSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationRedisVerifyFull, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationRedisSSLModes: all fields are null")
 }
 
 // DestinationRedisSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -515,7 +515,7 @@ func (u *DestinationRedisSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedisSSHTunnelMethod", string(data))
 }
 
 func (u DestinationRedisSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -531,7 +531,7 @@ func (u DestinationRedisSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationRedisPasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationRedisSSHTunnelMethod: all fields are null")
 }
 
 type DestinationRedis struct {

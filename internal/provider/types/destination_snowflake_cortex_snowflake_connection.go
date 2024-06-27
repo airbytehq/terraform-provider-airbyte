@@ -4,7 +4,7 @@ package types
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type DestinationSnowflakeCortexIndexing struct {
+type DestinationSnowflakeCortexSnowflakeConnection struct {
 	Credentials   UsernameAndPassword `tfsdk:"credentials"`
 	Database      types.String        `tfsdk:"database"`
 	DefaultSchema types.String        `tfsdk:"default_schema"`

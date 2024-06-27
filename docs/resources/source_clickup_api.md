@@ -22,10 +22,10 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
     space_id             = "...my_space_id..."
     team_id              = "...my_team_id..."
   }
-  definition_id = "0abb376b-ce66-4a7c-8ce2-0da3e9aab714"
-  name          = "Anita Schiller I"
+  definition_id = "39108618-e914-445d-83c4-94a849cd517f"
+  name          = "Sonja Douglas"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1893e1da-46c4-4f68-9d20-5011b8862473"
+  workspace_id  = "2e302e6d-e92b-43e4-b098-446f9835e642"
 }
 ```
 

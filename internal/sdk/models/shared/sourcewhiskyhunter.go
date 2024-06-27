@@ -32,7 +32,7 @@ func (e *WhiskyHunter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWhiskyHunter struct {
-	sourceType *WhiskyHunter `const:"whisky-hunter" json:"sourceType,omitempty"`
+	sourceType WhiskyHunter `const:"whisky-hunter" json:"sourceType"`
 }
 
 func (s SourceWhiskyHunter) MarshalJSON() ([]byte, error) {
@@ -46,6 +46,6 @@ func (s *SourceWhiskyHunter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWhiskyHunter) GetSourceType() *WhiskyHunter {
-	return WhiskyHunterWhiskyHunter.ToPointer()
+func (o *SourceWhiskyHunter) GetSourceType() WhiskyHunter {
+	return WhiskyHunterWhiskyHunter
 }

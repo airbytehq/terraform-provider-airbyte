@@ -20,11 +20,11 @@ resource "airbyte_source_gcs" "my_source_gcs" {
     start_date      = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 0
+        days_to_sync_if_history_is_full = 4
         format = {
           csv_format = {
             delimiter    = "...my_delimiter..."
-            double_quote = false
+            double_quote = true
             encoding     = "...my_encoding..."
             escape_char  = "...my_escape_char..."
             false_values = [
@@ -39,8 +39,8 @@ resource "airbyte_source_gcs" "my_source_gcs" {
               "...",
             ]
             quote_char              = "...my_quote_char..."
-            skip_rows_after_header  = 7
-            skip_rows_before_header = 9
+            skip_rows_after_header  = 0
+            skip_rows_before_header = 0
             strings_can_be_null     = true
             true_values = [
               "...",
@@ -52,17 +52,17 @@ resource "airbyte_source_gcs" "my_source_gcs" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Nellie Balistreri"
+        name              = "Mrs. Colleen Gusikowski"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
+        schemaless        = false
         validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "95c5b8dd-2d32-4b37-b6fe-c5cd0a4fda52"
-  name          = "Gilbert Mayert"
+  definition_id = "4d38a30e-a56c-4dfa-a7fb-f6225b4bae61"
+  name          = "Anna Collier Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3b8620d9-bb50-4480-aaaf-77ae08fd2caf"
+  workspace_id  = "3e87b490-ecc6-4bf7-9161-16fc803c8311"
 }
 ```
 

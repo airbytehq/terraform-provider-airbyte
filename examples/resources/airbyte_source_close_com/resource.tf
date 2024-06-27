@@ -3,8 +3,8 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     api_key    = "...my_api_key..."
     start_date = "2021-01-01"
   }
-  definition_id = "22d15b82-8621-4a87-bd2e-625cdd80ba5f"
-  name          = "Darrell Erdman"
+  definition_id = "dcfaea55-0038-401e-9f44-6900c8feba7b"
+  name          = "Annette Schiller"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fc10ca67-a827-4c3d-b49f-444d8a8589d8"
+  workspace_id  = "a08abdda-328f-46c3-b3e0-6663420a6a3a"
 }

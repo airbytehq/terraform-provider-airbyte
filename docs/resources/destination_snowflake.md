@@ -22,19 +22,19 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
       }
     }
     database              = "AIRBYTE_DATABASE"
-    disable_type_dedupe   = true
-    host                  = "accountname.us-east-2.aws.snowflakecomputing.com"
+    disable_type_dedupe   = false
+    host                  = "accountname.snowflakecomputing.com"
     jdbc_url_params       = "...my_jdbc_url_params..."
     raw_data_schema       = "...my_raw_data_schema..."
-    retention_period_days = 7
+    retention_period_days = 5
     role                  = "AIRBYTE_ROLE"
     schema                = "AIRBYTE_SCHEMA"
     username              = "AIRBYTE_USER"
     warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "9a0dc023-29a5-4cae-9f38-88495eab20eb"
-  name          = "Philip Baumbach"
-  workspace_id  = "3624c439-0072-45fa-be33-722ced92f8e0"
+  definition_id = "f6fed365-1e7d-4549-a735-da213c86a8b9"
+  name          = "Santiago Will"
+  workspace_id  = "53876e3d-e30a-486e-8df1-9faac84c3184"
 }
 ```
 

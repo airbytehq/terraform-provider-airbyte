@@ -5,8 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationSnowflakeCortex struct {
-	Embedding   DestinationAstraEmbedding             `tfsdk:"embedding"`
-	Indexing    DestinationSnowflakeCortexIndexing    `tfsdk:"indexing"`
-	OmitRawText types.Bool                            `tfsdk:"omit_raw_text"`
-	Processing  DestinationAstraProcessingConfigModel `tfsdk:"processing"`
+	Embedding   DestinationAstraEmbedding                     `tfsdk:"embedding"`
+	Indexing    DestinationSnowflakeCortexSnowflakeConnection `tfsdk:"indexing"`
+	OmitRawText types.Bool                                    `tfsdk:"omit_raw_text"`
+	Processing  DestinationAstraProcessingConfigModel         `tfsdk:"processing"`
 }

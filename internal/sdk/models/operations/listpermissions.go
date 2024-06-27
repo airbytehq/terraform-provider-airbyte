@@ -8,8 +8,17 @@ import (
 )
 
 type ListPermissionsRequest struct {
+	// This is required if you want to read someone else's permissions, and you should have organization admin or a higher role.
+	OrganizationID *string `queryParam:"style=form,explode=true,name=organizationId"`
 	// User Id in permission.
 	UserID *string `queryParam:"style=form,explode=true,name=userId"`
+}
+
+func (o *ListPermissionsRequest) GetOrganizationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationID
 }
 
 func (o *ListPermissionsRequest) GetUserID() *string {

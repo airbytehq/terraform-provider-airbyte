@@ -3,13 +3,42 @@
 package shared
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"time"
 )
 
+// DomainRegionCode - Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+type DomainRegionCode string
+
+const (
+	DomainRegionCodeUs DomainRegionCode = "US"
+	DomainRegionCodeEu DomainRegionCode = "EU"
+)
+
+func (e DomainRegionCode) ToPointer() *DomainRegionCode {
+	return &e
+}
+func (e *DomainRegionCode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "US":
+		fallthrough
+	case "EU":
+		*e = DomainRegionCode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DomainRegionCode: %v", v)
+	}
+}
+
 type SourceMailgunUpdate struct {
 	// Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
-	DomainRegion *string `default:"US" json:"domain_region"`
+	DomainRegion *DomainRegionCode `default:"US" json:"domain_region"`
 	// Primary account API key to access your Mailgun data.
 	PrivateKey string `json:"private_key"`
 	// UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
@@ -27,7 +56,7 @@ func (s *SourceMailgunUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMailgunUpdate) GetDomainRegion() *string {
+func (o *SourceMailgunUpdate) GetDomainRegion() *DomainRegionCode {
 	if o == nil {
 		return nil
 	}

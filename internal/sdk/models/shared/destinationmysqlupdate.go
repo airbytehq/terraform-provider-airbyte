@@ -280,7 +280,7 @@ func (u *DestinationMysqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMysqlUpdateSSHTunnelMethod", string(data))
 }
 
 func (u DestinationMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -296,7 +296,7 @@ func (u DestinationMysqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMysqlUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMysqlUpdateSSHTunnelMethod: all fields are null")
 }
 
 type DestinationMysqlUpdate struct {

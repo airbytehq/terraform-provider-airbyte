@@ -75,7 +75,7 @@ func (e *SourcePostgresUpdateSchemasMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.
+// DetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure.
 type DetectChangesWithXminSystemColumn struct {
 	method SourcePostgresUpdateSchemasMethod `const:"Xmin" json:"method"`
 }
@@ -363,7 +363,7 @@ func (u *SourcePostgresUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourcePostgresUpdateUpdateMethod", string(data))
 }
 
 func (u SourcePostgresUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
@@ -379,7 +379,7 @@ func (u SourcePostgresUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourcePostgresUpdateScanChangesWithUserDefinedCursor, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourcePostgresUpdateUpdateMethod: all fields are null")
 }
 
 type SourcePostgresUpdateSchemasSSLModeSSLModes6Mode string
@@ -883,7 +883,7 @@ func (u *SourcePostgresUpdateSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourcePostgresUpdateSSLModes", string(data))
 }
 
 func (u SourcePostgresUpdateSSLModes) MarshalJSON() ([]byte, error) {
@@ -911,7 +911,7 @@ func (u SourcePostgresUpdateSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourcePostgresUpdateVerifyFull, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourcePostgresUpdateSSLModes: all fields are null")
 }
 
 // SourcePostgresUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -1185,7 +1185,7 @@ func (u *SourcePostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourcePostgresUpdateSSHTunnelMethod", string(data))
 }
 
 func (u SourcePostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -1201,7 +1201,7 @@ func (u SourcePostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourcePostgresUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourcePostgresUpdateSSHTunnelMethod: all fields are null")
 }
 
 type SourcePostgresUpdate struct {

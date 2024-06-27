@@ -1,10 +1,10 @@
 resource "airbyte_source_sendgrid" "my_source_sendgrid" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2022-03-20T14:31:02.853Z"
+    start_date = "2020-02-29T00:35:24.807Z"
   }
-  definition_id = "5a7d2b46-09d4-4ec6-867c-968cce93394d"
-  name          = "Gerard Frami"
+  definition_id = "57eb672b-8aa5-45d6-bfb2-a63da0917a61"
+  name          = "Christine Weimann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b32f900f-8cfe-4737-8a58-77022972e237"
+  workspace_id  = "3e8ec69b-abb3-4389-b4cd-0d539af2319a"
 }

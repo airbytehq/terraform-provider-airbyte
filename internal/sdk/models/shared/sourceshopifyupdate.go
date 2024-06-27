@@ -181,7 +181,7 @@ func (u *ShopifyAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ShopifyAuthorizationMethod", string(data))
 }
 
 func (u ShopifyAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -193,7 +193,7 @@ func (u ShopifyAuthorizationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.APIPassword, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ShopifyAuthorizationMethod: all fields are null")
 }
 
 type SourceShopifyUpdate struct {

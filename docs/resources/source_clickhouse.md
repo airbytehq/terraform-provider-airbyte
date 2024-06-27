@@ -23,12 +23,12 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Margarete_Walker91"
+    username = "Johnpaul_Barton69"
   }
-  definition_id = "47490588-d0e2-4939-974a-681eea74b87a"
-  name          = "Ms. Dixie Pollich"
+  definition_id = "376bce66-a7c0-4ce2-8da3-e9aab71454cb"
+  name          = "Charlotte Blick"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d33223d8-0bb9-4936-ad2f-45974a2ebc36"
+  workspace_id  = "3e1da46c-4f68-45d2-8501-1b8862473b75"
 }
 ```
 

@@ -22,12 +22,12 @@ resource "airbyte_source_square" "my_source_square" {
     }
     include_deleted_objects = true
     is_sandbox              = true
-    start_date              = "2022-07-20"
+    start_date              = "2022-09-30"
   }
-  definition_id = "d8cbc054-7dc9-43d7-9762-8c47813582a6"
-  name          = "Gordon Durgan"
+  definition_id = "69b6ca0b-303c-4f01-bcd9-78363f1be7e9"
+  name          = "Tom O'Keefe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9dfc7f45-8565-4e71-95c9-f06b5482c9eb"
+  workspace_id  = "fc5ff714-6c36-4bb7-b37b-f0beca93a8ae"
 }
 ```
 

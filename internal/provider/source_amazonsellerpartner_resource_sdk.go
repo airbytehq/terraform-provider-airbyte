@@ -59,9 +59,11 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 				OptionValue: optionValue,
 			})
 		}
-		streamName := shared.SourceAmazonSellerPartnerStreamName(reportOptionsListItem.StreamName.ValueString())
+		reportName := shared.SourceAmazonSellerPartnerReportName(reportOptionsListItem.ReportName.ValueString())
+		streamName := reportOptionsListItem.StreamName.ValueString()
 		reportOptionsList = append(reportOptionsList, shared.SourceAmazonSellerPartnerReportOptions{
 			OptionsList: optionsList,
+			ReportName:  reportName,
 			StreamName:  streamName,
 		})
 	}
@@ -161,9 +163,11 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 				OptionValue: optionValue,
 			})
 		}
-		streamName := shared.StreamName(reportOptionsListItem.StreamName.ValueString())
+		reportName := shared.ReportName(reportOptionsListItem.ReportName.ValueString())
+		streamName := reportOptionsListItem.StreamName.ValueString()
 		reportOptionsList = append(reportOptionsList, shared.ReportOptions{
 			OptionsList: optionsList,
+			ReportName:  reportName,
 			StreamName:  streamName,
 		})
 	}

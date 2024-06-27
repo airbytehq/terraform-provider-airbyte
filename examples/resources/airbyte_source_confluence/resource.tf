@@ -4,8 +4,8 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     domain_name = "...my_domain_name..."
     email       = "abc@example.com"
   }
-  definition_id = "cb6e6ff3-32bd-4f14-9775-fcbb81a7466b"
-  name          = "Lonnie Langworth"
+  definition_id = "740139dc-2cf2-4cb4-9644-2d85f5b6382e"
+  name          = "Ms. Laura Upton"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b7dede54-7fc7-4c1c-b53c-351689ddb3b3"
+  workspace_id  = "8172f932-271c-49f9-8baa-542e6e080961"
 }

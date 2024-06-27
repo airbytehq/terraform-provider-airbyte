@@ -577,7 +577,7 @@ func (u *DestinationS3UpdateCompressionCodec) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3UpdateCompressionCodec", string(data))
 }
 
 func (u DestinationS3UpdateCompressionCodec) MarshalJSON() ([]byte, error) {
@@ -605,7 +605,7 @@ func (u DestinationS3UpdateCompressionCodec) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3UpdateSnappy, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3UpdateCompressionCodec: all fields are null")
 }
 
 type DestinationS3UpdateSchemasFormatFormatType string
@@ -801,7 +801,7 @@ func (u *DestinationS3UpdateSchemasCompression) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3UpdateSchemasCompression", string(data))
 }
 
 func (u DestinationS3UpdateSchemasCompression) MarshalJSON() ([]byte, error) {
@@ -813,7 +813,7 @@ func (u DestinationS3UpdateSchemasCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3UpdateSchemasGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3UpdateSchemasCompression: all fields are null")
 }
 
 // DestinationS3UpdateSchemasFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
@@ -1045,7 +1045,7 @@ func (u *DestinationS3UpdateCompression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3UpdateCompression", string(data))
 }
 
 func (u DestinationS3UpdateCompression) MarshalJSON() ([]byte, error) {
@@ -1057,7 +1057,7 @@ func (u DestinationS3UpdateCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3UpdateGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3UpdateCompression: all fields are null")
 }
 
 // DestinationS3UpdateFlattening - Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
@@ -1235,7 +1235,7 @@ func (u *DestinationS3UpdateOutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3UpdateOutputFormat", string(data))
 }
 
 func (u DestinationS3UpdateOutputFormat) MarshalJSON() ([]byte, error) {
@@ -1255,7 +1255,7 @@ func (u DestinationS3UpdateOutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3UpdateParquetColumnarStorage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3UpdateOutputFormat: all fields are null")
 }
 
 // DestinationS3UpdateS3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
@@ -1388,6 +1388,8 @@ type DestinationS3Update struct {
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 	Format DestinationS3UpdateOutputFormat `json:"format"`
+	// The Role ARN
+	RoleArn *string `json:"role_arn,omitempty"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	S3BucketName string `json:"s3_bucket_name"`
 	// Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
@@ -1432,6 +1434,13 @@ func (o *DestinationS3Update) GetFormat() DestinationS3UpdateOutputFormat {
 		return DestinationS3UpdateOutputFormat{}
 	}
 	return o.Format
+}
+
+func (o *DestinationS3Update) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
 }
 
 func (o *DestinationS3Update) GetS3BucketName() string {

@@ -450,7 +450,7 @@ func (u *SSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SSLModes", string(data))
 }
 
 func (u SSLModes) MarshalJSON() ([]byte, error) {
@@ -478,7 +478,7 @@ func (u SSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.VerifyFull, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SSLModes: all fields are null")
 }
 
 // DestinationPostgresUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -752,7 +752,7 @@ func (u *DestinationPostgresUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationPostgresUpdateSSHTunnelMethod", string(data))
 }
 
 func (u DestinationPostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -768,7 +768,7 @@ func (u DestinationPostgresUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.DestinationPostgresUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationPostgresUpdateSSHTunnelMethod: all fields are null")
 }
 
 type DestinationPostgresUpdate struct {

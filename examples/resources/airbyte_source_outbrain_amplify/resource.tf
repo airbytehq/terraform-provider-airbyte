@@ -6,12 +6,12 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "region"
-    report_granularity     = "monthly"
+    geo_location_breakdown = "country"
+    report_granularity     = "daily"
     start_date             = "...my_start_date..."
   }
-  definition_id = "9d0f84cc-bad7-41da-b038-014a124b6e7b"
-  name          = "Donna Leannon"
+  definition_id = "2dc402ae-f616-435a-b9f9-4f985aa22e67"
+  name          = "Della Koepp"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "37b0c992-762a-438a-a73d-79a85cb72465"
+  workspace_id  = "e4e4244a-41ce-4525-b489-3048e9c1af99"
 }

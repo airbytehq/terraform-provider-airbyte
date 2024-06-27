@@ -198,7 +198,7 @@ func (u *SourceMysqlUpdateMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMysqlUpdateMethod", string(data))
 }
 
 func (u SourceMysqlUpdateMethod) MarshalJSON() ([]byte, error) {
@@ -210,7 +210,7 @@ func (u SourceMysqlUpdateMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMysqlScanChangesWithUserDefinedCursor, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMysqlUpdateMethod: all fields are null")
 }
 
 type SourceMysqlMysql string
@@ -565,7 +565,7 @@ func (u *SourceMysqlSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMysqlSSLModes", string(data))
 }
 
 func (u SourceMysqlSSLModes) MarshalJSON() ([]byte, error) {
@@ -585,7 +585,7 @@ func (u SourceMysqlSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMysqlVerifyIdentity, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMysqlSSLModes: all fields are null")
 }
 
 // SourceMysqlSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -859,7 +859,7 @@ func (u *SourceMysqlSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMysqlSSHTunnelMethod", string(data))
 }
 
 func (u SourceMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -875,7 +875,7 @@ func (u SourceMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMysqlPasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMysqlSSHTunnelMethod: all fields are null")
 }
 
 type SourceMysql struct {

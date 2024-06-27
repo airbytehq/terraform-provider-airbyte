@@ -22,13 +22,13 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
         refresh_token = "refresh_token"
       }
     }
-    enable_experimental_streams = true
+    enable_experimental_streams = false
     start_date                  = "2017-01-25T00:00:00Z"
   }
-  definition_id = "e287b752-65fd-4ff2-9eb8-cbf2674a9203"
-  name          = "Jeannette Bergstrom"
+  definition_id = "887ccaaf-58e0-4f5c-9159-d60149910eec"
+  name          = "Leland Kshlerin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fcc526af-10da-4401-bb0f-c52730b39994"
+  workspace_id  = "84ec6040-57d0-4451-918d-b5cccbbbdb31"
 }
 ```
 

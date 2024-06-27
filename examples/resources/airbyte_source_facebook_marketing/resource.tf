@@ -4,12 +4,12 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     account_ids = [
       "...",
     ]
-    action_breakdowns_allow_empty = false
+    action_breakdowns_allow_empty = true
     ad_statuses = [
-      "ACTIVE",
+      "ADSET_PAUSED",
     ]
     adset_statuses = [
-      "CAMPAIGN_PAUSED",
+      "PAUSED",
     ]
     campaign_statuses = [
       "DELETED",
@@ -19,33 +19,33 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_type",
-        ]
-        action_report_time = "conversion"
-        breakdowns = [
           "standard_event_content_type",
+        ]
+        action_report_time = "impression"
+        breakdowns = [
+          "media_text_content",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "cost_per_inline_post_engagement",
+          "video_play_curve_actions",
         ]
-        insights_job_timeout     = 9
-        insights_lookback_window = 4
-        level                    = "account"
-        name                     = "Ramona Spencer"
+        insights_job_timeout     = 3
+        insights_lookback_window = 1
+        level                    = "campaign"
+        name                     = "Eleanor Prosacco"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 4
+        time_increment           = 10
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    insights_job_timeout     = 5
-    insights_lookback_window = 0
-    page_size                = 10
+    insights_job_timeout     = 1
+    insights_lookback_window = 9
+    page_size                = 2
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "ea586a09-709e-4dce-b2c4-357e7eb149e6"
-  name          = "Terence Miller"
+  definition_id = "81cdc2e9-642f-43c2-be19-c32edfee92bc"
+  name          = "Wendy Kunze"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6bd271d6-f7a7-47e5-9b04-b8d52e6bc1e2"
+  workspace_id  = "d2c887f2-8ef9-475a-bb10-2e5487915a2f"
 }

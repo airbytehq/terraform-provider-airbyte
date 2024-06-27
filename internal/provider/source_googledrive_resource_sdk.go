@@ -137,6 +137,12 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -170,18 +176,19 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceGoogleDriveCSVFormat = &shared.SourceGoogleDriveCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGoogleDriveCSVFormat != nil {
@@ -460,6 +467,12 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -493,18 +506,19 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceGoogleDriveUpdateCSVFormat = &shared.SourceGoogleDriveUpdateCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceGoogleDriveUpdateCSVFormat != nil {

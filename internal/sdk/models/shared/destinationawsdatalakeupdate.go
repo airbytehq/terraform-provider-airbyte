@@ -173,7 +173,7 @@ func (u *AuthenticationMode) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthenticationMode", string(data))
 }
 
 func (u AuthenticationMode) MarshalJSON() ([]byte, error) {
@@ -185,7 +185,7 @@ func (u AuthenticationMode) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.IAMUser, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type AuthenticationMode: all fields are null")
 }
 
 // DestinationAwsDatalakeUpdateCompressionCodecOptional - The compression algorithm used to compress data.
@@ -405,7 +405,7 @@ func (u *OutputFormatWildcard) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OutputFormatWildcard", string(data))
 }
 
 func (u OutputFormatWildcard) MarshalJSON() ([]byte, error) {
@@ -417,7 +417,7 @@ func (u OutputFormatWildcard) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ParquetColumnarStorage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type OutputFormatWildcard: all fields are null")
 }
 
 // ChooseHowToPartitionData - Partition data by cursor fields when a cursor field is a date

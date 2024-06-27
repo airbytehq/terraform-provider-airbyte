@@ -36,10 +36,10 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "c47ca706-1390-437c-beef-972df3c14a34"
-  name          = "Emilio Senger"
+  definition_id = "c5fc21d7-22b3-410b-a76f-b731c6d5241e"
+  name          = "Dr. Armando Dibbert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9ab276cb-ad00-4cae-a12c-4e65b57e54a2"
+  workspace_id  = "fc03242c-cd27-463a-8d30-eb91c3df2593"
 }
 ```
 

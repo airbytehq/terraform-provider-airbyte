@@ -14,10 +14,10 @@ Permission Resource
 
 ```terraform
 resource "airbyte_permission" "my_permission" {
-  organization_id = "9a46f396-c7c6-4bf7-b724-213ca1059f1e"
-  permission_type = "organization_admin"
-  user_id         = "0360fc0e-aa50-4681-bc3a-db090c013842"
-  workspace_id    = "c101e265-eebc-4230-b150-94cc21854edb"
+  organization_id = "eebc230b-1509-44cc-a185-4edb75e7d1c9"
+  permission_type = "workspace_reader"
+  user_id         = "dc2da362-faf1-4b28-be26-cb1bb0550b4e"
+  workspace_id    = "344126e7-f293-436e-a378-18d15373da8d"
 }
 ```
 
@@ -26,7 +26,7 @@ resource "airbyte_permission" "my_permission" {
 
 ### Required
 
-- `permission_type` (String) Describes what actions/endpoints the permission entitles to. must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]
+- `permission_type` (String) Subset of `PermissionType` (removing `instance_admin`), could be used in public-api. must be one of ["organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_admin", "workspace_editor", "workspace_reader"]
 - `user_id` (String) Internal Airbyte user ID. Requires replacement if changed.
 
 ### Optional

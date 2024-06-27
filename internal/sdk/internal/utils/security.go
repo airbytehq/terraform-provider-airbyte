@@ -196,6 +196,10 @@ func handleBasicAuthScheme(headers map[string]string, scheme interface{}) {
 		fieldType := schemeStructType.Field(i)
 		valType := schemeValType.Field(i)
 
+		if fieldType.Type.Kind() == reflect.Ptr {
+			valType = valType.Elem()
+		}
+
 		secTag := parseSecurityTag(fieldType)
 		if secTag == nil || secTag.Name == "" {
 			continue

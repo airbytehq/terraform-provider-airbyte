@@ -5,8 +5,8 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     client_secret = "...my_client_secret..."
     start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "0d626d48-87cc-4aaf-98e0-f5c1159d6014"
-  name          = "Dr. Fredrick Buckridge"
+  definition_id = "61b75b72-6765-4eab-9ad8-42954bd759bd"
+  name          = "Clayton Prosacco"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfc7f384-ec60-4405-bd04-51918db5cccb"
+  workspace_id  = "f80b7f55-7094-4a97-b635-6d53391630fd"
 }

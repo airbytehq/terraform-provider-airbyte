@@ -1,33 +1,35 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 7510d1e1adcbbc1ce51b5790463794de
+  docChecksum: 6a58a667436875db40aa409a888c47c1
   docVersion: 1.0.0
-  speakeasyVersion: 1.291.0
-  generationVersion: 2.332.4
-  releaseVersion: 0.5.0
-  configChecksum: 7553aaea74433c83d224b2e26c7afc9e
+  speakeasyVersion: 1.321.0
+  generationVersion: 2.354.2
+  releaseVersion: 0.6.0
+  configChecksum: afafa28d80ab5a794b9189ae5a5e2983
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.1.4
-    core: 3.21.0
+    core: 3.22.0
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
     groups: 2.81.2
     nullables: 0.0.0
     oauth2ClientCredentials: 0.1.0
-    unions: 2.81.13
+    unions: 2.81.15
 generatedFiles:
   - internal/sdk/connections.go
   - internal/sdk/destinations.go
   - internal/sdk/health.go
   - internal/sdk/jobs.go
+  - internal/sdk/organizations.go
   - internal/sdk/permissions.go
   - internal/sdk/sources.go
   - internal/sdk/streams.go
+  - internal/sdk/users.go
   - internal/sdk/workspaces.go
   - internal/sdk/sdk.go
   - internal/sdk/models/errors/sdkerror.go
@@ -64,6 +66,7 @@ generatedFiles:
   - internal/sdk/models/operations/createdestinationduckdb.go
   - internal/sdk/models/operations/createdestinationdynamodb.go
   - internal/sdk/models/operations/createdestinationelasticsearch.go
+  - internal/sdk/models/operations/createdestinationfirebolt.go
   - internal/sdk/models/operations/createdestinationfirestore.go
   - internal/sdk/models/operations/createdestinationgcs.go
   - internal/sdk/models/operations/createdestinationgooglesheets.go
@@ -102,6 +105,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletedestinationduckdb.go
   - internal/sdk/models/operations/deletedestinationdynamodb.go
   - internal/sdk/models/operations/deletedestinationelasticsearch.go
+  - internal/sdk/models/operations/deletedestinationfirebolt.go
   - internal/sdk/models/operations/deletedestinationfirestore.go
   - internal/sdk/models/operations/deletedestinationgcs.go
   - internal/sdk/models/operations/deletedestinationgooglesheets.go
@@ -140,6 +144,7 @@ generatedFiles:
   - internal/sdk/models/operations/getdestinationduckdb.go
   - internal/sdk/models/operations/getdestinationdynamodb.go
   - internal/sdk/models/operations/getdestinationelasticsearch.go
+  - internal/sdk/models/operations/getdestinationfirebolt.go
   - internal/sdk/models/operations/getdestinationfirestore.go
   - internal/sdk/models/operations/getdestinationgcs.go
   - internal/sdk/models/operations/getdestinationgooglesheets.go
@@ -180,6 +185,7 @@ generatedFiles:
   - internal/sdk/models/operations/putdestinationduckdb.go
   - internal/sdk/models/operations/putdestinationdynamodb.go
   - internal/sdk/models/operations/putdestinationelasticsearch.go
+  - internal/sdk/models/operations/putdestinationfirebolt.go
   - internal/sdk/models/operations/putdestinationfirestore.go
   - internal/sdk/models/operations/putdestinationgcs.go
   - internal/sdk/models/operations/putdestinationgooglesheets.go
@@ -210,6 +216,7 @@ generatedFiles:
   - internal/sdk/models/operations/createjob.go
   - internal/sdk/models/operations/getjob.go
   - internal/sdk/models/operations/listjobs.go
+  - internal/sdk/models/operations/listorganizationsforuser.go
   - internal/sdk/models/operations/createpermission.go
   - internal/sdk/models/operations/deletepermission.go
   - internal/sdk/models/operations/getpermission.go
@@ -262,6 +269,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcefauna.go
   - internal/sdk/models/operations/createsourcefile.go
   - internal/sdk/models/operations/createsourcefirebolt.go
+  - internal/sdk/models/operations/createsourcefleetio.go
   - internal/sdk/models/operations/createsourcefreshcaller.go
   - internal/sdk/models/operations/createsourcefreshdesk.go
   - internal/sdk/models/operations/createsourcefreshsales.go
@@ -457,6 +465,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcefauna.go
   - internal/sdk/models/operations/deletesourcefile.go
   - internal/sdk/models/operations/deletesourcefirebolt.go
+  - internal/sdk/models/operations/deletesourcefleetio.go
   - internal/sdk/models/operations/deletesourcefreshcaller.go
   - internal/sdk/models/operations/deletesourcefreshdesk.go
   - internal/sdk/models/operations/deletesourcefreshsales.go
@@ -652,6 +661,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcefauna.go
   - internal/sdk/models/operations/getsourcefile.go
   - internal/sdk/models/operations/getsourcefirebolt.go
+  - internal/sdk/models/operations/getsourcefleetio.go
   - internal/sdk/models/operations/getsourcefreshcaller.go
   - internal/sdk/models/operations/getsourcefreshdesk.go
   - internal/sdk/models/operations/getsourcefreshsales.go
@@ -850,6 +860,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcefauna.go
   - internal/sdk/models/operations/putsourcefile.go
   - internal/sdk/models/operations/putsourcefirebolt.go
+  - internal/sdk/models/operations/putsourcefleetio.go
   - internal/sdk/models/operations/putsourcefreshcaller.go
   - internal/sdk/models/operations/putsourcefreshdesk.go
   - internal/sdk/models/operations/putsourcefreshsales.go
@@ -999,6 +1010,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcezohocrm.go
   - internal/sdk/models/operations/putsourcezoom.go
   - internal/sdk/models/operations/getstreamproperties.go
+  - internal/sdk/models/operations/listuserswithinanorganization.go
   - internal/sdk/models/operations/createorupdateworkspaceoauthcredentials.go
   - internal/sdk/models/operations/createworkspace.go
   - internal/sdk/models/operations/deleteworkspace.go
@@ -1015,6 +1027,7 @@ generatedFiles:
   - internal/sdk/models/shared/streamconfigurations.go
   - internal/sdk/models/shared/streamconfiguration.go
   - internal/sdk/models/shared/connectionsyncmodeenum.go
+  - internal/sdk/models/shared/selectedfieldinfo.go
   - internal/sdk/models/shared/connectioncreaterequest.go
   - internal/sdk/models/shared/airbyteapiconnectionschedule.go
   - internal/sdk/models/shared/scheduletypeenum.go
@@ -1048,6 +1061,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationdynamodb.go
   - internal/sdk/models/shared/destinationelasticsearchcreaterequest.go
   - internal/sdk/models/shared/destinationelasticsearch.go
+  - internal/sdk/models/shared/destinationfireboltcreaterequest.go
+  - internal/sdk/models/shared/destinationfirebolt.go
   - internal/sdk/models/shared/destinationfirestorecreaterequest.go
   - internal/sdk/models/shared/destinationfirestore.go
   - internal/sdk/models/shared/destinationgcscreaterequest.go
@@ -1124,6 +1139,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationdynamodbupdate.go
   - internal/sdk/models/shared/destinationelasticsearchputrequest.go
   - internal/sdk/models/shared/destinationelasticsearchupdate.go
+  - internal/sdk/models/shared/destinationfireboltputrequest.go
+  - internal/sdk/models/shared/destinationfireboltupdate.go
   - internal/sdk/models/shared/destinationfirestoreputrequest.go
   - internal/sdk/models/shared/destinationfirestoreupdate.go
   - internal/sdk/models/shared/destinationgcsputrequest.go
@@ -1179,9 +1196,12 @@ generatedFiles:
   - internal/sdk/models/shared/jobtypeenum.go
   - internal/sdk/models/shared/jobcreaterequest.go
   - internal/sdk/models/shared/jobsresponse.go
+  - internal/sdk/models/shared/organizationsresponse.go
+  - internal/sdk/models/shared/organizationresponse.go
   - internal/sdk/models/shared/permissionresponse.go
   - internal/sdk/models/shared/permissiontype.go
   - internal/sdk/models/shared/permissioncreaterequest.go
+  - internal/sdk/models/shared/publicpermissiontype.go
   - internal/sdk/models/shared/permissionsresponse.go
   - internal/sdk/models/shared/permissionresponseread.go
   - internal/sdk/models/shared/permissionscope.go
@@ -1279,6 +1299,8 @@ generatedFiles:
   - internal/sdk/models/shared/sourcefile.go
   - internal/sdk/models/shared/sourcefireboltcreaterequest.go
   - internal/sdk/models/shared/sourcefirebolt.go
+  - internal/sdk/models/shared/sourcefleetiocreaterequest.go
+  - internal/sdk/models/shared/sourcefleetio.go
   - internal/sdk/models/shared/sourcefreshcallercreaterequest.go
   - internal/sdk/models/shared/sourcefreshcaller.go
   - internal/sdk/models/shared/sourcefreshdeskcreaterequest.go
@@ -1670,6 +1692,8 @@ generatedFiles:
   - internal/sdk/models/shared/sourcefileupdate.go
   - internal/sdk/models/shared/sourcefireboltputrequest.go
   - internal/sdk/models/shared/sourcefireboltupdate.go
+  - internal/sdk/models/shared/sourcefleetioputrequest.go
+  - internal/sdk/models/shared/sourcefleetioupdate.go
   - internal/sdk/models/shared/sourcefreshcallerputrequest.go
   - internal/sdk/models/shared/sourcefreshcallerupdate.go
   - internal/sdk/models/shared/sourcefreshdeskputrequest.go
@@ -1967,6 +1991,8 @@ generatedFiles:
   - internal/sdk/models/shared/sourcezoomputrequest.go
   - internal/sdk/models/shared/sourcezoomupdate.go
   - internal/sdk/models/shared/streamproperties.go
+  - internal/sdk/models/shared/usersresponse.go
+  - internal/sdk/models/shared/userresponse.go
   - internal/sdk/models/shared/workspaceoauthcredentialsrequest.go
   - internal/sdk/models/shared/oauthcredentialsconfiguration.go
   - internal/sdk/models/shared/actortypeenum.go
@@ -2026,6 +2052,7 @@ generatedFiles:
   - main.go
   - terraform-registry-manifest.json
   - tools/tools.go
+  - internal/provider/types/selected_field_info.go
   - internal/provider/types/stream_configuration.go
   - internal/provider/types/stream_configurations.go
   - internal/provider/types/airbyte_api_connection_schedule.go
@@ -2051,6 +2078,7 @@ generatedFiles:
   - internal/provider/types/destination_aws_datalake_output_format_wildcard.go
   - internal/provider/types/destination_aws_datalake.go
   - internal/provider/types/csv_comma_separated_values.go
+  - internal/provider/types/destination_azure_blob_storage_json_lines_newline_delimited_json.go
   - internal/provider/types/destination_azure_blob_storage_output_format.go
   - internal/provider/types/destination_azure_blob_storage.go
   - internal/provider/types/destination_bigquery_hmac_key.go
@@ -2075,6 +2103,9 @@ generatedFiles:
   - internal/provider/types/username_password.go
   - internal/provider/types/destination_elasticsearch_authentication_method.go
   - internal/provider/types/destination_elasticsearch.go
+  - internal/provider/types/external_table_via_s3.go
+  - internal/provider/types/destination_firebolt_loading_method.go
+  - internal/provider/types/destination_firebolt.go
   - internal/provider/types/destination_firestore.go
   - internal/provider/types/hmac_key.go
   - internal/provider/types/destination_gcs_authentication.go
@@ -2146,7 +2177,7 @@ generatedFiles:
   - internal/provider/types/username_and_password.go
   - internal/provider/types/destination_snowflake_authorization_method.go
   - internal/provider/types/destination_snowflake.go
-  - internal/provider/types/destination_snowflake_cortex_indexing.go
+  - internal/provider/types/destination_snowflake_cortex_snowflake_connection.go
   - internal/provider/types/destination_snowflake_cortex.go
   - internal/provider/types/destination_teradata_verify_ca.go
   - internal/provider/types/destination_teradata_ssl_modes.go
@@ -2242,6 +2273,7 @@ generatedFiles:
   - internal/provider/types/source_file_storage_provider.go
   - internal/provider/types/source_file.go
   - internal/provider/types/source_firebolt.go
+  - internal/provider/types/source_fleetio.go
   - internal/provider/types/source_freshcaller.go
   - internal/provider/types/source_freshdesk.go
   - internal/provider/types/source_freshsales.go
@@ -2337,9 +2369,6 @@ generatedFiles:
   - internal/provider/types/source_microsoft_onedrive.go
   - internal/provider/types/source_microsoft_sharepoint_authenticate_via_microsoft_o_auth.go
   - internal/provider/types/source_microsoft_sharepoint_authentication.go
-  - internal/provider/types/source_microsoft_sharepoint_csv_format.go
-  - internal/provider/types/source_microsoft_sharepoint_format.go
-  - internal/provider/types/source_microsoft_sharepoint_file_based_stream_config.go
   - internal/provider/types/source_microsoft_sharepoint.go
   - internal/provider/types/authenticate_via_microsoft.go
   - internal/provider/types/source_microsoft_teams_authentication_mechanism.go
@@ -2558,6 +2587,10 @@ generatedFiles:
   - internal/provider/destination_elasticsearch_resource.go
   - internal/provider/destination_elasticsearch_resource_sdk.go
   - examples/resources/airbyte_destination_elasticsearch/resource.tf
+  - examples/resources/airbyte_destination_firebolt/import.sh
+  - internal/provider/destination_firebolt_resource.go
+  - internal/provider/destination_firebolt_resource_sdk.go
+  - examples/resources/airbyte_destination_firebolt/resource.tf
   - examples/resources/airbyte_destination_firestore/import.sh
   - internal/provider/destination_firestore_resource.go
   - internal/provider/destination_firestore_resource_sdk.go
@@ -2846,6 +2879,10 @@ generatedFiles:
   - internal/provider/source_firebolt_resource.go
   - internal/provider/source_firebolt_resource_sdk.go
   - examples/resources/airbyte_source_firebolt/resource.tf
+  - examples/resources/airbyte_source_fleetio/import.sh
+  - internal/provider/source_fleetio_resource.go
+  - internal/provider/source_fleetio_resource_sdk.go
+  - examples/resources/airbyte_source_fleetio/resource.tf
   - examples/resources/airbyte_source_freshcaller/import.sh
   - internal/provider/source_freshcaller_resource.go
   - internal/provider/source_freshcaller_resource_sdk.go
@@ -3481,6 +3518,9 @@ generatedFiles:
   - internal/provider/destination_elasticsearch_data_source.go
   - internal/provider/destination_elasticsearch_data_source_sdk.go
   - examples/data-sources/airbyte_destination_elasticsearch/data-source.tf
+  - internal/provider/destination_firebolt_data_source.go
+  - internal/provider/destination_firebolt_data_source_sdk.go
+  - examples/data-sources/airbyte_destination_firebolt/data-source.tf
   - internal/provider/destination_firestore_data_source.go
   - internal/provider/destination_firestore_data_source_sdk.go
   - examples/data-sources/airbyte_destination_firestore/data-source.tf
@@ -3697,6 +3737,9 @@ generatedFiles:
   - internal/provider/source_firebolt_data_source.go
   - internal/provider/source_firebolt_data_source_sdk.go
   - examples/data-sources/airbyte_source_firebolt/data-source.tf
+  - internal/provider/source_fleetio_data_source.go
+  - internal/provider/source_fleetio_data_source_sdk.go
+  - examples/data-sources/airbyte_source_fleetio/data-source.tf
   - internal/provider/source_freshcaller_data_source.go
   - internal/provider/source_freshcaller_data_source_sdk.go
   - examples/data-sources/airbyte_source_freshcaller/data-source.tf

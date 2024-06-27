@@ -17,7 +17,7 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
   configuration = {
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 10
+    look_back_window = 3
     marketplace_ids = [
       "...",
     ]
@@ -25,19 +25,19 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       4,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "NA"
+    region        = "FE"
     report_record_types = [
-      "asins_targets",
+      "targets",
     ]
     start_date = "2022-10-10"
     state_filter = [
-      "enabled",
+      "archived",
     ]
   }
-  definition_id = "517930ed-8d43-4c0d-abba-6ef9fc3c3744"
-  name          = "Bryant Christiansen"
+  definition_id = "849b0bdf-3d5c-4a96-8633-54ae1d23c3d1"
+  name          = "Jaime Weimann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e57aa673-d282-459f-8c22-0e39e10d6ef0"
+  workspace_id  = "4df0d756-d8b0-4d90-9af9-186ab63a7b2e"
 }
 ```
 

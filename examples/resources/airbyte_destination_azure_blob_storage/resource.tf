@@ -8,11 +8,12 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_spill_size           = 500
     format = {
       csv_comma_separated_values = {
-        flattening = "Root level flattening"
+        file_extension = true
+        flattening     = "No flattening"
       }
     }
   }
-  definition_id = "163ca2e9-2d14-4284-ac5e-975e40d11a3c"
-  name          = "Betsy Mann"
-  workspace_id  = "cc05b91a-72d2-4700-9cd4-3ac809ede88b"
+  definition_id = "63ca2e92-d142-4842-85e9-75e40d11a3c6"
+  name          = "Virgil Dickens"
+  workspace_id  = "c05b91a7-2d27-400d-8d43-ac809ede88b1"
 }

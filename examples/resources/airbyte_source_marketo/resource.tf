@@ -5,8 +5,8 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     domain_url    = "https://000-AAA-000.mktorest.com"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  definition_id = "6e9fdef5-41f0-46ca-93b1-e89c1488faa4"
-  name          = "Frances Simonis"
+  definition_id = "825bea4e-c87a-4aff-ab9e-a290f7e9f416"
+  name          = "Bridget Gutmann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "922269c9-d648-4f0b-8cdd-2e95af6ed3c4"
+  workspace_id  = "69c61d27-bbad-43f0-bf8c-a743bfb1506e"
 }

@@ -188,7 +188,7 @@ func (u *SourceAzureBlobStorageUpdateAuthentication) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageUpdateAuthentication", string(data))
 }
 
 func (u SourceAzureBlobStorageUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -200,7 +200,7 @@ func (u SourceAzureBlobStorageUpdateAuthentication) MarshalJSON() ([]byte, error
 		return utils.MarshalJSON(u.AuthenticateViaStorageAccountKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageUpdateAuthentication: all fields are null")
 }
 
 type SourceAzureBlobStorageUpdateSchemasStreamsFormatFiletype string
@@ -300,7 +300,7 @@ func (u *Processing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Processing", string(data))
 }
 
 func (u Processing) MarshalJSON() ([]byte, error) {
@@ -308,7 +308,7 @@ func (u Processing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Local, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Processing: all fields are null")
 }
 
 // ParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -709,7 +709,7 @@ func (u *CSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CSVHeaderDefinition", string(data))
 }
 
 func (u CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -725,7 +725,7 @@ func (u CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.UserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CSVHeaderDefinition: all fields are null")
 }
 
 // InferenceType - How to infer the types of the columns. If none, inference default to strings.
@@ -1054,7 +1054,7 @@ func (u *Format) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Format", string(data))
 }
 
 func (u Format) MarshalJSON() ([]byte, error) {
@@ -1078,7 +1078,7 @@ func (u Format) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Format: all fields are null")
 }
 
 // ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

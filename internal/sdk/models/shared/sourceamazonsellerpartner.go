@@ -192,51 +192,52 @@ func (o *SourceAmazonSellerPartnerOptionsList) GetOptionValue() string {
 	return o.OptionValue
 }
 
-type SourceAmazonSellerPartnerStreamName string
+type SourceAmazonSellerPartnerReportName string
 
 const (
-	SourceAmazonSellerPartnerStreamNameGetAfnInventoryData                              SourceAmazonSellerPartnerStreamName = "GET_AFN_INVENTORY_DATA"
-	SourceAmazonSellerPartnerStreamNameGetAfnInventoryDataByCountry                     SourceAmazonSellerPartnerStreamName = "GET_AFN_INVENTORY_DATA_BY_COUNTRY"
-	SourceAmazonSellerPartnerStreamNameGetAmazonFulfilledShipmentsDataGeneral           SourceAmazonSellerPartnerStreamName = "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL"
-	SourceAmazonSellerPartnerStreamNameGetFbaEstimatedFbaFeesTxtData                    SourceAmazonSellerPartnerStreamName = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaFulfillmentCustomerReturnsData             SourceAmazonSellerPartnerStreamName = "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaFulfillmentCustomerShipmentPromotionData   SourceAmazonSellerPartnerStreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaFulfillmentCustomerShipmentReplacementData SourceAmazonSellerPartnerStreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaFulfillmentRemovalOrderDetailData          SourceAmazonSellerPartnerStreamName = "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaFulfillmentRemovalShipmentDetailData       SourceAmazonSellerPartnerStreamName = "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaInventoryPlanningData                      SourceAmazonSellerPartnerStreamName = "GET_FBA_INVENTORY_PLANNING_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaMyiUnsuppressedInventoryData               SourceAmazonSellerPartnerStreamName = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaReimbursementsData                         SourceAmazonSellerPartnerStreamName = "GET_FBA_REIMBURSEMENTS_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaSnsForecastData                            SourceAmazonSellerPartnerStreamName = "GET_FBA_SNS_FORECAST_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaSnsPerformanceData                         SourceAmazonSellerPartnerStreamName = "GET_FBA_SNS_PERFORMANCE_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFbaStorageFeeChargesData                      SourceAmazonSellerPartnerStreamName = "GET_FBA_STORAGE_FEE_CHARGES_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileActionableOrderDataShipping           SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileAllOrdersDataByLastUpdateGeneral      SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileAllOrdersDataByOrderDateGeneral       SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileArchivedOrdersDataByOrderDate         SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileOpenListingsData                      SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_OPEN_LISTINGS_DATA"
-	SourceAmazonSellerPartnerStreamNameGetFlatFileReturnsDataByReturnDate               SourceAmazonSellerPartnerStreamName = "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE"
-	SourceAmazonSellerPartnerStreamNameGetLedgerDetailViewData                          SourceAmazonSellerPartnerStreamName = "GET_LEDGER_DETAIL_VIEW_DATA"
-	SourceAmazonSellerPartnerStreamNameGetLedgerSummaryViewData                         SourceAmazonSellerPartnerStreamName = "GET_LEDGER_SUMMARY_VIEW_DATA"
-	SourceAmazonSellerPartnerStreamNameGetMerchantCancelledListingsData                 SourceAmazonSellerPartnerStreamName = "GET_MERCHANT_CANCELLED_LISTINGS_DATA"
-	SourceAmazonSellerPartnerStreamNameGetMerchantListingsAllData                       SourceAmazonSellerPartnerStreamName = "GET_MERCHANT_LISTINGS_ALL_DATA"
-	SourceAmazonSellerPartnerStreamNameGetMerchantListingsData                          SourceAmazonSellerPartnerStreamName = "GET_MERCHANT_LISTINGS_DATA"
-	SourceAmazonSellerPartnerStreamNameGetMerchantListingsDataBackCompat                SourceAmazonSellerPartnerStreamName = "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT"
-	SourceAmazonSellerPartnerStreamNameGetMerchantListingsInactiveData                  SourceAmazonSellerPartnerStreamName = "GET_MERCHANT_LISTINGS_INACTIVE_DATA"
-	SourceAmazonSellerPartnerStreamNameGetMerchantsListingsFypReport                    SourceAmazonSellerPartnerStreamName = "GET_MERCHANTS_LISTINGS_FYP_REPORT"
-	SourceAmazonSellerPartnerStreamNameGetOrderReportDataShipping                       SourceAmazonSellerPartnerStreamName = "GET_ORDER_REPORT_DATA_SHIPPING"
-	SourceAmazonSellerPartnerStreamNameGetRestockInventoryRecommendationsReport         SourceAmazonSellerPartnerStreamName = "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT"
-	SourceAmazonSellerPartnerStreamNameGetSellerFeedbackData                            SourceAmazonSellerPartnerStreamName = "GET_SELLER_FEEDBACK_DATA"
-	SourceAmazonSellerPartnerStreamNameGetStrandedInventoryUIData                       SourceAmazonSellerPartnerStreamName = "GET_STRANDED_INVENTORY_UI_DATA"
-	SourceAmazonSellerPartnerStreamNameGetV2SettlementReportDataFlatFile                SourceAmazonSellerPartnerStreamName = "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE"
-	SourceAmazonSellerPartnerStreamNameGetXMLAllOrdersDataByOrderDateGeneral            SourceAmazonSellerPartnerStreamName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
-	SourceAmazonSellerPartnerStreamNameGetXMLBrowseTreeData                             SourceAmazonSellerPartnerStreamName = "GET_XML_BROWSE_TREE_DATA"
+	SourceAmazonSellerPartnerReportNameGetAfnInventoryData                              SourceAmazonSellerPartnerReportName = "GET_AFN_INVENTORY_DATA"
+	SourceAmazonSellerPartnerReportNameGetAfnInventoryDataByCountry                     SourceAmazonSellerPartnerReportName = "GET_AFN_INVENTORY_DATA_BY_COUNTRY"
+	SourceAmazonSellerPartnerReportNameGetAmazonFulfilledShipmentsDataGeneral           SourceAmazonSellerPartnerReportName = "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL"
+	SourceAmazonSellerPartnerReportNameGetFbaEstimatedFbaFeesTxtData                    SourceAmazonSellerPartnerReportName = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaFulfillmentCustomerReturnsData             SourceAmazonSellerPartnerReportName = "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaFulfillmentCustomerShipmentPromotionData   SourceAmazonSellerPartnerReportName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaFulfillmentCustomerShipmentReplacementData SourceAmazonSellerPartnerReportName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaFulfillmentRemovalOrderDetailData          SourceAmazonSellerPartnerReportName = "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaFulfillmentRemovalShipmentDetailData       SourceAmazonSellerPartnerReportName = "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaInventoryPlanningData                      SourceAmazonSellerPartnerReportName = "GET_FBA_INVENTORY_PLANNING_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaMyiUnsuppressedInventoryData               SourceAmazonSellerPartnerReportName = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaReimbursementsData                         SourceAmazonSellerPartnerReportName = "GET_FBA_REIMBURSEMENTS_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaSnsForecastData                            SourceAmazonSellerPartnerReportName = "GET_FBA_SNS_FORECAST_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaSnsPerformanceData                         SourceAmazonSellerPartnerReportName = "GET_FBA_SNS_PERFORMANCE_DATA"
+	SourceAmazonSellerPartnerReportNameGetFbaStorageFeeChargesData                      SourceAmazonSellerPartnerReportName = "GET_FBA_STORAGE_FEE_CHARGES_DATA"
+	SourceAmazonSellerPartnerReportNameGetFlatFileActionableOrderDataShipping           SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
+	SourceAmazonSellerPartnerReportNameGetFlatFileAllOrdersDataByLastUpdateGeneral      SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
+	SourceAmazonSellerPartnerReportNameGetFlatFileAllOrdersDataByOrderDateGeneral       SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	SourceAmazonSellerPartnerReportNameGetFlatFileArchivedOrdersDataByOrderDate         SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE"
+	SourceAmazonSellerPartnerReportNameGetFlatFileOpenListingsData                      SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_OPEN_LISTINGS_DATA"
+	SourceAmazonSellerPartnerReportNameGetFlatFileReturnsDataByReturnDate               SourceAmazonSellerPartnerReportName = "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE"
+	SourceAmazonSellerPartnerReportNameGetLedgerDetailViewData                          SourceAmazonSellerPartnerReportName = "GET_LEDGER_DETAIL_VIEW_DATA"
+	SourceAmazonSellerPartnerReportNameGetLedgerSummaryViewData                         SourceAmazonSellerPartnerReportName = "GET_LEDGER_SUMMARY_VIEW_DATA"
+	SourceAmazonSellerPartnerReportNameGetMerchantCancelledListingsData                 SourceAmazonSellerPartnerReportName = "GET_MERCHANT_CANCELLED_LISTINGS_DATA"
+	SourceAmazonSellerPartnerReportNameGetMerchantListingsAllData                       SourceAmazonSellerPartnerReportName = "GET_MERCHANT_LISTINGS_ALL_DATA"
+	SourceAmazonSellerPartnerReportNameGetMerchantListingsData                          SourceAmazonSellerPartnerReportName = "GET_MERCHANT_LISTINGS_DATA"
+	SourceAmazonSellerPartnerReportNameGetMerchantListingsDataBackCompat                SourceAmazonSellerPartnerReportName = "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT"
+	SourceAmazonSellerPartnerReportNameGetMerchantListingsInactiveData                  SourceAmazonSellerPartnerReportName = "GET_MERCHANT_LISTINGS_INACTIVE_DATA"
+	SourceAmazonSellerPartnerReportNameGetMerchantsListingsFypReport                    SourceAmazonSellerPartnerReportName = "GET_MERCHANTS_LISTINGS_FYP_REPORT"
+	SourceAmazonSellerPartnerReportNameGetOrderReportDataShipping                       SourceAmazonSellerPartnerReportName = "GET_ORDER_REPORT_DATA_SHIPPING"
+	SourceAmazonSellerPartnerReportNameGetRestockInventoryRecommendationsReport         SourceAmazonSellerPartnerReportName = "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT"
+	SourceAmazonSellerPartnerReportNameGetSellerFeedbackData                            SourceAmazonSellerPartnerReportName = "GET_SELLER_FEEDBACK_DATA"
+	SourceAmazonSellerPartnerReportNameGetStrandedInventoryUIData                       SourceAmazonSellerPartnerReportName = "GET_STRANDED_INVENTORY_UI_DATA"
+	SourceAmazonSellerPartnerReportNameGetV2SettlementReportDataFlatFile                SourceAmazonSellerPartnerReportName = "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE"
+	SourceAmazonSellerPartnerReportNameGetXMLAllOrdersDataByOrderDateGeneral            SourceAmazonSellerPartnerReportName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	SourceAmazonSellerPartnerReportNameGetXMLBrowseTreeData                             SourceAmazonSellerPartnerReportName = "GET_XML_BROWSE_TREE_DATA"
+	SourceAmazonSellerPartnerReportNameGetVendorRealTimeInventoryReport                 SourceAmazonSellerPartnerReportName = "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"
 )
 
-func (e SourceAmazonSellerPartnerStreamName) ToPointer() *SourceAmazonSellerPartnerStreamName {
+func (e SourceAmazonSellerPartnerReportName) ToPointer() *SourceAmazonSellerPartnerReportName {
 	return &e
 }
-func (e *SourceAmazonSellerPartnerStreamName) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSellerPartnerReportName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -313,17 +314,20 @@ func (e *SourceAmazonSellerPartnerStreamName) UnmarshalJSON(data []byte) error {
 	case "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL":
 		fallthrough
 	case "GET_XML_BROWSE_TREE_DATA":
-		*e = SourceAmazonSellerPartnerStreamName(v)
+		fallthrough
+	case "GET_VENDOR_REAL_TIME_INVENTORY_REPORT":
+		*e = SourceAmazonSellerPartnerReportName(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerStreamName: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerReportName: %v", v)
 	}
 }
 
 type SourceAmazonSellerPartnerReportOptions struct {
 	// List of options
 	OptionsList []SourceAmazonSellerPartnerOptionsList `json:"options_list"`
-	StreamName  SourceAmazonSellerPartnerStreamName    `json:"stream_name"`
+	ReportName  SourceAmazonSellerPartnerReportName    `json:"report_name"`
+	StreamName  string                                 `json:"stream_name"`
 }
 
 func (o *SourceAmazonSellerPartnerReportOptions) GetOptionsList() []SourceAmazonSellerPartnerOptionsList {
@@ -333,9 +337,16 @@ func (o *SourceAmazonSellerPartnerReportOptions) GetOptionsList() []SourceAmazon
 	return o.OptionsList
 }
 
-func (o *SourceAmazonSellerPartnerReportOptions) GetStreamName() SourceAmazonSellerPartnerStreamName {
+func (o *SourceAmazonSellerPartnerReportOptions) GetReportName() SourceAmazonSellerPartnerReportName {
 	if o == nil {
-		return SourceAmazonSellerPartnerStreamName("")
+		return SourceAmazonSellerPartnerReportName("")
+	}
+	return o.ReportName
+}
+
+func (o *SourceAmazonSellerPartnerReportOptions) GetStreamName() string {
+	if o == nil {
+		return ""
 	}
 	return o.StreamName
 }

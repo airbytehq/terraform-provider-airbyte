@@ -7,8 +7,8 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     engine        = "...my_engine..."
     host          = "api.app.firebolt.io"
   }
-  definition_id = "02e3e601-6546-4635-ada9-b04e26c5d5cf"
-  name          = "Elizabeth Ziemann"
+  definition_id = "0df143ee-10f8-4279-a427-b2c340e1d4b4"
+  name          = "Mr. Carole Predovic"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "713464ed-5bf6-4d67-b06c-c548e68cfaef"
+  workspace_id  = "62aeeab6-a16b-4c0f-9be5-567777324c6c"
 }

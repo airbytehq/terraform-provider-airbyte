@@ -161,7 +161,7 @@ func (u *SourceSftpBulkAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSftpBulkAuthentication", string(data))
 }
 
 func (u SourceSftpBulkAuthentication) MarshalJSON() ([]byte, error) {
@@ -173,7 +173,7 @@ func (u SourceSftpBulkAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpBulkAuthenticateViaPrivateKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSftpBulkAuthentication: all fields are null")
 }
 
 type SftpBulk string
@@ -405,7 +405,7 @@ func (u *SourceSftpBulkProcessing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSftpBulkProcessing", string(data))
 }
 
 func (u SourceSftpBulkProcessing) MarshalJSON() ([]byte, error) {
@@ -417,7 +417,7 @@ func (u SourceSftpBulkProcessing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpBulkViaAPI, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSftpBulkProcessing: all fields are null")
 }
 
 // SourceSftpBulkParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -818,7 +818,7 @@ func (u *SourceSftpBulkCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSftpBulkCSVHeaderDefinition", string(data))
 }
 
 func (u SourceSftpBulkCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -834,7 +834,7 @@ func (u SourceSftpBulkCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpBulkUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSftpBulkCSVHeaderDefinition: all fields are null")
 }
 
 // SourceSftpBulkInferenceType - How to infer the types of the columns. If none, inference default to strings.
@@ -1163,7 +1163,7 @@ func (u *SourceSftpBulkFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSftpBulkFormat", string(data))
 }
 
 func (u SourceSftpBulkFormat) MarshalJSON() ([]byte, error) {
@@ -1187,7 +1187,7 @@ func (u SourceSftpBulkFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpBulkDocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSftpBulkFormat: all fields are null")
 }
 
 // SourceSftpBulkValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

@@ -179,7 +179,7 @@ func (u *SourceGithubUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGithubUpdateAuthentication", string(data))
 }
 
 func (u SourceGithubUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -191,7 +191,7 @@ func (u SourceGithubUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGithubUpdatePersonalAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGithubUpdateAuthentication: all fields are null")
 }
 
 type SourceGithubUpdate struct {
@@ -203,6 +203,8 @@ type SourceGithubUpdate struct {
 	Branches []string `json:"branches,omitempty"`
 	// Choose how to authenticate to GitHub
 	Credentials SourceGithubUpdateAuthentication `json:"credentials"`
+	// Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync
+	MaxWaitingTime *int64 `default:"10" json:"max_waiting_time"`
 	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
 	Repositories []string `json:"repositories"`
 	// (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
@@ -248,6 +250,13 @@ func (o *SourceGithubUpdate) GetCredentials() SourceGithubUpdateAuthentication {
 		return SourceGithubUpdateAuthentication{}
 	}
 	return o.Credentials
+}
+
+func (o *SourceGithubUpdate) GetMaxWaitingTime() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxWaitingTime
 }
 
 func (o *SourceGithubUpdate) GetRepositories() []string {

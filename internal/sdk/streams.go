@@ -121,4 +121,5 @@ func (s *Streams) GetStreamProperties(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }

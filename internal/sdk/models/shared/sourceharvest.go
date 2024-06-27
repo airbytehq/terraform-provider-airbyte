@@ -195,7 +195,7 @@ func (u *SourceHarvestAuthenticationMechanism) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceHarvestAuthenticationMechanism", string(data))
 }
 
 func (u SourceHarvestAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -207,7 +207,7 @@ func (u SourceHarvestAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceHarvestAuthenticateWithPersonalAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceHarvestAuthenticationMechanism: all fields are null")
 }
 
 type Harvest string

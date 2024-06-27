@@ -26,6 +26,16 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 				}
 				primaryKey = append(primaryKey, primaryKeyTmp)
 			}
+			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
+			for _, selectedFieldsItem := range streamsItem.SelectedFields {
+				var fieldPath []string = []string{}
+				for _, fieldPathItem := range selectedFieldsItem.FieldPath {
+					fieldPath = append(fieldPath, fieldPathItem.ValueString())
+				}
+				selectedFields = append(selectedFields, shared.SelectedFieldInfo{
+					FieldPath: fieldPath,
+				})
+			}
 			syncMode := new(shared.ConnectionSyncModeEnum)
 			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
 				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
@@ -33,10 +43,11 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 				syncMode = nil
 			}
 			streams = append(streams, shared.StreamConfiguration{
-				CursorField: cursorField,
-				Name:        name,
-				PrimaryKey:  primaryKey,
-				SyncMode:    syncMode,
+				CursorField:    cursorField,
+				Name:           name,
+				PrimaryKey:     primaryKey,
+				SelectedFields: selectedFields,
+				SyncMode:       syncMode,
 			})
 		}
 		configurations = &shared.StreamConfigurations{
@@ -122,6 +133,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 		if r.Configurations == nil {
 			r.Configurations = &tfTypes.StreamConfigurations{}
 		}
+		r.Configurations.Streams = []tfTypes.StreamConfiguration{}
 		if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
 			r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
 		}
@@ -141,6 +153,19 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 				}
 				streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
 			}
+			streams1.SelectedFields = []tfTypes.SelectedFieldInfo{}
+			for selectedFieldsCount, selectedFieldsItem := range streamsItem.SelectedFields {
+				var selectedFields1 tfTypes.SelectedFieldInfo
+				selectedFields1.FieldPath = []types.String{}
+				for _, v := range selectedFieldsItem.FieldPath {
+					selectedFields1.FieldPath = append(selectedFields1.FieldPath, types.StringValue(v))
+				}
+				if selectedFieldsCount+1 > len(streams1.SelectedFields) {
+					streams1.SelectedFields = append(streams1.SelectedFields, selectedFields1)
+				} else {
+					streams1.SelectedFields[selectedFieldsCount].FieldPath = selectedFields1.FieldPath
+				}
+			}
 			if streamsItem.SyncMode != nil {
 				streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
 			} else {
@@ -152,6 +177,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
 				r.Configurations.Streams[streamsCount].Name = streams1.Name
 				r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+				r.Configurations.Streams[streamsCount].SelectedFields = streams1.SelectedFields
 				r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
 			}
 		}
@@ -205,6 +231,16 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 				}
 				primaryKey = append(primaryKey, primaryKeyTmp)
 			}
+			var selectedFields []shared.SelectedFieldInfo = []shared.SelectedFieldInfo{}
+			for _, selectedFieldsItem := range streamsItem.SelectedFields {
+				var fieldPath []string = []string{}
+				for _, fieldPathItem := range selectedFieldsItem.FieldPath {
+					fieldPath = append(fieldPath, fieldPathItem.ValueString())
+				}
+				selectedFields = append(selectedFields, shared.SelectedFieldInfo{
+					FieldPath: fieldPath,
+				})
+			}
 			syncMode := new(shared.ConnectionSyncModeEnum)
 			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
 				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
@@ -212,10 +248,11 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 				syncMode = nil
 			}
 			streams = append(streams, shared.StreamConfiguration{
-				CursorField: cursorField,
-				Name:        name,
-				PrimaryKey:  primaryKey,
-				SyncMode:    syncMode,
+				CursorField:    cursorField,
+				Name:           name,
+				PrimaryKey:     primaryKey,
+				SelectedFields: selectedFields,
+				SyncMode:       syncMode,
 			})
 		}
 		configurations = &shared.StreamConfigurations{

@@ -35,6 +35,8 @@ func (e *Intercom) UnmarshalJSON(data []byte) error {
 type SourceIntercom struct {
 	// Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 	AccessToken string `json:"access_token"`
+	// Set lower value in case of failing long running sync of Activity Logs stream.
+	ActivityLogsTimeStep *int64 `default:"30" json:"activity_logs_time_step"`
 	// Client Id for your Intercom application.
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret for your Intercom application.
@@ -60,6 +62,13 @@ func (o *SourceIntercom) GetAccessToken() string {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceIntercom) GetActivityLogsTimeStep() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ActivityLogsTimeStep
 }
 
 func (o *SourceIntercom) GetClientID() *string {

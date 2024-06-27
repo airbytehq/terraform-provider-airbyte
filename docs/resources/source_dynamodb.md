@@ -23,14 +23,14 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
       }
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
-    ignore_missing_read_permissions_tables = true
-    region                                 = "ap-southeast-1"
+    ignore_missing_read_permissions_tables = false
+    region                                 = "me-central-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "c1959643-3e1d-4514-84aa-c586d055244c"
-  name          = "Michele Jones"
+  definition_id = "58122af6-a8ac-4655-b6a2-05f1e4d309ea"
+  name          = "Mrs. Carole Beer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "457a2c26-18fe-41b9-9dcc-e8e649d7675f"
+  workspace_id  = "4fbd8663-14ca-4ce0-af96-b833556f7e41"
 }
 ```
 

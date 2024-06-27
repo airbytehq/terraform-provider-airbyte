@@ -64,6 +64,12 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 			SourceGithubPersonalAccessToken: sourceGithubPersonalAccessToken,
 		}
 	}
+	maxWaitingTime := new(int64)
+	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
+		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
+	} else {
+		maxWaitingTime = nil
+	}
 	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
@@ -81,13 +87,14 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 		startDate = nil
 	}
 	configuration := shared.SourceGithub{
-		APIURL:       apiURL,
-		Branch:       branch,
-		Branches:     branches,
-		Credentials:  credentials,
-		Repositories: repositories,
-		Repository:   repository,
-		StartDate:    startDate,
+		APIURL:         apiURL,
+		Branch:         branch,
+		Branches:       branches,
+		Credentials:    credentials,
+		MaxWaitingTime: maxWaitingTime,
+		Repositories:   repositories,
+		Repository:     repository,
+		StartDate:      startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -178,6 +185,12 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 			SourceGithubUpdatePersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
 		}
 	}
+	maxWaitingTime := new(int64)
+	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
+		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
+	} else {
+		maxWaitingTime = nil
+	}
 	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
@@ -195,13 +208,14 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 		startDate = nil
 	}
 	configuration := shared.SourceGithubUpdate{
-		APIURL:       apiURL,
-		Branch:       branch,
-		Branches:     branches,
-		Credentials:  credentials,
-		Repositories: repositories,
-		Repository:   repository,
-		StartDate:    startDate,
+		APIURL:         apiURL,
+		Branch:         branch,
+		Branches:       branches,
+		Credentials:    credentials,
+		MaxWaitingTime: maxWaitingTime,
+		Repositories:   repositories,
+		Repository:     repository,
+		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

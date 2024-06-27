@@ -1,13 +1,13 @@
 resource "airbyte_source_nytimes" "my_source_nytimes" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "1851-01"
-    period     = "30"
+    end_date   = "2022-08"
+    period     = "1"
     share_type = "facebook"
-    start_date = "2022-08"
+    start_date = "1851-01"
   }
-  definition_id = "83b2c4dd-4d42-4907-b41e-e0bbab0457d9"
-  name          = "Sue Durgan"
+  definition_id = "a1c7d433-20fa-4c9c-9a8d-ab7e73a59718"
+  name          = "Suzanne Terry"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e6ecd841-e72a-4766-a686-faa512d8044b"
+  workspace_id  = "c1f633ab-c58a-4542-9517-fc88bc4998d7"
 }

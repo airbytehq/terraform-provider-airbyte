@@ -18,10 +18,10 @@ resource "airbyte_source_iterable" "my_source_iterable" {
     api_key    = "...my_api_key..."
     start_date = "2021-04-01T00:00:00Z"
   }
-  definition_id = "65ed70eb-17cb-44fc-a400-2ca0d01711f2"
-  name          = "Rosie Christiansen"
+  definition_id = "1af8b9bb-4850-4d65-8be1-e785de7e327e"
+  name          = "Georgia Ledner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "de04a9ce-3be5-47bf-a461-27442775ed08"
+  workspace_id  = "126eb569-4431-42d5-95e6-a2d83c0cc98d"
 }
 ```
 

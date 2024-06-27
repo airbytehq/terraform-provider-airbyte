@@ -15,7 +15,7 @@ SourceGoogleAnalyticsDataAPI Resource
 ```terraform
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
-    convert_conversions_event = true
+    convert_conversions_event = false
     credentials = {
       authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
@@ -38,12 +38,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 73.14
+                        value = 57.56
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 40.37
+                        value = 31.93
                       }
                     }
                   }
@@ -64,12 +64,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 7.66
+                        value = 35.8
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 46.24
+                        value = 18.49
                       }
                     }
                   }
@@ -81,20 +81,21 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Kenneth Boyle"
+        name = "Edmund Legros"
       },
     ]
     date_ranges_start_date = "2021-01-01"
     keep_empty_rows        = false
+    lookback_window        = 2
     property_ids = [
       "...",
     ]
-    window_in_days = 90
+    window_in_days = 30
   }
-  definition_id = "e1922df2-83a6-4143-93a5-2314031fd7b8"
-  name          = "Lula Feil III"
+  definition_id = "183b00ec-7045-4956-803e-c7b8b68fdfc0"
+  name          = "Miriam Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4c1950da-31eb-4ecd-9b5a-75a7c5fc21d7"
+  workspace_id  = "fd673f59-a8d0-4acc-9948-b0061059fac1"
 }
 ```
 
@@ -131,6 +132,7 @@ Optional:
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
 - `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 - `keep_empty_rows` (Boolean) If false, each row with all metrics equal to 0 will not be returned. If true, these rows will be returned if they are not separately removed by a filter. More information is available in <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/rest/v1beta/properties/runReport#request-body">the documentation</a>. Default: false
+- `lookback_window` (Number) Since attribution changes after the event date, and Google Analytics has a data processing latency, we should specify how many days in the past we should refresh the data in every run. So if you set it at 5 days, in every sync it will fetch the last bookmark date minus 5 days. Default: 2
 - `window_in_days` (Number) The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>. Default: 1
 
 <a id="nestedatt--configuration--credentials"></a>

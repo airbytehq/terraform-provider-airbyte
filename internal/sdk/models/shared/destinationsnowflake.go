@@ -264,7 +264,7 @@ func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationSnowflakeAuthorizationMethod", string(data))
 }
 
 func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -280,7 +280,7 @@ func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationSnowflakeOAuth20, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationSnowflakeAuthorizationMethod: all fields are null")
 }
 
 type Snowflake string

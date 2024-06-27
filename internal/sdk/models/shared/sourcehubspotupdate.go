@@ -183,7 +183,7 @@ func (u *SourceHubspotUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceHubspotUpdateAuthentication", string(data))
 }
 
 func (u SourceHubspotUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -195,7 +195,7 @@ func (u SourceHubspotUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.PrivateApp, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceHubspotUpdateAuthentication: all fields are null")
 }
 
 type SourceHubspotUpdate struct {

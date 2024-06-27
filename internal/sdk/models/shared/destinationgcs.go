@@ -103,7 +103,7 @@ func (u *DestinationGcsAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsAuthentication", string(data))
 }
 
 func (u DestinationGcsAuthentication) MarshalJSON() ([]byte, error) {
@@ -111,7 +111,7 @@ func (u DestinationGcsAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsHMACKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsAuthentication: all fields are null")
 }
 
 type Gcs string
@@ -417,7 +417,7 @@ func (u *DestinationGcsSchemasCompression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsSchemasCompression", string(data))
 }
 
 func (u DestinationGcsSchemasCompression) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u DestinationGcsSchemasCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsSchemasGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsSchemasCompression: all fields are null")
 }
 
 type DestinationGcsSchemasFormatFormatType string
@@ -625,7 +625,7 @@ func (u *DestinationGcsCompression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsCompression", string(data))
 }
 
 func (u DestinationGcsCompression) MarshalJSON() ([]byte, error) {
@@ -637,7 +637,7 @@ func (u DestinationGcsCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsCompression: all fields are null")
 }
 
 // DestinationGcsNormalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
@@ -1157,7 +1157,7 @@ func (u *DestinationGcsCompressionCodec) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsCompressionCodec", string(data))
 }
 
 func (u DestinationGcsCompressionCodec) MarshalJSON() ([]byte, error) {
@@ -1185,7 +1185,7 @@ func (u DestinationGcsCompressionCodec) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsSnappy, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsCompressionCodec: all fields are null")
 }
 
 type DestinationGcsFormatType string
@@ -1327,7 +1327,7 @@ func (u *DestinationGcsOutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsOutputFormat", string(data))
 }
 
 func (u DestinationGcsOutputFormat) MarshalJSON() ([]byte, error) {
@@ -1347,7 +1347,7 @@ func (u DestinationGcsOutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsParquetColumnarStorage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsOutputFormat: all fields are null")
 }
 
 // DestinationGCSGCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.

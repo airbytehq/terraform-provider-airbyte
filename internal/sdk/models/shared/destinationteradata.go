@@ -439,7 +439,7 @@ func (u *DestinationTeradataSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationTeradataSSLModes", string(data))
 }
 
 func (u DestinationTeradataSSLModes) MarshalJSON() ([]byte, error) {
@@ -467,7 +467,7 @@ func (u DestinationTeradataSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationTeradataVerifyFull, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationTeradataSSLModes: all fields are null")
 }
 
 type DestinationTeradata struct {

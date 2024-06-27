@@ -15,8 +15,8 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "47d95358-a568-419d-aabe-c21d7e3d24df"
-  name          = "Luis Stiedemann Sr."
+  definition_id = "08ecd761-f19b-460a-a080-4c971e60235d"
+  name          = "Frank Marquardt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "342f997d-059d-438a-ae5f-cf99c41876fa"
+  workspace_id  = "dad73b79-d20b-448a-8fdc-6fb504a12b77"
 }

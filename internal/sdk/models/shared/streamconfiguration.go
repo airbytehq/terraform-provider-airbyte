@@ -8,8 +8,10 @@ type StreamConfiguration struct {
 	CursorField []string `json:"cursorField,omitempty"`
 	Name        string   `json:"name"`
 	// Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
-	PrimaryKey [][]string              `json:"primaryKey,omitempty"`
-	SyncMode   *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
+	PrimaryKey [][]string `json:"primaryKey,omitempty"`
+	// Paths to the fields that will be included in the configured catalog.
+	SelectedFields []SelectedFieldInfo     `json:"selectedFields,omitempty"`
+	SyncMode       *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
 }
 
 func (o *StreamConfiguration) GetCursorField() []string {
@@ -31,6 +33,13 @@ func (o *StreamConfiguration) GetPrimaryKey() [][]string {
 		return nil
 	}
 	return o.PrimaryKey
+}
+
+func (o *StreamConfiguration) GetSelectedFields() []SelectedFieldInfo {
+	if o == nil {
+		return nil
+	}
+	return o.SelectedFields
 }
 
 func (o *StreamConfiguration) GetSyncMode() *ConnectionSyncModeEnum {

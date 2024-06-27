@@ -34,12 +34,12 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Jordy.Dickinson19"
+    username = "Era_Wisoky"
   }
-  definition_id = "bbc2f8e7-5b95-4ee5-9d11-c77a4e3aa4d1"
-  name          = "Ron Gleichner"
+  definition_id = "ec8fedb8-fc35-4367-bfee-523e36b74e8f"
+  name          = "Lula Lemke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d7d939b8-b6b2-4c09-a0aa-8be08607521b"
+  workspace_id  = "d76b02a3-d797-4c2f-9023-950717b206b8"
 }
 ```
 
@@ -87,7 +87,7 @@ Optional:
 
 Optional:
 
-- `detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--detect_changes_with_xmin_system_column))
+- `detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure. (see [below for nested schema](#nestedatt--configuration--replication_method--detect_changes_with_xmin_system_column))
 - `read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--read_changes_using_write_ahead_log_cdc))
 - `scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--scan_changes_with_user_defined_cursor))
 

@@ -178,7 +178,7 @@ func (u *SourceGoogleSheetsUpdateAuthentication) UnmarshalJSON(data []byte) erro
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSheetsUpdateAuthentication", string(data))
 }
 
 func (u SourceGoogleSheetsUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -190,7 +190,7 @@ func (u SourceGoogleSheetsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleSheetsUpdateServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleSheetsUpdateAuthentication: all fields are null")
 }
 
 type SourceGoogleSheetsUpdate struct {

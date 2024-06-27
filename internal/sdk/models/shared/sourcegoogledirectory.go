@@ -193,7 +193,7 @@ func (u *SourceGoogleDirectoryGoogleCredentials) UnmarshalJSON(data []byte) erro
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleDirectoryGoogleCredentials", string(data))
 }
 
 func (u SourceGoogleDirectoryGoogleCredentials) MarshalJSON() ([]byte, error) {
@@ -205,7 +205,7 @@ func (u SourceGoogleDirectoryGoogleCredentials) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleDirectoryServiceAccountKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleDirectoryGoogleCredentials: all fields are null")
 }
 
 type GoogleDirectory string

@@ -28,11 +28,11 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Fermin76"
+    username = "Brian25"
   }
-  definition_id = "50c9ec76-747b-406c-b86f-e4a6f8bb810e"
-  name          = "Brad Gutkowski"
-  workspace_id  = "802e7b21-83b2-4bc4-b6db-7afdacad2c14"
+  definition_id = "cf17a668-3bb7-46cb-9d42-c04b7b603cc8"
+  name          = "Bryant Lynch"
+  workspace_id  = "e7603813-ef7f-4c0d-976e-5f414549f124"
 }
 ```
 

@@ -9,6 +9,10 @@ import (
 )
 
 func MatchContentType(contentType string, pattern string) bool {
+	if contentType == "" {
+		contentType = "application/octet-stream"
+	}
+
 	if contentType == pattern || pattern == "*" || pattern == "*/*" {
 		return true
 	}

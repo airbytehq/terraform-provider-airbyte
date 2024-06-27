@@ -4,8 +4,8 @@ package shared
 
 type PermissionCreateRequest struct {
 	OrganizationID *string `json:"organizationId,omitempty"`
-	// Describes what actions/endpoints the permission entitles to
-	PermissionType PermissionType `json:"permissionType"`
+	// Subset of `PermissionType` (removing `instance_admin`), could be used in public-api.
+	PermissionType PublicPermissionType `json:"permissionType"`
 	// Internal Airbyte user ID
 	UserID      string  `json:"userId"`
 	WorkspaceID *string `json:"workspaceId,omitempty"`
@@ -18,9 +18,9 @@ func (o *PermissionCreateRequest) GetOrganizationID() *string {
 	return o.OrganizationID
 }
 
-func (o *PermissionCreateRequest) GetPermissionType() PermissionType {
+func (o *PermissionCreateRequest) GetPermissionType() PublicPermissionType {
 	if o == nil {
-		return PermissionType("")
+		return PublicPermissionType("")
 	}
 	return o.PermissionType
 }

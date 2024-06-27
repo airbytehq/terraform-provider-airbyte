@@ -169,9 +169,9 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 									},
 									Description: `List of options`,
 								},
-								"stream_name": schema.StringAttribute{
+								"report_name": schema.StringAttribute{
 									Required:    true,
-									Description: `must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA"]`,
+									Description: `must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA", "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"GET_AFN_INVENTORY_DATA",
@@ -210,8 +210,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 											"GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE",
 											"GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL",
 											"GET_XML_BROWSE_TREE_DATA",
+											"GET_VENDOR_REAL_TIME_INVENTORY_REPORT",
 										),
 									},
+								},
+								"stream_name": schema.StringAttribute{
+									Required: true,
 								},
 							},
 						},
@@ -317,8 +321,8 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res.SourceResponse)
@@ -343,8 +347,8 @@ func (r *SourceAmazonSellerPartnerResource) Create(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
@@ -396,8 +400,8 @@ func (r *SourceAmazonSellerPartnerResource) Read(ctx context.Context, req resour
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res.SourceResponse)
@@ -463,8 +467,8 @@ func (r *SourceAmazonSellerPartnerResource) Update(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res1.SourceResponse)

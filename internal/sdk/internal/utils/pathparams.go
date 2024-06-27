@@ -38,8 +38,7 @@ func GenerateURL(_ context.Context, serverURL, path string, pathParams interface
 }
 
 func populateParsedParameters(pathParams interface{}, globals interface{}, parsedParameters map[string]string, skipFields []string) ([]string, error) {
-	pathParamsStructType := reflect.TypeOf(pathParams)
-	pathParamsValType := reflect.ValueOf(pathParams)
+	pathParamsStructType, pathParamsValType := dereferencePointers(reflect.TypeOf(pathParams), reflect.ValueOf(pathParams))
 
 	globalsAlreadyPopulated := []string{}
 

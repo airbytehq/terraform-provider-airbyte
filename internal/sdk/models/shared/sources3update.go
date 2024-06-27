@@ -441,7 +441,7 @@ func (u *SourceS3UpdateFileFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3UpdateFileFormat", string(data))
 }
 
 func (u SourceS3UpdateFileFormat) MarshalJSON() ([]byte, error) {
@@ -461,7 +461,7 @@ func (u SourceS3UpdateFileFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Jsonl, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceS3UpdateFileFormat: all fields are null")
 }
 
 // S3AmazonWebServices - Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
@@ -648,7 +648,7 @@ func (u *SourceS3UpdateProcessing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3UpdateProcessing", string(data))
 }
 
 func (u SourceS3UpdateProcessing) MarshalJSON() ([]byte, error) {
@@ -656,7 +656,7 @@ func (u SourceS3UpdateProcessing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceS3UpdateLocal, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceS3UpdateProcessing: all fields are null")
 }
 
 // SourceS3UpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -1057,7 +1057,7 @@ func (u *SourceS3UpdateCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3UpdateCSVHeaderDefinition", string(data))
 }
 
 func (u SourceS3UpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -1073,7 +1073,7 @@ func (u SourceS3UpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceS3UpdateUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceS3UpdateCSVHeaderDefinition: all fields are null")
 }
 
 // SourceS3UpdateInferenceType - How to infer the types of the columns. If none, inference default to strings.
@@ -1402,7 +1402,7 @@ func (u *SourceS3UpdateFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3UpdateFormat", string(data))
 }
 
 func (u SourceS3UpdateFormat) MarshalJSON() ([]byte, error) {
@@ -1426,7 +1426,7 @@ func (u SourceS3UpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceS3UpdateDocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceS3UpdateFormat: all fields are null")
 }
 
 // SourceS3UpdateValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

@@ -124,6 +124,7 @@ func (s *Destinations) CreateDestination(ctx context.Context, request *shared.De
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationAstra - Create a destination
@@ -222,6 +223,7 @@ func (s *Destinations) CreateDestinationAstra(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationAwsDatalake - Create a destination
@@ -320,6 +322,7 @@ func (s *Destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationAzureBlobStorage - Create a destination
@@ -418,6 +421,7 @@ func (s *Destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationBigquery - Create a destination
@@ -516,6 +520,7 @@ func (s *Destinations) CreateDestinationBigquery(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationClickhouse - Create a destination
@@ -614,6 +619,7 @@ func (s *Destinations) CreateDestinationClickhouse(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationConvex - Create a destination
@@ -712,6 +718,7 @@ func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationCustom - Create a destination
@@ -810,6 +817,7 @@ func (s *Destinations) CreateDestinationCustom(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationDatabricks - Create a destination
@@ -908,6 +916,7 @@ func (s *Destinations) CreateDestinationDatabricks(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationDevNull - Create a destination
@@ -1006,6 +1015,7 @@ func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationDuckdb - Create a destination
@@ -1104,6 +1114,7 @@ func (s *Destinations) CreateDestinationDuckdb(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationDynamodb - Create a destination
@@ -1202,6 +1213,7 @@ func (s *Destinations) CreateDestinationDynamodb(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationElasticsearch - Create a destination
@@ -1300,6 +1312,106 @@ func (s *Destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 	}
 
 	return res, nil
+
+}
+
+// CreateDestinationFirebolt - Create a destination
+// Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
+func (s *Destinations) CreateDestinationFirebolt(ctx context.Context, request *shared.DestinationFireboltCreateRequest) (*operations.CreateDestinationFireboltResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "createDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := url.JoinPath(baseURL, "/destinations")
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	req.Header.Set("Content-Type", reqContentType)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.CreateDestinationFireboltResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // CreateDestinationFirestore - Create a destination
@@ -1398,6 +1510,7 @@ func (s *Destinations) CreateDestinationFirestore(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationGcs - Create a destination
@@ -1496,6 +1609,7 @@ func (s *Destinations) CreateDestinationGcs(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationGoogleSheets - Create a destination
@@ -1594,6 +1708,7 @@ func (s *Destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationLangchain - Create a destination
@@ -1692,6 +1807,7 @@ func (s *Destinations) CreateDestinationLangchain(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationMilvus - Create a destination
@@ -1790,6 +1906,7 @@ func (s *Destinations) CreateDestinationMilvus(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationMongodb - Create a destination
@@ -1888,6 +2005,7 @@ func (s *Destinations) CreateDestinationMongodb(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationMssql - Create a destination
@@ -1986,6 +2104,7 @@ func (s *Destinations) CreateDestinationMssql(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationMysql - Create a destination
@@ -2084,6 +2203,7 @@ func (s *Destinations) CreateDestinationMysql(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationOracle - Create a destination
@@ -2182,6 +2302,7 @@ func (s *Destinations) CreateDestinationOracle(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationPinecone - Create a destination
@@ -2280,6 +2401,7 @@ func (s *Destinations) CreateDestinationPinecone(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationPostgres - Create a destination
@@ -2378,6 +2500,7 @@ func (s *Destinations) CreateDestinationPostgres(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationPubsub - Create a destination
@@ -2476,6 +2599,7 @@ func (s *Destinations) CreateDestinationPubsub(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationQdrant - Create a destination
@@ -2574,6 +2698,7 @@ func (s *Destinations) CreateDestinationQdrant(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationRedis - Create a destination
@@ -2672,6 +2797,7 @@ func (s *Destinations) CreateDestinationRedis(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationRedshift - Create a destination
@@ -2770,6 +2896,7 @@ func (s *Destinations) CreateDestinationRedshift(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationS3 - Create a destination
@@ -2868,6 +2995,7 @@ func (s *Destinations) CreateDestinationS3(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationS3Glue - Create a destination
@@ -2966,6 +3094,7 @@ func (s *Destinations) CreateDestinationS3Glue(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationSftpJSON - Create a destination
@@ -3064,6 +3193,7 @@ func (s *Destinations) CreateDestinationSftpJSON(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationSnowflake - Create a destination
@@ -3162,6 +3292,7 @@ func (s *Destinations) CreateDestinationSnowflake(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationSnowflakeCortex - Create a destination
@@ -3260,6 +3391,7 @@ func (s *Destinations) CreateDestinationSnowflakeCortex(ctx context.Context, req
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationTeradata - Create a destination
@@ -3358,6 +3490,7 @@ func (s *Destinations) CreateDestinationTeradata(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationTypesense - Create a destination
@@ -3456,6 +3589,7 @@ func (s *Destinations) CreateDestinationTypesense(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationVectara - Create a destination
@@ -3554,6 +3688,7 @@ func (s *Destinations) CreateDestinationVectara(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationWeaviate - Create a destination
@@ -3652,6 +3787,7 @@ func (s *Destinations) CreateDestinationWeaviate(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateDestinationYellowbrick - Create a destination
@@ -3750,6 +3886,7 @@ func (s *Destinations) CreateDestinationYellowbrick(ctx context.Context, request
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestination - Delete a Destination
@@ -3831,6 +3968,7 @@ func (s *Destinations) DeleteDestination(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationAstra - Delete a Destination
@@ -3912,6 +4050,7 @@ func (s *Destinations) DeleteDestinationAstra(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationAwsDatalake - Delete a Destination
@@ -3993,6 +4132,7 @@ func (s *Destinations) DeleteDestinationAwsDatalake(ctx context.Context, request
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationAzureBlobStorage - Delete a Destination
@@ -4074,6 +4214,7 @@ func (s *Destinations) DeleteDestinationAzureBlobStorage(ctx context.Context, re
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationBigquery - Delete a Destination
@@ -4155,6 +4296,7 @@ func (s *Destinations) DeleteDestinationBigquery(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationClickhouse - Delete a Destination
@@ -4236,6 +4378,7 @@ func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationConvex - Delete a Destination
@@ -4317,6 +4460,7 @@ func (s *Destinations) DeleteDestinationConvex(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationCustom - Delete a Destination
@@ -4398,6 +4542,7 @@ func (s *Destinations) DeleteDestinationCustom(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationDatabricks - Delete a Destination
@@ -4479,6 +4624,7 @@ func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationDevNull - Delete a Destination
@@ -4560,6 +4706,7 @@ func (s *Destinations) DeleteDestinationDevNull(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationDuckdb - Delete a Destination
@@ -4641,6 +4788,7 @@ func (s *Destinations) DeleteDestinationDuckdb(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationDynamodb - Delete a Destination
@@ -4722,6 +4870,7 @@ func (s *Destinations) DeleteDestinationDynamodb(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationElasticsearch - Delete a Destination
@@ -4803,6 +4952,89 @@ func (s *Destinations) DeleteDestinationElasticsearch(ctx context.Context, reque
 	}
 
 	return res, nil
+
+}
+
+// DeleteDestinationFirebolt - Delete a Destination
+func (s *Destinations) DeleteDestinationFirebolt(ctx context.Context, request operations.DeleteDestinationFireboltRequest) (*operations.DeleteDestinationFireboltResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "deleteDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.DeleteDestinationFireboltResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // DeleteDestinationFirestore - Delete a Destination
@@ -4884,6 +5116,7 @@ func (s *Destinations) DeleteDestinationFirestore(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationGcs - Delete a Destination
@@ -4965,6 +5198,7 @@ func (s *Destinations) DeleteDestinationGcs(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationGoogleSheets - Delete a Destination
@@ -5046,6 +5280,7 @@ func (s *Destinations) DeleteDestinationGoogleSheets(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationLangchain - Delete a Destination
@@ -5127,6 +5362,7 @@ func (s *Destinations) DeleteDestinationLangchain(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationMilvus - Delete a Destination
@@ -5208,6 +5444,7 @@ func (s *Destinations) DeleteDestinationMilvus(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationMongodb - Delete a Destination
@@ -5289,6 +5526,7 @@ func (s *Destinations) DeleteDestinationMongodb(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationMssql - Delete a Destination
@@ -5370,6 +5608,7 @@ func (s *Destinations) DeleteDestinationMssql(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationMysql - Delete a Destination
@@ -5451,6 +5690,7 @@ func (s *Destinations) DeleteDestinationMysql(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationOracle - Delete a Destination
@@ -5532,6 +5772,7 @@ func (s *Destinations) DeleteDestinationOracle(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationPinecone - Delete a Destination
@@ -5613,6 +5854,7 @@ func (s *Destinations) DeleteDestinationPinecone(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationPostgres - Delete a Destination
@@ -5694,6 +5936,7 @@ func (s *Destinations) DeleteDestinationPostgres(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationPubsub - Delete a Destination
@@ -5775,6 +6018,7 @@ func (s *Destinations) DeleteDestinationPubsub(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationQdrant - Delete a Destination
@@ -5856,6 +6100,7 @@ func (s *Destinations) DeleteDestinationQdrant(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationRedis - Delete a Destination
@@ -5937,6 +6182,7 @@ func (s *Destinations) DeleteDestinationRedis(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationRedshift - Delete a Destination
@@ -6018,6 +6264,7 @@ func (s *Destinations) DeleteDestinationRedshift(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationS3 - Delete a Destination
@@ -6099,6 +6346,7 @@ func (s *Destinations) DeleteDestinationS3(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationS3Glue - Delete a Destination
@@ -6180,6 +6428,7 @@ func (s *Destinations) DeleteDestinationS3Glue(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationSftpJSON - Delete a Destination
@@ -6261,6 +6510,7 @@ func (s *Destinations) DeleteDestinationSftpJSON(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationSnowflake - Delete a Destination
@@ -6342,6 +6592,7 @@ func (s *Destinations) DeleteDestinationSnowflake(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationSnowflakeCortex - Delete a Destination
@@ -6423,6 +6674,7 @@ func (s *Destinations) DeleteDestinationSnowflakeCortex(ctx context.Context, req
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationTeradata - Delete a Destination
@@ -6504,6 +6756,7 @@ func (s *Destinations) DeleteDestinationTeradata(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationTypesense - Delete a Destination
@@ -6585,6 +6838,7 @@ func (s *Destinations) DeleteDestinationTypesense(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationVectara - Delete a Destination
@@ -6666,6 +6920,7 @@ func (s *Destinations) DeleteDestinationVectara(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationWeaviate - Delete a Destination
@@ -6747,6 +7002,7 @@ func (s *Destinations) DeleteDestinationWeaviate(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteDestinationYellowbrick - Delete a Destination
@@ -6828,6 +7084,7 @@ func (s *Destinations) DeleteDestinationYellowbrick(ctx context.Context, request
 	}
 
 	return res, nil
+
 }
 
 // GetDestination - Get Destination details
@@ -6919,6 +7176,7 @@ func (s *Destinations) GetDestination(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationAstra - Get Destination details
@@ -7010,6 +7268,7 @@ func (s *Destinations) GetDestinationAstra(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationAwsDatalake - Get Destination details
@@ -7101,6 +7360,7 @@ func (s *Destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationAzureBlobStorage - Get Destination details
@@ -7192,6 +7452,7 @@ func (s *Destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationBigquery - Get Destination details
@@ -7283,6 +7544,7 @@ func (s *Destinations) GetDestinationBigquery(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationClickhouse - Get Destination details
@@ -7374,6 +7636,7 @@ func (s *Destinations) GetDestinationClickhouse(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationConvex - Get Destination details
@@ -7465,6 +7728,7 @@ func (s *Destinations) GetDestinationConvex(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationCustom - Get Destination details
@@ -7556,6 +7820,7 @@ func (s *Destinations) GetDestinationCustom(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationDatabricks - Get Destination details
@@ -7647,6 +7912,7 @@ func (s *Destinations) GetDestinationDatabricks(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationDevNull - Get Destination details
@@ -7738,6 +8004,7 @@ func (s *Destinations) GetDestinationDevNull(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationDuckdb - Get Destination details
@@ -7829,6 +8096,7 @@ func (s *Destinations) GetDestinationDuckdb(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationDynamodb - Get Destination details
@@ -7920,6 +8188,7 @@ func (s *Destinations) GetDestinationDynamodb(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationElasticsearch - Get Destination details
@@ -8011,6 +8280,99 @@ func (s *Destinations) GetDestinationElasticsearch(ctx context.Context, request 
 	}
 
 	return res, nil
+
+}
+
+// GetDestinationFirebolt - Get Destination details
+func (s *Destinations) GetDestinationFirebolt(ctx context.Context, request operations.GetDestinationFireboltRequest) (*operations.GetDestinationFireboltResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "getDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.GetDestinationFireboltResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // GetDestinationFirestore - Get Destination details
@@ -8102,6 +8464,7 @@ func (s *Destinations) GetDestinationFirestore(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationGcs - Get Destination details
@@ -8193,6 +8556,7 @@ func (s *Destinations) GetDestinationGcs(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationGoogleSheets - Get Destination details
@@ -8284,6 +8648,7 @@ func (s *Destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationLangchain - Get Destination details
@@ -8375,6 +8740,7 @@ func (s *Destinations) GetDestinationLangchain(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationMilvus - Get Destination details
@@ -8466,6 +8832,7 @@ func (s *Destinations) GetDestinationMilvus(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationMongodb - Get Destination details
@@ -8557,6 +8924,7 @@ func (s *Destinations) GetDestinationMongodb(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationMssql - Get Destination details
@@ -8648,6 +9016,7 @@ func (s *Destinations) GetDestinationMssql(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationMysql - Get Destination details
@@ -8739,6 +9108,7 @@ func (s *Destinations) GetDestinationMysql(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationOracle - Get Destination details
@@ -8830,6 +9200,7 @@ func (s *Destinations) GetDestinationOracle(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationPinecone - Get Destination details
@@ -8921,6 +9292,7 @@ func (s *Destinations) GetDestinationPinecone(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationPostgres - Get Destination details
@@ -9012,6 +9384,7 @@ func (s *Destinations) GetDestinationPostgres(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationPubsub - Get Destination details
@@ -9103,6 +9476,7 @@ func (s *Destinations) GetDestinationPubsub(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationQdrant - Get Destination details
@@ -9194,6 +9568,7 @@ func (s *Destinations) GetDestinationQdrant(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationRedis - Get Destination details
@@ -9285,6 +9660,7 @@ func (s *Destinations) GetDestinationRedis(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationRedshift - Get Destination details
@@ -9376,6 +9752,7 @@ func (s *Destinations) GetDestinationRedshift(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationS3 - Get Destination details
@@ -9467,6 +9844,7 @@ func (s *Destinations) GetDestinationS3(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationS3Glue - Get Destination details
@@ -9558,6 +9936,7 @@ func (s *Destinations) GetDestinationS3Glue(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationSftpJSON - Get Destination details
@@ -9649,6 +10028,7 @@ func (s *Destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationSnowflake - Get Destination details
@@ -9740,6 +10120,7 @@ func (s *Destinations) GetDestinationSnowflake(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationSnowflakeCortex - Get Destination details
@@ -9831,6 +10212,7 @@ func (s *Destinations) GetDestinationSnowflakeCortex(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationTeradata - Get Destination details
@@ -9922,6 +10304,7 @@ func (s *Destinations) GetDestinationTeradata(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationTypesense - Get Destination details
@@ -10013,6 +10396,7 @@ func (s *Destinations) GetDestinationTypesense(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationVectara - Get Destination details
@@ -10104,6 +10488,7 @@ func (s *Destinations) GetDestinationVectara(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationWeaviate - Get Destination details
@@ -10195,6 +10580,7 @@ func (s *Destinations) GetDestinationWeaviate(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetDestinationYellowbrick - Get Destination details
@@ -10286,6 +10672,7 @@ func (s *Destinations) GetDestinationYellowbrick(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // ListDestinations - List destinations
@@ -10381,6 +10768,7 @@ func (s *Destinations) ListDestinations(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PatchDestination - Update a Destination
@@ -10478,6 +10866,7 @@ func (s *Destinations) PatchDestination(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutDestination - Update a Destination and fully overwrite it
@@ -10575,6 +10964,7 @@ func (s *Destinations) PutDestination(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationAstra - Update a Destination fully
@@ -10662,6 +11052,7 @@ func (s *Destinations) PutDestinationAstra(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationAwsDatalake - Update a Destination fully
@@ -10749,6 +11140,7 @@ func (s *Destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationAzureBlobStorage - Update a Destination fully
@@ -10836,6 +11228,7 @@ func (s *Destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationBigquery - Update a Destination fully
@@ -10923,6 +11316,7 @@ func (s *Destinations) PutDestinationBigquery(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationClickhouse - Update a Destination fully
@@ -11010,6 +11404,7 @@ func (s *Destinations) PutDestinationClickhouse(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationConvex - Update a Destination fully
@@ -11097,6 +11492,7 @@ func (s *Destinations) PutDestinationConvex(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationCustom - Update a Destination fully
@@ -11184,6 +11580,7 @@ func (s *Destinations) PutDestinationCustom(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationDatabricks - Update a Destination fully
@@ -11271,6 +11668,7 @@ func (s *Destinations) PutDestinationDatabricks(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationDevNull - Update a Destination fully
@@ -11358,6 +11756,7 @@ func (s *Destinations) PutDestinationDevNull(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationDuckdb - Update a Destination fully
@@ -11445,6 +11844,7 @@ func (s *Destinations) PutDestinationDuckdb(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationDynamodb - Update a Destination fully
@@ -11532,6 +11932,7 @@ func (s *Destinations) PutDestinationDynamodb(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationElasticsearch - Update a Destination fully
@@ -11619,6 +12020,95 @@ func (s *Destinations) PutDestinationElasticsearch(ctx context.Context, request 
 	}
 
 	return res, nil
+
+}
+
+// PutDestinationFirebolt - Update a Destination fully
+func (s *Destinations) PutDestinationFirebolt(ctx context.Context, request operations.PutDestinationFireboltRequest) (*operations.PutDestinationFireboltResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "putDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationFireboltPutRequest", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	req.Header.Set("Content-Type", reqContentType)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.PutDestinationFireboltResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // PutDestinationFirestore - Update a Destination fully
@@ -11706,6 +12196,7 @@ func (s *Destinations) PutDestinationFirestore(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationGcs - Update a Destination fully
@@ -11793,6 +12284,7 @@ func (s *Destinations) PutDestinationGcs(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationGoogleSheets - Update a Destination fully
@@ -11880,6 +12372,7 @@ func (s *Destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationLangchain - Update a Destination fully
@@ -11967,6 +12460,7 @@ func (s *Destinations) PutDestinationLangchain(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationMilvus - Update a Destination fully
@@ -12054,6 +12548,7 @@ func (s *Destinations) PutDestinationMilvus(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationMongodb - Update a Destination fully
@@ -12141,6 +12636,7 @@ func (s *Destinations) PutDestinationMongodb(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationMssql - Update a Destination fully
@@ -12228,6 +12724,7 @@ func (s *Destinations) PutDestinationMssql(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationMysql - Update a Destination fully
@@ -12315,6 +12812,7 @@ func (s *Destinations) PutDestinationMysql(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationOracle - Update a Destination fully
@@ -12402,6 +12900,7 @@ func (s *Destinations) PutDestinationOracle(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationPinecone - Update a Destination fully
@@ -12489,6 +12988,7 @@ func (s *Destinations) PutDestinationPinecone(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationPostgres - Update a Destination fully
@@ -12576,6 +13076,7 @@ func (s *Destinations) PutDestinationPostgres(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationPubsub - Update a Destination fully
@@ -12663,6 +13164,7 @@ func (s *Destinations) PutDestinationPubsub(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationQdrant - Update a Destination fully
@@ -12750,6 +13252,7 @@ func (s *Destinations) PutDestinationQdrant(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationRedis - Update a Destination fully
@@ -12837,6 +13340,7 @@ func (s *Destinations) PutDestinationRedis(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationRedshift - Update a Destination fully
@@ -12924,6 +13428,7 @@ func (s *Destinations) PutDestinationRedshift(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationS3 - Update a Destination fully
@@ -13011,6 +13516,7 @@ func (s *Destinations) PutDestinationS3(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationS3Glue - Update a Destination fully
@@ -13098,6 +13604,7 @@ func (s *Destinations) PutDestinationS3Glue(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationSftpJSON - Update a Destination fully
@@ -13185,6 +13692,7 @@ func (s *Destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationSnowflake - Update a Destination fully
@@ -13272,6 +13780,7 @@ func (s *Destinations) PutDestinationSnowflake(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationSnowflakeCortex - Update a Destination fully
@@ -13359,6 +13868,7 @@ func (s *Destinations) PutDestinationSnowflakeCortex(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationTeradata - Update a Destination fully
@@ -13446,6 +13956,7 @@ func (s *Destinations) PutDestinationTeradata(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationTypesense - Update a Destination fully
@@ -13533,6 +14044,7 @@ func (s *Destinations) PutDestinationTypesense(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationVectara - Update a Destination fully
@@ -13620,6 +14132,7 @@ func (s *Destinations) PutDestinationVectara(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationWeaviate - Update a Destination fully
@@ -13707,6 +14220,7 @@ func (s *Destinations) PutDestinationWeaviate(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutDestinationYellowbrick - Update a Destination fully
@@ -13794,4 +14308,5 @@ func (s *Destinations) PutDestinationYellowbrick(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }

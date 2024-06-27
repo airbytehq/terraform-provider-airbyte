@@ -186,7 +186,7 @@ func (u *SourceCartUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceCartUpdateAuthorizationMethod", string(data))
 }
 
 func (u SourceCartUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -198,7 +198,7 @@ func (u SourceCartUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SingleStoreAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceCartUpdateAuthorizationMethod: all fields are null")
 }
 
 type SourceCartUpdate struct {

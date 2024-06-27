@@ -7,8 +7,8 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  definition_id = "46209ea5-2c70-47cb-85c4-a8d21cf34658"
-  name          = "Dr. Zachary Cronin"
+  definition_id = "2799cad5-c4b8-4334-a9d3-410e395a0aac"
+  name          = "Beatrice Stamm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "54a56730-9cc0-4ee4-bba7-faed572054da"
+  workspace_id  = "d0978821-4279-492f-a5a7-105f2e570ad3"
 }

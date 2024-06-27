@@ -194,7 +194,7 @@ func (u *SourceRetentlyAuthenticationMechanism) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceRetentlyAuthenticationMechanism", string(data))
 }
 
 func (u SourceRetentlyAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -206,7 +206,7 @@ func (u SourceRetentlyAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceRetentlyAuthenticateWithAPIToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceRetentlyAuthenticationMechanism: all fields are null")
 }
 
 type Retently string

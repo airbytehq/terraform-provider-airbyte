@@ -9,7 +9,12 @@ import (
 )
 
 func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCreateRequest() *shared.SourceFacebookMarketingCreateRequest {
-	accessToken := r.Configuration.AccessToken.ValueString()
+	accessToken := new(string)
+	if !r.Configuration.AccessToken.IsUnknown() && !r.Configuration.AccessToken.IsNull() {
+		*accessToken = r.Configuration.AccessToken.ValueString()
+	} else {
+		accessToken = nil
+	}
 	var accountIds []string = []string{}
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueString())
@@ -202,7 +207,12 @@ func (r *SourceFacebookMarketingResourceModel) RefreshFromSharedSourceResponse(r
 }
 
 func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPutRequest() *shared.SourceFacebookMarketingPutRequest {
-	accessToken := r.Configuration.AccessToken.ValueString()
+	accessToken := new(string)
+	if !r.Configuration.AccessToken.IsUnknown() && !r.Configuration.AccessToken.IsNull() {
+		*accessToken = r.Configuration.AccessToken.ValueString()
+	} else {
+		accessToken = nil
+	}
 	var accountIds []string = []string{}
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueString())

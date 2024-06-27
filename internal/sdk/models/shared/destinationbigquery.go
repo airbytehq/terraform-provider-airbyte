@@ -319,7 +319,7 @@ func (u *DestinationBigqueryCredential) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationBigqueryCredential", string(data))
 }
 
 func (u DestinationBigqueryCredential) MarshalJSON() ([]byte, error) {
@@ -327,7 +327,7 @@ func (u DestinationBigqueryCredential) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationBigqueryHMACKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationBigqueryCredential: all fields are null")
 }
 
 // DestinationBigqueryGCSTmpFilesAfterwardProcessing - This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
@@ -485,7 +485,7 @@ func (u *DestinationBigqueryLoadingMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationBigqueryLoadingMethod", string(data))
 }
 
 func (u DestinationBigqueryLoadingMethod) MarshalJSON() ([]byte, error) {
@@ -497,7 +497,7 @@ func (u DestinationBigqueryLoadingMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationBigqueryStandardInserts, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationBigqueryLoadingMethod: all fields are null")
 }
 
 // DestinationBigqueryTransformationQueryRunType - Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.

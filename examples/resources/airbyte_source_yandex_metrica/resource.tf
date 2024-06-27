@@ -5,8 +5,8 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     end_date   = "2022-01-01"
     start_date = "2022-01-01"
   }
-  definition_id = "6756fe05-8810-422b-8ad4-5dc078875452"
-  name          = "Elsa Douglas"
+  definition_id = "deba481e-413d-4d76-8cc3-ae1d775ee978"
+  name          = "Dr. Lawrence Howe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ab512289-0f3e-4992-82a3-f4c8fc026c7c"
+  workspace_id  = "5746ac11-eb02-4437-a4c2-fa90b3fc58ae"
 }

@@ -188,7 +188,7 @@ func (u *SourceAzureBlobStorageAuthentication) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageAuthentication", string(data))
 }
 
 func (u SourceAzureBlobStorageAuthentication) MarshalJSON() ([]byte, error) {
@@ -200,7 +200,7 @@ func (u SourceAzureBlobStorageAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAzureBlobStorageAuthenticateViaStorageAccountKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageAuthentication: all fields are null")
 }
 
 type SourceAzureBlobStorageAzureBlobStorage string
@@ -323,7 +323,7 @@ func (u *SourceAzureBlobStorageProcessing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageProcessing", string(data))
 }
 
 func (u SourceAzureBlobStorageProcessing) MarshalJSON() ([]byte, error) {
@@ -331,7 +331,7 @@ func (u SourceAzureBlobStorageProcessing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAzureBlobStorageLocal, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageProcessing: all fields are null")
 }
 
 // SourceAzureBlobStorageParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -732,7 +732,7 @@ func (u *SourceAzureBlobStorageCSVHeaderDefinition) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageCSVHeaderDefinition", string(data))
 }
 
 func (u SourceAzureBlobStorageCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -748,7 +748,7 @@ func (u SourceAzureBlobStorageCSVHeaderDefinition) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceAzureBlobStorageUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageCSVHeaderDefinition: all fields are null")
 }
 
 // SourceAzureBlobStorageInferenceType - How to infer the types of the columns. If none, inference default to strings.
@@ -1077,7 +1077,7 @@ func (u *SourceAzureBlobStorageFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAzureBlobStorageFormat", string(data))
 }
 
 func (u SourceAzureBlobStorageFormat) MarshalJSON() ([]byte, error) {
@@ -1101,7 +1101,7 @@ func (u SourceAzureBlobStorageFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAzureBlobStorageDocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAzureBlobStorageFormat: all fields are null")
 }
 
 // SourceAzureBlobStorageValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

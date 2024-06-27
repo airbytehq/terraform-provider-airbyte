@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type SourceOktaUpdateSchemasAuthType string
@@ -177,7 +178,7 @@ func (u *SourceOktaUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOktaUpdateAuthorizationMethod", string(data))
 }
 
 func (u SourceOktaUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -189,7 +190,7 @@ func (u SourceOktaUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceOktaUpdateAPIToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceOktaUpdateAuthorizationMethod: all fields are null")
 }
 
 type SourceOktaUpdate struct {
@@ -197,7 +198,18 @@ type SourceOktaUpdate struct {
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
 	Domain *string `json:"domain,omitempty"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
+}
+
+func (s SourceOktaUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOktaUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceOktaUpdate) GetCredentials() *SourceOktaUpdateAuthorizationMethod {
@@ -214,7 +226,7 @@ func (o *SourceOktaUpdate) GetDomain() *string {
 	return o.Domain
 }
 
-func (o *SourceOktaUpdate) GetStartDate() *string {
+func (o *SourceOktaUpdate) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}

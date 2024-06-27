@@ -187,7 +187,7 @@ func (u *SourceZendeskSunshineAuthorizationMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceZendeskSunshineAuthorizationMethod", string(data))
 }
 
 func (u SourceZendeskSunshineAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -199,7 +199,7 @@ func (u SourceZendeskSunshineAuthorizationMethod) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.SourceZendeskSunshineAPIToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceZendeskSunshineAuthorizationMethod: all fields are null")
 }
 
 type ZendeskSunshine string

@@ -3,8 +3,8 @@ resource "airbyte_source_delighted" "my_source_delighted" {
     api_key = "...my_api_key..."
     since   = "2022-05-30T04:50:23Z"
   }
-  definition_id = "14094639-cf5d-4d4a-8c05-f536f6b9b8b8"
-  name          = "Sidney Ziemann"
+  definition_id = "3b7e8dc3-71ec-4bee-9051-1b439ed171c9"
+  name          = "Kirk Windler"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fbf365d6-87e0-487e-b905-b6a417faeb4f"
+  workspace_id  = "4783ac23-2bfa-441c-80b2-3345c949a955"
 }

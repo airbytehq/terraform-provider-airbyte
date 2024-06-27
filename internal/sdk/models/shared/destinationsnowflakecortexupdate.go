@@ -405,7 +405,7 @@ func (u *DestinationSnowflakeCortexUpdateEmbedding) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationSnowflakeCortexUpdateEmbedding", string(data))
 }
 
 func (u DestinationSnowflakeCortexUpdateEmbedding) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u DestinationSnowflakeCortexUpdateEmbedding) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.DestinationSnowflakeCortexUpdateOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationSnowflakeCortexUpdateEmbedding: all fields are null")
 }
 
 type DestinationSnowflakeCortexUpdateCredentials struct {
@@ -444,8 +444,8 @@ func (o *DestinationSnowflakeCortexUpdateCredentials) GetPassword() string {
 	return o.Password
 }
 
-// DestinationSnowflakeCortexUpdateIndexing - Snowflake can be used to store vector data and retrieve embeddings.
-type DestinationSnowflakeCortexUpdateIndexing struct {
+// SnowflakeConnection - Snowflake can be used to store vector data and retrieve embeddings.
+type SnowflakeConnection struct {
 	Credentials DestinationSnowflakeCortexUpdateCredentials `json:"credentials"`
 	// Enter the name of the database that you want to sync data into
 	Database string `json:"database"`
@@ -461,49 +461,49 @@ type DestinationSnowflakeCortexUpdateIndexing struct {
 	Warehouse string `json:"warehouse"`
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetCredentials() DestinationSnowflakeCortexUpdateCredentials {
+func (o *SnowflakeConnection) GetCredentials() DestinationSnowflakeCortexUpdateCredentials {
 	if o == nil {
 		return DestinationSnowflakeCortexUpdateCredentials{}
 	}
 	return o.Credentials
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetDatabase() string {
+func (o *SnowflakeConnection) GetDatabase() string {
 	if o == nil {
 		return ""
 	}
 	return o.Database
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetDefaultSchema() string {
+func (o *SnowflakeConnection) GetDefaultSchema() string {
 	if o == nil {
 		return ""
 	}
 	return o.DefaultSchema
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetHost() string {
+func (o *SnowflakeConnection) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetRole() string {
+func (o *SnowflakeConnection) GetRole() string {
 	if o == nil {
 		return ""
 	}
 	return o.Role
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetUsername() string {
+func (o *SnowflakeConnection) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
 }
 
-func (o *DestinationSnowflakeCortexUpdateIndexing) GetWarehouse() string {
+func (o *SnowflakeConnection) GetWarehouse() string {
 	if o == nil {
 		return ""
 	}
@@ -832,7 +832,7 @@ func (u *DestinationSnowflakeCortexUpdateTextSplitter) UnmarshalJSON(data []byte
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationSnowflakeCortexUpdateTextSplitter", string(data))
 }
 
 func (u DestinationSnowflakeCortexUpdateTextSplitter) MarshalJSON() ([]byte, error) {
@@ -848,7 +848,7 @@ func (u DestinationSnowflakeCortexUpdateTextSplitter) MarshalJSON() ([]byte, err
 		return utils.MarshalJSON(u.DestinationSnowflakeCortexUpdateByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationSnowflakeCortexUpdateTextSplitter: all fields are null")
 }
 
 type DestinationSnowflakeCortexUpdateProcessingConfigModel struct {
@@ -933,7 +933,7 @@ type DestinationSnowflakeCortexUpdate struct {
 	// Embedding configuration
 	Embedding DestinationSnowflakeCortexUpdateEmbedding `json:"embedding"`
 	// Snowflake can be used to store vector data and retrieve embeddings.
-	Indexing DestinationSnowflakeCortexUpdateIndexing `json:"indexing"`
+	Indexing SnowflakeConnection `json:"indexing"`
 	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
 	OmitRawText *bool                                                 `default:"false" json:"omit_raw_text"`
 	Processing  DestinationSnowflakeCortexUpdateProcessingConfigModel `json:"processing"`
@@ -957,9 +957,9 @@ func (o *DestinationSnowflakeCortexUpdate) GetEmbedding() DestinationSnowflakeCo
 	return o.Embedding
 }
 
-func (o *DestinationSnowflakeCortexUpdate) GetIndexing() DestinationSnowflakeCortexUpdateIndexing {
+func (o *DestinationSnowflakeCortexUpdate) GetIndexing() SnowflakeConnection {
 	if o == nil {
-		return DestinationSnowflakeCortexUpdateIndexing{}
+		return SnowflakeConnection{}
 	}
 	return o.Indexing
 }

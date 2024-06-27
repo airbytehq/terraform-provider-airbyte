@@ -8,13 +8,13 @@ resource "airbyte_source_slack" "my_source_slack" {
         api_token = "...my_api_token..."
       }
     }
-    include_private_channels = true
+    include_private_channels = false
     join_channels            = true
-    lookback_window          = 14
+    lookback_window          = 7
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "db3e1c88-3c55-4acc-a5c3-7529a15c3606"
-  name          = "Harriet Kertzmann"
+  definition_id = "6f1b8331-df02-45a1-9458-6c7cdfb558f8"
+  name          = "Kay Bauch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5716d2b2-65f2-4af5-afce-7bdd581ac648"
+  workspace_id  = "3d1fcf2b-6755-4110-90ec-6c18f2017e88"
 }

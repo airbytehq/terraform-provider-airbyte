@@ -27,10 +27,10 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "6cf9b79e-2328-488b-abde-25154a52da80"
-  name          = "Todd Rodriguez"
+  definition_id = "65fdff2d-eb8c-4bf2-a74a-92033b17bfcc"
+  name          = "Theresa Kertzmann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "49853a69-5093-45ad-936c-5004734e30b4"
+  workspace_id  = "10da401f-b0fc-4527-b0b3-9994a41e4a89"
 }
 ```
 

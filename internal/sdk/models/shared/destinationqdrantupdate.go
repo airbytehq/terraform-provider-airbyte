@@ -405,7 +405,7 @@ func (u *DestinationQdrantUpdateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantUpdateEmbedding", string(data))
 }
 
 func (u DestinationQdrantUpdateEmbedding) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u DestinationQdrantUpdateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationQdrantUpdateOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantUpdateEmbedding: all fields are null")
 }
 
 type DestinationQdrantUpdateSchemasIndexingAuthMethodMode string
@@ -574,7 +574,7 @@ func (u *DestinationQdrantUpdateAuthenticationMethod) UnmarshalJSON(data []byte)
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantUpdateAuthenticationMethod", string(data))
 }
 
 func (u DestinationQdrantUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -586,7 +586,7 @@ func (u DestinationQdrantUpdateAuthenticationMethod) MarshalJSON() ([]byte, erro
 		return utils.MarshalJSON(u.DestinationQdrantUpdateNoAuth, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantUpdateAuthenticationMethod: all fields are null")
 }
 
 // DistanceMetric - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
@@ -1010,7 +1010,7 @@ func (u *DestinationQdrantUpdateTextSplitter) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantUpdateTextSplitter", string(data))
 }
 
 func (u DestinationQdrantUpdateTextSplitter) MarshalJSON() ([]byte, error) {
@@ -1026,7 +1026,7 @@ func (u DestinationQdrantUpdateTextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationQdrantUpdateByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantUpdateTextSplitter: all fields are null")
 }
 
 type DestinationQdrantUpdateProcessingConfigModel struct {

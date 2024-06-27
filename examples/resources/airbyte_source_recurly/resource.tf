@@ -4,8 +4,8 @@ resource "airbyte_source_recurly" "my_source_recurly" {
     begin_time = "2021-12-01T00:00:00"
     end_time   = "2021-12-01T00:00:00"
   }
-  definition_id = "1fcb26b9-0cc0-4df9-8191-9892a209c167"
-  name          = "Tommie Koelpin"
+  definition_id = "2d7b0215-50aa-4da4-9f01-cf56ee294adb"
+  name          = "Pedro Rodriguez"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "34c463b8-38dc-45f9-b653-5f73a45535ff"
+  workspace_id  = "40789cf0-b8d2-4c04-9244-36569fd64cd2"
 }

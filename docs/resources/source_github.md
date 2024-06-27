@@ -15,7 +15,7 @@ SourceGithub Resource
 ```terraform
 resource "airbyte_source_github" "my_source_github" {
   configuration = {
-    api_url = "https://github.com"
+    api_url = "https://github.company.org"
     branch  = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     branches = [
       "...",
@@ -27,16 +27,17 @@ resource "airbyte_source_github" "my_source_github" {
         client_secret = "...my_client_secret..."
       }
     }
+    max_waiting_time = 10
     repositories = [
       "...",
     ]
-    repository = "airbytehq/airbyte airbytehq/another-repo"
+    repository = "airbytehq/*"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "e4d38a30-ea56-4cdf-a27f-bf6225b4bae6"
-  name          = "Martha Bergnaum"
+  definition_id = "527913ed-fcf9-4c90-98e6-9d20ee3e4cb5"
+  name          = "Rosalie Hoppe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "113e87b4-90ec-4c6b-b751-6116fc803c83"
+  workspace_id  = "e2f08eb7-6e35-41ce-b20d-e4cfc332b42c"
 }
 ```
 
@@ -72,6 +73,7 @@ Optional:
 - `api_url` (String) Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub. Default: "https://api.github.com/"
 - `branch` (String) (DEPRCATED) Space-delimited list of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 - `branches` (List of String) List of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
+- `max_waiting_time` (Number) Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync. Default: 10
 - `repository` (String) (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 - `start_date` (String) The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 

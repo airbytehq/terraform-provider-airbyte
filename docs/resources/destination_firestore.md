@@ -18,9 +18,9 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
     credentials_json = "...my_credentials_json..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "64562efb-7ef5-4d37-aa6e-5cbc1c0786ea"
-  name          = "Elvira Olson"
-  workspace_id  = "4c420209-7dca-4d1a-ba41-45a8ead64436"
+  definition_id = "fa9c0130-5655-43a4-a50c-dde3bcff11f6"
+  name          = "Angela Will"
+  workspace_id  = "23b2f88e-15f8-468b-b037-297dcd66bcb9"
 }
 ```
 
@@ -51,7 +51,7 @@ Required:
 
 Optional:
 
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
+- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 
 ## Import
 

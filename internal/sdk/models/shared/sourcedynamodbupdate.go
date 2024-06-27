@@ -176,7 +176,7 @@ func (u *Credentials) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Credentials", string(data))
 }
 
 func (u Credentials) MarshalJSON() ([]byte, error) {
@@ -188,7 +188,7 @@ func (u Credentials) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.RoleBasedAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Credentials: all fields are null")
 }
 
 // SourceDynamodbUpdateDynamodbRegion - The region of the Dynamodb database

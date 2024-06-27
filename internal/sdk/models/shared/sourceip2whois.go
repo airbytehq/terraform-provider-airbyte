@@ -35,8 +35,8 @@ type SourceIp2whois struct {
 	// Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	APIKey *string `json:"api_key,omitempty"`
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-	Domain     *string   `json:"domain,omitempty"`
-	sourceType *Ip2whois `const:"ip2whois" json:"sourceType,omitempty"`
+	Domain     *string  `json:"domain,omitempty"`
+	sourceType Ip2whois `const:"ip2whois" json:"sourceType"`
 }
 
 func (s SourceIp2whois) MarshalJSON() ([]byte, error) {
@@ -64,6 +64,6 @@ func (o *SourceIp2whois) GetDomain() *string {
 	return o.Domain
 }
 
-func (o *SourceIp2whois) GetSourceType() *Ip2whois {
-	return Ip2whoisIp2whois.ToPointer()
+func (o *SourceIp2whois) GetSourceType() Ip2whois {
+	return Ip2whoisIp2whois
 }
