@@ -405,7 +405,7 @@ func (u *DestinationMilvusUpdateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMilvusUpdateEmbedding", string(data))
 }
 
 func (u DestinationMilvusUpdateEmbedding) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u DestinationMilvusUpdateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMilvusUpdateOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMilvusUpdateEmbedding: all fields are null")
 }
 
 type DestinationMilvusUpdateSchemasIndexingAuthAuthenticationMode string
@@ -655,7 +655,7 @@ func (u *DestinationMilvusUpdateAuthentication) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMilvusUpdateAuthentication", string(data))
 }
 
 func (u DestinationMilvusUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -671,7 +671,7 @@ func (u DestinationMilvusUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.NoAuth, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMilvusUpdateAuthentication: all fields are null")
 }
 
 // DestinationMilvusUpdateIndexing - Indexing configuration
@@ -1065,7 +1065,7 @@ func (u *DestinationMilvusUpdateTextSplitter) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMilvusUpdateTextSplitter", string(data))
 }
 
 func (u DestinationMilvusUpdateTextSplitter) MarshalJSON() ([]byte, error) {
@@ -1081,7 +1081,7 @@ func (u DestinationMilvusUpdateTextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMilvusUpdateByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMilvusUpdateTextSplitter: all fields are null")
 }
 
 type DestinationMilvusUpdateProcessingConfigModel struct {

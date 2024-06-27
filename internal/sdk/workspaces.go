@@ -28,7 +28,7 @@ func newWorkspaces(sdkConfig sdkConfiguration) *Workspaces {
 
 // CreateOrUpdateWorkspaceOAuthCredentials - Create OAuth override credentials for a workspace and source type.
 // Create/update a set of OAuth credentials to override the Airbyte-provided OAuth credentials used for source/destination OAuth.
-// In order to determine what the credential configuration needs to be, please see the connector specification of the relevant  source/destination.
+// In order to determine what the credential configuration needs to be, please see the connector specification of the relevant source/destination.
 func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context, request operations.CreateOrUpdateWorkspaceOAuthCredentialsRequest) (*operations.CreateOrUpdateWorkspaceOAuthCredentialsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
@@ -113,6 +113,7 @@ func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 	}
 
 	return res, nil
+
 }
 
 // CreateWorkspace - Create a workspace
@@ -210,6 +211,7 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 	}
 
 	return res, nil
+
 }
 
 // DeleteWorkspace - Delete a Workspace
@@ -291,6 +293,7 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // GetWorkspace - Get Workspace details
@@ -382,6 +385,7 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 	}
 
 	return res, nil
+
 }
 
 // ListWorkspaces - List workspaces
@@ -477,6 +481,7 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 	}
 
 	return res, nil
+
 }
 
 // UpdateWorkspace - Update a workspace
@@ -574,4 +579,5 @@ func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 	}
 
 	return res, nil
+
 }

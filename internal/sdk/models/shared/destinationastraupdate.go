@@ -405,7 +405,7 @@ func (u *Embedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Embedding", string(data))
 }
 
 func (u Embedding) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u Embedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.OpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Embedding: all fields are null")
 }
 
 // Indexing - Astra DB gives developers the APIs, real-time data and ecosystem integrations to put accurate RAG and Gen AI apps with fewer hallucinations in production.
@@ -794,7 +794,7 @@ func (u *TextSplitter) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TextSplitter", string(data))
 }
 
 func (u TextSplitter) MarshalJSON() ([]byte, error) {
@@ -810,7 +810,7 @@ func (u TextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type TextSplitter: all fields are null")
 }
 
 type ProcessingConfigModel struct {

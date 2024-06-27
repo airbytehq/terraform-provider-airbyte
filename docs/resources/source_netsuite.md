@@ -26,10 +26,10 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     token_secret   = "...my_token_secret..."
     window_in_days = 5
   }
-  definition_id = "b7242137-fe2e-49e2-ac4c-104f1dbe3b1f"
-  name          = "Ramona Bahringer"
+  definition_id = "741ee0bb-ab04-457d-9263-98e6ecd841e7"
+  name          = "Jan Kub"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "77573847-65c7-4741-8014-d1f263651b77"
+  workspace_id  = "a686faa5-12d8-4044-b05c-5b7112361f26"
 }
 ```
 

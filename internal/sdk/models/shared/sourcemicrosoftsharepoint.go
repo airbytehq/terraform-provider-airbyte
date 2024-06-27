@@ -219,7 +219,7 @@ func (u *SourceMicrosoftSharepointAuthentication) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointAuthentication", string(data))
 }
 
 func (u SourceMicrosoftSharepointAuthentication) MarshalJSON() ([]byte, error) {
@@ -231,7 +231,7 @@ func (u SourceMicrosoftSharepointAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointServiceKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointAuthentication: all fields are null")
 }
 
 // SourceMicrosoftSharepointSearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
@@ -384,7 +384,7 @@ func (u *SourceMicrosoftSharepointProcessing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointProcessing", string(data))
 }
 
 func (u SourceMicrosoftSharepointProcessing) MarshalJSON() ([]byte, error) {
@@ -392,7 +392,7 @@ func (u SourceMicrosoftSharepointProcessing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointLocal, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointProcessing: all fields are null")
 }
 
 // SourceMicrosoftSharepointParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -793,7 +793,7 @@ func (u *SourceMicrosoftSharepointCSVHeaderDefinition) UnmarshalJSON(data []byte
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointCSVHeaderDefinition", string(data))
 }
 
 func (u SourceMicrosoftSharepointCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -809,7 +809,7 @@ func (u SourceMicrosoftSharepointCSVHeaderDefinition) MarshalJSON() ([]byte, err
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointCSVHeaderDefinition: all fields are null")
 }
 
 type SourceMicrosoftSharepointCSVFormat struct {
@@ -1102,7 +1102,7 @@ func (u *SourceMicrosoftSharepointFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointFormat", string(data))
 }
 
 func (u SourceMicrosoftSharepointFormat) MarshalJSON() ([]byte, error) {
@@ -1126,7 +1126,7 @@ func (u SourceMicrosoftSharepointFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointFormat: all fields are null")
 }
 
 // SourceMicrosoftSharepointValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

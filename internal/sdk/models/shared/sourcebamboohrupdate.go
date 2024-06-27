@@ -10,7 +10,7 @@ type SourceBambooHrUpdate struct {
 	// Api key of bamboo hr
 	APIKey string `json:"api_key"`
 	// Comma-separated list of fields to include in custom reports.
-	CustomReportsFields *string `default:"" json:"custom_reports_fields"`
+	CustomReportsFields *string `json:"custom_reports_fields,omitempty"`
 	// If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
 	CustomReportsIncludeDefaultFields *bool `default:"true" json:"custom_reports_include_default_fields"`
 	// Sub Domain of bamboo hr

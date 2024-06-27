@@ -5,6 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceLinkedinPages struct {
-	Credentials *SourceLinkedinAdsAuthentication `tfsdk:"credentials"`
-	OrgID       types.String                     `tfsdk:"org_id"`
+	Credentials         *SourceLinkedinAdsAuthentication `tfsdk:"credentials"`
+	OrgID               types.String                     `tfsdk:"org_id"`
+	StartDate           types.String                     `tfsdk:"start_date"`
+	TimeGranularityType types.String                     `tfsdk:"time_granularity_type"`
 }

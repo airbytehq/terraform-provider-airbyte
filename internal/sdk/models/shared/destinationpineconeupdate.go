@@ -405,7 +405,7 @@ func (u *DestinationPineconeUpdateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationPineconeUpdateEmbedding", string(data))
 }
 
 func (u DestinationPineconeUpdateEmbedding) MarshalJSON() ([]byte, error) {
@@ -429,7 +429,7 @@ func (u DestinationPineconeUpdateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationPineconeUpdateOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationPineconeUpdateEmbedding: all fields are null")
 }
 
 // DestinationPineconeUpdateIndexing - Pinecone is a popular vector store that can be used to store and retrieve embeddings.
@@ -785,7 +785,7 @@ func (u *DestinationPineconeUpdateTextSplitter) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationPineconeUpdateTextSplitter", string(data))
 }
 
 func (u DestinationPineconeUpdateTextSplitter) MarshalJSON() ([]byte, error) {
@@ -801,7 +801,7 @@ func (u DestinationPineconeUpdateTextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationPineconeUpdateByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationPineconeUpdateTextSplitter: all fields are null")
 }
 
 type DestinationPineconeUpdateProcessingConfigModel struct {

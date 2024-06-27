@@ -353,6 +353,12 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			DestinationS3ParquetColumnarStorage: destinationS3ParquetColumnarStorage,
 		}
 	}
+	roleArn := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn = nil
+	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
 	s3BucketRegion := new(shared.DestinationS3S3BucketRegion)
@@ -383,6 +389,7 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 		AccessKeyID:     accessKeyID,
 		FileNamePattern: fileNamePattern,
 		Format:          format,
+		RoleArn:         roleArn,
 		S3BucketName:    s3BucketName,
 		S3BucketPath:    s3BucketPath,
 		S3BucketRegion:  s3BucketRegion,
@@ -762,6 +769,12 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			DestinationS3UpdateParquetColumnarStorage: destinationS3UpdateParquetColumnarStorage,
 		}
 	}
+	roleArn := new(string)
+	if !r.Configuration.RoleArn.IsUnknown() && !r.Configuration.RoleArn.IsNull() {
+		*roleArn = r.Configuration.RoleArn.ValueString()
+	} else {
+		roleArn = nil
+	}
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
 	s3BucketRegion := new(shared.DestinationS3UpdateS3BucketRegion)
@@ -792,6 +805,7 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 		AccessKeyID:     accessKeyID,
 		FileNamePattern: fileNamePattern,
 		Format:          format,
+		RoleArn:         roleArn,
 		S3BucketName:    s3BucketName,
 		S3BucketPath:    s3BucketPath,
 		S3BucketRegion:  s3BucketRegion,

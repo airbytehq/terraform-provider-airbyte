@@ -205,7 +205,7 @@ func (u *SourceMicrosoftTeamsUpdateAuthenticationMechanism) UnmarshalJSON(data [
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftTeamsUpdateAuthenticationMechanism", string(data))
 }
 
 func (u SourceMicrosoftTeamsUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -217,7 +217,7 @@ func (u SourceMicrosoftTeamsUpdateAuthenticationMechanism) MarshalJSON() ([]byte
 		return utils.MarshalJSON(u.AuthenticateViaMicrosoft, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftTeamsUpdateAuthenticationMechanism: all fields are null")
 }
 
 type SourceMicrosoftTeamsUpdate struct {

@@ -21,10 +21,10 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "18021619-8723-463e-89a2-aae62d9d7702"
-  name          = "Tanya Hand"
+  definition_id = "61b1c883-a572-4712-98f3-b6433cb82b32"
+  name          = "Sammy Aufderhar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6995c576-52df-4199-822b-3629976b741d"
+  workspace_id  = "d9a9d8ba-9b0d-4f86-903c-4743ee79bd13"
 }
 ```
 

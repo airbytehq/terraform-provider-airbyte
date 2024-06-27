@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
+	"time"
 )
 
 type SourceMixpanelSchemasOptionTitle string
@@ -179,7 +179,7 @@ func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMixpanelAuthenticationWildcard", string(data))
 }
 
 func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
@@ -191,7 +191,7 @@ func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMixpanelProjectSecret, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMixpanelAuthenticationWildcard: all fields are null")
 }
 
 // SourceMixpanelRegion - The region of mixpanel domain instance either US or EU.
@@ -252,7 +252,7 @@ type SourceMixpanel struct {
 	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer)
 	DateWindowSize *int64 `default:"30" json:"date_window_size"`
 	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
-	EndDate *types.Date `json:"end_date,omitempty"`
+	EndDate *time.Time `json:"end_date,omitempty"`
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
 	ProjectTimezone *string `default:"US/Pacific" json:"project_timezone"`
 	// The region of mixpanel domain instance either US or EU.
@@ -261,7 +261,7 @@ type SourceMixpanel struct {
 	SelectPropertiesByDefault *bool    `default:"true" json:"select_properties_by_default"`
 	sourceType                Mixpanel `const:"mixpanel" json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
-	StartDate *types.Date `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceMixpanel) MarshalJSON() ([]byte, error) {
@@ -296,7 +296,7 @@ func (o *SourceMixpanel) GetDateWindowSize() *int64 {
 	return o.DateWindowSize
 }
 
-func (o *SourceMixpanel) GetEndDate() *types.Date {
+func (o *SourceMixpanel) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
 	}
@@ -328,7 +328,7 @@ func (o *SourceMixpanel) GetSourceType() Mixpanel {
 	return MixpanelMixpanel
 }
 
-func (o *SourceMixpanel) GetStartDate() *types.Date {
+func (o *SourceMixpanel) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}

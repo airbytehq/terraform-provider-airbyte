@@ -14,8 +14,8 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
     }
     omit_raw_text = false
     processing = {
-      chunk_overlap = 3
-      chunk_size    = 6
+      chunk_overlap = 5
+      chunk_size    = 9
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -30,12 +30,12 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 0
+          split_level = 3
         }
       }
     }
   }
-  definition_id = "e1a2bc7d-e0ff-4637-b749-15d3efc2cd95"
-  name          = "Laverne Donnelly"
-  workspace_id  = "cc1e6f12-9156-404b-95b3-26e06d2448e4"
+  definition_id = "e42a5305-0a9a-4fbc-a6c9-13a5b78062a6"
+  name          = "Gregory Flatley"
+  workspace_id  = "b7f63598-ffb0-4429-a4fa-eae5018c3193"
 }

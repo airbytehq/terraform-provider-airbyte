@@ -122,6 +122,7 @@ func (s *Sources) CreateSource(ctx context.Context, request *shared.SourceCreate
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAha - Create a source
@@ -220,6 +221,7 @@ func (s *Sources) CreateSourceAha(ctx context.Context, request *shared.SourceAha
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAircall - Create a source
@@ -318,6 +320,7 @@ func (s *Sources) CreateSourceAircall(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAirtable - Create a source
@@ -416,6 +419,7 @@ func (s *Sources) CreateSourceAirtable(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAmazonAds - Create a source
@@ -514,6 +518,7 @@ func (s *Sources) CreateSourceAmazonAds(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAmazonSellerPartner - Create a source
@@ -612,6 +617,7 @@ func (s *Sources) CreateSourceAmazonSellerPartner(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAmazonSqs - Create a source
@@ -710,6 +716,7 @@ func (s *Sources) CreateSourceAmazonSqs(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAmplitude - Create a source
@@ -808,6 +815,7 @@ func (s *Sources) CreateSourceAmplitude(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceApifyDataset - Create a source
@@ -906,6 +914,7 @@ func (s *Sources) CreateSourceApifyDataset(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAppfollow - Create a source
@@ -1004,6 +1013,7 @@ func (s *Sources) CreateSourceAppfollow(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAsana - Create a source
@@ -1102,6 +1112,7 @@ func (s *Sources) CreateSourceAsana(ctx context.Context, request *shared.SourceA
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAuth0 - Create a source
@@ -1200,6 +1211,7 @@ func (s *Sources) CreateSourceAuth0(ctx context.Context, request *shared.SourceA
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAwsCloudtrail - Create a source
@@ -1298,6 +1310,7 @@ func (s *Sources) CreateSourceAwsCloudtrail(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAzureBlobStorage - Create a source
@@ -1396,6 +1409,7 @@ func (s *Sources) CreateSourceAzureBlobStorage(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceAzureTable - Create a source
@@ -1494,6 +1508,7 @@ func (s *Sources) CreateSourceAzureTable(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceBambooHr - Create a source
@@ -1592,6 +1607,7 @@ func (s *Sources) CreateSourceBambooHr(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceBigquery - Create a source
@@ -1690,6 +1706,7 @@ func (s *Sources) CreateSourceBigquery(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceBingAds - Create a source
@@ -1788,6 +1805,7 @@ func (s *Sources) CreateSourceBingAds(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceBraintree - Create a source
@@ -1886,6 +1904,7 @@ func (s *Sources) CreateSourceBraintree(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceBraze - Create a source
@@ -1984,6 +2003,7 @@ func (s *Sources) CreateSourceBraze(ctx context.Context, request *shared.SourceB
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCart - Create a source
@@ -2082,6 +2102,7 @@ func (s *Sources) CreateSourceCart(ctx context.Context, request *shared.SourceCa
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceChargebee - Create a source
@@ -2180,6 +2201,7 @@ func (s *Sources) CreateSourceChargebee(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceChartmogul - Create a source
@@ -2278,6 +2300,7 @@ func (s *Sources) CreateSourceChartmogul(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceClickhouse - Create a source
@@ -2376,6 +2399,7 @@ func (s *Sources) CreateSourceClickhouse(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceClickupAPI - Create a source
@@ -2474,6 +2498,7 @@ func (s *Sources) CreateSourceClickupAPI(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceClockify - Create a source
@@ -2572,6 +2597,7 @@ func (s *Sources) CreateSourceClockify(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCloseCom - Create a source
@@ -2670,6 +2696,7 @@ func (s *Sources) CreateSourceCloseCom(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCoda - Create a source
@@ -2768,6 +2795,7 @@ func (s *Sources) CreateSourceCoda(ctx context.Context, request *shared.SourceCo
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCoinAPI - Create a source
@@ -2866,6 +2894,7 @@ func (s *Sources) CreateSourceCoinAPI(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCoinmarketcap - Create a source
@@ -2964,6 +2993,7 @@ func (s *Sources) CreateSourceCoinmarketcap(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceConfigcat - Create a source
@@ -3062,6 +3092,7 @@ func (s *Sources) CreateSourceConfigcat(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceConfluence - Create a source
@@ -3160,6 +3191,7 @@ func (s *Sources) CreateSourceConfluence(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceConvex - Create a source
@@ -3258,6 +3290,7 @@ func (s *Sources) CreateSourceConvex(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceCustom - Create a source
@@ -3356,6 +3389,7 @@ func (s *Sources) CreateSourceCustom(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDatascope - Create a source
@@ -3454,6 +3488,7 @@ func (s *Sources) CreateSourceDatascope(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDelighted - Create a source
@@ -3552,6 +3587,7 @@ func (s *Sources) CreateSourceDelighted(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDixa - Create a source
@@ -3650,6 +3686,7 @@ func (s *Sources) CreateSourceDixa(ctx context.Context, request *shared.SourceDi
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDockerhub - Create a source
@@ -3748,6 +3785,7 @@ func (s *Sources) CreateSourceDockerhub(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDremio - Create a source
@@ -3846,6 +3884,7 @@ func (s *Sources) CreateSourceDremio(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceDynamodb - Create a source
@@ -3944,6 +3983,7 @@ func (s *Sources) CreateSourceDynamodb(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceEmailoctopus - Create a source
@@ -4042,6 +4082,7 @@ func (s *Sources) CreateSourceEmailoctopus(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceExchangeRates - Create a source
@@ -4140,6 +4181,7 @@ func (s *Sources) CreateSourceExchangeRates(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFacebookMarketing - Create a source
@@ -4238,6 +4280,7 @@ func (s *Sources) CreateSourceFacebookMarketing(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFaker - Create a source
@@ -4336,6 +4379,7 @@ func (s *Sources) CreateSourceFaker(ctx context.Context, request *shared.SourceF
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFauna - Create a source
@@ -4434,6 +4478,7 @@ func (s *Sources) CreateSourceFauna(ctx context.Context, request *shared.SourceF
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFile - Create a source
@@ -4532,6 +4577,7 @@ func (s *Sources) CreateSourceFile(ctx context.Context, request *shared.SourceFi
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFirebolt - Create a source
@@ -4630,6 +4676,106 @@ func (s *Sources) CreateSourceFirebolt(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
+}
+
+// CreateSourceFleetio - Create a source
+// Creates a source given a name, workspace id, and a json blob containing the configuration for the source.
+func (s *Sources) CreateSourceFleetio(ctx context.Context, request *shared.SourceFleetioCreateRequest) (*operations.CreateSourceFleetioResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "createSourceFleetio",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := url.JoinPath(baseURL, "/sources")
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	req.Header.Set("Content-Type", reqContentType)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.CreateSourceFleetioResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out shared.SourceResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.SourceResponse = &out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // CreateSourceFreshcaller - Create a source
@@ -4728,6 +4874,7 @@ func (s *Sources) CreateSourceFreshcaller(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFreshdesk - Create a source
@@ -4826,6 +4973,7 @@ func (s *Sources) CreateSourceFreshdesk(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceFreshsales - Create a source
@@ -4924,6 +5072,7 @@ func (s *Sources) CreateSourceFreshsales(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGainsightPx - Create a source
@@ -5022,6 +5171,7 @@ func (s *Sources) CreateSourceGainsightPx(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGcs - Create a source
@@ -5120,6 +5270,7 @@ func (s *Sources) CreateSourceGcs(ctx context.Context, request *shared.SourceGcs
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGetlago - Create a source
@@ -5218,6 +5369,7 @@ func (s *Sources) CreateSourceGetlago(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGithub - Create a source
@@ -5316,6 +5468,7 @@ func (s *Sources) CreateSourceGithub(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGitlab - Create a source
@@ -5414,6 +5567,7 @@ func (s *Sources) CreateSourceGitlab(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGlassfrog - Create a source
@@ -5512,6 +5666,7 @@ func (s *Sources) CreateSourceGlassfrog(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGnews - Create a source
@@ -5610,6 +5765,7 @@ func (s *Sources) CreateSourceGnews(ctx context.Context, request *shared.SourceG
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleAds - Create a source
@@ -5708,6 +5864,7 @@ func (s *Sources) CreateSourceGoogleAds(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleAnalyticsDataAPI - Create a source
@@ -5806,6 +5963,7 @@ func (s *Sources) CreateSourceGoogleAnalyticsDataAPI(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleAnalyticsV4ServiceAccountOnly - Create a source
@@ -5904,6 +6062,7 @@ func (s *Sources) CreateSourceGoogleAnalyticsV4ServiceAccountOnly(ctx context.Co
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleDirectory - Create a source
@@ -6002,6 +6161,7 @@ func (s *Sources) CreateSourceGoogleDirectory(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleDrive - Create a source
@@ -6100,6 +6260,7 @@ func (s *Sources) CreateSourceGoogleDrive(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGooglePagespeedInsights - Create a source
@@ -6198,6 +6359,7 @@ func (s *Sources) CreateSourceGooglePagespeedInsights(ctx context.Context, reque
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleSearchConsole - Create a source
@@ -6296,6 +6458,7 @@ func (s *Sources) CreateSourceGoogleSearchConsole(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleSheets - Create a source
@@ -6394,6 +6557,7 @@ func (s *Sources) CreateSourceGoogleSheets(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGoogleWebfonts - Create a source
@@ -6492,6 +6656,7 @@ func (s *Sources) CreateSourceGoogleWebfonts(ctx context.Context, request *share
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGreenhouse - Create a source
@@ -6590,6 +6755,7 @@ func (s *Sources) CreateSourceGreenhouse(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceGridly - Create a source
@@ -6688,6 +6854,7 @@ func (s *Sources) CreateSourceGridly(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceHarvest - Create a source
@@ -6786,6 +6953,7 @@ func (s *Sources) CreateSourceHarvest(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceHubplanner - Create a source
@@ -6884,6 +7052,7 @@ func (s *Sources) CreateSourceHubplanner(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceHubspot - Create a source
@@ -6982,6 +7151,7 @@ func (s *Sources) CreateSourceHubspot(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceInsightly - Create a source
@@ -7080,6 +7250,7 @@ func (s *Sources) CreateSourceInsightly(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceInstagram - Create a source
@@ -7178,6 +7349,7 @@ func (s *Sources) CreateSourceInstagram(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceInstatus - Create a source
@@ -7276,6 +7448,7 @@ func (s *Sources) CreateSourceInstatus(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceIntercom - Create a source
@@ -7374,6 +7547,7 @@ func (s *Sources) CreateSourceIntercom(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceIp2whois - Create a source
@@ -7472,6 +7646,7 @@ func (s *Sources) CreateSourceIp2whois(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceIterable - Create a source
@@ -7570,6 +7745,7 @@ func (s *Sources) CreateSourceIterable(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceJira - Create a source
@@ -7668,6 +7844,7 @@ func (s *Sources) CreateSourceJira(ctx context.Context, request *shared.SourceJi
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceK6Cloud - Create a source
@@ -7766,6 +7943,7 @@ func (s *Sources) CreateSourceK6Cloud(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceKlarna - Create a source
@@ -7864,6 +8042,7 @@ func (s *Sources) CreateSourceKlarna(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceKlaviyo - Create a source
@@ -7962,6 +8141,7 @@ func (s *Sources) CreateSourceKlaviyo(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceKyve - Create a source
@@ -8060,6 +8240,7 @@ func (s *Sources) CreateSourceKyve(ctx context.Context, request *shared.SourceKy
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLaunchdarkly - Create a source
@@ -8158,6 +8339,7 @@ func (s *Sources) CreateSourceLaunchdarkly(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLemlist - Create a source
@@ -8256,6 +8438,7 @@ func (s *Sources) CreateSourceLemlist(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLeverHiring - Create a source
@@ -8354,6 +8537,7 @@ func (s *Sources) CreateSourceLeverHiring(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLinkedinAds - Create a source
@@ -8452,6 +8636,7 @@ func (s *Sources) CreateSourceLinkedinAds(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLinkedinPages - Create a source
@@ -8550,6 +8735,7 @@ func (s *Sources) CreateSourceLinkedinPages(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLinnworks - Create a source
@@ -8648,6 +8834,7 @@ func (s *Sources) CreateSourceLinnworks(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceLokalise - Create a source
@@ -8746,6 +8933,7 @@ func (s *Sources) CreateSourceLokalise(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMailchimp - Create a source
@@ -8844,6 +9032,7 @@ func (s *Sources) CreateSourceMailchimp(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMailgun - Create a source
@@ -8942,6 +9131,7 @@ func (s *Sources) CreateSourceMailgun(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMailjetSms - Create a source
@@ -9040,6 +9230,7 @@ func (s *Sources) CreateSourceMailjetSms(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMarketo - Create a source
@@ -9138,6 +9329,7 @@ func (s *Sources) CreateSourceMarketo(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMetabase - Create a source
@@ -9236,6 +9428,7 @@ func (s *Sources) CreateSourceMetabase(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMicrosoftOnedrive - Create a source
@@ -9334,6 +9527,7 @@ func (s *Sources) CreateSourceMicrosoftOnedrive(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMicrosoftSharepoint - Create a source
@@ -9432,6 +9626,7 @@ func (s *Sources) CreateSourceMicrosoftSharepoint(ctx context.Context, request *
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMicrosoftTeams - Create a source
@@ -9530,6 +9725,7 @@ func (s *Sources) CreateSourceMicrosoftTeams(ctx context.Context, request *share
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMixpanel - Create a source
@@ -9628,6 +9824,7 @@ func (s *Sources) CreateSourceMixpanel(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMonday - Create a source
@@ -9726,6 +9923,7 @@ func (s *Sources) CreateSourceMonday(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMongodbInternalPoc - Create a source
@@ -9824,6 +10022,7 @@ func (s *Sources) CreateSourceMongodbInternalPoc(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMongodbV2 - Create a source
@@ -9922,6 +10121,7 @@ func (s *Sources) CreateSourceMongodbV2(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMssql - Create a source
@@ -10020,6 +10220,7 @@ func (s *Sources) CreateSourceMssql(ctx context.Context, request *shared.SourceM
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMyHours - Create a source
@@ -10118,6 +10319,7 @@ func (s *Sources) CreateSourceMyHours(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceMysql - Create a source
@@ -10216,6 +10418,7 @@ func (s *Sources) CreateSourceMysql(ctx context.Context, request *shared.SourceM
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceNetsuite - Create a source
@@ -10314,6 +10517,7 @@ func (s *Sources) CreateSourceNetsuite(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceNotion - Create a source
@@ -10412,6 +10616,7 @@ func (s *Sources) CreateSourceNotion(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceNytimes - Create a source
@@ -10510,6 +10715,7 @@ func (s *Sources) CreateSourceNytimes(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOkta - Create a source
@@ -10608,6 +10814,7 @@ func (s *Sources) CreateSourceOkta(ctx context.Context, request *shared.SourceOk
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOmnisend - Create a source
@@ -10706,6 +10913,7 @@ func (s *Sources) CreateSourceOmnisend(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOnesignal - Create a source
@@ -10804,6 +11012,7 @@ func (s *Sources) CreateSourceOnesignal(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOracle - Create a source
@@ -10902,6 +11111,7 @@ func (s *Sources) CreateSourceOracle(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOrb - Create a source
@@ -11000,6 +11210,7 @@ func (s *Sources) CreateSourceOrb(ctx context.Context, request *shared.SourceOrb
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOrbit - Create a source
@@ -11098,6 +11309,7 @@ func (s *Sources) CreateSourceOrbit(ctx context.Context, request *shared.SourceO
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOutbrainAmplify - Create a source
@@ -11196,6 +11408,7 @@ func (s *Sources) CreateSourceOutbrainAmplify(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceOutreach - Create a source
@@ -11294,6 +11507,7 @@ func (s *Sources) CreateSourceOutreach(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePaypalTransaction - Create a source
@@ -11392,6 +11606,7 @@ func (s *Sources) CreateSourcePaypalTransaction(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePaystack - Create a source
@@ -11490,6 +11705,7 @@ func (s *Sources) CreateSourcePaystack(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePendo - Create a source
@@ -11588,6 +11804,7 @@ func (s *Sources) CreateSourcePendo(ctx context.Context, request *shared.SourceP
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePersistiq - Create a source
@@ -11686,6 +11903,7 @@ func (s *Sources) CreateSourcePersistiq(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePexelsAPI - Create a source
@@ -11784,6 +12002,7 @@ func (s *Sources) CreateSourcePexelsAPI(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePinterest - Create a source
@@ -11882,6 +12101,7 @@ func (s *Sources) CreateSourcePinterest(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePipedrive - Create a source
@@ -11980,6 +12200,7 @@ func (s *Sources) CreateSourcePipedrive(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePocket - Create a source
@@ -12078,6 +12299,7 @@ func (s *Sources) CreateSourcePocket(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePokeapi - Create a source
@@ -12176,6 +12398,7 @@ func (s *Sources) CreateSourcePokeapi(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePolygonStockAPI - Create a source
@@ -12274,6 +12497,7 @@ func (s *Sources) CreateSourcePolygonStockAPI(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePostgres - Create a source
@@ -12372,6 +12596,7 @@ func (s *Sources) CreateSourcePostgres(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePosthog - Create a source
@@ -12470,6 +12695,7 @@ func (s *Sources) CreateSourcePosthog(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePostmarkapp - Create a source
@@ -12568,6 +12794,7 @@ func (s *Sources) CreateSourcePostmarkapp(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePrestashop - Create a source
@@ -12666,6 +12893,7 @@ func (s *Sources) CreateSourcePrestashop(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePunkAPI - Create a source
@@ -12764,6 +12992,7 @@ func (s *Sources) CreateSourcePunkAPI(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourcePypi - Create a source
@@ -12862,6 +13091,7 @@ func (s *Sources) CreateSourcePypi(ctx context.Context, request *shared.SourcePy
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceQualaroo - Create a source
@@ -12960,6 +13190,7 @@ func (s *Sources) CreateSourceQualaroo(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRailz - Create a source
@@ -13058,6 +13289,7 @@ func (s *Sources) CreateSourceRailz(ctx context.Context, request *shared.SourceR
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRecharge - Create a source
@@ -13156,6 +13388,7 @@ func (s *Sources) CreateSourceRecharge(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRecreation - Create a source
@@ -13254,6 +13487,7 @@ func (s *Sources) CreateSourceRecreation(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRecruitee - Create a source
@@ -13352,6 +13586,7 @@ func (s *Sources) CreateSourceRecruitee(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRecurly - Create a source
@@ -13450,6 +13685,7 @@ func (s *Sources) CreateSourceRecurly(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRedshift - Create a source
@@ -13548,6 +13784,7 @@ func (s *Sources) CreateSourceRedshift(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRetently - Create a source
@@ -13646,6 +13883,7 @@ func (s *Sources) CreateSourceRetently(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRkiCovid - Create a source
@@ -13744,6 +13982,7 @@ func (s *Sources) CreateSourceRkiCovid(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceRss - Create a source
@@ -13842,6 +14081,7 @@ func (s *Sources) CreateSourceRss(ctx context.Context, request *shared.SourceRss
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceS3 - Create a source
@@ -13940,6 +14180,7 @@ func (s *Sources) CreateSourceS3(ctx context.Context, request *shared.SourceS3Cr
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSalesforce - Create a source
@@ -14038,6 +14279,7 @@ func (s *Sources) CreateSourceSalesforce(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSalesloft - Create a source
@@ -14136,6 +14378,7 @@ func (s *Sources) CreateSourceSalesloft(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSapFieldglass - Create a source
@@ -14234,6 +14477,7 @@ func (s *Sources) CreateSourceSapFieldglass(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSecoda - Create a source
@@ -14332,6 +14576,7 @@ func (s *Sources) CreateSourceSecoda(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSendgrid - Create a source
@@ -14430,6 +14675,7 @@ func (s *Sources) CreateSourceSendgrid(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSendinblue - Create a source
@@ -14528,6 +14774,7 @@ func (s *Sources) CreateSourceSendinblue(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSenseforce - Create a source
@@ -14626,6 +14873,7 @@ func (s *Sources) CreateSourceSenseforce(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSentry - Create a source
@@ -14724,6 +14972,7 @@ func (s *Sources) CreateSourceSentry(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSftp - Create a source
@@ -14822,6 +15071,7 @@ func (s *Sources) CreateSourceSftp(ctx context.Context, request *shared.SourceSf
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSftpBulk - Create a source
@@ -14920,6 +15170,7 @@ func (s *Sources) CreateSourceSftpBulk(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceShopify - Create a source
@@ -15018,6 +15269,7 @@ func (s *Sources) CreateSourceShopify(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceShortio - Create a source
@@ -15116,6 +15368,7 @@ func (s *Sources) CreateSourceShortio(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSlack - Create a source
@@ -15214,6 +15467,7 @@ func (s *Sources) CreateSourceSlack(ctx context.Context, request *shared.SourceS
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSmaily - Create a source
@@ -15312,6 +15566,7 @@ func (s *Sources) CreateSourceSmaily(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSmartengage - Create a source
@@ -15410,6 +15665,7 @@ func (s *Sources) CreateSourceSmartengage(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSmartsheets - Create a source
@@ -15508,6 +15764,7 @@ func (s *Sources) CreateSourceSmartsheets(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSnapchatMarketing - Create a source
@@ -15606,6 +15863,7 @@ func (s *Sources) CreateSourceSnapchatMarketing(ctx context.Context, request *sh
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSnowflake - Create a source
@@ -15704,6 +15962,7 @@ func (s *Sources) CreateSourceSnowflake(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSonarCloud - Create a source
@@ -15802,6 +16061,7 @@ func (s *Sources) CreateSourceSonarCloud(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSpacexAPI - Create a source
@@ -15900,6 +16160,7 @@ func (s *Sources) CreateSourceSpacexAPI(ctx context.Context, request *shared.Sou
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSquare - Create a source
@@ -15998,6 +16259,7 @@ func (s *Sources) CreateSourceSquare(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceStrava - Create a source
@@ -16096,6 +16358,7 @@ func (s *Sources) CreateSourceStrava(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceStripe - Create a source
@@ -16194,6 +16457,7 @@ func (s *Sources) CreateSourceStripe(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSurveySparrow - Create a source
@@ -16292,6 +16556,7 @@ func (s *Sources) CreateSourceSurveySparrow(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceSurveymonkey - Create a source
@@ -16390,6 +16655,7 @@ func (s *Sources) CreateSourceSurveymonkey(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTempo - Create a source
@@ -16488,6 +16754,7 @@ func (s *Sources) CreateSourceTempo(ctx context.Context, request *shared.SourceT
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTheGuardianAPI - Create a source
@@ -16586,6 +16853,7 @@ func (s *Sources) CreateSourceTheGuardianAPI(ctx context.Context, request *share
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTiktokMarketing - Create a source
@@ -16684,6 +16952,7 @@ func (s *Sources) CreateSourceTiktokMarketing(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTrello - Create a source
@@ -16782,6 +17051,7 @@ func (s *Sources) CreateSourceTrello(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTrustpilot - Create a source
@@ -16880,6 +17150,7 @@ func (s *Sources) CreateSourceTrustpilot(ctx context.Context, request *shared.So
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTvmazeSchedule - Create a source
@@ -16978,6 +17249,7 @@ func (s *Sources) CreateSourceTvmazeSchedule(ctx context.Context, request *share
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTwilio - Create a source
@@ -17076,6 +17348,7 @@ func (s *Sources) CreateSourceTwilio(ctx context.Context, request *shared.Source
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTwilioTaskrouter - Create a source
@@ -17174,6 +17447,7 @@ func (s *Sources) CreateSourceTwilioTaskrouter(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTwitter - Create a source
@@ -17272,6 +17546,7 @@ func (s *Sources) CreateSourceTwitter(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceTypeform - Create a source
@@ -17370,6 +17645,7 @@ func (s *Sources) CreateSourceTypeform(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceUsCensus - Create a source
@@ -17468,6 +17744,7 @@ func (s *Sources) CreateSourceUsCensus(ctx context.Context, request *shared.Sour
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceVantage - Create a source
@@ -17566,6 +17843,7 @@ func (s *Sources) CreateSourceVantage(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceWebflow - Create a source
@@ -17664,6 +17942,7 @@ func (s *Sources) CreateSourceWebflow(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceWhiskyHunter - Create a source
@@ -17762,6 +18041,7 @@ func (s *Sources) CreateSourceWhiskyHunter(ctx context.Context, request *shared.
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceWikipediaPageviews - Create a source
@@ -17860,6 +18140,7 @@ func (s *Sources) CreateSourceWikipediaPageviews(ctx context.Context, request *s
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceWoocommerce - Create a source
@@ -17958,6 +18239,7 @@ func (s *Sources) CreateSourceWoocommerce(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceXkcd - Create a source
@@ -18056,6 +18338,7 @@ func (s *Sources) CreateSourceXkcd(ctx context.Context, request *shared.SourceXk
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceYandexMetrica - Create a source
@@ -18154,6 +18437,7 @@ func (s *Sources) CreateSourceYandexMetrica(ctx context.Context, request *shared
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceYotpo - Create a source
@@ -18252,6 +18536,7 @@ func (s *Sources) CreateSourceYotpo(ctx context.Context, request *shared.SourceY
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceYoutubeAnalytics - Create a source
@@ -18350,6 +18635,7 @@ func (s *Sources) CreateSourceYoutubeAnalytics(ctx context.Context, request *sha
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZendeskChat - Create a source
@@ -18448,6 +18734,7 @@ func (s *Sources) CreateSourceZendeskChat(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZendeskSell - Create a source
@@ -18546,6 +18833,7 @@ func (s *Sources) CreateSourceZendeskSell(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZendeskSunshine - Create a source
@@ -18644,6 +18932,7 @@ func (s *Sources) CreateSourceZendeskSunshine(ctx context.Context, request *shar
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZendeskSupport - Create a source
@@ -18742,6 +19031,7 @@ func (s *Sources) CreateSourceZendeskSupport(ctx context.Context, request *share
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZendeskTalk - Create a source
@@ -18840,6 +19130,7 @@ func (s *Sources) CreateSourceZendeskTalk(ctx context.Context, request *shared.S
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZenloop - Create a source
@@ -18938,6 +19229,7 @@ func (s *Sources) CreateSourceZenloop(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZohoCrm - Create a source
@@ -19036,6 +19328,7 @@ func (s *Sources) CreateSourceZohoCrm(ctx context.Context, request *shared.Sourc
 	}
 
 	return res, nil
+
 }
 
 // CreateSourceZoom - Create a source
@@ -19134,6 +19427,7 @@ func (s *Sources) CreateSourceZoom(ctx context.Context, request *shared.SourceZo
 	}
 
 	return res, nil
+
 }
 
 // DeleteSource - Delete a Source
@@ -19215,6 +19509,7 @@ func (s *Sources) DeleteSource(ctx context.Context, request operations.DeleteSou
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAha - Delete a Source
@@ -19296,6 +19591,7 @@ func (s *Sources) DeleteSourceAha(ctx context.Context, request operations.Delete
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAircall - Delete a Source
@@ -19377,6 +19673,7 @@ func (s *Sources) DeleteSourceAircall(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAirtable - Delete a Source
@@ -19458,6 +19755,7 @@ func (s *Sources) DeleteSourceAirtable(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAmazonAds - Delete a Source
@@ -19539,6 +19837,7 @@ func (s *Sources) DeleteSourceAmazonAds(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAmazonSellerPartner - Delete a Source
@@ -19620,6 +19919,7 @@ func (s *Sources) DeleteSourceAmazonSellerPartner(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAmazonSqs - Delete a Source
@@ -19701,6 +20001,7 @@ func (s *Sources) DeleteSourceAmazonSqs(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAmplitude - Delete a Source
@@ -19782,6 +20083,7 @@ func (s *Sources) DeleteSourceAmplitude(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceApifyDataset - Delete a Source
@@ -19863,6 +20165,7 @@ func (s *Sources) DeleteSourceApifyDataset(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAppfollow - Delete a Source
@@ -19944,6 +20247,7 @@ func (s *Sources) DeleteSourceAppfollow(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAsana - Delete a Source
@@ -20025,6 +20329,7 @@ func (s *Sources) DeleteSourceAsana(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAuth0 - Delete a Source
@@ -20106,6 +20411,7 @@ func (s *Sources) DeleteSourceAuth0(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAwsCloudtrail - Delete a Source
@@ -20187,6 +20493,7 @@ func (s *Sources) DeleteSourceAwsCloudtrail(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAzureBlobStorage - Delete a Source
@@ -20268,6 +20575,7 @@ func (s *Sources) DeleteSourceAzureBlobStorage(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceAzureTable - Delete a Source
@@ -20349,6 +20657,7 @@ func (s *Sources) DeleteSourceAzureTable(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceBambooHr - Delete a Source
@@ -20430,6 +20739,7 @@ func (s *Sources) DeleteSourceBambooHr(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceBigquery - Delete a Source
@@ -20511,6 +20821,7 @@ func (s *Sources) DeleteSourceBigquery(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceBingAds - Delete a Source
@@ -20592,6 +20903,7 @@ func (s *Sources) DeleteSourceBingAds(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceBraintree - Delete a Source
@@ -20673,6 +20985,7 @@ func (s *Sources) DeleteSourceBraintree(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceBraze - Delete a Source
@@ -20754,6 +21067,7 @@ func (s *Sources) DeleteSourceBraze(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCart - Delete a Source
@@ -20835,6 +21149,7 @@ func (s *Sources) DeleteSourceCart(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceChargebee - Delete a Source
@@ -20916,6 +21231,7 @@ func (s *Sources) DeleteSourceChargebee(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceChartmogul - Delete a Source
@@ -20997,6 +21313,7 @@ func (s *Sources) DeleteSourceChartmogul(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceClickhouse - Delete a Source
@@ -21078,6 +21395,7 @@ func (s *Sources) DeleteSourceClickhouse(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceClickupAPI - Delete a Source
@@ -21159,6 +21477,7 @@ func (s *Sources) DeleteSourceClickupAPI(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceClockify - Delete a Source
@@ -21240,6 +21559,7 @@ func (s *Sources) DeleteSourceClockify(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCloseCom - Delete a Source
@@ -21321,6 +21641,7 @@ func (s *Sources) DeleteSourceCloseCom(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCoda - Delete a Source
@@ -21402,6 +21723,7 @@ func (s *Sources) DeleteSourceCoda(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCoinAPI - Delete a Source
@@ -21483,6 +21805,7 @@ func (s *Sources) DeleteSourceCoinAPI(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCoinmarketcap - Delete a Source
@@ -21564,6 +21887,7 @@ func (s *Sources) DeleteSourceCoinmarketcap(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceConfigcat - Delete a Source
@@ -21645,6 +21969,7 @@ func (s *Sources) DeleteSourceConfigcat(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceConfluence - Delete a Source
@@ -21726,6 +22051,7 @@ func (s *Sources) DeleteSourceConfluence(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceConvex - Delete a Source
@@ -21807,6 +22133,7 @@ func (s *Sources) DeleteSourceConvex(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceCustom - Delete a Source
@@ -21888,6 +22215,7 @@ func (s *Sources) DeleteSourceCustom(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDatascope - Delete a Source
@@ -21969,6 +22297,7 @@ func (s *Sources) DeleteSourceDatascope(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDelighted - Delete a Source
@@ -22050,6 +22379,7 @@ func (s *Sources) DeleteSourceDelighted(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDixa - Delete a Source
@@ -22131,6 +22461,7 @@ func (s *Sources) DeleteSourceDixa(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDockerhub - Delete a Source
@@ -22212,6 +22543,7 @@ func (s *Sources) DeleteSourceDockerhub(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDremio - Delete a Source
@@ -22293,6 +22625,7 @@ func (s *Sources) DeleteSourceDremio(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceDynamodb - Delete a Source
@@ -22374,6 +22707,7 @@ func (s *Sources) DeleteSourceDynamodb(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceEmailoctopus - Delete a Source
@@ -22455,6 +22789,7 @@ func (s *Sources) DeleteSourceEmailoctopus(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceExchangeRates - Delete a Source
@@ -22536,6 +22871,7 @@ func (s *Sources) DeleteSourceExchangeRates(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFacebookMarketing - Delete a Source
@@ -22617,6 +22953,7 @@ func (s *Sources) DeleteSourceFacebookMarketing(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFaker - Delete a Source
@@ -22698,6 +23035,7 @@ func (s *Sources) DeleteSourceFaker(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFauna - Delete a Source
@@ -22779,6 +23117,7 @@ func (s *Sources) DeleteSourceFauna(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFile - Delete a Source
@@ -22860,6 +23199,7 @@ func (s *Sources) DeleteSourceFile(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFirebolt - Delete a Source
@@ -22941,6 +23281,89 @@ func (s *Sources) DeleteSourceFirebolt(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
+}
+
+// DeleteSourceFleetio - Delete a Source
+func (s *Sources) DeleteSourceFleetio(ctx context.Context, request operations.DeleteSourceFleetioRequest) (*operations.DeleteSourceFleetioResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "deleteSourceFleetio",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/sources/{sourceId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.DeleteSourceFleetioResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // DeleteSourceFreshcaller - Delete a Source
@@ -23022,6 +23445,7 @@ func (s *Sources) DeleteSourceFreshcaller(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFreshdesk - Delete a Source
@@ -23103,6 +23527,7 @@ func (s *Sources) DeleteSourceFreshdesk(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceFreshsales - Delete a Source
@@ -23184,6 +23609,7 @@ func (s *Sources) DeleteSourceFreshsales(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGainsightPx - Delete a Source
@@ -23265,6 +23691,7 @@ func (s *Sources) DeleteSourceGainsightPx(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGcs - Delete a Source
@@ -23346,6 +23773,7 @@ func (s *Sources) DeleteSourceGcs(ctx context.Context, request operations.Delete
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGetlago - Delete a Source
@@ -23427,6 +23855,7 @@ func (s *Sources) DeleteSourceGetlago(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGithub - Delete a Source
@@ -23508,6 +23937,7 @@ func (s *Sources) DeleteSourceGithub(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGitlab - Delete a Source
@@ -23589,6 +24019,7 @@ func (s *Sources) DeleteSourceGitlab(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGlassfrog - Delete a Source
@@ -23670,6 +24101,7 @@ func (s *Sources) DeleteSourceGlassfrog(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGnews - Delete a Source
@@ -23751,6 +24183,7 @@ func (s *Sources) DeleteSourceGnews(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleAds - Delete a Source
@@ -23832,6 +24265,7 @@ func (s *Sources) DeleteSourceGoogleAds(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleAnalyticsDataAPI - Delete a Source
@@ -23913,6 +24347,7 @@ func (s *Sources) DeleteSourceGoogleAnalyticsDataAPI(ctx context.Context, reques
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleAnalyticsV4ServiceAccountOnly - Delete a Source
@@ -23994,6 +24429,7 @@ func (s *Sources) DeleteSourceGoogleAnalyticsV4ServiceAccountOnly(ctx context.Co
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleDirectory - Delete a Source
@@ -24075,6 +24511,7 @@ func (s *Sources) DeleteSourceGoogleDirectory(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleDrive - Delete a Source
@@ -24156,6 +24593,7 @@ func (s *Sources) DeleteSourceGoogleDrive(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGooglePagespeedInsights - Delete a Source
@@ -24237,6 +24675,7 @@ func (s *Sources) DeleteSourceGooglePagespeedInsights(ctx context.Context, reque
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleSearchConsole - Delete a Source
@@ -24318,6 +24757,7 @@ func (s *Sources) DeleteSourceGoogleSearchConsole(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleSheets - Delete a Source
@@ -24399,6 +24839,7 @@ func (s *Sources) DeleteSourceGoogleSheets(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGoogleWebfonts - Delete a Source
@@ -24480,6 +24921,7 @@ func (s *Sources) DeleteSourceGoogleWebfonts(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGreenhouse - Delete a Source
@@ -24561,6 +25003,7 @@ func (s *Sources) DeleteSourceGreenhouse(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceGridly - Delete a Source
@@ -24642,6 +25085,7 @@ func (s *Sources) DeleteSourceGridly(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceHarvest - Delete a Source
@@ -24723,6 +25167,7 @@ func (s *Sources) DeleteSourceHarvest(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceHubplanner - Delete a Source
@@ -24804,6 +25249,7 @@ func (s *Sources) DeleteSourceHubplanner(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceHubspot - Delete a Source
@@ -24885,6 +25331,7 @@ func (s *Sources) DeleteSourceHubspot(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceInsightly - Delete a Source
@@ -24966,6 +25413,7 @@ func (s *Sources) DeleteSourceInsightly(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceInstagram - Delete a Source
@@ -25047,6 +25495,7 @@ func (s *Sources) DeleteSourceInstagram(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceInstatus - Delete a Source
@@ -25128,6 +25577,7 @@ func (s *Sources) DeleteSourceInstatus(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceIntercom - Delete a Source
@@ -25209,6 +25659,7 @@ func (s *Sources) DeleteSourceIntercom(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceIp2whois - Delete a Source
@@ -25290,6 +25741,7 @@ func (s *Sources) DeleteSourceIp2whois(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceIterable - Delete a Source
@@ -25371,6 +25823,7 @@ func (s *Sources) DeleteSourceIterable(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceJira - Delete a Source
@@ -25452,6 +25905,7 @@ func (s *Sources) DeleteSourceJira(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceK6Cloud - Delete a Source
@@ -25533,6 +25987,7 @@ func (s *Sources) DeleteSourceK6Cloud(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceKlarna - Delete a Source
@@ -25614,6 +26069,7 @@ func (s *Sources) DeleteSourceKlarna(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceKlaviyo - Delete a Source
@@ -25695,6 +26151,7 @@ func (s *Sources) DeleteSourceKlaviyo(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceKyve - Delete a Source
@@ -25776,6 +26233,7 @@ func (s *Sources) DeleteSourceKyve(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLaunchdarkly - Delete a Source
@@ -25857,6 +26315,7 @@ func (s *Sources) DeleteSourceLaunchdarkly(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLemlist - Delete a Source
@@ -25938,6 +26397,7 @@ func (s *Sources) DeleteSourceLemlist(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLeverHiring - Delete a Source
@@ -26019,6 +26479,7 @@ func (s *Sources) DeleteSourceLeverHiring(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLinkedinAds - Delete a Source
@@ -26100,6 +26561,7 @@ func (s *Sources) DeleteSourceLinkedinAds(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLinkedinPages - Delete a Source
@@ -26181,6 +26643,7 @@ func (s *Sources) DeleteSourceLinkedinPages(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLinnworks - Delete a Source
@@ -26262,6 +26725,7 @@ func (s *Sources) DeleteSourceLinnworks(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceLokalise - Delete a Source
@@ -26343,6 +26807,7 @@ func (s *Sources) DeleteSourceLokalise(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMailchimp - Delete a Source
@@ -26424,6 +26889,7 @@ func (s *Sources) DeleteSourceMailchimp(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMailgun - Delete a Source
@@ -26505,6 +26971,7 @@ func (s *Sources) DeleteSourceMailgun(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMailjetSms - Delete a Source
@@ -26586,6 +27053,7 @@ func (s *Sources) DeleteSourceMailjetSms(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMarketo - Delete a Source
@@ -26667,6 +27135,7 @@ func (s *Sources) DeleteSourceMarketo(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMetabase - Delete a Source
@@ -26748,6 +27217,7 @@ func (s *Sources) DeleteSourceMetabase(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMicrosoftOnedrive - Delete a Source
@@ -26829,6 +27299,7 @@ func (s *Sources) DeleteSourceMicrosoftOnedrive(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMicrosoftSharepoint - Delete a Source
@@ -26910,6 +27381,7 @@ func (s *Sources) DeleteSourceMicrosoftSharepoint(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMicrosoftTeams - Delete a Source
@@ -26991,6 +27463,7 @@ func (s *Sources) DeleteSourceMicrosoftTeams(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMixpanel - Delete a Source
@@ -27072,6 +27545,7 @@ func (s *Sources) DeleteSourceMixpanel(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMonday - Delete a Source
@@ -27153,6 +27627,7 @@ func (s *Sources) DeleteSourceMonday(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMongodbInternalPoc - Delete a Source
@@ -27234,6 +27709,7 @@ func (s *Sources) DeleteSourceMongodbInternalPoc(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMongodbV2 - Delete a Source
@@ -27315,6 +27791,7 @@ func (s *Sources) DeleteSourceMongodbV2(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMssql - Delete a Source
@@ -27396,6 +27873,7 @@ func (s *Sources) DeleteSourceMssql(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMyHours - Delete a Source
@@ -27477,6 +27955,7 @@ func (s *Sources) DeleteSourceMyHours(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceMysql - Delete a Source
@@ -27558,6 +28037,7 @@ func (s *Sources) DeleteSourceMysql(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceNetsuite - Delete a Source
@@ -27639,6 +28119,7 @@ func (s *Sources) DeleteSourceNetsuite(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceNotion - Delete a Source
@@ -27720,6 +28201,7 @@ func (s *Sources) DeleteSourceNotion(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceNytimes - Delete a Source
@@ -27801,6 +28283,7 @@ func (s *Sources) DeleteSourceNytimes(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOkta - Delete a Source
@@ -27882,6 +28365,7 @@ func (s *Sources) DeleteSourceOkta(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOmnisend - Delete a Source
@@ -27963,6 +28447,7 @@ func (s *Sources) DeleteSourceOmnisend(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOnesignal - Delete a Source
@@ -28044,6 +28529,7 @@ func (s *Sources) DeleteSourceOnesignal(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOracle - Delete a Source
@@ -28125,6 +28611,7 @@ func (s *Sources) DeleteSourceOracle(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOrb - Delete a Source
@@ -28206,6 +28693,7 @@ func (s *Sources) DeleteSourceOrb(ctx context.Context, request operations.Delete
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOrbit - Delete a Source
@@ -28287,6 +28775,7 @@ func (s *Sources) DeleteSourceOrbit(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOutbrainAmplify - Delete a Source
@@ -28368,6 +28857,7 @@ func (s *Sources) DeleteSourceOutbrainAmplify(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceOutreach - Delete a Source
@@ -28449,6 +28939,7 @@ func (s *Sources) DeleteSourceOutreach(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePaypalTransaction - Delete a Source
@@ -28530,6 +29021,7 @@ func (s *Sources) DeleteSourcePaypalTransaction(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePaystack - Delete a Source
@@ -28611,6 +29103,7 @@ func (s *Sources) DeleteSourcePaystack(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePendo - Delete a Source
@@ -28692,6 +29185,7 @@ func (s *Sources) DeleteSourcePendo(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePersistiq - Delete a Source
@@ -28773,6 +29267,7 @@ func (s *Sources) DeleteSourcePersistiq(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePexelsAPI - Delete a Source
@@ -28854,6 +29349,7 @@ func (s *Sources) DeleteSourcePexelsAPI(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePinterest - Delete a Source
@@ -28935,6 +29431,7 @@ func (s *Sources) DeleteSourcePinterest(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePipedrive - Delete a Source
@@ -29016,6 +29513,7 @@ func (s *Sources) DeleteSourcePipedrive(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePocket - Delete a Source
@@ -29097,6 +29595,7 @@ func (s *Sources) DeleteSourcePocket(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePokeapi - Delete a Source
@@ -29178,6 +29677,7 @@ func (s *Sources) DeleteSourcePokeapi(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePolygonStockAPI - Delete a Source
@@ -29259,6 +29759,7 @@ func (s *Sources) DeleteSourcePolygonStockAPI(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePostgres - Delete a Source
@@ -29340,6 +29841,7 @@ func (s *Sources) DeleteSourcePostgres(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePosthog - Delete a Source
@@ -29421,6 +29923,7 @@ func (s *Sources) DeleteSourcePosthog(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePostmarkapp - Delete a Source
@@ -29502,6 +30005,7 @@ func (s *Sources) DeleteSourcePostmarkapp(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePrestashop - Delete a Source
@@ -29583,6 +30087,7 @@ func (s *Sources) DeleteSourcePrestashop(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePunkAPI - Delete a Source
@@ -29664,6 +30169,7 @@ func (s *Sources) DeleteSourcePunkAPI(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourcePypi - Delete a Source
@@ -29745,6 +30251,7 @@ func (s *Sources) DeleteSourcePypi(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceQualaroo - Delete a Source
@@ -29826,6 +30333,7 @@ func (s *Sources) DeleteSourceQualaroo(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRailz - Delete a Source
@@ -29907,6 +30415,7 @@ func (s *Sources) DeleteSourceRailz(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRecharge - Delete a Source
@@ -29988,6 +30497,7 @@ func (s *Sources) DeleteSourceRecharge(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRecreation - Delete a Source
@@ -30069,6 +30579,7 @@ func (s *Sources) DeleteSourceRecreation(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRecruitee - Delete a Source
@@ -30150,6 +30661,7 @@ func (s *Sources) DeleteSourceRecruitee(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRecurly - Delete a Source
@@ -30231,6 +30743,7 @@ func (s *Sources) DeleteSourceRecurly(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRedshift - Delete a Source
@@ -30312,6 +30825,7 @@ func (s *Sources) DeleteSourceRedshift(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRetently - Delete a Source
@@ -30393,6 +30907,7 @@ func (s *Sources) DeleteSourceRetently(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRkiCovid - Delete a Source
@@ -30474,6 +30989,7 @@ func (s *Sources) DeleteSourceRkiCovid(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceRss - Delete a Source
@@ -30555,6 +31071,7 @@ func (s *Sources) DeleteSourceRss(ctx context.Context, request operations.Delete
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceS3 - Delete a Source
@@ -30636,6 +31153,7 @@ func (s *Sources) DeleteSourceS3(ctx context.Context, request operations.DeleteS
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSalesforce - Delete a Source
@@ -30717,6 +31235,7 @@ func (s *Sources) DeleteSourceSalesforce(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSalesloft - Delete a Source
@@ -30798,6 +31317,7 @@ func (s *Sources) DeleteSourceSalesloft(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSapFieldglass - Delete a Source
@@ -30879,6 +31399,7 @@ func (s *Sources) DeleteSourceSapFieldglass(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSecoda - Delete a Source
@@ -30960,6 +31481,7 @@ func (s *Sources) DeleteSourceSecoda(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSendgrid - Delete a Source
@@ -31041,6 +31563,7 @@ func (s *Sources) DeleteSourceSendgrid(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSendinblue - Delete a Source
@@ -31122,6 +31645,7 @@ func (s *Sources) DeleteSourceSendinblue(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSenseforce - Delete a Source
@@ -31203,6 +31727,7 @@ func (s *Sources) DeleteSourceSenseforce(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSentry - Delete a Source
@@ -31284,6 +31809,7 @@ func (s *Sources) DeleteSourceSentry(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSftp - Delete a Source
@@ -31365,6 +31891,7 @@ func (s *Sources) DeleteSourceSftp(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSftpBulk - Delete a Source
@@ -31446,6 +31973,7 @@ func (s *Sources) DeleteSourceSftpBulk(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceShopify - Delete a Source
@@ -31527,6 +32055,7 @@ func (s *Sources) DeleteSourceShopify(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceShortio - Delete a Source
@@ -31608,6 +32137,7 @@ func (s *Sources) DeleteSourceShortio(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSlack - Delete a Source
@@ -31689,6 +32219,7 @@ func (s *Sources) DeleteSourceSlack(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSmaily - Delete a Source
@@ -31770,6 +32301,7 @@ func (s *Sources) DeleteSourceSmaily(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSmartengage - Delete a Source
@@ -31851,6 +32383,7 @@ func (s *Sources) DeleteSourceSmartengage(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSmartsheets - Delete a Source
@@ -31932,6 +32465,7 @@ func (s *Sources) DeleteSourceSmartsheets(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSnapchatMarketing - Delete a Source
@@ -32013,6 +32547,7 @@ func (s *Sources) DeleteSourceSnapchatMarketing(ctx context.Context, request ope
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSnowflake - Delete a Source
@@ -32094,6 +32629,7 @@ func (s *Sources) DeleteSourceSnowflake(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSonarCloud - Delete a Source
@@ -32175,6 +32711,7 @@ func (s *Sources) DeleteSourceSonarCloud(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSpacexAPI - Delete a Source
@@ -32256,6 +32793,7 @@ func (s *Sources) DeleteSourceSpacexAPI(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSquare - Delete a Source
@@ -32337,6 +32875,7 @@ func (s *Sources) DeleteSourceSquare(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceStrava - Delete a Source
@@ -32418,6 +32957,7 @@ func (s *Sources) DeleteSourceStrava(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceStripe - Delete a Source
@@ -32499,6 +33039,7 @@ func (s *Sources) DeleteSourceStripe(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSurveySparrow - Delete a Source
@@ -32580,6 +33121,7 @@ func (s *Sources) DeleteSourceSurveySparrow(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceSurveymonkey - Delete a Source
@@ -32661,6 +33203,7 @@ func (s *Sources) DeleteSourceSurveymonkey(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTempo - Delete a Source
@@ -32742,6 +33285,7 @@ func (s *Sources) DeleteSourceTempo(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTheGuardianAPI - Delete a Source
@@ -32823,6 +33367,7 @@ func (s *Sources) DeleteSourceTheGuardianAPI(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTiktokMarketing - Delete a Source
@@ -32904,6 +33449,7 @@ func (s *Sources) DeleteSourceTiktokMarketing(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTrello - Delete a Source
@@ -32985,6 +33531,7 @@ func (s *Sources) DeleteSourceTrello(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTrustpilot - Delete a Source
@@ -33066,6 +33613,7 @@ func (s *Sources) DeleteSourceTrustpilot(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTvmazeSchedule - Delete a Source
@@ -33147,6 +33695,7 @@ func (s *Sources) DeleteSourceTvmazeSchedule(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTwilio - Delete a Source
@@ -33228,6 +33777,7 @@ func (s *Sources) DeleteSourceTwilio(ctx context.Context, request operations.Del
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTwilioTaskrouter - Delete a Source
@@ -33309,6 +33859,7 @@ func (s *Sources) DeleteSourceTwilioTaskrouter(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTwitter - Delete a Source
@@ -33390,6 +33941,7 @@ func (s *Sources) DeleteSourceTwitter(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceTypeform - Delete a Source
@@ -33471,6 +34023,7 @@ func (s *Sources) DeleteSourceTypeform(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceUsCensus - Delete a Source
@@ -33552,6 +34105,7 @@ func (s *Sources) DeleteSourceUsCensus(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceVantage - Delete a Source
@@ -33633,6 +34187,7 @@ func (s *Sources) DeleteSourceVantage(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceWebflow - Delete a Source
@@ -33714,6 +34269,7 @@ func (s *Sources) DeleteSourceWebflow(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceWhiskyHunter - Delete a Source
@@ -33795,6 +34351,7 @@ func (s *Sources) DeleteSourceWhiskyHunter(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceWikipediaPageviews - Delete a Source
@@ -33876,6 +34433,7 @@ func (s *Sources) DeleteSourceWikipediaPageviews(ctx context.Context, request op
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceWoocommerce - Delete a Source
@@ -33957,6 +34515,7 @@ func (s *Sources) DeleteSourceWoocommerce(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceXkcd - Delete a Source
@@ -34038,6 +34597,7 @@ func (s *Sources) DeleteSourceXkcd(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceYandexMetrica - Delete a Source
@@ -34119,6 +34679,7 @@ func (s *Sources) DeleteSourceYandexMetrica(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceYotpo - Delete a Source
@@ -34200,6 +34761,7 @@ func (s *Sources) DeleteSourceYotpo(ctx context.Context, request operations.Dele
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceYoutubeAnalytics - Delete a Source
@@ -34281,6 +34843,7 @@ func (s *Sources) DeleteSourceYoutubeAnalytics(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZendeskChat - Delete a Source
@@ -34362,6 +34925,7 @@ func (s *Sources) DeleteSourceZendeskChat(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZendeskSell - Delete a Source
@@ -34443,6 +35007,7 @@ func (s *Sources) DeleteSourceZendeskSell(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZendeskSunshine - Delete a Source
@@ -34524,6 +35089,7 @@ func (s *Sources) DeleteSourceZendeskSunshine(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZendeskSupport - Delete a Source
@@ -34605,6 +35171,7 @@ func (s *Sources) DeleteSourceZendeskSupport(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZendeskTalk - Delete a Source
@@ -34686,6 +35253,7 @@ func (s *Sources) DeleteSourceZendeskTalk(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZenloop - Delete a Source
@@ -34767,6 +35335,7 @@ func (s *Sources) DeleteSourceZenloop(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZohoCrm - Delete a Source
@@ -34848,6 +35417,7 @@ func (s *Sources) DeleteSourceZohoCrm(ctx context.Context, request operations.De
 	}
 
 	return res, nil
+
 }
 
 // DeleteSourceZoom - Delete a Source
@@ -34929,6 +35499,7 @@ func (s *Sources) DeleteSourceZoom(ctx context.Context, request operations.Delet
 	}
 
 	return res, nil
+
 }
 
 // GetSource - Get Source details
@@ -35020,6 +35591,7 @@ func (s *Sources) GetSource(ctx context.Context, request operations.GetSourceReq
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAha - Get Source details
@@ -35111,6 +35683,7 @@ func (s *Sources) GetSourceAha(ctx context.Context, request operations.GetSource
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAircall - Get Source details
@@ -35202,6 +35775,7 @@ func (s *Sources) GetSourceAircall(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAirtable - Get Source details
@@ -35293,6 +35867,7 @@ func (s *Sources) GetSourceAirtable(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAmazonAds - Get Source details
@@ -35384,6 +35959,7 @@ func (s *Sources) GetSourceAmazonAds(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAmazonSellerPartner - Get Source details
@@ -35475,6 +36051,7 @@ func (s *Sources) GetSourceAmazonSellerPartner(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAmazonSqs - Get Source details
@@ -35566,6 +36143,7 @@ func (s *Sources) GetSourceAmazonSqs(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAmplitude - Get Source details
@@ -35657,6 +36235,7 @@ func (s *Sources) GetSourceAmplitude(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceApifyDataset - Get Source details
@@ -35748,6 +36327,7 @@ func (s *Sources) GetSourceApifyDataset(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAppfollow - Get Source details
@@ -35839,6 +36419,7 @@ func (s *Sources) GetSourceAppfollow(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAsana - Get Source details
@@ -35930,6 +36511,7 @@ func (s *Sources) GetSourceAsana(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAuth0 - Get Source details
@@ -36021,6 +36603,7 @@ func (s *Sources) GetSourceAuth0(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAwsCloudtrail - Get Source details
@@ -36112,6 +36695,7 @@ func (s *Sources) GetSourceAwsCloudtrail(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAzureBlobStorage - Get Source details
@@ -36203,6 +36787,7 @@ func (s *Sources) GetSourceAzureBlobStorage(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetSourceAzureTable - Get Source details
@@ -36294,6 +36879,7 @@ func (s *Sources) GetSourceAzureTable(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceBambooHr - Get Source details
@@ -36385,6 +36971,7 @@ func (s *Sources) GetSourceBambooHr(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceBigquery - Get Source details
@@ -36476,6 +37063,7 @@ func (s *Sources) GetSourceBigquery(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceBingAds - Get Source details
@@ -36567,6 +37155,7 @@ func (s *Sources) GetSourceBingAds(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceBraintree - Get Source details
@@ -36658,6 +37247,7 @@ func (s *Sources) GetSourceBraintree(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceBraze - Get Source details
@@ -36749,6 +37339,7 @@ func (s *Sources) GetSourceBraze(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCart - Get Source details
@@ -36840,6 +37431,7 @@ func (s *Sources) GetSourceCart(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceChargebee - Get Source details
@@ -36931,6 +37523,7 @@ func (s *Sources) GetSourceChargebee(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceChartmogul - Get Source details
@@ -37022,6 +37615,7 @@ func (s *Sources) GetSourceChartmogul(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceClickhouse - Get Source details
@@ -37113,6 +37707,7 @@ func (s *Sources) GetSourceClickhouse(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceClickupAPI - Get Source details
@@ -37204,6 +37799,7 @@ func (s *Sources) GetSourceClickupAPI(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceClockify - Get Source details
@@ -37295,6 +37891,7 @@ func (s *Sources) GetSourceClockify(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCloseCom - Get Source details
@@ -37386,6 +37983,7 @@ func (s *Sources) GetSourceCloseCom(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCoda - Get Source details
@@ -37477,6 +38075,7 @@ func (s *Sources) GetSourceCoda(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCoinAPI - Get Source details
@@ -37568,6 +38167,7 @@ func (s *Sources) GetSourceCoinAPI(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCoinmarketcap - Get Source details
@@ -37659,6 +38259,7 @@ func (s *Sources) GetSourceCoinmarketcap(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceConfigcat - Get Source details
@@ -37750,6 +38351,7 @@ func (s *Sources) GetSourceConfigcat(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceConfluence - Get Source details
@@ -37841,6 +38443,7 @@ func (s *Sources) GetSourceConfluence(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceConvex - Get Source details
@@ -37932,6 +38535,7 @@ func (s *Sources) GetSourceConvex(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceCustom - Get Source details
@@ -38023,6 +38627,7 @@ func (s *Sources) GetSourceCustom(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDatascope - Get Source details
@@ -38114,6 +38719,7 @@ func (s *Sources) GetSourceDatascope(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDelighted - Get Source details
@@ -38205,6 +38811,7 @@ func (s *Sources) GetSourceDelighted(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDixa - Get Source details
@@ -38296,6 +38903,7 @@ func (s *Sources) GetSourceDixa(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDockerhub - Get Source details
@@ -38387,6 +38995,7 @@ func (s *Sources) GetSourceDockerhub(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDremio - Get Source details
@@ -38478,6 +39087,7 @@ func (s *Sources) GetSourceDremio(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceDynamodb - Get Source details
@@ -38569,6 +39179,7 @@ func (s *Sources) GetSourceDynamodb(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceEmailoctopus - Get Source details
@@ -38660,6 +39271,7 @@ func (s *Sources) GetSourceEmailoctopus(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceExchangeRates - Get Source details
@@ -38751,6 +39363,7 @@ func (s *Sources) GetSourceExchangeRates(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFacebookMarketing - Get Source details
@@ -38842,6 +39455,7 @@ func (s *Sources) GetSourceFacebookMarketing(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFaker - Get Source details
@@ -38933,6 +39547,7 @@ func (s *Sources) GetSourceFaker(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFauna - Get Source details
@@ -39024,6 +39639,7 @@ func (s *Sources) GetSourceFauna(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFile - Get Source details
@@ -39115,6 +39731,7 @@ func (s *Sources) GetSourceFile(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFirebolt - Get Source details
@@ -39206,6 +39823,99 @@ func (s *Sources) GetSourceFirebolt(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
+}
+
+// GetSourceFleetio - Get Source details
+func (s *Sources) GetSourceFleetio(ctx context.Context, request operations.GetSourceFleetioRequest) (*operations.GetSourceFleetioResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "getSourceFleetio",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/sources/{sourceId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.GetSourceFleetioResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			var out shared.SourceResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.SourceResponse = &out
+		default:
+			return nil, errors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // GetSourceFreshcaller - Get Source details
@@ -39297,6 +40007,7 @@ func (s *Sources) GetSourceFreshcaller(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFreshdesk - Get Source details
@@ -39388,6 +40099,7 @@ func (s *Sources) GetSourceFreshdesk(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceFreshsales - Get Source details
@@ -39479,6 +40191,7 @@ func (s *Sources) GetSourceFreshsales(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGainsightPx - Get Source details
@@ -39570,6 +40283,7 @@ func (s *Sources) GetSourceGainsightPx(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGcs - Get Source details
@@ -39661,6 +40375,7 @@ func (s *Sources) GetSourceGcs(ctx context.Context, request operations.GetSource
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGetlago - Get Source details
@@ -39752,6 +40467,7 @@ func (s *Sources) GetSourceGetlago(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGithub - Get Source details
@@ -39843,6 +40559,7 @@ func (s *Sources) GetSourceGithub(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGitlab - Get Source details
@@ -39934,6 +40651,7 @@ func (s *Sources) GetSourceGitlab(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGlassfrog - Get Source details
@@ -40025,6 +40743,7 @@ func (s *Sources) GetSourceGlassfrog(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGnews - Get Source details
@@ -40116,6 +40835,7 @@ func (s *Sources) GetSourceGnews(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleAds - Get Source details
@@ -40207,6 +40927,7 @@ func (s *Sources) GetSourceGoogleAds(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleAnalyticsDataAPI - Get Source details
@@ -40298,6 +41019,7 @@ func (s *Sources) GetSourceGoogleAnalyticsDataAPI(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleAnalyticsV4ServiceAccountOnly - Get Source details
@@ -40389,6 +41111,7 @@ func (s *Sources) GetSourceGoogleAnalyticsV4ServiceAccountOnly(ctx context.Conte
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleDirectory - Get Source details
@@ -40480,6 +41203,7 @@ func (s *Sources) GetSourceGoogleDirectory(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleDrive - Get Source details
@@ -40571,6 +41295,7 @@ func (s *Sources) GetSourceGoogleDrive(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGooglePagespeedInsights - Get Source details
@@ -40662,6 +41387,7 @@ func (s *Sources) GetSourceGooglePagespeedInsights(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleSearchConsole - Get Source details
@@ -40753,6 +41479,7 @@ func (s *Sources) GetSourceGoogleSearchConsole(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleSheets - Get Source details
@@ -40844,6 +41571,7 @@ func (s *Sources) GetSourceGoogleSheets(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGoogleWebfonts - Get Source details
@@ -40935,6 +41663,7 @@ func (s *Sources) GetSourceGoogleWebfonts(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGreenhouse - Get Source details
@@ -41026,6 +41755,7 @@ func (s *Sources) GetSourceGreenhouse(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceGridly - Get Source details
@@ -41117,6 +41847,7 @@ func (s *Sources) GetSourceGridly(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceHarvest - Get Source details
@@ -41208,6 +41939,7 @@ func (s *Sources) GetSourceHarvest(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceHubplanner - Get Source details
@@ -41299,6 +42031,7 @@ func (s *Sources) GetSourceHubplanner(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceHubspot - Get Source details
@@ -41390,6 +42123,7 @@ func (s *Sources) GetSourceHubspot(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceInsightly - Get Source details
@@ -41481,6 +42215,7 @@ func (s *Sources) GetSourceInsightly(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceInstagram - Get Source details
@@ -41572,6 +42307,7 @@ func (s *Sources) GetSourceInstagram(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceInstatus - Get Source details
@@ -41663,6 +42399,7 @@ func (s *Sources) GetSourceInstatus(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceIntercom - Get Source details
@@ -41754,6 +42491,7 @@ func (s *Sources) GetSourceIntercom(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceIp2whois - Get Source details
@@ -41845,6 +42583,7 @@ func (s *Sources) GetSourceIp2whois(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceIterable - Get Source details
@@ -41936,6 +42675,7 @@ func (s *Sources) GetSourceIterable(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceJira - Get Source details
@@ -42027,6 +42767,7 @@ func (s *Sources) GetSourceJira(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceK6Cloud - Get Source details
@@ -42118,6 +42859,7 @@ func (s *Sources) GetSourceK6Cloud(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceKlarna - Get Source details
@@ -42209,6 +42951,7 @@ func (s *Sources) GetSourceKlarna(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceKlaviyo - Get Source details
@@ -42300,6 +43043,7 @@ func (s *Sources) GetSourceKlaviyo(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceKyve - Get Source details
@@ -42391,6 +43135,7 @@ func (s *Sources) GetSourceKyve(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLaunchdarkly - Get Source details
@@ -42482,6 +43227,7 @@ func (s *Sources) GetSourceLaunchdarkly(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLemlist - Get Source details
@@ -42573,6 +43319,7 @@ func (s *Sources) GetSourceLemlist(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLeverHiring - Get Source details
@@ -42664,6 +43411,7 @@ func (s *Sources) GetSourceLeverHiring(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLinkedinAds - Get Source details
@@ -42755,6 +43503,7 @@ func (s *Sources) GetSourceLinkedinAds(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLinkedinPages - Get Source details
@@ -42846,6 +43595,7 @@ func (s *Sources) GetSourceLinkedinPages(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLinnworks - Get Source details
@@ -42937,6 +43687,7 @@ func (s *Sources) GetSourceLinnworks(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceLokalise - Get Source details
@@ -43028,6 +43779,7 @@ func (s *Sources) GetSourceLokalise(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMailchimp - Get Source details
@@ -43119,6 +43871,7 @@ func (s *Sources) GetSourceMailchimp(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMailgun - Get Source details
@@ -43210,6 +43963,7 @@ func (s *Sources) GetSourceMailgun(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMailjetSms - Get Source details
@@ -43301,6 +44055,7 @@ func (s *Sources) GetSourceMailjetSms(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMarketo - Get Source details
@@ -43392,6 +44147,7 @@ func (s *Sources) GetSourceMarketo(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMetabase - Get Source details
@@ -43483,6 +44239,7 @@ func (s *Sources) GetSourceMetabase(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMicrosoftOnedrive - Get Source details
@@ -43574,6 +44331,7 @@ func (s *Sources) GetSourceMicrosoftOnedrive(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMicrosoftSharepoint - Get Source details
@@ -43665,6 +44423,7 @@ func (s *Sources) GetSourceMicrosoftSharepoint(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMicrosoftTeams - Get Source details
@@ -43756,6 +44515,7 @@ func (s *Sources) GetSourceMicrosoftTeams(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMixpanel - Get Source details
@@ -43847,6 +44607,7 @@ func (s *Sources) GetSourceMixpanel(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMonday - Get Source details
@@ -43938,6 +44699,7 @@ func (s *Sources) GetSourceMonday(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMongodbInternalPoc - Get Source details
@@ -44029,6 +44791,7 @@ func (s *Sources) GetSourceMongodbInternalPoc(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMongodbV2 - Get Source details
@@ -44120,6 +44883,7 @@ func (s *Sources) GetSourceMongodbV2(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMssql - Get Source details
@@ -44211,6 +44975,7 @@ func (s *Sources) GetSourceMssql(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMyHours - Get Source details
@@ -44302,6 +45067,7 @@ func (s *Sources) GetSourceMyHours(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceMysql - Get Source details
@@ -44393,6 +45159,7 @@ func (s *Sources) GetSourceMysql(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceNetsuite - Get Source details
@@ -44484,6 +45251,7 @@ func (s *Sources) GetSourceNetsuite(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceNotion - Get Source details
@@ -44575,6 +45343,7 @@ func (s *Sources) GetSourceNotion(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceNytimes - Get Source details
@@ -44666,6 +45435,7 @@ func (s *Sources) GetSourceNytimes(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOkta - Get Source details
@@ -44757,6 +45527,7 @@ func (s *Sources) GetSourceOkta(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOmnisend - Get Source details
@@ -44848,6 +45619,7 @@ func (s *Sources) GetSourceOmnisend(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOnesignal - Get Source details
@@ -44939,6 +45711,7 @@ func (s *Sources) GetSourceOnesignal(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOracle - Get Source details
@@ -45030,6 +45803,7 @@ func (s *Sources) GetSourceOracle(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOrb - Get Source details
@@ -45121,6 +45895,7 @@ func (s *Sources) GetSourceOrb(ctx context.Context, request operations.GetSource
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOrbit - Get Source details
@@ -45212,6 +45987,7 @@ func (s *Sources) GetSourceOrbit(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOutbrainAmplify - Get Source details
@@ -45303,6 +46079,7 @@ func (s *Sources) GetSourceOutbrainAmplify(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetSourceOutreach - Get Source details
@@ -45394,6 +46171,7 @@ func (s *Sources) GetSourceOutreach(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePaypalTransaction - Get Source details
@@ -45485,6 +46263,7 @@ func (s *Sources) GetSourcePaypalTransaction(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePaystack - Get Source details
@@ -45576,6 +46355,7 @@ func (s *Sources) GetSourcePaystack(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePendo - Get Source details
@@ -45667,6 +46447,7 @@ func (s *Sources) GetSourcePendo(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePersistiq - Get Source details
@@ -45758,6 +46539,7 @@ func (s *Sources) GetSourcePersistiq(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePexelsAPI - Get Source details
@@ -45849,6 +46631,7 @@ func (s *Sources) GetSourcePexelsAPI(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePinterest - Get Source details
@@ -45940,6 +46723,7 @@ func (s *Sources) GetSourcePinterest(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePipedrive - Get Source details
@@ -46031,6 +46815,7 @@ func (s *Sources) GetSourcePipedrive(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePocket - Get Source details
@@ -46122,6 +46907,7 @@ func (s *Sources) GetSourcePocket(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePokeapi - Get Source details
@@ -46213,6 +46999,7 @@ func (s *Sources) GetSourcePokeapi(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePolygonStockAPI - Get Source details
@@ -46304,6 +47091,7 @@ func (s *Sources) GetSourcePolygonStockAPI(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePostgres - Get Source details
@@ -46395,6 +47183,7 @@ func (s *Sources) GetSourcePostgres(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePosthog - Get Source details
@@ -46486,6 +47275,7 @@ func (s *Sources) GetSourcePosthog(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePostmarkapp - Get Source details
@@ -46577,6 +47367,7 @@ func (s *Sources) GetSourcePostmarkapp(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePrestashop - Get Source details
@@ -46668,6 +47459,7 @@ func (s *Sources) GetSourcePrestashop(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePunkAPI - Get Source details
@@ -46759,6 +47551,7 @@ func (s *Sources) GetSourcePunkAPI(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourcePypi - Get Source details
@@ -46850,6 +47643,7 @@ func (s *Sources) GetSourcePypi(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceQualaroo - Get Source details
@@ -46941,6 +47735,7 @@ func (s *Sources) GetSourceQualaroo(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRailz - Get Source details
@@ -47032,6 +47827,7 @@ func (s *Sources) GetSourceRailz(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRecharge - Get Source details
@@ -47123,6 +47919,7 @@ func (s *Sources) GetSourceRecharge(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRecreation - Get Source details
@@ -47214,6 +48011,7 @@ func (s *Sources) GetSourceRecreation(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRecruitee - Get Source details
@@ -47305,6 +48103,7 @@ func (s *Sources) GetSourceRecruitee(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRecurly - Get Source details
@@ -47396,6 +48195,7 @@ func (s *Sources) GetSourceRecurly(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRedshift - Get Source details
@@ -47487,6 +48287,7 @@ func (s *Sources) GetSourceRedshift(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRetently - Get Source details
@@ -47578,6 +48379,7 @@ func (s *Sources) GetSourceRetently(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRkiCovid - Get Source details
@@ -47669,6 +48471,7 @@ func (s *Sources) GetSourceRkiCovid(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceRss - Get Source details
@@ -47760,6 +48563,7 @@ func (s *Sources) GetSourceRss(ctx context.Context, request operations.GetSource
 	}
 
 	return res, nil
+
 }
 
 // GetSourceS3 - Get Source details
@@ -47851,6 +48655,7 @@ func (s *Sources) GetSourceS3(ctx context.Context, request operations.GetSourceS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSalesforce - Get Source details
@@ -47942,6 +48747,7 @@ func (s *Sources) GetSourceSalesforce(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSalesloft - Get Source details
@@ -48033,6 +48839,7 @@ func (s *Sources) GetSourceSalesloft(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSapFieldglass - Get Source details
@@ -48124,6 +48931,7 @@ func (s *Sources) GetSourceSapFieldglass(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSecoda - Get Source details
@@ -48215,6 +49023,7 @@ func (s *Sources) GetSourceSecoda(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSendgrid - Get Source details
@@ -48306,6 +49115,7 @@ func (s *Sources) GetSourceSendgrid(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSendinblue - Get Source details
@@ -48397,6 +49207,7 @@ func (s *Sources) GetSourceSendinblue(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSenseforce - Get Source details
@@ -48488,6 +49299,7 @@ func (s *Sources) GetSourceSenseforce(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSentry - Get Source details
@@ -48579,6 +49391,7 @@ func (s *Sources) GetSourceSentry(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSftp - Get Source details
@@ -48670,6 +49483,7 @@ func (s *Sources) GetSourceSftp(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSftpBulk - Get Source details
@@ -48761,6 +49575,7 @@ func (s *Sources) GetSourceSftpBulk(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceShopify - Get Source details
@@ -48852,6 +49667,7 @@ func (s *Sources) GetSourceShopify(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceShortio - Get Source details
@@ -48943,6 +49759,7 @@ func (s *Sources) GetSourceShortio(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSlack - Get Source details
@@ -49034,6 +49851,7 @@ func (s *Sources) GetSourceSlack(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSmaily - Get Source details
@@ -49125,6 +49943,7 @@ func (s *Sources) GetSourceSmaily(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSmartengage - Get Source details
@@ -49216,6 +50035,7 @@ func (s *Sources) GetSourceSmartengage(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSmartsheets - Get Source details
@@ -49307,6 +50127,7 @@ func (s *Sources) GetSourceSmartsheets(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSnapchatMarketing - Get Source details
@@ -49398,6 +50219,7 @@ func (s *Sources) GetSourceSnapchatMarketing(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSnowflake - Get Source details
@@ -49489,6 +50311,7 @@ func (s *Sources) GetSourceSnowflake(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSonarCloud - Get Source details
@@ -49580,6 +50403,7 @@ func (s *Sources) GetSourceSonarCloud(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSpacexAPI - Get Source details
@@ -49671,6 +50495,7 @@ func (s *Sources) GetSourceSpacexAPI(ctx context.Context, request operations.Get
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSquare - Get Source details
@@ -49762,6 +50587,7 @@ func (s *Sources) GetSourceSquare(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceStrava - Get Source details
@@ -49853,6 +50679,7 @@ func (s *Sources) GetSourceStrava(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceStripe - Get Source details
@@ -49944,6 +50771,7 @@ func (s *Sources) GetSourceStripe(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSurveySparrow - Get Source details
@@ -50035,6 +50863,7 @@ func (s *Sources) GetSourceSurveySparrow(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceSurveymonkey - Get Source details
@@ -50126,6 +50955,7 @@ func (s *Sources) GetSourceSurveymonkey(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTempo - Get Source details
@@ -50217,6 +51047,7 @@ func (s *Sources) GetSourceTempo(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTheGuardianAPI - Get Source details
@@ -50308,6 +51139,7 @@ func (s *Sources) GetSourceTheGuardianAPI(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTiktokMarketing - Get Source details
@@ -50399,6 +51231,7 @@ func (s *Sources) GetSourceTiktokMarketing(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTrello - Get Source details
@@ -50490,6 +51323,7 @@ func (s *Sources) GetSourceTrello(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTrustpilot - Get Source details
@@ -50581,6 +51415,7 @@ func (s *Sources) GetSourceTrustpilot(ctx context.Context, request operations.Ge
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTvmazeSchedule - Get Source details
@@ -50672,6 +51507,7 @@ func (s *Sources) GetSourceTvmazeSchedule(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTwilio - Get Source details
@@ -50763,6 +51599,7 @@ func (s *Sources) GetSourceTwilio(ctx context.Context, request operations.GetSou
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTwilioTaskrouter - Get Source details
@@ -50854,6 +51691,7 @@ func (s *Sources) GetSourceTwilioTaskrouter(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTwitter - Get Source details
@@ -50945,6 +51783,7 @@ func (s *Sources) GetSourceTwitter(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceTypeform - Get Source details
@@ -51036,6 +51875,7 @@ func (s *Sources) GetSourceTypeform(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceUsCensus - Get Source details
@@ -51127,6 +51967,7 @@ func (s *Sources) GetSourceUsCensus(ctx context.Context, request operations.GetS
 	}
 
 	return res, nil
+
 }
 
 // GetSourceVantage - Get Source details
@@ -51218,6 +52059,7 @@ func (s *Sources) GetSourceVantage(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceWebflow - Get Source details
@@ -51309,6 +52151,7 @@ func (s *Sources) GetSourceWebflow(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceWhiskyHunter - Get Source details
@@ -51400,6 +52243,7 @@ func (s *Sources) GetSourceWhiskyHunter(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // GetSourceWikipediaPageviews - Get Source details
@@ -51491,6 +52335,7 @@ func (s *Sources) GetSourceWikipediaPageviews(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // GetSourceWoocommerce - Get Source details
@@ -51582,6 +52427,7 @@ func (s *Sources) GetSourceWoocommerce(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceXkcd - Get Source details
@@ -51673,6 +52519,7 @@ func (s *Sources) GetSourceXkcd(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // GetSourceYandexMetrica - Get Source details
@@ -51764,6 +52611,7 @@ func (s *Sources) GetSourceYandexMetrica(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // GetSourceYotpo - Get Source details
@@ -51855,6 +52703,7 @@ func (s *Sources) GetSourceYotpo(ctx context.Context, request operations.GetSour
 	}
 
 	return res, nil
+
 }
 
 // GetSourceYoutubeAnalytics - Get Source details
@@ -51946,6 +52795,7 @@ func (s *Sources) GetSourceYoutubeAnalytics(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZendeskChat - Get Source details
@@ -52037,6 +52887,7 @@ func (s *Sources) GetSourceZendeskChat(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZendeskSell - Get Source details
@@ -52128,6 +52979,7 @@ func (s *Sources) GetSourceZendeskSell(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZendeskSunshine - Get Source details
@@ -52219,6 +53071,7 @@ func (s *Sources) GetSourceZendeskSunshine(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZendeskSupport - Get Source details
@@ -52310,6 +53163,7 @@ func (s *Sources) GetSourceZendeskSupport(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZendeskTalk - Get Source details
@@ -52401,6 +53255,7 @@ func (s *Sources) GetSourceZendeskTalk(ctx context.Context, request operations.G
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZenloop - Get Source details
@@ -52492,6 +53347,7 @@ func (s *Sources) GetSourceZenloop(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZohoCrm - Get Source details
@@ -52583,6 +53439,7 @@ func (s *Sources) GetSourceZohoCrm(ctx context.Context, request operations.GetSo
 	}
 
 	return res, nil
+
 }
 
 // GetSourceZoom - Get Source details
@@ -52674,6 +53531,7 @@ func (s *Sources) GetSourceZoom(ctx context.Context, request operations.GetSourc
 	}
 
 	return res, nil
+
 }
 
 // InitiateOAuth - Initiate OAuth for a source
@@ -52766,6 +53624,7 @@ func (s *Sources) InitiateOAuth(ctx context.Context, request shared.InitiateOaut
 	}
 
 	return res, nil
+
 }
 
 // ListSources - List sources
@@ -52861,6 +53720,7 @@ func (s *Sources) ListSources(ctx context.Context, request operations.ListSource
 	}
 
 	return res, nil
+
 }
 
 // PatchSource - Update a Source
@@ -52958,6 +53818,7 @@ func (s *Sources) PatchSource(ctx context.Context, request operations.PatchSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSource - Update a Source and fully overwrite it
@@ -53055,6 +53916,7 @@ func (s *Sources) PutSource(ctx context.Context, request operations.PutSourceReq
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAha - Update a Source fully
@@ -53142,6 +54004,7 @@ func (s *Sources) PutSourceAha(ctx context.Context, request operations.PutSource
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAircall - Update a Source fully
@@ -53229,6 +54092,7 @@ func (s *Sources) PutSourceAircall(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAirtable - Update a Source fully
@@ -53316,6 +54180,7 @@ func (s *Sources) PutSourceAirtable(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAmazonAds - Update a Source fully
@@ -53403,6 +54268,7 @@ func (s *Sources) PutSourceAmazonAds(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAmazonSellerPartner - Update a Source fully
@@ -53490,6 +54356,7 @@ func (s *Sources) PutSourceAmazonSellerPartner(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAmazonSqs - Update a Source fully
@@ -53577,6 +54444,7 @@ func (s *Sources) PutSourceAmazonSqs(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAmplitude - Update a Source fully
@@ -53664,6 +54532,7 @@ func (s *Sources) PutSourceAmplitude(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceApifyDataset - Update a Source fully
@@ -53751,6 +54620,7 @@ func (s *Sources) PutSourceApifyDataset(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAppfollow - Update a Source fully
@@ -53838,6 +54708,7 @@ func (s *Sources) PutSourceAppfollow(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAsana - Update a Source fully
@@ -53925,6 +54796,7 @@ func (s *Sources) PutSourceAsana(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAuth0 - Update a Source fully
@@ -54012,6 +54884,7 @@ func (s *Sources) PutSourceAuth0(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAwsCloudtrail - Update a Source fully
@@ -54099,6 +54972,7 @@ func (s *Sources) PutSourceAwsCloudtrail(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAzureBlobStorage - Update a Source fully
@@ -54186,6 +55060,7 @@ func (s *Sources) PutSourceAzureBlobStorage(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutSourceAzureTable - Update a Source fully
@@ -54273,6 +55148,7 @@ func (s *Sources) PutSourceAzureTable(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceBambooHr - Update a Source fully
@@ -54360,6 +55236,7 @@ func (s *Sources) PutSourceBambooHr(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceBigquery - Update a Source fully
@@ -54447,6 +55324,7 @@ func (s *Sources) PutSourceBigquery(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceBingAds - Update a Source fully
@@ -54534,6 +55412,7 @@ func (s *Sources) PutSourceBingAds(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceBraintree - Update a Source fully
@@ -54621,6 +55500,7 @@ func (s *Sources) PutSourceBraintree(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceBraze - Update a Source fully
@@ -54708,6 +55588,7 @@ func (s *Sources) PutSourceBraze(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCart - Update a Source fully
@@ -54795,6 +55676,7 @@ func (s *Sources) PutSourceCart(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceChargebee - Update a Source fully
@@ -54882,6 +55764,7 @@ func (s *Sources) PutSourceChargebee(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceChartmogul - Update a Source fully
@@ -54969,6 +55852,7 @@ func (s *Sources) PutSourceChartmogul(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceClickhouse - Update a Source fully
@@ -55056,6 +55940,7 @@ func (s *Sources) PutSourceClickhouse(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceClickupAPI - Update a Source fully
@@ -55143,6 +56028,7 @@ func (s *Sources) PutSourceClickupAPI(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceClockify - Update a Source fully
@@ -55230,6 +56116,7 @@ func (s *Sources) PutSourceClockify(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCloseCom - Update a Source fully
@@ -55317,6 +56204,7 @@ func (s *Sources) PutSourceCloseCom(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCoda - Update a Source fully
@@ -55404,6 +56292,7 @@ func (s *Sources) PutSourceCoda(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCoinAPI - Update a Source fully
@@ -55491,6 +56380,7 @@ func (s *Sources) PutSourceCoinAPI(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCoinmarketcap - Update a Source fully
@@ -55578,6 +56468,7 @@ func (s *Sources) PutSourceCoinmarketcap(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceConfigcat - Update a Source fully
@@ -55665,6 +56556,7 @@ func (s *Sources) PutSourceConfigcat(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceConfluence - Update a Source fully
@@ -55752,6 +56644,7 @@ func (s *Sources) PutSourceConfluence(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceConvex - Update a Source fully
@@ -55839,6 +56732,7 @@ func (s *Sources) PutSourceConvex(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceCustom - Update a Source fully
@@ -55926,6 +56820,7 @@ func (s *Sources) PutSourceCustom(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDatascope - Update a Source fully
@@ -56013,6 +56908,7 @@ func (s *Sources) PutSourceDatascope(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDelighted - Update a Source fully
@@ -56100,6 +56996,7 @@ func (s *Sources) PutSourceDelighted(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDixa - Update a Source fully
@@ -56187,6 +57084,7 @@ func (s *Sources) PutSourceDixa(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDockerhub - Update a Source fully
@@ -56274,6 +57172,7 @@ func (s *Sources) PutSourceDockerhub(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDremio - Update a Source fully
@@ -56361,6 +57260,7 @@ func (s *Sources) PutSourceDremio(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceDynamodb - Update a Source fully
@@ -56448,6 +57348,7 @@ func (s *Sources) PutSourceDynamodb(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceEmailoctopus - Update a Source fully
@@ -56535,6 +57436,7 @@ func (s *Sources) PutSourceEmailoctopus(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceExchangeRates - Update a Source fully
@@ -56622,6 +57524,7 @@ func (s *Sources) PutSourceExchangeRates(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFacebookMarketing - Update a Source fully
@@ -56709,6 +57612,7 @@ func (s *Sources) PutSourceFacebookMarketing(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFaker - Update a Source fully
@@ -56796,6 +57700,7 @@ func (s *Sources) PutSourceFaker(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFauna - Update a Source fully
@@ -56883,6 +57788,7 @@ func (s *Sources) PutSourceFauna(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFile - Update a Source fully
@@ -56970,6 +57876,7 @@ func (s *Sources) PutSourceFile(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFirebolt - Update a Source fully
@@ -57057,6 +57964,95 @@ func (s *Sources) PutSourceFirebolt(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
+}
+
+// PutSourceFleetio - Update a Source fully
+func (s *Sources) PutSourceFleetio(ctx context.Context, request operations.PutSourceFleetioRequest) (*operations.PutSourceFleetioResponse, error) {
+	hookCtx := hooks.HookContext{
+		Context:        ctx,
+		OperationID:    "putSourceFleetio",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/sources/{sourceId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "SourceFleetioPutRequest", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	req.Header.Set("Content-Type", reqContentType)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.PutSourceFleetioResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	switch {
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+		fallthrough
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		return nil, errors.NewSDKError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
 }
 
 // PutSourceFreshcaller - Update a Source fully
@@ -57144,6 +58140,7 @@ func (s *Sources) PutSourceFreshcaller(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFreshdesk - Update a Source fully
@@ -57231,6 +58228,7 @@ func (s *Sources) PutSourceFreshdesk(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceFreshsales - Update a Source fully
@@ -57318,6 +58316,7 @@ func (s *Sources) PutSourceFreshsales(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGainsightPx - Update a Source fully
@@ -57405,6 +58404,7 @@ func (s *Sources) PutSourceGainsightPx(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGcs - Update a Source fully
@@ -57492,6 +58492,7 @@ func (s *Sources) PutSourceGcs(ctx context.Context, request operations.PutSource
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGetlago - Update a Source fully
@@ -57579,6 +58580,7 @@ func (s *Sources) PutSourceGetlago(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGithub - Update a Source fully
@@ -57666,6 +58668,7 @@ func (s *Sources) PutSourceGithub(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGitlab - Update a Source fully
@@ -57753,6 +58756,7 @@ func (s *Sources) PutSourceGitlab(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGlassfrog - Update a Source fully
@@ -57840,6 +58844,7 @@ func (s *Sources) PutSourceGlassfrog(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGnews - Update a Source fully
@@ -57927,6 +58932,7 @@ func (s *Sources) PutSourceGnews(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleAds - Update a Source fully
@@ -58014,6 +59020,7 @@ func (s *Sources) PutSourceGoogleAds(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleAnalyticsDataAPI - Update a Source fully
@@ -58101,6 +59108,7 @@ func (s *Sources) PutSourceGoogleAnalyticsDataAPI(ctx context.Context, request o
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleAnalyticsV4ServiceAccountOnly - Update a Source fully
@@ -58188,6 +59196,7 @@ func (s *Sources) PutSourceGoogleAnalyticsV4ServiceAccountOnly(ctx context.Conte
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleDirectory - Update a Source fully
@@ -58275,6 +59284,7 @@ func (s *Sources) PutSourceGoogleDirectory(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleDrive - Update a Source fully
@@ -58362,6 +59372,7 @@ func (s *Sources) PutSourceGoogleDrive(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGooglePagespeedInsights - Update a Source fully
@@ -58449,6 +59460,7 @@ func (s *Sources) PutSourceGooglePagespeedInsights(ctx context.Context, request 
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleSearchConsole - Update a Source fully
@@ -58536,6 +59548,7 @@ func (s *Sources) PutSourceGoogleSearchConsole(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleSheets - Update a Source fully
@@ -58623,6 +59636,7 @@ func (s *Sources) PutSourceGoogleSheets(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGoogleWebfonts - Update a Source fully
@@ -58710,6 +59724,7 @@ func (s *Sources) PutSourceGoogleWebfonts(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGreenhouse - Update a Source fully
@@ -58797,6 +59812,7 @@ func (s *Sources) PutSourceGreenhouse(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceGridly - Update a Source fully
@@ -58884,6 +59900,7 @@ func (s *Sources) PutSourceGridly(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceHarvest - Update a Source fully
@@ -58971,6 +59988,7 @@ func (s *Sources) PutSourceHarvest(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceHubplanner - Update a Source fully
@@ -59058,6 +60076,7 @@ func (s *Sources) PutSourceHubplanner(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceHubspot - Update a Source fully
@@ -59145,6 +60164,7 @@ func (s *Sources) PutSourceHubspot(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceInsightly - Update a Source fully
@@ -59232,6 +60252,7 @@ func (s *Sources) PutSourceInsightly(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceInstagram - Update a Source fully
@@ -59319,6 +60340,7 @@ func (s *Sources) PutSourceInstagram(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceInstatus - Update a Source fully
@@ -59406,6 +60428,7 @@ func (s *Sources) PutSourceInstatus(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceIntercom - Update a Source fully
@@ -59493,6 +60516,7 @@ func (s *Sources) PutSourceIntercom(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceIp2whois - Update a Source fully
@@ -59580,6 +60604,7 @@ func (s *Sources) PutSourceIp2whois(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceIterable - Update a Source fully
@@ -59667,6 +60692,7 @@ func (s *Sources) PutSourceIterable(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceJira - Update a Source fully
@@ -59754,6 +60780,7 @@ func (s *Sources) PutSourceJira(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceK6Cloud - Update a Source fully
@@ -59841,6 +60868,7 @@ func (s *Sources) PutSourceK6Cloud(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceKlarna - Update a Source fully
@@ -59928,6 +60956,7 @@ func (s *Sources) PutSourceKlarna(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceKlaviyo - Update a Source fully
@@ -60015,6 +61044,7 @@ func (s *Sources) PutSourceKlaviyo(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceKyve - Update a Source fully
@@ -60102,6 +61132,7 @@ func (s *Sources) PutSourceKyve(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLaunchdarkly - Update a Source fully
@@ -60189,6 +61220,7 @@ func (s *Sources) PutSourceLaunchdarkly(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLemlist - Update a Source fully
@@ -60276,6 +61308,7 @@ func (s *Sources) PutSourceLemlist(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLeverHiring - Update a Source fully
@@ -60363,6 +61396,7 @@ func (s *Sources) PutSourceLeverHiring(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLinkedinAds - Update a Source fully
@@ -60450,6 +61484,7 @@ func (s *Sources) PutSourceLinkedinAds(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLinkedinPages - Update a Source fully
@@ -60537,6 +61572,7 @@ func (s *Sources) PutSourceLinkedinPages(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLinnworks - Update a Source fully
@@ -60624,6 +61660,7 @@ func (s *Sources) PutSourceLinnworks(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceLokalise - Update a Source fully
@@ -60711,6 +61748,7 @@ func (s *Sources) PutSourceLokalise(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMailchimp - Update a Source fully
@@ -60798,6 +61836,7 @@ func (s *Sources) PutSourceMailchimp(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMailgun - Update a Source fully
@@ -60885,6 +61924,7 @@ func (s *Sources) PutSourceMailgun(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMailjetSms - Update a Source fully
@@ -60972,6 +62012,7 @@ func (s *Sources) PutSourceMailjetSms(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMarketo - Update a Source fully
@@ -61059,6 +62100,7 @@ func (s *Sources) PutSourceMarketo(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMetabase - Update a Source fully
@@ -61146,6 +62188,7 @@ func (s *Sources) PutSourceMetabase(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMicrosoftOnedrive - Update a Source fully
@@ -61233,6 +62276,7 @@ func (s *Sources) PutSourceMicrosoftOnedrive(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMicrosoftSharepoint - Update a Source fully
@@ -61320,6 +62364,7 @@ func (s *Sources) PutSourceMicrosoftSharepoint(ctx context.Context, request oper
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMicrosoftTeams - Update a Source fully
@@ -61407,6 +62452,7 @@ func (s *Sources) PutSourceMicrosoftTeams(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMixpanel - Update a Source fully
@@ -61494,6 +62540,7 @@ func (s *Sources) PutSourceMixpanel(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMonday - Update a Source fully
@@ -61581,6 +62628,7 @@ func (s *Sources) PutSourceMonday(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMongodbInternalPoc - Update a Source fully
@@ -61668,6 +62716,7 @@ func (s *Sources) PutSourceMongodbInternalPoc(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMongodbV2 - Update a Source fully
@@ -61755,6 +62804,7 @@ func (s *Sources) PutSourceMongodbV2(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMssql - Update a Source fully
@@ -61842,6 +62892,7 @@ func (s *Sources) PutSourceMssql(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMyHours - Update a Source fully
@@ -61929,6 +62980,7 @@ func (s *Sources) PutSourceMyHours(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceMysql - Update a Source fully
@@ -62016,6 +63068,7 @@ func (s *Sources) PutSourceMysql(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceNetsuite - Update a Source fully
@@ -62103,6 +63156,7 @@ func (s *Sources) PutSourceNetsuite(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceNotion - Update a Source fully
@@ -62190,6 +63244,7 @@ func (s *Sources) PutSourceNotion(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceNytimes - Update a Source fully
@@ -62277,6 +63332,7 @@ func (s *Sources) PutSourceNytimes(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOkta - Update a Source fully
@@ -62364,6 +63420,7 @@ func (s *Sources) PutSourceOkta(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOmnisend - Update a Source fully
@@ -62451,6 +63508,7 @@ func (s *Sources) PutSourceOmnisend(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOnesignal - Update a Source fully
@@ -62538,6 +63596,7 @@ func (s *Sources) PutSourceOnesignal(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOracle - Update a Source fully
@@ -62625,6 +63684,7 @@ func (s *Sources) PutSourceOracle(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOrb - Update a Source fully
@@ -62712,6 +63772,7 @@ func (s *Sources) PutSourceOrb(ctx context.Context, request operations.PutSource
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOrbit - Update a Source fully
@@ -62799,6 +63860,7 @@ func (s *Sources) PutSourceOrbit(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOutbrainAmplify - Update a Source fully
@@ -62886,6 +63948,7 @@ func (s *Sources) PutSourceOutbrainAmplify(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutSourceOutreach - Update a Source fully
@@ -62973,6 +64036,7 @@ func (s *Sources) PutSourceOutreach(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePaypalTransaction - Update a Source fully
@@ -63060,6 +64124,7 @@ func (s *Sources) PutSourcePaypalTransaction(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePaystack - Update a Source fully
@@ -63147,6 +64212,7 @@ func (s *Sources) PutSourcePaystack(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePendo - Update a Source fully
@@ -63234,6 +64300,7 @@ func (s *Sources) PutSourcePendo(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePersistiq - Update a Source fully
@@ -63321,6 +64388,7 @@ func (s *Sources) PutSourcePersistiq(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePexelsAPI - Update a Source fully
@@ -63408,6 +64476,7 @@ func (s *Sources) PutSourcePexelsAPI(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePinterest - Update a Source fully
@@ -63495,6 +64564,7 @@ func (s *Sources) PutSourcePinterest(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePipedrive - Update a Source fully
@@ -63582,6 +64652,7 @@ func (s *Sources) PutSourcePipedrive(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePocket - Update a Source fully
@@ -63669,6 +64740,7 @@ func (s *Sources) PutSourcePocket(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePokeapi - Update a Source fully
@@ -63756,6 +64828,7 @@ func (s *Sources) PutSourcePokeapi(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePolygonStockAPI - Update a Source fully
@@ -63843,6 +64916,7 @@ func (s *Sources) PutSourcePolygonStockAPI(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePostgres - Update a Source fully
@@ -63930,6 +65004,7 @@ func (s *Sources) PutSourcePostgres(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePosthog - Update a Source fully
@@ -64017,6 +65092,7 @@ func (s *Sources) PutSourcePosthog(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePostmarkapp - Update a Source fully
@@ -64104,6 +65180,7 @@ func (s *Sources) PutSourcePostmarkapp(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePrestashop - Update a Source fully
@@ -64191,6 +65268,7 @@ func (s *Sources) PutSourcePrestashop(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePunkAPI - Update a Source fully
@@ -64278,6 +65356,7 @@ func (s *Sources) PutSourcePunkAPI(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourcePypi - Update a Source fully
@@ -64365,6 +65444,7 @@ func (s *Sources) PutSourcePypi(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceQualaroo - Update a Source fully
@@ -64452,6 +65532,7 @@ func (s *Sources) PutSourceQualaroo(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRailz - Update a Source fully
@@ -64539,6 +65620,7 @@ func (s *Sources) PutSourceRailz(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRecharge - Update a Source fully
@@ -64626,6 +65708,7 @@ func (s *Sources) PutSourceRecharge(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRecreation - Update a Source fully
@@ -64713,6 +65796,7 @@ func (s *Sources) PutSourceRecreation(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRecruitee - Update a Source fully
@@ -64800,6 +65884,7 @@ func (s *Sources) PutSourceRecruitee(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRecurly - Update a Source fully
@@ -64887,6 +65972,7 @@ func (s *Sources) PutSourceRecurly(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRedshift - Update a Source fully
@@ -64974,6 +66060,7 @@ func (s *Sources) PutSourceRedshift(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRetently - Update a Source fully
@@ -65061,6 +66148,7 @@ func (s *Sources) PutSourceRetently(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRkiCovid - Update a Source fully
@@ -65148,6 +66236,7 @@ func (s *Sources) PutSourceRkiCovid(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceRss - Update a Source fully
@@ -65235,6 +66324,7 @@ func (s *Sources) PutSourceRss(ctx context.Context, request operations.PutSource
 	}
 
 	return res, nil
+
 }
 
 // PutSourceS3 - Update a Source fully
@@ -65322,6 +66412,7 @@ func (s *Sources) PutSourceS3(ctx context.Context, request operations.PutSourceS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSalesforce - Update a Source fully
@@ -65409,6 +66500,7 @@ func (s *Sources) PutSourceSalesforce(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSalesloft - Update a Source fully
@@ -65496,6 +66588,7 @@ func (s *Sources) PutSourceSalesloft(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSapFieldglass - Update a Source fully
@@ -65583,6 +66676,7 @@ func (s *Sources) PutSourceSapFieldglass(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSecoda - Update a Source fully
@@ -65670,6 +66764,7 @@ func (s *Sources) PutSourceSecoda(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSendgrid - Update a Source fully
@@ -65757,6 +66852,7 @@ func (s *Sources) PutSourceSendgrid(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSendinblue - Update a Source fully
@@ -65844,6 +66940,7 @@ func (s *Sources) PutSourceSendinblue(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSenseforce - Update a Source fully
@@ -65931,6 +67028,7 @@ func (s *Sources) PutSourceSenseforce(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSentry - Update a Source fully
@@ -66018,6 +67116,7 @@ func (s *Sources) PutSourceSentry(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSftp - Update a Source fully
@@ -66105,6 +67204,7 @@ func (s *Sources) PutSourceSftp(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSftpBulk - Update a Source fully
@@ -66192,6 +67292,7 @@ func (s *Sources) PutSourceSftpBulk(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceShopify - Update a Source fully
@@ -66279,6 +67380,7 @@ func (s *Sources) PutSourceShopify(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceShortio - Update a Source fully
@@ -66366,6 +67468,7 @@ func (s *Sources) PutSourceShortio(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSlack - Update a Source fully
@@ -66453,6 +67556,7 @@ func (s *Sources) PutSourceSlack(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSmaily - Update a Source fully
@@ -66540,6 +67644,7 @@ func (s *Sources) PutSourceSmaily(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSmartengage - Update a Source fully
@@ -66627,6 +67732,7 @@ func (s *Sources) PutSourceSmartengage(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSmartsheets - Update a Source fully
@@ -66714,6 +67820,7 @@ func (s *Sources) PutSourceSmartsheets(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSnapchatMarketing - Update a Source fully
@@ -66801,6 +67908,7 @@ func (s *Sources) PutSourceSnapchatMarketing(ctx context.Context, request operat
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSnowflake - Update a Source fully
@@ -66888,6 +67996,7 @@ func (s *Sources) PutSourceSnowflake(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSonarCloud - Update a Source fully
@@ -66975,6 +68084,7 @@ func (s *Sources) PutSourceSonarCloud(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSpacexAPI - Update a Source fully
@@ -67062,6 +68172,7 @@ func (s *Sources) PutSourceSpacexAPI(ctx context.Context, request operations.Put
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSquare - Update a Source fully
@@ -67149,6 +68260,7 @@ func (s *Sources) PutSourceSquare(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceStrava - Update a Source fully
@@ -67236,6 +68348,7 @@ func (s *Sources) PutSourceStrava(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceStripe - Update a Source fully
@@ -67323,6 +68436,7 @@ func (s *Sources) PutSourceStripe(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSurveySparrow - Update a Source fully
@@ -67410,6 +68524,7 @@ func (s *Sources) PutSourceSurveySparrow(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceSurveymonkey - Update a Source fully
@@ -67497,6 +68612,7 @@ func (s *Sources) PutSourceSurveymonkey(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTempo - Update a Source fully
@@ -67584,6 +68700,7 @@ func (s *Sources) PutSourceTempo(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTheGuardianAPI - Update a Source fully
@@ -67671,6 +68788,7 @@ func (s *Sources) PutSourceTheGuardianAPI(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTiktokMarketing - Update a Source fully
@@ -67758,6 +68876,7 @@ func (s *Sources) PutSourceTiktokMarketing(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTrello - Update a Source fully
@@ -67845,6 +68964,7 @@ func (s *Sources) PutSourceTrello(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTrustpilot - Update a Source fully
@@ -67932,6 +69052,7 @@ func (s *Sources) PutSourceTrustpilot(ctx context.Context, request operations.Pu
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTvmazeSchedule - Update a Source fully
@@ -68019,6 +69140,7 @@ func (s *Sources) PutSourceTvmazeSchedule(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTwilio - Update a Source fully
@@ -68106,6 +69228,7 @@ func (s *Sources) PutSourceTwilio(ctx context.Context, request operations.PutSou
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTwilioTaskrouter - Update a Source fully
@@ -68193,6 +69316,7 @@ func (s *Sources) PutSourceTwilioTaskrouter(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTwitter - Update a Source fully
@@ -68280,6 +69404,7 @@ func (s *Sources) PutSourceTwitter(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceTypeform - Update a Source fully
@@ -68367,6 +69492,7 @@ func (s *Sources) PutSourceTypeform(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceUsCensus - Update a Source fully
@@ -68454,6 +69580,7 @@ func (s *Sources) PutSourceUsCensus(ctx context.Context, request operations.PutS
 	}
 
 	return res, nil
+
 }
 
 // PutSourceVantage - Update a Source fully
@@ -68541,6 +69668,7 @@ func (s *Sources) PutSourceVantage(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceWebflow - Update a Source fully
@@ -68628,6 +69756,7 @@ func (s *Sources) PutSourceWebflow(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceWhiskyHunter - Update a Source fully
@@ -68715,6 +69844,7 @@ func (s *Sources) PutSourceWhiskyHunter(ctx context.Context, request operations.
 	}
 
 	return res, nil
+
 }
 
 // PutSourceWikipediaPageviews - Update a Source fully
@@ -68802,6 +69932,7 @@ func (s *Sources) PutSourceWikipediaPageviews(ctx context.Context, request opera
 	}
 
 	return res, nil
+
 }
 
 // PutSourceWoocommerce - Update a Source fully
@@ -68889,6 +70020,7 @@ func (s *Sources) PutSourceWoocommerce(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceXkcd - Update a Source fully
@@ -68976,6 +70108,7 @@ func (s *Sources) PutSourceXkcd(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }
 
 // PutSourceYandexMetrica - Update a Source fully
@@ -69063,6 +70196,7 @@ func (s *Sources) PutSourceYandexMetrica(ctx context.Context, request operations
 	}
 
 	return res, nil
+
 }
 
 // PutSourceYotpo - Update a Source fully
@@ -69150,6 +70284,7 @@ func (s *Sources) PutSourceYotpo(ctx context.Context, request operations.PutSour
 	}
 
 	return res, nil
+
 }
 
 // PutSourceYoutubeAnalytics - Update a Source fully
@@ -69237,6 +70372,7 @@ func (s *Sources) PutSourceYoutubeAnalytics(ctx context.Context, request operati
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZendeskChat - Update a Source fully
@@ -69324,6 +70460,7 @@ func (s *Sources) PutSourceZendeskChat(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZendeskSell - Update a Source fully
@@ -69411,6 +70548,7 @@ func (s *Sources) PutSourceZendeskSell(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZendeskSunshine - Update a Source fully
@@ -69498,6 +70636,7 @@ func (s *Sources) PutSourceZendeskSunshine(ctx context.Context, request operatio
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZendeskSupport - Update a Source fully
@@ -69585,6 +70724,7 @@ func (s *Sources) PutSourceZendeskSupport(ctx context.Context, request operation
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZendeskTalk - Update a Source fully
@@ -69672,6 +70812,7 @@ func (s *Sources) PutSourceZendeskTalk(ctx context.Context, request operations.P
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZenloop - Update a Source fully
@@ -69759,6 +70900,7 @@ func (s *Sources) PutSourceZenloop(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZohoCrm - Update a Source fully
@@ -69846,6 +70988,7 @@ func (s *Sources) PutSourceZohoCrm(ctx context.Context, request operations.PutSo
 	}
 
 	return res, nil
+
 }
 
 // PutSourceZoom - Update a Source fully
@@ -69933,4 +71076,5 @@ func (s *Sources) PutSourceZoom(ctx context.Context, request operations.PutSourc
 	}
 
 	return res, nil
+
 }

@@ -180,7 +180,7 @@ func (u *DestinationElasticsearchAuthenticationMethod) UnmarshalJSON(data []byte
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationElasticsearchAuthenticationMethod", string(data))
 }
 
 func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -192,7 +192,7 @@ func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, err
 		return utils.MarshalJSON(u.DestinationElasticsearchUsernamePassword, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationElasticsearchAuthenticationMethod: all fields are null")
 }
 
 type Elasticsearch string

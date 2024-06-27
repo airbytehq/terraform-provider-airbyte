@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type SourceOktaSchemasAuthType string
@@ -177,7 +178,7 @@ func (u *SourceOktaAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOktaAuthorizationMethod", string(data))
 }
 
 func (u SourceOktaAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -189,7 +190,7 @@ func (u SourceOktaAuthorizationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceOktaAPIToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceOktaAuthorizationMethod: all fields are null")
 }
 
 type Okta string
@@ -221,7 +222,7 @@ type SourceOkta struct {
 	Domain     *string `json:"domain,omitempty"`
 	sourceType Okta    `const:"okta" json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceOkta) MarshalJSON() ([]byte, error) {
@@ -253,7 +254,7 @@ func (o *SourceOkta) GetSourceType() Okta {
 	return OktaOkta
 }
 
-func (o *SourceOkta) GetStartDate() *string {
+func (o *SourceOkta) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}

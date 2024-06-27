@@ -268,7 +268,7 @@ func (u *SourceMongodbV2ClusterType) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMongodbV2ClusterType", string(data))
 }
 
 func (u SourceMongodbV2ClusterType) MarshalJSON() ([]byte, error) {
@@ -280,7 +280,7 @@ func (u SourceMongodbV2ClusterType) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMongodbV2SelfManagedReplicaSet, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMongodbV2ClusterType: all fields are null")
 }
 
 // SourceMongodbV2InvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.

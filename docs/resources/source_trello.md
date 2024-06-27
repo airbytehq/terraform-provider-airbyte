@@ -22,10 +22,10 @@ resource "airbyte_source_trello" "my_source_trello" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "e494b9e5-830e-49ef-bf41-2cdcae9f85c7"
-  name          = "Virginia Kuphal"
+  definition_id = "b5a46242-8ebc-45c7-bead-f0c9ce16ebe8"
+  name          = "Josefina Pacocha"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0526f885-6cdf-43fd-afbe-1999214f3ffa"
+  workspace_id  = "aee8d2bd-e48e-4efc-ab9e-0d54b0894bdd"
 }
 ```
 

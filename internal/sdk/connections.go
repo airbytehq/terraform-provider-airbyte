@@ -121,6 +121,7 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 	}
 
 	return res, nil
+
 }
 
 // DeleteConnection - Delete a Connection
@@ -202,6 +203,7 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 	}
 
 	return res, nil
+
 }
 
 // GetConnection - Get Connection details
@@ -293,6 +295,7 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 	}
 
 	return res, nil
+
 }
 
 // ListConnections - List connections
@@ -388,6 +391,7 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 	}
 
 	return res, nil
+
 }
 
 // PatchConnection - Update Connection details
@@ -485,4 +489,5 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 	}
 
 	return res, nil
+
 }

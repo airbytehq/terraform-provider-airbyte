@@ -17,14 +17,14 @@ resource "airbyte_source_freshdesk" "my_source_freshdesk" {
   configuration = {
     api_key                 = "...my_api_key..."
     domain                  = "myaccount.freshdesk.com"
-    lookback_window_in_days = 5
-    requests_per_minute     = 10
+    lookback_window_in_days = 3
+    requests_per_minute     = 8
     start_date              = "2020-12-01T00:00:00Z"
   }
-  definition_id = "ac638785-4b69-4c42-a8b9-a534c06fe5a2"
-  name          = "Enrique Gutmann"
+  definition_id = "b5882c88-1a08-478b-bdf7-e2fa4a63623e"
+  name          = "Lucille Purdy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f211adfc-721d-4d1f-8023-9a929660c93e"
+  workspace_id  = "48ed6d0e-af7f-454c-bc36-9f9cb0a3dd00"
 }
 ```
 

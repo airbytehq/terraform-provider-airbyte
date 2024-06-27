@@ -196,7 +196,7 @@ func (u *SourceSmartsheetsUpdateAuthorizationMethod) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSmartsheetsUpdateAuthorizationMethod", string(data))
 }
 
 func (u SourceSmartsheetsUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -208,7 +208,7 @@ func (u SourceSmartsheetsUpdateAuthorizationMethod) MarshalJSON() ([]byte, error
 		return utils.MarshalJSON(u.APIAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSmartsheetsUpdateAuthorizationMethod: all fields are null")
 }
 
 type Validenums string

@@ -179,7 +179,7 @@ func (u *SourceSlackAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSlackAuthenticationMechanism", string(data))
 }
 
 func (u SourceSlackAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -191,7 +191,7 @@ func (u SourceSlackAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSlackAPIToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSlackAuthenticationMechanism: all fields are null")
 }
 
 type Slack string

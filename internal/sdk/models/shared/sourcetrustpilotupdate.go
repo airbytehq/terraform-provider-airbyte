@@ -197,7 +197,7 @@ func (u *SourceTrustpilotUpdateAuthorizationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceTrustpilotUpdateAuthorizationMethod", string(data))
 }
 
 func (u SourceTrustpilotUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
@@ -209,7 +209,7 @@ func (u SourceTrustpilotUpdateAuthorizationMethod) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceTrustpilotUpdateAPIKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceTrustpilotUpdateAuthorizationMethod: all fields are null")
 }
 
 type SourceTrustpilotUpdate struct {

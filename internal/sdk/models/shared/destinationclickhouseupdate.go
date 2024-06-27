@@ -280,7 +280,7 @@ func (u *SSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SSHTunnelMethod", string(data))
 }
 
 func (u SSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -296,7 +296,7 @@ func (u SSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.PasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SSHTunnelMethod: all fields are null")
 }
 
 type DestinationClickhouseUpdate struct {

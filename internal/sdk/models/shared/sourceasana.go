@@ -179,7 +179,7 @@ func (u *SourceAsanaAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAsanaAuthenticationMechanism", string(data))
 }
 
 func (u SourceAsanaAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -191,7 +191,7 @@ func (u SourceAsanaAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAsanaAuthenticateWithPersonalAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAsanaAuthenticationMechanism: all fields are null")
 }
 
 type Asana string

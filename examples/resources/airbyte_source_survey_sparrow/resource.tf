@@ -8,8 +8,8 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "bc290ef0-0ad5-4372-a56f-e50a2e7cfe6f"
-  name          = "Danielle Nitzsche"
+  definition_id = "6dac9959-2aae-4b21-989b-3db558d4aa17"
+  name          = "Margaret Wiza"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "65c56f5f-a677-48e4-8b91-c615d128040b"
+  workspace_id  = "1a7b03b3-15af-419b-84a1-418c27e2e49f"
 }

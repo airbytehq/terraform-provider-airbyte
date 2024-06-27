@@ -93,7 +93,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							"detect_changes_with_xmin_system_column": schema.SingleNestedAttribute{
 								Optional:    true,
 								Attributes:  map[string]schema.Attribute{},
-								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Suitable for databases that have low transaction pressure.`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("read_changes_using_write_ahead_log_cdc"),
@@ -567,8 +567,8 @@ func (r *SourcePostgresResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res.SourceResponse)
@@ -593,8 +593,8 @@ func (r *SourcePostgresResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
@@ -646,8 +646,8 @@ func (r *SourcePostgresResource) Read(ctx context.Context, req resource.ReadRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res.SourceResponse)
@@ -713,8 +713,8 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedSourceResponse(res1.SourceResponse)

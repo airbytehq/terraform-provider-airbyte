@@ -9,9 +9,9 @@ import (
 )
 
 func (r *SourceMailgunResourceModel) ToSharedSourceMailgunCreateRequest() *shared.SourceMailgunCreateRequest {
-	domainRegion := new(string)
+	domainRegion := new(shared.SourceMailgunDomainRegionCode)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
-		*domainRegion = r.Configuration.DomainRegion.ValueString()
+		*domainRegion = shared.SourceMailgunDomainRegionCode(r.Configuration.DomainRegion.ValueString())
 	} else {
 		domainRegion = nil
 	}
@@ -61,9 +61,9 @@ func (r *SourceMailgunResourceModel) RefreshFromSharedSourceResponse(resp *share
 }
 
 func (r *SourceMailgunResourceModel) ToSharedSourceMailgunPutRequest() *shared.SourceMailgunPutRequest {
-	domainRegion := new(string)
+	domainRegion := new(shared.DomainRegionCode)
 	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
-		*domainRegion = r.Configuration.DomainRegion.ValueString()
+		*domainRegion = shared.DomainRegionCode(r.Configuration.DomainRegion.ValueString())
 	} else {
 		domainRegion = nil
 	}

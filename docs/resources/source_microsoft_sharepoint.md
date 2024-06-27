@@ -24,11 +24,11 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
       }
     }
     folder_path  = "...my_folder_path..."
-    search_scope = "SHARED_ITEMS"
+    search_scope = "ACCESSIBLE_DRIVES"
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 9
+        days_to_sync_if_history_is_full = 1
         format = {
           avro_format = {
             double_as_string = false
@@ -38,17 +38,17 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Noah Rempel"
+        name              = "Mrs. Alfonso Hayes"
         primary_key       = "...my_primary_key..."
         schemaless        = false
         validation_policy = "Skip Record"
       },
     ]
   }
-  definition_id = "c82f283f-df1b-4362-a3ef-9cacc879ba7a"
-  name          = "Steven Bernier"
+  definition_id = "fa2ea25a-51d7-4622-a389-cc4200a4abb3"
+  name          = "Bobbie McCullough"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7dc7c271-c504-44a2-9a4f-7e4eabe3a977"
+  workspace_id  = "11cc7be3-e8ba-4718-8dc0-5c92c2050fdf"
 }
 ```
 

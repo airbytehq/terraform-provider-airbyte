@@ -18,10 +18,10 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     api_key    = "...my_api_key..."
     start_date = "dd/mm/YYYY HH:MM"
   }
-  definition_id = "41ba6f5d-90d5-4a8a-b49e-2072bdff3818"
-  name          = "Rudy Tremblay DVM"
+  definition_id = "8d140946-39cf-45dd-8a0c-05f536f6b9b8"
+  name          = "Dave Willms"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb32a781-73ab-4b82-a6a7-189e9256d746"
+  workspace_id  = "6afbf365-d687-4e08-be39-05b6a417faeb"
 }
 ```
 

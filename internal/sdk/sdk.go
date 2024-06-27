@@ -65,14 +65,16 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	Connections  *Connections
-	Destinations *Destinations
-	Health       *Health
-	Jobs         *Jobs
-	Permissions  *Permissions
-	Sources      *Sources
-	Streams      *Streams
-	Workspaces   *Workspaces
+	Connections   *Connections
+	Destinations  *Destinations
+	Health        *Health
+	Jobs          *Jobs
+	Organizations *Organizations
+	Permissions   *Permissions
+	Sources       *Sources
+	Streams       *Streams
+	Users         *Users
+	Workspaces    *Workspaces
 
 	sdkConfiguration sdkConfiguration
 }
@@ -115,16 +117,10 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
-func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
-	return func(context.Context) (interface{}, error) {
-		return security, nil
-	}
-}
-
 // WithSecurity configures the SDK to use the provided security details
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *SDK) {
-		sdk.sdkConfiguration.Security = withSecurity(security)
+		sdk.sdkConfiguration.Security = utils.AsSecuritySource(security)
 	}
 }
 
@@ -150,8 +146,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.332.4",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.332.4 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			GenVersion:        "2.354.2",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.354.2 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -179,11 +175,15 @@ func New(opts ...SDKOption) *SDK {
 
 	sdk.Jobs = newJobs(sdk.sdkConfiguration)
 
+	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
+
 	sdk.Permissions = newPermissions(sdk.sdkConfiguration)
 
 	sdk.Sources = newSources(sdk.sdkConfiguration)
 
 	sdk.Streams = newStreams(sdk.sdkConfiguration)
+
+	sdk.Users = newUsers(sdk.sdkConfiguration)
 
 	sdk.Workspaces = newWorkspaces(sdk.sdkConfiguration)
 

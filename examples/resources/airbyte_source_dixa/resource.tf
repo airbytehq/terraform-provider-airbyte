@@ -4,8 +4,8 @@ resource "airbyte_source_dixa" "my_source_dixa" {
     batch_size = 1
     start_date = "YYYY-MM-DD"
   }
-  definition_id = "e8dc371e-cbee-4105-91b4-39ed171c9d9f"
-  name          = "Bennie Grimes"
+  definition_id = "a34ff680-c88d-48e9-b743-1721e4227fd5"
+  name          = "Patty Huel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3ac232bf-a41c-480b-a334-5c949a95559f"
+  workspace_id  = "c345b5c1-bae7-4472-aa8c-d9c5aad47afd"
 }

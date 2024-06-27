@@ -175,7 +175,7 @@ func (u *DestinationLangchainEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationLangchainEmbedding", string(data))
 }
 
 func (u DestinationLangchainEmbedding) MarshalJSON() ([]byte, error) {
@@ -187,7 +187,7 @@ func (u DestinationLangchainEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationLangchainFake, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationLangchainEmbedding: all fields are null")
 }
 
 type DestinationLangchainSchemasIndexingIndexing3Mode string
@@ -439,7 +439,7 @@ func (u *DestinationLangchainIndexing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationLangchainIndexing", string(data))
 }
 
 func (u DestinationLangchainIndexing) MarshalJSON() ([]byte, error) {
@@ -455,7 +455,7 @@ func (u DestinationLangchainIndexing) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationLangchainChromaLocalPersistance, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationLangchainIndexing: all fields are null")
 }
 
 type DestinationLangchainProcessingConfigModel struct {

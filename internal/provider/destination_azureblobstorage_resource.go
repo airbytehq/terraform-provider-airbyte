@@ -16,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -99,6 +100,12 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"file_extension": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(false),
+										Description: `Add file extensions to the output file. Default: false`,
+									},
 									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
@@ -119,8 +126,15 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								},
 							},
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional:   true,
-								Attributes: map[string]schema.Attribute{},
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"file_extension": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(false),
+										Description: `Add file extensions to the output file. Default: false`,
+									},
+								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("csv_comma_separated_values"),
@@ -226,8 +240,8 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.DestinationResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
@@ -252,8 +266,8 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.DestinationResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
@@ -305,8 +319,8 @@ func (r *DestinationAzureBlobStorageResource) Read(ctx context.Context, req reso
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.DestinationResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
@@ -372,8 +386,8 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
 		return
 	}
-	if res1.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res1.RawResponse))
+	if !(res1.DestinationResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
 	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)

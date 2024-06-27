@@ -3,6 +3,7 @@
 package utils
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"math/big"
@@ -85,6 +86,12 @@ func MatchStatusCodes(expectedCodes []string, statusCode int) bool {
 	}
 
 	return false
+}
+
+func AsSecuritySource(security interface{}) func(context.Context) (interface{}, error) {
+	return func(context.Context) (interface{}, error) {
+		return security, nil
+	}
 }
 
 func parseStructTag(tagKey string, field reflect.StructField) map[string]string {

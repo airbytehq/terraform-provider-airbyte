@@ -19,11 +19,11 @@ resource "airbyte_source_s3" "my_source_s3" {
     aws_secret_access_key = "...my_aws_secret_access_key..."
     bucket                = "...my_bucket..."
     dataset               = "...my_dataset..."
-    endpoint              = "https://my-s3-endpoint.com"
+    endpoint              = "my-s3-endpoint.com"
     format = {
       avro = {}
     }
-    path_pattern = "**"
+    path_pattern = "myFolder/myTableFiles/*.csv|myFolder/myOtherTableFiles/*.csv"
     provider = {
       aws_access_key_id     = "...my_aws_access_key_id..."
       aws_secret_access_key = "...my_aws_secret_access_key..."
@@ -40,10 +40,10 @@ resource "airbyte_source_s3" "my_source_s3" {
     start_date  = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 7
+        days_to_sync_if_history_is_full = 4
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
@@ -51,17 +51,17 @@ resource "airbyte_source_s3" "my_source_s3" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Eula Mitchell"
+        name              = "Pam Goldner"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Emit Record"
+        schemaless        = false
+        validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "b81056bc-977a-43bf-8dff-8dd835d80427"
-  name          = "Eugene Emmerich"
+  definition_id = "bdae34af-cb06-4318-8072-9444d2b8965c"
+  name          = "Julius Rau"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e1d8c723-c8e5-4e25-9fe4-ef6493875b5a"
+  workspace_id  = "ee9d6378-e724-43c0-a1bc-073abf4dfebd"
 }
 ```
 

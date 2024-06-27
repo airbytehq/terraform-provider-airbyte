@@ -160,7 +160,7 @@ func (u *ConnectBy) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ConnectBy", string(data))
 }
 
 func (u ConnectBy) MarshalJSON() ([]byte, error) {
@@ -172,7 +172,7 @@ func (u ConnectBy) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SystemIDSID, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type ConnectBy: all fields are null")
 }
 
 type SourceOracleUpdateEncryptionMethod string
@@ -358,7 +358,7 @@ func (u *Encryption) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Encryption", string(data))
 }
 
 func (u Encryption) MarshalJSON() ([]byte, error) {
@@ -370,7 +370,7 @@ func (u Encryption) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Encryption: all fields are null")
 }
 
 // SourceOracleUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -644,7 +644,7 @@ func (u *SourceOracleUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOracleUpdateSSHTunnelMethod", string(data))
 }
 
 func (u SourceOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -660,7 +660,7 @@ func (u SourceOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceOracleUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceOracleUpdateSSHTunnelMethod: all fields are null")
 }
 
 type SourceOracleUpdate struct {

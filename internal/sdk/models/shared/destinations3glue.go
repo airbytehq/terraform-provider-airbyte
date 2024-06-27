@@ -171,7 +171,7 @@ func (u *DestinationS3GlueCompression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3GlueCompression", string(data))
 }
 
 func (u DestinationS3GlueCompression) MarshalJSON() ([]byte, error) {
@@ -183,7 +183,7 @@ func (u DestinationS3GlueCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3GlueGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3GlueCompression: all fields are null")
 }
 
 // DestinationS3GlueFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
@@ -307,7 +307,7 @@ func (u *DestinationS3GlueOutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationS3GlueOutputFormat", string(data))
 }
 
 func (u DestinationS3GlueOutputFormat) MarshalJSON() ([]byte, error) {
@@ -315,7 +315,7 @@ func (u DestinationS3GlueOutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationS3GlueJSONLinesNewlineDelimitedJSON, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationS3GlueOutputFormat: all fields are null")
 }
 
 // DestinationS3GlueSerializationLibrary - The library that your query engine will use for reading and writing data in your lake.

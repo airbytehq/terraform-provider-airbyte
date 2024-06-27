@@ -10,6 +10,7 @@ type SourceGoogleAnalyticsDataAPI struct {
 	CustomReportsArray      []SourceGoogleAnalyticsDataAPICustomReportConfig `tfsdk:"custom_reports_array"`
 	DateRangesStartDate     types.String                                     `tfsdk:"date_ranges_start_date"`
 	KeepEmptyRows           types.Bool                                       `tfsdk:"keep_empty_rows"`
+	LookbackWindow          types.Int64                                      `tfsdk:"lookback_window"`
 	PropertyIds             []types.String                                   `tfsdk:"property_ids"`
 	WindowInDays            types.Int64                                      `tfsdk:"window_in_days"`
 }

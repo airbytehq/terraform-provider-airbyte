@@ -1,11 +1,11 @@
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 3
+    lookback_window_days = 9
     secret_key           = "...my_secret_key..."
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "3048e9c1-af99-461b-9c88-3a572712d8f3"
-  name          = "Brett Goodwin"
+  definition_id = "fad6ab5e-c8ca-4acd-8d2a-bfdc0f33811d"
+  name          = "Omar Sporer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb82b32a-d03f-4d9a-9d8b-a9b0df86503c"
+  workspace_id  = "79aa2af6-8e00-4dcd-add4-7961168b4fa7"
 }

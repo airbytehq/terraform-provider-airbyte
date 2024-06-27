@@ -296,7 +296,7 @@ func (u *Credential) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Credential", string(data))
 }
 
 func (u Credential) MarshalJSON() ([]byte, error) {
@@ -304,7 +304,7 @@ func (u Credential) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationBigqueryUpdateHMACKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Credential: all fields are null")
 }
 
 // GCSTmpFilesAfterwardProcessing - This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
@@ -462,7 +462,7 @@ func (u *LoadingMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LoadingMethod", string(data))
 }
 
 func (u LoadingMethod) MarshalJSON() ([]byte, error) {
@@ -474,7 +474,7 @@ func (u LoadingMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.StandardInserts, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type LoadingMethod: all fields are null")
 }
 
 // TransformationQueryRunType - Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.

@@ -162,7 +162,7 @@ func (u *DestinationMongodbAuthorizationType) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMongodbAuthorizationType", string(data))
 }
 
 func (u DestinationMongodbAuthorizationType) MarshalJSON() ([]byte, error) {
@@ -174,7 +174,7 @@ func (u DestinationMongodbAuthorizationType) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMongodbLoginPassword, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMongodbAuthorizationType: all fields are null")
 }
 
 type Mongodb string
@@ -447,7 +447,7 @@ func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMongodbMongoDbInstanceType", string(data))
 }
 
 func (u DestinationMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
@@ -463,7 +463,7 @@ func (u DestinationMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMongodbMongoDBAtlas, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMongodbMongoDbInstanceType: all fields are null")
 }
 
 // DestinationMongodbSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -737,7 +737,7 @@ func (u *DestinationMongodbSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMongodbSSHTunnelMethod", string(data))
 }
 
 func (u DestinationMongodbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -753,7 +753,7 @@ func (u DestinationMongodbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationMongodbPasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationMongodbSSHTunnelMethod: all fields are null")
 }
 
 type DestinationMongodb struct {

@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceLinkedinPagesResourceModel) ToSharedSourceLinkedinPagesCreateRequest() *shared.SourceLinkedinPagesCreateRequest {
@@ -40,9 +41,23 @@ func (r *SourceLinkedinPagesResourceModel) ToSharedSourceLinkedinPagesCreateRequ
 		}
 	}
 	orgID := r.Configuration.OrgID.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	timeGranularityType := new(shared.SourceLinkedinPagesTimeGranularityType)
+	if !r.Configuration.TimeGranularityType.IsUnknown() && !r.Configuration.TimeGranularityType.IsNull() {
+		*timeGranularityType = shared.SourceLinkedinPagesTimeGranularityType(r.Configuration.TimeGranularityType.ValueString())
+	} else {
+		timeGranularityType = nil
+	}
 	configuration := shared.SourceLinkedinPages{
-		Credentials: credentials,
-		OrgID:       orgID,
+		Credentials:         credentials,
+		OrgID:               orgID,
+		StartDate:           startDate,
+		TimeGranularityType: timeGranularityType,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -110,9 +125,23 @@ func (r *SourceLinkedinPagesResourceModel) ToSharedSourceLinkedinPagesPutRequest
 		}
 	}
 	orgID := r.Configuration.OrgID.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	timeGranularityType := new(shared.TimeGranularityType)
+	if !r.Configuration.TimeGranularityType.IsUnknown() && !r.Configuration.TimeGranularityType.IsNull() {
+		*timeGranularityType = shared.TimeGranularityType(r.Configuration.TimeGranularityType.ValueString())
+	} else {
+		timeGranularityType = nil
+	}
 	configuration := shared.SourceLinkedinPagesUpdate{
-		Credentials: credentials,
-		OrgID:       orgID,
+		Credentials:         credentials,
+		OrgID:               orgID,
+		StartDate:           startDate,
+		TimeGranularityType: timeGranularityType,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

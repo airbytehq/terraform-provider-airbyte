@@ -649,7 +649,7 @@ func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for StorageProvider", string(data))
 }
 
 func (u StorageProvider) MarshalJSON() ([]byte, error) {
@@ -681,7 +681,7 @@ func (u StorageProvider) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SFTPSecureFileTransferProtocol, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type StorageProvider: all fields are null")
 }
 
 type SourceFileUpdate struct {

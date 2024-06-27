@@ -8,26 +8,26 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type Firebolt string
+type SourceFireboltFirebolt string
 
 const (
-	FireboltFirebolt Firebolt = "firebolt"
+	SourceFireboltFireboltFirebolt SourceFireboltFirebolt = "firebolt"
 )
 
-func (e Firebolt) ToPointer() *Firebolt {
+func (e SourceFireboltFirebolt) ToPointer() *SourceFireboltFirebolt {
 	return &e
 }
-func (e *Firebolt) UnmarshalJSON(data []byte) error {
+func (e *SourceFireboltFirebolt) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "firebolt":
-		*e = Firebolt(v)
+		*e = SourceFireboltFirebolt(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Firebolt: %v", v)
+		return fmt.Errorf("invalid value for SourceFireboltFirebolt: %v", v)
 	}
 }
 
@@ -43,8 +43,8 @@ type SourceFirebolt struct {
 	// Engine name to connect to.
 	Engine string `json:"engine"`
 	// The host name of your Firebolt database.
-	Host       *string  `json:"host,omitempty"`
-	sourceType Firebolt `const:"firebolt" json:"sourceType"`
+	Host       *string                `json:"host,omitempty"`
+	sourceType SourceFireboltFirebolt `const:"firebolt" json:"sourceType"`
 }
 
 func (s SourceFirebolt) MarshalJSON() ([]byte, error) {
@@ -100,6 +100,6 @@ func (o *SourceFirebolt) GetHost() *string {
 	return o.Host
 }
 
-func (o *SourceFirebolt) GetSourceType() Firebolt {
-	return FireboltFirebolt
+func (o *SourceFirebolt) GetSourceType() SourceFireboltFirebolt {
+	return SourceFireboltFireboltFirebolt
 }

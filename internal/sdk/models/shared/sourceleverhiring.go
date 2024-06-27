@@ -178,7 +178,7 @@ func (u *SourceLeverHiringAuthenticationMechanism) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceLeverHiringAuthenticationMechanism", string(data))
 }
 
 func (u SourceLeverHiringAuthenticationMechanism) MarshalJSON() ([]byte, error) {
@@ -190,7 +190,7 @@ func (u SourceLeverHiringAuthenticationMechanism) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.SourceLeverHiringAuthenticateViaLeverAPIKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceLeverHiringAuthenticationMechanism: all fields are null")
 }
 
 // SourceLeverHiringEnvironment - The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use.

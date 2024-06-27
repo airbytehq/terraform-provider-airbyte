@@ -5,5 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type CSVCommaSeparatedValues struct {
-	Flattening types.String `tfsdk:"flattening"`
+	FileExtension types.Bool   `tfsdk:"file_extension"`
+	Flattening    types.String `tfsdk:"flattening"`
 }

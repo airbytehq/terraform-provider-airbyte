@@ -235,7 +235,7 @@ func (u *SourceGcsUpdateCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGcsUpdateCSVHeaderDefinition", string(data))
 }
 
 func (u SourceGcsUpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -251,7 +251,7 @@ func (u SourceGcsUpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGcsUpdateUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGcsUpdateCSVHeaderDefinition: all fields are null")
 }
 
 // SourceGcsUpdateInferenceType - How to infer the types of the columns. If none, inference default to strings.
@@ -457,7 +457,7 @@ func (u *SourceGcsUpdateFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGcsUpdateFormat", string(data))
 }
 
 func (u SourceGcsUpdateFormat) MarshalJSON() ([]byte, error) {
@@ -465,7 +465,7 @@ func (u SourceGcsUpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGcsUpdateCSVFormat, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGcsUpdateFormat: all fields are null")
 }
 
 // SourceGcsUpdateValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

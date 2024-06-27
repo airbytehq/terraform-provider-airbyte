@@ -162,6 +162,12 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -195,18 +201,19 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceMicrosoftOnedriveCSVFormat = &shared.SourceMicrosoftOnedriveCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftOnedriveCSVFormat != nil {
@@ -512,6 +519,12 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 					}
 				}
 			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -545,18 +558,19 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 				trueValues = append(trueValues, trueValuesItem.ValueString())
 			}
 			sourceMicrosoftOnedriveUpdateCSVFormat = &shared.SourceMicrosoftOnedriveUpdateCSVFormat{
-				Delimiter:            delimiter,
-				DoubleQuote:          doubleQuote,
-				Encoding:             encoding,
-				EscapeChar:           escapeChar,
-				FalseValues:          falseValues,
-				HeaderDefinition:     headerDefinition,
-				NullValues:           nullValues,
-				QuoteChar:            quoteChar,
-				SkipRowsAfterHeader:  skipRowsAfterHeader,
-				SkipRowsBeforeHeader: skipRowsBeforeHeader,
-				StringsCanBeNull:     stringsCanBeNull,
-				TrueValues:           trueValues,
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftOnedriveUpdateCSVFormat != nil {

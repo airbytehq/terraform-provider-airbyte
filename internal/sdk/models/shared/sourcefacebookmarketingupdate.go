@@ -414,7 +414,6 @@ const (
 	SourceFacebookMarketingUpdateValidEnumsCatalogSegmentValueOmniPurchaseRoas     SourceFacebookMarketingUpdateValidEnums = "catalog_segment_value_omni_purchase_roas"
 	SourceFacebookMarketingUpdateValidEnumsCatalogSegmentValueWebsitePurchaseRoas  SourceFacebookMarketingUpdateValidEnums = "catalog_segment_value_website_purchase_roas"
 	SourceFacebookMarketingUpdateValidEnumsClicks                                  SourceFacebookMarketingUpdateValidEnums = "clicks"
-	SourceFacebookMarketingUpdateValidEnumsConversionLeadRate                      SourceFacebookMarketingUpdateValidEnums = "conversion_lead_rate"
 	SourceFacebookMarketingUpdateValidEnumsConversionRateRanking                   SourceFacebookMarketingUpdateValidEnums = "conversion_rate_ranking"
 	SourceFacebookMarketingUpdateValidEnumsConversionValues                        SourceFacebookMarketingUpdateValidEnums = "conversion_values"
 	SourceFacebookMarketingUpdateValidEnumsConversions                             SourceFacebookMarketingUpdateValidEnums = "conversions"
@@ -425,7 +424,6 @@ const (
 	SourceFacebookMarketingUpdateValidEnumsCostPerActionType                       SourceFacebookMarketingUpdateValidEnums = "cost_per_action_type"
 	SourceFacebookMarketingUpdateValidEnumsCostPerAdClick                          SourceFacebookMarketingUpdateValidEnums = "cost_per_ad_click"
 	SourceFacebookMarketingUpdateValidEnumsCostPerConversion                       SourceFacebookMarketingUpdateValidEnums = "cost_per_conversion"
-	SourceFacebookMarketingUpdateValidEnumsCostPerConversionLead                   SourceFacebookMarketingUpdateValidEnums = "cost_per_conversion_lead"
 	SourceFacebookMarketingUpdateValidEnumsCostPerDdaCountbyConvs                  SourceFacebookMarketingUpdateValidEnums = "cost_per_dda_countby_convs"
 	SourceFacebookMarketingUpdateValidEnumsCostPerEstimatedAdRecallers             SourceFacebookMarketingUpdateValidEnums = "cost_per_estimated_ad_recallers"
 	SourceFacebookMarketingUpdateValidEnumsCostPerInlineLinkClick                  SourceFacebookMarketingUpdateValidEnums = "cost_per_inline_link_click"
@@ -588,8 +586,6 @@ func (e *SourceFacebookMarketingUpdateValidEnums) UnmarshalJSON(data []byte) err
 		fallthrough
 	case "clicks":
 		fallthrough
-	case "conversion_lead_rate":
-		fallthrough
 	case "conversion_rate_ranking":
 		fallthrough
 	case "conversion_values":
@@ -609,8 +605,6 @@ func (e *SourceFacebookMarketingUpdateValidEnums) UnmarshalJSON(data []byte) err
 	case "cost_per_ad_click":
 		fallthrough
 	case "cost_per_conversion":
-		fallthrough
-	case "cost_per_conversion_lead":
 		fallthrough
 	case "cost_per_dda_countby_convs":
 		fallthrough
@@ -859,7 +853,7 @@ type InsightConfig struct {
 	Name string `json:"name"`
 	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).
+	// Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89.
 	TimeIncrement *int64 `default:"1" json:"time_increment"`
 }
 
@@ -953,7 +947,7 @@ func (o *InsightConfig) GetTimeIncrement() *int64 {
 
 type SourceFacebookMarketingUpdate struct {
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-	AccessToken string `json:"access_token"`
+	AccessToken *string `json:"access_token,omitempty"`
 	// The Facebook Ad account ID(s) to pull data from. The Ad account ID number is in the account dropdown menu or in your browser's address bar of your <a href="https://adsmanager.facebook.com/adsmanager/">Meta Ads Manager</a>. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 	AccountIds []string `json:"account_ids"`
 	// Allows action_breakdowns to be an empty list
@@ -995,9 +989,9 @@ func (s *SourceFacebookMarketingUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceFacebookMarketingUpdate) GetAccessToken() string {
+func (o *SourceFacebookMarketingUpdate) GetAccessToken() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.AccessToken
 }

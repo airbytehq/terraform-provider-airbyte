@@ -96,4 +96,5 @@ func (s *Health) GetHealthCheck(ctx context.Context) (*operations.GetHealthCheck
 	}
 
 	return res, nil
+
 }

@@ -69,15 +69,13 @@ func (r *PermissionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Required:    true,
-				Description: `Describes what actions/endpoints the permission entitles to. must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]`,
+				Description: `Subset of ` + "`" + `PermissionType` + "`" + ` (removing ` + "`" + `instance_admin` + "`" + `), could be used in public-api. must be one of ["organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_admin", "workspace_editor", "workspace_reader"]`,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
-						"instance_admin",
 						"organization_admin",
 						"organization_editor",
 						"organization_reader",
 						"organization_member",
-						"workspace_owner",
 						"workspace_admin",
 						"workspace_editor",
 						"workspace_reader",
@@ -160,8 +158,8 @@ func (r *PermissionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.PermissionResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.PermissionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
@@ -213,8 +211,8 @@ func (r *PermissionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.PermissionResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.PermissionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
@@ -259,8 +257,8 @@ func (r *PermissionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.PermissionResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.PermissionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)

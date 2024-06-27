@@ -11,8 +11,10 @@ import (
 type JobTypeEnum string
 
 const (
-	JobTypeEnumSync  JobTypeEnum = "sync"
-	JobTypeEnumReset JobTypeEnum = "reset"
+	JobTypeEnumSync    JobTypeEnum = "sync"
+	JobTypeEnumReset   JobTypeEnum = "reset"
+	JobTypeEnumRefresh JobTypeEnum = "refresh"
+	JobTypeEnumClear   JobTypeEnum = "clear"
 )
 
 func (e JobTypeEnum) ToPointer() *JobTypeEnum {
@@ -27,6 +29,10 @@ func (e *JobTypeEnum) UnmarshalJSON(data []byte) error {
 	case "sync":
 		fallthrough
 	case "reset":
+		fallthrough
+	case "refresh":
+		fallthrough
+	case "clear":
 		*e = JobTypeEnum(v)
 		return nil
 	default:

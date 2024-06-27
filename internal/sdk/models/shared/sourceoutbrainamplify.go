@@ -169,7 +169,7 @@ func (u *SourceOutbrainAmplifyAuthenticationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOutbrainAmplifyAuthenticationMethod", string(data))
 }
 
 func (u SourceOutbrainAmplifyAuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -181,7 +181,7 @@ func (u SourceOutbrainAmplifyAuthenticationMethod) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceOutbrainAmplifyUsernamePassword, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceOutbrainAmplifyAuthenticationMethod: all fields are null")
 }
 
 // SourceOutbrainAmplifyGranularityForGeoLocationRegion - The granularity used for geo location data in reports.

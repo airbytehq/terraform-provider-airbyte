@@ -27,9 +27,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     custom_reports_array = [
       {
         dimensions = [
-          "device",
+          "page",
         ]
-        name = "Darren Rosenbaum"
+        name = "Randolph Stanton"
       },
     ]
     data_state = "final"
@@ -37,12 +37,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2022-01-24"
+    start_date = "2021-06-12"
   }
-  definition_id = "5baddd27-47bb-4c7f-a417-09ce4fe165bc"
-  name          = "Dr. Billie Hahn"
+  definition_id = "5ec21a9a-b567-4f13-877e-51fa773fcf1a"
+  name          = "Connie Baumbach"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fb5df254-77f3-470b-8ec7-c89bfb0cb9d8"
+  workspace_id  = "082909d9-7bfa-4bba-9367-1a9ca1d9c174"
 }
 ```
 

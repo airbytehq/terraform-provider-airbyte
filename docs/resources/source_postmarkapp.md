@@ -18,10 +18,10 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  definition_id = "f6b4ca64-72a5-4f8a-ac8f-edb8fc35367b"
-  name          = "Stewart Torphy"
+  definition_id = "ae2b40c1-73d4-4d61-933d-db2a95937ced"
+  name          = "Sandra Hodkiewicz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3e36b74e-8f7b-4837-976b-02a3d797c2fd"
+  workspace_id  = "7b59a4e7-8152-4cbd-a66e-4c12d05e7f58"
 }
 ```
 

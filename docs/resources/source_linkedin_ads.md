@@ -16,13 +16,13 @@ SourceLinkedinAds Resource
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      7,
+      4,
     ]
     ad_analytics_reports = [
       {
-        name             = "Lori McClure"
-        pivot_by         = "SHARE"
-        time_granularity = "MONTHLY"
+        name             = "Carolyn Bednar"
+        pivot_by         = "MEMBER_COUNTRY_V2"
+        time_granularity = "ALL"
       },
     ]
     credentials = {
@@ -32,10 +32,10 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     }
     start_date = "2021-05-17"
   }
-  definition_id = "bb0227d6-25c3-4155-b731-c6e6bc1caf16"
-  name          = "Joanna Waelchi"
+  definition_id = "1ce49a8f-c7f8-4e24-a726-45cfb2449eef"
+  name          = "Cory Johnson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8925477f-387c-4530-a2ba-4aed2995c663"
+  workspace_id  = "b4b875ea-1fa6-43f6-80fa-c1403cfd915c"
 }
 ```
 

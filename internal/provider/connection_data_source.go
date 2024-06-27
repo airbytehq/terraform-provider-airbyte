@@ -77,6 +77,18 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},
+								"selected_fields": schema.ListNestedAttribute{
+									Computed: true,
+									NestedObject: schema.NestedAttributeObject{
+										Attributes: map[string]schema.Attribute{
+											"field_path": schema.ListAttribute{
+												Computed:    true,
+												ElementType: types.StringType,
+											},
+										},
+									},
+									Description: `Paths to the fields that will be included in the configured catalog.`,
+								},
 								"sync_mode": schema.StringAttribute{
 									Computed:    true,
 									Description: `must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
@@ -206,8 +218,8 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	if res.ConnectionResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+	if !(res.ConnectionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
 	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)

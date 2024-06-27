@@ -192,51 +192,52 @@ func (o *OptionsList) GetOptionValue() string {
 	return o.OptionValue
 }
 
-type StreamName string
+type ReportName string
 
 const (
-	StreamNameGetAfnInventoryData                              StreamName = "GET_AFN_INVENTORY_DATA"
-	StreamNameGetAfnInventoryDataByCountry                     StreamName = "GET_AFN_INVENTORY_DATA_BY_COUNTRY"
-	StreamNameGetAmazonFulfilledShipmentsDataGeneral           StreamName = "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL"
-	StreamNameGetFbaEstimatedFbaFeesTxtData                    StreamName = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
-	StreamNameGetFbaFulfillmentCustomerReturnsData             StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA"
-	StreamNameGetFbaFulfillmentCustomerShipmentPromotionData   StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA"
-	StreamNameGetFbaFulfillmentCustomerShipmentReplacementData StreamName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA"
-	StreamNameGetFbaFulfillmentRemovalOrderDetailData          StreamName = "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA"
-	StreamNameGetFbaFulfillmentRemovalShipmentDetailData       StreamName = "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA"
-	StreamNameGetFbaInventoryPlanningData                      StreamName = "GET_FBA_INVENTORY_PLANNING_DATA"
-	StreamNameGetFbaMyiUnsuppressedInventoryData               StreamName = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
-	StreamNameGetFbaReimbursementsData                         StreamName = "GET_FBA_REIMBURSEMENTS_DATA"
-	StreamNameGetFbaSnsForecastData                            StreamName = "GET_FBA_SNS_FORECAST_DATA"
-	StreamNameGetFbaSnsPerformanceData                         StreamName = "GET_FBA_SNS_PERFORMANCE_DATA"
-	StreamNameGetFbaStorageFeeChargesData                      StreamName = "GET_FBA_STORAGE_FEE_CHARGES_DATA"
-	StreamNameGetFlatFileActionableOrderDataShipping           StreamName = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
-	StreamNameGetFlatFileAllOrdersDataByLastUpdateGeneral      StreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
-	StreamNameGetFlatFileAllOrdersDataByOrderDateGeneral       StreamName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
-	StreamNameGetFlatFileArchivedOrdersDataByOrderDate         StreamName = "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE"
-	StreamNameGetFlatFileOpenListingsData                      StreamName = "GET_FLAT_FILE_OPEN_LISTINGS_DATA"
-	StreamNameGetFlatFileReturnsDataByReturnDate               StreamName = "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE"
-	StreamNameGetLedgerDetailViewData                          StreamName = "GET_LEDGER_DETAIL_VIEW_DATA"
-	StreamNameGetLedgerSummaryViewData                         StreamName = "GET_LEDGER_SUMMARY_VIEW_DATA"
-	StreamNameGetMerchantCancelledListingsData                 StreamName = "GET_MERCHANT_CANCELLED_LISTINGS_DATA"
-	StreamNameGetMerchantListingsAllData                       StreamName = "GET_MERCHANT_LISTINGS_ALL_DATA"
-	StreamNameGetMerchantListingsData                          StreamName = "GET_MERCHANT_LISTINGS_DATA"
-	StreamNameGetMerchantListingsDataBackCompat                StreamName = "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT"
-	StreamNameGetMerchantListingsInactiveData                  StreamName = "GET_MERCHANT_LISTINGS_INACTIVE_DATA"
-	StreamNameGetMerchantsListingsFypReport                    StreamName = "GET_MERCHANTS_LISTINGS_FYP_REPORT"
-	StreamNameGetOrderReportDataShipping                       StreamName = "GET_ORDER_REPORT_DATA_SHIPPING"
-	StreamNameGetRestockInventoryRecommendationsReport         StreamName = "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT"
-	StreamNameGetSellerFeedbackData                            StreamName = "GET_SELLER_FEEDBACK_DATA"
-	StreamNameGetStrandedInventoryUIData                       StreamName = "GET_STRANDED_INVENTORY_UI_DATA"
-	StreamNameGetV2SettlementReportDataFlatFile                StreamName = "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE"
-	StreamNameGetXMLAllOrdersDataByOrderDateGeneral            StreamName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
-	StreamNameGetXMLBrowseTreeData                             StreamName = "GET_XML_BROWSE_TREE_DATA"
+	ReportNameGetAfnInventoryData                              ReportName = "GET_AFN_INVENTORY_DATA"
+	ReportNameGetAfnInventoryDataByCountry                     ReportName = "GET_AFN_INVENTORY_DATA_BY_COUNTRY"
+	ReportNameGetAmazonFulfilledShipmentsDataGeneral           ReportName = "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL"
+	ReportNameGetFbaEstimatedFbaFeesTxtData                    ReportName = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
+	ReportNameGetFbaFulfillmentCustomerReturnsData             ReportName = "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA"
+	ReportNameGetFbaFulfillmentCustomerShipmentPromotionData   ReportName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA"
+	ReportNameGetFbaFulfillmentCustomerShipmentReplacementData ReportName = "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA"
+	ReportNameGetFbaFulfillmentRemovalOrderDetailData          ReportName = "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA"
+	ReportNameGetFbaFulfillmentRemovalShipmentDetailData       ReportName = "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA"
+	ReportNameGetFbaInventoryPlanningData                      ReportName = "GET_FBA_INVENTORY_PLANNING_DATA"
+	ReportNameGetFbaMyiUnsuppressedInventoryData               ReportName = "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA"
+	ReportNameGetFbaReimbursementsData                         ReportName = "GET_FBA_REIMBURSEMENTS_DATA"
+	ReportNameGetFbaSnsForecastData                            ReportName = "GET_FBA_SNS_FORECAST_DATA"
+	ReportNameGetFbaSnsPerformanceData                         ReportName = "GET_FBA_SNS_PERFORMANCE_DATA"
+	ReportNameGetFbaStorageFeeChargesData                      ReportName = "GET_FBA_STORAGE_FEE_CHARGES_DATA"
+	ReportNameGetFlatFileActionableOrderDataShipping           ReportName = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
+	ReportNameGetFlatFileAllOrdersDataByLastUpdateGeneral      ReportName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
+	ReportNameGetFlatFileAllOrdersDataByOrderDateGeneral       ReportName = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	ReportNameGetFlatFileArchivedOrdersDataByOrderDate         ReportName = "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE"
+	ReportNameGetFlatFileOpenListingsData                      ReportName = "GET_FLAT_FILE_OPEN_LISTINGS_DATA"
+	ReportNameGetFlatFileReturnsDataByReturnDate               ReportName = "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE"
+	ReportNameGetLedgerDetailViewData                          ReportName = "GET_LEDGER_DETAIL_VIEW_DATA"
+	ReportNameGetLedgerSummaryViewData                         ReportName = "GET_LEDGER_SUMMARY_VIEW_DATA"
+	ReportNameGetMerchantCancelledListingsData                 ReportName = "GET_MERCHANT_CANCELLED_LISTINGS_DATA"
+	ReportNameGetMerchantListingsAllData                       ReportName = "GET_MERCHANT_LISTINGS_ALL_DATA"
+	ReportNameGetMerchantListingsData                          ReportName = "GET_MERCHANT_LISTINGS_DATA"
+	ReportNameGetMerchantListingsDataBackCompat                ReportName = "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT"
+	ReportNameGetMerchantListingsInactiveData                  ReportName = "GET_MERCHANT_LISTINGS_INACTIVE_DATA"
+	ReportNameGetMerchantsListingsFypReport                    ReportName = "GET_MERCHANTS_LISTINGS_FYP_REPORT"
+	ReportNameGetOrderReportDataShipping                       ReportName = "GET_ORDER_REPORT_DATA_SHIPPING"
+	ReportNameGetRestockInventoryRecommendationsReport         ReportName = "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT"
+	ReportNameGetSellerFeedbackData                            ReportName = "GET_SELLER_FEEDBACK_DATA"
+	ReportNameGetStrandedInventoryUIData                       ReportName = "GET_STRANDED_INVENTORY_UI_DATA"
+	ReportNameGetV2SettlementReportDataFlatFile                ReportName = "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE"
+	ReportNameGetXMLAllOrdersDataByOrderDateGeneral            ReportName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
+	ReportNameGetXMLBrowseTreeData                             ReportName = "GET_XML_BROWSE_TREE_DATA"
+	ReportNameGetVendorRealTimeInventoryReport                 ReportName = "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"
 )
 
-func (e StreamName) ToPointer() *StreamName {
+func (e ReportName) ToPointer() *ReportName {
 	return &e
 }
-func (e *StreamName) UnmarshalJSON(data []byte) error {
+func (e *ReportName) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -313,17 +314,20 @@ func (e *StreamName) UnmarshalJSON(data []byte) error {
 	case "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL":
 		fallthrough
 	case "GET_XML_BROWSE_TREE_DATA":
-		*e = StreamName(v)
+		fallthrough
+	case "GET_VENDOR_REAL_TIME_INVENTORY_REPORT":
+		*e = ReportName(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for StreamName: %v", v)
+		return fmt.Errorf("invalid value for ReportName: %v", v)
 	}
 }
 
 type ReportOptions struct {
 	// List of options
 	OptionsList []OptionsList `json:"options_list"`
-	StreamName  StreamName    `json:"stream_name"`
+	ReportName  ReportName    `json:"report_name"`
+	StreamName  string        `json:"stream_name"`
 }
 
 func (o *ReportOptions) GetOptionsList() []OptionsList {
@@ -333,9 +337,16 @@ func (o *ReportOptions) GetOptionsList() []OptionsList {
 	return o.OptionsList
 }
 
-func (o *ReportOptions) GetStreamName() StreamName {
+func (o *ReportOptions) GetReportName() ReportName {
 	if o == nil {
-		return StreamName("")
+		return ReportName("")
+	}
+	return o.ReportName
+}
+
+func (o *ReportOptions) GetStreamName() string {
+	if o == nil {
+		return ""
 	}
 	return o.StreamName
 }

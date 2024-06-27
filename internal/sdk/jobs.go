@@ -115,6 +115,7 @@ func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 	}
 
 	return res, nil
+
 }
 
 // CreateJob - Trigger a sync or reset job of a connection
@@ -212,6 +213,7 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 	}
 
 	return res, nil
+
 }
 
 // GetJob - Get Job status and details
@@ -303,6 +305,7 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 	}
 
 	return res, nil
+
 }
 
 // ListJobs - List Jobs by sync type
@@ -396,4 +399,5 @@ func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest)
 	}
 
 	return res, nil
+
 }

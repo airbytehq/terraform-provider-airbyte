@@ -25,16 +25,16 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
       }
     }
     processing = {
-      chunk_overlap = 10
-      chunk_size    = 0
+      chunk_overlap = 7
+      chunk_size    = 3
       text_fields = [
         "...",
       ]
     }
   }
-  definition_id = "f39a6c15-1a78-4cf1-bc35-89bc3eaba63d"
-  name          = "Lindsay Labadie"
-  workspace_id  = "09ed832d-18dd-4dbe-b1f8-7bb5069e16a5"
+  definition_id = "a735a4e1-8012-43f0-976f-b78bf74fa22d"
+  name          = "Jack Christiansen"
+  workspace_id  = "1b5f134d-0007-4497-b4ae-87c30892ffb0"
 }
 ```
 

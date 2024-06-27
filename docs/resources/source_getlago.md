@@ -18,10 +18,10 @@ resource "airbyte_source_getlago" "my_source_getlago" {
     api_key = "...my_api_key..."
     api_url = "...my_api_url..."
   }
-  definition_id = "83f04591-0a7c-4570-970b-889169da4e6d"
-  name          = "Brooke Deckow"
+  definition_id = "a97a1ae8-9496-4294-b2a0-2ceacfe7e017"
+  name          = "Fredrick Ankunding"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aa386da1-d2dd-4f03-91c4-9c6869005174"
+  workspace_id  = "f2040e06-9282-4dd6-a12c-b01cbd9faeed"
 }
 ```
 

@@ -1,6 +1,6 @@
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
-    convert_conversions_event = true
+    convert_conversions_event = false
     credentials = {
       authenticate_via_google_oauth = {
         access_token  = "...my_access_token..."
@@ -23,12 +23,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 73.14
+                        value = 57.56
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 40.37
+                        value = 31.93
                       }
                     }
                   }
@@ -49,12 +49,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 7.66
+                        value = 35.8
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 46.24
+                        value = 18.49
                       }
                     }
                   }
@@ -66,18 +66,19 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Kenneth Boyle"
+        name = "Edmund Legros"
       },
     ]
     date_ranges_start_date = "2021-01-01"
     keep_empty_rows        = false
+    lookback_window        = 2
     property_ids = [
       "...",
     ]
-    window_in_days = 90
+    window_in_days = 30
   }
-  definition_id = "e1922df2-83a6-4143-93a5-2314031fd7b8"
-  name          = "Lula Feil III"
+  definition_id = "183b00ec-7045-4956-803e-c7b8b68fdfc0"
+  name          = "Miriam Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4c1950da-31eb-4ecd-9b5a-75a7c5fc21d7"
+  workspace_id  = "fd673f59-a8d0-4acc-9948-b0061059fac1"
 }

@@ -20,10 +20,10 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     aws_secret_key  = "...my_aws_secret_key..."
     start_date      = "2021-01-01"
   }
-  definition_id = "9af007bc-0419-41be-b057-f07c546621bd"
-  name          = "Mrs. Blake Maggio"
+  definition_id = "af2b0521-0208-4e03-ab26-8d758466c963"
+  name          = "Justin Bauch MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4f51ed0a-8181-4e6e-95fd-9ebe7b2f5ca6"
+  workspace_id  = "394b84ac-df8d-4b6a-8f7e-23711b260f5d"
 }
 ```
 

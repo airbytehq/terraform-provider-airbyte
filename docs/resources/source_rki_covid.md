@@ -17,10 +17,10 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
   configuration = {
     start_date = "...my_start_date..."
   }
-  definition_id = "24436569-fd64-4cd2-bcf0-8a635d7a8c38"
-  name          = "Rosalie Ward"
+  definition_id = "6bc977a3-bf4d-4ff8-9d83-5d80427d23a4"
+  name          = "Gerald Stoltenberg"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fae93f7f-0f8c-44b4-b8d4-f6833e1f3303"
+  workspace_id  = "723c8e5e-259f-4e4e-b649-3875b5a324c6"
 }
 ```
 

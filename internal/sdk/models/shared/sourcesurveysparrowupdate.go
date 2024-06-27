@@ -142,7 +142,7 @@ func (u *BaseURL) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BaseURL", string(data))
 }
 
 func (u BaseURL) MarshalJSON() ([]byte, error) {
@@ -154,7 +154,7 @@ func (u BaseURL) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GlobalAccount, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type BaseURL: all fields are null")
 }
 
 type SourceSurveySparrowUpdate struct {

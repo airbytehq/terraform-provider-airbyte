@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type SourceLinkedinPagesUpdateSchemasAuthMethod string
@@ -177,7 +178,7 @@ func (u *SourceLinkedinPagesUpdateAuthentication) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceLinkedinPagesUpdateAuthentication", string(data))
 }
 
 func (u SourceLinkedinPagesUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -189,13 +190,55 @@ func (u SourceLinkedinPagesUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceLinkedinPagesUpdateAccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceLinkedinPagesUpdateAuthentication: all fields are null")
+}
+
+// TimeGranularityType - Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH"
+type TimeGranularityType string
+
+const (
+	TimeGranularityTypeDay   TimeGranularityType = "DAY"
+	TimeGranularityTypeMonth TimeGranularityType = "MONTH"
+)
+
+func (e TimeGranularityType) ToPointer() *TimeGranularityType {
+	return &e
+}
+func (e *TimeGranularityType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "DAY":
+		fallthrough
+	case "MONTH":
+		*e = TimeGranularityType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TimeGranularityType: %v", v)
+	}
 }
 
 type SourceLinkedinPagesUpdate struct {
 	Credentials *SourceLinkedinPagesUpdateAuthentication `json:"credentials,omitempty"`
 	// Specify the Organization ID
 	OrgID string `json:"org_id"`
+	// Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{"{{"}} "\n" }} {{"{{"}} response.errorDetails }}
+	StartDate *time.Time `default:"2023-01-01T00:00:00Z" json:"start_date"`
+	// Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH"
+	TimeGranularityType *TimeGranularityType `default:"DAY" json:"time_granularity_type"`
+}
+
+func (s SourceLinkedinPagesUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceLinkedinPagesUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceLinkedinPagesUpdate) GetCredentials() *SourceLinkedinPagesUpdateAuthentication {
@@ -210,4 +253,18 @@ func (o *SourceLinkedinPagesUpdate) GetOrgID() string {
 		return ""
 	}
 	return o.OrgID
+}
+
+func (o *SourceLinkedinPagesUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceLinkedinPagesUpdate) GetTimeGranularityType() *TimeGranularityType {
+	if o == nil {
+		return nil
+	}
+	return o.TimeGranularityType
 }

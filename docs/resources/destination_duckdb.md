@@ -15,13 +15,13 @@ DestinationDuckdb Resource
 ```terraform
 resource "airbyte_destination_duckdb" "my_destination_duckdb" {
   configuration = {
-    destination_path   = "/local/destination.duckdb"
+    destination_path   = "motherduck:"
     motherduck_api_key = "...my_motherduck_api_key..."
     schema             = "main"
   }
-  definition_id = "db1eeca9-f91e-4b58-8332-57456993f062"
-  name          = "Carole Hackett"
-  workspace_id  = "0d1987ed-52cb-4ff0-9858-935bdfe27505"
+  definition_id = "b1eeca9f-91eb-458c-b325-7456993f0626"
+  name          = "Tom Kertzmann PhD"
+  workspace_id  = "1987ed52-cbff-4018-9893-5bdfe2750539"
 }
 ```
 

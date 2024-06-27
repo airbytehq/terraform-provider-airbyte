@@ -303,7 +303,7 @@ func (u *DestinationRedshiftSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftSSHTunnelMethod", string(data))
 }
 
 func (u DestinationRedshiftSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -319,50 +319,7 @@ func (u DestinationRedshiftSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationRedshiftPasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
-}
-
-type DestinationRedshiftSchemasMethod string
-
-const (
-	DestinationRedshiftSchemasMethodStandard DestinationRedshiftSchemasMethod = "Standard"
-)
-
-func (e DestinationRedshiftSchemasMethod) ToPointer() *DestinationRedshiftSchemasMethod {
-	return &e
-}
-func (e *DestinationRedshiftSchemasMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Standard":
-		*e = DestinationRedshiftSchemasMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSchemasMethod: %v", v)
-	}
-}
-
-// DestinationRedshiftStandard - <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use S3 uploading.
-type DestinationRedshiftStandard struct {
-	method DestinationRedshiftSchemasMethod `const:"Standard" json:"method"`
-}
-
-func (d DestinationRedshiftStandard) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationRedshiftStandard) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationRedshiftStandard) GetMethod() DestinationRedshiftSchemasMethod {
-	return DestinationRedshiftSchemasMethodStandard
+	return nil, errors.New("could not marshal union type DestinationRedshiftSSHTunnelMethod: all fields are null")
 }
 
 type DestinationRedshiftSchemasEncryptionType string
@@ -509,7 +466,7 @@ func (u *DestinationRedshiftEncryption) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftEncryption", string(data))
 }
 
 func (u DestinationRedshiftEncryption) MarshalJSON() ([]byte, error) {
@@ -521,7 +478,7 @@ func (u DestinationRedshiftEncryption) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationRedshiftAESCBCEnvelopeEncryption, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationRedshiftEncryption: all fields are null")
 }
 
 type DestinationRedshiftMethod string
@@ -766,13 +723,11 @@ type DestinationRedshiftUploadingMethodType string
 
 const (
 	DestinationRedshiftUploadingMethodTypeDestinationRedshiftAWSS3Staging DestinationRedshiftUploadingMethodType = "destination-redshift_AWS S3 Staging"
-	DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard     DestinationRedshiftUploadingMethodType = "destination-redshift_Standard"
 )
 
 // DestinationRedshiftUploadingMethod - The way data will be uploaded to Redshift.
 type DestinationRedshiftUploadingMethod struct {
 	DestinationRedshiftAWSS3Staging *DestinationRedshiftAWSS3Staging
-	DestinationRedshiftStandard     *DestinationRedshiftStandard
 
 	Type DestinationRedshiftUploadingMethodType
 }
@@ -786,23 +741,7 @@ func CreateDestinationRedshiftUploadingMethodDestinationRedshiftAWSS3Staging(des
 	}
 }
 
-func CreateDestinationRedshiftUploadingMethodDestinationRedshiftStandard(destinationRedshiftStandard DestinationRedshiftStandard) DestinationRedshiftUploadingMethod {
-	typ := DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
-
-	return DestinationRedshiftUploadingMethod{
-		DestinationRedshiftStandard: &destinationRedshiftStandard,
-		Type:                        typ,
-	}
-}
-
 func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
-
-	var destinationRedshiftStandard DestinationRedshiftStandard = DestinationRedshiftStandard{}
-	if err := utils.UnmarshalJSON(data, &destinationRedshiftStandard, "", true, true); err == nil {
-		u.DestinationRedshiftStandard = &destinationRedshiftStandard
-		u.Type = DestinationRedshiftUploadingMethodTypeDestinationRedshiftStandard
-		return nil
-	}
 
 	var destinationRedshiftAWSS3Staging DestinationRedshiftAWSS3Staging = DestinationRedshiftAWSS3Staging{}
 	if err := utils.UnmarshalJSON(data, &destinationRedshiftAWSS3Staging, "", true, true); err == nil {
@@ -811,7 +750,7 @@ func (u *DestinationRedshiftUploadingMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftUploadingMethod", string(data))
 }
 
 func (u DestinationRedshiftUploadingMethod) MarshalJSON() ([]byte, error) {
@@ -819,11 +758,7 @@ func (u DestinationRedshiftUploadingMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationRedshiftAWSS3Staging, "", true)
 	}
 
-	if u.DestinationRedshiftStandard != nil {
-		return utils.MarshalJSON(u.DestinationRedshiftStandard, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationRedshiftUploadingMethod: all fields are null")
 }
 
 type DestinationRedshift struct {

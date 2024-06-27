@@ -15,10 +15,10 @@ SourceXkcd Resource
 ```terraform
 resource "airbyte_source_xkcd" "my_source_xkcd" {
   configuration = {}
-  definition_id = "dccb9fd6-e1ad-4747-8b83-20ef50a8ca76"
-  name          = "Jeffrey Kuvalis"
+  definition_id = "66c12869-f984-4d61-b828-542bb37a458f"
+  name          = "Ms. Lowell Stiedemann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a280df18-04a6-47b9-b3e5-8149512957c2"
+  workspace_id  = "1a16fff1-f04a-4eeb-8306-c4f3397c2047"
 }
 ```
 

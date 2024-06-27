@@ -18,10 +18,10 @@ resource "airbyte_source_convex" "my_source_convex" {
     access_key     = "...my_access_key..."
     deployment_url = "https://cluttered-owl-337.convex.cloud"
   }
-  definition_id = "740139dc-2cf2-4cb4-9644-2d85f5b6382e"
-  name          = "Ms. Laura Upton"
+  definition_id = "84c3fbc2-4f86-40fc-a851-98c116e72658"
+  name          = "Kellie Torphy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8172f932-271c-49f9-8baa-542e6e080961"
+  workspace_id  = "70fa8ec1-ba80-44bd-a457-a40e8851a354"
 }
 ```
 

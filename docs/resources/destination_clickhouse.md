@@ -24,11 +24,11 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Adah75"
+    username = "Carmelo_Rosenbaum"
   }
-  definition_id = "6d65d335-e03a-4beb-b71b-58e872ec68b6"
-  name          = "Shawn Olson"
-  workspace_id  = "48b53694-1566-4f22-bd30-a28af8c1d27b"
+  definition_id = "65d335e0-3abe-4bb7-9b58-e872ec68b6d2"
+  name          = "Wade Schimmel"
+  workspace_id  = "b5369415-66f2-42fd-b0a2-8af8c1d27b3e"
 }
 ```
 

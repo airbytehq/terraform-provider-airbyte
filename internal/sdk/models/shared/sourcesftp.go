@@ -164,7 +164,7 @@ func (u *SourceSftpAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceSftpAuthentication", string(data))
 }
 
 func (u SourceSftpAuthentication) MarshalJSON() ([]byte, error) {
@@ -176,7 +176,7 @@ func (u SourceSftpAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpSSHKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceSftpAuthentication: all fields are null")
 }
 
 type Sftp string

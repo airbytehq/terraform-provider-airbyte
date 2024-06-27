@@ -19,10 +19,10 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date = "2022-01-01"
     url        = "...my_url..."
   }
-  definition_id = "3950717b-206b-48fd-a8b4-8bf3f0e9631e"
-  name          = "Myron O'Reilly"
+  definition_id = "a0625cbf-f5b3-41f2-b930-4d3ebf32902d"
+  name          = "Hector Breitenberg Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a2ee7a1e-0cb6-4197-895b-91e126100f09"
+  workspace_id  = "be882924-ee80-4aa2-980d-84713ebef014"
 }
 ```
 

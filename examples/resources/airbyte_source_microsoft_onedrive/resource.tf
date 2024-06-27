@@ -14,7 +14,7 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 4
+        days_to_sync_if_history_is_full = 6
         format = {
           avro_format = {
             double_as_string = true
@@ -24,15 +24,15 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Ramon Reinger"
+        name              = "Jeanette Larson"
         primary_key       = "...my_primary_key..."
         schemaless        = true
-        validation_policy = "Wait for Discover"
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "af825bea-4ec8-47aa-bfeb-9ea290f7e9f4"
-  name          = "Gertrude Hoeger"
+  definition_id = "45d14463-0331-48f2-9cf1-0b0742b93b49"
+  name          = "Miss Joshua Brekke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2b69c61d-27bb-4ad3-b0bf-8ca743bfb150"
+  workspace_id  = "20ccad5a-dc13-430e-b574-88395b5ae042"
 }

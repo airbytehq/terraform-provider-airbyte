@@ -24,12 +24,12 @@ resource "airbyte_source_google_analytics_v4_service_account_only" "my_source_go
     end_date       = "2020-06-01"
     start_date     = "2020-06-01"
     view_id        = "...my_view_id..."
-    window_in_days = 30
+    window_in_days = 200
   }
-  definition_id = "b676fb73-1c6d-4524-9e98-21d4fc03242c"
-  name          = "Kristopher Cormier"
+  definition_id = "f0f35d94-2704-4e93-abb3-6d8aaea00f0c"
+  name          = "Kara Macejkovic"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3a0d30eb-91c3-4df2-9934-9552dc8258f3"
+  workspace_id  = "89e625ba-e876-4a32-9c31-e1b4b67e953b"
 }
 ```
 

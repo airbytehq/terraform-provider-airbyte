@@ -7,7 +7,7 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     }
     spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  definition_id = "a13f0bea-64a2-437e-8a59-e7bfd1d496bd"
-  name          = "Ms. Bertha Stoltenberg"
-  workspace_id  = "4a7d5d4b-2ee1-453b-82c3-2f48f6e543a0"
+  definition_id = "f0f39a6c-151a-478c-b13c-3589bc3eaba6"
+  name          = "Freda Dicki"
+  workspace_id  = "7f09ed83-2d18-4ddd-bef1-f87bb5069e16"
 }

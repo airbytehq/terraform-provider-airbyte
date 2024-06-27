@@ -17,14 +17,14 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
     data_region        = "EU Residency Server"
-    request_time_range = 6
+    request_time_range = 5
     secret_key         = "...my_secret_key..."
     start_date         = "2021-01-25T00:00:00Z"
   }
-  definition_id = "afeef69e-ad1e-45d3-a90e-fc6e828b1d2d"
-  name          = "Wm Herman"
+  definition_id = "21b517b1-6f1f-4884-abcd-5137451945c4"
+  name          = "Mrs. Sylvia Howe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a9ea927c-ae7b-429c-85e6-b85628652e0f"
+  workspace_id  = "6ae8aa3c-4f28-4791-bb86-68105e1180fb"
 }
 ```
 

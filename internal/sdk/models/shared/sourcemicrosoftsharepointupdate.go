@@ -219,7 +219,7 @@ func (u *SourceMicrosoftSharepointUpdateAuthentication) UnmarshalJSON(data []byt
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateAuthentication", string(data))
 }
 
 func (u SourceMicrosoftSharepointUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -231,7 +231,7 @@ func (u SourceMicrosoftSharepointUpdateAuthentication) MarshalJSON() ([]byte, er
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateServiceKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateAuthentication: all fields are null")
 }
 
 // SourceMicrosoftSharepointUpdateSearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
@@ -361,7 +361,7 @@ func (u *SourceMicrosoftSharepointUpdateProcessing) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateProcessing", string(data))
 }
 
 func (u SourceMicrosoftSharepointUpdateProcessing) MarshalJSON() ([]byte, error) {
@@ -369,7 +369,7 @@ func (u SourceMicrosoftSharepointUpdateProcessing) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateLocal, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateProcessing: all fields are null")
 }
 
 // SourceMicrosoftSharepointUpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
@@ -770,7 +770,7 @@ func (u *SourceMicrosoftSharepointUpdateCSVHeaderDefinition) UnmarshalJSON(data 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateCSVHeaderDefinition", string(data))
 }
 
 func (u SourceMicrosoftSharepointUpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
@@ -786,7 +786,7 @@ func (u SourceMicrosoftSharepointUpdateCSVHeaderDefinition) MarshalJSON() ([]byt
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateUserProvided, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateCSVHeaderDefinition: all fields are null")
 }
 
 type SourceMicrosoftSharepointUpdateCSVFormat struct {
@@ -1079,7 +1079,7 @@ func (u *SourceMicrosoftSharepointUpdateFormat) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateFormat", string(data))
 }
 
 func (u SourceMicrosoftSharepointUpdateFormat) MarshalJSON() ([]byte, error) {
@@ -1103,7 +1103,7 @@ func (u SourceMicrosoftSharepointUpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateFormat: all fields are null")
 }
 
 // SourceMicrosoftSharepointUpdateValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.

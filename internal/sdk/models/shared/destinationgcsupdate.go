@@ -103,7 +103,7 @@ func (u *Authentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Authentication", string(data))
 }
 
 func (u Authentication) MarshalJSON() ([]byte, error) {
@@ -111,7 +111,7 @@ func (u Authentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.HMACKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Authentication: all fields are null")
 }
 
 // DestinationGcsUpdateCompressionCodec - The compression algorithm used to compress data pages.
@@ -394,7 +394,7 @@ func (u *DestinationGcsUpdateCompression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsUpdateCompression", string(data))
 }
 
 func (u DestinationGcsUpdateCompression) MarshalJSON() ([]byte, error) {
@@ -406,7 +406,7 @@ func (u DestinationGcsUpdateCompression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsUpdateGZIP, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsUpdateCompression: all fields are null")
 }
 
 type DestinationGcsUpdateSchemasFormatFormatType string
@@ -602,7 +602,7 @@ func (u *Compression) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Compression", string(data))
 }
 
 func (u Compression) MarshalJSON() ([]byte, error) {
@@ -614,7 +614,7 @@ func (u Compression) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Gzip, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type Compression: all fields are null")
 }
 
 // Normalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
@@ -1134,7 +1134,7 @@ func (u *CompressionCodec) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CompressionCodec", string(data))
 }
 
 func (u CompressionCodec) MarshalJSON() ([]byte, error) {
@@ -1162,7 +1162,7 @@ func (u CompressionCodec) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Snappy, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type CompressionCodec: all fields are null")
 }
 
 type DestinationGcsUpdateFormatType string
@@ -1304,7 +1304,7 @@ func (u *DestinationGcsUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsUpdateOutputFormat", string(data))
 }
 
 func (u DestinationGcsUpdateOutputFormat) MarshalJSON() ([]byte, error) {
@@ -1324,7 +1324,7 @@ func (u DestinationGcsUpdateOutputFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationGcsUpdateParquetColumnarStorage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsUpdateOutputFormat: all fields are null")
 }
 
 // GCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.

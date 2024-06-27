@@ -32,8 +32,7 @@ func PopulateQueryParams(_ context.Context, req *http.Request, queryParams inter
 }
 
 func populateQueryParams(queryParams interface{}, globals interface{}, values url.Values, skipFields []string) ([]string, error) {
-	queryParamsStructType := reflect.TypeOf(queryParams)
-	queryParamsValType := reflect.ValueOf(queryParams)
+	queryParamsStructType, queryParamsValType := dereferencePointers(reflect.TypeOf(queryParams), reflect.ValueOf(queryParams))
 
 	globalsAlreadyPopulated := []string{}
 

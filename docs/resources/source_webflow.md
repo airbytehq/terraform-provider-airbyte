@@ -19,10 +19,10 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     api_key        = "a very long hex sequence"
     site_id        = "a relatively long hex sequence"
   }
-  definition_id = "02bc2f7f-5dfb-42c2-ab49-86915d3324b4"
-  name          = "Raymond Mayer"
+  definition_id = "d12e392c-e90b-4916-9fb3-0db2efb21ef2"
+  name          = "Israel Gleason"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "393429d3-165d-4d85-95e9-c61e20db5f4b"
+  workspace_id  = "f07f2e77-2136-4664-afa9-b2db7532b28c"
 }
 ```
 

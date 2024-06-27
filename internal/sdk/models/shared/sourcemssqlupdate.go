@@ -198,7 +198,7 @@ func (u *UpdateMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateMethod", string(data))
 }
 
 func (u UpdateMethod) MarshalJSON() ([]byte, error) {
@@ -210,7 +210,7 @@ func (u UpdateMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type UpdateMethod: all fields are null")
 }
 
 type SourceMssqlUpdateSchemasSSLMethodSSLMethodSSLMethod string
@@ -427,7 +427,7 @@ func (u *SourceMssqlUpdateSSLMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMssqlUpdateSSLMethod", string(data))
 }
 
 func (u SourceMssqlUpdateSSLMethod) MarshalJSON() ([]byte, error) {
@@ -443,7 +443,7 @@ func (u SourceMssqlUpdateSSLMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMssqlUpdateEncryptedVerifyCertificate, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMssqlUpdateSSLMethod: all fields are null")
 }
 
 // SourceMssqlUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -717,7 +717,7 @@ func (u *SourceMssqlUpdateSSHTunnelMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMssqlUpdateSSHTunnelMethod", string(data))
 }
 
 func (u SourceMssqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -733,7 +733,7 @@ func (u SourceMssqlUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMssqlUpdatePasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceMssqlUpdateSSHTunnelMethod: all fields are null")
 }
 
 type SourceMssqlUpdate struct {

@@ -8,12 +8,12 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// SourceKlarnaUpdateRegion - Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
+// SourceKlarnaUpdateRegion - Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
 type SourceKlarnaUpdateRegion string
 
 const (
 	SourceKlarnaUpdateRegionEu SourceKlarnaUpdateRegion = "eu"
-	SourceKlarnaUpdateRegionUs SourceKlarnaUpdateRegion = "us"
+	SourceKlarnaUpdateRegionNa SourceKlarnaUpdateRegion = "na"
 	SourceKlarnaUpdateRegionOc SourceKlarnaUpdateRegion = "oc"
 )
 
@@ -28,7 +28,7 @@ func (e *SourceKlarnaUpdateRegion) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "eu":
 		fallthrough
-	case "us":
+	case "na":
 		fallthrough
 	case "oc":
 		*e = SourceKlarnaUpdateRegion(v)
@@ -43,7 +43,7 @@ type SourceKlarnaUpdate struct {
 	Password string `json:"password"`
 	// Propertie defining if connector is used against playground or production environment
 	Playground *bool `default:"false" json:"playground"`
-	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
+	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
 	Region SourceKlarnaUpdateRegion `json:"region"`
 	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
 	Username string `json:"username"`

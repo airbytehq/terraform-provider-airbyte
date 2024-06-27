@@ -428,7 +428,7 @@ func (u *DestinationQdrantEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantEmbedding", string(data))
 }
 
 func (u DestinationQdrantEmbedding) MarshalJSON() ([]byte, error) {
@@ -452,7 +452,7 @@ func (u DestinationQdrantEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationQdrantOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantEmbedding: all fields are null")
 }
 
 type DestinationQdrantSchemasIndexingAuthMethodMode string
@@ -597,7 +597,7 @@ func (u *DestinationQdrantAuthenticationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantAuthenticationMethod", string(data))
 }
 
 func (u DestinationQdrantAuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -609,7 +609,7 @@ func (u DestinationQdrantAuthenticationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationQdrantNoAuth, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantAuthenticationMethod: all fields are null")
 }
 
 // DestinationQdrantDistanceMetric - The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector.
@@ -1033,7 +1033,7 @@ func (u *DestinationQdrantTextSplitter) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationQdrantTextSplitter", string(data))
 }
 
 func (u DestinationQdrantTextSplitter) MarshalJSON() ([]byte, error) {
@@ -1049,7 +1049,7 @@ func (u DestinationQdrantTextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationQdrantByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationQdrantTextSplitter: all fields are null")
 }
 
 type DestinationQdrantProcessingConfigModel struct {

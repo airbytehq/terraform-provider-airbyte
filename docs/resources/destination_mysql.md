@@ -25,11 +25,11 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Barbara.Kunde41"
+    username = "Jimmy.Cummings31"
   }
-  definition_id = "83bb76cb-dd42-4c04-b7b6-03cc8cd887e7"
-  name          = "Susan Dickinson I"
-  workspace_id  = "ef7fc0d1-76e5-4f41-8549-f1242182d15e"
+  definition_id = "ef4e895c-9212-4618-852d-1432f33897fe"
+  name          = "Francis Rutherford"
+  workspace_id  = "c8c4bf88-2725-4c3c-abc3-9a6d3f396b39"
 }
 ```
 

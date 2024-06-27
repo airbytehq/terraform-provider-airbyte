@@ -8,8 +8,8 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
         initial_waiting_seconds              = 7
-        invalid_cdc_cursor_position_behavior = "Fail sync"
-        queue_size                           = 9
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
+        queue_size                           = 7
       }
     }
     schemas = [
@@ -21,10 +21,10 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Salvatore_Weissnat66"
+    username = "Caroline_Harvey"
   }
-  definition_id = "b6ad0e44-a4dc-4970-8078-573a20ac990f"
-  name          = "Wm Corkery"
+  definition_id = "4141a21c-8938-4ad6-bcbb-78bed98212c7"
+  name          = "Eleanor O'Hara V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7a67a851-50ea-4861-a0cd-618d74280681"
+  workspace_id  = "387527d5-e3ef-4724-ad0c-0b7968b72421"
 }

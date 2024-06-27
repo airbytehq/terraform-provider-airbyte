@@ -326,7 +326,7 @@ func (u *SourceLinkedinAdsUpdateAuthentication) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceLinkedinAdsUpdateAuthentication", string(data))
 }
 
 func (u SourceLinkedinAdsUpdateAuthentication) MarshalJSON() ([]byte, error) {
@@ -338,7 +338,7 @@ func (u SourceLinkedinAdsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.AccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceLinkedinAdsUpdateAuthentication: all fields are null")
 }
 
 type SourceLinkedinAdsUpdate struct {

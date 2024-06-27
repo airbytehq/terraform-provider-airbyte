@@ -1505,6 +1505,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	} else {
 		keepEmptyRows = nil
 	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	var propertyIds []string = []string{}
 	for _, propertyIdsItem := range r.Configuration.PropertyIds {
 		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
@@ -1521,6 +1527,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 		CustomReportsArray:      customReportsArray,
 		DateRangesStartDate:     dateRangesStartDate,
 		KeepEmptyRows:           keepEmptyRows,
+		LookbackWindow:          lookbackWindow,
 		PropertyIds:             propertyIds,
 		WindowInDays:            windowInDays,
 	}
@@ -3054,6 +3061,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	} else {
 		keepEmptyRows = nil
 	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	var propertyIds []string = []string{}
 	for _, propertyIdsItem := range r.Configuration.PropertyIds {
 		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
@@ -3070,6 +3083,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 		CustomReportsArray:      customReportsArray,
 		DateRangesStartDate:     dateRangesStartDate,
 		KeepEmptyRows:           keepEmptyRows,
+		LookbackWindow:          lookbackWindow,
 		PropertyIds:             propertyIds,
 		WindowInDays:            windowInDays,
 	}

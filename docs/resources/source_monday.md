@@ -21,10 +21,10 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "92c2050f-df2b-4a7d-83d2-0d3384e15ed5"
-  name          = "Dolores Cruickshank"
+  definition_id = "0634c9db-1c42-4670-9282-f0b308e78729"
+  name          = "Mr. Emmett Hermiston"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "88faeaba-deb9-43c7-b287-9b6069b6a28d"
+  workspace_id  = "b690b273-6f2f-47a3-b95d-4abcb3edfbba"
 }
 ```
 

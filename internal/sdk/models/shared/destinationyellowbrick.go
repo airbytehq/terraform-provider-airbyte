@@ -473,7 +473,7 @@ func (u *DestinationYellowbrickSSLModes) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationYellowbrickSSLModes", string(data))
 }
 
 func (u DestinationYellowbrickSSLModes) MarshalJSON() ([]byte, error) {
@@ -501,7 +501,7 @@ func (u DestinationYellowbrickSSLModes) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationYellowbrickVerifyFull, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationYellowbrickSSLModes: all fields are null")
 }
 
 // DestinationYellowbrickSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
@@ -775,7 +775,7 @@ func (u *DestinationYellowbrickSSHTunnelMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationYellowbrickSSHTunnelMethod", string(data))
 }
 
 func (u DestinationYellowbrickSSHTunnelMethod) MarshalJSON() ([]byte, error) {
@@ -791,7 +791,7 @@ func (u DestinationYellowbrickSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationYellowbrickPasswordAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationYellowbrickSSHTunnelMethod: all fields are null")
 }
 
 type DestinationYellowbrick struct {

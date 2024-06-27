@@ -173,7 +173,7 @@ func (u *DestinationAwsDatalakeAuthenticationMode) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationAwsDatalakeAuthenticationMode", string(data))
 }
 
 func (u DestinationAwsDatalakeAuthenticationMode) MarshalJSON() ([]byte, error) {
@@ -185,7 +185,7 @@ func (u DestinationAwsDatalakeAuthenticationMode) MarshalJSON() ([]byte, error) 
 		return utils.MarshalJSON(u.DestinationAwsDatalakeIAMUser, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationAwsDatalakeAuthenticationMode: all fields are null")
 }
 
 type AwsDatalake string
@@ -428,7 +428,7 @@ func (u *DestinationAwsDatalakeOutputFormatWildcard) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationAwsDatalakeOutputFormatWildcard", string(data))
 }
 
 func (u DestinationAwsDatalakeOutputFormatWildcard) MarshalJSON() ([]byte, error) {
@@ -440,7 +440,7 @@ func (u DestinationAwsDatalakeOutputFormatWildcard) MarshalJSON() ([]byte, error
 		return utils.MarshalJSON(u.DestinationAwsDatalakeParquetColumnarStorage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationAwsDatalakeOutputFormatWildcard: all fields are null")
 }
 
 // DestinationAwsDatalakeChooseHowToPartitionData - Partition data by cursor fields when a cursor field is a date

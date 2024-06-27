@@ -177,7 +177,7 @@ func (u *SourceAuth0AuthenticationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceAuth0AuthenticationMethod", string(data))
 }
 
 func (u SourceAuth0AuthenticationMethod) MarshalJSON() ([]byte, error) {
@@ -189,7 +189,7 @@ func (u SourceAuth0AuthenticationMethod) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAuth0OAuth2AccessToken, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceAuth0AuthenticationMethod: all fields are null")
 }
 
 type Auth0 string

@@ -11,10 +11,11 @@ generation:
     oAuth2ClientCredentialsEnabled: true
   telemetryEnabled: true
 terraform:
-  version: 0.5.0
+  version: 0.6.0
   additionalDataSources: []
   additionalDependencies: {}
   additionalResources: []
+  allowUnknownFieldsInWeakUnions: false
   author: airbytehq
   environmentVariables: []
   imports:

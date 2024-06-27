@@ -1,12 +1,12 @@
 resource "airbyte_source_twitter" "my_source_twitter" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2022-07-05T12:18:51.962Z"
+    end_date   = "2020-01-18T12:46:16.717Z"
     query      = "...my_query..."
-    start_date = "2021-11-23T00:10:09.937Z"
+    start_date = "2022-03-25T00:43:50.915Z"
   }
-  definition_id = "cbe7ccff-9d07-4247-87a4-b37eb205ddb7"
-  name          = "Ryan Rice Jr."
+  definition_id = "3592a5dd-7ddb-4d79-bd2e-b894fd682a67"
+  name          = "Whitney Casper"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "95e07e10-3643-4a6d-bd2a-60225b2ac62e"
+  workspace_id  = "dbbaeb9b-5c2e-42ee-8b85-f41cf2efd5ed"
 }

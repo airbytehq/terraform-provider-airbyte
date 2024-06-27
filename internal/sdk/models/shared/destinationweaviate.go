@@ -568,7 +568,7 @@ func (u *DestinationWeaviateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationWeaviateEmbedding", string(data))
 }
 
 func (u DestinationWeaviateEmbedding) MarshalJSON() ([]byte, error) {
@@ -600,7 +600,7 @@ func (u DestinationWeaviateEmbedding) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationWeaviateOpenAICompatible, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationWeaviateEmbedding: all fields are null")
 }
 
 type DestinationWeaviateHeader struct {
@@ -845,7 +845,7 @@ func (u *DestinationWeaviateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationWeaviateAuthentication", string(data))
 }
 
 func (u DestinationWeaviateAuthentication) MarshalJSON() ([]byte, error) {
@@ -861,7 +861,7 @@ func (u DestinationWeaviateAuthentication) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationWeaviateNoAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationWeaviateAuthentication: all fields are null")
 }
 
 // DestinationWeaviateDefaultVectorizer - The vectorizer to use if new classes need to be created
@@ -1309,7 +1309,7 @@ func (u *DestinationWeaviateTextSplitter) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationWeaviateTextSplitter", string(data))
 }
 
 func (u DestinationWeaviateTextSplitter) MarshalJSON() ([]byte, error) {
@@ -1325,7 +1325,7 @@ func (u DestinationWeaviateTextSplitter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DestinationWeaviateByProgrammingLanguage, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationWeaviateTextSplitter: all fields are null")
 }
 
 type DestinationWeaviateProcessingConfigModel struct {

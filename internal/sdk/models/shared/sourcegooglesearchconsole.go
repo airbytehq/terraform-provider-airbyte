@@ -196,7 +196,7 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSearchConsoleAuthenticationType", string(data))
 }
 
 func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
@@ -208,7 +208,7 @@ func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, erro
 		return utils.MarshalJSON(u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleSearchConsoleAuthenticationType: all fields are null")
 }
 
 // SourceGoogleSearchConsoleValidEnums - An enumeration of dimensions.

@@ -11,7 +11,7 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 6
+        days_to_sync_if_history_is_full = 5
         format = {
           avro_format = {
             double_as_string = false
@@ -21,15 +21,15 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Johanna Abbott"
+        name              = "Marianne Hartmann"
         primary_key       = "...my_primary_key..."
-        schemaless        = false
+        schemaless        = true
         validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "942704e9-3ebb-436d-8aae-a00f0c4c84b8"
-  name          = "Conrad Hyatt"
+  definition_id = "1e5baddd-2747-4bbc-bf24-1709ce4fe165"
+  name          = "Edmund Gleichner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bae876a3-2dc3-41e1-b4b6-7e953bf2defe"
+  workspace_id  = "0e7fb5df-2547-47f3-b0b0-ec7c89bfb0cb"
 }

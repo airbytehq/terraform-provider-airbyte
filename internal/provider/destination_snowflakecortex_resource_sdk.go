@@ -96,7 +96,7 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 	role := r.Configuration.Indexing.Role.ValueString()
 	username := r.Configuration.Indexing.Username.ValueString()
 	warehouse := r.Configuration.Indexing.Warehouse.ValueString()
-	indexing := shared.DestinationSnowflakeCortexIndexing{
+	indexing := shared.DestinationSnowflakeCortexSnowflakeConnection{
 		Credentials:   credentials,
 		Database:      database,
 		DefaultSchema: defaultSchema,
@@ -318,7 +318,7 @@ func (r *DestinationSnowflakeCortexResourceModel) ToSharedDestinationSnowflakeCo
 	role := r.Configuration.Indexing.Role.ValueString()
 	username := r.Configuration.Indexing.Username.ValueString()
 	warehouse := r.Configuration.Indexing.Warehouse.ValueString()
-	indexing := shared.DestinationSnowflakeCortexUpdateIndexing{
+	indexing := shared.SnowflakeConnection{
 		Credentials:   credentials,
 		Database:      database,
 		DefaultSchema: defaultSchema,

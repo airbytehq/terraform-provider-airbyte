@@ -3,8 +3,8 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "d5e5f9cf-b0d1-4e8d-bacc-e90aeed1087b"
-  name          = "Everett Lang"
+  definition_id = "c649b6bc-8e2c-47d0-9e0f-8a2b57adde20"
+  name          = "Mr. Erik Heathcote DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "54ce598c-c59e-4b95-af06-231c57fd8f9d"
+  workspace_id  = "d0612ffd-3df1-4197-8b38-5957e3c921cc"
 }

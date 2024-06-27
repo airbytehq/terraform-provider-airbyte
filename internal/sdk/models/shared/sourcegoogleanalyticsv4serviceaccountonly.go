@@ -92,7 +92,7 @@ func (u *SourceGoogleAnalyticsV4ServiceAccountOnlyCredentials) UnmarshalJSON(dat
 		return nil
 	}
 
-	return errors.New("could not unmarshal into supported union types")
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleAnalyticsV4ServiceAccountOnlyCredentials", string(data))
 }
 
 func (u SourceGoogleAnalyticsV4ServiceAccountOnlyCredentials) MarshalJSON() ([]byte, error) {
@@ -100,7 +100,7 @@ func (u SourceGoogleAnalyticsV4ServiceAccountOnlyCredentials) MarshalJSON() ([]b
 		return utils.MarshalJSON(u.SourceGoogleAnalyticsV4ServiceAccountOnlyServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleAnalyticsV4ServiceAccountOnlyCredentials: all fields are null")
 }
 
 type GoogleAnalyticsV4ServiceAccountOnly string
