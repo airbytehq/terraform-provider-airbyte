@@ -69,10 +69,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
+					// TODO: convert this to a `schema.SetNestedAttribute`
+					// https://developer.hashicorp.com/terraform/plugin/framework/handling-data/attributes/set-nested
 					"streams": schema.ListNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+							speakeasy_listplanmodifier.ListToSet("name"),
 						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
