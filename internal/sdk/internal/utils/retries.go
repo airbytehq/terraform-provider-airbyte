@@ -6,32 +6,25 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/retry"
+	"github.com/cenkalti/backoff/v4"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/cenkalti/backoff/v4"
 )
 
 var errRequestFailed = errors.New("request failed")
 
-type BackoffStrategy struct {
-	InitialInterval int
-	MaxInterval     int
-	Exponent        float64
-	MaxElapsedTime  int
-}
+// Deprecated: Use retry.BackoffStrategy instead.
+type BackoffStrategy = retry.BackoffStrategy
 
-type RetryConfig struct {
-	Strategy              string
-	Backoff               *BackoffStrategy
-	RetryConnectionErrors bool
-}
+// Deprecated: Use retry.Config instead.
+type RetryConfig = retry.Config
 
 type Retries struct {
-	Config      *RetryConfig
+	Config      *retry.Config
 	StatusCodes []string
 }
 
