@@ -115,13 +115,13 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Computed:    true,
 										Optional:    true,
 										Default:     stringdefault.StaticString(""),
-										Description: `Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""`,
+										Description: `Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed:    true,
 										Optional:    true,
 										Default:     int64default.StaticInt64(1200),
-										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200`,
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-setting-up-initial-cdc-waiting-time">initial waiting time</a>. Default: 1200`,
 									},
 									"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
 										Computed:    true,
