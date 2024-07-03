@@ -169,7 +169,7 @@ Required:
 - `host` (String) Enter the account name you want to use to access the database. This is usually the identifier before .snowflakecomputing.com
 - `role` (String) Enter the role that you want to use to access Snowflake
 - `username` (String) Enter the name of the user you want to use to access the database
-- `warehouse` (String) Enter the name of the warehouse that you want to sync data into
+- `warehouse` (String) Enter the name of the warehouse that you want to use as a compute cluster
 
 <a id="nestedatt--configuration--indexing--credentials"></a>
 ### Nested Schema for `configuration.indexing.credentials`
