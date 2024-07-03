@@ -8,6 +8,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/hooks"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/retry"
 	"net/http"
 	"time"
 )
@@ -51,7 +52,7 @@ type sdkConfiguration struct {
 	SDKVersion        string
 	GenVersion        string
 	UserAgent         string
-	RetryConfig       *utils.RetryConfig
+	RetryConfig       *retry.Config
 	Hooks             *hooks.Hooks
 }
 
@@ -133,7 +134,7 @@ func WithSecuritySource(security func(context.Context) (shared.Security, error))
 	}
 }
 
-func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+func WithRetryConfig(retryConfig retry.Config) SDKOption {
 	return func(sdk *SDK) {
 		sdk.sdkConfiguration.RetryConfig = &retryConfig
 	}
@@ -146,8 +147,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.354.2",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.354.2 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			GenVersion:        "2.359.0",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.359.0 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

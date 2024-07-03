@@ -1,8 +1,8 @@
-speakeasyVersion: 1.321.0
+speakeasyVersion: 1.326.0
 sources:
     my-source:
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:3033fa2ed31f47a1508ad2e10594f824a2c68caa25670224e7d576f93c63b269
+        sourceRevisionDigest: sha256:7c049828b8d9b72461c5a1f491f53e16c2a9f066a72cd6b81905a7f74aef6762
         sourceBlobDigest: sha256:bb31cea6549192e0e90dda8d97fa05daa2cf2debac4223ee19e46b59b1c18ce3
         tags:
             - latest
@@ -11,7 +11,7 @@ targets:
     terraform-provider-airbyte:
         source: my-source
         sourceNamespace: my-source
-        sourceRevisionDigest: sha256:3033fa2ed31f47a1508ad2e10594f824a2c68caa25670224e7d576f93c63b269
+        sourceRevisionDigest: sha256:7c049828b8d9b72461c5a1f491f53e16c2a9f066a72cd6b81905a7f74aef6762
         sourceBlobDigest: sha256:bb31cea6549192e0e90dda8d97fa05daa2cf2debac4223ee19e46b59b1c18ce3
         outLocation: /github/workspace/repo
 workflow:

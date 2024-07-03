@@ -3,17 +3,17 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 6a58a667436875db40aa409a888c47c1
   docVersion: 1.0.0
-  speakeasyVersion: 1.321.0
-  generationVersion: 2.354.2
-  releaseVersion: 0.6.0
-  configChecksum: afafa28d80ab5a794b9189ae5a5e2983
+  speakeasyVersion: 1.326.0
+  generationVersion: 2.359.0
+  releaseVersion: 0.7.0
+  configChecksum: 1c7f50b6a94006f98a421e082288d58f
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.1.4
-    core: 3.22.0
+    core: 3.23.0
     globalSecurity: 2.81.6
     globalServerURLs: 2.82.1
     groups: 2.81.2
@@ -33,6 +33,7 @@ generatedFiles:
   - internal/sdk/workspaces.go
   - internal/sdk/sdk.go
   - internal/sdk/models/errors/sdkerror.go
+  - internal/sdk/retry/config.go
   - internal/sdk/types/bigint.go
   - internal/sdk/types/date.go
   - internal/sdk/types/datetime.go
