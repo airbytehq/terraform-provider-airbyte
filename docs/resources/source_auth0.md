@@ -23,10 +23,10 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "007bc041-91be-4b05-bf07-c546621bdba9"
-  name          = "Victoria Haley"
+  definition_id = "e1c5ff22-3389-4204-a261-684e73ef602c"
+  name          = "Raymond Halvorson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "51ed0a81-81e6-4e55-bd9e-be7b2f5ca6ec"
+  workspace_id  = "97cf5896-557c-4e17-8cd6-b10d6388d4fd"
 }
 ```
 

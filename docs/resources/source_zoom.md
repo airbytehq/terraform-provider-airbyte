@@ -20,10 +20,10 @@ resource "airbyte_source_zoom" "my_source_zoom" {
     client_id              = "...my_client_id..."
     client_secret          = "...my_client_secret..."
   }
-  definition_id = "b7c1d354-0fbb-4e2d-8a9d-0010028d11c1"
-  name          = "Leona Bechtelar"
+  definition_id = "34f9589f-4219-48f3-a822-b82a159ebc2b"
+  name          = "Della Brekke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "07cdd8eb-8c75-4c46-9093-8eb2433624d8"
+  workspace_id  = "540fbbe2-d8a9-4d00-9002-8d11c1280d80"
 }
 ```
 

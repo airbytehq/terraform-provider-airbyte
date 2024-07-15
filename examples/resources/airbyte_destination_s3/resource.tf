@@ -1,7 +1,7 @@
 resource "airbyte_destination_s3" "my_destination_s3" {
   configuration = {
     access_key_id     = "A012345678910EXAMPLE"
-    file_name_pattern = "{date}"
+    file_name_pattern = "{timestamp}"
     format = {
       avro_apache_avro = {
         compression_codec = {
@@ -20,7 +20,7 @@ resource "airbyte_destination_s3" "my_destination_s3" {
     s3_path_format    = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "bc3217ac-be2a-4d9f-b186-486fc7b23d6b"
-  name          = "Kyle Luettgen"
-  workspace_id  = "0346c04b-193f-4b28-918e-382726ed560c"
+  definition_id = "aab15fb4-58ba-4d9e-a767-1d5852a459de"
+  name          = "Bonnie Beatty"
+  workspace_id  = "3420a295-e5c0-4996-a877-b187a0987534"
 }

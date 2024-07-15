@@ -4,8 +4,8 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     api_token  = "...my_api_token..."
     start_date = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "c1931372-2140-427e-a71b-638bd648d548"
-  name          = "Lucille O'Conner"
+  definition_id = "8d6eef04-7576-430d-9bc2-dbf188dfabd5"
+  name          = "Miss Ann Bode"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b93d4bbd-e9f2-4bb8-8cd3-fe4ad282938c"
+  workspace_id  = "61dffa69-fe71-443a-be9a-244d7bc1a5a6"
 }

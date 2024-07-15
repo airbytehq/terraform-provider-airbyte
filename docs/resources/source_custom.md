@@ -15,10 +15,10 @@ SourceCustom Resource
 ```terraform
 resource "airbyte_source_custom" "my_source_custom" {
   configuration = { "user" : "charles" }
-  definition_id = "1ba6f5d9-0d5a-48a3-89e2-072bdff3818d"
-  name          = "Dr. Rogelio Harris"
+  definition_id = "1a3541ba-6f5d-490d-9a8a-349e2072bdff"
+  name          = "Carole Buckridge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b32a7817-3abb-482e-aa71-89e9256d7463"
+  workspace_id  = "be50fcb3-2a78-4173-abb8-2e6a7189e925"
 }
 ```
 

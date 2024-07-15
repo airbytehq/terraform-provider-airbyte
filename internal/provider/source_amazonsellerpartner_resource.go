@@ -146,7 +146,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"replication_start_date": schema.StringAttribute{
 						Optional:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.`,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},

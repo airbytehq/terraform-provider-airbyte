@@ -33,10 +33,10 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       username       = "AIRBYTE_USER"
       warehouse      = "AIRBYTE_WAREHOUSE"
     }
-    omit_raw_text = false
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 2
-      chunk_size    = 0
+      chunk_overlap = 9
+      chunk_size    = 2
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -51,14 +51,14 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 6
+          split_level = 4
         }
       }
     }
   }
-  definition_id = "6a04bb96-66e7-4d15-a7ee-dd4643586b68"
-  name          = "Tommie Sporer I"
-  workspace_id  = "c292fcfa-b73b-49ba-9d30-45674ad28dce"
+  definition_id = "51e7d549-6735-4da2-93c8-6a8b9fef8f53"
+  name          = "Jessie Jones"
+  workspace_id  = "de30a86e-4df1-49fa-ac84-c31846ef3644"
 }
 ```
 
@@ -169,7 +169,7 @@ Required:
 - `host` (String) Enter the account name you want to use to access the database. This is usually the identifier before .snowflakecomputing.com
 - `role` (String) Enter the role that you want to use to access Snowflake
 - `username` (String) Enter the name of the user you want to use to access the database
-- `warehouse` (String) Enter the name of the warehouse that you want to sync data into
+- `warehouse` (String) Enter the name of the warehouse that you want to use as a compute cluster
 
 <a id="nestedatt--configuration--indexing--credentials"></a>
 ### Nested Schema for `configuration.indexing.credentials`

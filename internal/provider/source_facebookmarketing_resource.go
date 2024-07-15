@@ -12,6 +12,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -106,6 +107,53 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
 						Description: `The Client Secret for your OAuth app`,
+					},
+					"credentials": schema.SingleNestedAttribute{
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"authenticate_via_facebook_marketing_oauth": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Optional:    true,
+										Sensitive:   true,
+										Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
+									},
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Description: `Client ID for the Facebook Marketing API`,
+									},
+									"client_secret": schema.StringAttribute{
+										Required:    true,
+										Description: `Client Secret for the Facebook Marketing API`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key_authentication"),
+									}...),
+								},
+							},
+							"service_account_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_facebook_marketing_oauth"),
+									}...),
+								},
+							},
+						},
+						Description: `Credentials for connecting to the Facebook Marketing API`,
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
 					},
 					"custom_insights": schema.ListNestedAttribute{
 						Optional: true,

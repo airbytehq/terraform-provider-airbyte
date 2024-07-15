@@ -16,11 +16,10 @@ SourceSnowflake Resource
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     credentials = {
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
+      key_pair_authentication = {
+        private_key          = "...my_private_key..."
+        private_key_password = "...my_private_key_password..."
+        username             = "AIRBYTE_USER"
       }
     }
     database        = "AIRBYTE_DATABASE"
@@ -30,10 +29,10 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "08ecd761-f19b-460a-a080-4c971e60235d"
-  name          = "Frank Marquardt"
+  definition_id = "9943dfa5-2a9e-4475-abff-ba2c1e7b6908"
+  name          = "Sherman Stokes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dad73b79-d20b-448a-8fdc-6fb504a12b77"
+  workspace_id  = "1f19b60a-a080-44c9-b1e6-0235dc09fada"
 }
 ```
 
@@ -77,8 +76,22 @@ Optional:
 
 Optional:
 
+- `key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--key_pair_authentication))
 - `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
 - `username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--username_and_password))
+
+<a id="nestedatt--configuration--credentials--key_pair_authentication"></a>
+### Nested Schema for `configuration.credentials.key_pair_authentication`
+
+Required:
+
+- `private_key` (String, Sensitive) RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.
+- `username` (String) The username you created to allow Airbyte to access the database.
+
+Optional:
+
+- `private_key_password` (String, Sensitive) Passphrase for private key
+
 
 <a id="nestedatt--configuration--credentials--o_auth20"></a>
 ### Nested Schema for `configuration.credentials.o_auth20`

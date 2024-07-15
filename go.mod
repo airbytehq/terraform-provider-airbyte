@@ -2,7 +2,7 @@ module github.com/airbytehq/terraform-provider-airbyte
 
 go 1.21
 
-toolchain go1.21.10
+toolchain go1.22.5
 
 require (
 	github.com/cenkalti/backoff/v4 v4.2.0

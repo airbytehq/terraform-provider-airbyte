@@ -18,10 +18,10 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
     api_key    = "...my_api_key..."
     project_id = "...my_project_id..."
   }
-  definition_id = "447712b4-a020-4883-8aab-effb8d976510"
-  name          = "Lindsey Pouros"
+  definition_id = "ef524043-cb4c-4473-a8c7-bd5915174a55"
+  name          = "Melba Shields"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0a5f2f61-a4e4-4668-89f7-bbeaaef52404"
+  workspace_id  = "1daf7626-ef51-4c5f-a52e-0c6c0cc93e76"
 }
 ```
 

@@ -299,165 +299,6 @@ func (u DestinationRedshiftUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) 
 	return nil, errors.New("could not marshal union type DestinationRedshiftUpdateSSHTunnelMethod: all fields are null")
 }
 
-type DestinationRedshiftUpdateEncryptionType string
-
-const (
-	DestinationRedshiftUpdateEncryptionTypeAesCbcEnvelope DestinationRedshiftUpdateEncryptionType = "aes_cbc_envelope"
-)
-
-func (e DestinationRedshiftUpdateEncryptionType) ToPointer() *DestinationRedshiftUpdateEncryptionType {
-	return &e
-}
-func (e *DestinationRedshiftUpdateEncryptionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "aes_cbc_envelope":
-		*e = DestinationRedshiftUpdateEncryptionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUpdateEncryptionType: %v", v)
-	}
-}
-
-// AESCBCEnvelopeEncryption - Staging data will be encrypted using AES-CBC envelope encryption.
-type AESCBCEnvelopeEncryption struct {
-	encryptionType *DestinationRedshiftUpdateEncryptionType `const:"aes_cbc_envelope" json:"encryption_type"`
-	// The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
-	KeyEncryptingKey *string `json:"key_encrypting_key,omitempty"`
-}
-
-func (a AESCBCEnvelopeEncryption) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AESCBCEnvelopeEncryption) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AESCBCEnvelopeEncryption) GetEncryptionType() *DestinationRedshiftUpdateEncryptionType {
-	return DestinationRedshiftUpdateEncryptionTypeAesCbcEnvelope.ToPointer()
-}
-
-func (o *AESCBCEnvelopeEncryption) GetKeyEncryptingKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.KeyEncryptingKey
-}
-
-type EncryptionType string
-
-const (
-	EncryptionTypeNone EncryptionType = "none"
-)
-
-func (e EncryptionType) ToPointer() *EncryptionType {
-	return &e
-}
-func (e *EncryptionType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "none":
-		*e = EncryptionType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for EncryptionType: %v", v)
-	}
-}
-
-// NoEncryption - Staging data will be stored in plaintext.
-type NoEncryption struct {
-	encryptionType *EncryptionType `const:"none" json:"encryption_type"`
-}
-
-func (n NoEncryption) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(n, "", false)
-}
-
-func (n *NoEncryption) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *NoEncryption) GetEncryptionType() *EncryptionType {
-	return EncryptionTypeNone.ToPointer()
-}
-
-type DestinationRedshiftUpdateEncryptionUnionType string
-
-const (
-	DestinationRedshiftUpdateEncryptionUnionTypeNoEncryption             DestinationRedshiftUpdateEncryptionUnionType = "No encryption"
-	DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption DestinationRedshiftUpdateEncryptionUnionType = "AES-CBC envelope encryption"
-)
-
-// DestinationRedshiftUpdateEncryption - How to encrypt the staging data
-type DestinationRedshiftUpdateEncryption struct {
-	NoEncryption             *NoEncryption
-	AESCBCEnvelopeEncryption *AESCBCEnvelopeEncryption
-
-	Type DestinationRedshiftUpdateEncryptionUnionType
-}
-
-func CreateDestinationRedshiftUpdateEncryptionNoEncryption(noEncryption NoEncryption) DestinationRedshiftUpdateEncryption {
-	typ := DestinationRedshiftUpdateEncryptionUnionTypeNoEncryption
-
-	return DestinationRedshiftUpdateEncryption{
-		NoEncryption: &noEncryption,
-		Type:         typ,
-	}
-}
-
-func CreateDestinationRedshiftUpdateEncryptionAESCBCEnvelopeEncryption(aesCBCEnvelopeEncryption AESCBCEnvelopeEncryption) DestinationRedshiftUpdateEncryption {
-	typ := DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption
-
-	return DestinationRedshiftUpdateEncryption{
-		AESCBCEnvelopeEncryption: &aesCBCEnvelopeEncryption,
-		Type:                     typ,
-	}
-}
-
-func (u *DestinationRedshiftUpdateEncryption) UnmarshalJSON(data []byte) error {
-
-	var noEncryption NoEncryption = NoEncryption{}
-	if err := utils.UnmarshalJSON(data, &noEncryption, "", true, true); err == nil {
-		u.NoEncryption = &noEncryption
-		u.Type = DestinationRedshiftUpdateEncryptionUnionTypeNoEncryption
-		return nil
-	}
-
-	var aesCBCEnvelopeEncryption AESCBCEnvelopeEncryption = AESCBCEnvelopeEncryption{}
-	if err := utils.UnmarshalJSON(data, &aesCBCEnvelopeEncryption, "", true, true); err == nil {
-		u.AESCBCEnvelopeEncryption = &aesCBCEnvelopeEncryption
-		u.Type = DestinationRedshiftUpdateEncryptionUnionTypeAESCBCEnvelopeEncryption
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationRedshiftUpdateEncryption", string(data))
-}
-
-func (u DestinationRedshiftUpdateEncryption) MarshalJSON() ([]byte, error) {
-	if u.NoEncryption != nil {
-		return utils.MarshalJSON(u.NoEncryption, "", true)
-	}
-
-	if u.AESCBCEnvelopeEncryption != nil {
-		return utils.MarshalJSON(u.AESCBCEnvelopeEncryption, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationRedshiftUpdateEncryption: all fields are null")
-}
-
 type DestinationRedshiftUpdateMethod string
 
 const (
@@ -608,8 +449,6 @@ func (e *DestinationRedshiftUpdateS3BucketRegion) UnmarshalJSON(data []byte) err
 type AWSS3Staging struct {
 	// This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 	AccessKeyID string `json:"access_key_id"`
-	// How to encrypt the staging data
-	Encryption *DestinationRedshiftUpdateEncryption `json:"encryption,omitempty"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string                         `json:"file_name_pattern,omitempty"`
 	method          DestinationRedshiftUpdateMethod `const:"S3 Staging" json:"method"`
@@ -641,13 +480,6 @@ func (o *AWSS3Staging) GetAccessKeyID() string {
 		return ""
 	}
 	return o.AccessKeyID
-}
-
-func (o *AWSS3Staging) GetEncryption() *DestinationRedshiftUpdateEncryption {
-	if o == nil {
-		return nil
-	}
-	return o.Encryption
 }
 
 func (o *AWSS3Staging) GetFileNamePattern() *string {

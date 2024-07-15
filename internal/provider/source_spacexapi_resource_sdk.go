@@ -14,15 +14,15 @@ func (r *SourceSpacexAPIResourceModel) ToSharedSourceSpacexAPICreateRequest() *s
 	} else {
 		id = nil
 	}
-	options := new(string)
+	optionsVar := new(string)
 	if !r.Configuration.Options.IsUnknown() && !r.Configuration.Options.IsNull() {
-		*options = r.Configuration.Options.ValueString()
+		*optionsVar = r.Configuration.Options.ValueString()
 	} else {
-		options = nil
+		optionsVar = nil
 	}
 	configuration := shared.SourceSpacexAPI{
 		ID:      id,
-		Options: options,
+		Options: optionsVar,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -64,15 +64,15 @@ func (r *SourceSpacexAPIResourceModel) ToSharedSourceSpacexAPIPutRequest() *shar
 	} else {
 		id = nil
 	}
-	options := new(string)
+	optionsVar := new(string)
 	if !r.Configuration.Options.IsUnknown() && !r.Configuration.Options.IsNull() {
-		*options = r.Configuration.Options.ValueString()
+		*optionsVar = r.Configuration.Options.ValueString()
 	} else {
-		options = nil
+		optionsVar = nil
 	}
 	configuration := shared.SourceSpacexAPIUpdate{
 		ID:      id,
-		Options: options,
+		Options: optionsVar,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

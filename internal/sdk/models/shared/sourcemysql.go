@@ -104,6 +104,8 @@ func (e *SourceMysqlMethod) UnmarshalJSON(data []byte) error {
 
 // SourceMysqlReadChangesUsingBinaryLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.
 type SourceMysqlReadChangesUsingBinaryLogCDC struct {
+	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
 	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
@@ -122,6 +124,13 @@ func (s *SourceMysqlReadChangesUsingBinaryLogCDC) UnmarshalJSON(data []byte) err
 		return err
 	}
 	return nil
+}
+
+func (o *SourceMysqlReadChangesUsingBinaryLogCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
 }
 
 func (o *SourceMysqlReadChangesUsingBinaryLogCDC) GetInitialWaitingSeconds() *int64 {

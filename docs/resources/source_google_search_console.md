@@ -29,20 +29,20 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         dimensions = [
           "page",
         ]
-        name = "Randolph Stanton"
+        name = "Allen Jenkins MD"
       },
     ]
-    data_state = "final"
+    data_state = "all"
     end_date   = "2021-12-12"
     site_urls = [
       "...",
     ]
-    start_date = "2021-06-12"
+    start_date = "2022-03-09"
   }
-  definition_id = "5ec21a9a-b567-4f13-877e-51fa773fcf1a"
-  name          = "Connie Baumbach"
+  definition_id = "9c174fee-4145-4562-9275-76235e52bb8a"
+  name          = "Roosevelt Lebsack"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "082909d9-7bfa-4bba-9367-1a9ca1d9c174"
+  workspace_id  = "2a7f940d-ec44-4e21-adff-8929e4d23a00"
 }
 ```
 

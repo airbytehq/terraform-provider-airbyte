@@ -20,10 +20,10 @@ resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
     start_date                     = "...my_start_date..."
     web_schedule_country_code      = "global"
   }
-  definition_id = "fe3f7d5a-433d-430c-a4aa-9f684d9ab345"
-  name          = "Ms. Moses Dibbert"
+  definition_id = "3ecae3cb-491e-4a79-92cd-63d3381efe3f"
+  name          = "Mercedes Heathcote"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb2e52a8-6adb-4b57-85cb-e7ccff9d0724"
+  workspace_id  = "33d30ca4-aa9f-4684-99ab-345ef3183cb2"
 }
 ```
 

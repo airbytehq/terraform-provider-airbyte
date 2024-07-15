@@ -1,23 +1,23 @@
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "in"
+    country  = "cn"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "description",
+      "content",
     ]
-    language = "te"
+    language = "ru"
     nullable = [
-      "description",
+      "content",
     ]
-    query               = "Apple OR Microsoft"
+    query               = "(Windows 7) AND (Windows 10)"
     sortby              = "relevance"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Microsoft Windows 10"
-    top_headlines_topic = "technology"
+    top_headlines_query = "Apple AND NOT iPhone"
+    top_headlines_topic = "sports"
   }
-  definition_id = "b617a012-e6bf-468e-9922-df283a614313"
-  name          = "Darrell Cummerata II"
+  definition_id = "5a75a7c5-fc21-4d72-ab31-0b676fb731c6"
+  name          = "Pedro Champlin PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "031fd7b8-2b3c-4164-8195-0da31ebecd9b"
+  workspace_id  = "9821d4fc-0324-42cc-9276-3a0d30eb91c3"
 }

@@ -18,12 +18,16 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     aws_key_id      = "...my_aws_key_id..."
     aws_region_name = "...my_aws_region_name..."
     aws_secret_key  = "...my_aws_secret_key..."
-    start_date      = "2021-01-01"
+    lookup_attributes_filter = {
+      attribute_key   = "EventName"
+      attribute_value = "ConsoleLogin"
+    }
+    start_date = "2021-01-01"
   }
-  definition_id = "af2b0521-0208-4e03-ab26-8d758466c963"
-  name          = "Justin Bauch MD"
+  definition_id = "af007bc0-4191-4beb-857f-07c546621bdb"
+  name          = "Ross Abshire"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "394b84ac-df8d-4b6a-8f7e-23711b260f5d"
+  workspace_id  = "4f51ed0a-8181-4e6e-95fd-9ebe7b2f5ca6"
 }
 ```
 
@@ -52,12 +56,21 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 Required:
 
 - `aws_key_id` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-- `aws_region_name` (String) The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
 - `aws_secret_key` (String, Sensitive) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 
 Optional:
 
-- `start_date` (String) The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD. Default: "1970-01-01"
+- `aws_region_name` (String) The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name. Default: "us-east-1"
+- `lookup_attributes_filter` (Attributes) (see [below for nested schema](#nestedatt--configuration--lookup_attributes_filter))
+- `start_date` (String) The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
+
+<a id="nestedatt--configuration--lookup_attributes_filter"></a>
+### Nested Schema for `configuration.lookup_attributes_filter`
+
+Optional:
+
+- `attribute_key` (String, Sensitive) Default: "EventName"
+- `attribute_value` (String) Default: "ListInstanceAssociations"
 
 ## Import
 

@@ -3,13 +3,13 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
-    limit       = 2
-    period      = "2MTH"
+    limit       = 8
+    period      = "5SEC"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  definition_id = "8783d50d-4d2b-480c-90dc-344f66cbf0e9"
-  name          = "Larry Hayes"
+  definition_id = "cc123e87-83d5-40d4-92b8-0c50dc344f66"
+  name          = "Dr. Randolph Wilderman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "94ace41d-c5b4-42f2-a228-e88647f2d427"
+  workspace_id  = "a05e994a-ce41-4dc5-b42f-2a228e88647f"
 }

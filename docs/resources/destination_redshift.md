@@ -16,7 +16,7 @@ DestinationRedshift Resource
 resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
-    disable_type_dedupe = false
+    disable_type_dedupe = true
     drop_cascade        = true
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
@@ -29,25 +29,20 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     }
     uploading_method = {
       awss3_staging = {
-        access_key_id = "...my_access_key_id..."
-        encryption = {
-          aescbc_envelope_encryption = {
-            key_encrypting_key = "...my_key_encrypting_key..."
-          }
-        }
+        access_key_id      = "...my_access_key_id..."
         file_name_pattern  = "{timestamp}"
         purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "eu-central-2"
+        s3_bucket_region   = "eu-south-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Clark65"
+    username = "Devante10"
   }
-  definition_id = "ab15fb45-8bad-49ea-b671-d5852a459de5"
-  name          = "Jessica Runolfsdottir"
-  workspace_id  = "420a295e-5c09-4962-877b-187a09875344"
+  definition_id = "a29aaf3c-6807-40ec-a153-7042295e6e54"
+  name          = "Ms. Edmund Douglas III"
+  workspace_id  = "586b7399-0fea-469b-aba7-dc7cde8f8d83"
 }
 ```
 
@@ -150,30 +145,10 @@ Required:
 
 Optional:
 
-- `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--encryption))
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
 - `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details. Default: true
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
 - `s3_bucket_region` (String) The region of the S3 staging bucket. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
-
-<a id="nestedatt--configuration--uploading_method--awss3_staging--encryption"></a>
-### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region`
-
-Optional:
-
-- `aescbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--aescbc_envelope_encryption))
-- `no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--no_encryption))
-
-<a id="nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--aescbc_envelope_encryption"></a>
-### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region.aescbc_envelope_encryption`
-
-Optional:
-
-- `key_encrypting_key` (String, Sensitive) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
-
-
-<a id="nestedatt--configuration--uploading_method--awss3_staging--s3_bucket_region--no_encryption"></a>
-### Nested Schema for `configuration.uploading_method.awss3_staging.s3_bucket_region.no_encryption`
 
 ## Import
 

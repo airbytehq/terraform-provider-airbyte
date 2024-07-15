@@ -17,7 +17,7 @@ resource "airbyte_source_orb" "my_source_orb" {
   configuration = {
     api_key              = "...my_api_key..."
     end_date             = "2024-03-01T00:00:00Z"
-    lookback_window_days = 7
+    lookback_window_days = 2
     numeric_event_properties_keys = [
       "...",
     ]
@@ -28,10 +28,10 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  definition_id = "124b6e7b-2083-4a37-b0c9-92762a38aa73"
-  name          = "Julio Mayer"
+  definition_id = "e09a2aae-62d9-4d77-8257-55e6995c5765"
+  name          = "Miss Nadine Wunsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5cb72465-1802-4161-9872-363e09a2aae6"
+  workspace_id  = "422b3629-976b-4741-9bfa-fbdd349afd0c"
 }
 ```
 

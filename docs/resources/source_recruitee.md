@@ -16,12 +16,12 @@ SourceRecruitee Resource
 resource "airbyte_source_recruitee" "my_source_recruitee" {
   configuration = {
     api_key    = "...my_api_key..."
-    company_id = 4
+    company_id = 5
   }
-  definition_id = "1dc53f64-148a-4cb8-b41d-5bf94a01397d"
-  name          = "Muriel Wunsch"
+  definition_id = "6535f73a-4553-45ff-b5d1-d34f0cce5486"
+  name          = "Ms. Nathan O'Reilly PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0aff6604-97cb-4974-a7d8-001cbe4b7daa"
+  workspace_id  = "c53f6414-8acb-48b4-9d5b-f94a01397d3d"
 }
 ```
 

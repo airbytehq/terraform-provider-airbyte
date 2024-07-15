@@ -26,7 +26,7 @@ func newHealth(sdkConfig sdkConfiguration) *Health {
 }
 
 // GetHealthCheck - Health Check
-func (s *Health) GetHealthCheck(ctx context.Context) (*operations.GetHealthCheckResponse, error) {
+func (s *Health) GetHealthCheck(ctx context.Context, opts ...operations.Option) (*operations.GetHealthCheckResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getHealthCheck",
@@ -34,10 +34,32 @@ func (s *Health) GetHealthCheck(ctx context.Context) (*operations.GetHealthCheck
 		SecuritySource: nil,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/health")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)

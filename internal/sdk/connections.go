@@ -27,12 +27,23 @@ func newConnections(sdkConfig sdkConfiguration) *Connections {
 }
 
 // CreateConnection - Create a connection
-func (s *Connections) CreateConnection(ctx context.Context, request shared.ConnectionCreateRequest) (*operations.CreateConnectionResponse, error) {
+func (s *Connections) CreateConnection(ctx context.Context, request shared.ConnectionCreateRequest, opts ...operations.Option) (*operations.CreateConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createConnection",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -44,6 +55,17 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
@@ -125,7 +147,7 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 }
 
 // DeleteConnection - Delete a Connection
-func (s *Connections) DeleteConnection(ctx context.Context, request operations.DeleteConnectionRequest) (*operations.DeleteConnectionResponse, error) {
+func (s *Connections) DeleteConnection(ctx context.Context, request operations.DeleteConnectionRequest, opts ...operations.Option) (*operations.DeleteConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "deleteConnection",
@@ -133,10 +155,32 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/connections/{connectionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
@@ -207,7 +251,7 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 }
 
 // GetConnection - Get Connection details
-func (s *Connections) GetConnection(ctx context.Context, request operations.GetConnectionRequest) (*operations.GetConnectionResponse, error) {
+func (s *Connections) GetConnection(ctx context.Context, request operations.GetConnectionRequest, opts ...operations.Option) (*operations.GetConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getConnection",
@@ -215,10 +259,32 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/connections/{connectionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -299,7 +365,7 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 }
 
 // ListConnections - List connections
-func (s *Connections) ListConnections(ctx context.Context, request operations.ListConnectionsRequest) (*operations.ListConnectionsResponse, error) {
+func (s *Connections) ListConnections(ctx context.Context, request operations.ListConnectionsRequest, opts ...operations.Option) (*operations.ListConnectionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listConnections",
@@ -307,10 +373,32 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/connections")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -395,12 +483,23 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 }
 
 // PatchConnection - Update Connection details
-func (s *Connections) PatchConnection(ctx context.Context, request operations.PatchConnectionRequest) (*operations.PatchConnectionResponse, error) {
+func (s *Connections) PatchConnection(ctx context.Context, request operations.PatchConnectionRequest, opts ...operations.Option) (*operations.PatchConnectionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "patchConnection",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -412,6 +511,17 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "ConnectionPatchRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "PATCH", opURL, bodyReader)

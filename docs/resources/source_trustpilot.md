@@ -25,10 +25,10 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     }
     start_date = "%Y-%m-%dT%H:%M:%S"
   }
-  definition_id = "98fe3f92-c06a-49aa-b270-2875abb88c39"
-  name          = "Marcos Kuhic"
+  definition_id = "d2bde48e-efce-4b9e-8d54-b0894bdd98fe"
+  name          = "Lucia McClure"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "66080f3e-cae3-4cb4-91ea-7992cd63d338"
+  workspace_id  = "06a9aa72-7028-475a-bb88-c398d7966608"
 }
 ```
 

@@ -8,28 +8,28 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     custom_reports = [
       {
         attribution_types = [
-          "INDIVIDUAL",
+          "HOUSEHOLD",
         ]
-        click_window_days = "7"
+        click_window_days = "14"
         columns = [
-          "CAMPAIGN_DAILY_SPEND_CAP",
+          "VIDEO_LENGTH",
         ]
-        conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "30"
-        granularity            = "MONTH"
-        level                  = "PRODUCT_GROUP_TARGETING"
-        name                   = "Dr. Fred Grady"
+        conversion_report_time = "TIME_OF_AD_ACTION"
+        engagement_window_days = "1"
+        granularity            = "HOUR"
+        level                  = "PIN_PROMOTION"
+        name                   = "Mr. Marcos Baumbach DVM"
         start_date             = "2022-07-28"
-        view_window_days       = "1"
+        view_window_days       = "30"
       },
     ]
     start_date = "2022-07-28"
     status = [
-      "ACTIVE",
+      "ARCHIVED",
     ]
   }
-  definition_id = "c879583a-59a8-4255-b101-40178456a4c1"
-  name          = "Bessie Emard"
+  definition_id = "2676b4d9-282a-4d19-925d-5253fa02ef00"
+  name          = "Ms. Moses Boehm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2c277a8e-2388-4fd0-920f-62c51a2676b4"
+  workspace_id  = "81572f72-4d1e-40e7-a708-b9f815bf9f13"
 }

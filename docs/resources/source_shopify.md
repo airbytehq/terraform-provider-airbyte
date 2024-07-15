@@ -15,20 +15,21 @@ SourceShopify Resource
 ```terraform
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
-    bulk_window_in_days = 3
+    bulk_window_in_days = 10
     credentials = {
       api_password = {
         api_password = "...my_api_password..."
       }
     }
     fetch_transactions_user_id = false
+    job_termination_threshold  = 0
     shop                       = "my-store.myshopify.com"
-    start_date                 = "2020-04-28"
+    start_date                 = "2022-06-27"
   }
-  definition_id = "5c37529a-15c3-4606-aa63-f5716d2b265f"
-  name          = "Marguerite Will"
+  definition_id = "db2aae6c-20ac-49c1-9db3-e1c883c55acc"
+  name          = "Glen Schinner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fce7bdd5-81ac-4648-b876-fcad615bcace"
+  workspace_id  = "529a15c3-6062-4a63-b571-6d2b265f2af5"
 }
 ```
 
@@ -63,6 +64,7 @@ Optional:
 - `bulk_window_in_days` (Number) Defines what would be a date range per single BULK Job. Default: 30
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 - `fetch_transactions_user_id` (Boolean) Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch. Default: false
+- `job_termination_threshold` (Number) The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 3600
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"
 
 <a id="nestedatt--configuration--credentials"></a>

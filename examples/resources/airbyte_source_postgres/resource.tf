@@ -19,10 +19,10 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Era_Wisoky"
+    username = "Jayme_Boyer"
   }
-  definition_id = "ec8fedb8-fc35-4367-bfee-523e36b74e8f"
-  name          = "Lula Lemke"
+  definition_id = "206b8fda-8b48-4bf3-b0e9-631ebcafaa2e"
+  name          = "Dr. Clinton Osinski DDS"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d76b02a3-d797-4c2f-9023-950717b206b8"
+  workspace_id  = "b6197095-b91e-4126-900f-09eb706bb016"
 }

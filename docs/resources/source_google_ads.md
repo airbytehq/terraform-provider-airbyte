@@ -31,15 +31,15 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     ]
     customer_id = "6783948572,5839201945"
     customer_status_filter = [
-      "SUSPENDED",
+      "CANCELED",
     ]
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "c5fc21d7-22b3-410b-a76f-b731c6d5241e"
-  name          = "Dr. Armando Dibbert"
+  definition_id = "c9948b00-6105-49fa-81d6-c9b0f0f35d94"
+  name          = "Pearl Batz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fc03242c-cd27-463a-8d30-eb91c3df2593"
+  workspace_id  = "93ebb36d-8aae-4a00-b0c4-c84b89e625ba"
 }
 ```
 

@@ -21,10 +21,10 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "61b1c883-a572-4712-98f3-b6433cb82b32"
-  name          = "Sammy Aufderhar"
+  definition_id = "ee79bd13-e204-4659-bbdc-56c2f2e20259"
+  name          = "Mrs. Ramon Quitzon"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d9a9d8ba-9b0d-4f86-903c-4743ee79bd13"
+  workspace_id  = "98d3fc54-30ae-4066-94a9-1bbbc35ba892"
 }
 ```
 
