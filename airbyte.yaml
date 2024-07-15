@@ -3323,6 +3323,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /sources#Clazar:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceClazarCreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSourceClazar"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\
+        \ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Clazar#create
+  /sources/{sourceId}#Clazar:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSourceClazar"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Clazar#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceClazarPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSourceClazar"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Clazar#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSourceClazar"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Clazar#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /sources#Clickhouse:
     post:
       requestBody:
@@ -4176,6 +4262,92 @@ paths:
       summary: "Delete a Source"
       x-use-speakeasy-middleware: true
       x-speakeasy-entity-operation: Source_Convex#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
+  /sources#Datadog:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceDatadogCreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSourceDatadog"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\
+        \ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Datadog#create
+  /sources/{sourceId}#Datadog:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSourceDatadog"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Datadog#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceDatadogPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSourceDatadog"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Datadog#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSourceDatadog"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Datadog#delete
     parameters:
       - name: "sourceId"
         schema:
@@ -6247,6 +6419,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /sources#Goldcast:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceGoldcastCreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSourceGoldcast"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\
+        \ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Goldcast#create
+  /sources/{sourceId}#Goldcast:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSourceGoldcast"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Goldcast#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceGoldcastPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSourceGoldcast"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Goldcast#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSourceGoldcast"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Goldcast#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /sources#GoogleAds:
     post:
       requestBody:
@@ -6412,92 +6670,6 @@ paths:
       summary: "Delete a Source"
       x-use-speakeasy-middleware: true
       x-speakeasy-entity-operation: Source_GoogleAnalyticsDataApi#delete
-    parameters:
-      - name: "sourceId"
-        schema:
-          format: "UUID"
-          type: "string"
-        in: "path"
-        required: true
-  /sources#GoogleAnalyticsV4ServiceAccountOnly:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SourceGoogleAnalyticsV4ServiceAccountOnlyCreateRequest"
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Successful operation"
-        "400":
-          description: "Invalid data"
-        "403":
-          description: "Not allowed"
-      operationId: "createSourceGoogleAnalyticsV4ServiceAccountOnly"
-      summary: "Create a source"
-      description:
-        "Creates a source given a name, workspace id, and a json blob containing\
-        \ the configuration for the source."
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_GoogleAnalyticsV4ServiceAccountOnly#create
-  /sources/{sourceId}#GoogleAnalyticsV4ServiceAccountOnly:
-    get:
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Get a Source by the id in the path."
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "getSourceGoogleAnalyticsV4ServiceAccountOnly"
-      summary: "Get Source details"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_GoogleAnalyticsV4ServiceAccountOnly#read
-    put:
-      tags:
-        - "Sources"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SourceGoogleAnalyticsV4ServiceAccountOnlyPutRequest"
-      responses:
-        "2XX":
-          description: "The resource was updated successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "putSourceGoogleAnalyticsV4ServiceAccountOnly"
-      summary: "Update a Source fully"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_GoogleAnalyticsV4ServiceAccountOnly#update
-    delete:
-      tags:
-        - "Sources"
-      responses:
-        "2XX":
-          description: "The resource was deleted successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "deleteSourceGoogleAnalyticsV4ServiceAccountOnly"
-      summary: "Delete a Source"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_GoogleAnalyticsV4ServiceAccountOnly#delete
     parameters:
       - name: "sourceId"
         schema:
@@ -12432,92 +12604,6 @@ paths:
       summary: "Delete a Source"
       x-use-speakeasy-middleware: true
       x-speakeasy-entity-operation: Source_Prestashop#delete
-    parameters:
-      - name: "sourceId"
-        schema:
-          format: "UUID"
-          type: "string"
-        in: "path"
-        required: true
-  /sources#PunkApi:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SourcePunkApiCreateRequest"
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Successful operation"
-        "400":
-          description: "Invalid data"
-        "403":
-          description: "Not allowed"
-      operationId: "createSourcePunkApi"
-      summary: "Create a source"
-      description:
-        "Creates a source given a name, workspace id, and a json blob containing\
-        \ the configuration for the source."
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_PunkApi#create
-  /sources/{sourceId}#PunkApi:
-    get:
-      tags:
-        - "Sources"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SourceResponse"
-          description: "Get a Source by the id in the path."
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "getSourcePunkApi"
-      summary: "Get Source details"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_PunkApi#read
-    put:
-      tags:
-        - "Sources"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SourcePunkApiPutRequest"
-      responses:
-        "2XX":
-          description: "The resource was updated successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "putSourcePunkApi"
-      summary: "Update a Source fully"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_PunkApi#update
-    delete:
-      tags:
-        - "Sources"
-      responses:
-        "2XX":
-          description: "The resource was deleted successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "deleteSourcePunkApi"
-      summary: "Delete a Source"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Source_PunkApi#delete
     parameters:
       - name: "sourceId"
         schema:
@@ -19491,92 +19577,6 @@ paths:
           type: "string"
         in: "path"
         required: true
-  /destinations#Langchain:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/DestinationLangchainCreateRequest"
-      tags:
-        - "Destinations"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DestinationResponse"
-          description: "Successful operation"
-        "400":
-          description: "Invalid data"
-        "403":
-          description: "Not allowed"
-      operationId: "createDestinationLangchain"
-      summary: "Create a destination"
-      description:
-        "Creates a destination given a name, workspace id, and a json blob containing\
-        \ the configuration for the destination."
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_Langchain#create
-  /destinations/{destinationId}#Langchain:
-    get:
-      tags:
-        - "Destinations"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DestinationResponse"
-          description: "Get a Destination by the id in the path."
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "getDestinationLangchain"
-      summary: "Get Destination details"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_Langchain#read
-    put:
-      tags:
-        - "Destinations"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/DestinationLangchainPutRequest"
-      responses:
-        "2XX":
-          description: "The resource was updated successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "putDestinationLangchain"
-      summary: "Update a Destination fully"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_Langchain#update
-    delete:
-      tags:
-        - "Destinations"
-      responses:
-        "2XX":
-          description: "The resource was deleted successfully"
-        "403":
-          description: "Not allowed"
-        "404":
-          description: "Not found"
-      operationId: "deleteDestinationLangchain"
-      summary: "Delete a Destination"
-      x-use-speakeasy-middleware: true
-      x-speakeasy-entity-operation: Destination_Langchain#delete
-    parameters:
-      - name: "destinationId"
-        schema:
-          format: "UUID"
-          type: "string"
-        in: "path"
-        required: true
   /destinations#Milvus:
     post:
       requestBody:
@@ -21561,6 +21561,76 @@ components:
       x-speakeasy-component: true
     OAuthInputConfiguration:
       $ref: "#/components/schemas/OAuthConfiguration"
+      x-speakeasy-component: true
+    ApplicationCreate:
+      required:
+      - "name"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+      x-speakeasy-component: true
+    ApplicationReadList:
+      required:
+      - "applications"
+      type: "object"
+      properties:
+        applications:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ApplicationRead"
+      x-speakeasy-component: true
+    ApplicationRead:
+      required:
+      - "id"
+      - "name"
+      - "clientId"
+      - "clientSecret"
+      - "createdAt"
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        clientId:
+          type: "string"
+        clientSecret:
+          type: "string"
+        createdAt:
+          type: "integer"
+          format: "int64"
+      x-speakeasy-component: true
+    ApplicationTokenRequestWithGrant:
+      required:
+      - "client_id"
+      - "client_secret"
+      - "grant_type"
+      type: "object"
+      properties:
+        client_id:
+          type: "string"
+        client_secret:
+          type: "string"
+        grant-type:
+          enum:
+          - "client_credentials"
+      x-speakeasy-component: true
+    PublicAccessTokenResponse:
+      required:
+      - "access_token"
+      - "token_type"
+      - "expires_in"
+      type: "object"
+      properties:
+        access_token:
+          type: "string"
+        token_type:
+          enum:
+          - "Bearer"
+        expires_in:
+          type: "integer"
+          format: "int64"
       x-speakeasy-component: true
     RedirectUrlResponse:
       title: "Root Type for RedirectUrlResponse"
@@ -23673,6 +23743,214 @@ components:
           order: 1
       required:
       - "api_key"
+    source-datadog:
+      title: "Datadog Source Spec"
+      type: "object"
+      required:
+      - "api_key"
+      - "application_key"
+      - "sourceType"
+      properties:
+        api_key:
+          title: "API Key"
+          description: "Datadog API key"
+          type: "string"
+          airbyte_secret: true
+          order: 1
+          x-speakeasy-param-sensitive: true
+        application_key:
+          title: "Application Key"
+          description: "Datadog application key"
+          type: "string"
+          airbyte_secret: true
+          order: 2
+          x-speakeasy-param-sensitive: true
+        query:
+          title: "Query"
+          description: "The search query. This just applies to Incremental syncs.\
+            \ If empty, it'll collect all logs."
+          type: "string"
+          order: 3
+        start_date:
+          title: "Start date"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
+            \ data before this date will not be replicated. This just applies to Incremental\
+            \ syncs."
+          type: "string"
+          examples:
+          - "2022-10-01T00:00:00Z"
+          order: 4
+        site:
+          title: "Site"
+          description: "The site where Datadog data resides in."
+          type: "string"
+          enum:
+          - "datadoghq.com"
+          - "us3.datadoghq.com"
+          - "us5.datadoghq.com"
+          - "datadoghq.eu"
+          - "ddog-gov.com"
+          default: "datadoghq.com"
+          order: 5
+        end_date:
+          title: "End date"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "UTC date and time in the format 2017-01-25T00:00:00Z. Data\
+            \ after this date will  not be replicated. An empty value will represent\
+            \ the current datetime for each  execution. This just applies to Incremental\
+            \ syncs."
+          examples:
+          - "2022-10-01T00:00:00Z"
+          type: "string"
+          order: 6
+        max_records_per_request:
+          type: "integer"
+          title: "Max records per requests"
+          default: 5000
+          minimum: 1
+          maximum: 5000
+          description: "Maximum number of records to collect per request."
+          order: 7
+        queries:
+          title: "Queries"
+          description: "List of queries to be run and used as inputs."
+          type: "array"
+          order: 8
+          default: []
+          items:
+            type: "object"
+            required:
+            - "name"
+            - "data_source"
+            - "query"
+            properties:
+              name:
+                title: "Query Name"
+                description: "The variable name for use in queries."
+                type: "string"
+                order: 1
+              data_source:
+                title: "Data Source"
+                description: "A data source that is powered by the platform."
+                type: "string"
+                enum:
+                - "metrics"
+                - "cloud_cost"
+                - "logs"
+                - "rum"
+                order: 2
+              query:
+                title: "Query"
+                description: "A classic query string."
+                type: "string"
+                order: 3
+        sourceType:
+          title: "datadog"
+          const: "datadog"
+          enum:
+          - "datadog"
+          order: 0
+          type: "string"
+    source-datadog-update:
+      title: "Datadog Source Spec"
+      type: "object"
+      required:
+      - "api_key"
+      - "application_key"
+      properties:
+        api_key:
+          title: "API Key"
+          description: "Datadog API key"
+          type: "string"
+          airbyte_secret: true
+          order: 1
+        application_key:
+          title: "Application Key"
+          description: "Datadog application key"
+          type: "string"
+          airbyte_secret: true
+          order: 2
+        query:
+          title: "Query"
+          description: "The search query. This just applies to Incremental syncs.\
+            \ If empty, it'll collect all logs."
+          type: "string"
+          order: 3
+        start_date:
+          title: "Start date"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
+            \ data before this date will not be replicated. This just applies to Incremental\
+            \ syncs."
+          type: "string"
+          examples:
+          - "2022-10-01T00:00:00Z"
+          order: 4
+        site:
+          title: "Site"
+          description: "The site where Datadog data resides in."
+          type: "string"
+          enum:
+          - "datadoghq.com"
+          - "us3.datadoghq.com"
+          - "us5.datadoghq.com"
+          - "datadoghq.eu"
+          - "ddog-gov.com"
+          default: "datadoghq.com"
+          order: 5
+        end_date:
+          title: "End date"
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+          description: "UTC date and time in the format 2017-01-25T00:00:00Z. Data\
+            \ after this date will  not be replicated. An empty value will represent\
+            \ the current datetime for each  execution. This just applies to Incremental\
+            \ syncs."
+          examples:
+          - "2022-10-01T00:00:00Z"
+          type: "string"
+          order: 6
+        max_records_per_request:
+          type: "integer"
+          title: "Max records per requests"
+          default: 5000
+          minimum: 1
+          maximum: 5000
+          description: "Maximum number of records to collect per request."
+          order: 7
+        queries:
+          title: "Queries"
+          description: "List of queries to be run and used as inputs."
+          type: "array"
+          order: 8
+          default: []
+          items:
+            type: "object"
+            required:
+            - "name"
+            - "data_source"
+            - "query"
+            properties:
+              name:
+                title: "Query Name"
+                description: "The variable name for use in queries."
+                type: "string"
+                order: 1
+              data_source:
+                title: "Data Source"
+                description: "A data source that is powered by the platform."
+                type: "string"
+                enum:
+                - "metrics"
+                - "cloud_cost"
+                - "logs"
+                - "rum"
+                order: 2
+              query:
+                title: "Query"
+                description: "A classic query string."
+                type: "string"
+                order: 3
     source-dockerhub:
       type: "object"
       required:
@@ -23773,27 +24051,17 @@ components:
           example: "1.0.0"
           order: 2
     source-wikipedia-pageviews:
-      title: "Wikipedia Pageviews Spec"
       type: "object"
       required:
-      - "project"
       - "access"
       - "agent"
       - "article"
-      - "start"
-      - "end"
       - "country"
+      - "end"
+      - "project"
+      - "start"
       - "sourceType"
       properties:
-        project:
-          type: "string"
-          title: "Project"
-          description: "If you want to filter by project, use the domain of any Wikimedia\
-            \ project."
-          examples:
-          - "en.wikipedia.org"
-          - "www.mediawiki.org"
-          - "commons.wikimedia.org"
         access:
           type: "string"
           title: "Access"
@@ -23805,6 +24073,7 @@ components:
           - "desktop"
           - "mobile-app"
           - "mobile-web"
+          order: 0
         agent:
           type: "string"
           title: "Agent"
@@ -23816,6 +24085,7 @@ components:
           - "user"
           - "spider"
           - "automated"
+          order: 1
         article:
           type: "string"
           title: "Article"
@@ -23824,16 +24094,7 @@ components:
             \ so that non-URI-safe characters like %, / or ? are accepted."
           examples:
           - "Are_You_the_One%3F"
-        start:
-          type: "string"
-          title: "Start"
-          description: "The date of the first day to include, in YYYYMMDD or YYYYMMDDHH\
-            \ format."
-        end:
-          type: "string"
-          title: "End"
-          description: "The date of the last day to include, in YYYYMMDD or YYYYMMDDHH\
-            \ format."
+          order: 2
         country:
           type: "string"
           title: "Country"
@@ -23842,6 +24103,29 @@ components:
           examples:
           - "FR"
           - "IN"
+          order: 3
+        end:
+          type: "string"
+          title: "End"
+          description: "The date of the last day to include, in YYYYMMDD or YYYYMMDDHH\
+            \ format."
+          order: 4
+        project:
+          type: "string"
+          title: "Project"
+          description: "If you want to filter by project, use the domain of any Wikimedia\
+            \ project."
+          examples:
+          - "en.wikipedia.org"
+          - "www.mediawiki.org"
+          - "commons.wikimedia.org"
+          order: 5
+        start:
+          type: "string"
+          title: "Start"
+          description: "The date of the first day to include, in YYYYMMDD or YYYYMMDDHH\
+            \ format. Also serves as the date to retrieve data for the top articles."
+          order: 6
         sourceType:
           title: "wikipedia-pageviews"
           const: "wikipedia-pageviews"
@@ -23850,26 +24134,16 @@ components:
           order: 0
           type: "string"
     source-wikipedia-pageviews-update:
-      title: "Wikipedia Pageviews Spec"
       type: "object"
       required:
-      - "project"
       - "access"
       - "agent"
       - "article"
-      - "start"
-      - "end"
       - "country"
+      - "end"
+      - "project"
+      - "start"
       properties:
-        project:
-          type: "string"
-          title: "Project"
-          description: "If you want to filter by project, use the domain of any Wikimedia\
-            \ project."
-          examples:
-          - "en.wikipedia.org"
-          - "www.mediawiki.org"
-          - "commons.wikimedia.org"
         access:
           type: "string"
           title: "Access"
@@ -23881,6 +24155,7 @@ components:
           - "desktop"
           - "mobile-app"
           - "mobile-web"
+          order: 0
         agent:
           type: "string"
           title: "Agent"
@@ -23892,6 +24167,7 @@ components:
           - "user"
           - "spider"
           - "automated"
+          order: 1
         article:
           type: "string"
           title: "Article"
@@ -23900,16 +24176,7 @@ components:
             \ so that non-URI-safe characters like %, / or ? are accepted."
           examples:
           - "Are_You_the_One%3F"
-        start:
-          type: "string"
-          title: "Start"
-          description: "The date of the first day to include, in YYYYMMDD or YYYYMMDDHH\
-            \ format."
-        end:
-          type: "string"
-          title: "End"
-          description: "The date of the last day to include, in YYYYMMDD or YYYYMMDDHH\
-            \ format."
+          order: 2
         country:
           type: "string"
           title: "Country"
@@ -23918,6 +24185,29 @@ components:
           examples:
           - "FR"
           - "IN"
+          order: 3
+        end:
+          type: "string"
+          title: "End"
+          description: "The date of the last day to include, in YYYYMMDD or YYYYMMDDHH\
+            \ format."
+          order: 4
+        project:
+          type: "string"
+          title: "Project"
+          description: "If you want to filter by project, use the domain of any Wikimedia\
+            \ project."
+          examples:
+          - "en.wikipedia.org"
+          - "www.mediawiki.org"
+          - "commons.wikimedia.org"
+          order: 5
+        start:
+          type: "string"
+          title: "Start"
+          description: "The date of the first day to include, in YYYYMMDD or YYYYMMDDHH\
+            \ format. Also serves as the date to retrieve data for the top articles."
+          order: 6
     source-google-directory:
       title: "Google Directory Spec"
       type: "object"
@@ -27301,6 +27591,14 @@ components:
             \ data. If you are a `Shopify Plus` user, leave the default value to speed\
             \ up the fetch."
           default: false
+        job_termination_threshold:
+          type: "integer"
+          title: "BULK Job termination threshold"
+          description: "The max time in seconds, after which the single BULK Job should\
+            \ be `CANCELED` and retried. The bigger the value the longer the BULK\
+            \ Job is allowed to run."
+          default: 3600
+          minimum: 1
         sourceType:
           title: "shopify"
           const: "shopify"
@@ -27402,18 +27700,26 @@ components:
             \ data. If you are a `Shopify Plus` user, leave the default value to speed\
             \ up the fetch."
           default: false
+        job_termination_threshold:
+          type: "integer"
+          title: "BULK Job termination threshold"
+          description: "The max time in seconds, after which the single BULK Job should\
+            \ be `CANCELED` and retried. The bigger the value the longer the BULK\
+            \ Job is allowed to run."
+          default: 3600
+          minimum: 1
     source-omnisend:
-      title: "Omnisend Spec"
       type: "object"
       required:
       - "api_key"
       - "sourceType"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
-          description: "API Key"
+          title: "API Key"
           airbyte_secret: true
+          description: "API Key"
+          order: 0
           x-speakeasy-param-sensitive: true
         sourceType:
           title: "omnisend"
@@ -27423,16 +27729,16 @@ components:
           order: 0
           type: "string"
     source-omnisend-update:
-      title: "Omnisend Spec"
       type: "object"
       required:
       - "api_key"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
-          description: "API Key"
+          title: "API Key"
           airbyte_secret: true
+          description: "API Key"
+          order: 0
     source-mongodb-v2:
       title: "MongoDb Source Spec"
       type: "object"
@@ -28462,7 +28768,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -29233,7 +29539,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -32286,13 +32592,51 @@ components:
                 airbyte_secret: true
                 order: 4
                 x-speakeasy-param-sensitive: true
+          - title: "Key Pair Authentication"
+            type: "object"
+            order: 1
+            required:
+            - "username"
+            - "private_key"
+            properties:
+              auth_type:
+                type: "string"
+                const: "Key Pair Authentication"
+                order: 0
+                enum:
+                - "Key Pair Authentication"
+              username:
+                description: "The username you created to allow Airbyte to access\
+                  \ the database."
+                examples:
+                - "AIRBYTE_USER"
+                type: "string"
+                title: "Username"
+                order: 1
+              private_key:
+                type: "string"
+                title: "Private Key"
+                description: "RSA Private key to use for Snowflake connection. See\
+                  \ the <a href=\"https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication\"\
+                  >docs</a> for more information on how to obtain this key."
+                multiline: true
+                airbyte_secret: true
+                order: 2
+                x-speakeasy-param-sensitive: true
+              private_key_password:
+                type: "string"
+                title: "Passphrase"
+                description: "Passphrase for private key"
+                airbyte_secret: true
+                order: 3
+                x-speakeasy-param-sensitive: true
           - title: "Username and Password"
             type: "object"
             required:
             - "username"
             - "password"
             - "auth_type"
-            order: 1
+            order: 2
             properties:
               auth_type:
                 type: "string"
@@ -32419,13 +32763,49 @@ components:
                 description: "Refresh Token for making authenticated requests."
                 airbyte_secret: true
                 order: 4
+          - title: "Key Pair Authentication"
+            type: "object"
+            order: 1
+            required:
+            - "username"
+            - "private_key"
+            properties:
+              auth_type:
+                type: "string"
+                const: "Key Pair Authentication"
+                order: 0
+                enum:
+                - "Key Pair Authentication"
+              username:
+                description: "The username you created to allow Airbyte to access\
+                  \ the database."
+                examples:
+                - "AIRBYTE_USER"
+                type: "string"
+                title: "Username"
+                order: 1
+              private_key:
+                type: "string"
+                title: "Private Key"
+                description: "RSA Private key to use for Snowflake connection. See\
+                  \ the <a href=\"https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication\"\
+                  >docs</a> for more information on how to obtain this key."
+                multiline: true
+                airbyte_secret: true
+                order: 2
+              private_key_password:
+                type: "string"
+                title: "Passphrase"
+                description: "Passphrase for private key"
+                airbyte_secret: true
+                order: 3
           - title: "Username and Password"
             type: "object"
             required:
             - "username"
             - "password"
             - "auth_type"
-            order: 1
+            order: 2
             properties:
               auth_type:
                 type: "string"
@@ -33050,7 +33430,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -33539,7 +33919,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -34916,6 +35296,16 @@ components:
                 default: "Fail sync"
                 order: 3
                 always_show: true
+              initial_load_timeout_hours:
+                type: "integer"
+                title: "Initial Load Timeout in Hours (Advanced)"
+                description: "The amount of time an initial load is allowed to continue\
+                  \ for before catching up on CDC logs."
+                default: 8
+                min: 4
+                max: 24
+                order: 4
+                always_show: true
           - title: "Scan Changes with User Defined Cursor"
             description: "Incrementally detects new inserts and updates using the\
               \ <a href=\"https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor\"\
@@ -35279,6 +35669,16 @@ components:
                 - "Re-sync data"
                 default: "Fail sync"
                 order: 3
+                always_show: true
+              initial_load_timeout_hours:
+                type: "integer"
+                title: "Initial Load Timeout in Hours (Advanced)"
+                description: "The amount of time an initial load is allowed to continue\
+                  \ for before catching up on CDC logs."
+                default: 8
+                min: 4
+                max: 24
+                order: 4
                 always_show: true
           - title: "Scan Changes with User Defined Cursor"
             description: "Incrementally detects new inserts and updates using the\
@@ -35804,11 +36204,10 @@ components:
           maximum: 100000
           default: 100
     source-orb:
-      title: "Orb Spec"
       type: "object"
       required:
-      - "api_key"
       - "start_date"
+      - "api_key"
       - "sourceType"
       properties:
         api_key:
@@ -35816,18 +36215,19 @@ components:
           title: "Orb API Key"
           description: "Orb API Key, issued from the Orb admin console."
           airbyte_secret: true
-          order: 1
+          order: 0
           x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           title: "Start Date"
+          format: "date-time"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           description: "UTC date and time in the format 2022-03-01T00:00:00Z. Any\
             \ data with created_at before this data will not be synced. For Subscription\
             \ Usage, this becomes the `timeframe_start` API parameter."
           examples:
           - "2022-03-01T00:00:00Z"
-          order: 2
+          order: 1
         end_date:
           type: "string"
           title: "End Date"
@@ -35837,7 +36237,7 @@ components:
             \ Usage, this becomes the `timeframe_start` API parameter."
           examples:
           - "2024-03-01T00:00:00Z"
-          order: 3
+          order: 2
         lookback_window_days:
           type: "integer"
           title: "Lookback Window (in days)"
@@ -35846,7 +36246,7 @@ components:
           description: "When set to N, the connector will always refresh resources\
             \ created within the past N days. By default, updated objects that are\
             \ not newly created are not incrementally synced."
-          order: 4
+          order: 3
         string_event_properties_keys:
           type: "array"
           items:
@@ -35854,7 +36254,7 @@ components:
           title: "Event properties keys (string values)"
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
-          order: 5
+          order: 4
           x-speakeasy-param-sensitive: true
         numeric_event_properties_keys:
           type: "array"
@@ -35863,18 +36263,20 @@ components:
           title: "Event properties keys (numeric values)"
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
-          order: 6
+          order: 5
           x-speakeasy-param-sensitive: true
         subscription_usage_grouping_key:
           type: "string"
           title: "Subscription usage grouping key (string value)"
           description: "Property key name to group subscription usage by."
+          order: 6
           x-speakeasy-param-sensitive: true
         plan_id:
           type: "string"
           title: "Orb Plan ID for Subscription Usage (string value)"
           description: "Orb Plan ID to filter subscriptions that should have usage\
             \ fetched."
+          order: 7
         sourceType:
           title: "orb"
           const: "orb"
@@ -35883,28 +36285,28 @@ components:
           order: 0
           type: "string"
     source-orb-update:
-      title: "Orb Spec"
       type: "object"
       required:
-      - "api_key"
       - "start_date"
+      - "api_key"
       properties:
         api_key:
           type: "string"
           title: "Orb API Key"
           description: "Orb API Key, issued from the Orb admin console."
           airbyte_secret: true
-          order: 1
+          order: 0
         start_date:
           type: "string"
           title: "Start Date"
+          format: "date-time"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           description: "UTC date and time in the format 2022-03-01T00:00:00Z. Any\
             \ data with created_at before this data will not be synced. For Subscription\
             \ Usage, this becomes the `timeframe_start` API parameter."
           examples:
           - "2022-03-01T00:00:00Z"
-          order: 2
+          order: 1
         end_date:
           type: "string"
           title: "End Date"
@@ -35914,7 +36316,7 @@ components:
             \ Usage, this becomes the `timeframe_start` API parameter."
           examples:
           - "2024-03-01T00:00:00Z"
-          order: 3
+          order: 2
         lookback_window_days:
           type: "integer"
           title: "Lookback Window (in days)"
@@ -35923,7 +36325,7 @@ components:
           description: "When set to N, the connector will always refresh resources\
             \ created within the past N days. By default, updated objects that are\
             \ not newly created are not incrementally synced."
-          order: 4
+          order: 3
         string_event_properties_keys:
           type: "array"
           items:
@@ -35931,7 +36333,7 @@ components:
           title: "Event properties keys (string values)"
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
-          order: 5
+          order: 4
         numeric_event_properties_keys:
           type: "array"
           items:
@@ -35939,16 +36341,18 @@ components:
           title: "Event properties keys (numeric values)"
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
-          order: 6
+          order: 5
         subscription_usage_grouping_key:
           type: "string"
           title: "Subscription usage grouping key (string value)"
           description: "Property key name to group subscription usage by."
+          order: 6
         plan_id:
           type: "string"
           title: "Orb Plan ID for Subscription Usage (string value)"
           description: "Orb Plan ID to filter subscriptions that should have usage\
             \ fetched."
+          order: 7
     source-sentry:
       title: "Sentry Spec"
       type: "object"
@@ -38758,8 +39162,9 @@ components:
         replication_start_date:
           title: "Start Date"
           description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
-            \ data before this date will not be replicated. If start date is not provided,\
-            \ the date 2 years ago from today will be used."
+            \ data before this date will not be replicated. If start date is not provided\
+            \ or older than 2 years ago from today, the date 2 years ago from today\
+            \ will be used."
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           examples:
           - "2017-01-25T00:00:00Z"
@@ -38958,8 +39363,9 @@ components:
         replication_start_date:
           title: "Start Date"
           description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
-            \ data before this date will not be replicated. If start date is not provided,\
-            \ the date 2 years ago from today will be used."
+            \ data before this date will not be replicated. If start date is not provided\
+            \ or older than 2 years ago from today, the date 2 years ago from today\
+            \ will be used."
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           examples:
           - "2017-01-25T00:00:00Z"
@@ -39461,6 +39867,37 @@ components:
           type: "string"
           description: "Your API Key. Get your key <a href=\"https://api.census.gov/data/key_signup.html\"\
             >here</a>."
+          airbyte_secret: true
+    source-goldcast:
+      title: "goldcast.io Source Spec"
+      type: "object"
+      required:
+      - "access_key"
+      - "sourceType"
+      properties:
+        access_key:
+          type: "string"
+          description: "Your API Access Key. See <a href=\"https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast\"\
+            >here</a>. The key is case sensitive."
+          airbyte_secret: true
+          x-speakeasy-param-sensitive: true
+        sourceType:
+          title: "goldcast"
+          const: "goldcast"
+          enum:
+          - "goldcast"
+          order: 0
+          type: "string"
+    source-goldcast-update:
+      title: "goldcast.io Source Spec"
+      type: "object"
+      required:
+      - "access_key"
+      properties:
+        access_key:
+          type: "string"
+          description: "Your API Access Key. See <a href=\"https://help.goldcast.io/hc/en-us/articles/22931655725723-How-To-Create-an-API-Token-in-Goldcast\"\
+            >here</a>. The key is case sensitive."
           airbyte_secret: true
     source-pinterest:
       title: "Pinterest Spec"
@@ -40140,190 +40577,6 @@ components:
           desciption: "Optional, Possible values for an endpoint. Example values for\
             \ launches-latest, upcoming, past"
           order: 1
-    source-google-analytics-v4-service-account-only:
-      title: "Google Analytics (V4) Spec"
-      type: "object"
-      required:
-      - "view_id"
-      - "start_date"
-      - "sourceType"
-      properties:
-        credentials:
-          order: 0
-          type: "object"
-          title: "Credentials"
-          description: "Credentials for the service"
-          oneOf:
-          - type: "object"
-            title: "Service Account Key Authentication"
-            required:
-            - "credentials_json"
-            properties:
-              auth_type:
-                type: "string"
-                const: "Service"
-                order: 0
-                enum:
-                - "Service"
-              credentials_json:
-                title: "Service Account JSON Key"
-                type: "string"
-                description: "The JSON key of the service account to use for authorization"
-                examples:
-                - "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID,\
-                  \ \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
-                airbyte_secret: true
-        start_date:
-          order: 1
-          type: "string"
-          title: "Replication Start Date"
-          description: "The date in the format YYYY-MM-DD. Any data before this date\
-            \ will not be replicated."
-          examples:
-          - "2020-06-01"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$|^$|[\\s\\S]+$"
-          format: "date"
-        view_id:
-          order: 2
-          type: "string"
-          title: "View ID"
-          description: "The ID for the Google Analytics View you want to fetch data\
-            \ from. This can be found from the <a href=\"https://ga-dev-tools.appspot.com/account-explorer/\"\
-            >Google Analytics Account Explorer</a>."
-        end_date:
-          order: 3
-          type: "string"
-          title: "Replication End Date"
-          description: "The date in the format YYYY-MM-DD. Any data after this date\
-            \ will not be replicated."
-          examples:
-          - "2020-06-01"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$|^$|[\\s\\S]+$"
-          format: "date"
-        custom_reports:
-          order: 4
-          type: "string"
-          title: "Custom Reports"
-          description: "A JSON array describing the custom reports you want to sync\
-            \ from Google Analytics. See <a href=\"https://docs.airbyte.com/integrations/sources/google-analytics-v4#data-processing-latency\"\
-            >the docs</a> for more information about the exact format you can use\
-            \ to fill out this field."
-        window_in_days:
-          type: "integer"
-          title: "Data request time increment in days"
-          description: "The time increment used by the connector when requesting data\
-            \ from the Google Analytics API. More information is available in the\
-            \ <a href=\"https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports\"\
-            >the docs</a>. The bigger this value is, the faster the sync will be,\
-            \ but the more likely that sampling will be applied to your data, potentially\
-            \ causing inaccuracies in the returned results. We recommend setting this\
-            \ to 1 unless you have a hard requirement to make the sync faster at the\
-            \ expense of accuracy. The minimum allowed value for this field is 1,\
-            \ and the maximum is 364. "
-          examples:
-          - 30
-          - 60
-          - 90
-          - 120
-          - 200
-          - 364
-          default: 1
-          order: 5
-        sourceType:
-          title: "google-analytics-v4-service-account-only"
-          const: "google-analytics-v4-service-account-only"
-          enum:
-          - "google-analytics-v4-service-account-only"
-          order: 0
-          type: "string"
-    source-google-analytics-v4-service-account-only-update:
-      title: "Google Analytics (V4) Spec"
-      type: "object"
-      required:
-      - "view_id"
-      - "start_date"
-      properties:
-        credentials:
-          order: 0
-          type: "object"
-          title: "Credentials"
-          description: "Credentials for the service"
-          oneOf:
-          - type: "object"
-            title: "Service Account Key Authentication"
-            required:
-            - "credentials_json"
-            properties:
-              auth_type:
-                type: "string"
-                const: "Service"
-                order: 0
-                enum:
-                - "Service"
-              credentials_json:
-                title: "Service Account JSON Key"
-                type: "string"
-                description: "The JSON key of the service account to use for authorization"
-                examples:
-                - "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID,\
-                  \ \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
-                airbyte_secret: true
-        start_date:
-          order: 1
-          type: "string"
-          title: "Replication Start Date"
-          description: "The date in the format YYYY-MM-DD. Any data before this date\
-            \ will not be replicated."
-          examples:
-          - "2020-06-01"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$|^$|[\\s\\S]+$"
-          format: "date"
-        view_id:
-          order: 2
-          type: "string"
-          title: "View ID"
-          description: "The ID for the Google Analytics View you want to fetch data\
-            \ from. This can be found from the <a href=\"https://ga-dev-tools.appspot.com/account-explorer/\"\
-            >Google Analytics Account Explorer</a>."
-        end_date:
-          order: 3
-          type: "string"
-          title: "Replication End Date"
-          description: "The date in the format YYYY-MM-DD. Any data after this date\
-            \ will not be replicated."
-          examples:
-          - "2020-06-01"
-          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$|^$|[\\s\\S]+$"
-          format: "date"
-        custom_reports:
-          order: 4
-          type: "string"
-          title: "Custom Reports"
-          description: "A JSON array describing the custom reports you want to sync\
-            \ from Google Analytics. See <a href=\"https://docs.airbyte.com/integrations/sources/google-analytics-v4#data-processing-latency\"\
-            >the docs</a> for more information about the exact format you can use\
-            \ to fill out this field."
-        window_in_days:
-          type: "integer"
-          title: "Data request time increment in days"
-          description: "The time increment used by the connector when requesting data\
-            \ from the Google Analytics API. More information is available in the\
-            \ <a href=\"https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports\"\
-            >the docs</a>. The bigger this value is, the faster the sync will be,\
-            \ but the more likely that sampling will be applied to your data, potentially\
-            \ causing inaccuracies in the returned results. We recommend setting this\
-            \ to 1 unless you have a hard requirement to make the sync faster at the\
-            \ expense of accuracy. The minimum allowed value for this field is 1,\
-            \ and the maximum is 364. "
-          examples:
-          - 30
-          - 60
-          - 90
-          - 120
-          - 200
-          - 364
-          default: 1
-          order: 5
     source-bamboo-hr:
       title: "Bamboo HR Spec"
       type: "object"
@@ -42515,7 +42768,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -43010,7 +43263,7 @@ components:
                       type: "boolean"
                   required:
                   - "filetype"
-                - title: "Document File Type Format (Experimental)"
+                - title: "Unstructured Document Format"
                   type: "object"
                   properties:
                     filetype:
@@ -43193,70 +43446,6 @@ components:
       required:
       - "streams"
       - "credentials"
-    source-punk-api:
-      title: "Punk Api Spec"
-      type: "object"
-      required:
-      - "brewed_before"
-      - "brewed_after"
-      - "sourceType"
-      properties:
-        id:
-          title: "Beers with specific ID"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          examples:
-          - 1
-          - 22
-        brewed_before:
-          title: "Brewed before data to get incremental reads"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          pattern: "^[0-9]{2}-[0-9]{4}$"
-          examples:
-          - "MM-YYYY"
-        brewed_after:
-          title: "Brewed after data to get incremental reads"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          pattern: "^[0-9]{2}-[0-9]{4}$"
-          examples:
-          - "MM-YYYY"
-        sourceType:
-          title: "punk-api"
-          const: "punk-api"
-          enum:
-          - "punk-api"
-          order: 0
-          type: "string"
-    source-punk-api-update:
-      title: "Punk Api Spec"
-      type: "object"
-      required:
-      - "brewed_before"
-      - "brewed_after"
-      properties:
-        id:
-          title: "Beers with specific ID"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          examples:
-          - 1
-          - 22
-        brewed_before:
-          title: "Brewed before data to get incremental reads"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          pattern: "^[0-9]{2}-[0-9]{4}$"
-          examples:
-          - "MM-YYYY"
-        brewed_after:
-          title: "Brewed after data to get incremental reads"
-          type: "string"
-          description: "To extract specific data with Unique ID"
-          pattern: "^[0-9]{2}-[0-9]{4}$"
-          examples:
-          - "MM-YYYY"
     source-tiktok-marketing:
       title: "TikTok Marketing Source Spec"
       type: "object"
@@ -43356,8 +43545,10 @@ components:
           order: 3
           type: "integer"
         include_deleted:
-          title: "Include Deleted Data in Reports"
-          description: "Set to active if you want to include deleted data in reports."
+          title: "Include Deleted Data in Reports and Ads, Ad Groups and Campaign\
+            \ streams."
+          description: "Set to active if you want to include deleted data in report\
+            \ based streams and Ads, Ad Groups and Campaign streams."
           default: false
           order: 4
           type: "boolean"
@@ -43465,8 +43656,10 @@ components:
           order: 3
           type: "integer"
         include_deleted:
-          title: "Include Deleted Data in Reports"
-          description: "Set to active if you want to include deleted data in reports."
+          title: "Include Deleted Data in Reports and Ads, Ad Groups and Campaign\
+            \ streams."
+          description: "Set to active if you want to include deleted data in report\
+            \ based streams and Ads, Ad Groups and Campaign streams."
           default: false
           order: 4
           type: "boolean"
@@ -43477,7 +43670,6 @@ components:
       - "aws_key_id"
       - "aws_secret_key"
       - "aws_region_name"
-      - "start_date"
       - "sourceType"
       properties:
         aws_key_id:
@@ -43500,6 +43692,7 @@ components:
           description: "The default AWS Region to use, for example, us-west-1 or us-west-2.\
             \ When specifying a Region inline during client initialization, this property\
             \ is named region_name."
+          default: "us-east-1"
         start_date:
           type: "string"
           title: "Start Date"
@@ -43507,9 +43700,30 @@ components:
             \ is available for last 90 days only. Format: YYYY-MM-DD."
           examples:
           - "2021-01-01"
-          default: "1970-01-01"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
           format: "date"
+        lookup_attributes_filter:
+          title: "Filter applied while fetching records based on AttributeKey and\
+            \ AttributeValue which will be appended on the request body"
+          type: "object"
+          required:
+          - "attribute_key"
+          - "attribute_value"
+          properties:
+            attribute_key:
+              type: "string"
+              title: "Attribute Key from the response to filter"
+              examples:
+              - "EventName"
+              default: "EventName"
+              x-speakeasy-param-sensitive: true
+            attribute_value:
+              type: "string"
+              title: "Corresponding value to the given attribute key"
+              examples:
+              - "ListInstanceAssociations"
+              - "ConsoleLogin"
+              default: "ListInstanceAssociations"
         sourceType:
           title: "aws-cloudtrail"
           const: "aws-cloudtrail"
@@ -43524,7 +43738,6 @@ components:
       - "aws_key_id"
       - "aws_secret_key"
       - "aws_region_name"
-      - "start_date"
       properties:
         aws_key_id:
           type: "string"
@@ -43544,6 +43757,7 @@ components:
           description: "The default AWS Region to use, for example, us-west-1 or us-west-2.\
             \ When specifying a Region inline during client initialization, this property\
             \ is named region_name."
+          default: "us-east-1"
         start_date:
           type: "string"
           title: "Start Date"
@@ -43551,9 +43765,29 @@ components:
             \ is available for last 90 days only. Format: YYYY-MM-DD."
           examples:
           - "2021-01-01"
-          default: "1970-01-01"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
           format: "date"
+        lookup_attributes_filter:
+          title: "Filter applied while fetching records based on AttributeKey and\
+            \ AttributeValue which will be appended on the request body"
+          type: "object"
+          required:
+          - "attribute_key"
+          - "attribute_value"
+          properties:
+            attribute_key:
+              type: "string"
+              title: "Attribute Key from the response to filter"
+              examples:
+              - "EventName"
+              default: "EventName"
+            attribute_value:
+              type: "string"
+              title: "Corresponding value to the given attribute key"
+              examples:
+              - "ListInstanceAssociations"
+              - "ConsoleLogin"
+              default: "ListInstanceAssociations"
     source-jira:
       title: "Jira Spec"
       type: "object"
@@ -49545,6 +49779,68 @@ components:
           airbyte_secret: true
           type: "string"
           x-speakeasy-param-sensitive: true
+        credentials:
+          title: "Authentication"
+          description: "Credentials for connecting to the Facebook Marketing API"
+          type: "object"
+          oneOf:
+          - title: "Authenticate via Facebook Marketing (Oauth)"
+            type: "object"
+            properties:
+              auth_type:
+                title: "Auth Type"
+                default: "Client"
+                const: "Client"
+                enum:
+                - "Client"
+                type: "string"
+              client_id:
+                title: "Client ID"
+                description: "Client ID for the Facebook Marketing API"
+                airbyte_secret: true
+                type: "string"
+              client_secret:
+                title: "Client Secret"
+                description: "Client Secret for the Facebook Marketing API"
+                airbyte_secret: true
+                type: "string"
+              access_token:
+                title: "Access Token"
+                description: "The value of the generated access token. From your App’\
+                  s Dashboard, click on \"Marketing API\" then \"Tools\". Select permissions\
+                  \ <b>ads_management, ads_read, read_insights, business_management</b>.\
+                  \ Then click on \"Get token\". See the <a href=\"https://docs.airbyte.com/integrations/sources/facebook-marketing\"\
+                  >docs</a> for more information."
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+            required:
+            - "client_id"
+            - "client_secret"
+            - "auth_type"
+          - title: "Service Account Key Authentication"
+            type: "object"
+            properties:
+              auth_type:
+                title: "Auth Type"
+                default: "Service"
+                const: "Service"
+                enum:
+                - "Service"
+                type: "string"
+              access_token:
+                title: "Access Token"
+                description: "The value of the generated access token. From your App’\
+                  s Dashboard, click on \"Marketing API\" then \"Tools\". Select permissions\
+                  \ <b>ads_management, ads_read, read_insights, business_management</b>.\
+                  \ Then click on \"Get token\". See the <a href=\"https://docs.airbyte.com/integrations/sources/facebook-marketing\"\
+                  >docs</a> for more information."
+                airbyte_secret: true
+                type: "string"
+                x-speakeasy-param-sensitive: true
+            required:
+            - "access_token"
+            - "auth_type"
         start_date:
           title: "Start Date"
           description: "The date from which you'd like to replicate data for all incremental\
@@ -49684,7 +49980,6 @@ components:
                   - "adset_end"
                   - "adset_id"
                   - "adset_name"
-                  - "adset_start"
                   - "age_targeting"
                   - "attribution_setting"
                   - "auction_bid"
@@ -50041,6 +50336,66 @@ components:
           order: 1
           airbyte_secret: true
           type: "string"
+        credentials:
+          title: "Authentication"
+          description: "Credentials for connecting to the Facebook Marketing API"
+          type: "object"
+          oneOf:
+          - title: "Authenticate via Facebook Marketing (Oauth)"
+            type: "object"
+            properties:
+              auth_type:
+                title: "Auth Type"
+                default: "Client"
+                const: "Client"
+                enum:
+                - "Client"
+                type: "string"
+              client_id:
+                title: "Client ID"
+                description: "Client ID for the Facebook Marketing API"
+                airbyte_secret: true
+                type: "string"
+              client_secret:
+                title: "Client Secret"
+                description: "Client Secret for the Facebook Marketing API"
+                airbyte_secret: true
+                type: "string"
+              access_token:
+                title: "Access Token"
+                description: "The value of the generated access token. From your App’\
+                  s Dashboard, click on \"Marketing API\" then \"Tools\". Select permissions\
+                  \ <b>ads_management, ads_read, read_insights, business_management</b>.\
+                  \ Then click on \"Get token\". See the <a href=\"https://docs.airbyte.com/integrations/sources/facebook-marketing\"\
+                  >docs</a> for more information."
+                airbyte_secret: true
+                type: "string"
+            required:
+            - "client_id"
+            - "client_secret"
+            - "auth_type"
+          - title: "Service Account Key Authentication"
+            type: "object"
+            properties:
+              auth_type:
+                title: "Auth Type"
+                default: "Service"
+                const: "Service"
+                enum:
+                - "Service"
+                type: "string"
+              access_token:
+                title: "Access Token"
+                description: "The value of the generated access token. From your App’\
+                  s Dashboard, click on \"Marketing API\" then \"Tools\". Select permissions\
+                  \ <b>ads_management, ads_read, read_insights, business_management</b>.\
+                  \ Then click on \"Get token\". See the <a href=\"https://docs.airbyte.com/integrations/sources/facebook-marketing\"\
+                  >docs</a> for more information."
+                airbyte_secret: true
+                type: "string"
+            required:
+            - "access_token"
+            - "auth_type"
         start_date:
           title: "Start Date"
           description: "The date from which you'd like to replicate data for all incremental\
@@ -50180,7 +50535,6 @@ components:
                   - "adset_end"
                   - "adset_id"
                   - "adset_name"
-                  - "adset_start"
                   - "age_targeting"
                   - "attribution_setting"
                   - "auction_bid"
@@ -50499,7 +50853,6 @@ components:
       required:
       - "account_ids"
     source-recruitee:
-      title: "Recruitee Spec"
       type: "object"
       required:
       - "api_key"
@@ -50507,18 +50860,20 @@ components:
       - "sourceType"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Recruitee API Key. See <a href=\"https://docs.recruitee.com/reference/getting-started#generate-api-token\"\
             >here</a>."
-          airbyte_secret: true
+          order: 0
           x-speakeasy-param-sensitive: true
         company_id:
-          title: "Company ID"
           type: "integer"
+          title: "Company ID"
           description: "Recruitee Company ID. You can also find this ID on the <a\
             \ href=\"https://app.recruitee.com/#/settings/api_tokens\">Recruitee API\
             \ tokens page</a>."
+          order: 1
         sourceType:
           title: "recruitee"
           const: "recruitee"
@@ -50527,24 +50882,25 @@ components:
           order: 0
           type: "string"
     source-recruitee-update:
-      title: "Recruitee Spec"
       type: "object"
       required:
       - "api_key"
       - "company_id"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Recruitee API Key. See <a href=\"https://docs.recruitee.com/reference/getting-started#generate-api-token\"\
             >here</a>."
-          airbyte_secret: true
+          order: 0
         company_id:
-          title: "Company ID"
           type: "integer"
+          title: "Company ID"
           description: "Recruitee Company ID. You can also find this ID on the <a\
             \ href=\"https://app.recruitee.com/#/settings/api_tokens\">Recruitee API\
             \ tokens page</a>."
+          order: 1
     source-survey-sparrow:
       type: "object"
       required:
@@ -53525,18 +53881,18 @@ components:
       - "client_secret"
       - "refresh_token"
     source-sendinblue:
-      title: "Sendinblue Spec"
       type: "object"
       required:
       - "api_key"
       - "sourceType"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Your API Key. See <a href=\"https://developers.sendinblue.com/docs/getting-started\"\
             >here</a>."
-          airbyte_secret: true
+          order: 0
           x-speakeasy-param-sensitive: true
         sourceType:
           title: "sendinblue"
@@ -53546,17 +53902,17 @@ components:
           order: 0
           type: "string"
     source-sendinblue-update:
-      title: "Sendinblue Spec"
       type: "object"
       required:
       - "api_key"
       properties:
         api_key:
-          title: "API Key"
           type: "string"
+          title: "API Key"
+          airbyte_secret: true
           description: "Your API Key. See <a href=\"https://developers.sendinblue.com/docs/getting-started\"\
             >here</a>."
-          airbyte_secret: true
+          order: 0
     source-github:
       title: "GitHub Source Spec"
       type: "object"
@@ -54048,6 +54404,46 @@ components:
           type: "string"
           title: "Engine"
           description: "Engine name to connect to."
+    source-clazar:
+      type: "object"
+      required:
+      - "client_id"
+      - "client_secret"
+      - "sourceType"
+      properties:
+        client_id:
+          type: "string"
+          order: 0
+          title: "Client ID"
+          airbyte_secret: true
+        client_secret:
+          type: "string"
+          order: 1
+          title: "Client secret"
+          airbyte_secret: true
+        sourceType:
+          title: "clazar"
+          const: "clazar"
+          enum:
+          - "clazar"
+          order: 0
+          type: "string"
+    source-clazar-update:
+      type: "object"
+      required:
+      - "client_id"
+      - "client_secret"
+      properties:
+        client_id:
+          type: "string"
+          order: 0
+          title: "Client ID"
+          airbyte_secret: true
+        client_secret:
+          type: "string"
+          order: 1
+          title: "Client secret"
+          airbyte_secret: true
     source-outreach:
       title: "Source Outreach Spec"
       type: "object"
@@ -56379,31 +56775,22 @@ components:
           default: false
           order: 3
     source-paystack:
-      title: "Paystack Source Spec"
       type: "object"
       required:
-      - "secret_key"
       - "start_date"
+      - "secret_key"
       - "sourceType"
       properties:
-        secret_key:
-          type: "string"
-          title: "Secret Key"
-          pattern: "^(s|r)k_(live|test)_[a-zA-Z0-9]+$"
-          description: "The Paystack API key (usually starts with 'sk_live_'; find\
-            \ yours <a href=\"https://dashboard.paystack.com/#/settings/developer\"\
-            >here</a>)."
-          airbyte_secret: true
-          x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           title: "Start Date"
+          format: "date-time"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
             \ data before this date will not be replicated."
           examples:
           - "2017-01-25T00:00:00Z"
-          format: "date-time"
+          order: 0
         lookback_window_days:
           type: "integer"
           title: "Lookback Window (in days)"
@@ -56412,6 +56799,17 @@ components:
           description: "When set, the connector will always reload data from the past\
             \ N days, where N is the value set here. This is useful if your data is\
             \ updated after creation."
+          order: 1
+        secret_key:
+          type: "string"
+          title: "Secret Key"
+          pattern: "^(s|r)k_(live|test)_[a-zA-Z0-9]+$"
+          description: "The Paystack API key (usually starts with 'sk_live_'; find\
+            \ yours <a href=\"https://dashboard.paystack.com/#/settings/developer\"\
+            >here</a>)."
+          airbyte_secret: true
+          order: 2
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "paystack"
           const: "paystack"
@@ -56420,29 +56818,21 @@ components:
           order: 0
           type: "string"
     source-paystack-update:
-      title: "Paystack Source Spec"
       type: "object"
       required:
-      - "secret_key"
       - "start_date"
+      - "secret_key"
       properties:
-        secret_key:
-          type: "string"
-          title: "Secret Key"
-          pattern: "^(s|r)k_(live|test)_[a-zA-Z0-9]+$"
-          description: "The Paystack API key (usually starts with 'sk_live_'; find\
-            \ yours <a href=\"https://dashboard.paystack.com/#/settings/developer\"\
-            >here</a>)."
-          airbyte_secret: true
         start_date:
           type: "string"
           title: "Start Date"
+          format: "date-time"
           pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
           description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
             \ data before this date will not be replicated."
           examples:
           - "2017-01-25T00:00:00Z"
-          format: "date-time"
+          order: 0
         lookback_window_days:
           type: "integer"
           title: "Lookback Window (in days)"
@@ -56451,6 +56841,16 @@ components:
           description: "When set, the connector will always reload data from the past\
             \ N days, where N is the value set here. This is useful if your data is\
             \ updated after creation."
+          order: 1
+        secret_key:
+          type: "string"
+          title: "Secret Key"
+          pattern: "^(s|r)k_(live|test)_[a-zA-Z0-9]+$"
+          description: "The Paystack API key (usually starts with 'sk_live_'; find\
+            \ yours <a href=\"https://dashboard.paystack.com/#/settings/developer\"\
+            >here</a>)."
+          airbyte_secret: true
+          order: 2
     source-redshift:
       title: "Redshift Source Spec"
       type: "object"
@@ -60687,7 +61087,6 @@ components:
           examples:
           - "2022-08"
           - "1851-01"
-          format: "date"
           order: 1
         end_date:
           type: "string"
@@ -60697,7 +61096,6 @@ components:
           examples:
           - "2022-08"
           - "1851-01"
-          format: "date"
           order: 2
         period:
           type: "integer"
@@ -60744,7 +61142,6 @@ components:
           examples:
           - "2022-08"
           - "1851-01"
-          format: "date"
           order: 1
         end_date:
           type: "string"
@@ -60754,7 +61151,6 @@ components:
           examples:
           - "2022-08"
           - "1851-01"
-          format: "date"
           order: 2
         period:
           type: "integer"
@@ -66059,8 +66455,8 @@ components:
               type: "string"
             warehouse:
               title: "Warehouse"
-              description: "Enter the name of the warehouse that you want to sync\
-                \ data into"
+              description: "Enter the name of the warehouse that you want to use as\
+                \ a compute cluster"
               order: 3
               examples:
               - "AIRBYTE_WAREHOUSE"
@@ -66496,8 +66892,8 @@ components:
               type: "string"
             warehouse:
               title: "Warehouse"
-              description: "Enter the name of the warehouse that you want to sync\
-                \ data into"
+              description: "Enter the name of the warehouse that you want to use as\
+                \ a compute cluster"
               order: 3
               examples:
               - "AIRBYTE_WAREHOUSE"
@@ -66844,47 +67240,6 @@ components:
                   > docs</a> for details."
                 default: true
                 order: 6
-              encryption:
-                title: "Encryption"
-                type: "object"
-                description: "How to encrypt the staging data"
-                default:
-                  encryption_type: "none"
-                oneOf:
-                - title: "No encryption"
-                  description: "Staging data will be stored in plaintext."
-                  type: "object"
-                  required:
-                  - "encryption_type"
-                  properties:
-                    encryption_type:
-                      type: "string"
-                      const: "none"
-                      enum:
-                      - "none"
-                      default: "none"
-                - title: "AES-CBC envelope encryption"
-                  description: "Staging data will be encrypted using AES-CBC envelope\
-                    \ encryption."
-                  type: "object"
-                  required:
-                  - "encryption_type"
-                  properties:
-                    encryption_type:
-                      type: "string"
-                      const: "aes_cbc_envelope"
-                      enum:
-                      - "aes_cbc_envelope"
-                      default: "aes_cbc_envelope"
-                    key_encrypting_key:
-                      type: "string"
-                      title: "Key"
-                      description: "The key, base64-encoded. Must be either 128, 192,\
-                        \ or 256 bits. Leave blank to have Airbyte generate an ephemeral\
-                        \ key for each sync."
-                      airbyte_secret: true
-                      x-speakeasy-param-sensitive: true
-                order: 7
         raw_data_schema:
           type: "string"
           description: "The schema to write raw tables into (default: airbyte_internal)."
@@ -67217,46 +67572,6 @@ components:
                   > docs</a> for details."
                 default: true
                 order: 6
-              encryption:
-                title: "Encryption"
-                type: "object"
-                description: "How to encrypt the staging data"
-                default:
-                  encryption_type: "none"
-                oneOf:
-                - title: "No encryption"
-                  description: "Staging data will be stored in plaintext."
-                  type: "object"
-                  required:
-                  - "encryption_type"
-                  properties:
-                    encryption_type:
-                      type: "string"
-                      const: "none"
-                      enum:
-                      - "none"
-                      default: "none"
-                - title: "AES-CBC envelope encryption"
-                  description: "Staging data will be encrypted using AES-CBC envelope\
-                    \ encryption."
-                  type: "object"
-                  required:
-                  - "encryption_type"
-                  properties:
-                    encryption_type:
-                      type: "string"
-                      const: "aes_cbc_envelope"
-                      enum:
-                      - "aes_cbc_envelope"
-                      default: "aes_cbc_envelope"
-                    key_encrypting_key:
-                      type: "string"
-                      title: "Key"
-                      description: "The key, base64-encoded. Must be either 128, 192,\
-                        \ or 256 bits. Leave blank to have Airbyte generate an ephemeral\
-                        \ key for each sync."
-                      airbyte_secret: true
-                order: 7
         raw_data_schema:
           type: "string"
           description: "The schema to write raw tables into (default: airbyte_internal)."
@@ -68460,7 +68775,7 @@ components:
           order: 1
         warehouse:
           description: "Enter the name of the <a href=\"https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses\"\
-            >warehouse</a> that you want to sync data into"
+            >warehouse</a> that you want to use as a compute cluster"
           examples:
           - "AIRBYTE_WAREHOUSE"
           type: "string"
@@ -68650,7 +68965,7 @@ components:
           order: 1
         warehouse:
           description: "Enter the name of the <a href=\"https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses\"\
-            >warehouse</a> that you want to sync data into"
+            >warehouse</a> that you want to use as a compute cluster"
           examples:
           - "AIRBYTE_WAREHOUSE"
           type: "string"
@@ -75580,372 +75895,6 @@ components:
                 type: "boolean"
                 default: false
                 description: "Add file extensions to the output file."
-    destination-langchain:
-      title: "Langchain Destination Config"
-      type: "object"
-      properties:
-        processing:
-          title: "ProcessingConfigModel"
-          type: "object"
-          properties:
-            chunk_size:
-              title: "Chunk size"
-              description: "Size of chunks in tokens to store in vector store (make\
-                \ sure it is not too big for the context if your LLM)"
-              maximum: 8191
-              type: "integer"
-            chunk_overlap:
-              title: "Chunk overlap"
-              description: "Size of overlap between chunks in tokens to store in vector\
-                \ store to better capture relevant context"
-              default: 0
-              type: "integer"
-            text_fields:
-              title: "Text fields to embed"
-              description: "List of fields in the record that should be used to calculate\
-                \ the embedding. All other fields are passed along as meta fields.\
-                \ The field list is applied to all streams in the same way and non-existing\
-                \ fields are ignored. If none are defined, all fields are considered\
-                \ text fields. When specifying text fields, you can access nested\
-                \ fields in the record by using dot notation, e.g. `user.name` will\
-                \ access the `name` field in the `user` object. It's also possible\
-                \ to use wildcards to access all fields in an object, e.g. `users.*.name`\
-                \ will access all `names` fields in all entries of the `users` array."
-              always_show: true
-              examples:
-              - "text"
-              - "user.name"
-              - "users.*.name"
-              type: "array"
-              items:
-                type: "string"
-          required:
-          - "chunk_size"
-          - "text_fields"
-          group: "processing"
-        embedding:
-          title: "Embedding"
-          description: "Embedding configuration"
-          group: "embedding"
-          type: "object"
-          oneOf:
-          - title: "OpenAI"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "openai"
-                const: "openai"
-                enum:
-                - "openai"
-                type: "string"
-              openai_key:
-                title: "OpenAI API key"
-                airbyte_secret: true
-                type: "string"
-                x-speakeasy-param-sensitive: true
-            required:
-            - "openai_key"
-            description: "Use the OpenAI API to embed text. This option is using the\
-              \ text-embedding-ada-002 model with 1536 embedding dimensions."
-          - title: "Fake"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "fake"
-                const: "fake"
-                enum:
-                - "fake"
-                type: "string"
-            description: "Use a fake embedding made out of random vectors with 1536\
-              \ embedding dimensions. This is useful for testing the data pipeline\
-              \ without incurring any costs."
-        indexing:
-          title: "Indexing"
-          description: "Indexing configuration"
-          group: "indexing"
-          type: "object"
-          oneOf:
-          - title: "Pinecone"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "pinecone"
-                const: "pinecone"
-                enum:
-                - "pinecone"
-                type: "string"
-              pinecone_key:
-                title: "Pinecone API key"
-                airbyte_secret: true
-                type: "string"
-                x-speakeasy-param-sensitive: true
-              pinecone_environment:
-                title: "Pinecone environment"
-                description: "Pinecone environment to use"
-                type: "string"
-              index:
-                title: "Index"
-                description: "Pinecone index to use"
-                type: "string"
-            required:
-            - "pinecone_key"
-            - "pinecone_environment"
-            - "index"
-            description: "Pinecone is a popular vector store that can be used to store\
-              \ and retrieve embeddings. It is a managed service and can also be queried\
-              \ from outside of langchain."
-          - title: "DocArrayHnswSearch"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "DocArrayHnswSearch"
-                const: "DocArrayHnswSearch"
-                enum:
-                - "DocArrayHnswSearch"
-                type: "string"
-              destination_path:
-                title: "Destination Path"
-                description: "Path to the directory where hnswlib and meta data files\
-                  \ will be written. The files will be placed inside that local mount.\
-                  \ All files in the specified destination directory will be deleted\
-                  \ on each run."
-                examples:
-                - "/local/my_hnswlib_index"
-                type: "string"
-            required:
-            - "destination_path"
-            description: "DocArrayHnswSearch is a lightweight Document Index implementation\
-              \ provided by Docarray that runs fully locally and is best suited for\
-              \ small- to medium-sized datasets. It stores vectors on disk in hnswlib,\
-              \ and stores all other data in SQLite."
-          - title: "Chroma (local persistance)"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "chroma_local"
-                const: "chroma_local"
-                enum:
-                - "chroma_local"
-                type: "string"
-              destination_path:
-                title: "Destination Path"
-                description: "Path to the directory where chroma files will be written.\
-                  \ The files will be placed inside that local mount."
-                examples:
-                - "/local/my_chroma_db"
-                type: "string"
-              collection_name:
-                title: "Collection Name"
-                description: "Name of the collection to use."
-                default: "langchain"
-                type: "string"
-            required:
-            - "destination_path"
-            description: "Chroma is a popular vector store that can be used to store\
-              \ and retrieve embeddings. It will build its index in memory and persist\
-              \ it to disk by the end of the sync."
-        destinationType:
-          title: "langchain"
-          const: "langchain"
-          enum:
-          - "langchain"
-          order: 0
-          type: "string"
-      required:
-      - "processing"
-      - "embedding"
-      - "indexing"
-      - "destinationType"
-      groups:
-      - id: "processing"
-        title: "Processing"
-      - id: "embedding"
-        title: "Embedding"
-      - id: "indexing"
-        title: "Indexing"
-    destination-langchain-update:
-      title: "Langchain Destination Config"
-      type: "object"
-      properties:
-        processing:
-          title: "ProcessingConfigModel"
-          type: "object"
-          properties:
-            chunk_size:
-              title: "Chunk size"
-              description: "Size of chunks in tokens to store in vector store (make\
-                \ sure it is not too big for the context if your LLM)"
-              maximum: 8191
-              type: "integer"
-            chunk_overlap:
-              title: "Chunk overlap"
-              description: "Size of overlap between chunks in tokens to store in vector\
-                \ store to better capture relevant context"
-              default: 0
-              type: "integer"
-            text_fields:
-              title: "Text fields to embed"
-              description: "List of fields in the record that should be used to calculate\
-                \ the embedding. All other fields are passed along as meta fields.\
-                \ The field list is applied to all streams in the same way and non-existing\
-                \ fields are ignored. If none are defined, all fields are considered\
-                \ text fields. When specifying text fields, you can access nested\
-                \ fields in the record by using dot notation, e.g. `user.name` will\
-                \ access the `name` field in the `user` object. It's also possible\
-                \ to use wildcards to access all fields in an object, e.g. `users.*.name`\
-                \ will access all `names` fields in all entries of the `users` array."
-              always_show: true
-              examples:
-              - "text"
-              - "user.name"
-              - "users.*.name"
-              type: "array"
-              items:
-                type: "string"
-          required:
-          - "chunk_size"
-          - "text_fields"
-          group: "processing"
-        embedding:
-          title: "Embedding"
-          description: "Embedding configuration"
-          group: "embedding"
-          type: "object"
-          oneOf:
-          - title: "OpenAI"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "openai"
-                const: "openai"
-                enum:
-                - "openai"
-                type: "string"
-              openai_key:
-                title: "OpenAI API key"
-                airbyte_secret: true
-                type: "string"
-            required:
-            - "openai_key"
-            description: "Use the OpenAI API to embed text. This option is using the\
-              \ text-embedding-ada-002 model with 1536 embedding dimensions."
-          - title: "Fake"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "fake"
-                const: "fake"
-                enum:
-                - "fake"
-                type: "string"
-            description: "Use a fake embedding made out of random vectors with 1536\
-              \ embedding dimensions. This is useful for testing the data pipeline\
-              \ without incurring any costs."
-        indexing:
-          title: "Indexing"
-          description: "Indexing configuration"
-          group: "indexing"
-          type: "object"
-          oneOf:
-          - title: "Pinecone"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "pinecone"
-                const: "pinecone"
-                enum:
-                - "pinecone"
-                type: "string"
-              pinecone_key:
-                title: "Pinecone API key"
-                airbyte_secret: true
-                type: "string"
-              pinecone_environment:
-                title: "Pinecone environment"
-                description: "Pinecone environment to use"
-                type: "string"
-              index:
-                title: "Index"
-                description: "Pinecone index to use"
-                type: "string"
-            required:
-            - "pinecone_key"
-            - "pinecone_environment"
-            - "index"
-            description: "Pinecone is a popular vector store that can be used to store\
-              \ and retrieve embeddings. It is a managed service and can also be queried\
-              \ from outside of langchain."
-          - title: "DocArrayHnswSearch"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "DocArrayHnswSearch"
-                const: "DocArrayHnswSearch"
-                enum:
-                - "DocArrayHnswSearch"
-                type: "string"
-              destination_path:
-                title: "Destination Path"
-                description: "Path to the directory where hnswlib and meta data files\
-                  \ will be written. The files will be placed inside that local mount.\
-                  \ All files in the specified destination directory will be deleted\
-                  \ on each run."
-                examples:
-                - "/local/my_hnswlib_index"
-                type: "string"
-            required:
-            - "destination_path"
-            description: "DocArrayHnswSearch is a lightweight Document Index implementation\
-              \ provided by Docarray that runs fully locally and is best suited for\
-              \ small- to medium-sized datasets. It stores vectors on disk in hnswlib,\
-              \ and stores all other data in SQLite."
-          - title: "Chroma (local persistance)"
-            type: "object"
-            properties:
-              mode:
-                title: "Mode"
-                default: "chroma_local"
-                const: "chroma_local"
-                enum:
-                - "chroma_local"
-                type: "string"
-              destination_path:
-                title: "Destination Path"
-                description: "Path to the directory where chroma files will be written.\
-                  \ The files will be placed inside that local mount."
-                examples:
-                - "/local/my_chroma_db"
-                type: "string"
-              collection_name:
-                title: "Collection Name"
-                description: "Name of the collection to use."
-                default: "langchain"
-                type: "string"
-            required:
-            - "destination_path"
-            description: "Chroma is a popular vector store that can be used to store\
-              \ and retrieve embeddings. It will build its index in memory and persist\
-              \ it to disk by the end of the sync."
-      required:
-      - "processing"
-      - "embedding"
-      - "indexing"
-      groups:
-      - id: "processing"
-        title: "Processing"
-      - id: "embedding"
-        title: "Embedding"
-      - id: "indexing"
-        title: "Indexing"
     destination-yellowbrick:
       title: "Yellowbrick Destination Spec"
       type: "object"
@@ -77836,6 +77785,32 @@ components:
           type: "string"
       x-speakeasy-entity: Source_Chartmogul
       x-speakeasy-param-suppress-computed-diff: true
+    SourceClazarCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-clazar"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\
+            \ flow."
+          type: "string"
+      x-speakeasy-entity: Source_Clazar
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickhouseCreateRequest:
       required:
         - name
@@ -78095,6 +78070,32 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Convex
+      x-speakeasy-param-suppress-computed-diff: true
+    SourceDatadogCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-datadog"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\
+            \ flow."
+          type: "string"
+      x-speakeasy-entity: Source_Datadog
       x-speakeasy-param-suppress-computed-diff: true
     SourceDatascopeCreateRequest:
       required:
@@ -78720,6 +78721,32 @@ components:
           type: "string"
       x-speakeasy-entity: Source_Gnews
       x-speakeasy-param-suppress-computed-diff: true
+    SourceGoldcastCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-goldcast"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\
+            \ flow."
+          type: "string"
+      x-speakeasy-entity: Source_Goldcast
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAdsCreateRequest:
       required:
         - name
@@ -78771,32 +78798,6 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleAnalyticsDataApi
-      x-speakeasy-param-suppress-computed-diff: true
-    SourceGoogleAnalyticsV4ServiceAccountOnlyCreateRequest:
-      required:
-        - name
-        - workspaceId
-        - configuration
-      type: object
-      properties:
-        name:
-          description: Name of the source e.g. dev-mysql-instance.
-          type: string
-        definitionId:
-          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-          format: uuid
-          type: string
-        workspaceId:
-          format: uuid
-          type: string
-        configuration:
-          $ref: "#/components/schemas/source-google-analytics-v4-service-account-only"
-        secretId:
-          description:
-            "Optional secretID obtained through the public API OAuth redirect\
-            \ flow."
-          type: "string"
-      x-speakeasy-entity: Source_GoogleAnalyticsV4ServiceAccountOnly
       x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleDirectoryCreateRequest:
       required:
@@ -80591,32 +80592,6 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Prestashop
-      x-speakeasy-param-suppress-computed-diff: true
-    SourcePunkApiCreateRequest:
-      required:
-        - name
-        - workspaceId
-        - configuration
-      type: object
-      properties:
-        name:
-          description: Name of the source e.g. dev-mysql-instance.
-          type: string
-        definitionId:
-          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
-          format: uuid
-          type: string
-        workspaceId:
-          format: uuid
-          type: string
-        configuration:
-          $ref: "#/components/schemas/source-punk-api"
-        secretId:
-          description:
-            "Optional secretID obtained through the public API OAuth redirect\
-            \ flow."
-          type: "string"
-      x-speakeasy-entity: Source_PunkApi
       x-speakeasy-param-suppress-computed-diff: true
     SourcePypiCreateRequest:
       required:
@@ -82649,27 +82624,6 @@ components:
           $ref: "#/components/schemas/destination-google-sheets"
       x-speakeasy-entity: Destination_GoogleSheets
       x-speakeasy-param-suppress-computed-diff: true
-    DestinationLangchainCreateRequest:
-      required:
-        - name
-        - workspaceId
-        - configuration
-      type: object
-      properties:
-        name:
-          description: Name of the destination e.g. dev-mysql-instance.
-          type: string
-        definitionId:
-          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
-          format: uuid
-          type: string
-        workspaceId:
-          format: uuid
-          type: string
-        configuration:
-          $ref: "#/components/schemas/destination-langchain"
-      x-speakeasy-entity: Destination_Langchain
-      x-speakeasy-param-suppress-computed-diff: true
     DestinationMilvusCreateRequest:
       required:
         - name
@@ -83484,6 +83438,22 @@ components:
           $ref: "#/components/schemas/source-chartmogul-update"
       x-speakeasy-entity: Source_Chartmogul
       x-speakeasy-param-suppress-computed-diff: true
+    SourceClazarPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-clazar-update"
+      x-speakeasy-entity: Source_Clazar
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickhousePutRequest:
       required:
         - "name"
@@ -83643,6 +83613,22 @@ components:
         configuration:
           $ref: "#/components/schemas/source-convex-update"
       x-speakeasy-entity: Source_Convex
+      x-speakeasy-param-suppress-computed-diff: true
+    SourceDatadogPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-datadog-update"
+      x-speakeasy-entity: Source_Datadog
       x-speakeasy-param-suppress-computed-diff: true
     SourceDatascopePutRequest:
       required:
@@ -84028,6 +84014,22 @@ components:
           $ref: "#/components/schemas/source-gnews-update"
       x-speakeasy-entity: Source_Gnews
       x-speakeasy-param-suppress-computed-diff: true
+    SourceGoldcastPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-goldcast-update"
+      x-speakeasy-entity: Source_Goldcast
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAdsPutRequest:
       required:
         - "name"
@@ -84059,22 +84061,6 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-analytics-data-api-update"
       x-speakeasy-entity: Source_GoogleAnalyticsDataApi
-      x-speakeasy-param-suppress-computed-diff: true
-    SourceGoogleAnalyticsV4ServiceAccountOnlyPutRequest:
-      required:
-        - "name"
-        - "workspaceId"
-        - "configuration"
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        workspaceId:
-          format: "uuid"
-          type: "string"
-        configuration:
-          $ref: "#/components/schemas/source-google-analytics-v4-service-account-only-update"
-      x-speakeasy-entity: Source_GoogleAnalyticsV4ServiceAccountOnly
       x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleDirectoryPutRequest:
       required:
@@ -85179,22 +85165,6 @@ components:
         configuration:
           $ref: "#/components/schemas/source-prestashop-update"
       x-speakeasy-entity: Source_Prestashop
-      x-speakeasy-param-suppress-computed-diff: true
-    SourcePunkApiPutRequest:
-      required:
-        - "name"
-        - "workspaceId"
-        - "configuration"
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        workspaceId:
-          format: "uuid"
-          type: "string"
-        configuration:
-          $ref: "#/components/schemas/source-punk-api-update"
-      x-speakeasy-entity: Source_PunkApi
       x-speakeasy-param-suppress-computed-diff: true
     SourcePypiPutRequest:
       required:
@@ -86492,22 +86462,6 @@ components:
           $ref: "#/components/schemas/destination-google-sheets-update"
       x-speakeasy-entity: Destination_GoogleSheets
       x-speakeasy-param-suppress-computed-diff: true
-    DestinationLangchainPutRequest:
-      required:
-        - "name"
-        - "workspaceId"
-        - "configuration"
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        workspaceId:
-          format: "uuid"
-          type: "string"
-        configuration:
-          $ref: "#/components/schemas/destination-langchain-update"
-      x-speakeasy-entity: Destination_Langchain
-      x-speakeasy-param-suppress-computed-diff: true
     DestinationMilvusPutRequest:
       required:
         - "name"
@@ -86888,7 +86842,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: /api/v1/applications/token
+          tokenUrl: /applications/token
           scopes: {}
 security:
   - bearerAuth: []
