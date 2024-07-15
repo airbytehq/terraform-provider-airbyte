@@ -25,12 +25,12 @@ resource "airbyte_source_asana" "my_source_asana" {
     organization_export_ids = [
       "{ \"see\": \"documentation\" }",
     ]
-    test_mode = true
+    test_mode = false
   }
-  definition_id = "f2233892-0422-4616-84e7-3ef602c915f5"
-  name          = "Ron Schimmel"
+  definition_id = "3b9184ca-c7dc-4ada-9293-8da5765e7880"
+  name          = "Matthew Bednar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "896557ce-17cc-4d6b-90d6-388d4fdfb9af"
+  workspace_id  = "0ddef9a9-0fa7-4f8f-841b-58dfc559a0be"
 }
 ```
 

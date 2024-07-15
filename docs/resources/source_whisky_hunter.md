@@ -15,10 +15,10 @@ SourceWhiskyHunter Resource
 ```terraform
 resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
   configuration = {}
-  definition_id = "b785b8d4-ad9b-4b4c-ad04-c6ceb0e44096"
-  name          = "Jenny Strosin"
+  definition_id = "f2e77213-6664-46fa-9b2d-b7532b28cb78"
+  name          = "Olivia Lesch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6ecaf35c-15b3-4779-97e3-dccb9fd6e1ad"
+  workspace_id  = "ad9bb4c2-d04c-46ce-b0e4-409659dbf6ec"
 }
 ```
 

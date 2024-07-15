@@ -9,8 +9,8 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "2ba7d43d-20d3-4384-a15e-d53522788fae"
-  name          = "Ed Ondricka"
+  definition_id = "196ea920-3cb7-4876-a75a-531f3b4802a3"
+  name          = "Terrence Smith"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b93c7728-79b6-4069-b6a2-8df3196ea920"
+  workspace_id  = "4976dbe1-16c7-4811-ac70-bfb32667c47d"
 }

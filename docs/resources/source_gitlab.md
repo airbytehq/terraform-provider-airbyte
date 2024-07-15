@@ -22,7 +22,7 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-03-12T08:01:10.085Z"
+        token_expiry_date = "2022-12-09T20:11:03.938Z"
       }
     }
     groups = "airbyte.io"
@@ -35,10 +35,10 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "bc6076e7-14fb-4f0c-bd3a-ed54ef24d0de"
-  name          = "Jeffrey Terry"
+  definition_id = "42a10fbc-47ca-4706-9390-37c7eef972df"
+  name          = "Rachael Boyer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b9050201-5d2d-4e4b-8db3-3d2b3a27b0b3"
+  workspace_id  = "349fde89-ab27-46cb-ad00-caee12c4e65b"
 }
 ```
 

@@ -29,12 +29,23 @@ func newWorkspaces(sdkConfig sdkConfiguration) *Workspaces {
 // CreateOrUpdateWorkspaceOAuthCredentials - Create OAuth override credentials for a workspace and source type.
 // Create/update a set of OAuth credentials to override the Airbyte-provided OAuth credentials used for source/destination OAuth.
 // In order to determine what the credential configuration needs to be, please see the connector specification of the relevant source/destination.
-func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context, request operations.CreateOrUpdateWorkspaceOAuthCredentialsRequest) (*operations.CreateOrUpdateWorkspaceOAuthCredentialsResponse, error) {
+func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context, request operations.CreateOrUpdateWorkspaceOAuthCredentialsRequest, opts ...operations.Option) (*operations.CreateOrUpdateWorkspaceOAuthCredentialsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createOrUpdateWorkspaceOAuthCredentials",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -46,6 +57,17 @@ func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceOAuthCredentialsRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
@@ -117,12 +139,23 @@ func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 }
 
 // CreateWorkspace - Create a workspace
-func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.WorkspaceCreateRequest) (*operations.CreateWorkspaceResponse, error) {
+func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.WorkspaceCreateRequest, opts ...operations.Option) (*operations.CreateWorkspaceResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createWorkspace",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -134,6 +167,17 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
@@ -215,7 +259,7 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 }
 
 // DeleteWorkspace - Delete a Workspace
-func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.DeleteWorkspaceRequest) (*operations.DeleteWorkspaceResponse, error) {
+func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.DeleteWorkspaceRequest, opts ...operations.Option) (*operations.DeleteWorkspaceResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "deleteWorkspace",
@@ -223,10 +267,32 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/workspaces/{workspaceId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
@@ -297,7 +363,7 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 }
 
 // GetWorkspace - Get Workspace details
-func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWorkspaceRequest) (*operations.GetWorkspaceResponse, error) {
+func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWorkspaceRequest, opts ...operations.Option) (*operations.GetWorkspaceResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getWorkspace",
@@ -305,10 +371,32 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/workspaces/{workspaceId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -389,7 +477,7 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 }
 
 // ListWorkspaces - List workspaces
-func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.ListWorkspacesRequest) (*operations.ListWorkspacesResponse, error) {
+func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.ListWorkspacesRequest, opts ...operations.Option) (*operations.ListWorkspacesResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listWorkspaces",
@@ -397,10 +485,32 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/workspaces")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -485,12 +595,23 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 }
 
 // UpdateWorkspace - Update a workspace
-func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.UpdateWorkspaceRequest) (*operations.UpdateWorkspaceResponse, error) {
+func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.UpdateWorkspaceRequest, opts ...operations.Option) (*operations.UpdateWorkspaceResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updateWorkspace",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -502,6 +623,17 @@ func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "PATCH", opURL, bodyReader)

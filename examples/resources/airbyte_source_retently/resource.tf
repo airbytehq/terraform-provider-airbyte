@@ -9,8 +9,8 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "1cd73d2c-f401-436d-9989-e7dbace4005a"
-  name          = "Sheila Bahringer"
+  definition_id = "d4f6833e-1f33-403a-b045-c891fe9c8dcb"
+  name          = "Miss Kendra Sauer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "76c58b5d-a21f-4739-86a7-1e992c2b8105"
+  workspace_id  = "73d2cf40-136d-4598-9e7d-bace4005a630"
 }

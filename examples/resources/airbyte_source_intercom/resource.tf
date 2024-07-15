@@ -6,8 +6,8 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     client_secret           = "...my_client_secret..."
     start_date              = "2020-11-16T00:00:00Z"
   }
-  definition_id = "7cb4fc24-002c-4a0d-8171-1f25a28dde04"
-  name          = "Marshall Schinner"
+  definition_id = "4e17a648-8571-41ab-94fe-75a513e00977"
+  name          = "Geneva Fisher"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "be57bfa4-6127-4442-b75e-d08074e17a64"
+  workspace_id  = "7c06dd86-b4fb-4de6-ae53-955108cd8df8"
 }

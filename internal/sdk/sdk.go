@@ -54,6 +54,7 @@ type sdkConfiguration struct {
 	UserAgent         string
 	RetryConfig       *retry.Config
 	Hooks             *hooks.Hooks
+	Timeout           *time.Duration
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -140,6 +141,13 @@ func WithRetryConfig(retryConfig retry.Config) SDKOption {
 	}
 }
 
+// WithTimeout Optional request timeout applied to each operation
+func WithTimeout(timeout time.Duration) SDKOption {
+	return func(sdk *SDK) {
+		sdk.sdkConfiguration.Timeout = &timeout
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
@@ -147,8 +155,8 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.0.1",
-			GenVersion:        "2.359.0",
-			UserAgent:         "speakeasy-sdk/go 0.0.1 2.359.0 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			GenVersion:        "2.372.3",
+			UserAgent:         "speakeasy-sdk/go 0.0.1 2.372.3 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}

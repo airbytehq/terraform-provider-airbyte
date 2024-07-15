@@ -309,11 +309,11 @@ func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() EncryptionMethod {
 	return EncryptionMethodClientNne
 }
 
-type EncryptionUnionType string
+type EncryptionType string
 
 const (
-	EncryptionUnionTypeNativeNetworkEncryptionNNE    EncryptionUnionType = "Native Network Encryption (NNE)"
-	EncryptionUnionTypeTLSEncryptedVerifyCertificate EncryptionUnionType = "TLS Encrypted (verify certificate)"
+	EncryptionTypeNativeNetworkEncryptionNNE    EncryptionType = "Native Network Encryption (NNE)"
+	EncryptionTypeTLSEncryptedVerifyCertificate EncryptionType = "TLS Encrypted (verify certificate)"
 )
 
 // Encryption - The encryption method with is used when communicating with the database.
@@ -321,11 +321,11 @@ type Encryption struct {
 	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE
 	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate
 
-	Type EncryptionUnionType
+	Type EncryptionType
 }
 
 func CreateEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE) Encryption {
-	typ := EncryptionUnionTypeNativeNetworkEncryptionNNE
+	typ := EncryptionTypeNativeNetworkEncryptionNNE
 
 	return Encryption{
 		NativeNetworkEncryptionNNE: &nativeNetworkEncryptionNNE,
@@ -334,7 +334,7 @@ func CreateEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE Nativ
 }
 
 func CreateEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate) Encryption {
-	typ := EncryptionUnionTypeTLSEncryptedVerifyCertificate
+	typ := EncryptionTypeTLSEncryptedVerifyCertificate
 
 	return Encryption{
 		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
@@ -347,14 +347,14 @@ func (u *Encryption) UnmarshalJSON(data []byte) error {
 	var nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE = NativeNetworkEncryptionNNE{}
 	if err := utils.UnmarshalJSON(data, &nativeNetworkEncryptionNNE, "", true, true); err == nil {
 		u.NativeNetworkEncryptionNNE = &nativeNetworkEncryptionNNE
-		u.Type = EncryptionUnionTypeNativeNetworkEncryptionNNE
+		u.Type = EncryptionTypeNativeNetworkEncryptionNNE
 		return nil
 	}
 
 	var tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate = TLSEncryptedVerifyCertificate{}
 	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, true); err == nil {
 		u.TLSEncryptedVerifyCertificate = &tlsEncryptedVerifyCertificate
-		u.Type = EncryptionUnionTypeTLSEncryptedVerifyCertificate
+		u.Type = EncryptionTypeTLSEncryptedVerifyCertificate
 		return nil
 	}
 

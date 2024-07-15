@@ -5,17 +5,17 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     force_use_bulk_api = true
     is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
-    start_date         = "2021-07-25"
-    stream_slice_step  = "P1M"
+    start_date         = "2021-07-25T00:00:00Z"
+    stream_slice_step  = "P30D"
     streams_criteria = [
       {
-        criteria = "exacts"
+        criteria = "ends with"
         value    = "...my_value..."
       },
     ]
   }
-  definition_id = "03e6b3fc-a03d-492c-b145-10264179a403"
-  name          = "Jean Prosacco"
+  definition_id = "78e7243c-021b-4c07-babf-4dfebd414e5a"
+  name          = "Barbara Franecki"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7b13a43b-1ead-4703-a4ee-b23fe553942b"
+  workspace_id  = "b3fca03d-92cb-4145-9026-4179a40301bb"
 }

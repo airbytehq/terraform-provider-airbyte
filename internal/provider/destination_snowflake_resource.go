@@ -177,7 +177,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					},
 					"warehouse": schema.StringAttribute{
 						Required:    true,
-						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into`,
+						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster`,
 					},
 				},
 			},

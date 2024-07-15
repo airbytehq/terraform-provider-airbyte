@@ -16,13 +16,13 @@ SourceDixa Resource
 resource "airbyte_source_dixa" "my_source_dixa" {
   configuration = {
     api_token  = "...my_api_token..."
-    batch_size = 1
+    batch_size = 31
     start_date = "YYYY-MM-DD"
   }
-  definition_id = "a34ff680-c88d-48e9-b743-1721e4227fd5"
-  name          = "Patty Huel"
+  definition_id = "1e10d002-e1c7-43f9-ba1e-39a63be209ca"
+  name          = "Vernon Mosciski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c345b5c1-bae7-4472-aa8c-d9c5aad47afd"
+  workspace_id  = "b808ec8c-0a1f-4116-b1a5-6d068f4b5e4c"
 }
 ```
 

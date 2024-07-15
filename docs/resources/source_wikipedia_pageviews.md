@@ -15,18 +15,18 @@ SourceWikipediaPageviews Resource
 ```terraform
 resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
   configuration = {
-    access  = "desktop"
-    agent   = "user"
+    access  = "mobile-app"
+    agent   = "automated"
     article = "Are_You_the_One%3F"
     country = "FR"
     end     = "...my_end..."
     project = "commons.wikimedia.org"
     start   = "...my_start..."
   }
-  definition_id = "8320ef50-a8ca-476b-883e-a280df1804a6"
-  name          = "Hannah Moore"
+  definition_id = "15b3779d-7e3d-4ccb-9fd6-e1ad7470b832"
+  name          = "Delia Zulauf MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e5814951-2957-4c29-8696-756fe0588102"
+  workspace_id  = "8ca76b08-3ea2-480d-b180-4a67b9f3e581"
 }
 ```
 
@@ -60,7 +60,7 @@ Required:
 - `country` (String) The ISO 3166-1 alpha-2 code of a country for which to retrieve top articles.
 - `end` (String) The date of the last day to include, in YYYYMMDD or YYYYMMDDHH format.
 - `project` (String) If you want to filter by project, use the domain of any Wikimedia project.
-- `start` (String) The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
+- `start` (String) The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format. Also serves as the date to retrieve data for the top articles.
 
 ## Import
 

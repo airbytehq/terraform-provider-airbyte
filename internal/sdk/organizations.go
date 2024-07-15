@@ -28,7 +28,7 @@ func newOrganizations(sdkConfig sdkConfiguration) *Organizations {
 
 // ListOrganizationsForUser - List all organizations for a user
 // Lists users organizations.
-func (s *Organizations) ListOrganizationsForUser(ctx context.Context) (*operations.ListOrganizationsForUserResponse, error) {
+func (s *Organizations) ListOrganizationsForUser(ctx context.Context, opts ...operations.Option) (*operations.ListOrganizationsForUserResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listOrganizationsForUser",
@@ -36,10 +36,32 @@ func (s *Organizations) ListOrganizationsForUser(ctx context.Context) (*operatio
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/organizations")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)

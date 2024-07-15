@@ -15,13 +15,13 @@ SourceAmazonSellerPartner Resource
 ```terraform
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
-    account_type           = "Seller"
+    account_type           = "Vendor"
     aws_environment        = "SANDBOX"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
-    period_in_days         = 5
+    period_in_days         = 7
     refresh_token          = "...my_refresh_token..."
-    region                 = "MX"
+    region                 = "IT"
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -32,15 +32,15 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
             option_value = "...my_option_value..."
           },
         ]
-        report_name = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
+        report_name = "GET_MERCHANT_LISTINGS_DATA"
         stream_name = "...my_stream_name..."
       },
     ]
   }
-  definition_id = "b1d1d8bb-57bf-4001-9db3-cf074d627d20"
-  name          = "Karla Adams III"
+  definition_id = "df3d5ca9-6c63-4354-ae1d-23c3d11ff934"
+  name          = "Irvin Berge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9bb26e6b-9f25-4aa9-b8c7-d4107048d9ff"
+  workspace_id  = "56d8b0d9-0daf-4918-aab6-3a7b2e3879ec"
 }
 ```
 
@@ -79,7 +79,7 @@ Optional:
 - `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90
 - `region` (String) Select the AWS Region. must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
-- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.
+- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
 - `report_options_list` (Attributes List) Additional information passed to reports. This varies by report type. (see [below for nested schema](#nestedatt--configuration--report_options_list))
 
 <a id="nestedatt--configuration--report_options_list"></a>

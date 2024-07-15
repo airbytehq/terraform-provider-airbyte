@@ -23,11 +23,11 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
     ssl_mode = {
       allow = {}
     }
-    username = "Arch_Stehr"
+    username = "Lillian.Keebler"
   }
-  definition_id = "d713664c-8ab0-488c-a48e-91396f340754"
-  name          = "Mr. Eula Heidenreich"
-  workspace_id  = "86d04e60-8039-4bc7-ab07-32a47524bb49"
+  definition_id = "4bb9666e-7d15-4e7e-add4-643586b689fd"
+  name          = "Eric Fadel"
+  workspace_id  = "92fcfab7-3b9b-4a5d-b045-674ad28dce71"
 }
 ```
 

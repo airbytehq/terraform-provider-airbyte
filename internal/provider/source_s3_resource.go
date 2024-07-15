@@ -343,9 +343,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
@@ -489,13 +489,44 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
-										"document_file_type_format_experimental": schema.SingleNestedAttribute{
+										"jsonl_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"parquet_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"decimal_as_float": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
+												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"unstructured_document_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"processing": schema.SingleNestedAttribute{
@@ -540,37 +571,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													path.MatchRelative().AtParent().AtName("csv_format"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
-												}...),
-											},
-										},
-										"jsonl_format": schema.SingleNestedAttribute{
-											Optional:   true,
-											Attributes: map[string]schema.Attribute{},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("parquet_format"),
-												}...),
-											},
-										},
-										"parquet_format": schema.SingleNestedAttribute{
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"decimal_as_float": schema.BoolAttribute{
-													Computed:    true,
-													Optional:    true,
-													Default:     booldefault.StaticBool(false),
-													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
-												},
-											},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("jsonl_format"),
 												}...),
 											},
 										},

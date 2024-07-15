@@ -18,10 +18,10 @@ resource "airbyte_source_getlago" "my_source_getlago" {
     api_key = "...my_api_key..."
     api_url = "...my_api_url..."
   }
-  definition_id = "a97a1ae8-9496-4294-b2a0-2ceacfe7e017"
-  name          = "Fredrick Ankunding"
+  definition_id = "a0582852-7913-4edf-8f9c-9058e69d20ee"
+  name          = "Raquel Gutkowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f2040e06-9282-4dd6-a12c-b01cbd9faeed"
+  workspace_id  = "55c695e2-f08e-4b76-a351-cef20de4cfc3"
 }
 ```
 

@@ -36,17 +36,17 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Marianne Hartmann"
+        name              = "Jose Walter"
         primary_key       = "...my_primary_key..."
         schemaless        = true
-        validation_policy = "Wait for Discover"
+        validation_policy = "Skip Record"
       },
     ]
   }
-  definition_id = "1e5baddd-2747-4bbc-bf24-1709ce4fe165"
-  name          = "Edmund Gleichner"
+  definition_id = "9bfb0cb9-d8df-4c27-a8c7-2c3eb5dc5571"
+  name          = "Ms. Angelina Reilly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0e7fb5df-2547-47f3-b0b0-ec7c89bfb0cb"
+  workspace_id  = "76987333-86b5-43a4-b9a0-805ff1793bf9"
 }
 ```
 

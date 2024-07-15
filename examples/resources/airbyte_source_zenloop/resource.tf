@@ -5,8 +5,8 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  definition_id = "cd819ecc-37ba-4170-8ba6-4daf2cd7c8fe"
-  name          = "Delores Hamill"
+  definition_id = "0d7b3b35-8aff-4520-ae7c-66512764ede9"
+  name          = "Miss Jake Lueilwitz"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "306443a7-5bcf-44e2-a137-8db01d76f7dd"
+  workspace_id  = "cc37ba17-00ba-464d-af2c-d7c8fe5757a3"
 }

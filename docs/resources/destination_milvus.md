@@ -30,14 +30,14 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       }
       collection   = "...my_collection..."
       db           = "...my_db..."
-      host         = "tcp://my-local-milvus:19530"
+      host         = "tcp://host.docker.internal:19530"
       text_field   = "...my_text_field..."
       vector_field = "...my_vector_field..."
     }
-    omit_raw_text = false
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 10
+      chunk_overlap = 6
+      chunk_size    = 4
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -52,14 +52,14 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 6
+          split_level = 2
         }
       }
     }
   }
-  definition_id = "2248d601-2833-484b-987b-5cce36148543"
-  name          = "Sylvia Smitham"
-  workspace_id  = "3c5e509f-4525-421a-8478-78c254cd184f"
+  definition_id = "5a4e1801-23f0-4d76-bb78-bf74fa22de12"
+  name          = "Jenny Braun"
+  workspace_id  = "f134d000-7497-474a-a87c-30892ffb0f41"
 }
 ```
 

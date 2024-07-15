@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 	"time"
@@ -145,6 +146,190 @@ func (e *SourceFacebookMarketingValidCampaignStatuses) UnmarshalJSON(data []byte
 	default:
 		return fmt.Errorf("invalid value for SourceFacebookMarketingValidCampaignStatuses: %v", v)
 	}
+}
+
+type SourceFacebookMarketingSchemasAuthType string
+
+const (
+	SourceFacebookMarketingSchemasAuthTypeService SourceFacebookMarketingSchemasAuthType = "Service"
+)
+
+func (e SourceFacebookMarketingSchemasAuthType) ToPointer() *SourceFacebookMarketingSchemasAuthType {
+	return &e
+}
+func (e *SourceFacebookMarketingSchemasAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Service":
+		*e = SourceFacebookMarketingSchemasAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingSchemasAuthType: %v", v)
+	}
+}
+
+type SourceFacebookMarketingServiceAccountKeyAuthentication struct {
+	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+	AccessToken string                                  `json:"access_token"`
+	authType    *SourceFacebookMarketingSchemasAuthType `const:"Service" json:"auth_type"`
+}
+
+func (s SourceFacebookMarketingServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookMarketingServiceAccountKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookMarketingServiceAccountKeyAuthentication) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookMarketingServiceAccountKeyAuthentication) GetAuthType() *SourceFacebookMarketingSchemasAuthType {
+	return SourceFacebookMarketingSchemasAuthTypeService.ToPointer()
+}
+
+type SourceFacebookMarketingAuthType string
+
+const (
+	SourceFacebookMarketingAuthTypeClient SourceFacebookMarketingAuthType = "Client"
+)
+
+func (e SourceFacebookMarketingAuthType) ToPointer() *SourceFacebookMarketingAuthType {
+	return &e
+}
+func (e *SourceFacebookMarketingAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Client":
+		*e = SourceFacebookMarketingAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingAuthType: %v", v)
+	}
+}
+
+type SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth struct {
+	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+	AccessToken *string                          `json:"access_token,omitempty"`
+	authType    *SourceFacebookMarketingAuthType `const:"Client" json:"auth_type"`
+	// Client ID for the Facebook Marketing API
+	ClientID string `json:"client_id"`
+	// Client Secret for the Facebook Marketing API
+	ClientSecret string `json:"client_secret"`
+}
+
+func (s SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) GetAuthType() *SourceFacebookMarketingAuthType {
+	return SourceFacebookMarketingAuthTypeClient.ToPointer()
+}
+
+func (o *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+type SourceFacebookMarketingAuthenticationType string
+
+const (
+	SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingAuthenticateViaFacebookMarketingOauth SourceFacebookMarketingAuthenticationType = "source-facebook-marketing_Authenticate via Facebook Marketing (Oauth)"
+	SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingServiceAccountKeyAuthentication       SourceFacebookMarketingAuthenticationType = "source-facebook-marketing_Service Account Key Authentication"
+)
+
+// SourceFacebookMarketingAuthentication - Credentials for connecting to the Facebook Marketing API
+type SourceFacebookMarketingAuthentication struct {
+	SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth *SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
+	SourceFacebookMarketingServiceAccountKeyAuthentication       *SourceFacebookMarketingServiceAccountKeyAuthentication
+
+	Type SourceFacebookMarketingAuthenticationType
+}
+
+func CreateSourceFacebookMarketingAuthenticationSourceFacebookMarketingAuthenticateViaFacebookMarketingOauth(sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth) SourceFacebookMarketingAuthentication {
+	typ := SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
+
+	return SourceFacebookMarketingAuthentication{
+		SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth: &sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth,
+		Type: typ,
+	}
+}
+
+func CreateSourceFacebookMarketingAuthenticationSourceFacebookMarketingServiceAccountKeyAuthentication(sourceFacebookMarketingServiceAccountKeyAuthentication SourceFacebookMarketingServiceAccountKeyAuthentication) SourceFacebookMarketingAuthentication {
+	typ := SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingServiceAccountKeyAuthentication
+
+	return SourceFacebookMarketingAuthentication{
+		SourceFacebookMarketingServiceAccountKeyAuthentication: &sourceFacebookMarketingServiceAccountKeyAuthentication,
+		Type: typ,
+	}
+}
+
+func (u *SourceFacebookMarketingAuthentication) UnmarshalJSON(data []byte) error {
+
+	var sourceFacebookMarketingServiceAccountKeyAuthentication SourceFacebookMarketingServiceAccountKeyAuthentication = SourceFacebookMarketingServiceAccountKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceFacebookMarketingServiceAccountKeyAuthentication, "", true, true); err == nil {
+		u.SourceFacebookMarketingServiceAccountKeyAuthentication = &sourceFacebookMarketingServiceAccountKeyAuthentication
+		u.Type = SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingServiceAccountKeyAuthentication
+		return nil
+	}
+
+	var sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth = SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth{}
+	if err := utils.UnmarshalJSON(data, &sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth, "", true, true); err == nil {
+		u.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth = &sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
+		u.Type = SourceFacebookMarketingAuthenticationTypeSourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceFacebookMarketingAuthentication", string(data))
+}
+
+func (u SourceFacebookMarketingAuthentication) MarshalJSON() ([]byte, error) {
+	if u.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth != nil {
+		return utils.MarshalJSON(u.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth, "", true)
+	}
+
+	if u.SourceFacebookMarketingServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.SourceFacebookMarketingServiceAccountKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceFacebookMarketingAuthentication: all fields are null")
 }
 
 // SourceFacebookMarketingValidActionBreakdowns - An enumeration.
@@ -397,7 +582,6 @@ const (
 	SourceFacebookMarketingValidEnumsAdsetEnd                                SourceFacebookMarketingValidEnums = "adset_end"
 	SourceFacebookMarketingValidEnumsAdsetID                                 SourceFacebookMarketingValidEnums = "adset_id"
 	SourceFacebookMarketingValidEnumsAdsetName                               SourceFacebookMarketingValidEnums = "adset_name"
-	SourceFacebookMarketingValidEnumsAdsetStart                              SourceFacebookMarketingValidEnums = "adset_start"
 	SourceFacebookMarketingValidEnumsAgeTargeting                            SourceFacebookMarketingValidEnums = "age_targeting"
 	SourceFacebookMarketingValidEnumsAttributionSetting                      SourceFacebookMarketingValidEnums = "attribution_setting"
 	SourceFacebookMarketingValidEnumsAuctionBid                              SourceFacebookMarketingValidEnums = "auction_bid"
@@ -551,8 +735,6 @@ func (e *SourceFacebookMarketingValidEnums) UnmarshalJSON(data []byte) error {
 	case "adset_id":
 		fallthrough
 	case "adset_name":
-		fallthrough
-	case "adset_start":
 		fallthrough
 	case "age_targeting":
 		fallthrough
@@ -985,6 +1167,8 @@ type SourceFacebookMarketing struct {
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret for your OAuth app
 	ClientSecret *string `json:"client_secret,omitempty"`
+	// Credentials for connecting to the Facebook Marketing API
+	Credentials *SourceFacebookMarketingAuthentication `json:"credentials,omitempty"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomInsights []SourceFacebookMarketingInsightConfig `json:"custom_insights,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
@@ -1067,6 +1251,13 @@ func (o *SourceFacebookMarketing) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceFacebookMarketing) GetCredentials() *SourceFacebookMarketingAuthentication {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }
 
 func (o *SourceFacebookMarketing) GetCustomInsights() []SourceFacebookMarketingInsightConfig {

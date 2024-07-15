@@ -15,7 +15,7 @@ SourceGoogleSheets Resource
 ```terraform
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
-    batch_size = 10
+    batch_size = 7
     credentials = {
       authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
@@ -26,10 +26,10 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
     names_conversion = false
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "e4145562-d275-4762-b5e5-2bb8adc8fd2a"
-  name          = "Ebony McDermott PhD"
+  definition_id = "94f7d68d-64a8-410b-a959-587ed0c47c0f"
+  name          = "Roosevelt Waters"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ec44e216-dff8-4929-a4d2-3a00b494f7d6"
+  workspace_id  = "c0f294c1-1e4e-4993-9294-74281bb54dff"
 }
 ```
 

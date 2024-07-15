@@ -15,12 +15,12 @@ SourcePokeapi Resource
 ```terraform
 resource "airbyte_source_pokeapi" "my_source_pokeapi" {
   configuration = {
-    pokemon_name = "snorlax"
+    pokemon_name = "ditto"
   }
-  definition_id = "2f8e75b9-5ee5-4dd1-9c77-a4e3aa4d1c74"
-  name          = "Gregg Smitham"
+  definition_id = "1b21ea9b-c9d1-4c88-b1ee-12f8a7db098a"
+  name          = "Lucille Blanda"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "939b8b6b-2c09-420a-a8be-08607521b21e"
+  workspace_id  = "6a87d389-094e-4fa6-bbbe-a9f5a35d1bd0"
 }
 ```
 

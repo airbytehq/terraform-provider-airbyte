@@ -405,8 +405,8 @@ func (e *SourceMicrosoftSharepointUpdateParsingStrategy) UnmarshalJSON(data []by
 	}
 }
 
-// SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental struct {
+// SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat struct {
 	filetype *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceMicrosoftSharepointUpdateProcessing `json:"processing,omitempty"`
@@ -416,36 +416,36 @@ type SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental struct {
 	Strategy *SourceMicrosoftSharepointUpdateParsingStrategy `default:"auto" json:"strategy"`
 }
 
-func (s SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype {
+func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetFiletype() *SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletype {
 	return SourceMicrosoftSharepointUpdateSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) GetProcessing() *SourceMicrosoftSharepointUpdateProcessing {
+func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftSharepointUpdateProcessing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
 }
 
-func (o *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) GetStrategy() *SourceMicrosoftSharepointUpdateParsingStrategy {
+func (o *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) GetStrategy() *SourceMicrosoftSharepointUpdateParsingStrategy {
 	if o == nil {
 		return nil
 	}
@@ -979,20 +979,20 @@ func (o *SourceMicrosoftSharepointUpdateAvroFormat) GetFiletype() *SourceMicroso
 type SourceMicrosoftSharepointUpdateFormatType string
 
 const (
-	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateAvroFormat                         SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Avro Format"
-	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateCSVFormat                          SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_CSV Format"
-	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateJsonlFormat                        SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Jsonl Format"
-	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateParquetFormat                      SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Parquet Format"
-	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Document File Type Format (Experimental)"
+	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateAvroFormat                 SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Avro Format"
+	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateCSVFormat                  SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_CSV Format"
+	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateJsonlFormat                SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Jsonl Format"
+	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateParquetFormat              SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Parquet Format"
+	SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateUnstructuredDocumentFormat SourceMicrosoftSharepointUpdateFormatType = "source-microsoft-sharepoint-update_Unstructured Document Format"
 )
 
 // SourceMicrosoftSharepointUpdateFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceMicrosoftSharepointUpdateFormat struct {
-	SourceMicrosoftSharepointUpdateAvroFormat                         *SourceMicrosoftSharepointUpdateAvroFormat
-	SourceMicrosoftSharepointUpdateCSVFormat                          *SourceMicrosoftSharepointUpdateCSVFormat
-	SourceMicrosoftSharepointUpdateJsonlFormat                        *SourceMicrosoftSharepointUpdateJsonlFormat
-	SourceMicrosoftSharepointUpdateParquetFormat                      *SourceMicrosoftSharepointUpdateParquetFormat
-	SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental *SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental
+	SourceMicrosoftSharepointUpdateAvroFormat                 *SourceMicrosoftSharepointUpdateAvroFormat
+	SourceMicrosoftSharepointUpdateCSVFormat                  *SourceMicrosoftSharepointUpdateCSVFormat
+	SourceMicrosoftSharepointUpdateJsonlFormat                *SourceMicrosoftSharepointUpdateJsonlFormat
+	SourceMicrosoftSharepointUpdateParquetFormat              *SourceMicrosoftSharepointUpdateParquetFormat
+	SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat *SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat
 
 	Type SourceMicrosoftSharepointUpdateFormatType
 }
@@ -1033,11 +1033,11 @@ func CreateSourceMicrosoftSharepointUpdateFormatSourceMicrosoftSharepointUpdateP
 	}
 }
 
-func CreateSourceMicrosoftSharepointUpdateFormatSourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental(sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental) SourceMicrosoftSharepointUpdateFormat {
-	typ := SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental
+func CreateSourceMicrosoftSharepointUpdateFormatSourceMicrosoftSharepointUpdateUnstructuredDocumentFormat(sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat) SourceMicrosoftSharepointUpdateFormat {
+	typ := SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateUnstructuredDocumentFormat
 
 	return SourceMicrosoftSharepointUpdateFormat{
-		SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental: &sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental,
+		SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat: &sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat,
 		Type: typ,
 	}
 }
@@ -1065,10 +1065,10 @@ func (u *SourceMicrosoftSharepointUpdateFormat) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	var sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental = SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental = &sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental
-		u.Type = SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental
+	var sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat = SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat = &sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat
+		u.Type = SourceMicrosoftSharepointUpdateFormatTypeSourceMicrosoftSharepointUpdateUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1099,8 +1099,8 @@ func (u SourceMicrosoftSharepointUpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateParquetFormat, "", true)
 	}
 
-	if u.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateFormat: all fields are null")

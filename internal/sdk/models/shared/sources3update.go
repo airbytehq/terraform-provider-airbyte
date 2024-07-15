@@ -692,8 +692,8 @@ func (e *SourceS3UpdateParsingStrategy) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceS3UpdateDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceS3UpdateDocumentFileTypeFormatExperimental struct {
+// SourceS3UpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceS3UpdateUnstructuredDocumentFormat struct {
 	filetype *SourceS3UpdateSchemasStreamsFormatFormat5Filetype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceS3UpdateProcessing `json:"processing,omitempty"`
@@ -703,36 +703,36 @@ type SourceS3UpdateDocumentFileTypeFormatExperimental struct {
 	Strategy *SourceS3UpdateParsingStrategy `default:"auto" json:"strategy"`
 }
 
-func (s SourceS3UpdateDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceS3UpdateUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceS3UpdateDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceS3UpdateUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormat5Filetype {
+func (o *SourceS3UpdateUnstructuredDocumentFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormat5Filetype {
 	return SourceS3UpdateSchemasStreamsFormatFormat5FiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetProcessing() *SourceS3UpdateProcessing {
+func (o *SourceS3UpdateUnstructuredDocumentFormat) GetProcessing() *SourceS3UpdateProcessing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
 }
 
-func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceS3UpdateUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceS3UpdateDocumentFileTypeFormatExperimental) GetStrategy() *SourceS3UpdateParsingStrategy {
+func (o *SourceS3UpdateUnstructuredDocumentFormat) GetStrategy() *SourceS3UpdateParsingStrategy {
 	if o == nil {
 		return nil
 	}
@@ -1302,20 +1302,20 @@ func (o *SourceS3UpdateAvroFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFi
 type SourceS3UpdateFormatType string
 
 const (
-	SourceS3UpdateFormatTypeSourceS3UpdateAvroFormat                         SourceS3UpdateFormatType = "source-s3-update_Avro Format"
-	SourceS3UpdateFormatTypeSourceS3UpdateCSVFormat                          SourceS3UpdateFormatType = "source-s3-update_CSV Format"
-	SourceS3UpdateFormatTypeSourceS3UpdateJsonlFormat                        SourceS3UpdateFormatType = "source-s3-update_Jsonl Format"
-	SourceS3UpdateFormatTypeSourceS3UpdateParquetFormat                      SourceS3UpdateFormatType = "source-s3-update_Parquet Format"
-	SourceS3UpdateFormatTypeSourceS3UpdateDocumentFileTypeFormatExperimental SourceS3UpdateFormatType = "source-s3-update_Document File Type Format (Experimental)"
+	SourceS3UpdateFormatTypeSourceS3UpdateAvroFormat                 SourceS3UpdateFormatType = "source-s3-update_Avro Format"
+	SourceS3UpdateFormatTypeSourceS3UpdateCSVFormat                  SourceS3UpdateFormatType = "source-s3-update_CSV Format"
+	SourceS3UpdateFormatTypeSourceS3UpdateJsonlFormat                SourceS3UpdateFormatType = "source-s3-update_Jsonl Format"
+	SourceS3UpdateFormatTypeSourceS3UpdateParquetFormat              SourceS3UpdateFormatType = "source-s3-update_Parquet Format"
+	SourceS3UpdateFormatTypeSourceS3UpdateUnstructuredDocumentFormat SourceS3UpdateFormatType = "source-s3-update_Unstructured Document Format"
 )
 
 // SourceS3UpdateFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceS3UpdateFormat struct {
-	SourceS3UpdateAvroFormat                         *SourceS3UpdateAvroFormat
-	SourceS3UpdateCSVFormat                          *SourceS3UpdateCSVFormat
-	SourceS3UpdateJsonlFormat                        *SourceS3UpdateJsonlFormat
-	SourceS3UpdateParquetFormat                      *SourceS3UpdateParquetFormat
-	SourceS3UpdateDocumentFileTypeFormatExperimental *SourceS3UpdateDocumentFileTypeFormatExperimental
+	SourceS3UpdateAvroFormat                 *SourceS3UpdateAvroFormat
+	SourceS3UpdateCSVFormat                  *SourceS3UpdateCSVFormat
+	SourceS3UpdateJsonlFormat                *SourceS3UpdateJsonlFormat
+	SourceS3UpdateParquetFormat              *SourceS3UpdateParquetFormat
+	SourceS3UpdateUnstructuredDocumentFormat *SourceS3UpdateUnstructuredDocumentFormat
 
 	Type SourceS3UpdateFormatType
 }
@@ -1356,12 +1356,12 @@ func CreateSourceS3UpdateFormatSourceS3UpdateParquetFormat(sourceS3UpdateParquet
 	}
 }
 
-func CreateSourceS3UpdateFormatSourceS3UpdateDocumentFileTypeFormatExperimental(sourceS3UpdateDocumentFileTypeFormatExperimental SourceS3UpdateDocumentFileTypeFormatExperimental) SourceS3UpdateFormat {
-	typ := SourceS3UpdateFormatTypeSourceS3UpdateDocumentFileTypeFormatExperimental
+func CreateSourceS3UpdateFormatSourceS3UpdateUnstructuredDocumentFormat(sourceS3UpdateUnstructuredDocumentFormat SourceS3UpdateUnstructuredDocumentFormat) SourceS3UpdateFormat {
+	typ := SourceS3UpdateFormatTypeSourceS3UpdateUnstructuredDocumentFormat
 
 	return SourceS3UpdateFormat{
-		SourceS3UpdateDocumentFileTypeFormatExperimental: &sourceS3UpdateDocumentFileTypeFormatExperimental,
-		Type: typ,
+		SourceS3UpdateUnstructuredDocumentFormat: &sourceS3UpdateUnstructuredDocumentFormat,
+		Type:                                     typ,
 	}
 }
 
@@ -1388,10 +1388,10 @@ func (u *SourceS3UpdateFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceS3UpdateDocumentFileTypeFormatExperimental SourceS3UpdateDocumentFileTypeFormatExperimental = SourceS3UpdateDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceS3UpdateDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceS3UpdateDocumentFileTypeFormatExperimental = &sourceS3UpdateDocumentFileTypeFormatExperimental
-		u.Type = SourceS3UpdateFormatTypeSourceS3UpdateDocumentFileTypeFormatExperimental
+	var sourceS3UpdateUnstructuredDocumentFormat SourceS3UpdateUnstructuredDocumentFormat = SourceS3UpdateUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceS3UpdateUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceS3UpdateUnstructuredDocumentFormat = &sourceS3UpdateUnstructuredDocumentFormat
+		u.Type = SourceS3UpdateFormatTypeSourceS3UpdateUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1422,8 +1422,8 @@ func (u SourceS3UpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceS3UpdateParquetFormat, "", true)
 	}
 
-	if u.SourceS3UpdateDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceS3UpdateDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceS3UpdateUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceS3UpdateUnstructuredDocumentFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceS3UpdateFormat: all fields are null")

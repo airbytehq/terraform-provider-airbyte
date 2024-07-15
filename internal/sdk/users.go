@@ -28,7 +28,7 @@ func newUsers(sdkConfig sdkConfiguration) *Users {
 
 // ListUsersWithinAnOrganization - List all users within an organization
 // Organization Admin user can list all users within the same organization. Also provide filtering on a list of user IDs or/and a list of user emails.
-func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request operations.ListUsersWithinAnOrganizationRequest) (*operations.ListUsersWithinAnOrganizationResponse, error) {
+func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request operations.ListUsersWithinAnOrganizationRequest, opts ...operations.Option) (*operations.ListUsersWithinAnOrganizationResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listUsersWithinAnOrganization",
@@ -36,10 +36,32 @@ func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request opera
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/users")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)

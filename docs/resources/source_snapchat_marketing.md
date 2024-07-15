@@ -21,13 +21,13 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     end_date                    = "2022-01-30"
     refresh_token               = "...my_refresh_token..."
     start_date                  = "2022-01-01"
-    swipe_up_attribution_window = "7_DAY"
-    view_attribution_window     = "1_HOUR"
+    swipe_up_attribution_window = "28_DAY"
+    view_attribution_window     = "3_HOUR"
   }
-  definition_id = "5b0d51b3-114e-49ed-9754-1c3612b0e8c8"
-  name          = "Miss Emilio Botsford PhD"
+  definition_id = "fcf99c41-876f-4a0c-bc1b-99ee1e960566"
+  name          = "Dr. Beatrice Reilly"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "259943df-a52a-49e4-b5ab-ffba2c1e7b69"
+  workspace_id  = "1b3114e9-ed57-4541-8361-2b0e8c8cf11a"
 }
 ```
 

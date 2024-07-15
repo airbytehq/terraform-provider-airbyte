@@ -63,6 +63,31 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"key_pair_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"private_key": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.`,
+									},
+									"private_key_password": schema.StringAttribute{
+										Optional:    true,
+										Sensitive:   true,
+										Description: `Passphrase for private key`,
+									},
+									"username": schema.StringAttribute{
+										Required:    true,
+										Description: `The username you created to allow Airbyte to access the database.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+										path.MatchRelative().AtParent().AtName("username_and_password"),
+									}...),
+								},
+							},
 							"o_auth20": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -87,6 +112,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("key_pair_authentication"),
 										path.MatchRelative().AtParent().AtName("username_and_password"),
 									}...),
 								},
@@ -106,6 +132,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("key_pair_authentication"),
 										path.MatchRelative().AtParent().AtName("o_auth20"),
 									}...),
 								},

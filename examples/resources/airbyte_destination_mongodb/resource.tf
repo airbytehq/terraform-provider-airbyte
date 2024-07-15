@@ -3,7 +3,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
     auth_type = {
       login_password = {
         password = "...my_password..."
-        username = "Ryleigh43"
+        username = "Ubaldo12"
       }
     }
     database = "...my_database..."
@@ -17,7 +17,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       no_tunnel = {}
     }
   }
-  definition_id = "e75f1c50-c9ec-4767-87b0-6cf86fe4a6f8"
-  name          = "Mr. Malcolm Lubowitz"
-  workspace_id  = "d646f802-e7b2-4183-b2bc-4f6db7afdaca"
+  definition_id = "48d60128-3384-4bd8-bb5c-ce3614854333"
+  name          = "Courtney Considine"
+  workspace_id  = "5e509f45-2521-4a04-b878-c254cd184fd1"
 }

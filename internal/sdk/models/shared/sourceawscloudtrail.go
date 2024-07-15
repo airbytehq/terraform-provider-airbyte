@@ -9,6 +9,36 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 )
 
+type SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody struct {
+	AttributeKey   *string `default:"EventName" json:"attribute_key"`
+	AttributeValue *string `default:"ListInstanceAssociations" json:"attribute_value"`
+}
+
+func (s SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody) GetAttributeKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AttributeKey
+}
+
+func (o *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody) GetAttributeValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AttributeValue
+}
+
 type AwsCloudtrail string
 
 const (
@@ -36,12 +66,13 @@ type SourceAwsCloudtrail struct {
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 	AwsKeyID string `json:"aws_key_id"`
 	// The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
-	AwsRegionName string `json:"aws_region_name"`
+	AwsRegionName *string `default:"us-east-1" json:"aws_region_name"`
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-	AwsSecretKey string        `json:"aws_secret_key"`
-	sourceType   AwsCloudtrail `const:"aws-cloudtrail" json:"sourceType"`
+	AwsSecretKey           string                                                                                                                       `json:"aws_secret_key"`
+	LookupAttributesFilter *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody `json:"lookup_attributes_filter,omitempty"`
+	sourceType             AwsCloudtrail                                                                                                                `const:"aws-cloudtrail" json:"sourceType"`
 	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
-	StartDate *types.Date `default:"1970-01-01" json:"start_date"`
+	StartDate *types.Date `json:"start_date,omitempty"`
 }
 
 func (s SourceAwsCloudtrail) MarshalJSON() ([]byte, error) {
@@ -62,9 +93,9 @@ func (o *SourceAwsCloudtrail) GetAwsKeyID() string {
 	return o.AwsKeyID
 }
 
-func (o *SourceAwsCloudtrail) GetAwsRegionName() string {
+func (o *SourceAwsCloudtrail) GetAwsRegionName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.AwsRegionName
 }
@@ -74,6 +105,13 @@ func (o *SourceAwsCloudtrail) GetAwsSecretKey() string {
 		return ""
 	}
 	return o.AwsSecretKey
+}
+
+func (o *SourceAwsCloudtrail) GetLookupAttributesFilter() *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody {
+	if o == nil {
+		return nil
+	}
+	return o.LookupAttributesFilter
 }
 
 func (o *SourceAwsCloudtrail) GetSourceType() AwsCloudtrail {

@@ -3,10 +3,10 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    username         = "Fatima_Simonis"
+    username         = "Lisandro_Champlin"
   }
-  definition_id = "eb8b49c8-2f28-43fd-b1b3-62a3ef9cacc8"
-  name          = "Misty Price"
+  definition_id = "4f7e4eab-e3a9-4776-8e79-345d14463033"
+  name          = "Priscilla Zulauf"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ac01647d-c7c2-471c-9044-a25a4f7e4eab"
+  workspace_id  = "cf10b074-2b93-4b49-9111-a320ccad5adc"
 }

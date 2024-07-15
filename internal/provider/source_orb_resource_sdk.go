@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.SourceOrbCreateRequest {
@@ -31,7 +32,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 	} else {
 		planID = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var stringEventPropertiesKeys []string = []string{}
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
@@ -109,7 +110,7 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 	} else {
 		planID = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var stringEventPropertiesKeys []string = []string{}
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())

@@ -7,8 +7,8 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
     }
     start_date = "2020-11-16T00:00:00Z"
   }
-  definition_id = "b6d0d209-32d7-4e88-9861-9ec39811786e"
-  name          = "Darlene Vandervort"
+  definition_id = "b13a43b1-ead7-403a-8eeb-23fe553942b5"
+  name          = "Jonathon Jerde PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "72c20971-d544-4a65-a7d2-b4609d4ec646"
+  workspace_id  = "20932d7e-88d8-4619-ac39-811786e44e52"
 }

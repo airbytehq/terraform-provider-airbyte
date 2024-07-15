@@ -27,7 +27,7 @@ func newJobs(sdkConfig sdkConfiguration) *Jobs {
 }
 
 // CancelJob - Cancel a running Job
-func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobRequest) (*operations.CancelJobResponse, error) {
+func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobRequest, opts ...operations.Option) (*operations.CancelJobResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "cancelJob",
@@ -35,10 +35,32 @@ func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/jobs/{jobId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
@@ -119,12 +141,23 @@ func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 }
 
 // CreateJob - Trigger a sync or reset job of a connection
-func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (*operations.CreateJobResponse, error) {
+func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest, opts ...operations.Option) (*operations.CreateJobResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createJob",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -136,6 +169,17 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
@@ -217,7 +261,7 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 }
 
 // GetJob - Get Job status and details
-func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*operations.GetJobResponse, error) {
+func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest, opts ...operations.Option) (*operations.GetJobResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getJob",
@@ -225,10 +269,32 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/jobs/{jobId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -309,7 +375,7 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 }
 
 // ListJobs - List Jobs by sync type
-func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest) (*operations.ListJobsResponse, error) {
+func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest, opts ...operations.Option) (*operations.ListJobsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listJobs",
@@ -317,10 +383,32 @@ func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest)
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/jobs")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)

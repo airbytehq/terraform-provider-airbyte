@@ -27,12 +27,23 @@ func newPermissions(sdkConfig sdkConfiguration) *Permissions {
 }
 
 // CreatePermission - Create a permission
-func (s *Permissions) CreatePermission(ctx context.Context, request shared.PermissionCreateRequest) (*operations.CreatePermissionResponse, error) {
+func (s *Permissions) CreatePermission(ctx context.Context, request shared.PermissionCreateRequest, opts ...operations.Option) (*operations.CreatePermissionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "createPermission",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -44,6 +55,17 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
@@ -125,7 +147,7 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 }
 
 // DeletePermission - Delete a Permission
-func (s *Permissions) DeletePermission(ctx context.Context, request operations.DeletePermissionRequest) (*operations.DeletePermissionResponse, error) {
+func (s *Permissions) DeletePermission(ctx context.Context, request operations.DeletePermissionRequest, opts ...operations.Option) (*operations.DeletePermissionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "deletePermission",
@@ -133,10 +155,32 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/permissions/{permissionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
@@ -209,7 +253,7 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 }
 
 // GetPermission - Get Permission details
-func (s *Permissions) GetPermission(ctx context.Context, request operations.GetPermissionRequest) (*operations.GetPermissionResponse, error) {
+func (s *Permissions) GetPermission(ctx context.Context, request operations.GetPermissionRequest, opts ...operations.Option) (*operations.GetPermissionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "getPermission",
@@ -217,10 +261,32 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/permissions/{permissionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -303,7 +369,7 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 }
 
 // ListPermissions - List Permissions by user id
-func (s *Permissions) ListPermissions(ctx context.Context, request operations.ListPermissionsRequest) (*operations.ListPermissionsResponse, error) {
+func (s *Permissions) ListPermissions(ctx context.Context, request operations.ListPermissionsRequest, opts ...operations.Option) (*operations.ListPermissionsResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "listPermissions",
@@ -311,10 +377,32 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	opURL, err := url.JoinPath(baseURL, "/permissions")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
@@ -399,12 +487,23 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 }
 
 // UpdatePermission - Update a permission
-func (s *Permissions) UpdatePermission(ctx context.Context, request operations.UpdatePermissionRequest) (*operations.UpdatePermissionResponse, error) {
+func (s *Permissions) UpdatePermission(ctx context.Context, request operations.UpdatePermissionRequest, opts ...operations.Option) (*operations.UpdatePermissionResponse, error) {
 	hookCtx := hooks.HookContext{
 		Context:        ctx,
 		OperationID:    "updatePermission",
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
 	}
 
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -416,6 +515,17 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PermissionUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
 	}
 
 	req, err := http.NewRequestWithContext(ctx, "PATCH", opURL, bodyReader)
