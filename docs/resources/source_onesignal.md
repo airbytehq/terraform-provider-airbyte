@@ -26,10 +26,10 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  definition_id = "f388685d-8941-4e7d-b072-3f94739cc80e"
-  name          = "Pedro Prohaska Sr."
+  definition_id = "0dfc3504-1fcd-4cac-a226-2ef24d92369b"
+  name          = "Shawna Wilkinson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "25778f7a-023c-41e0-8d80-f694c48e9d0f"
+  workspace_id  = "7ba288f1-0a06-435f-b19f-388685d8941e"
 }
 ```
 

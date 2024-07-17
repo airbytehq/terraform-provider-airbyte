@@ -15,7 +15,7 @@ resource "airbyte_destination_vectara" "my_destination_vectara" {
     ]
     title_field = "document_key"
   }
-  definition_id = "490aa753-ad11-4902-ba18-8860231ad193"
-  name          = "Emilio Gerhold V"
-  workspace_id  = "85c92d33-cae7-4edb-801c-239e69c6f21d"
+  definition_id = "173cccbb-c51a-43ca-a62e-557cba0d3380"
+  name          = "Beverly Murray"
+  workspace_id  = "67fcf379-fa40-411e-ae8d-b1144f7f4dcb"
 }

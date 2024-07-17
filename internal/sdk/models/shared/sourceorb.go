@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
-	"time"
 )
 
 type Orb string
@@ -45,7 +44,7 @@ type SourceOrb struct {
 	PlanID     *string `json:"plan_id,omitempty"`
 	sourceType Orb     `const:"orb" json:"sourceType"`
 	// UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
-	StartDate time.Time `json:"start_date"`
+	StartDate string `json:"start_date"`
 	// Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 	StringEventPropertiesKeys []string `json:"string_event_properties_keys,omitempty"`
 	// Property key name to group subscription usage by.
@@ -102,9 +101,9 @@ func (o *SourceOrb) GetSourceType() Orb {
 	return OrbOrb
 }
 
-func (o *SourceOrb) GetStartDate() time.Time {
+func (o *SourceOrb) GetStartDate() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
 	return o.StartDate
 }

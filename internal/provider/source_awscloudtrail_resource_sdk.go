@@ -10,32 +10,8 @@ import (
 
 func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailCreateRequest() *shared.SourceAwsCloudtrailCreateRequest {
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
-	awsRegionName := new(string)
-	if !r.Configuration.AwsRegionName.IsUnknown() && !r.Configuration.AwsRegionName.IsNull() {
-		*awsRegionName = r.Configuration.AwsRegionName.ValueString()
-	} else {
-		awsRegionName = nil
-	}
+	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
-	var lookupAttributesFilter *shared.SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody
-	if r.Configuration.LookupAttributesFilter != nil {
-		attributeKey := new(string)
-		if !r.Configuration.LookupAttributesFilter.AttributeKey.IsUnknown() && !r.Configuration.LookupAttributesFilter.AttributeKey.IsNull() {
-			*attributeKey = r.Configuration.LookupAttributesFilter.AttributeKey.ValueString()
-		} else {
-			attributeKey = nil
-		}
-		attributeValue := new(string)
-		if !r.Configuration.LookupAttributesFilter.AttributeValue.IsUnknown() && !r.Configuration.LookupAttributesFilter.AttributeValue.IsNull() {
-			*attributeValue = r.Configuration.LookupAttributesFilter.AttributeValue.ValueString()
-		} else {
-			attributeValue = nil
-		}
-		lookupAttributesFilter = &shared.SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody{
-			AttributeKey:   attributeKey,
-			AttributeValue: attributeValue,
-		}
-	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -43,11 +19,10 @@ func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailCreateRequ
 		startDate = nil
 	}
 	configuration := shared.SourceAwsCloudtrail{
-		AwsKeyID:               awsKeyID,
-		AwsRegionName:          awsRegionName,
-		AwsSecretKey:           awsSecretKey,
-		LookupAttributesFilter: lookupAttributesFilter,
-		StartDate:              startDate,
+		AwsKeyID:      awsKeyID,
+		AwsRegionName: awsRegionName,
+		AwsSecretKey:  awsSecretKey,
+		StartDate:     startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -84,32 +59,8 @@ func (r *SourceAwsCloudtrailResourceModel) RefreshFromSharedSourceResponse(resp 
 
 func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailPutRequest() *shared.SourceAwsCloudtrailPutRequest {
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
-	awsRegionName := new(string)
-	if !r.Configuration.AwsRegionName.IsUnknown() && !r.Configuration.AwsRegionName.IsNull() {
-		*awsRegionName = r.Configuration.AwsRegionName.ValueString()
-	} else {
-		awsRegionName = nil
-	}
+	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
-	var lookupAttributesFilter *shared.FilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody
-	if r.Configuration.LookupAttributesFilter != nil {
-		attributeKey := new(string)
-		if !r.Configuration.LookupAttributesFilter.AttributeKey.IsUnknown() && !r.Configuration.LookupAttributesFilter.AttributeKey.IsNull() {
-			*attributeKey = r.Configuration.LookupAttributesFilter.AttributeKey.ValueString()
-		} else {
-			attributeKey = nil
-		}
-		attributeValue := new(string)
-		if !r.Configuration.LookupAttributesFilter.AttributeValue.IsUnknown() && !r.Configuration.LookupAttributesFilter.AttributeValue.IsNull() {
-			*attributeValue = r.Configuration.LookupAttributesFilter.AttributeValue.ValueString()
-		} else {
-			attributeValue = nil
-		}
-		lookupAttributesFilter = &shared.FilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody{
-			AttributeKey:   attributeKey,
-			AttributeValue: attributeValue,
-		}
-	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -117,11 +68,10 @@ func (r *SourceAwsCloudtrailResourceModel) ToSharedSourceAwsCloudtrailPutRequest
 		startDate = nil
 	}
 	configuration := shared.SourceAwsCloudtrailUpdate{
-		AwsKeyID:               awsKeyID,
-		AwsRegionName:          awsRegionName,
-		AwsSecretKey:           awsSecretKey,
-		LookupAttributesFilter: lookupAttributesFilter,
-		StartDate:              startDate,
+		AwsKeyID:      awsKeyID,
+		AwsRegionName: awsRegionName,
+		AwsSecretKey:  awsSecretKey,
+		StartDate:     startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

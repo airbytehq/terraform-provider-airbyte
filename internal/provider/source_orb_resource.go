@@ -10,14 +10,12 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -88,9 +86,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 					"start_date": schema.StringAttribute{
 						Required:    true,
 						Description: `UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the ` + "`" + `timeframe_start` + "`" + ` API parameter.`,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
 					},
 					"string_event_properties_keys": schema.ListAttribute{
 						Optional:    true,

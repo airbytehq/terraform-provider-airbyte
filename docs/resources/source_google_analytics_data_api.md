@@ -38,12 +38,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 54.51
+                        value = 57.56
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 44.08
+                        value = 31.93
                       }
                     }
                   }
@@ -64,12 +64,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 41.77
+                        value = 35.8
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 64.64
+                        value = 18.49
                       }
                     }
                   }
@@ -81,21 +81,21 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Julia Stracke"
+        name = "Edmund Legros"
       },
     ]
     date_ranges_start_date = "2021-01-01"
-    keep_empty_rows        = true
-    lookback_window        = 14
+    keep_empty_rows        = false
+    lookback_window        = 2
     property_ids = [
       "...",
     ]
-    window_in_days = 200
+    window_in_days = 30
   }
-  definition_id = "7e953bf2-defe-4a2f-9145-f48d36313985"
-  name          = "Kim Marvin"
+  definition_id = "183b00ec-7045-4956-803e-c7b8b68fdfc0"
+  name          = "Miriam Deckow"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "52d3206a-fb3a-4724-a60d-40134e58876c"
+  workspace_id  = "fd673f59-a8d0-4acc-9948-b0061059fac1"
 }
 ```
 

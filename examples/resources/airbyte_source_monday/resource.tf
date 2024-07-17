@@ -6,8 +6,8 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "cb3edfbb-ab6a-4d0e-84a4-dc970c078573"
-  name          = "Benjamin Bartell"
+  definition_id = "0634c9db-1c42-4670-9282-f0b308e78729"
+  name          = "Mr. Emmett Hermiston"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "990f9b2c-e7a6-47a8-9150-ea86120cd618"
+  workspace_id  = "b690b273-6f2f-47a3-b95d-4abcb3edfbba"
 }

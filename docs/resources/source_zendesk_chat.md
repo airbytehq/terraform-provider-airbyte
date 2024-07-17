@@ -23,10 +23,10 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
     start_date = "2021-02-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "e012beba-22c9-4964-9ef6-30f5d8739c0e"
-  name          = "Hazel Pfeffer"
+  definition_id = "c0e34b35-2ddb-404c-9bce-387d66444a18"
+  name          = "Claudia Mills"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2ddb04c9-bce3-487d-a644-4a186797a763"
+  workspace_id  = "763e10f9-9e00-4879-a494-84a748552064"
 }
 ```
 

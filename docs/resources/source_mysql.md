@@ -22,9 +22,8 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     port            = 3306
     replication_method = {
       read_changes_using_binary_log_cdc = {
-        initial_load_timeout_hours           = 7
-        initial_waiting_seconds              = 8
-        invalid_cdc_cursor_position_behavior = "Fail sync"
+        initial_waiting_seconds              = 7
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
         server_time_zone                     = "...my_server_time_zone..."
       }
     }
@@ -34,12 +33,12 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Rachelle.Rippin"
+    username = "Flossie.Padberg78"
   }
-  definition_id = "b2c4dd4d-4290-4774-9ee0-bbab0457d926"
-  name          = "Miriam Lynch"
+  definition_id = "6558d9b0-3d25-4bee-bdba-dc477cb62b59"
+  name          = "Dr. Kirk Welch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ecd841e7-2a76-46a6-86fa-a512d8044b05"
+  workspace_id  = "4249578a-5bcb-4bc2-8b83-b2c4dd4d4290"
 }
 ```
 
@@ -93,7 +92,6 @@ Optional:
 
 Optional:
 
-- `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300
 - `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `server_time_zone` (String) Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.

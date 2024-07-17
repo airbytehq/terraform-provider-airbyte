@@ -21,15 +21,15 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "sheetname",
+      "sheetversion",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00-07:00"
+    start_datetime = "2000-01-01T13:00:00"
   }
-  definition_id = "56e98a69-50f0-4007-a330-47d95358a568"
-  name          = "Margarita Sipes"
+  definition_id = "9d2abec2-1d7e-43d2-8dfd-3d512342f997"
+  name          = "Jose Hilpert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bec21d7e-3d24-4dfd-bd51-2342f997d059"
+  workspace_id  = "38a2e5fc-f99c-4418-b6fa-0cbc1b99ee1e"
 }
 ```
 

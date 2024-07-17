@@ -3,8 +3,8 @@ resource "airbyte_source_dremio" "my_source_dremio" {
     api_key  = "...my_api_key..."
     base_url = "...my_base_url..."
   }
-  definition_id = "58122af6-a8ac-4655-b6a2-05f1e4d309ea"
-  name          = "Mrs. Carole Beer"
+  definition_id = "4c195964-33e1-4d51-884a-ac586d055244"
+  name          = "Floyd Hackett"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4fbd8663-14ca-4ce0-af96-b833556f7e41"
+  workspace_id  = "b457a2c2-618f-4e1b-91dc-ce8e649d7675"
 }

@@ -3,15 +3,15 @@ resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
     adjusted      = "false"
     api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
-    limit         = 100
-    multiplier    = 1
-    sort          = "asc"
+    limit         = 120
+    multiplier    = 2
+    sort          = "desc"
     start_date    = "2020-10-14"
     stocks_ticker = "MSFT"
     timespan      = "day"
   }
-  definition_id = "a6472a5f-8aec-48fe-9b8f-c35367bfee52"
-  name          = "Olive Durgan"
+  definition_id = "1ee12f8a-7db0-498a-b412-66a87d389094"
+  name          = "Emanuel Paucek"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "74e8f7b8-37d7-46b0-aa3d-797c2fd02395"
+  workspace_id  = "bbea9f5a-35d1-4bd0-bb63-21f6b4ca6472"
 }

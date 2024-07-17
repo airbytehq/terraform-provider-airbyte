@@ -2,8 +2,8 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "e3b52011-25b2-4925-aa78-4d2d0f170747"
-  name          = "Sonja Dibbert"
+  definition_id = "46f2bce2-e77b-4bcc-af58-8ac548be8a7a"
+  name          = "Wilfred Quitzon"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a49780ba-1d6a-428c-aeef-e59b72db2240"
+  workspace_id  = "2c79293e-28aa-4819-8334-8b38fe3b5201"
 }

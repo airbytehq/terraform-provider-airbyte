@@ -198,6 +198,41 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Sensitive:   true,
 										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
+									"encryption": schema.SingleNestedAttribute{
+										Optional: true,
+										Attributes: map[string]schema.Attribute{
+											"aescbc_envelope_encryption": schema.SingleNestedAttribute{
+												Optional: true,
+												Attributes: map[string]schema.Attribute{
+													"key_encrypting_key": schema.StringAttribute{
+														Optional:    true,
+														Sensitive:   true,
+														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
+													},
+												},
+												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("no_encryption"),
+													}...),
+												},
+											},
+											"no_encryption": schema.SingleNestedAttribute{
+												Optional:    true,
+												Attributes:  map[string]schema.Attribute{},
+												Description: `Staging data will be stored in plaintext.`,
+												Validators: []validator.Object{
+													objectvalidator.ConflictsWith(path.Expressions{
+														path.MatchRelative().AtParent().AtName("aescbc_envelope_encryption"),
+													}...),
+												},
+											},
+										},
+										Description: `How to encrypt the staging data`,
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
 										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,

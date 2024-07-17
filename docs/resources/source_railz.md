@@ -19,10 +19,10 @@ resource "airbyte_source_railz" "my_source_railz" {
     secret_key = "...my_secret_key..."
     start_date = "...my_start_date..."
   }
-  definition_id = "55dc9d09-7882-4142-b992-f65a7105f2e5"
-  name          = "Deborah Nader"
+  definition_id = "72ede129-9d48-4414-90fd-6e7ec48816b0"
+  name          = "Reginald Dibbert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "72ede129-9d48-4414-90fd-6e7ec48816b0"
+  workspace_id  = "975147c3-e6c8-4bd1-8cca-d3b1c4065293"
 }
 ```
 

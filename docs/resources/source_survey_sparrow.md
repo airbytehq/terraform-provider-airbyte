@@ -23,10 +23,10 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "84461977-a1b2-471a-9b00-9f29606a36da"
-  name          = "Alejandro Muller"
+  definition_id = "6dac9959-2aae-4b21-989b-3db558d4aa17"
+  name          = "Margaret Wiza"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2aaeb21d-89b3-4db5-98d4-aa1770fe21a7"
+  workspace_id  = "1a7b03b3-15af-419b-84a1-418c27e2e49f"
 }
 ```
 

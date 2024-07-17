@@ -25,11 +25,11 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Emmalee.Towne89"
+    username = "Louvenia.Bartell4"
   }
-  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
-  name          = "Adrienne Lockman"
-  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
+  definition_id = "16590e1a-2bc7-4de0-bf63-7374915d3efc"
+  name          = "Kara Stroman"
+  workspace_id  = "0e36acc1-e6f1-4291-9604-b55b326e06d2"
 }
 ```
 

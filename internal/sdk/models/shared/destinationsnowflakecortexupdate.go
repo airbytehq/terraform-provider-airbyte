@@ -457,7 +457,7 @@ type SnowflakeConnection struct {
 	Role string `json:"role"`
 	// Enter the name of the user you want to use to access the database
 	Username string `json:"username"`
-	// Enter the name of the warehouse that you want to use as a compute cluster
+	// Enter the name of the warehouse that you want to sync data into
 	Warehouse string `json:"warehouse"`
 }
 

@@ -34,16 +34,16 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
           token = "...my_token..."
         }
       }
-      batch_size         = 4
-      default_vectorizer = "text2vec-huggingface"
+      batch_size         = 1
+      default_vectorizer = "text2vec-palm"
       host               = "https://my-cluster.weaviate.network"
       tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
     omit_raw_text = false
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 4
+      chunk_overlap = 0
+      chunk_size    = 5
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -58,14 +58,14 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 2
+          split_level = 4
         }
       }
     }
   }
-  definition_id = "cccbbc51-a3ca-4a62-a557-cba0d338002a"
-  name          = "Delores Jakubowski"
-  workspace_id  = "cf379fa4-011e-4ae8-9b11-44f7f4dcb281"
+  definition_id = "8467e5cd-3332-485c-bcc3-fde334f786aa"
+  name          = "Dale Padberg"
+  workspace_id  = "527fe19e-b1bf-48ee-a339-467597e801e6"
 }
 ```
 

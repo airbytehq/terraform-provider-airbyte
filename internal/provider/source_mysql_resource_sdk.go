@@ -31,12 +31,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 	var replicationMethod shared.SourceMysqlUpdateMethod
 	var sourceMysqlReadChangesUsingBinaryLogCDC *shared.SourceMysqlReadChangesUsingBinaryLogCDC
 	if r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC != nil {
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
 		initialWaitingSeconds := new(int64)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
 			*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
@@ -56,7 +50,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			serverTimeZone = nil
 		}
 		sourceMysqlReadChangesUsingBinaryLogCDC = &shared.SourceMysqlReadChangesUsingBinaryLogCDC{
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 			InitialWaitingSeconds:            initialWaitingSeconds,
 			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 			ServerTimeZone:                   serverTimeZone,
@@ -290,12 +283,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 	var replicationMethod shared.SourceMysqlUpdateUpdateMethod
 	var readChangesUsingBinaryLogCDC *shared.ReadChangesUsingBinaryLogCDC
 	if r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC != nil {
-		initialLoadTimeoutHours := new(int64)
-		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.IsNull() {
-			*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialLoadTimeoutHours.ValueInt64()
-		} else {
-			initialLoadTimeoutHours = nil
-		}
 		initialWaitingSeconds := new(int64)
 		if !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
 			*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
@@ -315,7 +302,6 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 			serverTimeZone = nil
 		}
 		readChangesUsingBinaryLogCDC = &shared.ReadChangesUsingBinaryLogCDC{
-			InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 			InitialWaitingSeconds:            initialWaitingSeconds,
 			InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 			ServerTimeZone:                   serverTimeZone,

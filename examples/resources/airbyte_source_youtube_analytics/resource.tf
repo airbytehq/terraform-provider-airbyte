@@ -7,8 +7,8 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "3c013462-1866-4cf5-98db-d5ebee014e07"
-  name          = "Oliver Smith"
+  definition_id = "e07eadc6-f53d-4253-9b8b-1e39d437be8f"
+  name          = "Vicky Welch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f53d253d-b8b1-4e39-9437-be8f4cf797fa"
+  workspace_id  = "7fa8ae01-2beb-4a22-8996-41ef630f5d87"
 }
