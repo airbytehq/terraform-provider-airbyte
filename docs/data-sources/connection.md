@@ -45,7 +45,7 @@ data "airbyte_connection" "my_connection" {
 
 Read-Only:
 
-- `streams` (Attributes List) (see [below for nested schema](#nestedatt--configurations--streams))
+- `streams` (Attributes Set) (see [below for nested schema](#nestedatt--configurations--streams))
 
 <a id="nestedatt--configurations--streams"></a>
 ### Nested Schema for `configurations.streams`
