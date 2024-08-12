@@ -10,6 +10,7 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -68,6 +69,9 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 					"end_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `End date to stop the article retrieval (format YYYY-MM)`,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
 					},
 					"period": schema.Int64Attribute{
 						Required:    true,
@@ -94,6 +98,9 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 					"start_date": schema.StringAttribute{
 						Required:    true,
 						Description: `Start date to begin the article retrieval (format YYYY-MM)`,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
 					},
 				},
 			},

@@ -67,12 +67,6 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 	} else {
 		fetchTransactionsUserID = nil
 	}
-	jobTerminationThreshold := new(int64)
-	if !r.Configuration.JobTerminationThreshold.IsUnknown() && !r.Configuration.JobTerminationThreshold.IsNull() {
-		*jobTerminationThreshold = r.Configuration.JobTerminationThreshold.ValueInt64()
-	} else {
-		jobTerminationThreshold = nil
-	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -84,7 +78,6 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 		BulkWindowInDays:        bulkWindowInDays,
 		Credentials:             credentials,
 		FetchTransactionsUserID: fetchTransactionsUserID,
-		JobTerminationThreshold: jobTerminationThreshold,
 		Shop:                    shop,
 		StartDate:               startDate,
 	}
@@ -180,12 +173,6 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 	} else {
 		fetchTransactionsUserID = nil
 	}
-	jobTerminationThreshold := new(int64)
-	if !r.Configuration.JobTerminationThreshold.IsUnknown() && !r.Configuration.JobTerminationThreshold.IsNull() {
-		*jobTerminationThreshold = r.Configuration.JobTerminationThreshold.ValueInt64()
-	} else {
-		jobTerminationThreshold = nil
-	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -197,7 +184,6 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 		BulkWindowInDays:        bulkWindowInDays,
 		Credentials:             credentials,
 		FetchTransactionsUserID: fetchTransactionsUserID,
-		JobTerminationThreshold: jobTerminationThreshold,
 		Shop:                    shop,
 		StartDate:               startDate,
 	}

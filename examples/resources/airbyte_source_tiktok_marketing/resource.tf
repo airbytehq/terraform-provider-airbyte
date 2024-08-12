@@ -1,6 +1,6 @@
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 10
+    attribution_window = 8
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -9,12 +9,12 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2021-02-26"
+    end_date        = "2022-04-17"
     include_deleted = true
-    start_date      = "2021-10-12"
+    start_date      = "2021-05-10"
   }
-  definition_id = "9214f3ff-a48a-4cad-8064-00b7b58d13a2"
-  name          = "Spencer Witting"
+  definition_id = "13a2ccf2-b1ad-4e2f-8984-bfb0e1b3d2b8"
+  name          = "Jean Dare"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1ade2f49-84bf-4b0e-9b3d-2b89b26a8838"
+  workspace_id  = "8838cf8d-227f-4318-9424-0654f4782740"
 }

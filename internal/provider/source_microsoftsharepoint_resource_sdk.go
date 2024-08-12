@@ -246,12 +246,12 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				SourceMicrosoftSharepointParquetFormat: sourceMicrosoftSharepointParquetFormat,
 			}
 		}
-		var sourceMicrosoftSharepointUnstructuredDocumentFormat *shared.SourceMicrosoftSharepointUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceMicrosoftSharepointDocumentFileTypeFormatExperimental *shared.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceMicrosoftSharepointProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceMicrosoftSharepointLocal *shared.SourceMicrosoftSharepointLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceMicrosoftSharepointLocal = &shared.SourceMicrosoftSharepointLocal{}
 				}
 				if sourceMicrosoftSharepointLocal != nil {
@@ -261,26 +261,26 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceMicrosoftSharepointParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftSharepointParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftSharepointParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceMicrosoftSharepointUnstructuredDocumentFormat = &shared.SourceMicrosoftSharepointUnstructuredDocumentFormat{
+			sourceMicrosoftSharepointDocumentFileTypeFormatExperimental = &shared.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceMicrosoftSharepointUnstructuredDocumentFormat != nil {
+		if sourceMicrosoftSharepointDocumentFileTypeFormatExperimental != nil {
 			format = shared.SourceMicrosoftSharepointFormat{
-				SourceMicrosoftSharepointUnstructuredDocumentFormat: sourceMicrosoftSharepointUnstructuredDocumentFormat,
+				SourceMicrosoftSharepointDocumentFileTypeFormatExperimental: sourceMicrosoftSharepointDocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}
@@ -601,12 +601,12 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				SourceMicrosoftSharepointUpdateParquetFormat: sourceMicrosoftSharepointUpdateParquetFormat,
 			}
 		}
-		var sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat *shared.SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental *shared.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceMicrosoftSharepointUpdateProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceMicrosoftSharepointUpdateLocal *shared.SourceMicrosoftSharepointUpdateLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceMicrosoftSharepointUpdateLocal = &shared.SourceMicrosoftSharepointUpdateLocal{}
 				}
 				if sourceMicrosoftSharepointUpdateLocal != nil {
@@ -616,26 +616,26 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceMicrosoftSharepointUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftSharepointUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftSharepointUpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat = &shared.SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat{
+			sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental = &shared.SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat != nil {
+		if sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental != nil {
 			format = shared.SourceMicrosoftSharepointUpdateFormat{
-				SourceMicrosoftSharepointUpdateUnstructuredDocumentFormat: sourceMicrosoftSharepointUpdateUnstructuredDocumentFormat,
+				SourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental: sourceMicrosoftSharepointUpdateDocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}

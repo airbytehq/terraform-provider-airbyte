@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "512957c2-9869-4675-afe0-5881022b8ad4"
-  name          = "Ms. Marcella Schiller"
+  definition_id = "8ad45dc0-7887-4545-a3f3-6dab5122890f"
+  name          = "Cecelia McClure"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8754523f-36da-4b51-a289-0f3e992c2a3f"
+  workspace_id  = "c2a3f4c8-fc02-46c7-8c4e-afdab4c1bcaf"
 }
 ```
 

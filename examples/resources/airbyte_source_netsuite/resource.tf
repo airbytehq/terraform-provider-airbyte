@@ -9,10 +9,10 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 8
+    window_in_days = 5
   }
-  definition_id = "5b711236-1f26-4d47-b86c-dec1a2bc2b81"
-  name          = "Francisco Hegmann"
+  definition_id = "741ee0bb-ab04-457d-9263-98e6ecd841e7"
+  name          = "Jan Kub"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ceb6c910-dc95-4a96-8b5f-3bc4b3253e6b"
+  workspace_id  = "a686faa5-12d8-4044-b05c-5b7112361f26"
 }

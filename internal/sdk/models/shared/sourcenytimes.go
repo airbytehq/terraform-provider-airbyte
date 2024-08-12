@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 )
 
 // SourceNytimesPeriodUsedForMostPopularStreams - Period of time (in days)
@@ -89,14 +90,14 @@ type SourceNytimes struct {
 	// API Key
 	APIKey string `json:"api_key"`
 	// End date to stop the article retrieval (format YYYY-MM)
-	EndDate *string `json:"end_date,omitempty"`
+	EndDate *types.Date `json:"end_date,omitempty"`
 	// Period of time (in days)
 	Period SourceNytimesPeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
 	ShareType  *SourceNytimesShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
 	sourceType Nytimes                                               `const:"nytimes" json:"sourceType"`
 	// Start date to begin the article retrieval (format YYYY-MM)
-	StartDate string `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
 }
 
 func (s SourceNytimes) MarshalJSON() ([]byte, error) {
@@ -117,7 +118,7 @@ func (o *SourceNytimes) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNytimes) GetEndDate() *string {
+func (o *SourceNytimes) GetEndDate() *types.Date {
 	if o == nil {
 		return nil
 	}
@@ -142,9 +143,9 @@ func (o *SourceNytimes) GetSourceType() Nytimes {
 	return NytimesNytimes
 }
 
-func (o *SourceNytimes) GetStartDate() string {
+func (o *SourceNytimes) GetStartDate() types.Date {
 	if o == nil {
-		return ""
+		return types.Date{}
 	}
 	return o.StartDate
 }

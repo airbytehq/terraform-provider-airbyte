@@ -2,8 +2,8 @@ resource "airbyte_source_vantage" "my_source_vantage" {
   configuration = {
     access_token = "...my_access_token..."
   }
-  definition_id = "20db5f4b-b11c-460c-ba7b-a336248be45d"
-  name          = "Shaun Schultz"
+  definition_id = "45dfad93-24f6-4ab9-b833-4526eae71eb7"
+  name          = "Sheryl Stroman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "24f6ab9f-8334-4526-aae7-1eb759d7dd0b"
+  workspace_id  = "d0bf2f57-2195-478f-bbe9-226a954fff93"
 }

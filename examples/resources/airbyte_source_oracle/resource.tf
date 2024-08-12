@@ -13,17 +13,17 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 2
+    port            = 9
     schemas = [
       "...",
     ]
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Orin_Romaguera85"
+    username = "Neha.Abbott"
   }
-  definition_id = "71dab038-014a-4124-b6e7-b2083a37b0c9"
-  name          = "Harry Kuhic"
+  definition_id = "3f94739c-c80e-4e5b-b122-5778f7a023c1"
+  name          = "Charles Littel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a38aa73d-79a8-45cb-b246-518021619872"
+  workspace_id  = "0f694c48-e9d0-4f84-8cba-d71dab038014"
 }

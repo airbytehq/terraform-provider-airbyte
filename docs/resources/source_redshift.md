@@ -23,12 +23,12 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     schemas = [
       "...",
     ]
-    username = "Riley3"
+    username = "Ralph52"
   }
-  definition_id = "789cf0b8-d2c0-4412-8436-569fd64cd2bc"
-  name          = "Jeffrey Lebsack"
+  definition_id = "a635d7a8-c386-4cec-8fae-93f7f0f8c4b4"
+  name          = "Ivan Stanton"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "35d7a8c3-86ce-4ccf-ae93-f7f0f8c4b4f8"
+  workspace_id  = "6833e1f3-303a-4b04-9c89-1fe9c8dcb6cc"
 }
 ```
 

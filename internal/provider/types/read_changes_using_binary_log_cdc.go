@@ -5,7 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ReadChangesUsingBinaryLogCDC struct {
-	InitialLoadTimeoutHours          types.Int64  `tfsdk:"initial_load_timeout_hours"`
 	InitialWaitingSeconds            types.Int64  `tfsdk:"initial_waiting_seconds"`
 	InvalidCdcCursorPositionBehavior types.String `tfsdk:"invalid_cdc_cursor_position_behavior"`
 	ServerTimeZone                   types.String `tfsdk:"server_time_zone"`

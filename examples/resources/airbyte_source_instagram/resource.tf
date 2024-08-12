@@ -5,8 +5,8 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     client_secret = "...my_client_secret..."
     start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "91630fd2-f131-4d4f-bef2-53f33ac135dc"
-  name          = "Kevin Weissnat"
+  definition_id = "61b75b72-6765-4eab-9ad8-42954bd759bd"
+  name          = "Clayton Prosacco"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "794a97d5-acf5-4625-ba66-e5ad39192931"
+  workspace_id  = "f80b7f55-7094-4a97-b635-6d53391630fd"
 }

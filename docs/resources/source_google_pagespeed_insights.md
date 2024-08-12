@@ -17,19 +17,19 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
   configuration = {
     api_key = "...my_api_key..."
     categories = [
-      "pwa",
+      "performance",
     ]
     strategies = [
-      "desktop",
+      "mobile",
     ]
     urls = [
       "...",
     ]
   }
-  definition_id = "99d63199-bd6b-4468-885e-c21a9ab567f1"
-  name          = "Leticia Kling"
+  definition_id = "8dfc27a8-c72c-43eb-9dc5-5714db07d769"
+  name          = "Lance Dicki"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "51fa773f-cf1a-4430-ae08-2909d97bfabb"
+  workspace_id  = "86b53a47-9a08-405f-b179-3bf9b799d631"
 }
 ```
 

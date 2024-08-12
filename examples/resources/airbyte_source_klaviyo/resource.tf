@@ -3,8 +3,8 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "e3c921cc-9284-4a21-955c-54910609be9a"
-  name          = "Ivan Grimes"
+  definition_id = "c649b6bc-8e2c-47d0-9e0f-8a2b57adde20"
+  name          = "Mr. Erik Heathcote DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b07bcaf1-3ed5-4606-ac59-e7c8aeeeb09f"
+  workspace_id  = "d0612ffd-3df1-4197-8b38-5957e3c921cc"
 }

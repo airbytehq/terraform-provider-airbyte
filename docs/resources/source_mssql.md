@@ -22,9 +22,9 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     port            = 1433
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
-        initial_waiting_seconds              = 1
-        invalid_cdc_cursor_position_behavior = "Fail sync"
-        queue_size                           = 4
+        initial_waiting_seconds              = 7
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
+        queue_size                           = 7
       }
     }
     schemas = [
@@ -36,12 +36,12 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Raymond.Armstrong73"
+    username = "Caroline_Harvey"
   }
-  definition_id = "7968b724-2137-4fe2-a9e2-6c4c104f1dbe"
-  name          = "Luz Brown"
+  definition_id = "4141a21c-8938-4ad6-bcbb-78bed98212c7"
+  name          = "Eleanor O'Hara V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "90447757-3847-465c-b741-8014d1f26365"
+  workspace_id  = "387527d5-e3ef-4724-ad0c-0b7968b72421"
 }
 ```
 

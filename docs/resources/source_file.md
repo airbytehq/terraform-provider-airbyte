@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "yaml"
+    format       = "excel_binary"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -25,12 +25,12 @@ resource "airbyte_source_file" "my_source_file" {
       }
     }
     reader_options = "{}"
-    url            = "gs://my-google-bucket/data.csv"
+    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
   }
-  definition_id = "0df143ee-10f8-4279-a427-b2c340e1d4b4"
-  name          = "Mr. Carole Predovic"
+  definition_id = "e3e60165-4663-452d-a9b0-4e26c5d5cf50"
+  name          = "Robin Wolf I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "62aeeab6-a16b-4c0f-9be5-567777324c6c"
+  workspace_id  = "464ed5bf-6d67-4306-8c54-8e68cfaeff48"
 }
 ```
 

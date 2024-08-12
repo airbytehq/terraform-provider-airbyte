@@ -27,10 +27,10 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       pinecone_environment = "us-west1-gcp"
       pinecone_key         = "...my_pinecone_key..."
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 0
-      chunk_size    = 4
+      chunk_overlap = 5
+      chunk_size    = 9
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -50,9 +50,9 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       }
     }
   }
-  definition_id = "90e1a2bc-7de0-4ff6-b737-4915d3efc2cd"
-  name          = "Jorge Beahan"
-  workspace_id  = "6acc1e6f-1291-4560-8b55-b326e06d2448"
+  definition_id = "e42a5305-0a9a-4fbc-a6c9-13a5b78062a6"
+  name          = "Gregory Flatley"
+  workspace_id  = "b7f63598-ffb0-4429-a4fa-eae5018c3193"
 }
 ```
 

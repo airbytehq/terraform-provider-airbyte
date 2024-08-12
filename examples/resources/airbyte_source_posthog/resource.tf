@@ -5,8 +5,8 @@ resource "airbyte_source_posthog" "my_source_posthog" {
     events_time_step = 5
     start_date       = "2021-01-01T00:00:00Z"
   }
-  definition_id = "c6bfae2b-40c1-473d-8d61-133ddb2a9593"
-  name          = "Rosalie Walter Jr."
+  definition_id = "b48bf3f0-e963-41eb-8afa-a2ee7a1e0cb6"
+  name          = "Ms. Jenny Konopelski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "62e7b59a-4e78-4152-8bd2-66e4c12d05e7"
+  workspace_id  = "b91e1261-00f0-49eb-b06b-b016ea0ac6bf"
 }

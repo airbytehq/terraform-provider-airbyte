@@ -124,12 +124,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Default:     booldefault.StaticBool(false),
 						Description: `Defines which API type (REST/BULK) to use to fetch ` + "`" + `Transactions` + "`" + ` data. If you are a ` + "`" + `Shopify Plus` + "`" + ` user, leave the default value to speed up the fetch. Default: false`,
 					},
-					"job_termination_threshold": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(3600),
-						Description: `The max time in seconds, after which the single BULK Job should be ` + "`" + `CANCELED` + "`" + ` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 3600`,
-					},
 					"shop": schema.StringAttribute{
 						Required:    true,
 						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.`,

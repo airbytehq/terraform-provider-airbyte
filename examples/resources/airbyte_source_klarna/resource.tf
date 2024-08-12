@@ -3,10 +3,10 @@ resource "airbyte_source_klarna" "my_source_klarna" {
     password   = "...my_password..."
     playground = true
     region     = "oc"
-    username   = "Ben_Greenholt"
+    username   = "Gretchen35"
   }
-  definition_id = "3b04e32d-c649-4b6b-88e2-c7d0de0f8a2b"
-  name          = "Tanya Padberg"
+  definition_id = "b1e50c14-468d-4231-8dd9-8f81edeee1be"
+  name          = "Sophia Kunze"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e20e7511-1fd0-4612-bfd3-df11978b3859"
+  workspace_id  = "eeaf419b-c59e-404a-869e-9d149f3b04e3"
 }

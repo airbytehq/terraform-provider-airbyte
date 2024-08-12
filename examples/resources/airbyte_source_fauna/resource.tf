@@ -4,15 +4,15 @@ resource "airbyte_source_fauna" "my_source_fauna" {
       deletions = {
         disabled = {}
       }
-      page_size = 10
+      page_size = 5
     }
     domain = "...my_domain..."
     port   = 5
     scheme = "...my_scheme..."
     secret = "...my_secret..."
   }
-  definition_id = "02e3e601-6546-4635-ada9-b04e26c5d5cf"
-  name          = "Elizabeth Ziemann"
+  definition_id = "eae086e3-c2d3-4308-aab8-40e56112c1fd"
+  name          = "Mr. Kenneth Corkery"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "713464ed-5bf6-4d67-b06c-c548e68cfaef"
+  workspace_id  = "5cfbec28-7654-4f12-bc84-028fbb0cddcf"
 }

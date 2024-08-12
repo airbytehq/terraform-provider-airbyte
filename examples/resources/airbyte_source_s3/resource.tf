@@ -25,10 +25,10 @@ resource "airbyte_source_s3" "my_source_s3" {
     start_date  = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 0
+        days_to_sync_if_history_is_full = 4
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
@@ -36,15 +36,15 @@ resource "airbyte_source_s3" "my_source_s3" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Alfredo Lowe DVM"
+        name              = "Pam Goldner"
         primary_key       = "...my_primary_key..."
         schemaless        = false
-        validation_policy = "Emit Record"
+        validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "6fd3b8cc-64e9-45a7-a369-2db06d3b499d"
-  name          = "Gerardo Stroman"
+  definition_id = "bdae34af-cb06-4318-8072-9444d2b8965c"
+  name          = "Julius Rau"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "34afcb06-3184-4072-9444-d2b8965caaba"
+  workspace_id  = "ee9d6378-e724-43c0-a1bc-073abf4dfebd"
 }

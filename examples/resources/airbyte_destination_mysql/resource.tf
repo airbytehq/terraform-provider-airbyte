@@ -1,7 +1,7 @@
 resource "airbyte_destination_mysql" "my_destination_mysql" {
   configuration = {
     database            = "...my_database..."
-    disable_type_dedupe = false
+    disable_type_dedupe = true
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -10,9 +10,9 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Deon.Russel49"
+    username = "Jimmy.Cummings31"
   }
-  definition_id = "a6683bb7-6cbd-4d42-804b-7b603cc8cd88"
-  name          = "Tricia Klocko I"
-  workspace_id  = "813ef7fc-0d17-46e5-b414-549f1242182d"
+  definition_id = "ef4e895c-9212-4618-852d-1432f33897fe"
+  name          = "Francis Rutherford"
+  workspace_id  = "c8c4bf88-2725-4c3c-abc3-9a6d3f396b39"
 }
