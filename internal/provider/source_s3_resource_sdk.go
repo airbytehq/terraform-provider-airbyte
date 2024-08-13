@@ -461,12 +461,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				SourceS3ParquetFormat: sourceS3ParquetFormat,
 			}
 		}
-		var sourceS3UnstructuredDocumentFormat *shared.SourceS3UnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceS3DocumentFileTypeFormatExperimental *shared.SourceS3DocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceS3Processing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceS3Local *shared.SourceS3Local
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceS3Local = &shared.SourceS3Local{}
 				}
 				if sourceS3Local != nil {
@@ -476,26 +476,26 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceS3ParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceS3UnstructuredDocumentFormat = &shared.SourceS3UnstructuredDocumentFormat{
+			sourceS3DocumentFileTypeFormatExperimental = &shared.SourceS3DocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceS3UnstructuredDocumentFormat != nil {
+		if sourceS3DocumentFileTypeFormatExperimental != nil {
 			format1 = shared.SourceS3Format{
-				SourceS3UnstructuredDocumentFormat: sourceS3UnstructuredDocumentFormat,
+				SourceS3DocumentFileTypeFormatExperimental: sourceS3DocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}
@@ -1046,12 +1046,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				SourceS3UpdateParquetFormat: sourceS3UpdateParquetFormat,
 			}
 		}
-		var sourceS3UpdateUnstructuredDocumentFormat *shared.SourceS3UpdateUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceS3UpdateDocumentFileTypeFormatExperimental *shared.SourceS3UpdateDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceS3UpdateProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceS3UpdateLocal *shared.SourceS3UpdateLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceS3UpdateLocal = &shared.SourceS3UpdateLocal{}
 				}
 				if sourceS3UpdateLocal != nil {
@@ -1061,26 +1061,26 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceS3UpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceS3UpdateUnstructuredDocumentFormat = &shared.SourceS3UpdateUnstructuredDocumentFormat{
+			sourceS3UpdateDocumentFileTypeFormatExperimental = &shared.SourceS3UpdateDocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceS3UpdateUnstructuredDocumentFormat != nil {
+		if sourceS3UpdateDocumentFileTypeFormatExperimental != nil {
 			format1 = shared.SourceS3UpdateFormat{
-				SourceS3UpdateUnstructuredDocumentFormat: sourceS3UpdateUnstructuredDocumentFormat,
+				SourceS3UpdateDocumentFileTypeFormatExperimental: sourceS3UpdateDocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}

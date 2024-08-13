@@ -4,14 +4,15 @@ package provider
 
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceNytimesResourceModel) ToSharedSourceNytimesCreateRequest() *shared.SourceNytimesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	endDate := new(string)
+	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
@@ -22,7 +23,7 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesCreateRequest() *share
 	} else {
 		shareType = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNytimes{
 		APIKey:    apiKey,
 		EndDate:   endDate,
@@ -65,9 +66,9 @@ func (r *SourceNytimesResourceModel) RefreshFromSharedSourceResponse(resp *share
 
 func (r *SourceNytimesResourceModel) ToSharedSourceNytimesPutRequest() *shared.SourceNytimesPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	endDate := new(string)
+	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
@@ -78,7 +79,7 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesPutRequest() *shared.S
 	} else {
 		shareType = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNytimesUpdate{
 		APIKey:    apiKey,
 		EndDate:   endDate,

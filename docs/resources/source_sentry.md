@@ -19,14 +19,14 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "expert-potato.info"
+    hostname     = "unimportant-glacier.biz"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "4b7cf533-c55d-468a-96e1-f7b10c6dd1e6"
-  name          = "Eloise Robel"
+  definition_id = "eb5fcf36-5dcc-4aec-ace4-1cbe1d2ecd01"
+  name          = "Angela Boehm"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cf365dcc-aec2-4ce4-9cbe-1d2ecd01501d"
+  workspace_id  = "2f6c56d3-cf89-4e69-a1ce-0c7a6ecf0509"
 }
 ```
 

@@ -38,34 +38,13 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakeCreateRequest() *s
 				SourceSnowflakeOAuth20: sourceSnowflakeOAuth20,
 			}
 		}
-		var sourceSnowflakeKeyPairAuthentication *shared.SourceSnowflakeKeyPairAuthentication
-		if r.Configuration.Credentials.KeyPairAuthentication != nil {
-			privateKey := r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
-			privateKeyPassword := new(string)
-			if !r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.IsNull() {
-				*privateKeyPassword = r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.ValueString()
-			} else {
-				privateKeyPassword = nil
-			}
-			username := r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
-			sourceSnowflakeKeyPairAuthentication = &shared.SourceSnowflakeKeyPairAuthentication{
-				PrivateKey:         privateKey,
-				PrivateKeyPassword: privateKeyPassword,
-				Username:           username,
-			}
-		}
-		if sourceSnowflakeKeyPairAuthentication != nil {
-			credentials = &shared.SourceSnowflakeAuthorizationMethod{
-				SourceSnowflakeKeyPairAuthentication: sourceSnowflakeKeyPairAuthentication,
-			}
-		}
 		var sourceSnowflakeUsernameAndPassword *shared.SourceSnowflakeUsernameAndPassword
 		if r.Configuration.Credentials.UsernameAndPassword != nil {
 			password := r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
-			username1 := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+			username := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
 			sourceSnowflakeUsernameAndPassword = &shared.SourceSnowflakeUsernameAndPassword{
 				Password: password,
-				Username: username1,
+				Username: username,
 			}
 		}
 		if sourceSnowflakeUsernameAndPassword != nil {
@@ -163,34 +142,13 @@ func (r *SourceSnowflakeResourceModel) ToSharedSourceSnowflakePutRequest() *shar
 				SourceSnowflakeUpdateOAuth20: sourceSnowflakeUpdateOAuth20,
 			}
 		}
-		var sourceSnowflakeUpdateKeyPairAuthentication *shared.SourceSnowflakeUpdateKeyPairAuthentication
-		if r.Configuration.Credentials.KeyPairAuthentication != nil {
-			privateKey := r.Configuration.Credentials.KeyPairAuthentication.PrivateKey.ValueString()
-			privateKeyPassword := new(string)
-			if !r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.IsNull() {
-				*privateKeyPassword = r.Configuration.Credentials.KeyPairAuthentication.PrivateKeyPassword.ValueString()
-			} else {
-				privateKeyPassword = nil
-			}
-			username := r.Configuration.Credentials.KeyPairAuthentication.Username.ValueString()
-			sourceSnowflakeUpdateKeyPairAuthentication = &shared.SourceSnowflakeUpdateKeyPairAuthentication{
-				PrivateKey:         privateKey,
-				PrivateKeyPassword: privateKeyPassword,
-				Username:           username,
-			}
-		}
-		if sourceSnowflakeUpdateKeyPairAuthentication != nil {
-			credentials = &shared.SourceSnowflakeUpdateAuthorizationMethod{
-				SourceSnowflakeUpdateKeyPairAuthentication: sourceSnowflakeUpdateKeyPairAuthentication,
-			}
-		}
 		var sourceSnowflakeUpdateUsernameAndPassword *shared.SourceSnowflakeUpdateUsernameAndPassword
 		if r.Configuration.Credentials.UsernameAndPassword != nil {
 			password := r.Configuration.Credentials.UsernameAndPassword.Password.ValueString()
-			username1 := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
+			username := r.Configuration.Credentials.UsernameAndPassword.Username.ValueString()
 			sourceSnowflakeUpdateUsernameAndPassword = &shared.SourceSnowflakeUpdateUsernameAndPassword{
 				Password: password,
-				Username: username1,
+				Username: username,
 			}
 		}
 		if sourceSnowflakeUpdateUsernameAndPassword != nil {

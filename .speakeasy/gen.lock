@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: f4fd4d7fa7b66fed557afd0da34c6d79
+  docChecksum: ffd32f87e1171c711ed1cd4a2a9a0e18
   docVersion: 1.0.0
   speakeasyVersion: 1.335.2
   generationVersion: 2.372.3
-  releaseVersion: 0.7.1
-  configChecksum: 70a295d2cf4a28b42867fbba6bc0f0de
+  releaseVersion: 0.9.0
+  configChecksum: 64dc958d07cf4d6aec0453684dcc4df2
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -19,6 +19,7 @@ features:
     groups: 2.81.2
     nullables: 0.0.0
     oauth2ClientCredentials: 0.1.0
+    sets: 0.1.2
     unions: 2.81.15
 generatedFiles:
   - internal/sdk/connections.go
@@ -71,6 +72,7 @@ generatedFiles:
   - internal/sdk/models/operations/createdestinationfirestore.go
   - internal/sdk/models/operations/createdestinationgcs.go
   - internal/sdk/models/operations/createdestinationgooglesheets.go
+  - internal/sdk/models/operations/createdestinationlangchain.go
   - internal/sdk/models/operations/createdestinationmilvus.go
   - internal/sdk/models/operations/createdestinationmongodb.go
   - internal/sdk/models/operations/createdestinationmssql.go
@@ -109,6 +111,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletedestinationfirestore.go
   - internal/sdk/models/operations/deletedestinationgcs.go
   - internal/sdk/models/operations/deletedestinationgooglesheets.go
+  - internal/sdk/models/operations/deletedestinationlangchain.go
   - internal/sdk/models/operations/deletedestinationmilvus.go
   - internal/sdk/models/operations/deletedestinationmongodb.go
   - internal/sdk/models/operations/deletedestinationmssql.go
@@ -147,6 +150,7 @@ generatedFiles:
   - internal/sdk/models/operations/getdestinationfirestore.go
   - internal/sdk/models/operations/getdestinationgcs.go
   - internal/sdk/models/operations/getdestinationgooglesheets.go
+  - internal/sdk/models/operations/getdestinationlangchain.go
   - internal/sdk/models/operations/getdestinationmilvus.go
   - internal/sdk/models/operations/getdestinationmongodb.go
   - internal/sdk/models/operations/getdestinationmssql.go
@@ -187,6 +191,7 @@ generatedFiles:
   - internal/sdk/models/operations/putdestinationfirestore.go
   - internal/sdk/models/operations/putdestinationgcs.go
   - internal/sdk/models/operations/putdestinationgooglesheets.go
+  - internal/sdk/models/operations/putdestinationlangchain.go
   - internal/sdk/models/operations/putdestinationmilvus.go
   - internal/sdk/models/operations/putdestinationmongodb.go
   - internal/sdk/models/operations/putdestinationmssql.go
@@ -242,7 +247,6 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcecart.go
   - internal/sdk/models/operations/createsourcechargebee.go
   - internal/sdk/models/operations/createsourcechartmogul.go
-  - internal/sdk/models/operations/createsourceclazar.go
   - internal/sdk/models/operations/createsourceclickhouse.go
   - internal/sdk/models/operations/createsourceclickupapi.go
   - internal/sdk/models/operations/createsourceclockify.go
@@ -254,7 +258,6 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceconfluence.go
   - internal/sdk/models/operations/createsourceconvex.go
   - internal/sdk/models/operations/createsourcecustom.go
-  - internal/sdk/models/operations/createsourcedatadog.go
   - internal/sdk/models/operations/createsourcedatascope.go
   - internal/sdk/models/operations/createsourcedelighted.go
   - internal/sdk/models/operations/createsourcedixa.go
@@ -279,9 +282,9 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcegitlab.go
   - internal/sdk/models/operations/createsourceglassfrog.go
   - internal/sdk/models/operations/createsourcegnews.go
-  - internal/sdk/models/operations/createsourcegoldcast.go
   - internal/sdk/models/operations/createsourcegoogleads.go
   - internal/sdk/models/operations/createsourcegoogleanalyticsdataapi.go
+  - internal/sdk/models/operations/createsourcegoogleanalyticsv4serviceaccountonly.go
   - internal/sdk/models/operations/createsourcegoogledirectory.go
   - internal/sdk/models/operations/createsourcegoogledrive.go
   - internal/sdk/models/operations/createsourcegooglepagespeedinsights.go
@@ -351,6 +354,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceposthog.go
   - internal/sdk/models/operations/createsourcepostmarkapp.go
   - internal/sdk/models/operations/createsourceprestashop.go
+  - internal/sdk/models/operations/createsourcepunkapi.go
   - internal/sdk/models/operations/createsourcepypi.go
   - internal/sdk/models/operations/createsourcequalaroo.go
   - internal/sdk/models/operations/createsourcerailz.go
@@ -439,7 +443,6 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcecart.go
   - internal/sdk/models/operations/deletesourcechargebee.go
   - internal/sdk/models/operations/deletesourcechartmogul.go
-  - internal/sdk/models/operations/deletesourceclazar.go
   - internal/sdk/models/operations/deletesourceclickhouse.go
   - internal/sdk/models/operations/deletesourceclickupapi.go
   - internal/sdk/models/operations/deletesourceclockify.go
@@ -451,7 +454,6 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceconfluence.go
   - internal/sdk/models/operations/deletesourceconvex.go
   - internal/sdk/models/operations/deletesourcecustom.go
-  - internal/sdk/models/operations/deletesourcedatadog.go
   - internal/sdk/models/operations/deletesourcedatascope.go
   - internal/sdk/models/operations/deletesourcedelighted.go
   - internal/sdk/models/operations/deletesourcedixa.go
@@ -476,9 +478,9 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcegitlab.go
   - internal/sdk/models/operations/deletesourceglassfrog.go
   - internal/sdk/models/operations/deletesourcegnews.go
-  - internal/sdk/models/operations/deletesourcegoldcast.go
   - internal/sdk/models/operations/deletesourcegoogleads.go
   - internal/sdk/models/operations/deletesourcegoogleanalyticsdataapi.go
+  - internal/sdk/models/operations/deletesourcegoogleanalyticsv4serviceaccountonly.go
   - internal/sdk/models/operations/deletesourcegoogledirectory.go
   - internal/sdk/models/operations/deletesourcegoogledrive.go
   - internal/sdk/models/operations/deletesourcegooglepagespeedinsights.go
@@ -548,6 +550,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceposthog.go
   - internal/sdk/models/operations/deletesourcepostmarkapp.go
   - internal/sdk/models/operations/deletesourceprestashop.go
+  - internal/sdk/models/operations/deletesourcepunkapi.go
   - internal/sdk/models/operations/deletesourcepypi.go
   - internal/sdk/models/operations/deletesourcequalaroo.go
   - internal/sdk/models/operations/deletesourcerailz.go
@@ -636,7 +639,6 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcecart.go
   - internal/sdk/models/operations/getsourcechargebee.go
   - internal/sdk/models/operations/getsourcechartmogul.go
-  - internal/sdk/models/operations/getsourceclazar.go
   - internal/sdk/models/operations/getsourceclickhouse.go
   - internal/sdk/models/operations/getsourceclickupapi.go
   - internal/sdk/models/operations/getsourceclockify.go
@@ -648,7 +650,6 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceconfluence.go
   - internal/sdk/models/operations/getsourceconvex.go
   - internal/sdk/models/operations/getsourcecustom.go
-  - internal/sdk/models/operations/getsourcedatadog.go
   - internal/sdk/models/operations/getsourcedatascope.go
   - internal/sdk/models/operations/getsourcedelighted.go
   - internal/sdk/models/operations/getsourcedixa.go
@@ -673,9 +674,9 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcegitlab.go
   - internal/sdk/models/operations/getsourceglassfrog.go
   - internal/sdk/models/operations/getsourcegnews.go
-  - internal/sdk/models/operations/getsourcegoldcast.go
   - internal/sdk/models/operations/getsourcegoogleads.go
   - internal/sdk/models/operations/getsourcegoogleanalyticsdataapi.go
+  - internal/sdk/models/operations/getsourcegoogleanalyticsv4serviceaccountonly.go
   - internal/sdk/models/operations/getsourcegoogledirectory.go
   - internal/sdk/models/operations/getsourcegoogledrive.go
   - internal/sdk/models/operations/getsourcegooglepagespeedinsights.go
@@ -745,6 +746,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceposthog.go
   - internal/sdk/models/operations/getsourcepostmarkapp.go
   - internal/sdk/models/operations/getsourceprestashop.go
+  - internal/sdk/models/operations/getsourcepunkapi.go
   - internal/sdk/models/operations/getsourcepypi.go
   - internal/sdk/models/operations/getsourcequalaroo.go
   - internal/sdk/models/operations/getsourcerailz.go
@@ -836,7 +838,6 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcecart.go
   - internal/sdk/models/operations/putsourcechargebee.go
   - internal/sdk/models/operations/putsourcechartmogul.go
-  - internal/sdk/models/operations/putsourceclazar.go
   - internal/sdk/models/operations/putsourceclickhouse.go
   - internal/sdk/models/operations/putsourceclickupapi.go
   - internal/sdk/models/operations/putsourceclockify.go
@@ -848,7 +849,6 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceconfluence.go
   - internal/sdk/models/operations/putsourceconvex.go
   - internal/sdk/models/operations/putsourcecustom.go
-  - internal/sdk/models/operations/putsourcedatadog.go
   - internal/sdk/models/operations/putsourcedatascope.go
   - internal/sdk/models/operations/putsourcedelighted.go
   - internal/sdk/models/operations/putsourcedixa.go
@@ -873,9 +873,9 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcegitlab.go
   - internal/sdk/models/operations/putsourceglassfrog.go
   - internal/sdk/models/operations/putsourcegnews.go
-  - internal/sdk/models/operations/putsourcegoldcast.go
   - internal/sdk/models/operations/putsourcegoogleads.go
   - internal/sdk/models/operations/putsourcegoogleanalyticsdataapi.go
+  - internal/sdk/models/operations/putsourcegoogleanalyticsv4serviceaccountonly.go
   - internal/sdk/models/operations/putsourcegoogledirectory.go
   - internal/sdk/models/operations/putsourcegoogledrive.go
   - internal/sdk/models/operations/putsourcegooglepagespeedinsights.go
@@ -945,6 +945,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceposthog.go
   - internal/sdk/models/operations/putsourcepostmarkapp.go
   - internal/sdk/models/operations/putsourceprestashop.go
+  - internal/sdk/models/operations/putsourcepunkapi.go
   - internal/sdk/models/operations/putsourcepypi.go
   - internal/sdk/models/operations/putsourcequalaroo.go
   - internal/sdk/models/operations/putsourcerailz.go
@@ -1070,6 +1071,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationgcs.go
   - internal/sdk/models/shared/destinationgooglesheetscreaterequest.go
   - internal/sdk/models/shared/destinationgooglesheets.go
+  - internal/sdk/models/shared/destinationlangchaincreaterequest.go
+  - internal/sdk/models/shared/destinationlangchain.go
   - internal/sdk/models/shared/destinationmilvuscreaterequest.go
   - internal/sdk/models/shared/destinationmilvus.go
   - internal/sdk/models/shared/destinationmongodbcreaterequest.go
@@ -1146,6 +1149,8 @@ generatedFiles:
   - internal/sdk/models/shared/destinationgcsupdate.go
   - internal/sdk/models/shared/destinationgooglesheetsputrequest.go
   - internal/sdk/models/shared/destinationgooglesheetsupdate.go
+  - internal/sdk/models/shared/destinationlangchainputrequest.go
+  - internal/sdk/models/shared/destinationlangchainupdate.go
   - internal/sdk/models/shared/destinationmilvusputrequest.go
   - internal/sdk/models/shared/destinationmilvusupdate.go
   - internal/sdk/models/shared/destinationmongodbputrequest.go
@@ -1249,8 +1254,6 @@ generatedFiles:
   - internal/sdk/models/shared/sourcechargebee.go
   - internal/sdk/models/shared/sourcechartmogulcreaterequest.go
   - internal/sdk/models/shared/sourcechartmogul.go
-  - internal/sdk/models/shared/sourceclazarcreaterequest.go
-  - internal/sdk/models/shared/sourceclazar.go
   - internal/sdk/models/shared/sourceclickhousecreaterequest.go
   - internal/sdk/models/shared/sourceclickhouse.go
   - internal/sdk/models/shared/sourceclickupapicreaterequest.go
@@ -1272,8 +1275,6 @@ generatedFiles:
   - internal/sdk/models/shared/sourceconvexcreaterequest.go
   - internal/sdk/models/shared/sourceconvex.go
   - internal/sdk/models/shared/sourcecustomcreaterequest.go
-  - internal/sdk/models/shared/sourcedatadogcreaterequest.go
-  - internal/sdk/models/shared/sourcedatadog.go
   - internal/sdk/models/shared/sourcedatascopecreaterequest.go
   - internal/sdk/models/shared/sourcedatascope.go
   - internal/sdk/models/shared/sourcedelightedcreaterequest.go
@@ -1322,12 +1323,12 @@ generatedFiles:
   - internal/sdk/models/shared/sourceglassfrog.go
   - internal/sdk/models/shared/sourcegnewscreaterequest.go
   - internal/sdk/models/shared/sourcegnews.go
-  - internal/sdk/models/shared/sourcegoldcastcreaterequest.go
-  - internal/sdk/models/shared/sourcegoldcast.go
   - internal/sdk/models/shared/sourcegoogleadscreaterequest.go
   - internal/sdk/models/shared/sourcegoogleads.go
   - internal/sdk/models/shared/sourcegoogleanalyticsdataapicreaterequest.go
   - internal/sdk/models/shared/sourcegoogleanalyticsdataapi.go
+  - internal/sdk/models/shared/sourcegoogleanalyticsv4serviceaccountonlycreaterequest.go
+  - internal/sdk/models/shared/sourcegoogleanalyticsv4serviceaccountonly.go
   - internal/sdk/models/shared/sourcegoogledirectorycreaterequest.go
   - internal/sdk/models/shared/sourcegoogledirectory.go
   - internal/sdk/models/shared/sourcegoogledrivecreaterequest.go
@@ -1466,6 +1467,8 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepostmarkapp.go
   - internal/sdk/models/shared/sourceprestashopcreaterequest.go
   - internal/sdk/models/shared/sourceprestashop.go
+  - internal/sdk/models/shared/sourcepunkapicreaterequest.go
+  - internal/sdk/models/shared/sourcepunkapi.go
   - internal/sdk/models/shared/sourcepypicreaterequest.go
   - internal/sdk/models/shared/sourcepypi.go
   - internal/sdk/models/shared/sourcequalaroocreaterequest.go
@@ -1644,8 +1647,6 @@ generatedFiles:
   - internal/sdk/models/shared/sourcechargebeeupdate.go
   - internal/sdk/models/shared/sourcechartmogulputrequest.go
   - internal/sdk/models/shared/sourcechartmogulupdate.go
-  - internal/sdk/models/shared/sourceclazarputrequest.go
-  - internal/sdk/models/shared/sourceclazarupdate.go
   - internal/sdk/models/shared/sourceclickhouseputrequest.go
   - internal/sdk/models/shared/sourceclickhouseupdate.go
   - internal/sdk/models/shared/sourceclickupapiputrequest.go
@@ -1667,8 +1668,6 @@ generatedFiles:
   - internal/sdk/models/shared/sourceconvexputrequest.go
   - internal/sdk/models/shared/sourceconvexupdate.go
   - internal/sdk/models/shared/sourcecustomputrequest.go
-  - internal/sdk/models/shared/sourcedatadogputrequest.go
-  - internal/sdk/models/shared/sourcedatadogupdate.go
   - internal/sdk/models/shared/sourcedatascopeputrequest.go
   - internal/sdk/models/shared/sourcedatascopeupdate.go
   - internal/sdk/models/shared/sourcedelightedputrequest.go
@@ -1717,12 +1716,12 @@ generatedFiles:
   - internal/sdk/models/shared/sourceglassfrogupdate.go
   - internal/sdk/models/shared/sourcegnewsputrequest.go
   - internal/sdk/models/shared/sourcegnewsupdate.go
-  - internal/sdk/models/shared/sourcegoldcastputrequest.go
-  - internal/sdk/models/shared/sourcegoldcastupdate.go
   - internal/sdk/models/shared/sourcegoogleadsputrequest.go
   - internal/sdk/models/shared/sourcegoogleadsupdate.go
   - internal/sdk/models/shared/sourcegoogleanalyticsdataapiputrequest.go
   - internal/sdk/models/shared/sourcegoogleanalyticsdataapiupdate.go
+  - internal/sdk/models/shared/sourcegoogleanalyticsv4serviceaccountonlyputrequest.go
+  - internal/sdk/models/shared/sourcegoogleanalyticsv4serviceaccountonlyupdate.go
   - internal/sdk/models/shared/sourcegoogledirectoryputrequest.go
   - internal/sdk/models/shared/sourcegoogledirectoryupdate.go
   - internal/sdk/models/shared/sourcegoogledriveputrequest.go
@@ -1861,6 +1860,8 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepostmarkappupdate.go
   - internal/sdk/models/shared/sourceprestashopputrequest.go
   - internal/sdk/models/shared/sourceprestashopupdate.go
+  - internal/sdk/models/shared/sourcepunkapiputrequest.go
+  - internal/sdk/models/shared/sourcepunkapiupdate.go
   - internal/sdk/models/shared/sourcepypiputrequest.go
   - internal/sdk/models/shared/sourcepypiupdate.go
   - internal/sdk/models/shared/sourcequalarooputrequest.go
@@ -2007,7 +2008,6 @@ generatedFiles:
   - internal/sdk/.gitignore
   - internal/sdk/models/operations/options.go
   - internal/sdk/.gitattributes
-  - internal/sdk/internal/hooks/registration.go
   - internal/sdk/internal/hooks/hooks.go
   - internal/sdk/internal/hooks/clientcredentials.go
   - examples/README.md
@@ -2129,6 +2129,13 @@ generatedFiles:
   - internal/provider/types/destination_gcs.go
   - internal/provider/types/destination_google_sheets_authentication_via_google_o_auth.go
   - internal/provider/types/destination_google_sheets.go
+  - internal/provider/types/destination_langchain_embedding.go
+  - internal/provider/types/chroma_local_persistance.go
+  - internal/provider/types/doc_array_hnsw_search.go
+  - internal/provider/types/destination_langchain_pinecone.go
+  - internal/provider/types/destination_langchain_indexing.go
+  - internal/provider/types/destination_langchain_processing_config_model.go
+  - internal/provider/types/destination_langchain.go
   - internal/provider/types/destination_milvus_api_token.go
   - internal/provider/types/destination_milvus_authentication.go
   - internal/provider/types/destination_milvus_indexing.go
@@ -2144,7 +2151,6 @@ generatedFiles:
   - internal/provider/types/destination_mssql.go
   - internal/provider/types/destination_mysql.go
   - internal/provider/types/destination_oracle.go
-  - internal/provider/types/destination_pinecone_indexing.go
   - internal/provider/types/destination_pinecone.go
   - internal/provider/types/verify_ca.go
   - internal/provider/types/verify_full.go
@@ -2157,6 +2163,8 @@ generatedFiles:
   - internal/provider/types/destination_qdrant.go
   - internal/provider/types/destination_redis_ssl_modes.go
   - internal/provider/types/destination_redis.go
+  - internal/provider/types/aescbc_envelope_encryption.go
+  - internal/provider/types/destination_redshift_encryption.go
   - internal/provider/types/awss3_staging.go
   - internal/provider/types/destination_redshift_uploading_method.go
   - internal/provider/types/destination_redshift.go
@@ -2206,7 +2214,6 @@ generatedFiles:
   - internal/provider/types/o_auth2_confidential_application.go
   - internal/provider/types/source_auth0_authentication_method.go
   - internal/provider/types/source_auth0.go
-  - internal/provider/types/source_aws_cloudtrail_filter_applied_while_fetching_records_based_on_attribute_key_and_attribute_value_which_will_be_appended_on_the_request_body.go
   - internal/provider/types/source_aws_cloudtrail.go
   - internal/provider/types/authenticate_via_oauth2.go
   - internal/provider/types/authenticate_via_storage_account_key.go
@@ -2243,8 +2250,6 @@ generatedFiles:
   - internal/provider/types/source_coin_api.go
   - internal/provider/types/source_coinmarketcap.go
   - internal/provider/types/source_confluence.go
-  - internal/provider/types/queries.go
-  - internal/provider/types/source_datadog.go
   - internal/provider/types/source_datascope.go
   - internal/provider/types/source_delighted.go
   - internal/provider/types/source_dixa.go
@@ -2255,8 +2260,6 @@ generatedFiles:
   - internal/provider/types/source_dynamodb_credentials.go
   - internal/provider/types/source_dynamodb.go
   - internal/provider/types/source_exchange_rates.go
-  - internal/provider/types/authenticate_via_facebook_marketing_oauth.go
-  - internal/provider/types/source_facebook_marketing_authentication.go
   - internal/provider/types/insight_config.go
   - internal/provider/types/source_facebook_marketing.go
   - internal/provider/types/source_faker.go
@@ -2287,12 +2290,11 @@ generatedFiles:
   - internal/provider/types/source_gitlab_authorization_method.go
   - internal/provider/types/source_gitlab.go
   - internal/provider/types/source_gnews.go
-  - internal/provider/types/source_goldcast.go
   - internal/provider/types/source_google_ads_google_credentials.go
   - internal/provider/types/custom_queries_array.go
   - internal/provider/types/source_google_ads.go
   - internal/provider/types/authenticate_via_google_oauth.go
-  - internal/provider/types/source_google_analytics_data_api_service_account_key_authentication.go
+  - internal/provider/types/service_account_key_authentication.go
   - internal/provider/types/source_google_analytics_data_api_credentials.go
   - internal/provider/types/source_google_analytics_data_api_cohort_report_settings.go
   - internal/provider/types/source_google_analytics_data_api_date_range.go
@@ -2314,6 +2316,8 @@ generatedFiles:
   - internal/provider/types/source_google_analytics_data_api_dimensions_filter.go
   - internal/provider/types/source_google_analytics_data_api_custom_report_config.go
   - internal/provider/types/source_google_analytics_data_api.go
+  - internal/provider/types/source_google_analytics_v4_service_account_only_credentials.go
+  - internal/provider/types/source_google_analytics_v4_service_account_only.go
   - internal/provider/types/service_account_key.go
   - internal/provider/types/source_google_directory_google_credentials.go
   - internal/provider/types/source_google_directory.go
@@ -2364,8 +2368,6 @@ generatedFiles:
   - internal/provider/types/source_metabase.go
   - internal/provider/types/service_key_authentication.go
   - internal/provider/types/source_microsoft_onedrive_authentication.go
-  - internal/provider/types/source_microsoft_onedrive_format.go
-  - internal/provider/types/source_microsoft_onedrive_file_based_stream_config.go
   - internal/provider/types/source_microsoft_onedrive.go
   - internal/provider/types/source_microsoft_sharepoint_authenticate_via_microsoft_o_auth.go
   - internal/provider/types/source_microsoft_sharepoint_authentication.go
@@ -2434,6 +2436,7 @@ generatedFiles:
   - internal/provider/types/source_posthog.go
   - internal/provider/types/source_postmarkapp.go
   - internal/provider/types/source_prestashop.go
+  - internal/provider/types/source_punk_api.go
   - internal/provider/types/source_pypi.go
   - internal/provider/types/source_qualaroo.go
   - internal/provider/types/source_railz.go
@@ -2452,8 +2455,6 @@ generatedFiles:
   - internal/provider/types/parquet.go
   - internal/provider/types/source_s3_file_format.go
   - internal/provider/types/source_s3_s3_amazon_web_services.go
-  - internal/provider/types/source_s3_format.go
-  - internal/provider/types/source_s3_file_based_stream_config.go
   - internal/provider/types/source_s3.go
   - internal/provider/types/streams_criteria.go
   - internal/provider/types/source_salesforce.go
@@ -2485,7 +2486,6 @@ generatedFiles:
   - internal/provider/types/source_smartsheets_authorization_method.go
   - internal/provider/types/source_smartsheets.go
   - internal/provider/types/source_snapchat_marketing.go
-  - internal/provider/types/source_snowflake_key_pair_authentication.go
   - internal/provider/types/source_snowflake_o_auth20.go
   - internal/provider/types/source_snowflake_authorization_method.go
   - internal/provider/types/source_snowflake.go
@@ -2538,7 +2538,6 @@ generatedFiles:
   - internal/provider/provider.go
   - examples/provider/provider.tf
   - examples/resources/airbyte_connection/import.sh
-  - internal/provider/connection_resource.go
   - internal/provider/connection_resource_sdk.go
   - examples/resources/airbyte_connection/resource.tf
   - examples/resources/airbyte_destination_astra/import.sh
@@ -2605,6 +2604,10 @@ generatedFiles:
   - internal/provider/destination_googlesheets_resource.go
   - internal/provider/destination_googlesheets_resource_sdk.go
   - examples/resources/airbyte_destination_google_sheets/resource.tf
+  - examples/resources/airbyte_destination_langchain/import.sh
+  - internal/provider/destination_langchain_resource.go
+  - internal/provider/destination_langchain_resource_sdk.go
+  - examples/resources/airbyte_destination_langchain/resource.tf
   - examples/resources/airbyte_destination_milvus/import.sh
   - internal/provider/destination_milvus_resource.go
   - internal/provider/destination_milvus_resource_sdk.go
@@ -2781,10 +2784,6 @@ generatedFiles:
   - internal/provider/source_chartmogul_resource.go
   - internal/provider/source_chartmogul_resource_sdk.go
   - examples/resources/airbyte_source_chartmogul/resource.tf
-  - examples/resources/airbyte_source_clazar/import.sh
-  - internal/provider/source_clazar_resource.go
-  - internal/provider/source_clazar_resource_sdk.go
-  - examples/resources/airbyte_source_clazar/resource.tf
   - examples/resources/airbyte_source_clickhouse/import.sh
   - internal/provider/source_clickhouse_resource.go
   - internal/provider/source_clickhouse_resource_sdk.go
@@ -2829,10 +2828,6 @@ generatedFiles:
   - internal/provider/source_custom_resource.go
   - internal/provider/source_custom_resource_sdk.go
   - examples/resources/airbyte_source_custom/resource.tf
-  - examples/resources/airbyte_source_datadog/import.sh
-  - internal/provider/source_datadog_resource.go
-  - internal/provider/source_datadog_resource_sdk.go
-  - examples/resources/airbyte_source_datadog/resource.tf
   - examples/resources/airbyte_source_datascope/import.sh
   - internal/provider/source_datascope_resource.go
   - internal/provider/source_datascope_resource_sdk.go
@@ -2929,10 +2924,6 @@ generatedFiles:
   - internal/provider/source_gnews_resource.go
   - internal/provider/source_gnews_resource_sdk.go
   - examples/resources/airbyte_source_gnews/resource.tf
-  - examples/resources/airbyte_source_goldcast/import.sh
-  - internal/provider/source_goldcast_resource.go
-  - internal/provider/source_goldcast_resource_sdk.go
-  - examples/resources/airbyte_source_goldcast/resource.tf
   - examples/resources/airbyte_source_google_ads/import.sh
   - internal/provider/source_googleads_resource.go
   - internal/provider/source_googleads_resource_sdk.go
@@ -2941,6 +2932,10 @@ generatedFiles:
   - internal/provider/source_googleanalyticsdataapi_resource.go
   - internal/provider/source_googleanalyticsdataapi_resource_sdk.go
   - examples/resources/airbyte_source_google_analytics_data_api/resource.tf
+  - examples/resources/airbyte_source_google_analytics_v4_service_account_only/import.sh
+  - internal/provider/source_googleanalyticsv4serviceaccountonly_resource.go
+  - internal/provider/source_googleanalyticsv4serviceaccountonly_resource_sdk.go
+  - examples/resources/airbyte_source_google_analytics_v4_service_account_only/resource.tf
   - examples/resources/airbyte_source_google_directory/import.sh
   - internal/provider/source_googledirectory_resource.go
   - internal/provider/source_googledirectory_resource_sdk.go
@@ -3217,6 +3212,10 @@ generatedFiles:
   - internal/provider/source_prestashop_resource.go
   - internal/provider/source_prestashop_resource_sdk.go
   - examples/resources/airbyte_source_prestashop/resource.tf
+  - examples/resources/airbyte_source_punk_api/import.sh
+  - internal/provider/source_punkapi_resource.go
+  - internal/provider/source_punkapi_resource_sdk.go
+  - examples/resources/airbyte_source_punk_api/resource.tf
   - examples/resources/airbyte_source_pypi/import.sh
   - internal/provider/source_pypi_resource.go
   - internal/provider/source_pypi_resource_sdk.go
@@ -3532,6 +3531,9 @@ generatedFiles:
   - internal/provider/destination_googlesheets_data_source.go
   - internal/provider/destination_googlesheets_data_source_sdk.go
   - examples/data-sources/airbyte_destination_google_sheets/data-source.tf
+  - internal/provider/destination_langchain_data_source.go
+  - internal/provider/destination_langchain_data_source_sdk.go
+  - examples/data-sources/airbyte_destination_langchain/data-source.tf
   - internal/provider/destination_milvus_data_source.go
   - internal/provider/destination_milvus_data_source_sdk.go
   - examples/data-sources/airbyte_destination_milvus/data-source.tf
@@ -3664,9 +3666,6 @@ generatedFiles:
   - internal/provider/source_chartmogul_data_source.go
   - internal/provider/source_chartmogul_data_source_sdk.go
   - examples/data-sources/airbyte_source_chartmogul/data-source.tf
-  - internal/provider/source_clazar_data_source.go
-  - internal/provider/source_clazar_data_source_sdk.go
-  - examples/data-sources/airbyte_source_clazar/data-source.tf
   - internal/provider/source_clickhouse_data_source.go
   - internal/provider/source_clickhouse_data_source_sdk.go
   - examples/data-sources/airbyte_source_clickhouse/data-source.tf
@@ -3700,9 +3699,6 @@ generatedFiles:
   - internal/provider/source_custom_data_source.go
   - internal/provider/source_custom_data_source_sdk.go
   - examples/data-sources/airbyte_source_custom/data-source.tf
-  - internal/provider/source_datadog_data_source.go
-  - internal/provider/source_datadog_data_source_sdk.go
-  - examples/data-sources/airbyte_source_datadog/data-source.tf
   - internal/provider/source_datascope_data_source.go
   - internal/provider/source_datascope_data_source_sdk.go
   - examples/data-sources/airbyte_source_datascope/data-source.tf
@@ -3775,15 +3771,15 @@ generatedFiles:
   - internal/provider/source_gnews_data_source.go
   - internal/provider/source_gnews_data_source_sdk.go
   - examples/data-sources/airbyte_source_gnews/data-source.tf
-  - internal/provider/source_goldcast_data_source.go
-  - internal/provider/source_goldcast_data_source_sdk.go
-  - examples/data-sources/airbyte_source_goldcast/data-source.tf
   - internal/provider/source_googleads_data_source.go
   - internal/provider/source_googleads_data_source_sdk.go
   - examples/data-sources/airbyte_source_google_ads/data-source.tf
   - internal/provider/source_googleanalyticsdataapi_data_source.go
   - internal/provider/source_googleanalyticsdataapi_data_source_sdk.go
   - examples/data-sources/airbyte_source_google_analytics_data_api/data-source.tf
+  - internal/provider/source_googleanalyticsv4serviceaccountonly_data_source.go
+  - internal/provider/source_googleanalyticsv4serviceaccountonly_data_source_sdk.go
+  - examples/data-sources/airbyte_source_google_analytics_v4_service_account_only/data-source.tf
   - internal/provider/source_googledirectory_data_source.go
   - internal/provider/source_googledirectory_data_source_sdk.go
   - examples/data-sources/airbyte_source_google_directory/data-source.tf
@@ -3991,6 +3987,9 @@ generatedFiles:
   - internal/provider/source_prestashop_data_source.go
   - internal/provider/source_prestashop_data_source_sdk.go
   - examples/data-sources/airbyte_source_prestashop/data-source.tf
+  - internal/provider/source_punkapi_data_source.go
+  - internal/provider/source_punkapi_data_source_sdk.go
+  - examples/data-sources/airbyte_source_punk_api/data-source.tf
   - internal/provider/source_pypi_data_source.go
   - internal/provider/source_pypi_data_source_sdk.go
   - examples/data-sources/airbyte_source_pypi/data-source.tf

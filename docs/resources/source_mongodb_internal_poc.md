@@ -21,10 +21,10 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
     replica_set       = "...my_replica_set..."
     user              = "...my_user..."
   }
-  definition_id = "74280681-2ca7-4b26-9526-15553a713498"
-  name          = "Luis Wilderman"
+  definition_id = "6ad0e44a-4dc9-470c-8785-73a20ac990f9"
+  name          = "Steve Sauer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "99a12d6e-33e6-46d7-80d4-772456d0d26d"
+  workspace_id  = "a67a8515-0ea8-4612-8cd6-18d742806812"
 }
 ```
 

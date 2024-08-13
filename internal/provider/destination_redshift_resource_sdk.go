@@ -110,6 +110,35 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 		var destinationRedshiftAWSS3Staging *shared.DestinationRedshiftAWSS3Staging
 		if r.Configuration.UploadingMethod.AWSS3Staging != nil {
 			accessKeyID := r.Configuration.UploadingMethod.AWSS3Staging.AccessKeyID.ValueString()
+			var encryption *shared.DestinationRedshiftEncryption
+			if r.Configuration.UploadingMethod.AWSS3Staging.Encryption != nil {
+				var destinationRedshiftNoEncryption *shared.DestinationRedshiftNoEncryption
+				if r.Configuration.UploadingMethod.AWSS3Staging.Encryption.NoEncryption != nil {
+					destinationRedshiftNoEncryption = &shared.DestinationRedshiftNoEncryption{}
+				}
+				if destinationRedshiftNoEncryption != nil {
+					encryption = &shared.DestinationRedshiftEncryption{
+						DestinationRedshiftNoEncryption: destinationRedshiftNoEncryption,
+					}
+				}
+				var destinationRedshiftAESCBCEnvelopeEncryption *shared.DestinationRedshiftAESCBCEnvelopeEncryption
+				if r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption != nil {
+					keyEncryptingKey := new(string)
+					if !r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
+						*keyEncryptingKey = r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
+					} else {
+						keyEncryptingKey = nil
+					}
+					destinationRedshiftAESCBCEnvelopeEncryption = &shared.DestinationRedshiftAESCBCEnvelopeEncryption{
+						KeyEncryptingKey: keyEncryptingKey,
+					}
+				}
+				if destinationRedshiftAESCBCEnvelopeEncryption != nil {
+					encryption = &shared.DestinationRedshiftEncryption{
+						DestinationRedshiftAESCBCEnvelopeEncryption: destinationRedshiftAESCBCEnvelopeEncryption,
+					}
+				}
+			}
 			fileNamePattern := new(string)
 			if !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsNull() {
 				*fileNamePattern = r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.ValueString()
@@ -138,6 +167,7 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftCreateRequ
 			secretAccessKey := r.Configuration.UploadingMethod.AWSS3Staging.SecretAccessKey.ValueString()
 			destinationRedshiftAWSS3Staging = &shared.DestinationRedshiftAWSS3Staging{
 				AccessKeyID:      accessKeyID,
+				Encryption:       encryption,
 				FileNamePattern:  fileNamePattern,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,
@@ -296,6 +326,35 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 		var awsS3Staging *shared.AWSS3Staging
 		if r.Configuration.UploadingMethod.AWSS3Staging != nil {
 			accessKeyID := r.Configuration.UploadingMethod.AWSS3Staging.AccessKeyID.ValueString()
+			var encryption *shared.DestinationRedshiftUpdateEncryption
+			if r.Configuration.UploadingMethod.AWSS3Staging.Encryption != nil {
+				var noEncryption *shared.NoEncryption
+				if r.Configuration.UploadingMethod.AWSS3Staging.Encryption.NoEncryption != nil {
+					noEncryption = &shared.NoEncryption{}
+				}
+				if noEncryption != nil {
+					encryption = &shared.DestinationRedshiftUpdateEncryption{
+						NoEncryption: noEncryption,
+					}
+				}
+				var aesCBCEnvelopeEncryption *shared.AESCBCEnvelopeEncryption
+				if r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption != nil {
+					keyEncryptingKey := new(string)
+					if !r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
+						*keyEncryptingKey = r.Configuration.UploadingMethod.AWSS3Staging.Encryption.AESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
+					} else {
+						keyEncryptingKey = nil
+					}
+					aesCBCEnvelopeEncryption = &shared.AESCBCEnvelopeEncryption{
+						KeyEncryptingKey: keyEncryptingKey,
+					}
+				}
+				if aesCBCEnvelopeEncryption != nil {
+					encryption = &shared.DestinationRedshiftUpdateEncryption{
+						AESCBCEnvelopeEncryption: aesCBCEnvelopeEncryption,
+					}
+				}
+			}
 			fileNamePattern := new(string)
 			if !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.IsNull() {
 				*fileNamePattern = r.Configuration.UploadingMethod.AWSS3Staging.FileNamePattern.ValueString()
@@ -324,6 +383,7 @@ func (r *DestinationRedshiftResourceModel) ToSharedDestinationRedshiftPutRequest
 			secretAccessKey := r.Configuration.UploadingMethod.AWSS3Staging.SecretAccessKey.ValueString()
 			awsS3Staging = &shared.AWSS3Staging{
 				AccessKeyID:      accessKeyID,
+				Encryption:       encryption,
 				FileNamePattern:  fileNamePattern,
 				PurgeStagingData: purgeStagingData,
 				S3BucketName:     s3BucketName,

@@ -29,15 +29,15 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
         }
       }
       collection      = "...my_collection..."
-      distance_metric = "cos"
+      distance_metric = "euc"
       prefer_grpc     = true
       text_field      = "...my_text_field..."
       url             = "...my_url..."
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 9
-      chunk_size    = 2
+      chunk_overlap = 6
+      chunk_size    = 5
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -52,14 +52,14 @@ resource "airbyte_destination_qdrant" "my_destination_qdrant" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 6
+          split_level = 9
         }
       }
     }
   }
-  definition_id = "dbc4fabb-f199-4438-a023-b4de2c1a7f28"
-  name          = "Gerard Simonis"
-  workspace_id  = "de3c9d6f-a94b-474b-938f-85ce1dfc1b27"
+  definition_id = "b19e64b8-3f63-4d34-8370-e173ec9d4f32"
+  name          = "Ms. Antonio Thiel"
+  workspace_id  = "a8a43c0f-29f7-4cbd-92b3-20943801c367"
 }
 ```
 

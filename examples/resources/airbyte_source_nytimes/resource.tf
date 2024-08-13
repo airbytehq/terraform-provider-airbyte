@@ -6,8 +6,8 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
     share_type = "facebook"
     start_date = "1851-01"
   }
-  definition_id = "517fc88b-c499-48d7-9efe-dea337d55b15"
-  name          = "Sabrina Kuvalis"
+  definition_id = "a1c7d433-20fa-4c9c-9a8d-ab7e73a59718"
+  name          = "Suzanne Terry"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "92c72d54-1f53-4892-8a50-561c1cc6291a"
+  workspace_id  = "c1f633ab-c58a-4542-9517-fc88bc4998d7"
 }

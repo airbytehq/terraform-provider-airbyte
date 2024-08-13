@@ -19,57 +19,50 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     account_ids = [
       "...",
     ]
-    action_breakdowns_allow_empty = false
+    action_breakdowns_allow_empty = true
     ad_statuses = [
-      "IN_PROCESS",
+      "ADSET_PAUSED",
     ]
     adset_statuses = [
-      "DELETED",
+      "PAUSED",
     ]
     campaign_statuses = [
-      "WITH_ISSUES",
+      "DELETED",
     ]
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    credentials = {
-      authenticate_via_facebook_marketing_oauth = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-      }
-    }
     custom_insights = [
       {
         action_breakdowns = [
-          "action_carousel_card_id",
+          "standard_event_content_type",
         ]
         action_report_time = "impression"
         breakdowns = [
-          "skan_conversion_id",
+          "media_text_content",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "dda_results",
+          "video_play_curve_actions",
         ]
-        insights_job_timeout     = 4
-        insights_lookback_window = 7
-        level                    = "adset"
-        name                     = "Scott Baumbach"
+        insights_job_timeout     = 3
+        insights_lookback_window = 1
+        level                    = "campaign"
+        name                     = "Eleanor Prosacco"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 5
+        time_increment           = 10
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
-    fetch_thumbnail_images   = true
-    insights_job_timeout     = 3
-    insights_lookback_window = 7
-    page_size                = 1
+    fetch_thumbnail_images   = false
+    insights_job_timeout     = 1
+    insights_lookback_window = 9
+    page_size                = 2
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "49e5b0b6-8d5f-4b4b-99e2-f7dc2833c76b"
-  name          = "Sammy Hauck"
+  definition_id = "81cdc2e9-642f-43c2-be19-c32edfee92bc"
+  name          = "Wendy Kunze"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "566b4ade-0498-4ec4-8fd8-ad9161a05c5e"
+  workspace_id  = "d2c887f2-8ef9-475a-bb10-2e5487915a2f"
 }
 ```
 
@@ -108,7 +101,6 @@ Optional:
 - `campaign_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 - `client_id` (String) The Client Id for your OAuth app
 - `client_secret` (String) The Client Secret for your OAuth app
-- `credentials` (Attributes) Credentials for connecting to the Facebook Marketing API (see [below for nested schema](#nestedatt--configuration--credentials))
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false
@@ -116,36 +108,6 @@ Optional:
 - `insights_lookback_window` (Number) The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here. Default: 28
 - `page_size` (Number) Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases. Default: 100
 - `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. If not set then all data will be replicated for usual streams and only last 2 years for insight streams.
-
-<a id="nestedatt--configuration--credentials"></a>
-### Nested Schema for `configuration.credentials`
-
-Optional:
-
-- `authenticate_via_facebook_marketing_oauth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_facebook_marketing_oauth))
-- `service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
-
-<a id="nestedatt--configuration--credentials--authenticate_via_facebook_marketing_oauth"></a>
-### Nested Schema for `configuration.credentials.authenticate_via_facebook_marketing_oauth`
-
-Required:
-
-- `client_id` (String) Client ID for the Facebook Marketing API
-- `client_secret` (String) Client Secret for the Facebook Marketing API
-
-Optional:
-
-- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-
-
-<a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
-### Nested Schema for `configuration.credentials.service_account_key_authentication`
-
-Required:
-
-- `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-
-
 
 <a id="nestedatt--configuration--custom_insights"></a>
 ### Nested Schema for `configuration.custom_insights`

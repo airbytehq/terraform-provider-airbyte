@@ -23,18 +23,18 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
     }
     database              = "AIRBYTE_DATABASE"
     disable_type_dedupe   = false
-    host                  = "accountname.us-east-2.aws.snowflakecomputing.com"
+    host                  = "accountname.snowflakecomputing.com"
     jdbc_url_params       = "...my_jdbc_url_params..."
     raw_data_schema       = "...my_raw_data_schema..."
-    retention_period_days = 9
+    retention_period_days = 5
     role                  = "AIRBYTE_ROLE"
     schema                = "AIRBYTE_SCHEMA"
     username              = "AIRBYTE_USER"
     warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "289a0dc0-2329-4a5c-ae9f-3888495eab20"
-  name          = "Ira Ratke II"
-  workspace_id  = "f3624c43-9007-425f-a3e3-3722ced92f8e"
+  definition_id = "f6fed365-1e7d-4549-a735-da213c86a8b9"
+  name          = "Santiago Will"
+  workspace_id  = "53876e3d-e30a-486e-8df1-9faac84c3184"
 }
 ```
 
@@ -66,7 +66,7 @@ Required:
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
 - `username` (String) Enter the name of the user you want to use to access the database
-- `warehouse` (String) Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
+- `warehouse` (String) Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
 
 Optional:
 

@@ -2,8 +2,8 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "c3156b2f-fd5d-46c6-9da5-497add71ffde"
-  name          = "Herman Lesch"
+  definition_id = "81b36cf1-afcf-494e-bc79-cbeca1c7573a"
+  name          = "Candice Rath"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "09709edc-ef2c-4435-be7e-b149e6fe9a76"
+  workspace_id  = "82d4c0a2-cef7-4812-875b-ca9a4804a9e0"
 }

@@ -9,31 +9,31 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type SourceSnowflakeUpdateSchemasCredentialsAuthType string
+type SourceSnowflakeUpdateSchemasAuthType string
 
 const (
-	SourceSnowflakeUpdateSchemasCredentialsAuthTypeUsernamePassword SourceSnowflakeUpdateSchemasCredentialsAuthType = "username/password"
+	SourceSnowflakeUpdateSchemasAuthTypeUsernamePassword SourceSnowflakeUpdateSchemasAuthType = "username/password"
 )
 
-func (e SourceSnowflakeUpdateSchemasCredentialsAuthType) ToPointer() *SourceSnowflakeUpdateSchemasCredentialsAuthType {
+func (e SourceSnowflakeUpdateSchemasAuthType) ToPointer() *SourceSnowflakeUpdateSchemasAuthType {
 	return &e
 }
-func (e *SourceSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "username/password":
-		*e = SourceSnowflakeUpdateSchemasCredentialsAuthType(v)
+		*e = SourceSnowflakeUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeUpdateSchemasCredentialsAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceSnowflakeUpdateSchemasAuthType: %v", v)
 	}
 }
 
 type SourceSnowflakeUpdateUsernameAndPassword struct {
-	authType SourceSnowflakeUpdateSchemasCredentialsAuthType `const:"username/password" json:"auth_type"`
+	authType SourceSnowflakeUpdateSchemasAuthType `const:"username/password" json:"auth_type"`
 	// The password associated with the username.
 	Password string `json:"password"`
 	// The username you created to allow Airbyte to access the database.
@@ -51,8 +51,8 @@ func (s *SourceSnowflakeUpdateUsernameAndPassword) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *SourceSnowflakeUpdateUsernameAndPassword) GetAuthType() SourceSnowflakeUpdateSchemasCredentialsAuthType {
-	return SourceSnowflakeUpdateSchemasCredentialsAuthTypeUsernamePassword
+func (o *SourceSnowflakeUpdateUsernameAndPassword) GetAuthType() SourceSnowflakeUpdateSchemasAuthType {
+	return SourceSnowflakeUpdateSchemasAuthTypeUsernamePassword
 }
 
 func (o *SourceSnowflakeUpdateUsernameAndPassword) GetPassword() string {
@@ -63,75 +63,6 @@ func (o *SourceSnowflakeUpdateUsernameAndPassword) GetPassword() string {
 }
 
 func (o *SourceSnowflakeUpdateUsernameAndPassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-type SourceSnowflakeUpdateSchemasAuthType string
-
-const (
-	SourceSnowflakeUpdateSchemasAuthTypeKeyPairAuthentication SourceSnowflakeUpdateSchemasAuthType = "Key Pair Authentication"
-)
-
-func (e SourceSnowflakeUpdateSchemasAuthType) ToPointer() *SourceSnowflakeUpdateSchemasAuthType {
-	return &e
-}
-func (e *SourceSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Key Pair Authentication":
-		*e = SourceSnowflakeUpdateSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeUpdateSchemasAuthType: %v", v)
-	}
-}
-
-type SourceSnowflakeUpdateKeyPairAuthentication struct {
-	authType *SourceSnowflakeUpdateSchemasAuthType `const:"Key Pair Authentication" json:"auth_type,omitempty"`
-	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.
-	PrivateKey string `json:"private_key"`
-	// Passphrase for private key
-	PrivateKeyPassword *string `json:"private_key_password,omitempty"`
-	// The username you created to allow Airbyte to access the database.
-	Username string `json:"username"`
-}
-
-func (s SourceSnowflakeUpdateKeyPairAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSnowflakeUpdateKeyPairAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetAuthType() *SourceSnowflakeUpdateSchemasAuthType {
-	return SourceSnowflakeUpdateSchemasAuthTypeKeyPairAuthentication.ToPointer()
-}
-
-func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetPrivateKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PrivateKey
-}
-
-func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetPrivateKeyPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrivateKeyPassword
-}
-
-func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetUsername() string {
 	if o == nil {
 		return ""
 	}
@@ -219,15 +150,13 @@ func (o *SourceSnowflakeUpdateOAuth20) GetRefreshToken() *string {
 type SourceSnowflakeUpdateAuthorizationMethodType string
 
 const (
-	SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateOAuth20               SourceSnowflakeUpdateAuthorizationMethodType = "source-snowflake-update_OAuth2.0"
-	SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateKeyPairAuthentication SourceSnowflakeUpdateAuthorizationMethodType = "source-snowflake-update_Key Pair Authentication"
-	SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateUsernameAndPassword   SourceSnowflakeUpdateAuthorizationMethodType = "source-snowflake-update_Username and Password"
+	SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateOAuth20             SourceSnowflakeUpdateAuthorizationMethodType = "source-snowflake-update_OAuth2.0"
+	SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateUsernameAndPassword SourceSnowflakeUpdateAuthorizationMethodType = "source-snowflake-update_Username and Password"
 )
 
 type SourceSnowflakeUpdateAuthorizationMethod struct {
-	SourceSnowflakeUpdateOAuth20               *SourceSnowflakeUpdateOAuth20
-	SourceSnowflakeUpdateKeyPairAuthentication *SourceSnowflakeUpdateKeyPairAuthentication
-	SourceSnowflakeUpdateUsernameAndPassword   *SourceSnowflakeUpdateUsernameAndPassword
+	SourceSnowflakeUpdateOAuth20             *SourceSnowflakeUpdateOAuth20
+	SourceSnowflakeUpdateUsernameAndPassword *SourceSnowflakeUpdateUsernameAndPassword
 
 	Type SourceSnowflakeUpdateAuthorizationMethodType
 }
@@ -238,15 +167,6 @@ func CreateSourceSnowflakeUpdateAuthorizationMethodSourceSnowflakeUpdateOAuth20(
 	return SourceSnowflakeUpdateAuthorizationMethod{
 		SourceSnowflakeUpdateOAuth20: &sourceSnowflakeUpdateOAuth20,
 		Type:                         typ,
-	}
-}
-
-func CreateSourceSnowflakeUpdateAuthorizationMethodSourceSnowflakeUpdateKeyPairAuthentication(sourceSnowflakeUpdateKeyPairAuthentication SourceSnowflakeUpdateKeyPairAuthentication) SourceSnowflakeUpdateAuthorizationMethod {
-	typ := SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateKeyPairAuthentication
-
-	return SourceSnowflakeUpdateAuthorizationMethod{
-		SourceSnowflakeUpdateKeyPairAuthentication: &sourceSnowflakeUpdateKeyPairAuthentication,
-		Type: typ,
 	}
 }
 
@@ -268,13 +188,6 @@ func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
-	var sourceSnowflakeUpdateKeyPairAuthentication SourceSnowflakeUpdateKeyPairAuthentication = SourceSnowflakeUpdateKeyPairAuthentication{}
-	if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdateKeyPairAuthentication, "", true, true); err == nil {
-		u.SourceSnowflakeUpdateKeyPairAuthentication = &sourceSnowflakeUpdateKeyPairAuthentication
-		u.Type = SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateKeyPairAuthentication
-		return nil
-	}
-
 	var sourceSnowflakeUpdateOAuth20 SourceSnowflakeUpdateOAuth20 = SourceSnowflakeUpdateOAuth20{}
 	if err := utils.UnmarshalJSON(data, &sourceSnowflakeUpdateOAuth20, "", true, true); err == nil {
 		u.SourceSnowflakeUpdateOAuth20 = &sourceSnowflakeUpdateOAuth20
@@ -288,10 +201,6 @@ func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 func (u SourceSnowflakeUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceSnowflakeUpdateOAuth20 != nil {
 		return utils.MarshalJSON(u.SourceSnowflakeUpdateOAuth20, "", true)
-	}
-
-	if u.SourceSnowflakeUpdateKeyPairAuthentication != nil {
-		return utils.MarshalJSON(u.SourceSnowflakeUpdateKeyPairAuthentication, "", true)
 	}
 
 	if u.SourceSnowflakeUpdateUsernameAndPassword != nil {

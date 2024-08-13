@@ -247,12 +247,12 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 				SourceMicrosoftOnedriveParquetFormat: sourceMicrosoftOnedriveParquetFormat,
 			}
 		}
-		var sourceMicrosoftOnedriveUnstructuredDocumentFormat *shared.SourceMicrosoftOnedriveUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental *shared.SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceMicrosoftOnedriveProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceMicrosoftOnedriveLocal *shared.SourceMicrosoftOnedriveLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceMicrosoftOnedriveLocal = &shared.SourceMicrosoftOnedriveLocal{}
 				}
 				if sourceMicrosoftOnedriveLocal != nil {
@@ -262,26 +262,26 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceMicrosoftOnedriveParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftOnedriveParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftOnedriveParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceMicrosoftOnedriveUnstructuredDocumentFormat = &shared.SourceMicrosoftOnedriveUnstructuredDocumentFormat{
+			sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental = &shared.SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceMicrosoftOnedriveUnstructuredDocumentFormat != nil {
+		if sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental != nil {
 			format = shared.SourceMicrosoftOnedriveFormat{
-				SourceMicrosoftOnedriveUnstructuredDocumentFormat: sourceMicrosoftOnedriveUnstructuredDocumentFormat,
+				SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental: sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}
@@ -604,12 +604,12 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 				SourceMicrosoftOnedriveUpdateParquetFormat: sourceMicrosoftOnedriveUpdateParquetFormat,
 			}
 		}
-		var unstructuredDocumentFormat *shared.UnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+		var sourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental *shared.SourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental
+		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
 			var processing *shared.SourceMicrosoftOnedriveUpdateProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
 				var sourceMicrosoftOnedriveUpdateLocal *shared.SourceMicrosoftOnedriveUpdateLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
 					sourceMicrosoftOnedriveUpdateLocal = &shared.SourceMicrosoftOnedriveUpdateLocal{}
 				}
 				if sourceMicrosoftOnedriveUpdateLocal != nil {
@@ -619,26 +619,26 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceMicrosoftOnedriveUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftOnedriveUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftOnedriveUpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			unstructuredDocumentFormat = &shared.UnstructuredDocumentFormat{
+			sourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental = &shared.SourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if unstructuredDocumentFormat != nil {
+		if sourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental != nil {
 			format = shared.SourceMicrosoftOnedriveUpdateFormat{
-				UnstructuredDocumentFormat: unstructuredDocumentFormat,
+				SourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental: sourceMicrosoftOnedriveUpdateDocumentFileTypeFormatExperimental,
 			}
 		}
 		var globs []string = []string{}

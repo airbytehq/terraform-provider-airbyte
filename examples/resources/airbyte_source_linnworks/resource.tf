@@ -2,11 +2,11 @@ resource "airbyte_source_linnworks" "my_source_linnworks" {
   configuration = {
     application_id     = "...my_application_id..."
     application_secret = "...my_application_secret..."
-    start_date         = "2020-11-23T19:16:47.007Z"
+    start_date         = "2021-09-13T06:35:49.884Z"
     token              = "...my_token..."
   }
-  definition_id = "6a0192c4-4771-42b4-a020-8830aabeffb8"
-  name          = "Luther Kunde"
+  definition_id = "167f1e8f-0042-4f92-a10b-5c8f204e6a77"
+  name          = "Gertrude Gutkowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1059b440-a5f2-4f61-a4e4-66849f7bbeaa"
+  workspace_id  = "b6babc0f-9b18-4b2e-afdc-453fb6a0192c"
 }

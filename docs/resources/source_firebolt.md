@@ -22,10 +22,10 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     engine        = "...my_engine..."
     host          = "api.app.firebolt.io"
   }
-  definition_id = "a7fcdac6-3878-454b-a9c4-2e8b9a534c06"
-  name          = "Merle Hills"
+  definition_id = "0df143ee-10f8-4279-a427-b2c340e1d4b4"
+  name          = "Mr. Carole Predovic"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e94eff21-1adf-4c72-9dd1-f80239a92966"
+  workspace_id  = "62aeeab6-a16b-4c0f-9be5-567777324c6c"
 }
 ```
 

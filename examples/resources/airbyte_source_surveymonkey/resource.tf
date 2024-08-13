@@ -11,8 +11,8 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       "...",
     ]
   }
-  definition_id = "d128040b-a03e-4b3c-8afc-c3c8fa6eafbb"
-  name          = "Alberto Tillman"
+  definition_id = "fbbc8e3e-7db5-4a3e-846f-c1e0fa91f7ef"
+  name          = "Winifred Graham"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7db5a3e4-46fc-41e0-ba91-f7ef5f462d7c"
+  workspace_id  = "d7c84461-977a-41b2-b1a5-b009f29606a3"
 }

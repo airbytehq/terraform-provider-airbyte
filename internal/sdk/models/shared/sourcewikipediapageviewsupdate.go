@@ -15,7 +15,7 @@ type SourceWikipediaPageviewsUpdate struct {
 	End string `json:"end"`
 	// If you want to filter by project, use the domain of any Wikimedia project.
 	Project string `json:"project"`
-	// The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format. Also serves as the date to retrieve data for the top articles.
+	// The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 	Start string `json:"start"`
 }
 
