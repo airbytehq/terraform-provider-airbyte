@@ -32316,6 +32316,45 @@ components:
                 title: "Password"
                 order: 2
                 x-speakeasy-param-sensitive: true
+          - title: "Key Pair Authentication"
+            type: "object"
+            required:
+            - "username"
+            - "private_key"
+            - "auth_type"
+            order: 2
+            properties:
+              auth_type:
+                type: "string"
+                const: "Key Pair Authentication"
+                order: 0
+                enum:
+                - "Key Pair Authentication"
+              username:
+                description: "The username you created to allow Airbyte to access\
+                  \ the database."
+                examples:
+                - "AIRBYTE_USER"
+                type: "string"
+                title: "Username"
+                order: 1
+              private_key:
+                description: "RSA Private key to use for Snowflake connection. See\
+                  \ the <a href=\"https://docs.airbyte.com/integrations/destinations/snowflake\"\
+                  >docs</a> for more information on how to obtain this key."
+                multiline: true
+                type: "string"
+                airbyte_secret: true
+                title: "Private Key"
+                order: 2
+                x-speakeasy-param-sensitive: true
+              private_key_password:
+                description: "Passphrase for private key."
+                type: "string"
+                airbyte_secret: true
+                title: "Private Key Password"
+                order: 3
+                x-speakeasy-param-sensitive: true
           order: 0
         host:
           description: "The host domain of the snowflake instance (must include the\
