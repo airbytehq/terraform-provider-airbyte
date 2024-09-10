@@ -10031,6 +10031,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /sources#Looker:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceLookerCreateRequest"
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createSourceLooker"
+      summary: "Create a source"
+      description:
+        "Creates a source given a name, workspace id, and a json blob containing\
+        \ the configuration for the source."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Looker#create
+  /sources/{sourceId}#Looker:
+    get:
+      tags:
+        - "Sources"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceResponse"
+          description: "Get a Source by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getSourceLooker"
+      summary: "Get Source details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Looker#read
+    put:
+      tags:
+        - "Sources"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceLookerPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putSourceLooker"
+      summary: "Update a Source fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Looker#update
+    delete:
+      tags:
+        - "Sources"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteSourceLooker"
+      summary: "Delete a Source"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Source_Looker#delete
+    parameters:
+      - name: "sourceId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /sources#Luma:
     post:
       requestBody:
@@ -22415,6 +22501,92 @@ paths:
           type: "string"
         in: "path"
         required: true
+  /destinations#Timeplus:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationTimeplusCreateRequest"
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Successful operation"
+        "400":
+          description: "Invalid data"
+        "403":
+          description: "Not allowed"
+      operationId: "createDestinationTimeplus"
+      summary: "Create a destination"
+      description:
+        "Creates a destination given a name, workspace id, and a json blob containing\
+        \ the configuration for the destination."
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Timeplus#create
+  /destinations/{destinationId}#Timeplus:
+    get:
+      tags:
+        - "Destinations"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DestinationResponse"
+          description: "Get a Destination by the id in the path."
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "getDestinationTimeplus"
+      summary: "Get Destination details"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Timeplus#read
+    put:
+      tags:
+        - "Destinations"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DestinationTimeplusPutRequest"
+      responses:
+        "2XX":
+          description: "The resource was updated successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "putDestinationTimeplus"
+      summary: "Update a Destination fully"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Timeplus#update
+    delete:
+      tags:
+        - "Destinations"
+      responses:
+        "2XX":
+          description: "The resource was deleted successfully"
+        "403":
+          description: "Not allowed"
+        "404":
+          description: "Not found"
+      operationId: "deleteDestinationTimeplus"
+      summary: "Delete a Destination"
+      x-use-speakeasy-middleware: true
+      x-speakeasy-entity-operation: Destination_Timeplus#delete
+    parameters:
+      - name: "destinationId"
+        schema:
+          format: "UUID"
+          type: "string"
+        in: "path"
+        required: true
   /destinations#Typesense:
     post:
       requestBody:
@@ -24208,6 +24380,7 @@ components:
           airbyte_secret: true
           type: "string"
           order: 0
+          x-speakeasy-param-sensitive: true
         replication_start_date:
           title: "Start Date"
           description: "UTC date and time in the format 2017-01-25T00:00:00Z. Any\
@@ -24258,6 +24431,7 @@ components:
                 type: "string"
                 description: "The Client Secret of your Harvest developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -24399,7 +24573,6 @@ components:
           description: "App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)"
           title: "App Key"
           order: 1
-          x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           description: "Date time filter for incremental filter, Specify which date\
@@ -24545,6 +24718,7 @@ components:
             \ as for the `sandbox`"
           order: 0
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         consumer_key:
           type: "string"
           title: "Consumer Key"
@@ -24558,6 +24732,7 @@ components:
           description: "Consumer secret associated with your integration"
           order: 2
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         token_key:
           type: "string"
           title: "Token Key (Token Id)"
@@ -24876,11 +25051,13 @@ components:
                 title: "Client ID"
                 description: "The Client ID of your OAuth application"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -25791,11 +25968,13 @@ components:
                 type: "string"
                 description: "The Client ID of the developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client secret"
                 type: "string"
                 description: "The Client Secret of the developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -25825,6 +26004,7 @@ components:
                   \ <a href=\"https://developers.google.com/admin-sdk/directory/v1/guides/delegation\"\
                   >docs</a> for more information on how to generate this key."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               email:
                 type: "string"
                 title: "Email"
@@ -26302,6 +26482,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client Certificate"
@@ -26310,6 +26491,7 @@ components:
                 multiline: true
                 order: 2
                 always_show: true
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client Key"
@@ -26348,6 +26530,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client Certificate"
@@ -26356,6 +26539,7 @@ components:
                 multiline: true
                 order: 2
                 always_show: true
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client Key"
@@ -27154,6 +27338,7 @@ components:
           title: "Fauna Secret"
           description: "Fauna secret, used when authenticating with the database."
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         collection:
           order: 5
           type: "object"
@@ -27328,6 +27513,7 @@ components:
           airbyte_secret: true
           type: "string"
           order: 1
+          x-speakeasy-param-sensitive: true
         auth_token:
           title: "Auth Token"
           description: "Twilio Auth Token."
@@ -27949,6 +28135,7 @@ components:
                 \ href=\"https://docs.airbyte.com/integrations/sources/google-ads#setup-guide\"\
                 >documentation</a>."
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             refresh_token:
               type: "string"
               title: "Refresh Token"
@@ -28296,6 +28483,7 @@ components:
                   \ application. Read more <a href=\"https://developers.google.com/webmaster-tools/v1/how-tos/authorizing\"\
                   >here</a>."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 type: "string"
@@ -28303,6 +28491,7 @@ components:
                   \ application. Read more <a href=\"https://developers.google.com/webmaster-tools/v1/how-tos/authorizing\"\
                   >here</a>."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 title: "Access Token"
                 type: "string"
@@ -28342,6 +28531,7 @@ components:
                 - "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID,\
                   \ \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               email:
                 title: "Admin Email"
                 type: "string"
@@ -28728,6 +28918,7 @@ components:
           - "fc6243f283e51f6ca989aab298b17da125496f50"
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         refresh_token:
           type: "string"
           description: "The Refresh Token with the activity: read_all permissions."
@@ -28916,6 +29107,7 @@ components:
           title: "API Key"
           description: "Your API ACCESS Key"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         adjusted:
           type: "string"
           order: 0
@@ -29101,12 +29293,14 @@ components:
                 description: "The Client ID of the Shopify developer application."
                 airbyte_secret: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of the Shopify developer application."
                 airbyte_secret: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -29788,6 +29982,7 @@ components:
                 type: "string"
                 description: "The Client Secret of your Retently developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -30009,12 +30204,14 @@ components:
           airbyte_secret: true
           airbyte_hidden: true
           type: "string"
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           description: "The Client Secret for your Oauth application"
           airbyte_secret: true
           airbyte_hidden: true
           type: "string"
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "instagram"
           const: "instagram"
@@ -30176,7 +30373,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -31720,7 +31916,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -32055,16 +32250,19 @@ components:
                 description: "Tenant ID of the Microsoft Azure Application user"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 description: "Client ID of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 description: "Refresh Token of your Microsoft developer application"
@@ -32716,11 +32914,13 @@ components:
                 title: "Client ID"
                 description: "The Client ID of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -32932,6 +33132,7 @@ components:
           title: "Customer Secret"
           description: "Customer Secret for API in WooCommerce shop"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         shop:
           type: "string"
           order: 2
@@ -33011,6 +33212,7 @@ components:
                 title: "Client ID"
                 description: "The client ID of the LinkedIn developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               auth_method:
                 type: "string"
                 const: "oAuth2.0"
@@ -33021,6 +33223,7 @@ components:
                 title: "Client secret"
                 description: "The client secret of the LinkedIn developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh token"
@@ -33057,6 +33260,7 @@ components:
           - "123456789"
           description: "Specify the Organization ID"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           order: 2
@@ -33334,6 +33538,7 @@ components:
                 title: "Client Secret"
                 description: "The Client Secret of your Salesloft developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh Token"
@@ -33344,7 +33549,6 @@ components:
                 type: "string"
                 format: "date-time"
                 description: "The date-time when the access token should be refreshed."
-                x-speakeasy-param-sensitive: true
           - type: "object"
             title: "Authenticate via API Key"
             required:
@@ -33475,6 +33679,7 @@ components:
           desciprtion: "Short.io Domain ID"
           title: "Domain ID"
           airbyte_secret: false
+          x-speakeasy-param-sensitive: true
         secret_key:
           type: "string"
           title: "Secret Key"
@@ -33489,6 +33694,7 @@ components:
           examples:
           - "2023-07-30T03:43:59.244Z"
           airbyte_secret: false
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "shortio"
           const: "shortio"
@@ -33656,6 +33862,7 @@ components:
           title: "API ID"
           airbyte_secret: true
           order: 0
+          x-speakeasy-param-sensitive: true
         api_token:
           type: "string"
           description: "App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)"
@@ -33773,12 +33980,14 @@ components:
           description: "The Client ID of your Snapchat developer application."
           airbyte_secret: true
           order: 0
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           type: "string"
           description: "The Client Secret of your Snapchat developer application."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         refresh_token:
           title: "Refresh Token"
           type: "string"
@@ -33953,10 +34162,12 @@ components:
                 type: "string"
                 description: "The API ID of the Gitlab developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 description: "The API Secret the Gitlab developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 description: "Access Token for making authenticated requests."
@@ -33966,7 +34177,6 @@ components:
                 type: "string"
                 description: "The date-time when the access token should be refreshed."
                 format: "date-time"
-                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 description: "The key to refresh the expired access_token."
@@ -34235,12 +34445,14 @@ components:
                 description: "The Client ID of your Snowflake developer application."
                 airbyte_secret: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of your Snowflake developer application."
                 airbyte_secret: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -34586,6 +34798,7 @@ components:
                 examples:
                 - "Client_Secret"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               audience:
                 title: "Audience"
                 description: "The audience for the token, which is your API. You can\
@@ -34627,6 +34840,7 @@ components:
           - "2023-08-05T00:43:59.244Z"
           default: "2023-08-05T00:43:59.244Z"
           airbyte_secret: false
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "auth0"
           const: "auth0"
@@ -34743,6 +34957,7 @@ components:
           description: "Linnworks Application Secret"
           type: "string"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         token:
           title: "API Token"
           type: "string"
@@ -34858,7 +35073,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -35205,16 +35419,19 @@ components:
                 description: "Tenant ID of the Microsoft SharePoint user"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 description: "Client ID of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 description: "Refresh Token of your Microsoft developer application"
@@ -35243,6 +35460,7 @@ components:
                 description: "Tenant ID of the Microsoft SharePoint user"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               user_principal_name:
                 title: "User Principal Name"
                 description: "Special characters such as a period, comma, space, and\
@@ -35250,16 +35468,19 @@ components:
                   \ https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 description: "Client ID of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
             required:
             - "tenant_id"
             - "user_principal_name"
@@ -36039,7 +36260,6 @@ components:
           - "airbyte-ws-order"
           - "airbyte-ws-checkout"
           order: 0
-          x-speakeasy-param-sensitive: true
         end_date:
           type: "string"
           title: "End date"
@@ -36207,6 +36427,7 @@ components:
           examples:
           - "https://000-AAA-000.mktorest.com"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         client_id:
           title: "Client ID"
           type: "string"
@@ -36215,6 +36436,7 @@ components:
             \ docs </a> for info on how to obtain this."
           order: 0
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           type: "string"
@@ -36223,6 +36445,7 @@ components:
             \ docs </a> for info on how to obtain this."
           order: 1
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         start_date:
           title: "Start Date"
           type: "string"
@@ -36497,10 +36720,12 @@ components:
                 type: "string"
                 description: "The API ID of the SmartSheets developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 description: "The API Secret the SmartSheets developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 description: "Access Token for making authenticated requests."
@@ -36510,7 +36735,6 @@ components:
                 type: "string"
                 description: "The date-time when the access token should be refreshed."
                 format: "date-time"
-                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 description: "The key to refresh the expired access_token."
@@ -36860,6 +37084,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client certificate"
@@ -36870,6 +37095,7 @@ components:
                 multiline: true
                 order: 2
                 always_show: true
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client key"
@@ -36908,6 +37134,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client certificate"
@@ -36918,6 +37145,7 @@ components:
                 multiline: true
                 order: 2
                 always_show: true
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client key"
@@ -37954,7 +38182,6 @@ components:
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
           order: 4
-          x-speakeasy-param-sensitive: true
         numeric_event_properties_keys:
           type: "array"
           items:
@@ -37963,13 +38190,11 @@ components:
           description: "Property key names to extract from all events, in order to\
             \ enrich ledger entries corresponding to an event deduction."
           order: 5
-          x-speakeasy-param-sensitive: true
         subscription_usage_grouping_key:
           type: "string"
           title: "Subscription usage grouping key (string value)"
           description: "Property key name to group subscription usage by."
           order: 6
-          x-speakeasy-param-sensitive: true
         plan_id:
           type: "string"
           title: "Orb Plan ID for Subscription Usage (string value)"
@@ -38173,6 +38398,7 @@ components:
                   \ href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a>\
                   \ for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 type: "string"
@@ -38180,6 +38406,7 @@ components:
                   \ <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a>\
                   \ for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 title: "Access Token"
                 type: "string"
@@ -38324,12 +38551,14 @@ components:
                 description: "The API key of the Trustpilot API application. (represents\
                   \ the OAuth Client ID)"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Secret"
                 description: "The Secret of the Trustpilot API application. (represents\
                   \ the OAuth Client Secret)"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -38341,7 +38570,6 @@ components:
                 title: "Token expiry date time"
                 description: "The date-time when the access token should be refreshed."
                 format: "date-time"
-                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh token"
@@ -38367,6 +38595,7 @@ components:
                 title: "API key"
                 description: "The API key of the Trustpilot API application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
         business_units:
           type: "array"
           items:
@@ -38674,6 +38903,7 @@ components:
                 description: "Slack client_secret. See our <a href=\"https://docs.airbyte.com/integrations/sources/slack\"\
                   >docs</a> if you need help finding this secret."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access token"
@@ -38907,6 +39137,7 @@ components:
                   \ file and copy/paste its content to this field (expecting JSON\
                   \ formats). If accessing publicly available data, this field is\
                   \ not necessary."
+                x-speakeasy-param-sensitive: true
           - title: "S3: Amazon Web Services"
             required:
             - "storage"
@@ -38923,7 +39154,6 @@ components:
                 description: "In order to access private Buckets stored on AWS S3,\
                   \ this connector would need credentials with the proper permissions.\
                   \ If accessing publicly available data, this field is not necessary."
-                x-speakeasy-param-sensitive: true
               aws_secret_access_key:
                 type: "string"
                 title: "AWS Secret Access Key"
@@ -39367,11 +39597,13 @@ components:
           title: "Client ID"
           description: "OAuth2.0 Client ID"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         client_secret:
           type: "string"
           title: "Client Secret"
           description: "OAuth2.0 Client Secret"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         refresh_token:
           type: "string"
           title: "Refresh Token"
@@ -39557,6 +39789,7 @@ components:
             \ <a href=\"https://dashboard.stripe.com/apikeys\">here</a>)."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           title: "Replication start date"
@@ -39735,11 +39968,13 @@ components:
               type: "string"
               description: "The Client ID of your developer application"
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             client_secret:
               title: "Client Secret"
               type: "string"
               description: "The client secret of your developer application"
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             refresh_token:
               title: "Refresh Token"
               type: "string"
@@ -39847,6 +40082,7 @@ components:
                 description: "Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's\
                   \ documentation</a> for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 type: "string"
@@ -39854,6 +40090,7 @@ components:
                   \ href='https://developers.google.com/identity/protocols/oauth2'>Google's\
                   \ documentation</a> for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -39883,6 +40120,7 @@ components:
                 examples:
                 - "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID,\
                   \ \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
+                x-speakeasy-param-sensitive: true
         sourceType:
           title: "google-sheets"
           const: "google-sheets"
@@ -40033,11 +40271,13 @@ components:
                 title: "Client ID"
                 description: "Client ID"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "Client Secret"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
           - title: "API Token"
             type: "object"
             required:
@@ -40291,11 +40531,13 @@ components:
                 title: ""
                 description: ""
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: ""
                 description: ""
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: ""
@@ -40627,6 +40869,7 @@ components:
                   \ to team -> Copy the link to the team and grab the tenant ID form\
                   \ the URL"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 type: "string"
@@ -40637,6 +40880,7 @@ components:
                 description: "The Client Secret of your Microsoft Teams developer\
                   \ application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -40667,6 +40911,7 @@ components:
                   \ to team -> Copy the link to the team and grab the tenant ID form\
                   \ the URL"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 type: "string"
@@ -40677,6 +40922,7 @@ components:
                 description: "The Client Secret of your Microsoft Teams developer\
                   \ application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
         sourceType:
           title: "microsoft-teams"
           const: "microsoft-teams"
@@ -40776,6 +41022,91 @@ components:
                 description: "The Client Secret of your Microsoft Teams developer\
                   \ application."
                 airbyte_secret: true
+    source-looker:
+      type: "object"
+      required:
+      - "client_id"
+      - "client_secret"
+      - "domain"
+      - "sourceType"
+      properties:
+        client_id:
+          type: "string"
+          order: 0
+          title: "Client ID"
+          description: "The Client ID is first part of an API3 key that is specific\
+            \ to each Looker user. See the <a href=\"https://docs.airbyte.com/integrations/sources/looker\"\
+            >docs</a> for more information on how to generate this key."
+        client_secret:
+          type: "string"
+          order: 1
+          title: "Client Secret"
+          description: "The Client Secret is second part of an API3 key."
+          airbyte_secret: true
+          x-speakeasy-param-sensitive: true
+        domain:
+          type: "string"
+          order: 2
+          title: "Domain"
+          examples:
+          - "domainname.looker.com"
+          - "looker.clientname.com"
+          - "123.123.124.123:8000"
+          description: "Domain for your Looker account, e.g. airbyte.cloud.looker.com,looker.[clientname].com,IP\
+            \ address"
+        run_look_ids:
+          type: "array"
+          items:
+            type: "string"
+            pattern: "^[0-9]*$"
+          order: 3
+          title: "Look IDs to Run"
+          description: "The IDs of any Looks to run"
+        sourceType:
+          title: "looker"
+          const: "looker"
+          enum:
+          - "looker"
+          order: 0
+          type: "string"
+    source-looker-update:
+      type: "object"
+      required:
+      - "client_id"
+      - "client_secret"
+      - "domain"
+      properties:
+        client_id:
+          type: "string"
+          order: 0
+          title: "Client ID"
+          description: "The Client ID is first part of an API3 key that is specific\
+            \ to each Looker user. See the <a href=\"https://docs.airbyte.com/integrations/sources/looker\"\
+            >docs</a> for more information on how to generate this key."
+        client_secret:
+          type: "string"
+          order: 1
+          title: "Client Secret"
+          description: "The Client Secret is second part of an API3 key."
+          airbyte_secret: true
+        domain:
+          type: "string"
+          order: 2
+          title: "Domain"
+          examples:
+          - "domainname.looker.com"
+          - "looker.clientname.com"
+          - "123.123.124.123:8000"
+          description: "Domain for your Looker account, e.g. airbyte.cloud.looker.com,looker.[clientname].com,IP\
+            \ address"
+        run_look_ids:
+          type: "array"
+          items:
+            type: "string"
+            pattern: "^[0-9]*$"
+          order: 3
+          title: "Look IDs to Run"
+          description: "The IDs of any Looks to run"
     source-amazon-seller-partner:
       title: "Amazon Seller Partner Spec"
       type: "object"
@@ -40849,12 +41180,14 @@ components:
           order: 4
           airbyte_secret: true
           type: "string"
+          x-speakeasy-param-sensitive: true
         lwa_client_secret:
           title: "LWA Client Secret"
           description: "Your Login with Amazon Client Secret."
           airbyte_secret: true
           order: 5
           type: "string"
+          x-speakeasy-param-sensitive: true
         refresh_token:
           title: "Refresh Token"
           description: "The Refresh Token obtained via OAuth flow authorization."
@@ -41277,6 +41610,7 @@ components:
           order: 1
           title: "Company ID"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "breezy-hr"
           const: "breezy-hr"
@@ -41330,6 +41664,7 @@ components:
                   \ our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a>\
                   \ for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
@@ -41337,6 +41672,7 @@ components:
                   \ to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a>\
                   \ for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh Token"
@@ -41744,11 +42080,13 @@ components:
               title: "Client ID"
               description: "The Client ID of your OAuth application"
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             client_secret:
               type: "string"
               title: "Client Secret"
               description: "The Client Secret of your OAuth application."
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             refresh_token:
               type: "string"
               title: "Refresh Token"
@@ -42481,11 +42819,13 @@ components:
                 title: "Client ID"
                 description: "The Client ID of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh Token"
@@ -42514,6 +42854,7 @@ components:
                 description: "The Client ID of your OAuth application."
                 airbyte_secret: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               key_id:
                 type: "string"
                 title: "Key ID"
@@ -42560,6 +42901,7 @@ components:
             >docs</a> for instructions on how to find it."
           airbyte_secret: false
           order: 1
+          x-speakeasy-param-sensitive: true
         start_date:
           type: "string"
           title: "Start Date"
@@ -42781,6 +43123,7 @@ components:
                   https://developer.mixpanel.com/reference/service-accounts\">docs</a>\
                   \ for more information on how to obtain this."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               project_id:
                 order: 3
                 title: "Project ID"
@@ -42805,6 +43148,7 @@ components:
                 description: "Mixpanel project secret. See the <a href=\"https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret\"\
                   >docs</a> for more information on how to obtain this."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
         attribution_window:
           order: 2
           title: "Attribution Window"
@@ -43229,7 +43573,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -43676,7 +44019,6 @@ components:
                 multiline: true
                 order: 4
                 type: "string"
-                x-speakeasy-param-sensitive: true
             required:
             - "private_key"
             - "auth_type"
@@ -44313,12 +44655,14 @@ components:
                 description: "The OAuth client's ID. See <a href=\"https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.\"\
                   >this guide</a> for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The OAuth client secret. See <a href=\"https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.\"\
                   >this guide</a> for more information."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
           - title: "API Token"
             type: "object"
             required:
@@ -44521,7 +44865,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -44850,16 +45193,19 @@ components:
                 description: "Tenant ID of the Microsoft OneDrive user"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 description: "Client ID of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 description: "Refresh Token of your Microsoft developer application"
@@ -44889,6 +45235,7 @@ components:
                 description: "Tenant ID of the Microsoft OneDrive user"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               user_principal_name:
                 title: "User Principal Name"
                 description: "Special characters such as a period, comma, space, and\
@@ -44896,16 +45243,19 @@ components:
                   \ https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_id:
                 title: "Client ID"
                 description: "Client ID of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret of your Microsoft developer application"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
             required:
             - "tenant_id"
             - "user_principal_name"
@@ -45460,11 +45810,13 @@ components:
                 description: "The Developer Application App ID."
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               secret:
                 title: "Secret"
                 description: "The Developer Application Secret."
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               access_token:
                 title: "Access Token"
                 description: "Long-term Authorized Access Token."
@@ -45704,7 +46056,6 @@ components:
               examples:
               - "EventName"
               default: "EventName"
-              x-speakeasy-param-sensitive: true
             attribute_value:
               type: "string"
               title: "Corresponding value to the given attribute key"
@@ -46061,6 +46412,7 @@ components:
                 examples:
                 - "secret"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 description: "Refresh token to renew an expired access token. See\
@@ -46263,6 +46615,7 @@ components:
           title: "Account SID"
           airbyte_secret: true
           order: 0
+          x-speakeasy-param-sensitive: true
         auth_token:
           type: "string"
           description: "Twilio Auth Token"
@@ -46346,12 +46699,14 @@ components:
           description: "Zenloop Survey ID. Can be found <a href=\"https://app.zenloop.com/settings/api\"\
             >here</a>. Leave empty to pull answers from all surveys"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         survey_group_id:
           type: "string"
           description: "Zenloop Survey Group ID. Can be found by pulling All Survey\
             \ Groups via SurveyGroups stream. Leave empty to pull answers from all\
             \ survey groups"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "zenloop"
           const: "zenloop"
@@ -46552,6 +46907,7 @@ components:
                 title: "OneSignal App ID"
                 order: 1
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               app_api_key:
                 type: "string"
                 title: "REST API Key"
@@ -46689,6 +47045,7 @@ components:
                   \ application."
                 airbyte_secret: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -46726,6 +47083,7 @@ components:
                   \ \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
                 airbyte_secret: true
                 order: 1
+                x-speakeasy-param-sensitive: true
         property_ids:
           title: "Property IDs"
           description: "A list of your Property IDs. The Property ID is a unique number\
@@ -50836,12 +51194,14 @@ components:
           description: "Client Id for your Intercom application."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           type: "string"
           description: "Client Secret for your Intercom application."
           airbyte_secret: true
           order: 2
+          x-speakeasy-param-sensitive: true
         activity_logs_time_step:
           type: "integer"
           default: 30
@@ -51002,6 +51362,7 @@ components:
           description: "The client secret for your Zoom app. You can find this in\
             \ the Zoom Marketplace under the \"Manage\" tab for your app."
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         authorization_endpoint:
           type: "string"
           order: 3
@@ -51205,10 +51566,12 @@ components:
                 type: "string"
                 description: "The Client ID of the Typeform developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 description: "The Client Secret the Typeform developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 description: "Access Token for making authenticated requests."
@@ -51218,7 +51581,6 @@ components:
                 type: "string"
                 description: "The date-time when the access token should be refreshed."
                 format: "date-time"
-                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 description: "The key to refresh the expired access_token."
@@ -51410,12 +51772,14 @@ components:
           description: "The Client ID of your Paypal developer application."
           airbyte_secret: true
           order: 0
+          x-speakeasy-param-sensitive: true
         client_secret:
           type: "string"
           title: "Client secret"
           description: "The Client Secret of your Paypal developer application."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         start_date:
           title: "Start Date"
           description: "Start Date for data extraction in <a href=\\\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\\\
@@ -51852,11 +52216,13 @@ components:
                 description: "Client ID for the Facebook Marketing API"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret for the Facebook Marketing API"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               access_token:
                 title: "Access Token"
                 description: "The value of the generated access token. From your App’\
@@ -52342,12 +52708,14 @@ components:
           airbyte_secret: true
           airbyte_hidden: true
           type: "string"
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           description: "The Client Secret for your OAuth app"
           airbyte_secret: true
           airbyte_hidden: true
           type: "string"
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "facebook-marketing"
           const: "facebook-marketing"
@@ -52979,6 +53347,7 @@ components:
           order: 2
           title: "client_secret"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "airbyte"
           const: "airbyte"
@@ -53125,6 +53494,7 @@ components:
           description: "The name of your storage account."
           order: 0
           airbyte_secret: false
+          x-speakeasy-param-sensitive: true
         storage_access_key:
           title: "Access Key"
           type: "string"
@@ -53145,6 +53515,7 @@ components:
           - "core.windows.net"
           - "core.chinacloudapi.cn"
           airbyte_secret: false
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "azure-table"
           const: "azure-table"
@@ -53252,12 +53623,14 @@ components:
               description: "The Client ID of the SurveyMonkey developer application."
               airbyte_secret: true
               order: 1
+              x-speakeasy-param-sensitive: true
             client_secret:
               type: "string"
               title: "Client Secret"
               description: "The Client Secret of the SurveyMonkey developer application."
               airbyte_secret: true
               order: 2
+              x-speakeasy-param-sensitive: true
             access_token:
               title: "Access Token"
               order: 3
@@ -53645,12 +54018,14 @@ components:
                 description: "Enter your application's User Name"
                 airbyte_secret: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               user_secret:
                 type: "string"
                 title: "User Secret"
                 description: "Enter your application's User Secret"
                 airbyte_secret: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               site_id:
                 type: "string"
                 title: "Site ID"
@@ -53659,6 +54034,7 @@ components:
                   \ param PSID"
                 airbyte_secret: true
                 order: 3
+                x-speakeasy-param-sensitive: true
           - title: "Single Store Access Token"
             type: "object"
             order: 1
@@ -53919,6 +54295,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 4
+                x-speakeasy-param-sensitive: true
         tunnel_method:
           type: "object"
           title: "SSH Tunnel Method"
@@ -54289,6 +54666,7 @@ components:
           title: "API Key"
           airbyte_secret: true
           order: 0
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "appfollow"
           const: "appfollow"
@@ -54853,12 +55231,14 @@ components:
           airbyte_secret: true
           default: "common"
           order: 0
+          x-speakeasy-param-sensitive: true
         client_id:
           type: "string"
           title: "Client ID"
           description: "The Client ID of your Microsoft Advertising developer application."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         client_secret:
           type: "string"
           title: "Client Secret"
@@ -54867,6 +55247,7 @@ components:
           default: ""
           airbyte_secret: true
           order: 2
+          x-speakeasy-param-sensitive: true
         refresh_token:
           type: "string"
           title: "Refresh Token"
@@ -55500,11 +55881,13 @@ components:
                 title: "Client ID"
                 description: "The Client ID of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Client Secret of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -55920,6 +56303,7 @@ components:
           order: 1
           type: "string"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         client_secret:
           title: "Client Secret"
           description: "The client secret of your Amazon Ads developer application.\
@@ -55928,6 +56312,7 @@ components:
           airbyte_secret: true
           order: 2
           type: "string"
+          x-speakeasy-param-sensitive: true
         refresh_token:
           title: "Refresh Token"
           description: "Amazon Ads refresh token. See the <a href=\"https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens\"\
@@ -56232,11 +56617,13 @@ components:
                 title: "Client Id"
                 description: "OAuth Client Id"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client secret"
                 description: "OAuth Client secret"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
           - type: "object"
             title: "Personal Access Token"
             required:
@@ -56535,6 +56922,7 @@ components:
             >docs</a> for more information on how to obtain this key."
           title: "Credentials JSON"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "bigquery"
           const: "bigquery"
@@ -56669,6 +57057,7 @@ components:
           title: "Client Secret"
           description: "Firebolt secret, corresponding to the service account ID."
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         account:
           type: "string"
           title: "Account"
@@ -56745,11 +57134,13 @@ components:
           order: 0
           title: "Client ID"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         client_secret:
           type: "string"
           order: 1
           title: "Client secret"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "clazar"
           const: "clazar"
@@ -56793,6 +57184,7 @@ components:
           title: "Client Secret"
           description: "The Client Secret of your Outreach developer application."
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         refresh_token:
           type: "string"
           title: "Refresh Token"
@@ -58963,11 +59355,13 @@ components:
                 title: "Client ID"
                 description: "The Square-issued ID of your application"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "The Square-issued application secret for your application"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 type: "string"
@@ -59332,7 +59726,6 @@ components:
             >docs</a> for more information on how to obtain this key."
           name: "Public Key"
           type: "string"
-          x-speakeasy-param-sensitive: true
         private_key:
           title: "Private Key"
           description: "Braintree Private Key. See the <a href=\"https://docs.airbyte.com/integrations/sources/braintree\"\
@@ -59462,11 +59855,13 @@ components:
                 type: "string"
                 description: "The Client ID of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 type: "string"
                 description: "The Client Secret of your OAuth application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 title: "Access Token"
                 type: "string"
@@ -59614,11 +60009,13 @@ components:
                 title: "Client ID"
                 description: "The client ID of the Airtable developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client secret"
                 description: "The client secret the Airtable developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 description: "Access Token for making authenticated requests."
@@ -59628,7 +60025,6 @@ components:
                 type: "string"
                 description: "The date-time when the access token should be refreshed."
                 format: "date-time"
-                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh token"
@@ -59838,6 +60234,7 @@ components:
                 order: 1
                 airbyte_secret: true
                 multiline: true
+                x-speakeasy-param-sensitive: true
         replication_method:
           type: "object"
           title: "Update Method"
@@ -60441,6 +60838,7 @@ components:
           airbyte_secret: true
           examples:
           - "name, field_name, field-name"
+          x-speakeasy-param-sensitive: true
         ignore_missing_read_permissions_tables:
           title: "Ignore missing read permissions tables"
           type: "boolean"
@@ -60598,6 +60996,7 @@ components:
           type: "string"
           airbyte_secret: true
           order: 3
+          x-speakeasy-param-sensitive: true
         refresh_token:
           title: "Refresh Token"
           description: "Enter your application's <a href=\"https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm\"\
@@ -61129,11 +61528,13 @@ components:
           type: "string"
           description: "API Key for server"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         X-Postmark-Account-Token:
           title: "X-Postmark-Account-Token"
           type: "string"
           description: "API Key for account"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         sourceType:
           title: "postmarkapp"
           const: "postmarkapp"
@@ -61321,6 +61722,7 @@ components:
                 type: "string"
                 description: "The Client Secret of your Lever Hiring developer application."
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 type: "string"
                 title: "Refresh Token"
@@ -61778,7 +62180,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -62114,11 +62515,13 @@ components:
                 description: "Client ID for the Google Drive API"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               client_secret:
                 title: "Client Secret"
                 description: "Client Secret for the Google Drive API"
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
               refresh_token:
                 title: "Refresh Token"
                 description: "Refresh Token for the Google Drive API"
@@ -62147,6 +62550,7 @@ components:
                   >here</a>."
                 airbyte_secret: true
                 type: "string"
+                x-speakeasy-param-sensitive: true
             required:
             - "service_account_info"
             - "auth_type"
@@ -62750,7 +63154,6 @@ components:
                   \ will default to the parser's default primary key."
                 airbyte_hidden: true
                 type: "string"
-                x-speakeasy-param-sensitive: true
               days_to_sync_if_history_is_full:
                 title: "Days To Sync If History Is Full"
                 description: "When the state history of the file store is full, syncs\
@@ -63036,11 +63439,6 @@ components:
                       default:
                         mode: "local"
                       type: "object"
-                      discriminator:
-                        propertyName: "mode"
-                        mapping:
-                          local: "#/definitions/LocalProcessingConfigModel"
-                          api: "#/definitions/APIProcessingConfigModel"
                       oneOf:
                       - title: "Local"
                         type: "object"
@@ -63154,6 +63552,7 @@ components:
           airbyte_secret: true
           order: 0
           type: "string"
+          x-speakeasy-param-sensitive: true
         bucket:
           title: "Bucket"
           description: "Name of the GCS bucket where the file(s) exist."
@@ -63532,11 +63931,6 @@ components:
                       default:
                         mode: "local"
                       type: "object"
-                      discriminator:
-                        propertyName: "mode"
-                        mapping:
-                          local: "#/definitions/LocalProcessingConfigModel"
-                          api: "#/definitions/APIProcessingConfigModel"
                       oneOf:
                       - title: "Local"
                         type: "object"
@@ -63683,11 +64077,13 @@ components:
           title: "Client ID"
           airbyte_secret: true
           order: 2
+          x-speakeasy-param-sensitive: true
         client_secret:
           type: "string"
           title: "Client secret"
           airbyte_secret: true
           order: 3
+          x-speakeasy-param-sensitive: true
         client_refresh_token_2:
           type: "string"
           title: "Refresh token"
@@ -66517,6 +66913,7 @@ components:
             >docs</a> if you need help generating this key."
           title: "Credentials JSON"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         ordering_enabled:
           title: "Message Ordering Enabled"
           description: "If TRUE PubSub publisher will have <a href=\"https://cloud.google.com/pubsub/docs/ordering\"\
@@ -67097,6 +67494,7 @@ components:
               default: ""
               airbyte_secret: true
               type: "string"
+              x-speakeasy-param-sensitive: true
             default_vectorizer:
               title: "Default Vectorizer"
               description: "The vectorizer to use if new classes need to be created"
@@ -67126,11 +67524,11 @@ components:
                   header_key:
                     title: "Header Key"
                     type: "string"
-                    x-speakeasy-param-sensitive: true
                   value:
                     title: "Header Value"
                     airbyte_secret: true
                     type: "string"
+                    x-speakeasy-param-sensitive: true
                 required:
                 - "header_key"
                 - "value"
@@ -68184,6 +68582,7 @@ components:
               airbyte_secret: true
               order: 1
               type: "string"
+              x-speakeasy-param-sensitive: true
           required:
           - "client_id"
           - "client_secret"
@@ -69694,6 +70093,57 @@ components:
         title: "Indexing"
       - id: "advanced"
         title: "Advanced"
+    destination-timeplus:
+      title: "Destination Timeplus"
+      type: "object"
+      required:
+      - "endpoint"
+      - "apikey"
+      - "destinationType"
+      properties:
+        endpoint:
+          title: "Endpoint"
+          description: "Timeplus workspace endpoint"
+          type: "string"
+          default: "https://us-west-2.timeplus.cloud/<workspace_id>"
+          examples:
+          - "https://us-west-2.timeplus.cloud/workspace_id"
+          order: 0
+        apikey:
+          title: "API key"
+          description: "Personal API key"
+          type: "string"
+          airbyte_secret: true
+          order: 1
+          x-speakeasy-param-sensitive: true
+        destinationType:
+          title: "timeplus"
+          const: "timeplus"
+          enum:
+          - "timeplus"
+          order: 0
+          type: "string"
+    destination-timeplus-update:
+      title: "Destination Timeplus"
+      type: "object"
+      required:
+      - "endpoint"
+      - "apikey"
+      properties:
+        endpoint:
+          title: "Endpoint"
+          description: "Timeplus workspace endpoint"
+          type: "string"
+          default: "https://us-west-2.timeplus.cloud/<workspace_id>"
+          examples:
+          - "https://us-west-2.timeplus.cloud/workspace_id"
+          order: 0
+        apikey:
+          title: "API key"
+          description: "Personal API key"
+          type: "string"
+          airbyte_secret: true
+          order: 1
     destination-convex:
       title: "Destination Convex"
       type: "object"
@@ -69757,6 +70207,7 @@ components:
             \ be used if this field is left empty."
           title: "Credentials JSON"
           airbyte_secret: true
+          x-speakeasy-param-sensitive: true
         destinationType:
           title: "firestore"
           const: "firestore"
@@ -71619,11 +72070,13 @@ components:
                 title: "Client ID"
                 description: "Enter your application's Client ID"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               client_secret:
                 type: "string"
                 title: "Client Secret"
                 description: "Enter your application's Client secret"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
               access_token:
                 type: "string"
                 title: "Access Token"
@@ -71946,6 +72399,7 @@ components:
                 type: "string"
                 airbyte_secret: true
                 order: 2
+                x-speakeasy-param-sensitive: true
           - title: "Personal Access Token"
             required:
             - "auth_type"
@@ -72486,6 +72940,7 @@ components:
                 type: "string"
                 description: "Will assume this role to write data to s3"
                 airbyte_secret: false
+                x-speakeasy-param-sensitive: true
           - type: "object"
             title: "IAM User"
             required:
@@ -72581,7 +73036,6 @@ components:
           - "pii_level"
           type: "string"
           order: 7
-          x-speakeasy-param-sensitive: true
         lakeformation_database_default_tag_values:
           title: "Lake Formation Database Tag Values"
           description: "Add default values for the `Tag Key` to databases created\
@@ -73839,6 +74293,7 @@ components:
           description: "Firebolt secret, corresponding to the service account ID."
           airbyte_secret: true
           order: 1
+          x-speakeasy-param-sensitive: true
         account:
           type: "string"
           title: "Account"
@@ -74037,11 +74492,13 @@ components:
               type: "string"
               description: "The Client ID of your Google Sheets developer application."
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             client_secret:
               title: "Client Secret"
               type: "string"
               description: "The Client Secret of your Google Sheets developer application."
               airbyte_secret: true
+              x-speakeasy-param-sensitive: true
             refresh_token:
               title: "Refresh Token"
               type: "string"
@@ -74468,7 +74925,6 @@ components:
                 \ Data Explorer tab in the Astra UI. The keyspace default_keyspace\
                 \ is created for you when you create a Vector Database in Astra DB."
               type: "string"
-              x-speakeasy-param-sensitive: true
             collection:
               title: "Astra DB collection"
               description: "Collections hold data. They are analagous to tables in\
@@ -75043,6 +75499,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
           - title: "verify-full"
             additionalProperties: false
             description: "Verify-full SSL mode."
@@ -75067,6 +75524,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
         jdbc_url_params:
           description: "Additional properties to pass to the JDBC URL string when\
             \ connecting to the database formatted as 'key=value' pairs separated\
@@ -77062,6 +77520,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client Certificate"
@@ -77069,6 +77528,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client Key"
@@ -77444,7 +77904,6 @@ components:
           type: "string"
           description: "Typesense API Key"
           order: 0
-          x-speakeasy-param-sensitive: true
         host:
           title: "Host"
           type: "string"
@@ -77712,6 +78171,7 @@ components:
           group: "connection"
           order: 4
           always_show: true
+          x-speakeasy-param-sensitive: true
         transformation_priority:
           type: "string"
           description: "Interactive run type means that the query is executed as soon\
@@ -78040,6 +78500,7 @@ components:
           description: "CA certificate"
           airbyte_secret: true
           multiline: true
+          x-speakeasy-param-sensitive: true
         authenticationMethod:
           title: "Authentication Method"
           type: "object"
@@ -78068,6 +78529,7 @@ components:
                 description: "The secret associated with the API Key ID."
                 type: "string"
                 airbyte_secret: true
+                x-speakeasy-param-sensitive: true
           - title: "Username/Password"
             additionalProperties: false
             description: "Basic auth header with a username and password"
@@ -78538,6 +79000,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_key_password:
                 type: "string"
                 title: "Client key password"
@@ -78569,6 +79032,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client certificate"
@@ -78576,6 +79040,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client key"
@@ -79175,6 +79640,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_key_password:
                 type: "string"
                 title: "Client key password"
@@ -79206,6 +79672,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 1
+                x-speakeasy-param-sensitive: true
               client_certificate:
                 type: "string"
                 title: "Client certificate"
@@ -79213,6 +79680,7 @@ components:
                 airbyte_secret: true
                 multiline: true
                 order: 2
+                x-speakeasy-param-sensitive: true
               client_key:
                 type: "string"
                 title: "Client key"
@@ -82303,6 +82771,32 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Lokalise
+      x-speakeasy-param-suppress-computed-diff: true
+    SourceLookerCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the source e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.sourceType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/source-looker"
+        secretId:
+          description:
+            "Optional secretID obtained through the public API OAuth redirect\
+            \ flow."
+          type: "string"
+      x-speakeasy-entity: Source_Looker
       x-speakeasy-param-suppress-computed-diff: true
     SourceLumaCreateRequest:
       required:
@@ -85888,6 +86382,27 @@ components:
           $ref: "#/components/schemas/destination-teradata"
       x-speakeasy-entity: Destination_Teradata
       x-speakeasy-param-suppress-computed-diff: true
+    DestinationTimeplusCreateRequest:
+      required:
+        - name
+        - workspaceId
+        - configuration
+      type: object
+      properties:
+        name:
+          description: Name of the destination e.g. dev-mysql-instance.
+          type: string
+        definitionId:
+          description: The UUID of the connector definition. One of configuration.destinationType or definitionId must be provided.
+          format: uuid
+          type: string
+        workspaceId:
+          format: uuid
+          type: string
+        configuration:
+          $ref: "#/components/schemas/destination-timeplus"
+      x-speakeasy-entity: Destination_Timeplus
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationTypesenseCreateRequest:
       required:
         - name
@@ -87592,6 +88107,22 @@ components:
         configuration:
           $ref: "#/components/schemas/source-lokalise-update"
       x-speakeasy-entity: Source_Lokalise
+      x-speakeasy-param-suppress-computed-diff: true
+    SourceLookerPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/source-looker-update"
+      x-speakeasy-entity: Source_Looker
       x-speakeasy-param-suppress-computed-diff: true
     SourceLumaPutRequest:
       required:
@@ -89896,6 +90427,22 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-teradata-update"
       x-speakeasy-entity: Destination_Teradata
+      x-speakeasy-param-suppress-computed-diff: true
+    DestinationTimeplusPutRequest:
+      required:
+        - "name"
+        - "workspaceId"
+        - "configuration"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        workspaceId:
+          format: "uuid"
+          type: "string"
+        configuration:
+          $ref: "#/components/schemas/destination-timeplus-update"
+      x-speakeasy-entity: Destination_Timeplus
       x-speakeasy-param-suppress-computed-diff: true
     DestinationTypesensePutRequest:
       required:
