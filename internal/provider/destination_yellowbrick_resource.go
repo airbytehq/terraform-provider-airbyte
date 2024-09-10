@@ -161,6 +161,7 @@ func (r *DestinationYellowbrickResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_key_password": schema.StringAttribute{
@@ -185,10 +186,12 @@ func (r *DestinationYellowbrickResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{

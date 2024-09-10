@@ -62,6 +62,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Harvest account ID. Required for all Harvest requests in pair with Personal Access Token`,
 					},
 					"credentials": schema.SingleNestedAttribute{
@@ -83,6 +84,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Harvest developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{

@@ -17,10 +17,10 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "85c78fa7-d86b-4df5-bf91-acb121083728"
-  name          = "Johnnie Maggio"
+  definition_id = "59e04a86-9e9d-4149-b3b0-4e32dc649b6b"
+  name          = "Dwight Ward"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "51e868df-1f2c-45ad-84a4-6153eb240d62"
+  workspace_id  = "7d0de0f8-a2b5-47ad-9e20-e75111fd0612"
 }
 ```
 

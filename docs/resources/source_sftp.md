@@ -27,10 +27,10 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "08d9d001-7533-4842-9733-72c40ec92913"
-  name          = "Gladys Zemlak"
+  definition_id = "b03b315a-f19b-4c4a-9418-c27e2e49fbe8"
+  name          = "Stella Hammes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "49bcc34d-389b-4bf5-924f-5b1164e1dc4a"
+  workspace_id  = "48e30ccc-b1d3-49dd-bc64-9b7a58a56364"
 }
 ```
 

@@ -9,11 +9,11 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
     ignore_missing_read_permissions_tables = false
-    region                                 = "me-central-1"
+    region                                 = "af-south-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "58122af6-a8ac-4655-b6a2-05f1e4d309ea"
-  name          = "Mrs. Carole Beer"
+  definition_id = "c62aeeab-6a16-4bc0-b1be-5567777324c6"
+  name          = "Horace Kunde"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4fbd8663-14ca-4ce0-af96-b833556f7e41"
+  workspace_id  = "dac63878-54b6-49c4-ae8b-9a534c06fe5a"
 }

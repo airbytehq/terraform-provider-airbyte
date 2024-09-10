@@ -15,16 +15,16 @@ SourceBraintree Resource
 ```terraform
 resource "airbyte_source_braintree" "my_source_braintree" {
   configuration = {
-    environment = "Development"
+    environment = "Qa"
     merchant_id = "...my_merchant_id..."
     private_key = "...my_private_key..."
     public_key  = "...my_public_key..."
     start_date  = "2020"
   }
-  definition_id = "430f8964-a321-4f43-9fb3-aad078a3612f"
-  name          = "Abraham Herzog"
+  definition_id = "a7074f01-6f72-4127-b33f-8652b2551b02"
+  name          = "Mr. Jana Runolfsson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fdd854e0-c39c-422f-a17d-f57adf10725f"
+  workspace_id  = "4a7ffb26-8dc1-4870-87d3-7ac99fd78516"
 }
 ```
 
@@ -55,7 +55,7 @@ Required:
 - `environment` (String) Environment specifies where the data will come from. must be one of ["Development", "Sandbox", "Qa", "Production"]
 - `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
 - `private_key` (String, Sensitive) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-- `public_key` (String, Sensitive) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+- `public_key` (String) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 
 Optional:
 

@@ -98,6 +98,12 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
+	useMergeForUpsert := new(bool)
+	if !r.Configuration.UseMergeForUpsert.IsUnknown() && !r.Configuration.UseMergeForUpsert.IsNull() {
+		*useMergeForUpsert = r.Configuration.UseMergeForUpsert.ValueBool()
+	} else {
+		useMergeForUpsert = nil
+	}
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflake{
@@ -110,6 +116,7 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 		RetentionPeriodDays: retentionPeriodDays,
 		Role:                role,
 		Schema:              schema,
+		UseMergeForUpsert:   useMergeForUpsert,
 		Username:            username,
 		Warehouse:           warehouse,
 	}
@@ -230,6 +237,12 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
+	useMergeForUpsert := new(bool)
+	if !r.Configuration.UseMergeForUpsert.IsUnknown() && !r.Configuration.UseMergeForUpsert.IsNull() {
+		*useMergeForUpsert = r.Configuration.UseMergeForUpsert.ValueBool()
+	} else {
+		useMergeForUpsert = nil
+	}
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflakeUpdate{
@@ -242,6 +255,7 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 		RetentionPeriodDays: retentionPeriodDays,
 		Role:                role,
 		Schema:              schema,
+		UseMergeForUpsert:   useMergeForUpsert,
 		Username:            username,
 		Warehouse:           warehouse,
 	}

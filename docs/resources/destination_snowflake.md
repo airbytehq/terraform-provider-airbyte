@@ -23,18 +23,19 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
     }
     database              = "AIRBYTE_DATABASE"
     disable_type_dedupe   = false
-    host                  = "accountname.snowflakecomputing.com"
+    host                  = "accountname.us-east-2.aws.snowflakecomputing.com"
     jdbc_url_params       = "...my_jdbc_url_params..."
     raw_data_schema       = "...my_raw_data_schema..."
-    retention_period_days = 5
+    retention_period_days = 9
     role                  = "AIRBYTE_ROLE"
     schema                = "AIRBYTE_SCHEMA"
+    use_merge_for_upsert  = false
     username              = "AIRBYTE_USER"
     warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "f6fed365-1e7d-4549-a735-da213c86a8b9"
-  name          = "Santiago Will"
-  workspace_id  = "53876e3d-e30a-486e-8df1-9faac84c3184"
+  definition_id = "89a0dc02-329a-45ca-a9f3-888495eab20e"
+  name          = "Mrs. Kelvin Dickens"
+  workspace_id  = "3624c439-0072-45fa-be33-722ced92f8e0"
 }
 ```
 
@@ -66,7 +67,7 @@ Required:
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
 - `username` (String) Enter the name of the user you want to use to access the database
-- `warehouse` (String) Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
+- `warehouse` (String) Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
 
 Optional:
 
@@ -75,6 +76,7 @@ Optional:
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `retention_period_days` (Number) The number of days of Snowflake Time Travel to enable on the tables. See <a href="https://docs.snowflake.com/en/user-guide/data-time-travel#data-retention-period">Snowflake's documentation</a> for more information. Setting a nonzero value will incur increased storage costs in your Snowflake instance. Default: 1
+- `use_merge_for_upsert` (Boolean) Use MERGE for de-duplication of final tables. This option no effect if Final tables are disabled or Sync mode is not DEDUPE. Default: false
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -107,8 +109,8 @@ Required:
 
 Optional:
 
-- `client_id` (String) Enter your application's Client ID
-- `client_secret` (String) Enter your application's Client secret
+- `client_id` (String, Sensitive) Enter your application's Client ID
+- `client_secret` (String, Sensitive) Enter your application's Client secret
 
 
 <a id="nestedatt--configuration--credentials--username_and_password"></a>

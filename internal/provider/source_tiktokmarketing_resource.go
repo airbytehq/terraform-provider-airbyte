@@ -86,10 +86,12 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"app_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Developer Application App ID.`,
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Developer Application Secret.`,
 									},
 								},
@@ -135,7 +137,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						Computed:    true,
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
-						Description: `Set to active if you want to include deleted data in reports. Default: false`,
+						Description: `Set to active if you want to include deleted data in report based streams and Ads, Ad Groups and Campaign streams. Default: false`,
 					},
 					"start_date": schema.StringAttribute{
 						Computed:    true,

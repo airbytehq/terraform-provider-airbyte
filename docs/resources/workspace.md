@@ -14,8 +14,8 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name            = "Floyd Schinner"
-  organization_id = "a0b5368b-26a5-468a-a6dc-340bb1546957"
+  name            = "Leonard Hamill"
+  organization_id = "023c2b52-9d84-41a3-8ae3-ec6aa76308e2"
 }
 ```
 

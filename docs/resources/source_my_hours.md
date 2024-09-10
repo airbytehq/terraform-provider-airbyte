@@ -18,12 +18,12 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     email           = "john@doe.com"
     logs_batch_size = 30
     password        = "...my_password..."
-    start_date      = "2016-01-01"
+    start_date      = "%Y-%m-%d"
   }
-  definition_id = "26c4c104-f1db-4e3b-9f29-044775738476"
-  name          = "Brooke Kihn"
+  definition_id = "43ee79bd-13e2-4046-99bb-dc56c2f2e202"
+  name          = "Lindsey Schinner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "18014d1f-2636-451b-b7f9-fe0e5e5f386d"
+  workspace_id  = "13998d3f-c543-40ae-866d-4a91bbbc35ba"
 }
 ```
 

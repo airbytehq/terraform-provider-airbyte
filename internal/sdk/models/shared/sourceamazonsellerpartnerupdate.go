@@ -369,10 +369,12 @@ type SourceAmazonSellerPartnerUpdate struct {
 	Region *AWSRegion `default:"US" json:"region"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
 	ReplicationStartDate *time.Time `json:"replication_start_date,omitempty"`
 	// Additional information passed to reports. This varies by report type.
 	ReportOptionsList []ReportOptions `json:"report_options_list,omitempty"`
+	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
+	WaitToAvoidFatalErrors *bool `default:"false" json:"wait_to_avoid_fatal_errors"`
 }
 
 func (s SourceAmazonSellerPartnerUpdate) MarshalJSON() ([]byte, error) {
@@ -458,4 +460,11 @@ func (o *SourceAmazonSellerPartnerUpdate) GetReportOptionsList() []ReportOptions
 		return nil
 	}
 	return o.ReportOptionsList
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetWaitToAvoidFatalErrors() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WaitToAvoidFatalErrors
 }

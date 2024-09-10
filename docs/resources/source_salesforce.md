@@ -21,18 +21,18 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
     start_date         = "2021-07-25"
-    stream_slice_step  = "P1M"
+    stream_slice_step  = "P1Y"
     streams_criteria = [
       {
-        criteria = "exacts"
+        criteria = "not contains"
         value    = "...my_value..."
       },
     ]
   }
-  definition_id = "03e6b3fc-a03d-492c-b145-10264179a403"
-  name          = "Jean Prosacco"
+  definition_id = "3d512342-f997-4d05-9d38-a2e5fcf99c41"
+  name          = "Jessie Howe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7b13a43b-1ead-4703-a4ee-b23fe553942b"
+  workspace_id  = "0cbc1b99-ee1e-4960-9660-5b0d51b3114e"
 }
 ```
 
@@ -61,7 +61,7 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
 Required:
 
 - `client_id` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
-- `client_secret` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
+- `client_secret` (String, Sensitive) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 - `refresh_token` (String, Sensitive) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 
 Optional:

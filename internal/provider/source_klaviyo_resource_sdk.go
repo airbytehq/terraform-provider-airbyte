@@ -10,6 +10,12 @@ import (
 
 func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest() *shared.SourceKlaviyoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
+	disableFetchingPredictiveAnalytics := new(bool)
+	if !r.Configuration.DisableFetchingPredictiveAnalytics.IsUnknown() && !r.Configuration.DisableFetchingPredictiveAnalytics.IsNull() {
+		*disableFetchingPredictiveAnalytics = r.Configuration.DisableFetchingPredictiveAnalytics.ValueBool()
+	} else {
+		disableFetchingPredictiveAnalytics = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -17,8 +23,9 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest() *share
 		startDate = nil
 	}
 	configuration := shared.SourceKlaviyo{
-		APIKey:    apiKey,
-		StartDate: startDate,
+		APIKey:                             apiKey,
+		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
+		StartDate:                          startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -55,6 +62,12 @@ func (r *SourceKlaviyoResourceModel) RefreshFromSharedSourceResponse(resp *share
 
 func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest() *shared.SourceKlaviyoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
+	disableFetchingPredictiveAnalytics := new(bool)
+	if !r.Configuration.DisableFetchingPredictiveAnalytics.IsUnknown() && !r.Configuration.DisableFetchingPredictiveAnalytics.IsNull() {
+		*disableFetchingPredictiveAnalytics = r.Configuration.DisableFetchingPredictiveAnalytics.ValueBool()
+	} else {
+		disableFetchingPredictiveAnalytics = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -62,8 +75,9 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest() *shared.S
 		startDate = nil
 	}
 	configuration := shared.SourceKlaviyoUpdate{
-		APIKey:    apiKey,
-		StartDate: startDate,
+		APIKey:                             apiKey,
+		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
+		StartDate:                          startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

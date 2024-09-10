@@ -67,17 +67,24 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 			StreamName:  streamName,
 		})
 	}
+	waitToAvoidFatalErrors := new(bool)
+	if !r.Configuration.WaitToAvoidFatalErrors.IsUnknown() && !r.Configuration.WaitToAvoidFatalErrors.IsNull() {
+		*waitToAvoidFatalErrors = r.Configuration.WaitToAvoidFatalErrors.ValueBool()
+	} else {
+		waitToAvoidFatalErrors = nil
+	}
 	configuration := shared.SourceAmazonSellerPartner{
-		AccountType:          accountType,
-		AwsEnvironment:       awsEnvironment,
-		LwaAppID:             lwaAppID,
-		LwaClientSecret:      lwaClientSecret,
-		PeriodInDays:         periodInDays,
-		RefreshToken:         refreshToken,
-		Region:               region,
-		ReplicationEndDate:   replicationEndDate,
-		ReplicationStartDate: replicationStartDate,
-		ReportOptionsList:    reportOptionsList,
+		AccountType:            accountType,
+		AwsEnvironment:         awsEnvironment,
+		LwaAppID:               lwaAppID,
+		LwaClientSecret:        lwaClientSecret,
+		PeriodInDays:           periodInDays,
+		RefreshToken:           refreshToken,
+		Region:                 region,
+		ReplicationEndDate:     replicationEndDate,
+		ReplicationStartDate:   replicationStartDate,
+		ReportOptionsList:      reportOptionsList,
+		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -171,17 +178,24 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 			StreamName:  streamName,
 		})
 	}
+	waitToAvoidFatalErrors := new(bool)
+	if !r.Configuration.WaitToAvoidFatalErrors.IsUnknown() && !r.Configuration.WaitToAvoidFatalErrors.IsNull() {
+		*waitToAvoidFatalErrors = r.Configuration.WaitToAvoidFatalErrors.ValueBool()
+	} else {
+		waitToAvoidFatalErrors = nil
+	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
-		AccountType:          accountType,
-		AwsEnvironment:       awsEnvironment,
-		LwaAppID:             lwaAppID,
-		LwaClientSecret:      lwaClientSecret,
-		PeriodInDays:         periodInDays,
-		RefreshToken:         refreshToken,
-		Region:               region,
-		ReplicationEndDate:   replicationEndDate,
-		ReplicationStartDate: replicationStartDate,
-		ReportOptionsList:    reportOptionsList,
+		AccountType:            accountType,
+		AwsEnvironment:         awsEnvironment,
+		LwaAppID:               lwaAppID,
+		LwaClientSecret:        lwaClientSecret,
+		PeriodInDays:           periodInDays,
+		RefreshToken:           refreshToken,
+		Region:                 region,
+		ReplicationEndDate:     replicationEndDate,
+		ReplicationStartDate:   replicationStartDate,
+		ReportOptionsList:      reportOptionsList,
+		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

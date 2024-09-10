@@ -43,7 +43,7 @@ type SourceMetabase struct {
 	// Note that by default, sessions are good for 14 days and needs to be regenerated.
 	SessionToken *string  `json:"session_token,omitempty"`
 	sourceType   Metabase `const:"metabase" json:"sourceType"`
-	Username     *string  `json:"username,omitempty"`
+	Username     string   `json:"username"`
 }
 
 func (s SourceMetabase) MarshalJSON() ([]byte, error) {
@@ -82,9 +82,9 @@ func (o *SourceMetabase) GetSourceType() Metabase {
 	return MetabaseMetabase
 }
 
-func (o *SourceMetabase) GetUsername() *string {
+func (o *SourceMetabase) GetUsername() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Username
 }

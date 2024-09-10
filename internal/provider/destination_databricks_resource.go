@@ -12,7 +12,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -68,158 +67,75 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Default:     booldefault.StaticBool(false),
 						Description: `You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector. Default: false`,
 					},
-					"data_source": schema.SingleNestedAttribute{
+					"authentication": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"recommended_managed_tables": schema.SingleNestedAttribute{
-								Optional:   true,
-								Attributes: map[string]schema.Attribute{},
+							"o_auth2_recommended": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"secret": schema.StringAttribute{
+										Required:  true,
+										Sensitive: true,
+									},
+								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("amazon_s3"),
-										path.MatchRelative().AtParent().AtName("azure_blob_storage"),
+										path.MatchRelative().AtParent().AtName("personal_access_token"),
 									}...),
 								},
 							},
-							"amazon_s3": schema.SingleNestedAttribute{
+							"personal_access_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"file_name_pattern": schema.StringAttribute{
-										Optional:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"s3_access_key_id": schema.StringAttribute{
-										Required:    true,
-										Sensitive:   true,
-										Description: `The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `The name of the S3 bucket to use for intermittent staging of the data.`,
-									},
-									"s3_bucket_path": schema.StringAttribute{
-										Required:    true,
-										Description: `The directory under the S3 bucket where data will be written.`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString(""),
-										Description: `The region of the S3 staging bucket to use if utilising a copy strategy. must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-north-1",
-												"eu-south-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"sa-east-1",
-												"me-south-1",
-												"us-gov-east-1",
-												"us-gov-west-1",
-											),
-										},
-									},
-									"s3_secret_access_key": schema.StringAttribute{
-										Required:    true,
-										Sensitive:   true,
-										Description: `The corresponding secret to the above access key id.`,
+									"personal_access_token": schema.StringAttribute{
+										Required:  true,
+										Sensitive: true,
 									},
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("recommended_managed_tables"),
-										path.MatchRelative().AtParent().AtName("azure_blob_storage"),
-									}...),
-								},
-							},
-							"azure_blob_storage": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"azure_blob_storage_account_name": schema.StringAttribute{
-										Required:    true,
-										Description: `The account's name of the Azure Blob Storage.`,
-									},
-									"azure_blob_storage_container_name": schema.StringAttribute{
-										Required:    true,
-										Description: `The name of the Azure blob storage container.`,
-									},
-									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString("blob.core.windows.net"),
-										Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"`,
-									},
-									"azure_blob_storage_sas_token": schema.StringAttribute{
-										Required:    true,
-										Sensitive:   true,
-										Description: `Shared access signature (SAS) token to grant limited access to objects in your storage account.`,
-									},
-								},
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("recommended_managed_tables"),
-										path.MatchRelative().AtParent().AtName("amazon_s3"),
+										path.MatchRelative().AtParent().AtName("o_auth2_recommended"),
 									}...),
 								},
 							},
 						},
-						Description: `Storage on which the delta lake is built.`,
+						Description: `Authentication mechanism for Staging files and running queries`,
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
 					},
 					"database": schema.StringAttribute{
-						Optional:    true,
-						Description: `The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.`,
+						Required:    true,
+						Description: `The name of the unity catalog for the database`,
 					},
-					"databricks_http_path": schema.StringAttribute{
+					"hostname": schema.StringAttribute{
+						Required:    true,
+						Description: `Databricks Cluster Server Hostname.`,
+					},
+					"http_path": schema.StringAttribute{
 						Required:    true,
 						Description: `Databricks Cluster HTTP Path.`,
 					},
-					"databricks_personal_access_token": schema.StringAttribute{
-						Required:    true,
-						Sensitive:   true,
-						Description: `Databricks Personal Access Token for making authenticated requests.`,
-					},
-					"databricks_port": schema.StringAttribute{
+					"port": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString("443"),
 						Description: `Databricks Cluster Port. Default: "443"`,
-					},
-					"databricks_server_hostname": schema.StringAttribute{
-						Required:    true,
-						Description: `Databricks Cluster Server Hostname.`,
-					},
-					"enable_schema_evolution": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes. Default: false`,
 					},
 					"purge_staging_data": schema.BoolAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     booldefault.StaticBool(true),
 						Description: `Default to 'true'. Switch it to 'false' for debugging purpose. Default: true`,
+					},
+					"raw_schema_override": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("airbyte_internal"),
+						Description: `The schema to write raw tables into (default: airbyte_internal). Default: "airbyte_internal"`,
 					},
 					"schema": schema.StringAttribute{
 						Computed:    true,

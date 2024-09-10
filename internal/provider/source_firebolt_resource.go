@@ -67,6 +67,7 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Firebolt secret, corresponding to the service account ID.`,
 					},
 					"database": schema.StringAttribute{

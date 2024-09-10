@@ -34,12 +34,12 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Era_Wisoky"
+    username = "Kaylee22"
   }
-  definition_id = "ec8fedb8-fc35-4367-bfee-523e36b74e8f"
-  name          = "Lula Lemke"
+  definition_id = "88851ec0-6fd3-4b8c-864e-95a7a3692db0"
+  name          = "Cristina Franey"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d76b02a3-d797-4c2f-9023-950717b206b8"
+  workspace_id  = "99dcbdae-34af-4cb0-a318-40729444d2b8"
 }
 ```
 
@@ -106,8 +106,9 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `heartbeat_action_query` (String) Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""
-- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>. Default: 1200
+- `heartbeat_action_query` (String) Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""
+- `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-setting-up-initial-cdc-waiting-time">initial waiting time</a>. Default: 1200
 - `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `lsn_commit_behaviour` (String) Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
 - `plugin` (String) A logical decoding plugin installed on the PostgreSQL server. must be one of ["pgoutput"]; Default: "pgoutput"
@@ -168,12 +169,12 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
+- `client_certificate` (String, Sensitive) Client certificate
 - `client_key` (String, Sensitive) Client key
 - `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 
@@ -183,12 +184,12 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String) CA certificate
+- `ca_certificate` (String, Sensitive) CA certificate
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String) Client certificate
+- `client_certificate` (String, Sensitive) Client certificate
 - `client_key` (String, Sensitive) Client key
 - `client_key_password` (String, Sensitive) Password for keystorage. If you do not add it - the password will be generated automatically.
 

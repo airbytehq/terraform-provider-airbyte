@@ -199,6 +199,48 @@ func (e *SftpBulk) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type SourceSftpBulkSchemasStreamsFormatFormat6Filetype string
+
+const (
+	SourceSftpBulkSchemasStreamsFormatFormat6FiletypeExcel SourceSftpBulkSchemasStreamsFormatFormat6Filetype = "excel"
+)
+
+func (e SourceSftpBulkSchemasStreamsFormatFormat6Filetype) ToPointer() *SourceSftpBulkSchemasStreamsFormatFormat6Filetype {
+	return &e
+}
+func (e *SourceSftpBulkSchemasStreamsFormatFormat6Filetype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "excel":
+		*e = SourceSftpBulkSchemasStreamsFormatFormat6Filetype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSftpBulkSchemasStreamsFormatFormat6Filetype: %v", v)
+	}
+}
+
+type SourceSftpBulkExcelFormat struct {
+	filetype *SourceSftpBulkSchemasStreamsFormatFormat6Filetype `const:"excel" json:"filetype"`
+}
+
+func (s SourceSftpBulkExcelFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSftpBulkExcelFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceSftpBulkExcelFormat) GetFiletype() *SourceSftpBulkSchemasStreamsFormatFormat6Filetype {
+	return SourceSftpBulkSchemasStreamsFormatFormat6FiletypeExcel.ToPointer()
+}
+
 type SourceSftpBulkSchemasStreamsFormatFormatFiletype string
 
 const (
@@ -453,8 +495,8 @@ func (e *SourceSftpBulkParsingStrategy) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSftpBulkDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceSftpBulkDocumentFileTypeFormatExperimental struct {
+// SourceSftpBulkUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceSftpBulkUnstructuredDocumentFormat struct {
 	filetype *SourceSftpBulkSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceSftpBulkProcessing `json:"processing,omitempty"`
@@ -464,36 +506,36 @@ type SourceSftpBulkDocumentFileTypeFormatExperimental struct {
 	Strategy *SourceSftpBulkParsingStrategy `default:"auto" json:"strategy"`
 }
 
-func (s SourceSftpBulkDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceSftpBulkUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceSftpBulkDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceSftpBulkUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceSftpBulkDocumentFileTypeFormatExperimental) GetFiletype() *SourceSftpBulkSchemasStreamsFormatFormatFiletype {
+func (o *SourceSftpBulkUnstructuredDocumentFormat) GetFiletype() *SourceSftpBulkSchemasStreamsFormatFormatFiletype {
 	return SourceSftpBulkSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceSftpBulkDocumentFileTypeFormatExperimental) GetProcessing() *SourceSftpBulkProcessing {
+func (o *SourceSftpBulkUnstructuredDocumentFormat) GetProcessing() *SourceSftpBulkProcessing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
 }
 
-func (o *SourceSftpBulkDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceSftpBulkUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceSftpBulkDocumentFileTypeFormatExperimental) GetStrategy() *SourceSftpBulkParsingStrategy {
+func (o *SourceSftpBulkUnstructuredDocumentFormat) GetStrategy() *SourceSftpBulkParsingStrategy {
 	if o == nil {
 		return nil
 	}
@@ -1063,20 +1105,22 @@ func (o *SourceSftpBulkAvroFormat) GetFiletype() *SourceSftpBulkFiletype {
 type SourceSftpBulkFormatType string
 
 const (
-	SourceSftpBulkFormatTypeSourceSftpBulkAvroFormat                         SourceSftpBulkFormatType = "source-sftp-bulk_Avro Format"
-	SourceSftpBulkFormatTypeSourceSftpBulkCSVFormat                          SourceSftpBulkFormatType = "source-sftp-bulk_CSV Format"
-	SourceSftpBulkFormatTypeSourceSftpBulkJsonlFormat                        SourceSftpBulkFormatType = "source-sftp-bulk_Jsonl Format"
-	SourceSftpBulkFormatTypeSourceSftpBulkParquetFormat                      SourceSftpBulkFormatType = "source-sftp-bulk_Parquet Format"
-	SourceSftpBulkFormatTypeSourceSftpBulkDocumentFileTypeFormatExperimental SourceSftpBulkFormatType = "source-sftp-bulk_Document File Type Format (Experimental)"
+	SourceSftpBulkFormatTypeSourceSftpBulkAvroFormat                 SourceSftpBulkFormatType = "source-sftp-bulk_Avro Format"
+	SourceSftpBulkFormatTypeSourceSftpBulkCSVFormat                  SourceSftpBulkFormatType = "source-sftp-bulk_CSV Format"
+	SourceSftpBulkFormatTypeSourceSftpBulkJsonlFormat                SourceSftpBulkFormatType = "source-sftp-bulk_Jsonl Format"
+	SourceSftpBulkFormatTypeSourceSftpBulkParquetFormat              SourceSftpBulkFormatType = "source-sftp-bulk_Parquet Format"
+	SourceSftpBulkFormatTypeSourceSftpBulkUnstructuredDocumentFormat SourceSftpBulkFormatType = "source-sftp-bulk_Unstructured Document Format"
+	SourceSftpBulkFormatTypeSourceSftpBulkExcelFormat                SourceSftpBulkFormatType = "source-sftp-bulk_Excel Format"
 )
 
 // SourceSftpBulkFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceSftpBulkFormat struct {
-	SourceSftpBulkAvroFormat                         *SourceSftpBulkAvroFormat
-	SourceSftpBulkCSVFormat                          *SourceSftpBulkCSVFormat
-	SourceSftpBulkJsonlFormat                        *SourceSftpBulkJsonlFormat
-	SourceSftpBulkParquetFormat                      *SourceSftpBulkParquetFormat
-	SourceSftpBulkDocumentFileTypeFormatExperimental *SourceSftpBulkDocumentFileTypeFormatExperimental
+	SourceSftpBulkAvroFormat                 *SourceSftpBulkAvroFormat
+	SourceSftpBulkCSVFormat                  *SourceSftpBulkCSVFormat
+	SourceSftpBulkJsonlFormat                *SourceSftpBulkJsonlFormat
+	SourceSftpBulkParquetFormat              *SourceSftpBulkParquetFormat
+	SourceSftpBulkUnstructuredDocumentFormat *SourceSftpBulkUnstructuredDocumentFormat
+	SourceSftpBulkExcelFormat                *SourceSftpBulkExcelFormat
 
 	Type SourceSftpBulkFormatType
 }
@@ -1117,12 +1161,21 @@ func CreateSourceSftpBulkFormatSourceSftpBulkParquetFormat(sourceSftpBulkParquet
 	}
 }
 
-func CreateSourceSftpBulkFormatSourceSftpBulkDocumentFileTypeFormatExperimental(sourceSftpBulkDocumentFileTypeFormatExperimental SourceSftpBulkDocumentFileTypeFormatExperimental) SourceSftpBulkFormat {
-	typ := SourceSftpBulkFormatTypeSourceSftpBulkDocumentFileTypeFormatExperimental
+func CreateSourceSftpBulkFormatSourceSftpBulkUnstructuredDocumentFormat(sourceSftpBulkUnstructuredDocumentFormat SourceSftpBulkUnstructuredDocumentFormat) SourceSftpBulkFormat {
+	typ := SourceSftpBulkFormatTypeSourceSftpBulkUnstructuredDocumentFormat
 
 	return SourceSftpBulkFormat{
-		SourceSftpBulkDocumentFileTypeFormatExperimental: &sourceSftpBulkDocumentFileTypeFormatExperimental,
-		Type: typ,
+		SourceSftpBulkUnstructuredDocumentFormat: &sourceSftpBulkUnstructuredDocumentFormat,
+		Type:                                     typ,
+	}
+}
+
+func CreateSourceSftpBulkFormatSourceSftpBulkExcelFormat(sourceSftpBulkExcelFormat SourceSftpBulkExcelFormat) SourceSftpBulkFormat {
+	typ := SourceSftpBulkFormatTypeSourceSftpBulkExcelFormat
+
+	return SourceSftpBulkFormat{
+		SourceSftpBulkExcelFormat: &sourceSftpBulkExcelFormat,
+		Type:                      typ,
 	}
 }
 
@@ -1132,6 +1185,13 @@ func (u *SourceSftpBulkFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &sourceSftpBulkJsonlFormat, "", true, true); err == nil {
 		u.SourceSftpBulkJsonlFormat = &sourceSftpBulkJsonlFormat
 		u.Type = SourceSftpBulkFormatTypeSourceSftpBulkJsonlFormat
+		return nil
+	}
+
+	var sourceSftpBulkExcelFormat SourceSftpBulkExcelFormat = SourceSftpBulkExcelFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSftpBulkExcelFormat, "", true, true); err == nil {
+		u.SourceSftpBulkExcelFormat = &sourceSftpBulkExcelFormat
+		u.Type = SourceSftpBulkFormatTypeSourceSftpBulkExcelFormat
 		return nil
 	}
 
@@ -1149,10 +1209,10 @@ func (u *SourceSftpBulkFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceSftpBulkDocumentFileTypeFormatExperimental SourceSftpBulkDocumentFileTypeFormatExperimental = SourceSftpBulkDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceSftpBulkDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceSftpBulkDocumentFileTypeFormatExperimental = &sourceSftpBulkDocumentFileTypeFormatExperimental
-		u.Type = SourceSftpBulkFormatTypeSourceSftpBulkDocumentFileTypeFormatExperimental
+	var sourceSftpBulkUnstructuredDocumentFormat SourceSftpBulkUnstructuredDocumentFormat = SourceSftpBulkUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceSftpBulkUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceSftpBulkUnstructuredDocumentFormat = &sourceSftpBulkUnstructuredDocumentFormat
+		u.Type = SourceSftpBulkFormatTypeSourceSftpBulkUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1183,8 +1243,12 @@ func (u SourceSftpBulkFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceSftpBulkParquetFormat, "", true)
 	}
 
-	if u.SourceSftpBulkDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceSftpBulkDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceSftpBulkUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceSftpBulkUnstructuredDocumentFormat, "", true)
+	}
+
+	if u.SourceSftpBulkExcelFormat != nil {
+		return utils.MarshalJSON(u.SourceSftpBulkExcelFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceSftpBulkFormat: all fields are null")
@@ -1235,6 +1299,8 @@ type SourceSftpBulkFileBasedStreamConfig struct {
 	Name string `json:"name"`
 	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
@@ -1299,6 +1365,13 @@ func (o *SourceSftpBulkFileBasedStreamConfig) GetPrimaryKey() *string {
 		return nil
 	}
 	return o.PrimaryKey
+}
+
+func (o *SourceSftpBulkFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
 func (o *SourceSftpBulkFileBasedStreamConfig) GetSchemaless() *bool {

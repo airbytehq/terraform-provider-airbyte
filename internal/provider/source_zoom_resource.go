@@ -74,6 +74,7 @@ func (r *SourceZoomResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.`,
 					},
 				},

@@ -15,20 +15,23 @@ SourceShopify Resource
 ```terraform
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
-    bulk_window_in_days = 3
+    bulk_window_in_days = 7
     credentials = {
       api_password = {
         api_password = "...my_api_password..."
       }
     }
-    fetch_transactions_user_id = false
-    shop                       = "my-store.myshopify.com"
-    start_date                 = "2020-04-28"
+    fetch_transactions_user_id               = true
+    job_checkpoint_interval                  = 6
+    job_product_variants_include_pres_prices = false
+    job_termination_threshold                = 8
+    shop                                     = "my-store.myshopify.com"
+    start_date                               = "2020-08-16"
   }
-  definition_id = "5c37529a-15c3-4606-aa63-f5716d2b265f"
-  name          = "Marguerite Will"
+  definition_id = "06400b7b-58d1-43a2-8cf2-b1ade2f4984b"
+  name          = "Ed Baumbach MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fce7bdd5-81ac-4648-b876-fcad615bcace"
+  workspace_id  = "3d2b89b2-6a88-438c-b8d2-27f318d42406"
 }
 ```
 
@@ -63,6 +66,9 @@ Optional:
 - `bulk_window_in_days` (Number) Defines what would be a date range per single BULK Job. Default: 30
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 - `fetch_transactions_user_id` (Boolean) Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch. Default: false
+- `job_checkpoint_interval` (Number) The threshold, after which the single BULK Job should be checkpointed. Default: 100000
+- `job_product_variants_include_pres_prices` (Boolean) If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance). Default: true
+- `job_termination_threshold` (Number) The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 7200
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -87,8 +93,8 @@ Required:
 Optional:
 
 - `access_token` (String, Sensitive) The Access Token for making authenticated requests.
-- `client_id` (String) The Client ID of the Shopify developer application.
-- `client_secret` (String) The Client Secret of the Shopify developer application.
+- `client_id` (String, Sensitive) The Client ID of the Shopify developer application.
+- `client_secret` (String, Sensitive) The Client Secret of the Shopify developer application.
 
 ## Import
 

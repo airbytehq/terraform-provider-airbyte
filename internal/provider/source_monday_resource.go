@@ -89,10 +89,12 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"subdomain": schema.StringAttribute{

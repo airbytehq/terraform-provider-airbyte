@@ -56,6 +56,12 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 	} else {
 		endDate = nil
 	}
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
+	} else {
+		pageSize = nil
+	}
 	projectTimezone := new(string)
 	if !r.Configuration.ProjectTimezone.IsUnknown() && !r.Configuration.ProjectTimezone.IsNull() {
 		*projectTimezone = r.Configuration.ProjectTimezone.ValueString()
@@ -85,6 +91,7 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 		Credentials:               credentials,
 		DateWindowSize:            dateWindowSize,
 		EndDate:                   endDate,
+		PageSize:                  pageSize,
 		ProjectTimezone:           projectTimezone,
 		Region:                    region,
 		SelectPropertiesByDefault: selectPropertiesByDefault,
@@ -171,6 +178,12 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 	} else {
 		endDate = nil
 	}
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
+	} else {
+		pageSize = nil
+	}
 	projectTimezone := new(string)
 	if !r.Configuration.ProjectTimezone.IsUnknown() && !r.Configuration.ProjectTimezone.IsNull() {
 		*projectTimezone = r.Configuration.ProjectTimezone.ValueString()
@@ -200,6 +213,7 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 		Credentials:               credentials,
 		DateWindowSize:            dateWindowSize,
 		EndDate:                   endDate,
+		PageSize:                  pageSize,
 		ProjectTimezone:           projectTimezone,
 		Region:                    region,
 		SelectPropertiesByDefault: selectPropertiesByDefault,

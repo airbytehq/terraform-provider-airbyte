@@ -96,6 +96,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
 									},
 								},
@@ -113,6 +114,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString("2023-08-05T00:43:59.244Z"),
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Default: "2023-08-05T00:43:59.244Z"`,
 					},

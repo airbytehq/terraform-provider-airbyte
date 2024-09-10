@@ -69,6 +69,7 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Firebolt secret, corresponding to the service account ID.`,
 					},
 					"database": schema.StringAttribute{

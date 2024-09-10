@@ -10,26 +10,462 @@ import (
 	"time"
 )
 
-type SourceGcsUpdateFiletype string
+type SourceGcsUpdateSchemasStreamsFormatFormat6Filetype string
 
 const (
-	SourceGcsUpdateFiletypeCsv SourceGcsUpdateFiletype = "csv"
+	SourceGcsUpdateSchemasStreamsFormatFormat6FiletypeExcel SourceGcsUpdateSchemasStreamsFormatFormat6Filetype = "excel"
 )
 
-func (e SourceGcsUpdateFiletype) ToPointer() *SourceGcsUpdateFiletype {
+func (e SourceGcsUpdateSchemasStreamsFormatFormat6Filetype) ToPointer() *SourceGcsUpdateSchemasStreamsFormatFormat6Filetype {
 	return &e
 }
-func (e *SourceGcsUpdateFiletype) UnmarshalJSON(data []byte) error {
+func (e *SourceGcsUpdateSchemasStreamsFormatFormat6Filetype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "excel":
+		*e = SourceGcsUpdateSchemasStreamsFormatFormat6Filetype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasStreamsFormatFormat6Filetype: %v", v)
+	}
+}
+
+type ExcelFormat struct {
+	filetype *SourceGcsUpdateSchemasStreamsFormatFormat6Filetype `const:"excel" json:"filetype"`
+}
+
+func (e ExcelFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ExcelFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ExcelFormat) GetFiletype() *SourceGcsUpdateSchemasStreamsFormatFormat6Filetype {
+	return SourceGcsUpdateSchemasStreamsFormatFormat6FiletypeExcel.ToPointer()
+}
+
+type SourceGcsUpdateSchemasStreamsFormatFormatFiletype string
+
+const (
+	SourceGcsUpdateSchemasStreamsFormatFormatFiletypeUnstructured SourceGcsUpdateSchemasStreamsFormatFormatFiletype = "unstructured"
+)
+
+func (e SourceGcsUpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceGcsUpdateSchemasStreamsFormatFormatFiletype {
+	return &e
+}
+func (e *SourceGcsUpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "unstructured":
+		*e = SourceGcsUpdateSchemasStreamsFormatFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasStreamsFormatFormatFiletype: %v", v)
+	}
+}
+
+type SourceGcsUpdateSchemasMode string
+
+const (
+	SourceGcsUpdateSchemasModeAPI SourceGcsUpdateSchemasMode = "api"
+)
+
+func (e SourceGcsUpdateSchemasMode) ToPointer() *SourceGcsUpdateSchemasMode {
+	return &e
+}
+func (e *SourceGcsUpdateSchemasMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "api":
+		*e = SourceGcsUpdateSchemasMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasMode: %v", v)
+	}
+}
+
+type APIParameterConfigModel struct {
+	// The name of the unstructured API parameter to use
+	Name string `json:"name"`
+	// The value of the parameter
+	Value string `json:"value"`
+}
+
+func (o *APIParameterConfigModel) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *APIParameterConfigModel) GetValue() string {
+	if o == nil {
+		return ""
+	}
+	return o.Value
+}
+
+// ViaAPI - Process files via an API, using the `hi_res` mode. This option is useful for increased performance and accuracy, but requires an API key and a hosted instance of unstructured.
+type ViaAPI struct {
+	// The API key to use matching the environment
+	APIKey *string `default:"" json:"api_key"`
+	// The URL of the unstructured API to use
+	APIURL *string                     `default:"https://api.unstructured.io" json:"api_url"`
+	mode   *SourceGcsUpdateSchemasMode `const:"api" json:"mode"`
+	// List of parameters send to the API
+	Parameters []APIParameterConfigModel `json:"parameters,omitempty"`
+}
+
+func (v ViaAPI) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(v, "", false)
+}
+
+func (v *ViaAPI) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &v, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ViaAPI) GetAPIKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIKey
+}
+
+func (o *ViaAPI) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
+}
+
+func (o *ViaAPI) GetMode() *SourceGcsUpdateSchemasMode {
+	return SourceGcsUpdateSchemasModeAPI.ToPointer()
+}
+
+func (o *ViaAPI) GetParameters() []APIParameterConfigModel {
+	if o == nil {
+		return nil
+	}
+	return o.Parameters
+}
+
+type SourceGcsUpdateMode string
+
+const (
+	SourceGcsUpdateModeLocal SourceGcsUpdateMode = "local"
+)
+
+func (e SourceGcsUpdateMode) ToPointer() *SourceGcsUpdateMode {
+	return &e
+}
+func (e *SourceGcsUpdateMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceGcsUpdateMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateMode: %v", v)
+	}
+}
+
+// SourceGcsUpdateLocal - Process files locally, supporting `fast` and `ocr` modes. This is the default option.
+type SourceGcsUpdateLocal struct {
+	mode *SourceGcsUpdateMode `const:"local" json:"mode"`
+}
+
+func (s SourceGcsUpdateLocal) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGcsUpdateLocal) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGcsUpdateLocal) GetMode() *SourceGcsUpdateMode {
+	return SourceGcsUpdateModeLocal.ToPointer()
+}
+
+type SourceGcsUpdateProcessingType string
+
+const (
+	SourceGcsUpdateProcessingTypeSourceGcsUpdateLocal SourceGcsUpdateProcessingType = "source-gcs-update_Local"
+	SourceGcsUpdateProcessingTypeViaAPI               SourceGcsUpdateProcessingType = "via API"
+)
+
+// SourceGcsUpdateProcessing - Processing configuration
+type SourceGcsUpdateProcessing struct {
+	SourceGcsUpdateLocal *SourceGcsUpdateLocal
+	ViaAPI               *ViaAPI
+
+	Type SourceGcsUpdateProcessingType
+}
+
+func CreateSourceGcsUpdateProcessingSourceGcsUpdateLocal(sourceGcsUpdateLocal SourceGcsUpdateLocal) SourceGcsUpdateProcessing {
+	typ := SourceGcsUpdateProcessingTypeSourceGcsUpdateLocal
+
+	return SourceGcsUpdateProcessing{
+		SourceGcsUpdateLocal: &sourceGcsUpdateLocal,
+		Type:                 typ,
+	}
+}
+
+func CreateSourceGcsUpdateProcessingViaAPI(viaAPI ViaAPI) SourceGcsUpdateProcessing {
+	typ := SourceGcsUpdateProcessingTypeViaAPI
+
+	return SourceGcsUpdateProcessing{
+		ViaAPI: &viaAPI,
+		Type:   typ,
+	}
+}
+
+func (u *SourceGcsUpdateProcessing) UnmarshalJSON(data []byte) error {
+
+	var sourceGcsUpdateLocal SourceGcsUpdateLocal = SourceGcsUpdateLocal{}
+	if err := utils.UnmarshalJSON(data, &sourceGcsUpdateLocal, "", true, true); err == nil {
+		u.SourceGcsUpdateLocal = &sourceGcsUpdateLocal
+		u.Type = SourceGcsUpdateProcessingTypeSourceGcsUpdateLocal
+		return nil
+	}
+
+	var viaAPI ViaAPI = ViaAPI{}
+	if err := utils.UnmarshalJSON(data, &viaAPI, "", true, true); err == nil {
+		u.ViaAPI = &viaAPI
+		u.Type = SourceGcsUpdateProcessingTypeViaAPI
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGcsUpdateProcessing", string(data))
+}
+
+func (u SourceGcsUpdateProcessing) MarshalJSON() ([]byte, error) {
+	if u.SourceGcsUpdateLocal != nil {
+		return utils.MarshalJSON(u.SourceGcsUpdateLocal, "", true)
+	}
+
+	if u.ViaAPI != nil {
+		return utils.MarshalJSON(u.ViaAPI, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceGcsUpdateProcessing: all fields are null")
+}
+
+// SourceGcsUpdateParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceGcsUpdateParsingStrategy string
+
+const (
+	SourceGcsUpdateParsingStrategyAuto    SourceGcsUpdateParsingStrategy = "auto"
+	SourceGcsUpdateParsingStrategyFast    SourceGcsUpdateParsingStrategy = "fast"
+	SourceGcsUpdateParsingStrategyOcrOnly SourceGcsUpdateParsingStrategy = "ocr_only"
+	SourceGcsUpdateParsingStrategyHiRes   SourceGcsUpdateParsingStrategy = "hi_res"
+)
+
+func (e SourceGcsUpdateParsingStrategy) ToPointer() *SourceGcsUpdateParsingStrategy {
+	return &e
+}
+func (e *SourceGcsUpdateParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceGcsUpdateParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateParsingStrategy: %v", v)
+	}
+}
+
+// UnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type UnstructuredDocumentFormat struct {
+	filetype *SourceGcsUpdateSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceGcsUpdateProcessing `json:"processing,omitempty"`
+	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
+	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
+	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+	Strategy *SourceGcsUpdateParsingStrategy `default:"auto" json:"strategy"`
+}
+
+func (u UnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UnstructuredDocumentFormat) GetFiletype() *SourceGcsUpdateSchemasStreamsFormatFormatFiletype {
+	return SourceGcsUpdateSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
+}
+
+func (o *UnstructuredDocumentFormat) GetProcessing() *SourceGcsUpdateProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
+func (o *UnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SkipUnprocessableFiles
+}
+
+func (o *UnstructuredDocumentFormat) GetStrategy() *SourceGcsUpdateParsingStrategy {
+	if o == nil {
+		return nil
+	}
+	return o.Strategy
+}
+
+type SourceGcsUpdateSchemasStreamsFormatFiletype string
+
+const (
+	SourceGcsUpdateSchemasStreamsFormatFiletypeParquet SourceGcsUpdateSchemasStreamsFormatFiletype = "parquet"
+)
+
+func (e SourceGcsUpdateSchemasStreamsFormatFiletype) ToPointer() *SourceGcsUpdateSchemasStreamsFormatFiletype {
+	return &e
+}
+func (e *SourceGcsUpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "parquet":
+		*e = SourceGcsUpdateSchemasStreamsFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasStreamsFormatFiletype: %v", v)
+	}
+}
+
+type SourceGcsUpdateParquetFormat struct {
+	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
+	DecimalAsFloat *bool                                        `default:"false" json:"decimal_as_float"`
+	filetype       *SourceGcsUpdateSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
+}
+
+func (s SourceGcsUpdateParquetFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGcsUpdateParquetFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGcsUpdateParquetFormat) GetDecimalAsFloat() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DecimalAsFloat
+}
+
+func (o *SourceGcsUpdateParquetFormat) GetFiletype() *SourceGcsUpdateSchemasStreamsFormatFiletype {
+	return SourceGcsUpdateSchemasStreamsFormatFiletypeParquet.ToPointer()
+}
+
+type SourceGcsUpdateSchemasStreamsFiletype string
+
+const (
+	SourceGcsUpdateSchemasStreamsFiletypeJsonl SourceGcsUpdateSchemasStreamsFiletype = "jsonl"
+)
+
+func (e SourceGcsUpdateSchemasStreamsFiletype) ToPointer() *SourceGcsUpdateSchemasStreamsFiletype {
+	return &e
+}
+func (e *SourceGcsUpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "jsonl":
+		*e = SourceGcsUpdateSchemasStreamsFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasStreamsFiletype: %v", v)
+	}
+}
+
+type SourceGcsUpdateJsonlFormat struct {
+	filetype *SourceGcsUpdateSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
+}
+
+func (s SourceGcsUpdateJsonlFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGcsUpdateJsonlFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGcsUpdateJsonlFormat) GetFiletype() *SourceGcsUpdateSchemasStreamsFiletype {
+	return SourceGcsUpdateSchemasStreamsFiletypeJsonl.ToPointer()
+}
+
+type SourceGcsUpdateSchemasFiletype string
+
+const (
+	SourceGcsUpdateSchemasFiletypeCsv SourceGcsUpdateSchemasFiletype = "csv"
+)
+
+func (e SourceGcsUpdateSchemasFiletype) ToPointer() *SourceGcsUpdateSchemasFiletype {
+	return &e
+}
+func (e *SourceGcsUpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "csv":
-		*e = SourceGcsUpdateFiletype(v)
+		*e = SourceGcsUpdateSchemasFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGcsUpdateFiletype: %v", v)
+		return fmt.Errorf("invalid value for SourceGcsUpdateSchemasFiletype: %v", v)
 	}
 }
 
@@ -291,8 +727,8 @@ type SourceGcsUpdateCSVFormat struct {
 	// The character used for escaping special characters. To disallow escaping, leave this field blank.
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string                 `json:"false_values,omitempty"`
-	filetype    *SourceGcsUpdateFiletype `const:"csv" json:"filetype"`
+	FalseValues []string                        `json:"false_values,omitempty"`
+	filetype    *SourceGcsUpdateSchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceGcsUpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
@@ -359,8 +795,8 @@ func (o *SourceGcsUpdateCSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
-func (o *SourceGcsUpdateCSVFormat) GetFiletype() *SourceGcsUpdateFiletype {
-	return SourceGcsUpdateFiletypeCsv.ToPointer()
+func (o *SourceGcsUpdateCSVFormat) GetFiletype() *SourceGcsUpdateSchemasFiletype {
+	return SourceGcsUpdateSchemasFiletypeCsv.ToPointer()
 }
 
 func (o *SourceGcsUpdateCSVFormat) GetHeaderDefinition() *SourceGcsUpdateCSVHeaderDefinition {
@@ -426,17 +862,87 @@ func (o *SourceGcsUpdateCSVFormat) GetTrueValues() []string {
 	return o.TrueValues
 }
 
+type SourceGcsUpdateFiletype string
+
+const (
+	SourceGcsUpdateFiletypeAvro SourceGcsUpdateFiletype = "avro"
+)
+
+func (e SourceGcsUpdateFiletype) ToPointer() *SourceGcsUpdateFiletype {
+	return &e
+}
+func (e *SourceGcsUpdateFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "avro":
+		*e = SourceGcsUpdateFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsUpdateFiletype: %v", v)
+	}
+}
+
+type SourceGcsUpdateAvroFormat struct {
+	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+	DoubleAsString *bool                    `default:"false" json:"double_as_string"`
+	filetype       *SourceGcsUpdateFiletype `const:"avro" json:"filetype"`
+}
+
+func (s SourceGcsUpdateAvroFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGcsUpdateAvroFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGcsUpdateAvroFormat) GetDoubleAsString() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DoubleAsString
+}
+
+func (o *SourceGcsUpdateAvroFormat) GetFiletype() *SourceGcsUpdateFiletype {
+	return SourceGcsUpdateFiletypeAvro.ToPointer()
+}
+
 type SourceGcsUpdateFormatType string
 
 const (
-	SourceGcsUpdateFormatTypeSourceGcsUpdateCSVFormat SourceGcsUpdateFormatType = "source-gcs-update_CSV Format"
+	SourceGcsUpdateFormatTypeSourceGcsUpdateAvroFormat    SourceGcsUpdateFormatType = "source-gcs-update_Avro Format"
+	SourceGcsUpdateFormatTypeSourceGcsUpdateCSVFormat     SourceGcsUpdateFormatType = "source-gcs-update_CSV Format"
+	SourceGcsUpdateFormatTypeSourceGcsUpdateJsonlFormat   SourceGcsUpdateFormatType = "source-gcs-update_Jsonl Format"
+	SourceGcsUpdateFormatTypeSourceGcsUpdateParquetFormat SourceGcsUpdateFormatType = "source-gcs-update_Parquet Format"
+	SourceGcsUpdateFormatTypeUnstructuredDocumentFormat   SourceGcsUpdateFormatType = "Unstructured Document Format"
+	SourceGcsUpdateFormatTypeExcelFormat                  SourceGcsUpdateFormatType = "Excel Format"
 )
 
 // SourceGcsUpdateFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGcsUpdateFormat struct {
-	SourceGcsUpdateCSVFormat *SourceGcsUpdateCSVFormat
+	SourceGcsUpdateAvroFormat    *SourceGcsUpdateAvroFormat
+	SourceGcsUpdateCSVFormat     *SourceGcsUpdateCSVFormat
+	SourceGcsUpdateJsonlFormat   *SourceGcsUpdateJsonlFormat
+	SourceGcsUpdateParquetFormat *SourceGcsUpdateParquetFormat
+	UnstructuredDocumentFormat   *UnstructuredDocumentFormat
+	ExcelFormat                  *ExcelFormat
 
 	Type SourceGcsUpdateFormatType
+}
+
+func CreateSourceGcsUpdateFormatSourceGcsUpdateAvroFormat(sourceGcsUpdateAvroFormat SourceGcsUpdateAvroFormat) SourceGcsUpdateFormat {
+	typ := SourceGcsUpdateFormatTypeSourceGcsUpdateAvroFormat
+
+	return SourceGcsUpdateFormat{
+		SourceGcsUpdateAvroFormat: &sourceGcsUpdateAvroFormat,
+		Type:                      typ,
+	}
 }
 
 func CreateSourceGcsUpdateFormatSourceGcsUpdateCSVFormat(sourceGcsUpdateCSVFormat SourceGcsUpdateCSVFormat) SourceGcsUpdateFormat {
@@ -448,7 +954,78 @@ func CreateSourceGcsUpdateFormatSourceGcsUpdateCSVFormat(sourceGcsUpdateCSVForma
 	}
 }
 
+func CreateSourceGcsUpdateFormatSourceGcsUpdateJsonlFormat(sourceGcsUpdateJsonlFormat SourceGcsUpdateJsonlFormat) SourceGcsUpdateFormat {
+	typ := SourceGcsUpdateFormatTypeSourceGcsUpdateJsonlFormat
+
+	return SourceGcsUpdateFormat{
+		SourceGcsUpdateJsonlFormat: &sourceGcsUpdateJsonlFormat,
+		Type:                       typ,
+	}
+}
+
+func CreateSourceGcsUpdateFormatSourceGcsUpdateParquetFormat(sourceGcsUpdateParquetFormat SourceGcsUpdateParquetFormat) SourceGcsUpdateFormat {
+	typ := SourceGcsUpdateFormatTypeSourceGcsUpdateParquetFormat
+
+	return SourceGcsUpdateFormat{
+		SourceGcsUpdateParquetFormat: &sourceGcsUpdateParquetFormat,
+		Type:                         typ,
+	}
+}
+
+func CreateSourceGcsUpdateFormatUnstructuredDocumentFormat(unstructuredDocumentFormat UnstructuredDocumentFormat) SourceGcsUpdateFormat {
+	typ := SourceGcsUpdateFormatTypeUnstructuredDocumentFormat
+
+	return SourceGcsUpdateFormat{
+		UnstructuredDocumentFormat: &unstructuredDocumentFormat,
+		Type:                       typ,
+	}
+}
+
+func CreateSourceGcsUpdateFormatExcelFormat(excelFormat ExcelFormat) SourceGcsUpdateFormat {
+	typ := SourceGcsUpdateFormatTypeExcelFormat
+
+	return SourceGcsUpdateFormat{
+		ExcelFormat: &excelFormat,
+		Type:        typ,
+	}
+}
+
 func (u *SourceGcsUpdateFormat) UnmarshalJSON(data []byte) error {
+
+	var sourceGcsUpdateJsonlFormat SourceGcsUpdateJsonlFormat = SourceGcsUpdateJsonlFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceGcsUpdateJsonlFormat, "", true, true); err == nil {
+		u.SourceGcsUpdateJsonlFormat = &sourceGcsUpdateJsonlFormat
+		u.Type = SourceGcsUpdateFormatTypeSourceGcsUpdateJsonlFormat
+		return nil
+	}
+
+	var excelFormat ExcelFormat = ExcelFormat{}
+	if err := utils.UnmarshalJSON(data, &excelFormat, "", true, true); err == nil {
+		u.ExcelFormat = &excelFormat
+		u.Type = SourceGcsUpdateFormatTypeExcelFormat
+		return nil
+	}
+
+	var sourceGcsUpdateAvroFormat SourceGcsUpdateAvroFormat = SourceGcsUpdateAvroFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceGcsUpdateAvroFormat, "", true, true); err == nil {
+		u.SourceGcsUpdateAvroFormat = &sourceGcsUpdateAvroFormat
+		u.Type = SourceGcsUpdateFormatTypeSourceGcsUpdateAvroFormat
+		return nil
+	}
+
+	var sourceGcsUpdateParquetFormat SourceGcsUpdateParquetFormat = SourceGcsUpdateParquetFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceGcsUpdateParquetFormat, "", true, true); err == nil {
+		u.SourceGcsUpdateParquetFormat = &sourceGcsUpdateParquetFormat
+		u.Type = SourceGcsUpdateFormatTypeSourceGcsUpdateParquetFormat
+		return nil
+	}
+
+	var unstructuredDocumentFormat UnstructuredDocumentFormat = UnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &unstructuredDocumentFormat, "", true, true); err == nil {
+		u.UnstructuredDocumentFormat = &unstructuredDocumentFormat
+		u.Type = SourceGcsUpdateFormatTypeUnstructuredDocumentFormat
+		return nil
+	}
 
 	var sourceGcsUpdateCSVFormat SourceGcsUpdateCSVFormat = SourceGcsUpdateCSVFormat{}
 	if err := utils.UnmarshalJSON(data, &sourceGcsUpdateCSVFormat, "", true, true); err == nil {
@@ -461,8 +1038,28 @@ func (u *SourceGcsUpdateFormat) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceGcsUpdateFormat) MarshalJSON() ([]byte, error) {
+	if u.SourceGcsUpdateAvroFormat != nil {
+		return utils.MarshalJSON(u.SourceGcsUpdateAvroFormat, "", true)
+	}
+
 	if u.SourceGcsUpdateCSVFormat != nil {
 		return utils.MarshalJSON(u.SourceGcsUpdateCSVFormat, "", true)
+	}
+
+	if u.SourceGcsUpdateJsonlFormat != nil {
+		return utils.MarshalJSON(u.SourceGcsUpdateJsonlFormat, "", true)
+	}
+
+	if u.SourceGcsUpdateParquetFormat != nil {
+		return utils.MarshalJSON(u.SourceGcsUpdateParquetFormat, "", true)
+	}
+
+	if u.UnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.UnstructuredDocumentFormat, "", true)
+	}
+
+	if u.ExcelFormat != nil {
+		return utils.MarshalJSON(u.ExcelFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceGcsUpdateFormat: all fields are null")
@@ -498,7 +1095,7 @@ func (e *SourceGcsUpdateValidationPolicy) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceGCSStreamConfig struct {
+type SourceGcsUpdateFileBasedStreamConfig struct {
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
@@ -507,86 +1104,95 @@ type SourceGCSStreamConfig struct {
 	Globs []string `json:"globs,omitempty"`
 	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 	InputSchema *string `json:"input_schema,omitempty"`
-	// The path prefix configured in previous versions of the GCS connector. This option is deprecated in favor of a single glob.
+	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
 	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
 	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
 	ValidationPolicy *SourceGcsUpdateValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
-func (s SourceGCSStreamConfig) MarshalJSON() ([]byte, error) {
+func (s SourceGcsUpdateFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceGCSStreamConfig) UnmarshalJSON(data []byte) error {
+func (s *SourceGcsUpdateFileBasedStreamConfig) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceGCSStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.DaysToSyncIfHistoryIsFull
 }
 
-func (o *SourceGCSStreamConfig) GetFormat() SourceGcsUpdateFormat {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetFormat() SourceGcsUpdateFormat {
 	if o == nil {
 		return SourceGcsUpdateFormat{}
 	}
 	return o.Format
 }
 
-func (o *SourceGCSStreamConfig) GetGlobs() []string {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetGlobs() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Globs
 }
 
-func (o *SourceGCSStreamConfig) GetInputSchema() *string {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetInputSchema() *string {
 	if o == nil {
 		return nil
 	}
 	return o.InputSchema
 }
 
-func (o *SourceGCSStreamConfig) GetLegacyPrefix() *string {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetLegacyPrefix() *string {
 	if o == nil {
 		return nil
 	}
 	return o.LegacyPrefix
 }
 
-func (o *SourceGCSStreamConfig) GetName() string {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
 }
 
-func (o *SourceGCSStreamConfig) GetPrimaryKey() *string {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetPrimaryKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PrimaryKey
 }
 
-func (o *SourceGCSStreamConfig) GetSchemaless() *bool {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
+}
+
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Schemaless
 }
 
-func (o *SourceGCSStreamConfig) GetValidationPolicy() *SourceGcsUpdateValidationPolicy {
+func (o *SourceGcsUpdateFileBasedStreamConfig) GetValidationPolicy() *SourceGcsUpdateValidationPolicy {
 	if o == nil {
 		return nil
 	}
@@ -603,8 +1209,8 @@ type SourceGcsUpdate struct {
 	ServiceAccount string `json:"service_account"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// Each instance of this configuration defines a <a href=https://docs.airbyte.com/cloud/core-concepts#stream>stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []SourceGCSStreamConfig `json:"streams"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams []SourceGcsUpdateFileBasedStreamConfig `json:"streams"`
 }
 
 func (s SourceGcsUpdate) MarshalJSON() ([]byte, error) {
@@ -639,9 +1245,9 @@ func (o *SourceGcsUpdate) GetStartDate() *time.Time {
 	return o.StartDate
 }
 
-func (o *SourceGcsUpdate) GetStreams() []SourceGCSStreamConfig {
+func (o *SourceGcsUpdate) GetStreams() []SourceGcsUpdateFileBasedStreamConfig {
 	if o == nil {
-		return []SourceGCSStreamConfig{}
+		return []SourceGcsUpdateFileBasedStreamConfig{}
 	}
 	return o.Streams
 }

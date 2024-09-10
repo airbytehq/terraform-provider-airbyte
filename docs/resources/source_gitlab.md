@@ -15,14 +15,14 @@ SourceGitlab Resource
 ```terraform
 resource "airbyte_source_gitlab" "my_source_gitlab" {
   configuration = {
-    api_url = "https://gitlab.com"
+    api_url = "https://gitlab.company.org"
     credentials = {
       o_auth20 = {
         access_token      = "...my_access_token..."
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-03-12T08:01:10.085Z"
+        token_expiry_date = "2022-09-22T11:58:26.764Z"
       }
     }
     groups = "airbyte.io"
@@ -35,10 +35,10 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "bc6076e7-14fb-4f0c-bd3a-ed54ef24d0de"
-  name          = "Jeffrey Terry"
+  definition_id = "09ce4fe1-65bc-4484-8e7f-b5df25477f37"
+  name          = "Hannah Becker"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b9050201-5d2d-4e4b-8db3-3d2b3a27b0b3"
+  workspace_id  = "7c89bfb0-cb9d-48df-827a-8c72c3eb5dc5"
 }
 ```
 
@@ -91,10 +91,10 @@ Optional:
 Required:
 
 - `access_token` (String, Sensitive) Access Token for making authenticated requests.
-- `client_id` (String) The API ID of the Gitlab developer application.
-- `client_secret` (String) The API Secret the Gitlab developer application.
+- `client_id` (String, Sensitive) The API ID of the Gitlab developer application.
+- `client_secret` (String, Sensitive) The API Secret the Gitlab developer application.
 - `refresh_token` (String, Sensitive) The key to refresh the expired access_token.
-- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
 <a id="nestedatt--configuration--credentials--private_token"></a>

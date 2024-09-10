@@ -1596,16 +1596,16 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				AuthenticateViaGoogleOauth: authenticateViaGoogleOauth,
 			}
 		}
-		var serviceAccountKeyAuthentication *shared.ServiceAccountKeyAuthentication
+		var sourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication
 		if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
 			credentialsJSON := r.Configuration.Credentials.ServiceAccountKeyAuthentication.CredentialsJSON.ValueString()
-			serviceAccountKeyAuthentication = &shared.ServiceAccountKeyAuthentication{
+			sourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication = &shared.SourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication{
 				CredentialsJSON: credentialsJSON,
 			}
 		}
-		if serviceAccountKeyAuthentication != nil {
+		if sourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication != nil {
 			credentials = &shared.SourceGoogleAnalyticsDataAPIUpdateCredentials{
-				ServiceAccountKeyAuthentication: serviceAccountKeyAuthentication,
+				SourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication: sourceGoogleAnalyticsDataAPIUpdateServiceAccountKeyAuthentication,
 			}
 		}
 	}

@@ -17,13 +17,13 @@ resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
     password   = "...my_password..."
     playground = true
-    region     = "oc"
-    username   = "Gretchen35"
+    region     = "eu"
+    username   = "Orland.Schmeler"
   }
-  definition_id = "b1e50c14-468d-4231-8dd9-8f81edeee1be"
-  name          = "Sophia Kunze"
+  definition_id = "e76e9fde-f541-4f06-8a13-b1e89c1488fa"
+  name          = "Dr. Randall Casper"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eeaf419b-c59e-404a-869e-9d149f3b04e3"
+  workspace_id  = "d922269c-9d64-48f0-bccd-d2e95af6ed3c"
 }
 ```
 

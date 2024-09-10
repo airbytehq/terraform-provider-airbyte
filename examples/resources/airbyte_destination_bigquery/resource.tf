@@ -6,23 +6,13 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
     dataset_location                = "southamerica-west1"
     disable_type_dedupe             = true
     loading_method = {
-      gcs_staging = {
-        credential = {
-          hmac_key = {
-            hmac_key_access_id = "1234567890abcdefghij1234"
-            hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
-          }
-        }
-        gcs_bucket_name          = "airbyte_sync"
-        gcs_bucket_path          = "data_sync/test"
-        keep_files_in_gcs_bucket = "Keep all tmp files in GCS"
-      }
+      batched_standard_inserts = {}
     }
     project_id              = "...my_project_id..."
     raw_data_dataset        = "...my_raw_data_dataset..."
-    transformation_priority = "interactive"
+    transformation_priority = "batch"
   }
-  definition_id = "5759d85e-2c27-4639-8b46-88adb42653c3"
-  name          = "Stella Zulauf IV"
-  workspace_id  = "b5ab2eb4-f41e-422e-b9b6-61a09af71290"
+  definition_id = "15759d85-e2c2-4763-98b4-688adb42653c"
+  name          = "Lori Kunde"
+  workspace_id  = "18b5ab2e-b4f4-41e2-ae39-b661a09af712"
 }

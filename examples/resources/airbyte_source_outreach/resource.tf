@@ -6,8 +6,8 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "61b1c883-a572-4712-98f3-b6433cb82b32"
-  name          = "Sammy Aufderhar"
+  definition_id = "5937ced0-062e-47b5-9a4e-78152cbd266e"
+  name          = "Bernadette Carter"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d9a9d8ba-9b0d-4f86-903c-4743ee79bd13"
+  workspace_id  = "05e7f58d-4a06-425c-bff5-b31f2b9304d3"
 }

@@ -3,8 +3,8 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
     dataset_id = "rHuMdwm6xCFt6WiGU"
     token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  definition_id = "2a875a1c-a190-4e95-bd11-82a17eb0af63"
-  name          = "Darin Windler"
+  definition_id = "184cac7d-cada-4d29-b8da-5765e7880f00"
+  name          = "Curtis Berge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3356f39b-ea5e-4208-9f0e-8905c8543b91"
+  workspace_id  = "ef9a90fa-7f8f-4441-b58d-fc559a0bee1c"
 }

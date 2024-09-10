@@ -92,10 +92,12 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 								},

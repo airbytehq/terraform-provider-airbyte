@@ -162,49 +162,6 @@ func (e *DatasetLocation) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationBigqueryUpdateMethod string
-
-const (
-	DestinationBigqueryUpdateMethodStandard DestinationBigqueryUpdateMethod = "Standard"
-)
-
-func (e DestinationBigqueryUpdateMethod) ToPointer() *DestinationBigqueryUpdateMethod {
-	return &e
-}
-func (e *DestinationBigqueryUpdateMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Standard":
-		*e = DestinationBigqueryUpdateMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryUpdateMethod: %v", v)
-	}
-}
-
-// StandardInserts - <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use GCS staging.
-type StandardInserts struct {
-	method DestinationBigqueryUpdateMethod `const:"Standard" json:"method"`
-}
-
-func (s StandardInserts) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *StandardInserts) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *StandardInserts) GetMethod() DestinationBigqueryUpdateMethod {
-	return DestinationBigqueryUpdateMethodStandard
-}
-
 type DestinationBigqueryUpdateCredentialType string
 
 const (
@@ -334,30 +291,30 @@ func (e *GCSTmpFilesAfterwardProcessing) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type Method string
+type DestinationBigqueryUpdateMethod string
 
 const (
-	MethodGcsStaging Method = "GCS Staging"
+	DestinationBigqueryUpdateMethodGcsStaging DestinationBigqueryUpdateMethod = "GCS Staging"
 )
 
-func (e Method) ToPointer() *Method {
+func (e DestinationBigqueryUpdateMethod) ToPointer() *DestinationBigqueryUpdateMethod {
 	return &e
 }
-func (e *Method) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryUpdateMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS Staging":
-		*e = Method(v)
+		*e = DestinationBigqueryUpdateMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Method: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryUpdateMethod: %v", v)
 	}
 }
 
-// GCSStaging - <i>(recommended)</i> Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. Provides best-in-class speed, reliability and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
+// GCSStaging - Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery.
 type GCSStaging struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential Credential `json:"credential"`
@@ -367,7 +324,7 @@ type GCSStaging struct {
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
 	KeepFilesInGcsBucket *GCSTmpFilesAfterwardProcessing `default:"Delete all tmp files from GCS" json:"keep_files_in_gcs-bucket"`
-	method               Method                          `const:"GCS Staging" json:"method"`
+	method               DestinationBigqueryUpdateMethod `const:"GCS Staging" json:"method"`
 }
 
 func (g GCSStaging) MarshalJSON() ([]byte, error) {
@@ -409,23 +366,75 @@ func (o *GCSStaging) GetKeepFilesInGcsBucket() *GCSTmpFilesAfterwardProcessing {
 	return o.KeepFilesInGcsBucket
 }
 
-func (o *GCSStaging) GetMethod() Method {
-	return MethodGcsStaging
+func (o *GCSStaging) GetMethod() DestinationBigqueryUpdateMethod {
+	return DestinationBigqueryUpdateMethodGcsStaging
+}
+
+type Method string
+
+const (
+	MethodStandard Method = "Standard"
+)
+
+func (e Method) ToPointer() *Method {
+	return &e
+}
+func (e *Method) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = Method(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Method: %v", v)
+	}
+}
+
+// BatchedStandardInserts - Direct loading using batched SQL INSERT statements. This method uses the BigQuery driver to convert large INSERT statements into file uploads automatically.
+type BatchedStandardInserts struct {
+	method Method `const:"Standard" json:"method"`
+}
+
+func (b BatchedStandardInserts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BatchedStandardInserts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *BatchedStandardInserts) GetMethod() Method {
+	return MethodStandard
 }
 
 type LoadingMethodType string
 
 const (
-	LoadingMethodTypeGCSStaging      LoadingMethodType = "GCS Staging"
-	LoadingMethodTypeStandardInserts LoadingMethodType = "Standard Inserts"
+	LoadingMethodTypeBatchedStandardInserts LoadingMethodType = "Batched Standard Inserts"
+	LoadingMethodTypeGCSStaging             LoadingMethodType = "GCS Staging"
 )
 
 // LoadingMethod - The way data will be uploaded to BigQuery.
 type LoadingMethod struct {
-	GCSStaging      *GCSStaging
-	StandardInserts *StandardInserts
+	BatchedStandardInserts *BatchedStandardInserts
+	GCSStaging             *GCSStaging
 
 	Type LoadingMethodType
+}
+
+func CreateLoadingMethodBatchedStandardInserts(batchedStandardInserts BatchedStandardInserts) LoadingMethod {
+	typ := LoadingMethodTypeBatchedStandardInserts
+
+	return LoadingMethod{
+		BatchedStandardInserts: &batchedStandardInserts,
+		Type:                   typ,
+	}
 }
 
 func CreateLoadingMethodGCSStaging(gcsStaging GCSStaging) LoadingMethod {
@@ -437,21 +446,12 @@ func CreateLoadingMethodGCSStaging(gcsStaging GCSStaging) LoadingMethod {
 	}
 }
 
-func CreateLoadingMethodStandardInserts(standardInserts StandardInserts) LoadingMethod {
-	typ := LoadingMethodTypeStandardInserts
-
-	return LoadingMethod{
-		StandardInserts: &standardInserts,
-		Type:            typ,
-	}
-}
-
 func (u *LoadingMethod) UnmarshalJSON(data []byte) error {
 
-	var standardInserts StandardInserts = StandardInserts{}
-	if err := utils.UnmarshalJSON(data, &standardInserts, "", true, true); err == nil {
-		u.StandardInserts = &standardInserts
-		u.Type = LoadingMethodTypeStandardInserts
+	var batchedStandardInserts BatchedStandardInserts = BatchedStandardInserts{}
+	if err := utils.UnmarshalJSON(data, &batchedStandardInserts, "", true, true); err == nil {
+		u.BatchedStandardInserts = &batchedStandardInserts
+		u.Type = LoadingMethodTypeBatchedStandardInserts
 		return nil
 	}
 
@@ -466,12 +466,12 @@ func (u *LoadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u LoadingMethod) MarshalJSON() ([]byte, error) {
-	if u.GCSStaging != nil {
-		return utils.MarshalJSON(u.GCSStaging, "", true)
+	if u.BatchedStandardInserts != nil {
+		return utils.MarshalJSON(u.BatchedStandardInserts, "", true)
 	}
 
-	if u.StandardInserts != nil {
-		return utils.MarshalJSON(u.StandardInserts, "", true)
+	if u.GCSStaging != nil {
+		return utils.MarshalJSON(u.GCSStaging, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type LoadingMethod: all fields are null")

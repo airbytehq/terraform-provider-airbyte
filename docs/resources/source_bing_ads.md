@@ -17,7 +17,7 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
   configuration = {
     account_names = [
       {
-        name     = "Eula Ritchie"
+        name     = "Bert Bins"
         operator = "Equals"
       },
     ]
@@ -25,24 +25,24 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     client_secret = "...my_client_secret..."
     custom_reports = [
       {
-        name               = "Account Performance"
+        name               = "AdDynamicTextPerformanceReport"
         report_aggregation = "...my_report_aggregation..."
         report_columns = [
           "...",
         ]
-        reporting_object = "ProductNegativeKeywordConflictReportRequest"
+        reporting_object = "GeographicPerformanceReportRequest"
       },
     ]
     developer_token    = "...my_developer_token..."
-    lookback_window    = 5
+    lookback_window    = 1
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-01-16"
+    reports_start_date = "2022-01-11"
     tenant_id          = "...my_tenant_id..."
   }
-  definition_id = "472f2e8b-bfe1-4822-ba33-308df445f49b"
-  name          = "Chester Dach"
+  definition_id = "f7f1a27e-8fd2-4f19-bd4f-9ab29a2f8317"
+  name          = "Frankie Runte"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9f17b5c6-1c8d-42f7-9d6e-e9c7e7401902"
+  workspace_id  = "3eab02cc-b908-4523-9f16-a0cc4991982a"
 }
 ```
 
@@ -70,18 +70,18 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Microsoft Advertising developer application.
+- `client_id` (String, Sensitive) The Client ID of your Microsoft Advertising developer application.
 - `developer_token` (String, Sensitive) Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 - `refresh_token` (String, Sensitive) Refresh Token to renew the expired Access Token.
 
 Optional:
 
 - `account_names` (Attributes List) Predicates that will be used to sync data by specific accounts. (see [below for nested schema](#nestedatt--configuration--account_names))
-- `client_secret` (String) The Client Secret of your Microsoft Advertising developer application. Default: ""
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Advertising developer application. Default: ""
 - `custom_reports` (Attributes List) You can add your Custom Bing Ads report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports))
 - `lookback_window` (Number) Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode without specified Reports Start Date. Default: 0
 - `reports_start_date` (String) The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format. If not set, data from previous and current calendar year will be replicated.
-- `tenant_id` (String) The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value. Default: "common"
+- `tenant_id` (String, Sensitive) The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value. Default: "common"
 
 <a id="nestedatt--configuration--account_names"></a>
 ### Nested Schema for `configuration.account_names`

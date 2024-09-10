@@ -18,10 +18,10 @@ resource "airbyte_source_gridly" "my_source_gridly" {
     api_key = "...my_api_key..."
     grid_id = "...my_grid_id..."
   }
-  definition_id = "4e758ac0-9227-4119-b95b-60c98bb7037a"
-  name          = "Floyd Hermann DDS"
+  definition_id = "d08074e1-7a64-4885-b11a-b94fe75a513e"
+  name          = "Ruth Marquardt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e1bb1cad-aa0e-4328-a3bd-5563e04de287"
+  workspace_id  = "793827c0-6dd8-46b4-bbde-6ae53955108c"
 }
 ```
 

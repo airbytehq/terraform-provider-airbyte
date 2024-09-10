@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceKlaviyo struct {
-	APIKey    types.String `tfsdk:"api_key"`
-	StartDate types.String `tfsdk:"start_date"`
+	APIKey                             types.String `tfsdk:"api_key"`
+	DisableFetchingPredictiveAnalytics types.Bool   `tfsdk:"disable_fetching_predictive_analytics"`
+	StartDate                          types.String `tfsdk:"start_date"`
 }

@@ -76,10 +76,12 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -99,6 +101,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Attributes: map[string]schema.Attribute{
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},

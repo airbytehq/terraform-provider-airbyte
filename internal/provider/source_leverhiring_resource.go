@@ -89,6 +89,7 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Lever Hiring developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{

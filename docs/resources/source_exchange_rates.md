@@ -17,13 +17,13 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
   configuration = {
     access_key      = "...my_access_key..."
     base            = "USD"
-    ignore_weekends = false
+    ignore_weekends = true
     start_date      = "YYYY-MM-DD"
   }
-  definition_id = "156b2ffd-5d6c-469d-a549-7add71ffdea5"
-  name          = "Ms. Reginald Nienow"
+  definition_id = "24121e63-15be-4306-a4e8-3994413a7c75"
+  name          = "Alexander Schroeder MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "09edcef2-c435-47e7-ab14-9e6fe9a76bd2"
+  workspace_id  = "5882c881-a087-48bf-9f7e-2fa4a63623e3"
 }
 ```
 

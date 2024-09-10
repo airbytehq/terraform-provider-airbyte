@@ -6,9 +6,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceClickupAPI struct {
 	APIToken           types.String `tfsdk:"api_token"`
-	FolderID           types.String `tfsdk:"folder_id"`
 	IncludeClosedTasks types.Bool   `tfsdk:"include_closed_tasks"`
-	ListID             types.String `tfsdk:"list_id"`
-	SpaceID            types.String `tfsdk:"space_id"`
-	TeamID             types.String `tfsdk:"team_id"`
 }

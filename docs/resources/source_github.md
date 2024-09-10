@@ -27,17 +27,17 @@ resource "airbyte_source_github" "my_source_github" {
         client_secret = "...my_client_secret..."
       }
     }
-    max_waiting_time = 10
+    max_waiting_time = 60
     repositories = [
       "...",
     ]
     repository = "airbytehq/*"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "527913ed-fcf9-4c90-98e6-9d20ee3e4cb5"
-  name          = "Rosalie Hoppe"
+  definition_id = "3206afb3-a724-4a60-9401-34e58876cb03"
+  name          = "Jan Bernier"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e2f08eb7-6e35-41ce-b20d-e4cfc332b42c"
+  workspace_id  = "ae06a57c-7c57-47af-9e5b-addd2747bbc7"
 }
 ```
 
@@ -94,8 +94,8 @@ Required:
 
 Optional:
 
-- `client_id` (String) OAuth Client Id
-- `client_secret` (String) OAuth Client secret
+- `client_id` (String, Sensitive) OAuth Client Id
+- `client_secret` (String, Sensitive) OAuth Client secret
 
 
 <a id="nestedatt--configuration--credentials--personal_access_token"></a>

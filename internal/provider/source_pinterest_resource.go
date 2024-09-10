@@ -69,10 +69,12 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 						Attributes: map[string]schema.Attribute{
 							"client_id": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client ID of your OAuth application`,
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of your OAuth application.`,
 							},
 							"refresh_token": schema.StringAttribute{

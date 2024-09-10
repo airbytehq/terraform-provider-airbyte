@@ -83,7 +83,6 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"public_key": schema.StringAttribute{
 						Required:    true,
-						Sensitive:   true,
 						Description: `Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.`,
 					},
 					"start_date": schema.StringAttribute{

@@ -15,6 +15,19 @@ Developers will need to create an API Key within your [Developer Portal](https:/
 
 The Developer Portal UI can also be used to help build your integration by showing information about network requests in the Requests tab. API usage information is also available to you in the Usage tab.
 
+<!-- Start Summary [summary] -->
+## Summary
+
+airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [SDK Example Usage](#sdk-example-usage)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
@@ -25,7 +38,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.9.0"
+      version = "0.11.0"
     }
   }
 }

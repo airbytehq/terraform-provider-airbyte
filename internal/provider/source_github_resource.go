@@ -91,10 +91,12 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `OAuth Client Id`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `OAuth Client secret`,
 									},
 								},

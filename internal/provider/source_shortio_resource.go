@@ -58,7 +58,8 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"domain_id": schema.StringAttribute{
-						Required: true,
+						Required:  true,
+						Sensitive: true,
 					},
 					"secret_key": schema.StringAttribute{
 						Required:    true,
@@ -67,6 +68,7 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},

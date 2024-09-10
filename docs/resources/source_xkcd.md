@@ -14,11 +14,13 @@ SourceXkcd Resource
 
 ```terraform
 resource "airbyte_source_xkcd" "my_source_xkcd" {
-  configuration = {}
-  definition_id = "66c12869-f984-4d61-b828-542bb37a458f"
-  name          = "Ms. Lowell Stiedemann"
+  configuration = {
+    comic_number = "...my_comic_number..."
+  }
+  definition_id = "5b511296-6924-4cde-8b86-7ddcc8cc1e1e"
+  name          = "Dana Hickle"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1a16fff1-f04a-4eeb-8306-c4f3397c2047"
+  workspace_id  = "c4c80fc9-04e1-4374-8425-fe8edba3050b"
 }
 ```
 
@@ -43,6 +45,10 @@ resource "airbyte_source_xkcd" "my_source_xkcd" {
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
+
+Optional:
+
+- `comic_number` (String) Specifies the comic number in which details are to be extracted, pagination will begin with that number to end of available comics. Default: "2960"
 
 ## Import
 

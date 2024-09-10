@@ -19,10 +19,10 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
     storage_account_name    = "...my_storage_account_name..."
     storage_endpoint_suffix = "core.chinacloudapi.cn"
   }
-  definition_id = "f4f64874-e62c-458d-8792-fd48887cb19c"
-  name          = "Vickie Ullrich"
+  definition_id = "50959a4f-a50e-4807-886b-d0cbf5314eea"
+  name          = "Lana Nienow MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b4573d66-d007-4e52-a2e4-396e7403ea2d"
+  workspace_id  = "a3736727-1c78-4a9a-a960-3df323c7d784"
 }
 ```
 
@@ -51,11 +51,11 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
 Required:
 
 - `storage_access_key` (String, Sensitive) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
-- `storage_account_name` (String) The name of your storage account.
+- `storage_account_name` (String, Sensitive) The name of your storage account.
 
 Optional:
 
-- `storage_endpoint_suffix` (String) Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix. Default: "core.windows.net"
+- `storage_endpoint_suffix` (String, Sensitive) Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix. Default: "core.windows.net"
 
 ## Import
 

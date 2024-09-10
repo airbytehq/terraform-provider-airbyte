@@ -29,10 +29,10 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 7
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
@@ -40,17 +40,17 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         ]
         input_schema      = "...my_input_schema..."
         legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Al Sanford"
+        name              = "Mrs. Olive Hills"
         primary_key       = "...my_primary_key..."
         schemaless        = true
         validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "da3d51cb-c156-423e-8645-3ce6c3cf0d0e"
-  name          = "Sandra Stroman III"
+  definition_id = "cf4f6487-4e62-4c58-9879-2fd48887cb19"
+  name          = "Jim Kuvalis"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b8da7b81-43f8-451c-b99c-7fd70e50457d"
+  workspace_id  = "8b4573d6-6d00-47e5-aa2e-4396e7403ea2"
 }
 ```
 
@@ -102,10 +102,10 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
 - `refresh_token` (String, Sensitive) Refresh Token of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft Azure Application user
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft Azure Application user
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_storage_account_key"></a>
@@ -131,7 +131,7 @@ Optional:
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 - `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 

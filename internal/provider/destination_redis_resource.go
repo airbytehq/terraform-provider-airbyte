@@ -113,10 +113,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{

@@ -4,14 +4,14 @@ resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
       api_token = {
         additional_properties = "{ \"see\": \"documentation\" }"
         api_token             = "...my_api_token..."
-        email                 = "Carolyne_Turcotte57@hotmail.com"
+        email                 = "Jan.OConner@hotmail.com"
       }
     }
     start_date = "2020-10-15T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "7ac93ce2-101f-4692-aff8-de5650472830"
-  name          = "Grant Schmitt V"
+  definition_id = "89949514-7b12-4e2d-8774-d24e5a5b3df8"
+  name          = "Kerry Lynch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0d7b3b35-8aff-4520-ae7c-66512764ede9"
+  workspace_id  = "c48d7309-6598-4895-bdb7-81b6d18174b5"
 }

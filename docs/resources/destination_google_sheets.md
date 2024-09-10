@@ -59,8 +59,8 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of your Google Sheets developer application.
-- `client_secret` (String) The Client Secret of your Google Sheets developer application.
+- `client_id` (String, Sensitive) The Client ID of your Google Sheets developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Google Sheets developer application.
 - `refresh_token` (String, Sensitive) The token for obtaining new access token.
 
 ## Import

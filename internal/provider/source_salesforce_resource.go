@@ -68,6 +68,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
 					"force_use_bulk_api": schema.BoolAttribute{

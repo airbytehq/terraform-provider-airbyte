@@ -15,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -88,10 +89,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"lwa_app_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Login with Amazon Client ID.`,
 					},
 					"lwa_client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Login with Amazon Client Secret.`,
 					},
 					"period_in_days": schema.Int64Attribute{
@@ -146,7 +149,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					},
 					"replication_start_date": schema.StringAttribute{
 						Optional:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided, the date 2 years ago from today will be used.`,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
@@ -220,6 +223,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 							},
 						},
 						Description: `Additional information passed to reports. This varies by report type.`,
+					},
+					"wait_to_avoid_fatal_errors": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details. Default: false`,
 					},
 				},
 			},

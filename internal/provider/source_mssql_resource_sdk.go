@@ -22,6 +22,12 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 	if r.Configuration.ReplicationMethod != nil {
 		var sourceMssqlReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC
 		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
@@ -41,6 +47,7 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlCreateRequest() *shared.So
 				queueSize = nil
 			}
 			sourceMssqlReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlReadChangesUsingChangeDataCaptureCDC{
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 				InitialWaitingSeconds:            initialWaitingSeconds,
 				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 				QueueSize:                        queueSize,
@@ -229,6 +236,12 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 	if r.Configuration.ReplicationMethod != nil {
 		var readChangesUsingChangeDataCaptureCDC *shared.ReadChangesUsingChangeDataCaptureCDC
 		if r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC != nil {
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
@@ -248,6 +261,7 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 				queueSize = nil
 			}
 			readChangesUsingChangeDataCaptureCDC = &shared.ReadChangesUsingChangeDataCaptureCDC{
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 				InitialWaitingSeconds:            initialWaitingSeconds,
 				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 				QueueSize:                        queueSize,

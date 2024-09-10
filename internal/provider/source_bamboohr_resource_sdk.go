@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrCreateRequest() *shared.SourceBambooHrCreateRequest {
@@ -21,11 +22,18 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrCreateRequest() *sha
 	} else {
 		customReportsIncludeDefaultFields = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceBambooHr{
 		APIKey:                            apiKey,
 		CustomReportsFields:               customReportsFields,
 		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
+		StartDate:                         startDate,
 		Subdomain:                         subdomain,
 	}
 	definitionID := new(string)
@@ -75,11 +83,18 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrPutRequest() *shared
 	} else {
 		customReportsIncludeDefaultFields = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceBambooHrUpdate{
 		APIKey:                            apiKey,
 		CustomReportsFields:               customReportsFields,
 		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
+		StartDate:                         startDate,
 		Subdomain:                         subdomain,
 	}
 	name := r.Name.ValueString()

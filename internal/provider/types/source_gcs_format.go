@@ -3,5 +3,10 @@
 package types
 
 type SourceGcsFormat struct {
-	CSVFormat *CSVFormat `tfsdk:"csv_format" tfPlanOnly:"true"`
+	AvroFormat                 *AvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *CSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
+	ExcelFormat                *Fake                       `tfsdk:"excel_format" tfPlanOnly:"true"`
+	JsonlFormat                *Fake                       `tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *ParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *UnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

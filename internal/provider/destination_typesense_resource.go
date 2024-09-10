@@ -58,7 +58,6 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Required:    true,
-						Sensitive:   true,
 						Description: `Typesense API Key`,
 					},
 					"batch_size": schema.Int64Attribute{
@@ -67,7 +66,7 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
-						Description: `Hostname of the Typesense instance without protocol.`,
+						Description: `Hostname of the Typesense instance without protocol. Accept multiple hosts separated by comma.`,
 					},
 					"path": schema.StringAttribute{
 						Optional:    true,

@@ -67,6 +67,24 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 	} else {
 		fetchTransactionsUserID = nil
 	}
+	jobCheckpointInterval := new(int64)
+	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
+		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	} else {
+		jobCheckpointInterval = nil
+	}
+	jobProductVariantsIncludePresPrices := new(bool)
+	if !r.Configuration.JobProductVariantsIncludePresPrices.IsUnknown() && !r.Configuration.JobProductVariantsIncludePresPrices.IsNull() {
+		*jobProductVariantsIncludePresPrices = r.Configuration.JobProductVariantsIncludePresPrices.ValueBool()
+	} else {
+		jobProductVariantsIncludePresPrices = nil
+	}
+	jobTerminationThreshold := new(int64)
+	if !r.Configuration.JobTerminationThreshold.IsUnknown() && !r.Configuration.JobTerminationThreshold.IsNull() {
+		*jobTerminationThreshold = r.Configuration.JobTerminationThreshold.ValueInt64()
+	} else {
+		jobTerminationThreshold = nil
+	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -75,11 +93,14 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 		startDate = nil
 	}
 	configuration := shared.SourceShopify{
-		BulkWindowInDays:        bulkWindowInDays,
-		Credentials:             credentials,
-		FetchTransactionsUserID: fetchTransactionsUserID,
-		Shop:                    shop,
-		StartDate:               startDate,
+		BulkWindowInDays:                    bulkWindowInDays,
+		Credentials:                         credentials,
+		FetchTransactionsUserID:             fetchTransactionsUserID,
+		JobCheckpointInterval:               jobCheckpointInterval,
+		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
+		JobTerminationThreshold:             jobTerminationThreshold,
+		Shop:                                shop,
+		StartDate:                           startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -173,6 +194,24 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 	} else {
 		fetchTransactionsUserID = nil
 	}
+	jobCheckpointInterval := new(int64)
+	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
+		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	} else {
+		jobCheckpointInterval = nil
+	}
+	jobProductVariantsIncludePresPrices := new(bool)
+	if !r.Configuration.JobProductVariantsIncludePresPrices.IsUnknown() && !r.Configuration.JobProductVariantsIncludePresPrices.IsNull() {
+		*jobProductVariantsIncludePresPrices = r.Configuration.JobProductVariantsIncludePresPrices.ValueBool()
+	} else {
+		jobProductVariantsIncludePresPrices = nil
+	}
+	jobTerminationThreshold := new(int64)
+	if !r.Configuration.JobTerminationThreshold.IsUnknown() && !r.Configuration.JobTerminationThreshold.IsNull() {
+		*jobTerminationThreshold = r.Configuration.JobTerminationThreshold.ValueInt64()
+	} else {
+		jobTerminationThreshold = nil
+	}
 	shop := r.Configuration.Shop.ValueString()
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -181,11 +220,14 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 		startDate = nil
 	}
 	configuration := shared.SourceShopifyUpdate{
-		BulkWindowInDays:        bulkWindowInDays,
-		Credentials:             credentials,
-		FetchTransactionsUserID: fetchTransactionsUserID,
-		Shop:                    shop,
-		StartDate:               startDate,
+		BulkWindowInDays:                    bulkWindowInDays,
+		Credentials:                         credentials,
+		FetchTransactionsUserID:             fetchTransactionsUserID,
+		JobCheckpointInterval:               jobCheckpointInterval,
+		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
+		JobTerminationThreshold:             jobTerminationThreshold,
+		Shop:                                shop,
+		StartDate:                           startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

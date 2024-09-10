@@ -22,10 +22,10 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  definition_id = "2799cad5-c4b8-4334-a9d3-410e395a0aac"
-  name          = "Beatrice Stamm"
+  definition_id = "cde039dd-5e8c-4577-8ddd-10910de87dfe"
+  name          = "Elizabeth Bruen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d0978821-4279-492f-a5a7-105f2e570ad3"
+  workspace_id  = "bd0d10cf-57eb-4672-b8aa-55d63fb2a63d"
 }
 ```
 

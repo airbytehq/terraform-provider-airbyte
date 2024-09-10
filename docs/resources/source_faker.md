@@ -15,16 +15,16 @@ SourceFaker Resource
 ```terraform
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
-    always_updated    = false
-    count             = 2
-    parallelism       = 6
-    records_per_slice = 9
-    seed              = 3
+    always_updated    = true
+    count             = 6
+    parallelism       = 0
+    records_per_slice = 7
+    seed              = 6
   }
-  definition_id = "b0b68d5f-b4b9-49e2-b7dc-2833c76bbd55"
-  name          = "Jon Howell"
+  definition_id = "af77ae08-fd2c-4af8-bf04-5910a7c57057"
+  name          = "Latoya Kuvalis"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4ade0498-ec40-4fd8-ad91-61a05c5e8899"
+  workspace_id  = "169da4e6-d7c2-4fca-a386-da1d2ddf0351"
 }
 ```
 

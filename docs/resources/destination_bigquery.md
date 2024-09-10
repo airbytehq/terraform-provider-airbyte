@@ -21,25 +21,15 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
     dataset_location                = "southamerica-west1"
     disable_type_dedupe             = true
     loading_method = {
-      gcs_staging = {
-        credential = {
-          hmac_key = {
-            hmac_key_access_id = "1234567890abcdefghij1234"
-            hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
-          }
-        }
-        gcs_bucket_name          = "airbyte_sync"
-        gcs_bucket_path          = "data_sync/test"
-        keep_files_in_gcs_bucket = "Keep all tmp files in GCS"
-      }
+      batched_standard_inserts = {}
     }
     project_id              = "...my_project_id..."
     raw_data_dataset        = "...my_raw_data_dataset..."
-    transformation_priority = "interactive"
+    transformation_priority = "batch"
   }
-  definition_id = "5759d85e-2c27-4639-8b46-88adb42653c3"
-  name          = "Stella Zulauf IV"
-  workspace_id  = "b5ab2eb4-f41e-422e-b9b6-61a09af71290"
+  definition_id = "15759d85-e2c2-4763-98b4-688adb42653c"
+  name          = "Lori Kunde"
+  workspace_id  = "18b5ab2e-b4f4-41e2-ae39-b661a09af712"
 }
 ```
 
@@ -73,7 +63,7 @@ Required:
 Optional:
 
 - `big_query_client_buffer_size_mb` (Number) Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>. Default: 15
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
+- `credentials_json` (String, Sensitive) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
 - `loading_method` (Attributes) The way data will be uploaded to BigQuery. (see [below for nested schema](#nestedatt--configuration--loading_method))
 - `raw_data_dataset` (String) The dataset to write raw tables into (default: airbyte_internal)
@@ -84,8 +74,12 @@ Optional:
 
 Optional:
 
-- `gcs_staging` (Attributes) <i>(recommended)</i> Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. Provides best-in-class speed, reliability and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging))
-- `standard_inserts` (Attributes) <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use GCS staging. (see [below for nested schema](#nestedatt--configuration--loading_method--standard_inserts))
+- `batched_standard_inserts` (Attributes) Direct loading using batched SQL INSERT statements. This method uses the BigQuery driver to convert large INSERT statements into file uploads automatically. (see [below for nested schema](#nestedatt--configuration--loading_method--batched_standard_inserts))
+- `gcs_staging` (Attributes) Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging))
+
+<a id="nestedatt--configuration--loading_method--batched_standard_inserts"></a>
+### Nested Schema for `configuration.loading_method.batched_standard_inserts`
+
 
 <a id="nestedatt--configuration--loading_method--gcs_staging"></a>
 ### Nested Schema for `configuration.loading_method.gcs_staging`
@@ -114,12 +108,6 @@ Required:
 
 - `hmac_key_access_id` (String, Sensitive) HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
 - `hmac_key_secret` (String, Sensitive) The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
-
-
-
-
-<a id="nestedatt--configuration--loading_method--standard_inserts"></a>
-### Nested Schema for `configuration.loading_method.standard_inserts`
 
 ## Import
 

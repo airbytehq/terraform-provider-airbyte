@@ -4,12 +4,12 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "unimportant-glacier.biz"
+    hostname     = "firsthand-hospice.com"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "eb5fcf36-5dcc-4aec-ace4-1cbe1d2ecd01"
-  name          = "Angela Boehm"
+  definition_id = "d7c84461-977a-41b2-b1a5-b009f29606a3"
+  name          = "Estelle Murray"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2f6c56d3-cf89-4e69-a1ce-0c7a6ecf0509"
+  workspace_id  = "9592aaeb-21d8-49b3-9b55-8d4aa1770fe2"
 }

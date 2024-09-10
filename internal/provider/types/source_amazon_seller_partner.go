@@ -5,14 +5,15 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAmazonSellerPartner struct {
-	AccountType          types.String    `tfsdk:"account_type"`
-	AwsEnvironment       types.String    `tfsdk:"aws_environment"`
-	LwaAppID             types.String    `tfsdk:"lwa_app_id"`
-	LwaClientSecret      types.String    `tfsdk:"lwa_client_secret"`
-	PeriodInDays         types.Int64     `tfsdk:"period_in_days"`
-	RefreshToken         types.String    `tfsdk:"refresh_token"`
-	Region               types.String    `tfsdk:"region"`
-	ReplicationEndDate   types.String    `tfsdk:"replication_end_date"`
-	ReplicationStartDate types.String    `tfsdk:"replication_start_date"`
-	ReportOptionsList    []ReportOptions `tfsdk:"report_options_list"`
+	AccountType            types.String    `tfsdk:"account_type"`
+	AwsEnvironment         types.String    `tfsdk:"aws_environment"`
+	LwaAppID               types.String    `tfsdk:"lwa_app_id"`
+	LwaClientSecret        types.String    `tfsdk:"lwa_client_secret"`
+	PeriodInDays           types.Int64     `tfsdk:"period_in_days"`
+	RefreshToken           types.String    `tfsdk:"refresh_token"`
+	Region                 types.String    `tfsdk:"region"`
+	ReplicationEndDate     types.String    `tfsdk:"replication_end_date"`
+	ReplicationStartDate   types.String    `tfsdk:"replication_start_date"`
+	ReportOptionsList      []ReportOptions `tfsdk:"report_options_list"`
+	WaitToAvoidFatalErrors types.Bool      `tfsdk:"wait_to_avoid_fatal_errors"`
 }

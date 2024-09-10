@@ -38,12 +38,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 57.56
+                        value = 82.98
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 31.93
+                        value = 63.94
                       }
                     }
                   }
@@ -64,12 +64,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 35.8
+                        value = 51.9
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 18.49
+                        value = 4.5
                       }
                     }
                   }
@@ -81,21 +81,21 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Edmund Legros"
+        name = "Todd Rodriguez"
       },
     ]
     date_ranges_start_date = "2021-01-01"
     keep_empty_rows        = false
-    lookback_window        = 2
+    lookback_window        = 4
     property_ids = [
       "...",
     ]
-    window_in_days = 30
+    window_in_days = 120
   }
-  definition_id = "183b00ec-7045-4956-803e-c7b8b68fdfc0"
-  name          = "Miriam Deckow"
+  definition_id = "950935ad-536c-4500-8734-e30b46b959e4"
+  name          = "Julio Harber"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fd673f59-a8d0-4acc-9948-b0061059fac1"
+  workspace_id  = "c0922711-9b95-4b60-898b-b7037ab5561c"
 }
 ```
 
@@ -149,7 +149,7 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Google Analytics developer application.
-- `client_secret` (String) The Client Secret of your Google Analytics developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Google Analytics developer application.
 - `refresh_token` (String, Sensitive) The token for obtaining a new access token.
 
 Optional:
@@ -162,7 +162,7 @@ Optional:
 
 Required:
 
-- `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
+- `credentials_json` (String, Sensitive) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 
 
 

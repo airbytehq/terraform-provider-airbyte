@@ -365,6 +365,8 @@ type SourceMongodbV2 struct {
 	DatabaseConfig SourceMongodbV2ClusterType `json:"database_config"`
 	// The maximum number of documents to sample when attempting to discover the unique fields for a collection.
 	DiscoverSampleSize *int64 `default:"10000" json:"discover_sample_size"`
+	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds.
 	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
@@ -399,6 +401,13 @@ func (o *SourceMongodbV2) GetDiscoverSampleSize() *int64 {
 		return nil
 	}
 	return o.DiscoverSampleSize
+}
+
+func (o *SourceMongodbV2) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
 }
 
 func (o *SourceMongodbV2) GetInitialWaitingSeconds() *int64 {

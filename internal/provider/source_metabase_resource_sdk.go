@@ -21,12 +21,7 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabaseCreateRequest() *sha
 	} else {
 		sessionToken = nil
 	}
-	username := new(string)
-	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
-		*username = r.Configuration.Username.ValueString()
-	} else {
-		username = nil
-	}
+	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceMetabase{
 		InstanceAPIURL: instanceAPIURL,
 		Password:       password,
@@ -80,12 +75,7 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabasePutRequest() *shared
 	} else {
 		sessionToken = nil
 	}
-	username := new(string)
-	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
-		*username = r.Configuration.Username.ValueString()
-	} else {
-		username = nil
-	}
+	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceMetabaseUpdate{
 		InstanceAPIURL: instanceAPIURL,
 		Password:       password,

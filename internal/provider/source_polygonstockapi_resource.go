@@ -65,6 +65,7 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 					},
 					"api_key": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your API ACCESS Key`,
 					},
 					"end_date": schema.StringAttribute{

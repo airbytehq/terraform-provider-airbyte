@@ -185,49 +185,6 @@ func (e *Bigquery) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationBigquerySchemasMethod string
-
-const (
-	DestinationBigquerySchemasMethodStandard DestinationBigquerySchemasMethod = "Standard"
-)
-
-func (e DestinationBigquerySchemasMethod) ToPointer() *DestinationBigquerySchemasMethod {
-	return &e
-}
-func (e *DestinationBigquerySchemasMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Standard":
-		*e = DestinationBigquerySchemasMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationBigquerySchemasMethod: %v", v)
-	}
-}
-
-// DestinationBigqueryStandardInserts - <i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use GCS staging.
-type DestinationBigqueryStandardInserts struct {
-	method DestinationBigquerySchemasMethod `const:"Standard" json:"method"`
-}
-
-func (d DestinationBigqueryStandardInserts) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationBigqueryStandardInserts) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationBigqueryStandardInserts) GetMethod() DestinationBigquerySchemasMethod {
-	return DestinationBigquerySchemasMethodStandard
-}
-
 type DestinationBigqueryCredentialType string
 
 const (
@@ -357,30 +314,30 @@ func (e *DestinationBigqueryGCSTmpFilesAfterwardProcessing) UnmarshalJSON(data [
 	}
 }
 
-type DestinationBigqueryMethod string
+type DestinationBigquerySchemasMethod string
 
 const (
-	DestinationBigqueryMethodGcsStaging DestinationBigqueryMethod = "GCS Staging"
+	DestinationBigquerySchemasMethodGcsStaging DestinationBigquerySchemasMethod = "GCS Staging"
 )
 
-func (e DestinationBigqueryMethod) ToPointer() *DestinationBigqueryMethod {
+func (e DestinationBigquerySchemasMethod) ToPointer() *DestinationBigquerySchemasMethod {
 	return &e
 }
-func (e *DestinationBigqueryMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigquerySchemasMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS Staging":
-		*e = DestinationBigqueryMethod(v)
+		*e = DestinationBigquerySchemasMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigquerySchemasMethod: %v", v)
 	}
 }
 
-// DestinationBigqueryGCSStaging - <i>(recommended)</i> Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. Provides best-in-class speed, reliability and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
+// DestinationBigqueryGCSStaging - Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery.
 type DestinationBigqueryGCSStaging struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential DestinationBigqueryCredential `json:"credential"`
@@ -390,7 +347,7 @@ type DestinationBigqueryGCSStaging struct {
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
 	KeepFilesInGcsBucket *DestinationBigqueryGCSTmpFilesAfterwardProcessing `default:"Delete all tmp files from GCS" json:"keep_files_in_gcs-bucket"`
-	method               DestinationBigqueryMethod                          `const:"GCS Staging" json:"method"`
+	method               DestinationBigquerySchemasMethod                   `const:"GCS Staging" json:"method"`
 }
 
 func (d DestinationBigqueryGCSStaging) MarshalJSON() ([]byte, error) {
@@ -432,23 +389,75 @@ func (o *DestinationBigqueryGCSStaging) GetKeepFilesInGcsBucket() *DestinationBi
 	return o.KeepFilesInGcsBucket
 }
 
-func (o *DestinationBigqueryGCSStaging) GetMethod() DestinationBigqueryMethod {
-	return DestinationBigqueryMethodGcsStaging
+func (o *DestinationBigqueryGCSStaging) GetMethod() DestinationBigquerySchemasMethod {
+	return DestinationBigquerySchemasMethodGcsStaging
+}
+
+type DestinationBigqueryMethod string
+
+const (
+	DestinationBigqueryMethodStandard DestinationBigqueryMethod = "Standard"
+)
+
+func (e DestinationBigqueryMethod) ToPointer() *DestinationBigqueryMethod {
+	return &e
+}
+func (e *DestinationBigqueryMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = DestinationBigqueryMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationBigqueryMethod: %v", v)
+	}
+}
+
+// DestinationBigqueryBatchedStandardInserts - Direct loading using batched SQL INSERT statements. This method uses the BigQuery driver to convert large INSERT statements into file uploads automatically.
+type DestinationBigqueryBatchedStandardInserts struct {
+	method DestinationBigqueryMethod `const:"Standard" json:"method"`
+}
+
+func (d DestinationBigqueryBatchedStandardInserts) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationBigqueryBatchedStandardInserts) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationBigqueryBatchedStandardInserts) GetMethod() DestinationBigqueryMethod {
+	return DestinationBigqueryMethodStandard
 }
 
 type DestinationBigqueryLoadingMethodType string
 
 const (
-	DestinationBigqueryLoadingMethodTypeDestinationBigqueryGCSStaging      DestinationBigqueryLoadingMethodType = "destination-bigquery_GCS Staging"
-	DestinationBigqueryLoadingMethodTypeDestinationBigqueryStandardInserts DestinationBigqueryLoadingMethodType = "destination-bigquery_Standard Inserts"
+	DestinationBigqueryLoadingMethodTypeDestinationBigqueryBatchedStandardInserts DestinationBigqueryLoadingMethodType = "destination-bigquery_Batched Standard Inserts"
+	DestinationBigqueryLoadingMethodTypeDestinationBigqueryGCSStaging             DestinationBigqueryLoadingMethodType = "destination-bigquery_GCS Staging"
 )
 
 // DestinationBigqueryLoadingMethod - The way data will be uploaded to BigQuery.
 type DestinationBigqueryLoadingMethod struct {
-	DestinationBigqueryGCSStaging      *DestinationBigqueryGCSStaging
-	DestinationBigqueryStandardInserts *DestinationBigqueryStandardInserts
+	DestinationBigqueryBatchedStandardInserts *DestinationBigqueryBatchedStandardInserts
+	DestinationBigqueryGCSStaging             *DestinationBigqueryGCSStaging
 
 	Type DestinationBigqueryLoadingMethodType
+}
+
+func CreateDestinationBigqueryLoadingMethodDestinationBigqueryBatchedStandardInserts(destinationBigqueryBatchedStandardInserts DestinationBigqueryBatchedStandardInserts) DestinationBigqueryLoadingMethod {
+	typ := DestinationBigqueryLoadingMethodTypeDestinationBigqueryBatchedStandardInserts
+
+	return DestinationBigqueryLoadingMethod{
+		DestinationBigqueryBatchedStandardInserts: &destinationBigqueryBatchedStandardInserts,
+		Type: typ,
+	}
 }
 
 func CreateDestinationBigqueryLoadingMethodDestinationBigqueryGCSStaging(destinationBigqueryGCSStaging DestinationBigqueryGCSStaging) DestinationBigqueryLoadingMethod {
@@ -460,21 +469,12 @@ func CreateDestinationBigqueryLoadingMethodDestinationBigqueryGCSStaging(destina
 	}
 }
 
-func CreateDestinationBigqueryLoadingMethodDestinationBigqueryStandardInserts(destinationBigqueryStandardInserts DestinationBigqueryStandardInserts) DestinationBigqueryLoadingMethod {
-	typ := DestinationBigqueryLoadingMethodTypeDestinationBigqueryStandardInserts
-
-	return DestinationBigqueryLoadingMethod{
-		DestinationBigqueryStandardInserts: &destinationBigqueryStandardInserts,
-		Type:                               typ,
-	}
-}
-
 func (u *DestinationBigqueryLoadingMethod) UnmarshalJSON(data []byte) error {
 
-	var destinationBigqueryStandardInserts DestinationBigqueryStandardInserts = DestinationBigqueryStandardInserts{}
-	if err := utils.UnmarshalJSON(data, &destinationBigqueryStandardInserts, "", true, true); err == nil {
-		u.DestinationBigqueryStandardInserts = &destinationBigqueryStandardInserts
-		u.Type = DestinationBigqueryLoadingMethodTypeDestinationBigqueryStandardInserts
+	var destinationBigqueryBatchedStandardInserts DestinationBigqueryBatchedStandardInserts = DestinationBigqueryBatchedStandardInserts{}
+	if err := utils.UnmarshalJSON(data, &destinationBigqueryBatchedStandardInserts, "", true, true); err == nil {
+		u.DestinationBigqueryBatchedStandardInserts = &destinationBigqueryBatchedStandardInserts
+		u.Type = DestinationBigqueryLoadingMethodTypeDestinationBigqueryBatchedStandardInserts
 		return nil
 	}
 
@@ -489,12 +489,12 @@ func (u *DestinationBigqueryLoadingMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationBigqueryLoadingMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationBigqueryGCSStaging != nil {
-		return utils.MarshalJSON(u.DestinationBigqueryGCSStaging, "", true)
+	if u.DestinationBigqueryBatchedStandardInserts != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryBatchedStandardInserts, "", true)
 	}
 
-	if u.DestinationBigqueryStandardInserts != nil {
-		return utils.MarshalJSON(u.DestinationBigqueryStandardInserts, "", true)
+	if u.DestinationBigqueryGCSStaging != nil {
+		return utils.MarshalJSON(u.DestinationBigqueryGCSStaging, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type DestinationBigqueryLoadingMethod: all fields are null")

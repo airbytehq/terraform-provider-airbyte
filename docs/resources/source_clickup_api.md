@@ -16,16 +16,12 @@ SourceClickupAPI Resource
 resource "airbyte_source_clickup_api" "my_source_clickupapi" {
   configuration = {
     api_token            = "...my_api_token..."
-    folder_id            = "...my_folder_id..."
-    include_closed_tasks = false
-    list_id              = "...my_list_id..."
-    space_id             = "...my_space_id..."
-    team_id              = "...my_team_id..."
+    include_closed_tasks = true
   }
-  definition_id = "39108618-e914-445d-83c4-94a849cd517f"
-  name          = "Sonja Douglas"
+  definition_id = "506042c1-c656-461b-a485-a060238eba13"
+  name          = "Joyce Shields"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2e302e6d-e92b-43e4-b098-446f9835e642"
+  workspace_id  = "00cfe1ba-68d3-4405-82b9-6029febd39e6"
 }
 ```
 
@@ -57,11 +53,7 @@ Required:
 
 Optional:
 
-- `folder_id` (String) The ID of your folder in your space. Retrieve it from the `/space/{space_id}/folder` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.
 - `include_closed_tasks` (Boolean) Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>. Default: false
-- `list_id` (String) The ID of your list in your folder. Retrieve it from the `/folder/{folder_id}/list` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.
-- `space_id` (String) The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
-- `team_id` (String) The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.
 
 ## Import
 

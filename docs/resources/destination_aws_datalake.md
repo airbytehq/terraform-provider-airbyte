@@ -76,7 +76,7 @@ Optional:
 - `bucket_prefix` (String) S3 prefix
 - `format` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format))
 - `glue_catalog_float_as_decimal` (Boolean) Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source. Default: false
-- `lakeformation_database_default_tag_key` (String, Sensitive) Add a default tag key to databases created by this destination
+- `lakeformation_database_default_tag_key` (String) Add a default tag key to databases created by this destination
 - `lakeformation_database_default_tag_values` (String) Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
 - `lakeformation_governed_tables` (Boolean) Whether to create tables as LF governed tables. Default: false
 - `partitioning` (String) Partition data by cursor fields when a cursor field is a date. must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]; Default: "NO PARTITIONING"
@@ -95,7 +95,7 @@ Optional:
 
 Required:
 
-- `role_arn` (String) Will assume this role to write data to s3
+- `role_arn` (String, Sensitive) Will assume this role to write data to s3
 
 
 <a id="nestedatt--configuration--credentials--iam_user"></a>

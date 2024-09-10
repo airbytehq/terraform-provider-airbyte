@@ -21,13 +21,13 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
       }
     }
     org_id                = "123456789"
-    start_date            = "2022-01-06T04:41:29.233Z"
+    start_date            = "2022-11-26T15:57:22.522Z"
     time_granularity_type = "DAY"
   }
-  definition_id = "ae1f1c37-b350-4ebb-b981-c89f963f1e61"
-  name          = "Anita Ryan"
+  definition_id = "c70bfb32-667c-447d-9036-16107c03f839"
+  name          = "Donna Jerde"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "788ff77a-5893-43f7-b38d-63dc7b7f8b16"
+  workspace_id  = "c9db1c42-6709-4282-b0b3-08e78729ff50"
 }
 ```
 
@@ -55,7 +55,7 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 
 Required:
 
-- `org_id` (String) Specify the Organization ID
+- `org_id` (String, Sensitive) Specify the Organization ID
 
 Optional:
 
@@ -84,8 +84,8 @@ Required:
 
 Required:
 
-- `client_id` (String) The client ID of the LinkedIn developer application.
-- `client_secret` (String) The client secret of the LinkedIn developer application.
+- `client_id` (String, Sensitive) The client ID of the LinkedIn developer application.
+- `client_secret` (String, Sensitive) The client secret of the LinkedIn developer application.
 - `refresh_token` (String, Sensitive) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 ## Import

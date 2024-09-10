@@ -197,7 +197,6 @@ func (r *DestinationAstraResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"astra_db_keyspace": schema.StringAttribute{
 								Required:    true,
-								Sensitive:   true,
 								Description: `Keyspaces (or Namespaces) serve as containers for organizing data within a database. You can create a new keyspace uisng the Data Explorer tab in the Astra UI. The keyspace default_keyspace is created for you when you create a Vector Database in Astra DB.`,
 							},
 							"collection": schema.StringAttribute{

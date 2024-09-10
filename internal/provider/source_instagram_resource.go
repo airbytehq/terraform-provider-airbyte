@@ -66,10 +66,12 @@ func (r *SourceInstagramResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Client ID for your Oauth application`,
 					},
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Client Secret for your Oauth application`,
 					},
 					"start_date": schema.StringAttribute{

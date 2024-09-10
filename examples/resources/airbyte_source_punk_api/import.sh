@@ -1,1 +1,0 @@
-terraform import airbyte_source_punk_api.my_airbyte_source_punk_api ""

@@ -61,14 +61,17 @@ func (r *SourceMarketoResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.`,
 					},
 					"domain_url": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.`,
 					},
 					"start_date": schema.StringAttribute{

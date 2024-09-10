@@ -6,8 +6,8 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  definition_id = "06042c1c-6566-41b2-885a-060238eba136"
-  name          = "Angelina Feeney Jr."
+  definition_id = "6d74638d-1409-4463-9cf5-dd4a0c05f536"
+  name          = "Reginald Rath"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfe1ba68-d340-4502-b960-29febd39e6ab"
+  workspace_id  = "8b8f8f6a-fbf3-465d-a87e-087e3905b6a4"
 }

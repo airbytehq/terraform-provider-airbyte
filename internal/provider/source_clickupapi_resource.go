@@ -63,27 +63,11 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 						Sensitive:   true,
 						Description: `Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.`,
 					},
-					"folder_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The ID of your folder in your space. Retrieve it from the ` + "`" + `/space/{space_id}/folder` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.`,
-					},
 					"include_closed_tasks": schema.BoolAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>. Default: false`,
-					},
-					"list_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The ID of your list in your folder. Retrieve it from the ` + "`" + `/folder/{folder_id}/list` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.`,
-					},
-					"space_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The ID of your space in your workspace. Retrieve it from the ` + "`" + `/team/{team_id}/space` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.`,
-					},
-					"team_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `The ID of your team in ClickUp. Retrieve it from the ` + "`" + `/team` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.`,
 					},
 				},
 			},

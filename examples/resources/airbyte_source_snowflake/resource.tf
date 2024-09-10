@@ -1,11 +1,10 @@
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     credentials = {
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
+      key_pair_authentication = {
+        private_key          = "...my_private_key..."
+        private_key_password = "...my_private_key_password..."
+        username             = "AIRBYTE_USER"
       }
     }
     database        = "AIRBYTE_DATABASE"
@@ -15,8 +14,8 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "08ecd761-f19b-460a-a080-4c971e60235d"
-  name          = "Frank Marquardt"
+  definition_id = "05e9e4de-da30-4dd3-8fb0-aa2fad058413"
+  name          = "Penny Franecki"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dad73b79-d20b-448a-8fdc-6fb504a12b77"
+  workspace_id  = "3e5de43c-907f-463c-802b-c2f7f5dfb2c2"
 }

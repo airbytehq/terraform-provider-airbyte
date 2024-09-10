@@ -16,15 +16,15 @@ SourceIntercom Resource
 resource "airbyte_source_intercom" "my_source_intercom" {
   configuration = {
     access_token            = "...my_access_token..."
-    activity_logs_time_step = 30
+    activity_logs_time_step = 5
     client_id               = "...my_client_id..."
     client_secret           = "...my_client_secret..."
     start_date              = "2020-11-16T00:00:00Z"
   }
-  definition_id = "7cb4fc24-002c-4a0d-8171-1f25a28dde04"
-  name          = "Marshall Schinner"
+  definition_id = "566ac796-fdac-41f4-8b8f-86701054c1db"
+  name          = "Vicky Torphy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "be57bfa4-6127-4442-b75e-d08074e17a64"
+  workspace_id  = "a8fc7f8e-2467-4264-9cfb-2449eef8764e"
 }
 ```
 
@@ -58,8 +58,8 @@ Required:
 Optional:
 
 - `activity_logs_time_step` (Number) Set lower value in case of failing long running sync of Activity Logs stream. Default: 30
-- `client_id` (String) Client Id for your Intercom application.
-- `client_secret` (String) Client Secret for your Intercom application.
+- `client_id` (String, Sensitive) Client Id for your Intercom application.
+- `client_secret` (String, Sensitive) Client Secret for your Intercom application.
 
 ## Import
 

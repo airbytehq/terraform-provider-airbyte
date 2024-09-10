@@ -17,13 +17,13 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
   configuration = {
     access_token = "...my_access_token..."
     app_key      = "...my_app_key..."
-    email        = "Leta.Jakubowski@hotmail.com"
+    email        = "Santiago_Von2@hotmail.com"
     start_date   = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "7de96097-25c6-4d5a-9da3-5039f4e4098b"
-  name          = "Morris Schimmel"
+  definition_id = "77895426-7034-4f3e-8d74-96d90ab23438"
+  name          = "Walter Wintheiser"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "23b3c013-4621-4866-8f51-8dbd5ebee014"
+  workspace_id  = "9697c812-8b04-429b-90eb-a2d38220deac"
 }
 ```
 
@@ -52,7 +52,7 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
 Required:
 
 - `access_token` (String, Sensitive) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
-- `app_key` (String, Sensitive) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
+- `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 Optional:

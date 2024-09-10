@@ -27,9 +27,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     custom_reports_array = [
       {
         dimensions = [
-          "page",
+          "country",
         ]
-        name = "Randolph Stanton"
+        name = "Peter Luettgen"
       },
     ]
     data_state = "final"
@@ -37,12 +37,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2021-06-12"
+    start_date = "2020-11-18"
   }
-  definition_id = "5ec21a9a-b567-4f13-877e-51fa773fcf1a"
-  name          = "Connie Baumbach"
+  definition_id = "bbdb3119-64f9-49d6-b745-afb65f1720bd"
+  name          = "Harriet Kiehn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "082909d9-7bfa-4bba-9367-1a9ca1d9c174"
+  workspace_id  = "19162647-e680-4e44-97c6-f4b509c8206a"
 }
 ```
 
@@ -94,8 +94,8 @@ Optional:
 
 Required:
 
-- `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-- `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_id` (String, Sensitive) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_secret` (String, Sensitive) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `refresh_token` (String, Sensitive) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 Optional:
@@ -109,7 +109,7 @@ Optional:
 Required:
 
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
+- `service_account_info` (String, Sensitive) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
 
 

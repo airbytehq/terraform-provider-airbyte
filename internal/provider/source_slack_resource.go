@@ -99,6 +99,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
 								},

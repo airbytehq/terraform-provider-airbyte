@@ -71,10 +71,12 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"client_id": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `The Client ID of the SurveyMonkey developer application.`,
 							},
 							"client_secret": schema.StringAttribute{
 								Optional:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of the SurveyMonkey developer application.`,
 							},
 						},

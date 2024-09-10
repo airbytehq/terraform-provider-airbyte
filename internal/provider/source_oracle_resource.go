@@ -133,6 +133,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Attributes: map[string]schema.Attribute{
 									"ssl_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
 									},
 								},

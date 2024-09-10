@@ -59,6 +59,7 @@ func (r *SourceTwilioTaskrouterResource) Schema(ctx context.Context, req resourc
 				Attributes: map[string]schema.Attribute{
 					"account_sid": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Twilio Account ID`,
 					},
 					"auth_token": schema.StringAttribute{

@@ -18,10 +18,10 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
   }
-  definition_id = "892a209c-167a-4f7b-834c-463b838dc5f9"
-  name          = "Vanessa Hammes"
+  definition_id = "b09b9a90-3f60-4eb4-a54b-7cf533c55d68"
+  name          = "Lloyd Kertzmann DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f73a4553-5fff-45d1-934f-0cce5486a3a1"
+  workspace_id  = "7b10c6dd-1e62-4eb5-bcf3-65dccaec2ce4"
 }
 ```
 

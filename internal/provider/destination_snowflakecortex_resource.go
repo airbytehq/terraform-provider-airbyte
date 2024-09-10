@@ -218,7 +218,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 							},
 							"warehouse": schema.StringAttribute{
 								Required:    true,
-								Description: `Enter the name of the warehouse that you want to sync data into`,
+								Description: `Enter the name of the warehouse that you want to use as a compute cluster`,
 							},
 						},
 						Description: `Snowflake can be used to store vector data and retrieve embeddings.`,

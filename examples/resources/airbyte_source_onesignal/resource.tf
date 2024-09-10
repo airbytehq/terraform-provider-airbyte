@@ -11,8 +11,8 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  definition_id = "0dfc3504-1fcd-4cac-a226-2ef24d92369b"
-  name          = "Shawna Wilkinson"
+  definition_id = "db48a2cc-4047-4b12-8c3e-cc1558e983f3"
+  name          = "Patty Powlowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7ba288f1-0a06-435f-b19f-388685d8941e"
+  workspace_id  = "f8e75b95-ee5d-4d11-877a-4e3aa4d1c74f"
 }

@@ -68,14 +68,17 @@ func (r *SourceCartResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"site_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID`,
 									},
 									"user_name": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your application's User Name`,
 									},
 									"user_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Enter your application's User Secret`,
 									},
 								},

@@ -73,10 +73,12 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -86,6 +88,7 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft OneDrive user`,
 									},
 								},
@@ -102,18 +105,22 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft OneDrive user`,
 									},
 									"user_principal_name": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls`,
 									},
 								},
@@ -189,9 +196,9 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
@@ -323,13 +330,44 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
-										"document_file_type_format_experimental": schema.SingleNestedAttribute{
+										"jsonl_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"parquet_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"decimal_as_float": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
+												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"unstructured_document_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"processing": schema.SingleNestedAttribute{
@@ -377,37 +415,6 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 												}...),
 											},
 										},
-										"jsonl_format": schema.SingleNestedAttribute{
-											Optional:   true,
-											Attributes: map[string]schema.Attribute{},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("parquet_format"),
-												}...),
-											},
-										},
-										"parquet_format": schema.SingleNestedAttribute{
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"decimal_as_float": schema.BoolAttribute{
-													Computed:    true,
-													Optional:    true,
-													Default:     booldefault.StaticBool(false),
-													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
-												},
-											},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("jsonl_format"),
-												}...),
-											},
-										},
 									},
 									Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
 									Validators: []validator.Object{
@@ -429,7 +436,6 @@ func (r *SourceMicrosoftOnedriveResource) Schema(ctx context.Context, req resour
 								},
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
-									Sensitive:   true,
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"schemaless": schema.BoolAttribute{

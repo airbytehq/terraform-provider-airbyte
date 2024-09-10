@@ -67,7 +67,6 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"app_key": schema.StringAttribute{
 						Required:    true,
-						Sensitive:   true,
 						Description: `App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)`,
 					},
 					"email": schema.StringAttribute{

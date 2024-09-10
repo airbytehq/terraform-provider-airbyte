@@ -134,6 +134,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Fauna secret, used when authenticating with the database.`,
 					},
 				},

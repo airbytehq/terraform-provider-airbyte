@@ -15,7 +15,7 @@ SourceGoogleSheets Resource
 ```terraform
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
-    batch_size = 10
+    batch_size = 2
     credentials = {
       authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
@@ -26,10 +26,10 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
     names_conversion = false
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "e4145562-d275-4762-b5e5-2bb8adc8fd2a"
-  name          = "Ebony McDermott PhD"
+  definition_id = "043ef09e-61b7-45b7-a676-5eab1ad84295"
+  name          = "Juana Stroman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ec44e216-dff8-4929-a4d2-3a00b494f7d6"
+  workspace_id  = "9bdc8b93-f80b-47f5-9709-4a97b6356d53"
 }
 ```
 
@@ -78,8 +78,8 @@ Optional:
 
 Required:
 
-- `client_id` (String) Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
-- `client_secret` (String) Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
+- `client_id` (String, Sensitive) Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
+- `client_secret` (String, Sensitive) Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 - `refresh_token` (String, Sensitive) Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 
 
@@ -88,7 +88,7 @@ Required:
 
 Required:
 
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
+- `service_account_info` (String, Sensitive) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 
 ## Import
 

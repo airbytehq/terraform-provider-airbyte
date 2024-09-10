@@ -51,7 +51,7 @@ Required:
 
 Optional:
 
-- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
+- `credentials_json` (String, Sensitive) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 
 ## Import
 

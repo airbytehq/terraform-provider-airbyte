@@ -21,10 +21,10 @@ resource "airbyte_source_strava" "my_source_strava" {
     refresh_token = "fc6243f283e51f6ca989aab298b17da125496f50"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  definition_id = "1e537d96-eb6d-45dc-9e25-0f80fbc595c3"
-  name          = "Jackie Krajcik"
+  definition_id = "ecaf35c1-5b37-479d-be3d-ccb9fd6e1ad7"
+  name          = "Stella Balistreri"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfe70cf1-47e2-493c-ba4b-2d7bbc290ef0"
+  workspace_id  = "320ef50a-8ca7-46b0-83ea-280df1804a67"
 }
 ```
 
@@ -54,7 +54,7 @@ Required:
 
 - `athlete_id` (Number) The Athlete ID of your Strava developer application.
 - `client_id` (String) The Client ID of your Strava developer application.
-- `client_secret` (String) The Client Secret of your Strava developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Strava developer application.
 - `refresh_token` (String, Sensitive) The Refresh Token with the activity: read_all permissions.
 - `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 

@@ -71,6 +71,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 					},
 					"service_account": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 					},
 					"start_date": schema.StringAttribute{
@@ -93,6 +94,26 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								"format": schema.SingleNestedAttribute{
 									Required: true,
 									Attributes: map[string]schema.Attribute{
+										"avro_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"double_as_string": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers. Default: false`,
+												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
 										"csv_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
@@ -230,6 +251,155 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 													},
 												},
 											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"excel_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"jsonl_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"parquet_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"decimal_as_float": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
+												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"unstructured_document_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"processing": schema.SingleNestedAttribute{
+													Optional: true,
+													Attributes: map[string]schema.Attribute{
+														"local": schema.SingleNestedAttribute{
+															Optional:    true,
+															Attributes:  map[string]schema.Attribute{},
+															Description: `Process files locally, supporting ` + "`" + `fast` + "`" + ` and ` + "`" + `ocr` + "`" + ` modes. This is the default option.`,
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("via_api"),
+																}...),
+															},
+														},
+														"via_api": schema.SingleNestedAttribute{
+															Optional: true,
+															Attributes: map[string]schema.Attribute{
+																"api_key": schema.StringAttribute{
+																	Computed:    true,
+																	Optional:    true,
+																	Sensitive:   true,
+																	Default:     stringdefault.StaticString(""),
+																	Description: `The API key to use matching the environment. Default: ""`,
+																},
+																"api_url": schema.StringAttribute{
+																	Computed:    true,
+																	Optional:    true,
+																	Default:     stringdefault.StaticString("https://api.unstructured.io"),
+																	Description: `The URL of the unstructured API to use. Default: "https://api.unstructured.io"`,
+																},
+																"parameters": schema.ListNestedAttribute{
+																	Optional: true,
+																	NestedObject: schema.NestedAttributeObject{
+																		Attributes: map[string]schema.Attribute{
+																			"name": schema.StringAttribute{
+																				Required:    true,
+																				Description: `The name of the unstructured API parameter to use`,
+																			},
+																			"value": schema.StringAttribute{
+																				Required:    true,
+																				Description: `The value of the parameter`,
+																			},
+																		},
+																	},
+																	Description: `List of parameters send to the API`,
+																},
+															},
+															Description: `Process files via an API, using the ` + "`" + `hi_res` + "`" + ` mode. This option is useful for increased performance and accuracy, but requires an API key and a hosted instance of unstructured.`,
+															Validators: []validator.Object{
+																objectvalidator.ConflictsWith(path.Expressions{
+																	path.MatchRelative().AtParent().AtName("local"),
+																}...),
+															},
+														},
+													},
+													Description: `Processing configuration`,
+													Validators: []validator.Object{
+														validators.ExactlyOneChild(),
+													},
+												},
+												"skip_unprocessable_files": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(true),
+													Description: `If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true`,
+												},
+												"strategy": schema.StringAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     stringdefault.StaticString("auto"),
+													Description: `The strategy used to parse documents. ` + "`" + `fast` + "`" + ` extracts text directly from the document which doesn't work for all files. ` + "`" + `ocr_only` + "`" + ` is more reliable, but slower. ` + "`" + `hi_res` + "`" + ` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"`,
+													Validators: []validator.String{
+														stringvalidator.OneOf(
+															"auto",
+															"fast",
+															"ocr_only",
+															"hi_res",
+														),
+													},
+												},
+											},
+											Description: `Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.`,
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+												}...),
+											},
 										},
 									},
 									Description: `The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.`,
@@ -248,7 +418,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								},
 								"legacy_prefix": schema.StringAttribute{
 									Optional:    true,
-									Description: `The path prefix configured in previous versions of the GCS connector. This option is deprecated in favor of a single glob.`,
+									Description: `The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.`,
 								},
 								"name": schema.StringAttribute{
 									Required:    true,
@@ -256,8 +426,11 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								},
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
-									Sensitive:   true,
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
+								},
+								"recent_n_files_to_read_for_schema_discovery": schema.Int64Attribute{
+									Optional:    true,
+									Description: `The number of resent files which will be used to discover the schema for this stream.`,
 								},
 								"schemaless": schema.BoolAttribute{
 									Computed:    true,
@@ -280,7 +453,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								},
 							},
 						},
-						Description: `Each instance of this configuration defines a <a href=https://docs.airbyte.com/cloud/core-concepts#stream>stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.`,
+						Description: `Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.`,
 					},
 				},
 				MarkdownDescription: `NOTE: When this Spec is changed, legacy_config_transformer.py must also be` + "\n" +

@@ -5,8 +5,8 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     end_date   = "2022-01-01"
     start_date = "2022-01-01"
   }
-  definition_id = "deba481e-413d-4d76-8cc3-ae1d775ee978"
-  name          = "Dr. Lawrence Howe"
+  definition_id = "579b424a-0569-4229-a6de-0331191cf44b"
+  name          = "Jacob Bergnaum"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5746ac11-eb02-4437-a4c2-fa90b3fc58ae"
+  workspace_id  = "c75cd175-6719-46a7-941f-a2a7924db04e"
 }

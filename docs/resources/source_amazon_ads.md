@@ -17,7 +17,7 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
   configuration = {
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 3
+    look_back_window = 10
     marketplace_ids = [
       "...",
     ]
@@ -25,19 +25,19 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       4,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "FE"
+    region        = "NA"
     report_record_types = [
-      "targets",
+      "keywords",
     ]
     start_date = "2022-10-10"
     state_filter = [
       "archived",
     ]
   }
-  definition_id = "849b0bdf-3d5c-4a96-8633-54ae1d23c3d1"
-  name          = "Jaime Weimann"
+  definition_id = "3879ec56-6b1d-41d8-bb57-bf001ddb3cf0"
+  name          = "Hazel Stehr"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4df0d756-d8b0-4d90-9af9-186ab63a7b2e"
+  workspace_id  = "7d201b0d-069b-4b26-a6b9-f25aa9f8c7d4"
 }
 ```
 
@@ -65,8 +65,8 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
 
 Required:
 
-- `client_id` (String) The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
-- `client_secret` (String) The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
+- `client_id` (String, Sensitive) The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
+- `client_secret` (String, Sensitive) The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 - `refresh_token` (String, Sensitive) Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 
 Optional:

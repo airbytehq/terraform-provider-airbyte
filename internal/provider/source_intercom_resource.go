@@ -73,10 +73,12 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"client_id": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Client Id for your Intercom application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Client Secret for your Intercom application.`,
 					},
 					"start_date": schema.StringAttribute{

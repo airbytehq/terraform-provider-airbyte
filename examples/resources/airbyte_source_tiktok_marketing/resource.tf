@@ -1,6 +1,6 @@
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 8
+    attribution_window = 6
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -9,12 +9,12 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-04-17"
+    end_date        = "2022-01-13"
     include_deleted = true
-    start_date      = "2021-05-10"
+    start_date      = "2021-09-07"
   }
-  definition_id = "13a2ccf2-b1ad-4e2f-8984-bfb0e1b3d2b8"
-  name          = "Jean Dare"
+  definition_id = "e012beba-22c9-4964-9ef6-30f5d8739c0e"
+  name          = "Hazel Pfeffer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8838cf8d-227f-4318-9424-0654f4782740"
+  workspace_id  = "2ddb04c9-bce3-487d-a644-4a186797a763"
 }

@@ -14,6 +14,7 @@ type DestinationSnowflake struct {
 	RetentionPeriodDays types.Int64                              `tfsdk:"retention_period_days"`
 	Role                types.String                             `tfsdk:"role"`
 	Schema              types.String                             `tfsdk:"schema"`
+	UseMergeForUpsert   types.Bool                               `tfsdk:"use_merge_for_upsert"`
 	Username            types.String                             `tfsdk:"username"`
 	Warehouse           types.String                             `tfsdk:"warehouse"`
 }

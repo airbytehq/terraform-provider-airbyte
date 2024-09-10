@@ -24,13 +24,13 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
     ignore_missing_read_permissions_tables = false
-    region                                 = "me-central-1"
+    region                                 = "af-south-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "58122af6-a8ac-4655-b6a2-05f1e4d309ea"
-  name          = "Mrs. Carole Beer"
+  definition_id = "c62aeeab-6a16-4bc0-b1be-5567777324c6"
+  name          = "Horace Kunde"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4fbd8663-14ca-4ce0-af96-b833556f7e41"
+  workspace_id  = "dac63878-54b6-49c4-ae8b-9a534c06fe5a"
 }
 ```
 
@@ -62,7 +62,7 @@ Optional:
 - `endpoint` (String) the URL of the Dynamodb database. Default: ""
 - `ignore_missing_read_permissions_tables` (Boolean) Ignore tables with missing scan/read permissions. Default: false
 - `region` (String) The region of the Dynamodb database. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
-- `reserved_attribute_names` (String) Comma separated reserved attribute names present in your tables
+- `reserved_attribute_names` (String, Sensitive) Comma separated reserved attribute names present in your tables
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

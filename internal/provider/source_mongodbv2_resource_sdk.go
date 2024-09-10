@@ -100,6 +100,12 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	} else {
 		discoverSampleSize = nil
 	}
+	initialLoadTimeoutHours := new(int64)
+	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
+		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
+	} else {
+		initialLoadTimeoutHours = nil
+	}
 	initialWaitingSeconds := new(int64)
 	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
 		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
@@ -127,6 +133,7 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	configuration := shared.SourceMongodbV2{
 		DatabaseConfig:                   databaseConfig,
 		DiscoverSampleSize:               discoverSampleSize,
+		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 		InitialWaitingSeconds:            initialWaitingSeconds,
 		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 		QueueSize:                        queueSize,
@@ -257,6 +264,12 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	} else {
 		discoverSampleSize = nil
 	}
+	initialLoadTimeoutHours := new(int64)
+	if !r.Configuration.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.InitialLoadTimeoutHours.IsNull() {
+		*initialLoadTimeoutHours = r.Configuration.InitialLoadTimeoutHours.ValueInt64()
+	} else {
+		initialLoadTimeoutHours = nil
+	}
 	initialWaitingSeconds := new(int64)
 	if !r.Configuration.InitialWaitingSeconds.IsUnknown() && !r.Configuration.InitialWaitingSeconds.IsNull() {
 		*initialWaitingSeconds = r.Configuration.InitialWaitingSeconds.ValueInt64()
@@ -284,6 +297,7 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	configuration := shared.SourceMongodbV2Update{
 		DatabaseConfig:                   databaseConfig,
 		DiscoverSampleSize:               discoverSampleSize,
+		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 		InitialWaitingSeconds:            initialWaitingSeconds,
 		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 		QueueSize:                        queueSize,

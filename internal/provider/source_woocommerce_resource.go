@@ -66,6 +66,7 @@ func (r *SourceWoocommerceResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"api_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Customer Secret for API in WooCommerce shop`,
 					},
 					"shop": schema.StringAttribute{

@@ -61,7 +61,7 @@ Required:
 
 - `account` (String) Firebolt account to login.
 - `client_id` (String) Firebolt service account ID.
-- `client_secret` (String) Firebolt secret, corresponding to the service account ID.
+- `client_secret` (String, Sensitive) Firebolt secret, corresponding to the service account ID.
 - `database` (String) The database to connect to.
 - `engine` (String) Engine name to connect to.
 

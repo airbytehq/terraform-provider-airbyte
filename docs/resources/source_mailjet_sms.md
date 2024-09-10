@@ -19,10 +19,10 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
     start_date = 1666261656
     token      = "...my_token..."
   }
-  definition_id = "b5eaa64b-86a4-42db-bb85-3ec4b5e6a18b"
-  name          = "Christie Kshlerin Jr."
+  definition_id = "bbab0457-d926-4398-a6ec-d841e72a766a"
+  name          = "Cassandra Hoppe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3de8da44-3bfa-4add-a9a6-dff6cb6bf32f"
+  workspace_id  = "a512d804-4b05-4c5b-b112-361f26d47b86"
 }
 ```
 

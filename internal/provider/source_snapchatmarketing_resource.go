@@ -75,10 +75,12 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Snapchat developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Snapchat developer application.`,
 					},
 					"end_date": schema.StringAttribute{

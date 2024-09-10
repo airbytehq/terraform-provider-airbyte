@@ -1,14 +1,14 @@
 resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
-    color       = "red"
-    locale      = "en-US"
+    color       = "orange"
+    locale      = "pt-BR"
     orientation = "square"
     query       = "oceans"
     size        = "large"
   }
-  definition_id = "9252a784-d2d0-4f17-8747-5e2d6a49780b"
-  name          = "Jack Swaniawski"
+  definition_id = "b5865238-4bdb-4821-b9c8-efa40dc207c5"
+  name          = "Raquel Jakubowski Sr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "28c6eefe-59b7-42db-a240-7ce310da7633"
+  workspace_id  = "11e1fcb2-6b90-4cc0-9f94-1919892a209c"
 }

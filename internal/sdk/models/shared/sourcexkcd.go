@@ -32,7 +32,9 @@ func (e *Xkcd) UnmarshalJSON(data []byte) error {
 }
 
 type SourceXkcd struct {
-	sourceType *Xkcd `const:"xkcd" json:"sourceType,omitempty"`
+	// Specifies the comic number in which details are to be extracted, pagination will begin with that number to end of available comics
+	ComicNumber *string `default:"2960" json:"comic_number"`
+	sourceType  *Xkcd   `const:"xkcd" json:"sourceType,omitempty"`
 }
 
 func (s SourceXkcd) MarshalJSON() ([]byte, error) {
@@ -44,6 +46,13 @@ func (s *SourceXkcd) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceXkcd) GetComicNumber() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ComicNumber
 }
 
 func (o *SourceXkcd) GetSourceType() *Xkcd {

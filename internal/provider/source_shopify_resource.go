@@ -98,10 +98,12 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client ID of the Shopify developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of the Shopify developer application.`,
 									},
 								},
@@ -123,6 +125,24 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Optional:    true,
 						Default:     booldefault.StaticBool(false),
 						Description: `Defines which API type (REST/BULK) to use to fetch ` + "`" + `Transactions` + "`" + ` data. If you are a ` + "`" + `Shopify Plus` + "`" + ` user, leave the default value to speed up the fetch. Default: false`,
+					},
+					"job_checkpoint_interval": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(100000),
+						Description: `The threshold, after which the single BULK Job should be checkpointed. Default: 100000`,
+					},
+					"job_product_variants_include_pres_prices": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `If enabled, the ` + "`" + `Product Variants` + "`" + ` stream attempts to include ` + "`" + `Presentment prices` + "`" + ` field (may affect the performance). Default: true`,
+					},
+					"job_termination_threshold": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(7200),
+						Description: `The max time in seconds, after which the single BULK Job should be ` + "`" + `CANCELED` + "`" + ` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 7200`,
 					},
 					"shop": schema.StringAttribute{
 						Required:    true,

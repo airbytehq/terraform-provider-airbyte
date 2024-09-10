@@ -27,6 +27,24 @@ func (r *SourceOktaResourceModel) ToSharedSourceOktaCreateRequest() *shared.Sour
 				SourceOktaOAuth20: sourceOktaOAuth20,
 			}
 		}
+		var sourceOktaOAuth20WithPrivateKey *shared.SourceOktaOAuth20WithPrivateKey
+		if r.Configuration.Credentials.OAuth20WithPrivateKey != nil {
+			clientId1 := r.Configuration.Credentials.OAuth20WithPrivateKey.ClientID.ValueString()
+			keyID := r.Configuration.Credentials.OAuth20WithPrivateKey.KeyID.ValueString()
+			privateKey := r.Configuration.Credentials.OAuth20WithPrivateKey.PrivateKey.ValueString()
+			scope := r.Configuration.Credentials.OAuth20WithPrivateKey.Scope.ValueString()
+			sourceOktaOAuth20WithPrivateKey = &shared.SourceOktaOAuth20WithPrivateKey{
+				ClientID:   clientId1,
+				KeyID:      keyID,
+				PrivateKey: privateKey,
+				Scope:      scope,
+			}
+		}
+		if sourceOktaOAuth20WithPrivateKey != nil {
+			credentials = &shared.SourceOktaAuthorizationMethod{
+				SourceOktaOAuth20WithPrivateKey: sourceOktaOAuth20WithPrivateKey,
+			}
+		}
 		var sourceOktaAPIToken *shared.SourceOktaAPIToken
 		if r.Configuration.Credentials.APIToken != nil {
 			apiToken := r.Configuration.Credentials.APIToken.APIToken.ValueString()
@@ -107,6 +125,24 @@ func (r *SourceOktaResourceModel) ToSharedSourceOktaPutRequest() *shared.SourceO
 		if sourceOktaUpdateOAuth20 != nil {
 			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
 				SourceOktaUpdateOAuth20: sourceOktaUpdateOAuth20,
+			}
+		}
+		var oAuth20WithPrivateKey *shared.OAuth20WithPrivateKey
+		if r.Configuration.Credentials.OAuth20WithPrivateKey != nil {
+			clientId1 := r.Configuration.Credentials.OAuth20WithPrivateKey.ClientID.ValueString()
+			keyID := r.Configuration.Credentials.OAuth20WithPrivateKey.KeyID.ValueString()
+			privateKey := r.Configuration.Credentials.OAuth20WithPrivateKey.PrivateKey.ValueString()
+			scope := r.Configuration.Credentials.OAuth20WithPrivateKey.Scope.ValueString()
+			oAuth20WithPrivateKey = &shared.OAuth20WithPrivateKey{
+				ClientID:   clientId1,
+				KeyID:      keyID,
+				PrivateKey: privateKey,
+				Scope:      scope,
+			}
+		}
+		if oAuth20WithPrivateKey != nil {
+			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
+				OAuth20WithPrivateKey: oAuth20WithPrivateKey,
 			}
 		}
 		var sourceOktaUpdateAPIToken *shared.SourceOktaUpdateAPIToken

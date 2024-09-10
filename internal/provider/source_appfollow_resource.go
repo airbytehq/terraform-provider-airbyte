@@ -59,6 +59,7 @@ func (r *SourceAppfollowResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"api_secret": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `API Key provided by Appfollow`,
 					},
 				},

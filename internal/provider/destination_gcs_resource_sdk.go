@@ -398,7 +398,7 @@ func (r *DestinationGcsResourceModel) RefreshFromSharedDestinationResponse(resp 
 }
 
 func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared.DestinationGcsPutRequest {
-	var credential shared.Authentication
+	var credential shared.DestinationGcsUpdateAuthentication
 	var hmacKey *shared.HMACKey
 	if r.Configuration.Credential.HMACKey != nil {
 		credentialType := new(shared.CredentialType)
@@ -416,7 +416,7 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 		}
 	}
 	if hmacKey != nil {
-		credential = shared.Authentication{
+		credential = shared.DestinationGcsUpdateAuthentication{
 			HMACKey: hmacKey,
 		}
 	}

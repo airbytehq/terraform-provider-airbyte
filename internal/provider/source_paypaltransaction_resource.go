@@ -63,10 +63,12 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Paypal developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Paypal developer application.`,
 					},
 					"dispute_start_date": schema.StringAttribute{

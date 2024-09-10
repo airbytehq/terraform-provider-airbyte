@@ -62,6 +62,7 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"account_sid": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Twilio account SID`,
 					},
 					"auth_token": schema.StringAttribute{

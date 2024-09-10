@@ -73,10 +73,12 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -86,6 +88,7 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft SharePoint user`,
 									},
 								},
@@ -102,18 +105,22 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft SharePoint user`,
 									},
 									"user_principal_name": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls`,
 									},
 								},
@@ -183,9 +190,10 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
@@ -317,13 +325,60 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 											Validators: []validator.Object{
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
 												}...),
 											},
 										},
-										"document_file_type_format_experimental": schema.SingleNestedAttribute{
+										"excel_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"jsonl_format": schema.SingleNestedAttribute{
+											Optional:   true,
+											Attributes: map[string]schema.Attribute{},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("parquet_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"parquet_format": schema.SingleNestedAttribute{
+											Optional: true,
+											Attributes: map[string]schema.Attribute{
+												"decimal_as_float": schema.BoolAttribute{
+													Computed:    true,
+													Optional:    true,
+													Default:     booldefault.StaticBool(false),
+													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
+												},
+											},
+											Validators: []validator.Object{
+												objectvalidator.ConflictsWith(path.Expressions{
+													path.MatchRelative().AtParent().AtName("avro_format"),
+													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
+													path.MatchRelative().AtParent().AtName("jsonl_format"),
+													path.MatchRelative().AtParent().AtName("unstructured_document_format"),
+												}...),
+											},
+										},
+										"unstructured_document_format": schema.SingleNestedAttribute{
 											Optional: true,
 											Attributes: map[string]schema.Attribute{
 												"processing": schema.SingleNestedAttribute{
@@ -366,39 +421,9 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 												objectvalidator.ConflictsWith(path.Expressions{
 													path.MatchRelative().AtParent().AtName("avro_format"),
 													path.MatchRelative().AtParent().AtName("csv_format"),
+													path.MatchRelative().AtParent().AtName("excel_format"),
 													path.MatchRelative().AtParent().AtName("jsonl_format"),
 													path.MatchRelative().AtParent().AtName("parquet_format"),
-												}...),
-											},
-										},
-										"jsonl_format": schema.SingleNestedAttribute{
-											Optional:   true,
-											Attributes: map[string]schema.Attribute{},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("parquet_format"),
-												}...),
-											},
-										},
-										"parquet_format": schema.SingleNestedAttribute{
-											Optional: true,
-											Attributes: map[string]schema.Attribute{
-												"decimal_as_float": schema.BoolAttribute{
-													Computed:    true,
-													Optional:    true,
-													Default:     booldefault.StaticBool(false),
-													Description: `Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false`,
-												},
-											},
-											Validators: []validator.Object{
-												objectvalidator.ConflictsWith(path.Expressions{
-													path.MatchRelative().AtParent().AtName("avro_format"),
-													path.MatchRelative().AtParent().AtName("csv_format"),
-													path.MatchRelative().AtParent().AtName("document_file_type_format_experimental"),
-													path.MatchRelative().AtParent().AtName("jsonl_format"),
 												}...),
 											},
 										},
@@ -423,8 +448,11 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 								},
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
-									Sensitive:   true,
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
+								},
+								"recent_n_files_to_read_for_schema_discovery": schema.Int64Attribute{
+									Optional:    true,
+									Description: `The number of resent files which will be used to discover the schema for this stream.`,
 								},
 								"schemaless": schema.BoolAttribute{
 									Computed:    true,

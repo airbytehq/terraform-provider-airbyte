@@ -76,7 +76,7 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 							`Note that by default, sessions are good for 14 days and needs to be regenerated.`,
 					},
 					"username": schema.StringAttribute{
-						Optional: true,
+						Required: true,
 					},
 				},
 			},

@@ -20,10 +20,10 @@ resource "airbyte_source_zoom" "my_source_zoom" {
     client_id              = "...my_client_id..."
     client_secret          = "...my_client_secret..."
   }
-  definition_id = "b7c1d354-0fbb-4e2d-8a9d-0010028d11c1"
-  name          = "Leona Bechtelar"
+  definition_id = "7e57484d-e0ea-4ba6-b0f1-4e7378bf2375"
+  name          = "Allison Ondricka"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "07cdd8eb-8c75-4c46-9093-8eb2433624d8"
+  workspace_id  = "8f4810e2-b60f-4065-9300-56f91ac7e123"
 }
 ```
 
@@ -53,7 +53,7 @@ Required:
 
 - `account_id` (String) The account ID for your Zoom account. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 - `client_id` (String) The client ID for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
-- `client_secret` (String) The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
+- `client_secret` (String, Sensitive) The client secret for your Zoom app. You can find this in the Zoom Marketplace under the "Manage" tab for your app.
 
 Optional:
 

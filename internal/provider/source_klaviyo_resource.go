@@ -64,6 +64,10 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 						Sensitive:   true,
 						Description: `Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.`,
 					},
+					"disable_fetching_predictive_analytics": schema.BoolAttribute{
+						Optional:    true,
+						Description: `Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.`,
+					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.`,

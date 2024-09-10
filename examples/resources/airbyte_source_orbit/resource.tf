@@ -4,8 +4,8 @@ resource "airbyte_source_orbit" "my_source_orbit" {
     start_date = "...my_start_date..."
     workspace  = "...my_workspace..."
   }
-  definition_id = "2d9d7702-5755-4e69-95c5-7652df199422"
-  name          = "Danny Jakubowski"
+  definition_id = "74e8f7b8-37d7-46b0-aa3d-797c2fd02395"
+  name          = "Glenda Boyer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "976b741d-bfaf-4bdd-b49a-fd0cd95bcfe3"
+  workspace_id  = "206b8fda-8b48-4bf3-b0e9-631ebcafaa2e"
 }

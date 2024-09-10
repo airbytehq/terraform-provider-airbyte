@@ -92,6 +92,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							"read_changes_using_binary_log_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"initial_load_timeout_hours": schema.Int64Attribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(8),
+										Description: `The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8`,
+									},
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed:    true,
 										Optional:    true,
@@ -170,10 +176,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
@@ -201,10 +209,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{

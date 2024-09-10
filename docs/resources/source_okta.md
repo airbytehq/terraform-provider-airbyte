@@ -23,10 +23,10 @@ resource "airbyte_source_okta" "my_source_okta" {
     domain     = "...my_domain..."
     start_date = "2022-07-22T00:00:00Z"
   }
-  definition_id = "fedea337-d55b-4155-98db-92c72d541f53"
-  name          = "Marion Champlin"
+  definition_id = "2c277a8e-2388-4fd0-920f-62c51a2676b4"
+  name          = "Sergio Crooks"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "50561c1c-c629-41a1-ad7b-3d761e29ef26"
+  workspace_id  = "ad19d25d-5253-4fa0-aef0-08f118d81572"
 }
 ```
 
@@ -55,7 +55,7 @@ resource "airbyte_source_okta" "my_source_okta" {
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `domain` (String) The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
+- `domain` (String, Sensitive) The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
 - `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -65,6 +65,7 @@ Optional:
 
 - `api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_token))
 - `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+- `o_auth20_with_private_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20_with_private_key))
 
 <a id="nestedatt--configuration--credentials--api_token"></a>
 ### Nested Schema for `configuration.credentials.api_token`
@@ -79,9 +80,20 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
 - `refresh_token` (String, Sensitive) Refresh Token to obtain new Access Token, when it's expired.
+
+
+<a id="nestedatt--configuration--credentials--o_auth20_with_private_key"></a>
+### Nested Schema for `configuration.credentials.o_auth20_with_private_key`
+
+Required:
+
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `key_id` (String, Sensitive) The key ID (kid).
+- `private_key` (String, Sensitive) The private key in PEM format
+- `scope` (String) The OAuth scope.
 
 ## Import
 

@@ -3,8 +3,8 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
     api_key    = "...my_api_key..."
     start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "e4749058-8d0e-4293-9574-a681eea74b87"
-  name          = "Harold Willms IV"
+  definition_id = "94dcfaea-5500-4380-9e9f-446900c8feba"
+  name          = "Mamie Green"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7d33223d-80bb-4993-a2d2-f45974a2ebc3"
+  workspace_id  = "fea08abd-da32-48f6-8373-e06663420a6a"
 }

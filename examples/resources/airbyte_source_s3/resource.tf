@@ -8,7 +8,7 @@ resource "airbyte_source_s3" "my_source_s3" {
     format = {
       avro = {}
     }
-    path_pattern = "myFolder/myTableFiles/*.csv|myFolder/myOtherTableFiles/*.csv"
+    path_pattern = "**"
     provider = {
       aws_access_key_id     = "...my_aws_access_key_id..."
       aws_secret_access_key = "...my_aws_secret_access_key..."
@@ -28,23 +28,24 @@ resource "airbyte_source_s3" "my_source_s3" {
         days_to_sync_if_history_is_full = 4
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
           "...",
         ]
-        input_schema      = "...my_input_schema..."
-        legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Pam Goldner"
-        primary_key       = "...my_primary_key..."
-        schemaless        = false
-        validation_policy = "Wait for Discover"
+        input_schema                                = "...my_input_schema..."
+        legacy_prefix                               = "...my_legacy_prefix..."
+        name                                        = "Mr. Gladys Metz"
+        primary_key                                 = "...my_primary_key..."
+        recent_n_files_to_read_for_schema_discovery = 6
+        schemaless                                  = true
+        validation_policy                           = "Wait for Discover"
       },
     ]
   }
-  definition_id = "bdae34af-cb06-4318-8072-9444d2b8965c"
-  name          = "Julius Rau"
+  definition_id = "9df1af8f-5013-4d5d-8cf4-03b2856e98a6"
+  name          = "Herman Bartoletti Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ee9d6378-e724-43c0-a1bc-073abf4dfebd"
+  workspace_id  = "07e33047-d953-458a-9681-9d2abec21d7e"
 }

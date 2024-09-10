@@ -5,12 +5,11 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type AWSS3Staging struct {
-	AccessKeyID      types.String                   `tfsdk:"access_key_id"`
-	Encryption       *DestinationRedshiftEncryption `tfsdk:"encryption"`
-	FileNamePattern  types.String                   `tfsdk:"file_name_pattern"`
-	PurgeStagingData types.Bool                     `tfsdk:"purge_staging_data"`
-	S3BucketName     types.String                   `tfsdk:"s3_bucket_name"`
-	S3BucketPath     types.String                   `tfsdk:"s3_bucket_path"`
-	S3BucketRegion   types.String                   `tfsdk:"s3_bucket_region"`
-	SecretAccessKey  types.String                   `tfsdk:"secret_access_key"`
+	AccessKeyID      types.String `tfsdk:"access_key_id"`
+	FileNamePattern  types.String `tfsdk:"file_name_pattern"`
+	PurgeStagingData types.Bool   `tfsdk:"purge_staging_data"`
+	S3BucketName     types.String `tfsdk:"s3_bucket_name"`
+	S3BucketPath     types.String `tfsdk:"s3_bucket_path"`
+	S3BucketRegion   types.String `tfsdk:"s3_bucket_region"`
+	SecretAccessKey  types.String `tfsdk:"secret_access_key"`
 }

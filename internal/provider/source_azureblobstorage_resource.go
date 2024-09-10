@@ -85,10 +85,12 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID of your Microsoft developer application`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret of your Microsoft developer application`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -98,6 +100,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Tenant ID of the Microsoft Azure Application user`,
 									},
 								},
@@ -417,7 +420,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								},
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
-									Sensitive:   true,
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"schemaless": schema.BoolAttribute{

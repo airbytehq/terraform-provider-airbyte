@@ -6,13 +6,13 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "sheetversion",
+      "row_created_by",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
     start_datetime = "2000-01-01T13:00:00"
   }
-  definition_id = "9d2abec2-1d7e-43d2-8dfd-3d512342f997"
-  name          = "Jose Hilpert"
+  definition_id = "1fb8be04-16cb-449d-a06c-239e7af3ca2c"
+  name          = "Shawn Pfannerstill"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "38a2e5fc-f99c-4418-b6fa-0cbc1b99ee1e"
+  workspace_id  = "92d74588-9040-4904-b267-ce86a322e02b"
 }

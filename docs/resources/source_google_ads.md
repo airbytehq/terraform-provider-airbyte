@@ -31,15 +31,15 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     ]
     customer_id = "6783948572,5839201945"
     customer_status_filter = [
-      "SUSPENDED",
+      "CANCELED",
     ]
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "c5fc21d7-22b3-410b-a76f-b731c6d5241e"
-  name          = "Dr. Armando Dibbert"
+  definition_id = "c47c0f9c-e33c-40f2-94c1-1e4e993d2947"
+  name          = "Miss Andrea Lind"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fc03242c-cd27-463a-8d30-eb91c3df2593"
+  workspace_id  = "54dff6cf-9b79-4e23-a888-b6bde25154a5"
 }
 ```
 
@@ -84,7 +84,7 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
-- `client_secret` (String) The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `client_secret` (String, Sensitive) The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 - `developer_token` (String, Sensitive) The Developer Token granted by Google to use their APIs. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 - `refresh_token` (String, Sensitive) The token used to obtain a new Access Token. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 

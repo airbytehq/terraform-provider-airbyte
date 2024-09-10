@@ -5,8 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGcs struct {
-	Bucket         types.String            `tfsdk:"bucket"`
-	ServiceAccount types.String            `tfsdk:"service_account"`
-	StartDate      types.String            `tfsdk:"start_date"`
-	Streams        []SourceGCSStreamConfig `tfsdk:"streams"`
+	Bucket         types.String                     `tfsdk:"bucket"`
+	ServiceAccount types.String                     `tfsdk:"service_account"`
+	StartDate      types.String                     `tfsdk:"start_date"`
+	Streams        []SourceGcsFileBasedStreamConfig `tfsdk:"streams"`
 }

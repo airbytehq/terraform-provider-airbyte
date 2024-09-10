@@ -4,9 +4,9 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Araceli.Kiehn85"
+    username         = "Kristin95"
   }
-  definition_id = "5b00289a-0dc0-4232-9a5c-ae9f3888495e"
-  name          = "Dr. Bennie Cassin"
-  workspace_id  = "b305f362-4c43-4900-b25f-a3e33722ced9"
+  definition_id = "9eaf9a8e-2157-4a85-a0c8-9e77fd0c2020"
+  name          = "Rick Sporer"
+  workspace_id  = "6de60f94-2f93-47a3-8595-08dd11c7ed17"
 }

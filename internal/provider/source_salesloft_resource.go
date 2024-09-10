@@ -92,6 +92,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Salesloft developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -101,7 +102,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required:    true,
-										Sensitive:   true,
 										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),

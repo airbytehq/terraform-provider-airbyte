@@ -240,11 +240,11 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 								NestedObject: schema.NestedAttributeObject{
 									Attributes: map[string]schema.Attribute{
 										"header_key": schema.StringAttribute{
-											Required:  true,
-											Sensitive: true,
+											Required: true,
 										},
 										"value": schema.StringAttribute{
-											Required: true,
+											Required:  true,
+											Sensitive: true,
 										},
 									},
 								},
@@ -339,6 +339,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 							"tenant_id": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
+								Sensitive:   true,
 								Default:     stringdefault.StaticString(""),
 								Description: `The tenant ID to use for multi tenancy. Default: ""`,
 							},
