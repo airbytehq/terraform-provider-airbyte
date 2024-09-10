@@ -8,10 +8,10 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Johnpaul_Barton69"
+    username = "Otho19"
   }
-  definition_id = "376bce66-a7c0-4ce2-8da3-e9aab71454cb"
-  name          = "Charlotte Blick"
+  definition_id = "e8783d50-d4d2-4b80-850d-c344f66cbf0e"
+  name          = "Trevor Bednar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3e1da46c-4f68-45d2-8501-1b8862473b75"
+  workspace_id  = "994ace41-dc5b-442f-aa22-8e88647f2d42"
 }

@@ -7,9 +7,10 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     port            = 1433
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
-        initial_waiting_seconds              = 7
+        initial_load_timeout_hours           = 3
+        initial_waiting_seconds              = 2
         invalid_cdc_cursor_position_behavior = "Re-sync data"
-        queue_size                           = 7
+        queue_size                           = 3
       }
     }
     schemas = [
@@ -21,10 +22,10 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Caroline_Harvey"
+    username = "Ayden.Sanford17"
   }
-  definition_id = "4141a21c-8938-4ad6-bcbb-78bed98212c7"
-  name          = "Eleanor O'Hara V"
+  definition_id = "5b489304-8e9c-41af-9961-b1c883a57271"
+  name          = "Kari Lemke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "387527d5-e3ef-4724-ad0c-0b7968b72421"
+  workspace_id  = "b6433cb8-2b32-4ad0-bfd9-a9d8ba9b0df8"
 }

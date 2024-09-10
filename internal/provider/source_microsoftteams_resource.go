@@ -72,10 +72,12 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
@@ -94,6 +96,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -103,6 +106,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 									},
 									"tenant_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},

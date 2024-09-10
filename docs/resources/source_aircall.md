@@ -19,10 +19,10 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     api_token  = "...my_api_token..."
     start_date = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "c1931372-2140-427e-a71b-638bd648d548"
-  name          = "Lucille O'Conner"
+  definition_id = "45275644-5179-430e-98d4-3c0dabba6ef9"
+  name          = "Myron Emard"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b93d4bbd-e9f2-4bb8-8cd3-fe4ad282938c"
+  workspace_id  = "744fd252-e57a-4a67-bd28-259f0c220e39"
 }
 ```
 
@@ -50,7 +50,7 @@ resource "airbyte_source_aircall" "my_source_aircall" {
 
 Required:
 
-- `api_id` (String) App ID found at settings https://dashboard.aircall.io/integrations/api-keys
+- `api_id` (String, Sensitive) App ID found at settings https://dashboard.aircall.io/integrations/api-keys
 - `api_token` (String, Sensitive) App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 

@@ -16,17 +16,17 @@ SourceStripe Resource
 resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
     account_id           = "...my_account_id..."
-    call_rate_limit      = 25
+    call_rate_limit      = 100
     client_secret        = "...my_client_secret..."
-    lookback_window_days = 9
+    lookback_window_days = 10
     num_workers          = 1
     slice_range          = 10
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "6fe50a2e-7cfe-46f3-8acc-65c56f5fa677"
-  name          = "Sheldon Gerlach"
+  definition_id = "9512957c-2986-4967-96fe-05881022b8ad"
+  name          = "Joann Schuster IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "91c615d1-2804-40ba-83eb-3c0afcc3c8fa"
+  workspace_id  = "88754523-f36d-4ab5-9228-90f3e992c2a3"
 }
 ```
 
@@ -55,7 +55,7 @@ resource "airbyte_source_stripe" "my_source_stripe" {
 Required:
 
 - `account_id` (String) Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
-- `client_secret` (String) Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
+- `client_secret` (String, Sensitive) Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
 
 Optional:
 

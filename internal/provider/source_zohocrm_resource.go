@@ -63,10 +63,12 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OAuth2.0 Client ID`,
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `OAuth2.0 Client Secret`,
 					},
 					"dc_region": schema.StringAttribute{

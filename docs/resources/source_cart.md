@@ -18,16 +18,16 @@ resource "airbyte_source_cart" "my_source_cart" {
     credentials = {
       central_api_router = {
         site_id     = "...my_site_id..."
-        user_name   = "Ceasar63"
+        user_name   = "Joelle30"
         user_secret = "...my_user_secret..."
       }
     }
     start_date = "2021-01-01T00:00:00Z"
   }
-  definition_id = "7074f016-f721-427f-b3f8-652b2551b023"
-  name          = "Mr. Spencer Casper"
+  definition_id = "73b75739-1086-418e-9144-5d83c494a849"
+  name          = "Ms. Kristopher Hammes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a7ffb268-dc18-4708-bd37-ac99fd785161"
+  workspace_id  = "0e32c2e3-02e6-4de9-ab3e-43098446f983"
 }
 ```
 
@@ -74,9 +74,9 @@ Optional:
 
 Required:
 
-- `site_id` (String) You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
-- `user_name` (String) Enter your application's User Name
-- `user_secret` (String) Enter your application's User Secret
+- `site_id` (String, Sensitive) You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
+- `user_name` (String, Sensitive) Enter your application's User Name
+- `user_secret` (String, Sensitive) Enter your application's User Secret
 
 
 <a id="nestedatt--configuration--credentials--single_store_access_token"></a>

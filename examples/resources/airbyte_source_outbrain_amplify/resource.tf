@@ -6,12 +6,12 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "country"
-    report_granularity     = "daily"
+    geo_location_breakdown = "subregion"
+    report_granularity     = "weekly"
     start_date             = "...my_start_date..."
   }
-  definition_id = "2dc402ae-f616-435a-b9f9-4f985aa22e67"
-  name          = "Della Koepp"
+  definition_id = "a1e0cb61-9709-45b9-9e12-6100f09eb706"
+  name          = "Mrs. Randolph Aufderhar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e4e4244a-41ce-4525-b489-3048e9c1af99"
+  workspace_id  = "a0ac6bfa-e2b4-40c1-b3d4-d61133ddb2a9"
 }

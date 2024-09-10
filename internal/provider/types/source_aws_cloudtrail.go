@@ -5,8 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAwsCloudtrail struct {
-	AwsKeyID      types.String `tfsdk:"aws_key_id"`
-	AwsRegionName types.String `tfsdk:"aws_region_name"`
-	AwsSecretKey  types.String `tfsdk:"aws_secret_key"`
-	StartDate     types.String `tfsdk:"start_date"`
+	AwsKeyID               types.String                                                                                                                 `tfsdk:"aws_key_id"`
+	AwsRegionName          types.String                                                                                                                 `tfsdk:"aws_region_name"`
+	AwsSecretKey           types.String                                                                                                                 `tfsdk:"aws_secret_key"`
+	LookupAttributesFilter *SourceAwsCloudtrailFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody `tfsdk:"lookup_attributes_filter"`
+	StartDate              types.String                                                                                                                 `tfsdk:"start_date"`
 }

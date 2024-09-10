@@ -20,10 +20,10 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     client_secret = "...my_client_secret..."
     start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "61b75b72-6765-4eab-9ad8-42954bd759bd"
-  name          = "Clayton Prosacco"
+  definition_id = "b1a975dd-1b5a-4029-9b19-7bbb0227d625"
+  name          = "Earl Bruen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f80b7f55-7094-4a97-b635-6d53391630fd"
+  workspace_id  = "f731c6e6-bc1c-4af1-a6ae-e78925477f38"
 }
 ```
 
@@ -55,8 +55,8 @@ Required:
 
 Optional:
 
-- `client_id` (String) The Client ID for your Oauth application
-- `client_secret` (String) The Client Secret for your Oauth application
+- `client_id` (String, Sensitive) The Client ID for your Oauth application
+- `client_secret` (String, Sensitive) The Client Secret for your Oauth application
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 
 ## Import

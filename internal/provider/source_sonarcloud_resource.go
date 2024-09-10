@@ -62,7 +62,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 				Attributes: map[string]schema.Attribute{
 					"component_keys": schema.ListAttribute{
 						Required:    true,
-						Sensitive:   true,
 						ElementType: types.StringType,
 						Description: `Comma-separated list of component keys.`,
 						Validators: []validator.List{

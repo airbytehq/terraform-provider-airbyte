@@ -15,18 +15,20 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = true
-    data_source = {
-      recommended_managed_tables = {}
+    accept_terms = false
+    authentication = {
+      o_auth2_recommended = {
+        client_id = "...my_client_id..."
+        secret    = "...my_secret..."
+      }
     }
-    database                         = "...my_database..."
-    databricks_http_path             = "sql/protocolvx/o/1234567489/0000-1111111-abcd90"
-    databricks_personal_access_token = "dapi0123456789abcdefghij0123456789AB"
-    databricks_port                  = "443"
-    databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
-    enable_schema_evolution          = false
-    purge_staging_data               = true
-    schema                           = "default"
+    database            = "...my_database..."
+    hostname            = "abc-12345678-wxyz.cloud.databricks.com"
+    http_path           = "sql/1.0/warehouses/0000-1111111-abcd90"
+    port                = "443"
+    purge_staging_data  = true
+    raw_schema_override = "...my_raw_schema_override..."
+    schema              = "default"
   }
   definition_id = "bfbb5605-d730-46cf-a6f6-0bfc11e74f73"
   name          = "Janis Kohler"
@@ -57,61 +59,42 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 
 Required:
 
-- `data_source` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source))
-- `databricks_http_path` (String) Databricks Cluster HTTP Path.
-- `databricks_personal_access_token` (String, Sensitive) Databricks Personal Access Token for making authenticated requests.
-- `databricks_server_hostname` (String) Databricks Cluster Server Hostname.
+- `authentication` (Attributes) Authentication mechanism for Staging files and running queries (see [below for nested schema](#nestedatt--configuration--authentication))
+- `database` (String) The name of the unity catalog for the database
+- `hostname` (String) Databricks Cluster Server Hostname.
+- `http_path` (String) Databricks Cluster HTTP Path.
 
 Optional:
 
 - `accept_terms` (Boolean) You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector. Default: false
-- `database` (String) The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.
-- `databricks_port` (String) Databricks Cluster Port. Default: "443"
-- `enable_schema_evolution` (Boolean) Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes. Default: false
+- `port` (String) Databricks Cluster Port. Default: "443"
 - `purge_staging_data` (Boolean) Default to 'true'. Switch it to 'false' for debugging purpose. Default: true
+- `raw_schema_override` (String) The schema to write raw tables into (default: airbyte_internal). Default: "airbyte_internal"
 - `schema` (String) The default schema tables are written. If not specified otherwise, the "default" will be used. Default: "default"
 
-<a id="nestedatt--configuration--data_source"></a>
-### Nested Schema for `configuration.data_source`
+<a id="nestedatt--configuration--authentication"></a>
+### Nested Schema for `configuration.authentication`
 
 Optional:
 
-- `amazon_s3` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--amazon_s3))
-- `azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--azure_blob_storage))
-- `recommended_managed_tables` (Attributes) (see [below for nested schema](#nestedatt--configuration--data_source--recommended_managed_tables))
+- `o_auth2_recommended` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication--o_auth2_recommended))
+- `personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication--personal_access_token))
 
-<a id="nestedatt--configuration--data_source--amazon_s3"></a>
-### Nested Schema for `configuration.data_source.amazon_s3`
+<a id="nestedatt--configuration--authentication--o_auth2_recommended"></a>
+### Nested Schema for `configuration.authentication.o_auth2_recommended`
 
 Required:
 
-- `s3_access_key_id` (String, Sensitive) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
-- `s3_bucket_name` (String) The name of the S3 bucket to use for intermittent staging of the data.
-- `s3_bucket_path` (String) The directory under the S3 bucket where data will be written.
-- `s3_secret_access_key` (String, Sensitive) The corresponding secret to the above access key id.
-
-Optional:
-
-- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a copy strategy. must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]; Default: ""
+- `client_id` (String)
+- `secret` (String, Sensitive)
 
 
-<a id="nestedatt--configuration--data_source--azure_blob_storage"></a>
-### Nested Schema for `configuration.data_source.azure_blob_storage`
+<a id="nestedatt--configuration--authentication--personal_access_token"></a>
+### Nested Schema for `configuration.authentication.personal_access_token`
 
 Required:
 
-- `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
-- `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
-- `azure_blob_storage_sas_token` (String, Sensitive) Shared access signature (SAS) token to grant limited access to objects in your storage account.
-
-Optional:
-
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"
-
-
-<a id="nestedatt--configuration--data_source--recommended_managed_tables"></a>
-### Nested Schema for `configuration.data_source.recommended_managed_tables`
+- `personal_access_token` (String, Sensitive)
 
 ## Import
 

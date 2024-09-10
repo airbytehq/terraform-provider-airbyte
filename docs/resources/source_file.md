@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "excel_binary"
+    format       = "yaml"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -24,13 +24,13 @@ resource "airbyte_source_file" "my_source_file" {
         storage_account = "...my_storage_account..."
       }
     }
-    reader_options = "{}"
-    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+    reader_options = "{\"sep\": \" \"}"
+    url            = "gs://my-google-bucket/data.csv"
   }
-  definition_id = "e3e60165-4663-452d-a9b0-4e26c5d5cf50"
-  name          = "Robin Wolf I"
+  definition_id = "16116fc8-03c8-4311-a97a-1ae894962943"
+  name          = "Kristine Bailey"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "464ed5bf-6d67-4306-8c54-8e68cfaeff48"
+  workspace_id  = "eacfe7e0-17f9-4052-b204-0e069282dd6a"
 }
 ```
 
@@ -98,7 +98,7 @@ Optional:
 
 Optional:
 
-- `service_account_json` (String) In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
+- `service_account_json` (String, Sensitive) In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
 
 
 <a id="nestedatt--configuration--provider--https_public_web"></a>
@@ -114,7 +114,7 @@ Optional:
 
 Optional:
 
-- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+- `aws_access_key_id` (String) In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 
 

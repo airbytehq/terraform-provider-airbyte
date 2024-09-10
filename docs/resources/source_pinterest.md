@@ -27,26 +27,26 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
         ]
         click_window_days = "7"
         columns = [
-          "CAMPAIGN_DAILY_SPEND_CAP",
+          "TOTAL_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR",
         ]
         conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "30"
-        granularity            = "MONTH"
-        level                  = "PRODUCT_GROUP_TARGETING"
-        name                   = "Dr. Fred Grady"
+        engagement_window_days = "60"
+        granularity            = "HOUR"
+        level                  = "KEYWORD"
+        name                   = "Stanley Green"
         start_date             = "2022-07-28"
-        view_window_days       = "1"
+        view_window_days       = "30"
       },
     ]
     start_date = "2022-07-28"
     status = [
-      "ACTIVE",
+      "PAUSED",
     ]
   }
-  definition_id = "c879583a-59a8-4255-b101-40178456a4c1"
-  name          = "Bessie Emard"
+  definition_id = "dc5f9765-35f7-43a4-9535-fff5d1d34f0c"
+  name          = "Conrad Hane"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2c277a8e-2388-4fd0-920f-62c51a2676b4"
+  workspace_id  = "6a3a161d-c53f-4641-88ac-b8b41d5bf94a"
 }
 ```
 
@@ -84,8 +84,8 @@ Optional:
 
 Required:
 
-- `client_id` (String) The Client ID of your OAuth application
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
 - `refresh_token` (String, Sensitive) Refresh Token to obtain new Access Token, when it's expired.
 
 

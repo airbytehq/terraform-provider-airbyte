@@ -2,11 +2,11 @@ resource "airbyte_source_posthog" "my_source_posthog" {
   configuration = {
     api_key          = "...my_api_key..."
     base_url         = "https://posthog.example.com"
-    events_time_step = 5
+    events_time_step = 10
     start_date       = "2021-01-01T00:00:00Z"
   }
-  definition_id = "b48bf3f0-e963-41eb-8afa-a2ee7a1e0cb6"
-  name          = "Ms. Jenny Konopelski"
+  definition_id = "aababee9-d637-48e7-a43c-021bc073abf4"
+  name          = "Edmond Thiel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b91e1261-00f0-49eb-b06b-b016ea0ac6bf"
+  workspace_id  = "414e5a60-3e6b-43fc-a03d-92cb14510264"
 }

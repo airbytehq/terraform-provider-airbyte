@@ -5,8 +5,8 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
   }
-  definition_id = "8d64a810-b295-4958-bed0-c47c0f9ce33c"
-  name          = "Kristie Davis"
+  definition_id = "391630fd-2f13-41d4-bbef-253f33ac135d"
+  name          = "Jackie Bayer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c11e4e99-3d29-4474-a81b-b54dff6cf9b7"
+  workspace_id  = "3794a97d-5acf-4562-93a6-6e5ad3919293"
 }

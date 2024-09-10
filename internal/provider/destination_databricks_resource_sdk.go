@@ -14,97 +14,53 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreate
 	} else {
 		acceptTerms = nil
 	}
-	var dataSource shared.DestinationDatabricksDataSource
-	var destinationDatabricksRecommendedManagedTables *shared.DestinationDatabricksRecommendedManagedTables
-	if r.Configuration.DataSource.RecommendedManagedTables != nil {
-		destinationDatabricksRecommendedManagedTables = &shared.DestinationDatabricksRecommendedManagedTables{}
-	}
-	if destinationDatabricksRecommendedManagedTables != nil {
-		dataSource = shared.DestinationDatabricksDataSource{
-			DestinationDatabricksRecommendedManagedTables: destinationDatabricksRecommendedManagedTables,
+	var authentication shared.DestinationDatabricksAuthentication
+	var destinationDatabricksOAuth2Recommended *shared.DestinationDatabricksOAuth2Recommended
+	if r.Configuration.Authentication.OAuth2Recommended != nil {
+		clientID := r.Configuration.Authentication.OAuth2Recommended.ClientID.ValueString()
+		secret := r.Configuration.Authentication.OAuth2Recommended.Secret.ValueString()
+		destinationDatabricksOAuth2Recommended = &shared.DestinationDatabricksOAuth2Recommended{
+			ClientID: clientID,
+			Secret:   secret,
 		}
 	}
-	var destinationDatabricksAmazonS3 *shared.DestinationDatabricksAmazonS3
-	if r.Configuration.DataSource.AmazonS3 != nil {
-		fileNamePattern := new(string)
-		if !r.Configuration.DataSource.AmazonS3.FileNamePattern.IsUnknown() && !r.Configuration.DataSource.AmazonS3.FileNamePattern.IsNull() {
-			*fileNamePattern = r.Configuration.DataSource.AmazonS3.FileNamePattern.ValueString()
-		} else {
-			fileNamePattern = nil
-		}
-		s3AccessKeyID := r.Configuration.DataSource.AmazonS3.S3AccessKeyID.ValueString()
-		s3BucketName := r.Configuration.DataSource.AmazonS3.S3BucketName.ValueString()
-		s3BucketPath := r.Configuration.DataSource.AmazonS3.S3BucketPath.ValueString()
-		s3BucketRegion := new(shared.DestinationDatabricksS3BucketRegion)
-		if !r.Configuration.DataSource.AmazonS3.S3BucketRegion.IsUnknown() && !r.Configuration.DataSource.AmazonS3.S3BucketRegion.IsNull() {
-			*s3BucketRegion = shared.DestinationDatabricksS3BucketRegion(r.Configuration.DataSource.AmazonS3.S3BucketRegion.ValueString())
-		} else {
-			s3BucketRegion = nil
-		}
-		s3SecretAccessKey := r.Configuration.DataSource.AmazonS3.S3SecretAccessKey.ValueString()
-		destinationDatabricksAmazonS3 = &shared.DestinationDatabricksAmazonS3{
-			FileNamePattern:   fileNamePattern,
-			S3AccessKeyID:     s3AccessKeyID,
-			S3BucketName:      s3BucketName,
-			S3BucketPath:      s3BucketPath,
-			S3BucketRegion:    s3BucketRegion,
-			S3SecretAccessKey: s3SecretAccessKey,
+	if destinationDatabricksOAuth2Recommended != nil {
+		authentication = shared.DestinationDatabricksAuthentication{
+			DestinationDatabricksOAuth2Recommended: destinationDatabricksOAuth2Recommended,
 		}
 	}
-	if destinationDatabricksAmazonS3 != nil {
-		dataSource = shared.DestinationDatabricksDataSource{
-			DestinationDatabricksAmazonS3: destinationDatabricksAmazonS3,
+	var destinationDatabricksPersonalAccessToken *shared.DestinationDatabricksPersonalAccessToken
+	if r.Configuration.Authentication.PersonalAccessToken != nil {
+		personalAccessToken := r.Configuration.Authentication.PersonalAccessToken.PersonalAccessToken.ValueString()
+		destinationDatabricksPersonalAccessToken = &shared.DestinationDatabricksPersonalAccessToken{
+			PersonalAccessToken: personalAccessToken,
 		}
 	}
-	var destinationDatabricksAzureBlobStorage *shared.DestinationDatabricksAzureBlobStorage
-	if r.Configuration.DataSource.AzureBlobStorage != nil {
-		azureBlobStorageAccountName := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageAccountName.ValueString()
-		azureBlobStorageContainerName := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageContainerName.ValueString()
-		azureBlobStorageEndpointDomainName := new(string)
-		if !r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.IsUnknown() && !r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.IsNull() {
-			*azureBlobStorageEndpointDomainName = r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.ValueString()
-		} else {
-			azureBlobStorageEndpointDomainName = nil
-		}
-		azureBlobStorageSasToken := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageSasToken.ValueString()
-		destinationDatabricksAzureBlobStorage = &shared.DestinationDatabricksAzureBlobStorage{
-			AzureBlobStorageAccountName:        azureBlobStorageAccountName,
-			AzureBlobStorageContainerName:      azureBlobStorageContainerName,
-			AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
-			AzureBlobStorageSasToken:           azureBlobStorageSasToken,
+	if destinationDatabricksPersonalAccessToken != nil {
+		authentication = shared.DestinationDatabricksAuthentication{
+			DestinationDatabricksPersonalAccessToken: destinationDatabricksPersonalAccessToken,
 		}
 	}
-	if destinationDatabricksAzureBlobStorage != nil {
-		dataSource = shared.DestinationDatabricksDataSource{
-			DestinationDatabricksAzureBlobStorage: destinationDatabricksAzureBlobStorage,
-		}
-	}
-	database := new(string)
-	if !r.Configuration.Database.IsUnknown() && !r.Configuration.Database.IsNull() {
-		*database = r.Configuration.Database.ValueString()
+	database := r.Configuration.Database.ValueString()
+	hostname := r.Configuration.Hostname.ValueString()
+	httpPath := r.Configuration.HTTPPath.ValueString()
+	port := new(string)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueString()
 	} else {
-		database = nil
-	}
-	databricksHTTPPath := r.Configuration.DatabricksHTTPPath.ValueString()
-	databricksPersonalAccessToken := r.Configuration.DatabricksPersonalAccessToken.ValueString()
-	databricksPort := new(string)
-	if !r.Configuration.DatabricksPort.IsUnknown() && !r.Configuration.DatabricksPort.IsNull() {
-		*databricksPort = r.Configuration.DatabricksPort.ValueString()
-	} else {
-		databricksPort = nil
-	}
-	databricksServerHostname := r.Configuration.DatabricksServerHostname.ValueString()
-	enableSchemaEvolution := new(bool)
-	if !r.Configuration.EnableSchemaEvolution.IsUnknown() && !r.Configuration.EnableSchemaEvolution.IsNull() {
-		*enableSchemaEvolution = r.Configuration.EnableSchemaEvolution.ValueBool()
-	} else {
-		enableSchemaEvolution = nil
+		port = nil
 	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
 	} else {
 		purgeStagingData = nil
+	}
+	rawSchemaOverride := new(string)
+	if !r.Configuration.RawSchemaOverride.IsUnknown() && !r.Configuration.RawSchemaOverride.IsNull() {
+		*rawSchemaOverride = r.Configuration.RawSchemaOverride.ValueString()
+	} else {
+		rawSchemaOverride = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -113,16 +69,15 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreate
 		schema = nil
 	}
 	configuration := shared.DestinationDatabricks{
-		AcceptTerms:                   acceptTerms,
-		DataSource:                    dataSource,
-		Database:                      database,
-		DatabricksHTTPPath:            databricksHTTPPath,
-		DatabricksPersonalAccessToken: databricksPersonalAccessToken,
-		DatabricksPort:                databricksPort,
-		DatabricksServerHostname:      databricksServerHostname,
-		EnableSchemaEvolution:         enableSchemaEvolution,
-		PurgeStagingData:              purgeStagingData,
-		Schema:                        schema,
+		AcceptTerms:       acceptTerms,
+		Authentication:    authentication,
+		Database:          database,
+		Hostname:          hostname,
+		HTTPPath:          httpPath,
+		Port:              port,
+		PurgeStagingData:  purgeStagingData,
+		RawSchemaOverride: rawSchemaOverride,
+		Schema:            schema,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -157,97 +112,53 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutReq
 	} else {
 		acceptTerms = nil
 	}
-	var dataSource shared.DataSource
-	var recommendedManagedTables *shared.RecommendedManagedTables
-	if r.Configuration.DataSource.RecommendedManagedTables != nil {
-		recommendedManagedTables = &shared.RecommendedManagedTables{}
-	}
-	if recommendedManagedTables != nil {
-		dataSource = shared.DataSource{
-			RecommendedManagedTables: recommendedManagedTables,
+	var authentication shared.Authentication
+	var oAuth2Recommended *shared.OAuth2Recommended
+	if r.Configuration.Authentication.OAuth2Recommended != nil {
+		clientID := r.Configuration.Authentication.OAuth2Recommended.ClientID.ValueString()
+		secret := r.Configuration.Authentication.OAuth2Recommended.Secret.ValueString()
+		oAuth2Recommended = &shared.OAuth2Recommended{
+			ClientID: clientID,
+			Secret:   secret,
 		}
 	}
-	var amazonS3 *shared.AmazonS3
-	if r.Configuration.DataSource.AmazonS3 != nil {
-		fileNamePattern := new(string)
-		if !r.Configuration.DataSource.AmazonS3.FileNamePattern.IsUnknown() && !r.Configuration.DataSource.AmazonS3.FileNamePattern.IsNull() {
-			*fileNamePattern = r.Configuration.DataSource.AmazonS3.FileNamePattern.ValueString()
-		} else {
-			fileNamePattern = nil
-		}
-		s3AccessKeyID := r.Configuration.DataSource.AmazonS3.S3AccessKeyID.ValueString()
-		s3BucketName := r.Configuration.DataSource.AmazonS3.S3BucketName.ValueString()
-		s3BucketPath := r.Configuration.DataSource.AmazonS3.S3BucketPath.ValueString()
-		s3BucketRegion := new(shared.DestinationDatabricksUpdateS3BucketRegion)
-		if !r.Configuration.DataSource.AmazonS3.S3BucketRegion.IsUnknown() && !r.Configuration.DataSource.AmazonS3.S3BucketRegion.IsNull() {
-			*s3BucketRegion = shared.DestinationDatabricksUpdateS3BucketRegion(r.Configuration.DataSource.AmazonS3.S3BucketRegion.ValueString())
-		} else {
-			s3BucketRegion = nil
-		}
-		s3SecretAccessKey := r.Configuration.DataSource.AmazonS3.S3SecretAccessKey.ValueString()
-		amazonS3 = &shared.AmazonS3{
-			FileNamePattern:   fileNamePattern,
-			S3AccessKeyID:     s3AccessKeyID,
-			S3BucketName:      s3BucketName,
-			S3BucketPath:      s3BucketPath,
-			S3BucketRegion:    s3BucketRegion,
-			S3SecretAccessKey: s3SecretAccessKey,
+	if oAuth2Recommended != nil {
+		authentication = shared.Authentication{
+			OAuth2Recommended: oAuth2Recommended,
 		}
 	}
-	if amazonS3 != nil {
-		dataSource = shared.DataSource{
-			AmazonS3: amazonS3,
+	var personalAccessToken *shared.PersonalAccessToken
+	if r.Configuration.Authentication.PersonalAccessToken != nil {
+		personalAccessToken1 := r.Configuration.Authentication.PersonalAccessToken.PersonalAccessToken.ValueString()
+		personalAccessToken = &shared.PersonalAccessToken{
+			PersonalAccessToken: personalAccessToken1,
 		}
 	}
-	var destinationDatabricksUpdateAzureBlobStorage *shared.DestinationDatabricksUpdateAzureBlobStorage
-	if r.Configuration.DataSource.AzureBlobStorage != nil {
-		azureBlobStorageAccountName := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageAccountName.ValueString()
-		azureBlobStorageContainerName := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageContainerName.ValueString()
-		azureBlobStorageEndpointDomainName := new(string)
-		if !r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.IsUnknown() && !r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.IsNull() {
-			*azureBlobStorageEndpointDomainName = r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageEndpointDomainName.ValueString()
-		} else {
-			azureBlobStorageEndpointDomainName = nil
-		}
-		azureBlobStorageSasToken := r.Configuration.DataSource.AzureBlobStorage.AzureBlobStorageSasToken.ValueString()
-		destinationDatabricksUpdateAzureBlobStorage = &shared.DestinationDatabricksUpdateAzureBlobStorage{
-			AzureBlobStorageAccountName:        azureBlobStorageAccountName,
-			AzureBlobStorageContainerName:      azureBlobStorageContainerName,
-			AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
-			AzureBlobStorageSasToken:           azureBlobStorageSasToken,
+	if personalAccessToken != nil {
+		authentication = shared.Authentication{
+			PersonalAccessToken: personalAccessToken,
 		}
 	}
-	if destinationDatabricksUpdateAzureBlobStorage != nil {
-		dataSource = shared.DataSource{
-			DestinationDatabricksUpdateAzureBlobStorage: destinationDatabricksUpdateAzureBlobStorage,
-		}
-	}
-	database := new(string)
-	if !r.Configuration.Database.IsUnknown() && !r.Configuration.Database.IsNull() {
-		*database = r.Configuration.Database.ValueString()
+	database := r.Configuration.Database.ValueString()
+	hostname := r.Configuration.Hostname.ValueString()
+	httpPath := r.Configuration.HTTPPath.ValueString()
+	port := new(string)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueString()
 	} else {
-		database = nil
-	}
-	databricksHTTPPath := r.Configuration.DatabricksHTTPPath.ValueString()
-	databricksPersonalAccessToken := r.Configuration.DatabricksPersonalAccessToken.ValueString()
-	databricksPort := new(string)
-	if !r.Configuration.DatabricksPort.IsUnknown() && !r.Configuration.DatabricksPort.IsNull() {
-		*databricksPort = r.Configuration.DatabricksPort.ValueString()
-	} else {
-		databricksPort = nil
-	}
-	databricksServerHostname := r.Configuration.DatabricksServerHostname.ValueString()
-	enableSchemaEvolution := new(bool)
-	if !r.Configuration.EnableSchemaEvolution.IsUnknown() && !r.Configuration.EnableSchemaEvolution.IsNull() {
-		*enableSchemaEvolution = r.Configuration.EnableSchemaEvolution.ValueBool()
-	} else {
-		enableSchemaEvolution = nil
+		port = nil
 	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
 	} else {
 		purgeStagingData = nil
+	}
+	rawSchemaOverride := new(string)
+	if !r.Configuration.RawSchemaOverride.IsUnknown() && !r.Configuration.RawSchemaOverride.IsNull() {
+		*rawSchemaOverride = r.Configuration.RawSchemaOverride.ValueString()
+	} else {
+		rawSchemaOverride = nil
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -256,16 +167,15 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutReq
 		schema = nil
 	}
 	configuration := shared.DestinationDatabricksUpdate{
-		AcceptTerms:                   acceptTerms,
-		DataSource:                    dataSource,
-		Database:                      database,
-		DatabricksHTTPPath:            databricksHTTPPath,
-		DatabricksPersonalAccessToken: databricksPersonalAccessToken,
-		DatabricksPort:                databricksPort,
-		DatabricksServerHostname:      databricksServerHostname,
-		EnableSchemaEvolution:         enableSchemaEvolution,
-		PurgeStagingData:              purgeStagingData,
-		Schema:                        schema,
+		AcceptTerms:       acceptTerms,
+		Authentication:    authentication,
+		Database:          database,
+		Hostname:          hostname,
+		HTTPPath:          httpPath,
+		Port:              port,
+		PurgeStagingData:  purgeStagingData,
+		RawSchemaOverride: rawSchemaOverride,
+		Schema:            schema,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

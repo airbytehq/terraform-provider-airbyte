@@ -19,17 +19,17 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
       api_token = {
         additional_properties = "{ \"see\": \"documentation\" }"
         api_token             = "...my_api_token..."
-        email                 = "Anastacio94@yahoo.com"
+        email                 = "Priscilla.Bergstrom51@hotmail.com"
       }
     }
     ignore_pagination = true
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  definition_id = "0a84c82f-eed3-45fd-8712-605259781224"
-  name          = "Kathleen Greenfelder"
+  definition_id = "00a18f6f-5072-4b63-af98-b5cd0fbbcc17"
+  name          = "Katie Bartoletti"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "79a97873-ec6e-4c23-b893-6834bb7f256a"
+  workspace_id  = "ebd0cf43-5b72-4f05-818a-11c8951c09c2"
 }
 ```
 
@@ -96,8 +96,8 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_id` (String) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
-- `client_secret` (String) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
+- `client_id` (String, Sensitive) The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
+- `client_secret` (String, Sensitive) The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.
 
 ## Import
 

@@ -461,12 +461,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				SourceS3ParquetFormat: sourceS3ParquetFormat,
 			}
 		}
-		var sourceS3DocumentFileTypeFormatExperimental *shared.SourceS3DocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var sourceS3UnstructuredDocumentFormat *shared.SourceS3UnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			var processing *shared.SourceS3Processing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceS3Local *shared.SourceS3Local
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					sourceS3Local = &shared.SourceS3Local{}
 				}
 				if sourceS3Local != nil {
@@ -476,26 +476,26 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceS3ParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceS3ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceS3DocumentFileTypeFormatExperimental = &shared.SourceS3DocumentFileTypeFormatExperimental{
+			sourceS3UnstructuredDocumentFormat = &shared.SourceS3UnstructuredDocumentFormat{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceS3DocumentFileTypeFormatExperimental != nil {
+		if sourceS3UnstructuredDocumentFormat != nil {
 			format1 = shared.SourceS3Format{
-				SourceS3DocumentFileTypeFormatExperimental: sourceS3DocumentFileTypeFormatExperimental,
+				SourceS3UnstructuredDocumentFormat: sourceS3UnstructuredDocumentFormat,
 			}
 		}
 		var globs []string = []string{}
@@ -521,6 +521,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 		} else {
 			primaryKey = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -534,15 +540,16 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3CreateRequest() *shared.SourceS3
 			validationPolicy = nil
 		}
 		streams = append(streams, shared.SourceS3FileBasedStreamConfig{
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format1,
-			Globs:                     globs,
-			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
-			Name:                      name,
-			PrimaryKey:                primaryKey,
-			Schemaless:                schemaless,
-			ValidationPolicy:          validationPolicy,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format1,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			LegacyPrefix:                         legacyPrefix,
+			Name:                                 name,
+			PrimaryKey:                           primaryKey,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
 	configuration := shared.SourceS3{
@@ -1046,12 +1053,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				SourceS3UpdateParquetFormat: sourceS3UpdateParquetFormat,
 			}
 		}
-		var sourceS3UpdateDocumentFileTypeFormatExperimental *shared.SourceS3UpdateDocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var sourceS3UpdateUnstructuredDocumentFormat *shared.SourceS3UpdateUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			var processing *shared.SourceS3UpdateProcessing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceS3UpdateLocal *shared.SourceS3UpdateLocal
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					sourceS3UpdateLocal = &shared.SourceS3UpdateLocal{}
 				}
 				if sourceS3UpdateLocal != nil {
@@ -1061,26 +1068,26 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceS3UpdateParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceS3UpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceS3UpdateDocumentFileTypeFormatExperimental = &shared.SourceS3UpdateDocumentFileTypeFormatExperimental{
+			sourceS3UpdateUnstructuredDocumentFormat = &shared.SourceS3UpdateUnstructuredDocumentFormat{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceS3UpdateDocumentFileTypeFormatExperimental != nil {
+		if sourceS3UpdateUnstructuredDocumentFormat != nil {
 			format1 = shared.SourceS3UpdateFormat{
-				SourceS3UpdateDocumentFileTypeFormatExperimental: sourceS3UpdateDocumentFileTypeFormatExperimental,
+				SourceS3UpdateUnstructuredDocumentFormat: sourceS3UpdateUnstructuredDocumentFormat,
 			}
 		}
 		var globs []string = []string{}
@@ -1106,6 +1113,12 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 		} else {
 			primaryKey = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -1119,15 +1132,16 @@ func (r *SourceS3ResourceModel) ToSharedSourceS3PutRequest() *shared.SourceS3Put
 			validationPolicy = nil
 		}
 		streams = append(streams, shared.SourceS3UpdateFileBasedStreamConfig{
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format1,
-			Globs:                     globs,
-			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
-			Name:                      name,
-			PrimaryKey:                primaryKey,
-			Schemaless:                schemaless,
-			ValidationPolicy:          validationPolicy,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format1,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			LegacyPrefix:                         legacyPrefix,
+			Name:                                 name,
+			PrimaryKey:                           primaryKey,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
 	configuration := shared.SourceS3Update{

@@ -203,6 +203,12 @@ type SourceShopifyUpdate struct {
 	Credentials *ShopifyAuthorizationMethod `json:"credentials,omitempty"`
 	// Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch.
 	FetchTransactionsUserID *bool `default:"false" json:"fetch_transactions_user_id"`
+	// The threshold, after which the single BULK Job should be checkpointed.
+	JobCheckpointInterval *int64 `default:"100000" json:"job_checkpoint_interval"`
+	// If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance).
+	JobProductVariantsIncludePresPrices *bool `default:"true" json:"job_product_variants_include_pres_prices"`
+	// The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run.
+	JobTerminationThreshold *int64 `default:"7200" json:"job_termination_threshold"`
 	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 	Shop string `json:"shop"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
@@ -239,6 +245,27 @@ func (o *SourceShopifyUpdate) GetFetchTransactionsUserID() *bool {
 		return nil
 	}
 	return o.FetchTransactionsUserID
+}
+
+func (o *SourceShopifyUpdate) GetJobCheckpointInterval() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.JobCheckpointInterval
+}
+
+func (o *SourceShopifyUpdate) GetJobProductVariantsIncludePresPrices() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.JobProductVariantsIncludePresPrices
+}
+
+func (o *SourceShopifyUpdate) GetJobTerminationThreshold() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.JobTerminationThreshold
 }
 
 func (o *SourceShopifyUpdate) GetShop() string {

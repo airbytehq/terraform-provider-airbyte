@@ -5,8 +5,8 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     lookback_window = 60
     start_date      = "2020-10-01T00:00:00Z"
   }
-  definition_id = "a4b37eb2-05dd-4b7f-9b71-195e07e10364"
-  name          = "Angie Jenkins"
+  definition_id = "214e979a-9787-43ec-aec2-3f8936834bb7"
+  name          = "Howard Herman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d2a60225-b2ac-462e-b10f-1a0d51fb8be0"
+  workspace_id  = "a2eed97a-7ac9-43ce-a101-f692eff8de56"
 }

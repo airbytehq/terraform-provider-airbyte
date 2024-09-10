@@ -123,16 +123,16 @@ func (r *SourceAirtableResourceModel) ToSharedSourceAirtablePutRequest() *shared
 				SourceAirtableUpdateOAuth20: sourceAirtableUpdateOAuth20,
 			}
 		}
-		var personalAccessToken *shared.PersonalAccessToken
+		var sourceAirtableUpdatePersonalAccessToken *shared.SourceAirtableUpdatePersonalAccessToken
 		if r.Configuration.Credentials.PersonalAccessToken != nil {
 			apiKey := r.Configuration.Credentials.PersonalAccessToken.APIKey.ValueString()
-			personalAccessToken = &shared.PersonalAccessToken{
+			sourceAirtableUpdatePersonalAccessToken = &shared.SourceAirtableUpdatePersonalAccessToken{
 				APIKey: apiKey,
 			}
 		}
-		if personalAccessToken != nil {
+		if sourceAirtableUpdatePersonalAccessToken != nil {
 			credentials = &shared.SourceAirtableUpdateAuthentication{
-				PersonalAccessToken: personalAccessToken,
+				SourceAirtableUpdatePersonalAccessToken: sourceAirtableUpdatePersonalAccessToken,
 			}
 		}
 	}

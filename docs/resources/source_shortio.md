@@ -19,10 +19,10 @@ resource "airbyte_source_shortio" "my_source_shortio" {
     secret_key = "...my_secret_key..."
     start_date = "2023-07-30T03:43:59.244Z"
   }
-  definition_id = "687b3371-0669-486a-bb02-fd25c7727b36"
-  name          = "Yvonne Glover"
+  definition_id = "54f47827-40a2-4b5a-8624-28ebc5c77ead"
+  name          = "Kenneth Rutherford"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1d3e7f0b-c649-4fe5-b08c-82dc40ca1ab7"
+  workspace_id  = "e16ebe85-fa64-4aee-8d2b-de48eefceb9e"
 }
 ```
 
@@ -50,9 +50,9 @@ resource "airbyte_source_shortio" "my_source_shortio" {
 
 Required:
 
-- `domain_id` (String)
+- `domain_id` (String, Sensitive)
 - `secret_key` (String, Sensitive) Short.io Secret Key
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+- `start_date` (String, Sensitive) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 ## Import
 

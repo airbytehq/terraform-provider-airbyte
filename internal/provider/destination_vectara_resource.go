@@ -80,6 +80,7 @@ func (r *DestinationVectaraResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `OAuth2.0 client secret`,
 							},
 						},

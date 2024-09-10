@@ -80,10 +80,12 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API ID of the Gitlab developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API Secret the Gitlab developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -93,7 +95,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required:    true,
-										Sensitive:   true,
 										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),

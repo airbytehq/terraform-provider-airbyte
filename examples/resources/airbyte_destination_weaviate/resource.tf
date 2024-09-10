@@ -19,16 +19,16 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
           token = "...my_token..."
         }
       }
-      batch_size         = 1
-      default_vectorizer = "text2vec-palm"
+      batch_size         = 9
+      default_vectorizer = "text2vec-transformers"
       host               = "https://my-cluster.weaviate.network"
       tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
-    omit_raw_text = false
+    omit_raw_text = true
     processing = {
-      chunk_overlap = 0
-      chunk_size    = 5
+      chunk_overlap = 1
+      chunk_size    = 6
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -43,12 +43,12 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 4
+          split_level = 0
         }
       }
     }
   }
-  definition_id = "8467e5cd-3332-485c-bcc3-fde334f786aa"
-  name          = "Dale Padberg"
-  workspace_id  = "527fe19e-b1bf-48ee-a339-467597e801e6"
+  definition_id = "0858467e-5cd3-4332-85c7-cc3fde334f78"
+  name          = "Maggie Nolan"
+  workspace_id  = "aaf527fe-19eb-41bf-8ee2-339467597e80"
 }

@@ -428,8 +428,8 @@ func (e *SourceMicrosoftOnedriveParsingStrategy) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental struct {
+// SourceMicrosoftOnedriveUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceMicrosoftOnedriveUnstructuredDocumentFormat struct {
 	filetype *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceMicrosoftOnedriveProcessing `json:"processing,omitempty"`
@@ -439,36 +439,36 @@ type SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental struct {
 	Strategy *SourceMicrosoftOnedriveParsingStrategy `default:"auto" json:"strategy"`
 }
 
-func (s SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceMicrosoftOnedriveUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceMicrosoftOnedriveUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) GetFiletype() *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype {
+func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetFiletype() *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype {
 	return SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) GetProcessing() *SourceMicrosoftOnedriveProcessing {
+func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftOnedriveProcessing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
 }
 
-func (o *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) GetStrategy() *SourceMicrosoftOnedriveParsingStrategy {
+func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetStrategy() *SourceMicrosoftOnedriveParsingStrategy {
 	if o == nil {
 		return nil
 	}
@@ -1002,20 +1002,20 @@ func (o *SourceMicrosoftOnedriveAvroFormat) GetFiletype() *SourceMicrosoftOnedri
 type SourceMicrosoftOnedriveFormatType string
 
 const (
-	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveAvroFormat                         SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Avro Format"
-	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveCSVFormat                          SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_CSV Format"
-	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveJsonlFormat                        SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Jsonl Format"
-	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveParquetFormat                      SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Parquet Format"
-	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveDocumentFileTypeFormatExperimental SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Document File Type Format (Experimental)"
+	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveAvroFormat                 SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Avro Format"
+	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveCSVFormat                  SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_CSV Format"
+	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveJsonlFormat                SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Jsonl Format"
+	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveParquetFormat              SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Parquet Format"
+	SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveUnstructuredDocumentFormat SourceMicrosoftOnedriveFormatType = "source-microsoft-onedrive_Unstructured Document Format"
 )
 
 // SourceMicrosoftOnedriveFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceMicrosoftOnedriveFormat struct {
-	SourceMicrosoftOnedriveAvroFormat                         *SourceMicrosoftOnedriveAvroFormat
-	SourceMicrosoftOnedriveCSVFormat                          *SourceMicrosoftOnedriveCSVFormat
-	SourceMicrosoftOnedriveJsonlFormat                        *SourceMicrosoftOnedriveJsonlFormat
-	SourceMicrosoftOnedriveParquetFormat                      *SourceMicrosoftOnedriveParquetFormat
-	SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental *SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental
+	SourceMicrosoftOnedriveAvroFormat                 *SourceMicrosoftOnedriveAvroFormat
+	SourceMicrosoftOnedriveCSVFormat                  *SourceMicrosoftOnedriveCSVFormat
+	SourceMicrosoftOnedriveJsonlFormat                *SourceMicrosoftOnedriveJsonlFormat
+	SourceMicrosoftOnedriveParquetFormat              *SourceMicrosoftOnedriveParquetFormat
+	SourceMicrosoftOnedriveUnstructuredDocumentFormat *SourceMicrosoftOnedriveUnstructuredDocumentFormat
 
 	Type SourceMicrosoftOnedriveFormatType
 }
@@ -1056,11 +1056,11 @@ func CreateSourceMicrosoftOnedriveFormatSourceMicrosoftOnedriveParquetFormat(sou
 	}
 }
 
-func CreateSourceMicrosoftOnedriveFormatSourceMicrosoftOnedriveDocumentFileTypeFormatExperimental(sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental) SourceMicrosoftOnedriveFormat {
-	typ := SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveDocumentFileTypeFormatExperimental
+func CreateSourceMicrosoftOnedriveFormatSourceMicrosoftOnedriveUnstructuredDocumentFormat(sourceMicrosoftOnedriveUnstructuredDocumentFormat SourceMicrosoftOnedriveUnstructuredDocumentFormat) SourceMicrosoftOnedriveFormat {
+	typ := SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveUnstructuredDocumentFormat
 
 	return SourceMicrosoftOnedriveFormat{
-		SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental: &sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental,
+		SourceMicrosoftOnedriveUnstructuredDocumentFormat: &sourceMicrosoftOnedriveUnstructuredDocumentFormat,
 		Type: typ,
 	}
 }
@@ -1088,10 +1088,10 @@ func (u *SourceMicrosoftOnedriveFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental = SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental = &sourceMicrosoftOnedriveDocumentFileTypeFormatExperimental
-		u.Type = SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveDocumentFileTypeFormatExperimental
+	var sourceMicrosoftOnedriveUnstructuredDocumentFormat SourceMicrosoftOnedriveUnstructuredDocumentFormat = SourceMicrosoftOnedriveUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftOnedriveUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceMicrosoftOnedriveUnstructuredDocumentFormat = &sourceMicrosoftOnedriveUnstructuredDocumentFormat
+		u.Type = SourceMicrosoftOnedriveFormatTypeSourceMicrosoftOnedriveUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1122,8 +1122,8 @@ func (u SourceMicrosoftOnedriveFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftOnedriveParquetFormat, "", true)
 	}
 
-	if u.SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftOnedriveDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceMicrosoftOnedriveUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftOnedriveUnstructuredDocumentFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceMicrosoftOnedriveFormat: all fields are null")

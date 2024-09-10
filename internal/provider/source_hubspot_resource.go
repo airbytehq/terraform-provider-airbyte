@@ -73,6 +73,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.`,
 									},
 									"refresh_token": schema.StringAttribute{

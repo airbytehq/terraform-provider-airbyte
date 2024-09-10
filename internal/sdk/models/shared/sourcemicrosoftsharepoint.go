@@ -287,6 +287,48 @@ func (e *MicrosoftSharepoint) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype string
+
+const (
+	SourceMicrosoftSharepointSchemasStreamsFormatFormat6FiletypeExcel SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype = "excel"
+)
+
+func (e SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype) ToPointer() *SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype {
+	return &e
+}
+func (e *SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "excel":
+		*e = SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype: %v", v)
+	}
+}
+
+type SourceMicrosoftSharepointExcelFormat struct {
+	filetype *SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype `const:"excel" json:"filetype"`
+}
+
+func (s SourceMicrosoftSharepointExcelFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointExcelFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointExcelFormat) GetFiletype() *SourceMicrosoftSharepointSchemasStreamsFormatFormat6Filetype {
+	return SourceMicrosoftSharepointSchemasStreamsFormatFormat6FiletypeExcel.ToPointer()
+}
+
 type SourceMicrosoftSharepointSchemasStreamsFormatFormatFiletype string
 
 const (
@@ -428,8 +470,8 @@ func (e *SourceMicrosoftSharepointParsingStrategy) UnmarshalJSON(data []byte) er
 	}
 }
 
-// SourceMicrosoftSharepointDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceMicrosoftSharepointDocumentFileTypeFormatExperimental struct {
+// SourceMicrosoftSharepointUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceMicrosoftSharepointUnstructuredDocumentFormat struct {
 	filetype *SourceMicrosoftSharepointSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceMicrosoftSharepointProcessing `json:"processing,omitempty"`
@@ -439,36 +481,36 @@ type SourceMicrosoftSharepointDocumentFileTypeFormatExperimental struct {
 	Strategy *SourceMicrosoftSharepointParsingStrategy `default:"auto" json:"strategy"`
 }
 
-func (s SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceMicrosoftSharepointUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceMicrosoftSharepointUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) GetFiletype() *SourceMicrosoftSharepointSchemasStreamsFormatFormatFiletype {
+func (o *SourceMicrosoftSharepointUnstructuredDocumentFormat) GetFiletype() *SourceMicrosoftSharepointSchemasStreamsFormatFormatFiletype {
 	return SourceMicrosoftSharepointSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) GetProcessing() *SourceMicrosoftSharepointProcessing {
+func (o *SourceMicrosoftSharepointUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftSharepointProcessing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
 }
 
-func (o *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceMicrosoftSharepointUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) GetStrategy() *SourceMicrosoftSharepointParsingStrategy {
+func (o *SourceMicrosoftSharepointUnstructuredDocumentFormat) GetStrategy() *SourceMicrosoftSharepointParsingStrategy {
 	if o == nil {
 		return nil
 	}
@@ -1002,20 +1044,22 @@ func (o *SourceMicrosoftSharepointAvroFormat) GetFiletype() *SourceMicrosoftShar
 type SourceMicrosoftSharepointFormatType string
 
 const (
-	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointAvroFormat                         SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Avro Format"
-	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointCSVFormat                          SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_CSV Format"
-	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointJsonlFormat                        SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Jsonl Format"
-	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointParquetFormat                      SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Parquet Format"
-	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointDocumentFileTypeFormatExperimental SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Document File Type Format (Experimental)"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointAvroFormat                 SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Avro Format"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointCSVFormat                  SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_CSV Format"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointJsonlFormat                SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Jsonl Format"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointParquetFormat              SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Parquet Format"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointUnstructuredDocumentFormat SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Unstructured Document Format"
+	SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointExcelFormat                SourceMicrosoftSharepointFormatType = "source-microsoft-sharepoint_Excel Format"
 )
 
 // SourceMicrosoftSharepointFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceMicrosoftSharepointFormat struct {
-	SourceMicrosoftSharepointAvroFormat                         *SourceMicrosoftSharepointAvroFormat
-	SourceMicrosoftSharepointCSVFormat                          *SourceMicrosoftSharepointCSVFormat
-	SourceMicrosoftSharepointJsonlFormat                        *SourceMicrosoftSharepointJsonlFormat
-	SourceMicrosoftSharepointParquetFormat                      *SourceMicrosoftSharepointParquetFormat
-	SourceMicrosoftSharepointDocumentFileTypeFormatExperimental *SourceMicrosoftSharepointDocumentFileTypeFormatExperimental
+	SourceMicrosoftSharepointAvroFormat                 *SourceMicrosoftSharepointAvroFormat
+	SourceMicrosoftSharepointCSVFormat                  *SourceMicrosoftSharepointCSVFormat
+	SourceMicrosoftSharepointJsonlFormat                *SourceMicrosoftSharepointJsonlFormat
+	SourceMicrosoftSharepointParquetFormat              *SourceMicrosoftSharepointParquetFormat
+	SourceMicrosoftSharepointUnstructuredDocumentFormat *SourceMicrosoftSharepointUnstructuredDocumentFormat
+	SourceMicrosoftSharepointExcelFormat                *SourceMicrosoftSharepointExcelFormat
 
 	Type SourceMicrosoftSharepointFormatType
 }
@@ -1056,12 +1100,21 @@ func CreateSourceMicrosoftSharepointFormatSourceMicrosoftSharepointParquetFormat
 	}
 }
 
-func CreateSourceMicrosoftSharepointFormatSourceMicrosoftSharepointDocumentFileTypeFormatExperimental(sourceMicrosoftSharepointDocumentFileTypeFormatExperimental SourceMicrosoftSharepointDocumentFileTypeFormatExperimental) SourceMicrosoftSharepointFormat {
-	typ := SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointDocumentFileTypeFormatExperimental
+func CreateSourceMicrosoftSharepointFormatSourceMicrosoftSharepointUnstructuredDocumentFormat(sourceMicrosoftSharepointUnstructuredDocumentFormat SourceMicrosoftSharepointUnstructuredDocumentFormat) SourceMicrosoftSharepointFormat {
+	typ := SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointUnstructuredDocumentFormat
 
 	return SourceMicrosoftSharepointFormat{
-		SourceMicrosoftSharepointDocumentFileTypeFormatExperimental: &sourceMicrosoftSharepointDocumentFileTypeFormatExperimental,
+		SourceMicrosoftSharepointUnstructuredDocumentFormat: &sourceMicrosoftSharepointUnstructuredDocumentFormat,
 		Type: typ,
+	}
+}
+
+func CreateSourceMicrosoftSharepointFormatSourceMicrosoftSharepointExcelFormat(sourceMicrosoftSharepointExcelFormat SourceMicrosoftSharepointExcelFormat) SourceMicrosoftSharepointFormat {
+	typ := SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointExcelFormat
+
+	return SourceMicrosoftSharepointFormat{
+		SourceMicrosoftSharepointExcelFormat: &sourceMicrosoftSharepointExcelFormat,
+		Type:                                 typ,
 	}
 }
 
@@ -1071,6 +1124,13 @@ func (u *SourceMicrosoftSharepointFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointJsonlFormat, "", true, true); err == nil {
 		u.SourceMicrosoftSharepointJsonlFormat = &sourceMicrosoftSharepointJsonlFormat
 		u.Type = SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointJsonlFormat
+		return nil
+	}
+
+	var sourceMicrosoftSharepointExcelFormat SourceMicrosoftSharepointExcelFormat = SourceMicrosoftSharepointExcelFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointExcelFormat, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointExcelFormat = &sourceMicrosoftSharepointExcelFormat
+		u.Type = SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointExcelFormat
 		return nil
 	}
 
@@ -1088,10 +1148,10 @@ func (u *SourceMicrosoftSharepointFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceMicrosoftSharepointDocumentFileTypeFormatExperimental SourceMicrosoftSharepointDocumentFileTypeFormatExperimental = SourceMicrosoftSharepointDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental = &sourceMicrosoftSharepointDocumentFileTypeFormatExperimental
-		u.Type = SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointDocumentFileTypeFormatExperimental
+	var sourceMicrosoftSharepointUnstructuredDocumentFormat SourceMicrosoftSharepointUnstructuredDocumentFormat = SourceMicrosoftSharepointUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUnstructuredDocumentFormat = &sourceMicrosoftSharepointUnstructuredDocumentFormat
+		u.Type = SourceMicrosoftSharepointFormatTypeSourceMicrosoftSharepointUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1122,8 +1182,12 @@ func (u SourceMicrosoftSharepointFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceMicrosoftSharepointParquetFormat, "", true)
 	}
 
-	if u.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceMicrosoftSharepointDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceMicrosoftSharepointUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUnstructuredDocumentFormat, "", true)
+	}
+
+	if u.SourceMicrosoftSharepointExcelFormat != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointExcelFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointFormat: all fields are null")
@@ -1172,6 +1236,8 @@ type SourceMicrosoftSharepointFileBasedStreamConfig struct {
 	Name string `json:"name"`
 	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 	PrimaryKey *string `json:"primary_key,omitempty"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
@@ -1229,6 +1295,13 @@ func (o *SourceMicrosoftSharepointFileBasedStreamConfig) GetPrimaryKey() *string
 		return nil
 	}
 	return o.PrimaryKey
+}
+
+func (o *SourceMicrosoftSharepointFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
 func (o *SourceMicrosoftSharepointFileBasedStreamConfig) GetSchemaless() *bool {

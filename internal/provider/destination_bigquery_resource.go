@@ -71,6 +71,7 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 					},
 					"credentials_json": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
 					},
 					"dataset_id": schema.StringAttribute{
@@ -138,6 +139,16 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"batched_standard_inserts": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
+								Description: `Direct loading using batched SQL INSERT statements. This method uses the BigQuery driver to convert large INSERT statements into file uploads automatically.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("gcs_staging"),
+									}...),
+								},
+							},
 							"gcs_staging": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -186,20 +197,10 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 								},
-								Description: `<i>(recommended)</i> Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery. Provides best-in-class speed, reliability and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+								Description: `Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery.`,
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("standard_inserts"),
-									}...),
-								},
-							},
-							"standard_inserts": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `<i>(not recommended)</i> Direct loading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In all other cases, you should use GCS staging.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("gcs_staging"),
+										path.MatchRelative().AtParent().AtName("batched_standard_inserts"),
 									}...),
 								},
 							},

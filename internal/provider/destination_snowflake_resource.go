@@ -95,10 +95,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Enter your application's Client ID`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Enter your application's Client secret`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -171,13 +173,19 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						Required:    true,
 						Description: `Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>`,
 					},
+					"use_merge_for_upsert": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Use MERGE for de-duplication of final tables. This option no effect if Final tables are disabled or Sync mode is not DEDUPE. Default: false`,
+					},
 					"username": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter the name of the user you want to use to access the database`,
 					},
 					"warehouse": schema.StringAttribute{
 						Required:    true,
-						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into`,
+						Description: `Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster`,
 					},
 				},
 			},

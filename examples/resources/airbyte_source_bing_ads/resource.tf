@@ -2,7 +2,7 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
   configuration = {
     account_names = [
       {
-        name     = "Eula Ritchie"
+        name     = "Bert Bins"
         operator = "Equals"
       },
     ]
@@ -10,22 +10,22 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     client_secret = "...my_client_secret..."
     custom_reports = [
       {
-        name               = "Account Performance"
+        name               = "AdDynamicTextPerformanceReport"
         report_aggregation = "...my_report_aggregation..."
         report_columns = [
           "...",
         ]
-        reporting_object = "ProductNegativeKeywordConflictReportRequest"
+        reporting_object = "GeographicPerformanceReportRequest"
       },
     ]
     developer_token    = "...my_developer_token..."
-    lookback_window    = 5
+    lookback_window    = 1
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-01-16"
+    reports_start_date = "2022-01-11"
     tenant_id          = "...my_tenant_id..."
   }
-  definition_id = "472f2e8b-bfe1-4822-ba33-308df445f49b"
-  name          = "Chester Dach"
+  definition_id = "f7f1a27e-8fd2-4f19-bd4f-9ab29a2f8317"
+  name          = "Frankie Runte"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9f17b5c6-1c8d-42f7-9d6e-e9c7e7401902"
+  workspace_id  = "3eab02cc-b908-4523-9f16-a0cc4991982a"
 }

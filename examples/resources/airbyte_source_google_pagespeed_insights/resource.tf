@@ -5,14 +5,14 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "performance",
     ]
     strategies = [
-      "mobile",
+      "desktop",
     ]
     urls = [
       "...",
     ]
   }
-  definition_id = "8dfc27a8-c72c-43eb-9dc5-5714db07d769"
-  name          = "Lance Dicki"
+  definition_id = "a46153eb-240d-4626-9488-7ccaaf58e0f5"
+  name          = "Lawrence Casper"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "86b53a47-9a08-405f-b179-3bf9b799d631"
+  workspace_id  = "d6014991-0eec-4fc7-b384-ec604057d045"
 }

@@ -66,19 +66,36 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
 					"aws_region_name": schema.StringAttribute{
-						Required:    true,
-						Description: `The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.`,
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("us-east-1"),
+						Description: `The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name. Default: "us-east-1"`,
 					},
 					"aws_secret_key": schema.StringAttribute{
 						Required:    true,
 						Sensitive:   true,
 						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
+					"lookup_attributes_filter": schema.SingleNestedAttribute{
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"attribute_key": schema.StringAttribute{
+								Computed:    true,
+								Optional:    true,
+								Default:     stringdefault.StaticString("EventName"),
+								Description: `Default: "EventName"`,
+							},
+							"attribute_value": schema.StringAttribute{
+								Computed:    true,
+								Optional:    true,
+								Default:     stringdefault.StaticString("ListInstanceAssociations"),
+								Description: `Default: "ListInstanceAssociations"`,
+							},
+						},
+					},
 					"start_date": schema.StringAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("1970-01-01"),
-						Description: `The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD. Default: "1970-01-01"`,
+						Description: `The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},

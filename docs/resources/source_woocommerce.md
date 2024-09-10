@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "8ad45dc0-7887-4545-a3f3-6dab5122890f"
-  name          = "Cecelia McClure"
+  definition_id = "bc947d1a-36d8-4135-b42d-9b671ba3daf1"
+  name          = "Faith Watsica"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c2a3f4c8-fc02-46c7-8c4e-afdab4c1bcaf"
+  workspace_id  = "d62693dd-fcad-432b-811f-0852299485bd"
 }
 ```
 
@@ -52,7 +52,7 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
 Required:
 
 - `api_key` (String, Sensitive) Customer Key for API in WooCommerce shop
-- `api_secret` (String) Customer Secret for API in WooCommerce shop
+- `api_secret` (String, Sensitive) Customer Secret for API in WooCommerce shop
 - `shop` (String) The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD
 

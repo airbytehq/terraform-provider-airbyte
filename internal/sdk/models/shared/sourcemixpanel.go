@@ -253,6 +253,8 @@ type SourceMixpanel struct {
 	DateWindowSize *int64 `default:"30" json:"date_window_size"`
 	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
 	EndDate *time.Time `json:"end_date,omitempty"`
+	// The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value.
+	PageSize *int64 `default:"1000" json:"page_size"`
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
 	ProjectTimezone *string `default:"US/Pacific" json:"project_timezone"`
 	// The region of mixpanel domain instance either US or EU.
@@ -301,6 +303,13 @@ func (o *SourceMixpanel) GetEndDate() *time.Time {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceMixpanel) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
 }
 
 func (o *SourceMixpanel) GetProjectTimezone() *string {

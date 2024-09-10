@@ -15,13 +15,14 @@ SourceKlaviyo Resource
 ```terraform
 resource "airbyte_source_klaviyo" "my_source_klaviyo" {
   configuration = {
-    api_key    = "...my_api_key..."
-    start_date = "2017-01-25T00:00:00Z"
+    api_key                               = "...my_api_key..."
+    disable_fetching_predictive_analytics = true
+    start_date                            = "2017-01-25T00:00:00Z"
   }
-  definition_id = "c649b6bc-8e2c-47d0-9e0f-8a2b57adde20"
-  name          = "Mr. Erik Heathcote DVM"
+  definition_id = "14160113-c2d3-4cb5-aaa6-4b86a42dbbb8"
+  name          = "Rosa VonRueden"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d0612ffd-3df1-4197-8b38-5957e3c921cc"
+  workspace_id  = "b5e6a18b-0d79-4003-9e8d-a443bfaadd29"
 }
 ```
 
@@ -53,6 +54,7 @@ Required:
 
 Optional:
 
+- `disable_fetching_predictive_analytics` (Boolean) Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
 
 ## Import

@@ -43,6 +43,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			} else {
 				heartbeatActionQuery = nil
 			}
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
@@ -78,6 +84,7 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			sourcePostgresReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresReadChangesUsingWriteAheadLogCDC{
 				AdditionalProperties:             additionalProperties,
 				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 				InitialWaitingSeconds:            initialWaitingSeconds,
 				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 				LsnCommitBehaviour:               lsnCommitBehaviour,
@@ -393,6 +400,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			} else {
 				heartbeatActionQuery = nil
 			}
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
 			initialWaitingSeconds := new(int64)
 			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
 				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
@@ -428,6 +441,7 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			readChangesUsingWriteAheadLogCDC = &shared.ReadChangesUsingWriteAheadLogCDC{
 				AdditionalProperties:             additionalProperties,
 				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
 				InitialWaitingSeconds:            initialWaitingSeconds,
 				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 				LsnCommitBehaviour:               lsnCommitBehaviour,

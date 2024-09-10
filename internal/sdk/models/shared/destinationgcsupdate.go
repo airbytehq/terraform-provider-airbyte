@@ -72,46 +72,46 @@ func (o *HMACKey) GetHmacKeySecret() string {
 	return o.HmacKeySecret
 }
 
-type AuthenticationUnionType string
+type DestinationGcsUpdateAuthenticationType string
 
 const (
-	AuthenticationUnionTypeHMACKey AuthenticationUnionType = "HMAC Key"
+	DestinationGcsUpdateAuthenticationTypeHMACKey DestinationGcsUpdateAuthenticationType = "HMAC Key"
 )
 
-// Authentication - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
-type Authentication struct {
+// DestinationGcsUpdateAuthentication - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
+type DestinationGcsUpdateAuthentication struct {
 	HMACKey *HMACKey
 
-	Type AuthenticationUnionType
+	Type DestinationGcsUpdateAuthenticationType
 }
 
-func CreateAuthenticationHMACKey(hmacKey HMACKey) Authentication {
-	typ := AuthenticationUnionTypeHMACKey
+func CreateDestinationGcsUpdateAuthenticationHMACKey(hmacKey HMACKey) DestinationGcsUpdateAuthentication {
+	typ := DestinationGcsUpdateAuthenticationTypeHMACKey
 
-	return Authentication{
+	return DestinationGcsUpdateAuthentication{
 		HMACKey: &hmacKey,
 		Type:    typ,
 	}
 }
 
-func (u *Authentication) UnmarshalJSON(data []byte) error {
+func (u *DestinationGcsUpdateAuthentication) UnmarshalJSON(data []byte) error {
 
 	var hmacKey HMACKey = HMACKey{}
 	if err := utils.UnmarshalJSON(data, &hmacKey, "", true, true); err == nil {
 		u.HMACKey = &hmacKey
-		u.Type = AuthenticationUnionTypeHMACKey
+		u.Type = DestinationGcsUpdateAuthenticationTypeHMACKey
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Authentication", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGcsUpdateAuthentication", string(data))
 }
 
-func (u Authentication) MarshalJSON() ([]byte, error) {
+func (u DestinationGcsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 	if u.HMACKey != nil {
 		return utils.MarshalJSON(u.HMACKey, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type Authentication: all fields are null")
+	return nil, errors.New("could not marshal union type DestinationGcsUpdateAuthentication: all fields are null")
 }
 
 // DestinationGcsUpdateCompressionCodec - The compression algorithm used to compress data pages.
@@ -1455,7 +1455,7 @@ func (e *GCSBucketRegion) UnmarshalJSON(data []byte) error {
 
 type DestinationGcsUpdate struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
-	Credential Authentication `json:"credential"`
+	Credential DestinationGcsUpdateAuthentication `json:"credential"`
 	// Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 	Format DestinationGcsUpdateOutputFormat `json:"format"`
 	// You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
@@ -1477,9 +1477,9 @@ func (d *DestinationGcsUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationGcsUpdate) GetCredential() Authentication {
+func (o *DestinationGcsUpdate) GetCredential() DestinationGcsUpdateAuthentication {
 	if o == nil {
-		return Authentication{}
+		return DestinationGcsUpdateAuthentication{}
 	}
 	return o.Credential
 }

@@ -8,8 +8,8 @@ resource "airbyte_source_okta" "my_source_okta" {
     domain     = "...my_domain..."
     start_date = "2022-07-22T00:00:00Z"
   }
-  definition_id = "fedea337-d55b-4155-98db-92c72d541f53"
-  name          = "Marion Champlin"
+  definition_id = "2c277a8e-2388-4fd0-920f-62c51a2676b4"
+  name          = "Sergio Crooks"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "50561c1c-c629-41a1-ad7b-3d761e29ef26"
+  workspace_id  = "ad19d25d-5253-4fa0-aef0-08f118d81572"
 }

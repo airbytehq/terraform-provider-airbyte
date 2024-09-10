@@ -30,6 +30,15 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequ
 	}
 	var loadingMethod *shared.DestinationBigqueryLoadingMethod
 	if r.Configuration.LoadingMethod != nil {
+		var destinationBigqueryBatchedStandardInserts *shared.DestinationBigqueryBatchedStandardInserts
+		if r.Configuration.LoadingMethod.BatchedStandardInserts != nil {
+			destinationBigqueryBatchedStandardInserts = &shared.DestinationBigqueryBatchedStandardInserts{}
+		}
+		if destinationBigqueryBatchedStandardInserts != nil {
+			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
+				DestinationBigqueryBatchedStandardInserts: destinationBigqueryBatchedStandardInserts,
+			}
+		}
 		var destinationBigqueryGCSStaging *shared.DestinationBigqueryGCSStaging
 		if r.Configuration.LoadingMethod.GCSStaging != nil {
 			var credential shared.DestinationBigqueryCredential
@@ -65,15 +74,6 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryCreateRequ
 		if destinationBigqueryGCSStaging != nil {
 			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
 				DestinationBigqueryGCSStaging: destinationBigqueryGCSStaging,
-			}
-		}
-		var destinationBigqueryStandardInserts *shared.DestinationBigqueryStandardInserts
-		if r.Configuration.LoadingMethod.StandardInserts != nil {
-			destinationBigqueryStandardInserts = &shared.DestinationBigqueryStandardInserts{}
-		}
-		if destinationBigqueryStandardInserts != nil {
-			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
-				DestinationBigqueryStandardInserts: destinationBigqueryStandardInserts,
 			}
 		}
 	}
@@ -150,6 +150,15 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest
 	}
 	var loadingMethod *shared.LoadingMethod
 	if r.Configuration.LoadingMethod != nil {
+		var batchedStandardInserts *shared.BatchedStandardInserts
+		if r.Configuration.LoadingMethod.BatchedStandardInserts != nil {
+			batchedStandardInserts = &shared.BatchedStandardInserts{}
+		}
+		if batchedStandardInserts != nil {
+			loadingMethod = &shared.LoadingMethod{
+				BatchedStandardInserts: batchedStandardInserts,
+			}
+		}
 		var gcsStaging *shared.GCSStaging
 		if r.Configuration.LoadingMethod.GCSStaging != nil {
 			var credential shared.Credential
@@ -185,15 +194,6 @@ func (r *DestinationBigqueryResourceModel) ToSharedDestinationBigqueryPutRequest
 		if gcsStaging != nil {
 			loadingMethod = &shared.LoadingMethod{
 				GCSStaging: gcsStaging,
-			}
-		}
-		var standardInserts *shared.StandardInserts
-		if r.Configuration.LoadingMethod.StandardInserts != nil {
-			standardInserts = &shared.StandardInserts{}
-		}
-		if standardInserts != nil {
-			loadingMethod = &shared.LoadingMethod{
-				StandardInserts: standardInserts,
 			}
 		}
 	}

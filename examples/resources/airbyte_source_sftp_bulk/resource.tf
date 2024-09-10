@@ -14,24 +14,25 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
         days_to_sync_if_history_is_full = 2
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
-        input_schema      = "...my_input_schema..."
-        legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Rene Kunze Jr."
-        primary_key       = "...my_primary_key..."
-        schemaless        = false
-        validation_policy = "Emit Record"
+        input_schema                                = "...my_input_schema..."
+        legacy_prefix                               = "...my_legacy_prefix..."
+        name                                        = "Tony Collier"
+        primary_key                                 = "...my_primary_key..."
+        recent_n_files_to_read_for_schema_discovery = 4
+        schemaless                                  = true
+        validation_policy                           = "Wait for Discover"
       },
     ]
-    username = "Rose_Abshire56"
+    username = "Santos_Leuschke"
   }
-  definition_id = "1eaa4a70-c9cb-4870-ab98-050c39e74506"
-  name          = "Marlene Reichel"
+  definition_id = "7e494b9e-5830-4e9e-bbf4-12cdcae9f85c"
+  name          = "Maria Bernhard"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1cb4db2a-ae6c-420a-89c1-9db3e1c883c5"
+  workspace_id  = "80526f88-56cd-4f3f-9efb-e1999214f3ff"
 }

@@ -24,10 +24,10 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "2ba7d43d-20d3-4384-a15e-d53522788fae"
-  name          = "Ed Ondricka"
+  definition_id = "369b1ff5-a7ba-4288-b10a-0635ff19f388"
+  name          = "Margie Heidenreich"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b93c7728-79b6-4069-b6a2-8df3196ea920"
+  workspace_id  = "941e7db0-723f-4947-b9cc-80ee5b712257"
 }
 ```
 
@@ -75,8 +75,8 @@ Optional:
 Required:
 
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Teams developer application.
+- `tenant_id` (String, Sensitive) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 
 <a id="nestedatt--configuration--credentials--authenticate_via_microsoft_o_auth20"></a>
@@ -85,9 +85,9 @@ Required:
 Required:
 
 - `client_id` (String) The Client ID of your Microsoft Teams developer application.
-- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Microsoft Teams developer application.
 - `refresh_token` (String, Sensitive) A Refresh Token to renew the expired Access Token.
-- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
+- `tenant_id` (String, Sensitive) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 ## Import
 

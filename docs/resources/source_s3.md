@@ -23,7 +23,7 @@ resource "airbyte_source_s3" "my_source_s3" {
     format = {
       avro = {}
     }
-    path_pattern = "myFolder/myTableFiles/*.csv|myFolder/myOtherTableFiles/*.csv"
+    path_pattern = "**"
     provider = {
       aws_access_key_id     = "...my_aws_access_key_id..."
       aws_secret_access_key = "...my_aws_secret_access_key..."
@@ -43,25 +43,26 @@ resource "airbyte_source_s3" "my_source_s3" {
         days_to_sync_if_history_is_full = 4
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
           "...",
         ]
-        input_schema      = "...my_input_schema..."
-        legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Pam Goldner"
-        primary_key       = "...my_primary_key..."
-        schemaless        = false
-        validation_policy = "Wait for Discover"
+        input_schema                                = "...my_input_schema..."
+        legacy_prefix                               = "...my_legacy_prefix..."
+        name                                        = "Mr. Gladys Metz"
+        primary_key                                 = "...my_primary_key..."
+        recent_n_files_to_read_for_schema_discovery = 6
+        schemaless                                  = true
+        validation_policy                           = "Wait for Discover"
       },
     ]
   }
-  definition_id = "bdae34af-cb06-4318-8072-9444d2b8965c"
-  name          = "Julius Rau"
+  definition_id = "9df1af8f-5013-4d5d-8cf4-03b2856e98a6"
+  name          = "Herman Bartoletti Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ee9d6378-e724-43c0-a1bc-073abf4dfebd"
+  workspace_id  = "07e33047-d953-458a-9681-9d2abec21d7e"
 }
 ```
 
@@ -121,7 +122,8 @@ Optional:
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 - `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `recent_n_files_to_read_for_schema_discovery` (Number) The number of resent files which will be used to discover the schema for this stream.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 
@@ -132,12 +134,12 @@ Optional:
 
 - `avro_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
 - `csv_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
-- `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
 - `jsonl_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
 - `parquet_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
+- `unstructured_document_format` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format))
 
 <a id="nestedatt--configuration--streams--format--avro_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
@@ -145,7 +147,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--streams--format--csv_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
@@ -154,7 +156,7 @@ Optional:
 - `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition))
+- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition))
 - `ignore_errors_on_fields_mismatch` (Boolean) Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false
 - `inference_type` (String) How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]; Default: "None"
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
@@ -164,25 +166,25 @@ Optional:
 - `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself. Default: true
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition`
 
 Optional:
 
-- `autogenerated` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
-- `from_csv` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
-- `user_provided` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
+- `autogenerated` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--autogenerated))
+- `from_csv` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--from_csv))
+- `user_provided` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--user_provided))
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
-
-
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--autogenerated"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
 
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--from_csv"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
+
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--user_provided"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
 
 Required:
 
@@ -191,38 +193,38 @@ Required:
 
 
 
-<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
-
-Optional:
-
-- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing))
-- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
-- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"
-
-<a id="nestedatt--configuration--streams--format--parquet_format--processing"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.processing`
-
-Optional:
-
-- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing--local))
-
-<a id="nestedatt--configuration--streams--format--parquet_format--processing--local"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.processing.local`
-
-
-
-
 <a id="nestedatt--configuration--streams--format--jsonl_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 
 <a id="nestedatt--configuration--streams--format--parquet_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
 - `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false
+
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
+
+Optional:
+
+- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing))
+- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
+- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing`
+
+Optional:
+
+- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing--local))
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing--local"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing.local`
+
+
 
 
 

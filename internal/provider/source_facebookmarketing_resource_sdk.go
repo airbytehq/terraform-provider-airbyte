@@ -49,6 +49,40 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 	} else {
 		clientSecret = nil
 	}
+	var credentials shared.SourceFacebookMarketingAuthentication
+	var sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth *shared.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
+	if r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth != nil {
+		accessToken1 := new(string)
+		if !r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.IsNull() {
+			*accessToken1 = r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.ValueString()
+		} else {
+			accessToken1 = nil
+		}
+		clientId1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
+		clientSecret1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
+		sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth = &shared.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth{
+			AccessToken:  accessToken1,
+			ClientID:     clientId1,
+			ClientSecret: clientSecret1,
+		}
+	}
+	if sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth != nil {
+		credentials = shared.SourceFacebookMarketingAuthentication{
+			SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth: sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth,
+		}
+	}
+	var sourceFacebookMarketingServiceAccountKeyAuthentication *shared.SourceFacebookMarketingServiceAccountKeyAuthentication
+	if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+		accessToken2 := r.Configuration.Credentials.ServiceAccountKeyAuthentication.AccessToken.ValueString()
+		sourceFacebookMarketingServiceAccountKeyAuthentication = &shared.SourceFacebookMarketingServiceAccountKeyAuthentication{
+			AccessToken: accessToken2,
+		}
+	}
+	if sourceFacebookMarketingServiceAccountKeyAuthentication != nil {
+		credentials = shared.SourceFacebookMarketingAuthentication{
+			SourceFacebookMarketingServiceAccountKeyAuthentication: sourceFacebookMarketingServiceAccountKeyAuthentication,
+		}
+	}
 	var customInsights []shared.SourceFacebookMarketingInsightConfig = []shared.SourceFacebookMarketingInsightConfig{}
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
 		var actionBreakdowns []shared.SourceFacebookMarketingValidActionBreakdowns = []shared.SourceFacebookMarketingValidActionBreakdowns{}
@@ -165,6 +199,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		CampaignStatuses:           campaignStatuses,
 		ClientID:                   clientID,
 		ClientSecret:               clientSecret,
+		Credentials:                credentials,
 		CustomInsights:             customInsights,
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,
@@ -246,6 +281,40 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		*clientSecret = r.Configuration.ClientSecret.ValueString()
 	} else {
 		clientSecret = nil
+	}
+	var credentials shared.SourceFacebookMarketingUpdateAuthentication
+	var authenticateViaFacebookMarketingOauth *shared.AuthenticateViaFacebookMarketingOauth
+	if r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth != nil {
+		accessToken1 := new(string)
+		if !r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.IsNull() {
+			*accessToken1 = r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.AccessToken.ValueString()
+		} else {
+			accessToken1 = nil
+		}
+		clientId1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
+		clientSecret1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
+		authenticateViaFacebookMarketingOauth = &shared.AuthenticateViaFacebookMarketingOauth{
+			AccessToken:  accessToken1,
+			ClientID:     clientId1,
+			ClientSecret: clientSecret1,
+		}
+	}
+	if authenticateViaFacebookMarketingOauth != nil {
+		credentials = shared.SourceFacebookMarketingUpdateAuthentication{
+			AuthenticateViaFacebookMarketingOauth: authenticateViaFacebookMarketingOauth,
+		}
+	}
+	var serviceAccountKeyAuthentication *shared.ServiceAccountKeyAuthentication
+	if r.Configuration.Credentials.ServiceAccountKeyAuthentication != nil {
+		accessToken2 := r.Configuration.Credentials.ServiceAccountKeyAuthentication.AccessToken.ValueString()
+		serviceAccountKeyAuthentication = &shared.ServiceAccountKeyAuthentication{
+			AccessToken: accessToken2,
+		}
+	}
+	if serviceAccountKeyAuthentication != nil {
+		credentials = shared.SourceFacebookMarketingUpdateAuthentication{
+			ServiceAccountKeyAuthentication: serviceAccountKeyAuthentication,
+		}
 	}
 	var customInsights []shared.InsightConfig = []shared.InsightConfig{}
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
@@ -363,6 +432,7 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		CampaignStatuses:           campaignStatuses,
 		ClientID:                   clientID,
 		ClientSecret:               clientSecret,
+		Credentials:                credentials,
 		CustomInsights:             customInsights,
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,

@@ -83,7 +83,7 @@ func (r *SourceWikipediaPageviewsResource) Schema(ctx context.Context, req resou
 					},
 					"start": schema.StringAttribute{
 						Required:    true,
-						Description: `The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.`,
+						Description: `The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format. Also serves as the date to retrieve data for the top articles.`,
 					},
 				},
 			},

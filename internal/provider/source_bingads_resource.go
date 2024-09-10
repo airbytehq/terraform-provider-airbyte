@@ -87,11 +87,13 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client ID of your Microsoft Advertising developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString(""),
 						Description: `The Client Secret of your Microsoft Advertising developer application. Default: ""`,
 					},
@@ -189,6 +191,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					"tenant_id": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
+						Sensitive:   true,
 						Default:     stringdefault.StaticString("common"),
 						Description: `The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value. Default: "common"`,
 					},

@@ -15,23 +15,24 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 2
+    attribution_window = 5
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
     }
-    date_window_size             = 8
+    date_window_size             = 5
     end_date                     = "2021-11-16"
-    project_timezone             = "UTC"
+    page_size                    = 6
+    project_timezone             = "US/Pacific"
     region                       = "US"
     select_properties_by_default = false
     start_date                   = "2021-11-16"
   }
-  definition_id = "5a531f3b-4802-4a3b-9d67-4976dbe116c7"
-  name          = "Raymond Boyer"
+  definition_id = "e08d80f6-94c4-48e9-90f8-4ccbad71dab0"
+  name          = "Mrs. Vickie Barrows"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "70bfb326-67c4-47d5-8361-6107c03f8392"
+  workspace_id  = "124b6e7b-2083-4a37-b0c9-92762a38aa73"
 }
 ```
 
@@ -66,6 +67,7 @@ Optional:
 - `attribution_window` (Number) A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days. (This value should be non-negative integer). Default: 5
 - `date_window_size` (Number) Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer). Default: 30
 - `end_date` (String) The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
+- `page_size` (Number) The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value. Default: 1000
 - `project_timezone` (String) Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>. Default: "US/Pacific"
 - `region` (String) The region of mixpanel domain instance either US or EU. must be one of ["US", "EU"]; Default: "US"
 - `select_properties_by_default` (Boolean) Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored. Default: true
@@ -84,7 +86,7 @@ Optional:
 
 Required:
 
-- `api_secret` (String) Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
+- `api_secret` (String, Sensitive) Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
 
 
 <a id="nestedatt--configuration--credentials--service_account"></a>
@@ -93,7 +95,7 @@ Required:
 Required:
 
 - `project_id` (Number) Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
-- `secret` (String) Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
+- `secret` (String, Sensitive) Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 - `username` (String) Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 
 ## Import

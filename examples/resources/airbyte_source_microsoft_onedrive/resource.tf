@@ -14,25 +14,25 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 6
+        days_to_sync_if_history_is_full = 2
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Jeanette Larson"
+        name              = "Krystal Hamill"
         primary_key       = "...my_primary_key..."
         schemaless        = true
         validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "45d14463-0331-48f2-9cf1-0b0742b93b49"
-  name          = "Miss Joshua Brekke"
+  definition_id = "598db92c-72d5-441f-9389-28a50561c1cc"
+  name          = "Miss Judith McGlynn MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20ccad5a-dc13-430e-b574-88395b5ae042"
+  workspace_id  = "d7b3d761-e29e-4f26-ae07-d2b59ab56edb"
 }

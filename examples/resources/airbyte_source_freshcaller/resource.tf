@@ -4,10 +4,10 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
     domain              = "snaptravel"
     requests_per_minute = 0
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 2
+    sync_lag_minutes    = 9
   }
-  definition_id = "eb11448c-1cd3-4afe-9ef8-5381e22d9fe1"
-  name          = "Kristopher Champlin"
+  definition_id = "2de4b8db-33d2-4b3a-a7b0-b342a10fbc47"
+  name          = "Ms. Grant Krajcik I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4121e631-5be3-406a-8e83-994413a7c75d"
+  workspace_id  = "9037c7ee-f972-4df3-814a-349fde89ab27"
 }

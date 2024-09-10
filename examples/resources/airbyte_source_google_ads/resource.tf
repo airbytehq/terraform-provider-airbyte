@@ -16,13 +16,13 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     ]
     customer_id = "6783948572,5839201945"
     customer_status_filter = [
-      "SUSPENDED",
+      "CANCELED",
     ]
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "c5fc21d7-22b3-410b-a76f-b731c6d5241e"
-  name          = "Dr. Armando Dibbert"
+  definition_id = "c47c0f9c-e33c-40f2-94c1-1e4e993d2947"
+  name          = "Miss Andrea Lind"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fc03242c-cd27-463a-8d30-eb91c3df2593"
+  workspace_id  = "54dff6cf-9b79-4e23-a888-b6bde25154a5"
 }

@@ -73,10 +73,12 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client ID for the Google Drive API`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Client Secret for the Google Drive API`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -96,6 +98,7 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},
@@ -388,7 +391,6 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 								},
 								"primary_key": schema.StringAttribute{
 									Optional:    true,
-									Sensitive:   true,
 									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"schemaless": schema.BoolAttribute{

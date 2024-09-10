@@ -2,8 +2,8 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
   configuration = {
     api_token = "...my_api_token..."
   }
-  definition_id = "5f9cfb0d-1e8d-43ac-8e90-aeed1087b988"
-  name          = "Eula Hane"
+  definition_id = "6849f7bb-eaae-4f52-8043-cb4c473e8c7b"
+  name          = "Mrs. Bill Mosciski IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e598cc59-eb95-42f0-a231-c57fd8f9d1ba"
+  workspace_id  = "4a553fda-41da-4f76-a6ef-51c5fa52e0c6"
 }

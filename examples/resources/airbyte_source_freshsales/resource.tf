@@ -3,8 +3,8 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
     api_key     = "...my_api_key..."
     domain_name = "mydomain.myfreshworks.com"
   }
-  definition_id = "07daef77-0c81-4f95-85b8-dd2d32b37f6f"
-  name          = "Wilbert Hettinger"
+  definition_id = "82b3c164-c195-40da-b1eb-ecd9b5a75a7c"
+  name          = "Shari Rutherford PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0a4fda52-f695-443b-8620-d9bb50480aaa"
+  workspace_id  = "722b310b-676f-4b73-9c6d-5241e9821d4f"
 }

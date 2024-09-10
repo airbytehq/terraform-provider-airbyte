@@ -82,6 +82,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Attributes: map[string]schema.Attribute{
 									"role_arn": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Will assume this role to write data to s3`,
 									},
 								},
@@ -202,7 +203,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
 						Optional:    true,
-						Sensitive:   true,
 						Description: `Add a default tag key to databases created by this destination`,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{

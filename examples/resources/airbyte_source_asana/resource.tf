@@ -12,8 +12,8 @@ resource "airbyte_source_asana" "my_source_asana" {
     ]
     test_mode = true
   }
-  definition_id = "f2233892-0422-4616-84e7-3ef602c915f5"
-  name          = "Ron Schimmel"
+  definition_id = "f007bc04-191b-4eb0-97f0-7c546621bdba"
+  name          = "Robert Feeney"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "896557ce-17cc-4d6b-90d6-388d4fdfb9af"
+  workspace_id  = "f51ed0a8-181e-46e5-9fd9-ebe7b2f5ca6e"
 }

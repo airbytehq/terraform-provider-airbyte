@@ -15,7 +15,7 @@ resource "airbyte_destination_vectara" "my_destination_vectara" {
     ]
     title_field = "document_key"
   }
-  definition_id = "173cccbb-c51a-43ca-a62e-557cba0d3380"
-  name          = "Beverly Murray"
-  workspace_id  = "67fcf379-fa40-411e-ae8d-b1144f7f4dcb"
+  definition_id = "d654173c-ccbb-4c51-a3ca-a62e557cba0d"
+  name          = "Mr. Sherry Leuschke"
+  workspace_id  = "a5767fcf-379f-4a40-91ea-e8db1144f7f4"
 }

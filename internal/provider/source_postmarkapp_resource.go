@@ -59,10 +59,12 @@ func (r *SourcePostmarkappResource) Schema(ctx context.Context, req resource.Sch
 				Attributes: map[string]schema.Attribute{
 					"x_postmark_account_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key for account`,
 					},
 					"x_postmark_server_token": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `API Key for server`,
 					},
 				},

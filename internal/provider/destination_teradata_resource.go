@@ -149,7 +149,8 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 										MarkdownDescription: `Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-ca.` + "\n" +
 											` See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.`,
 									},
@@ -169,7 +170,8 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:  true,
+										Sensitive: true,
 										MarkdownDescription: `Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.` + "\n" +
 											` See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.`,
 									},

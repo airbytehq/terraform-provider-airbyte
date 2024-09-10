@@ -89,10 +89,12 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API ID of the SmartSheets developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The API Secret the SmartSheets developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -102,7 +104,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required:    true,
-										Sensitive:   true,
 										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),

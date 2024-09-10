@@ -71,6 +71,7 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).`,
 					},
 					"lookback_window_days": schema.Int64Attribute{

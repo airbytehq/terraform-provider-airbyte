@@ -2,8 +2,8 @@ resource "airbyte_source_pokeapi" "my_source_pokeapi" {
   configuration = {
     pokemon_name = "snorlax"
   }
-  definition_id = "2f8e75b9-5ee5-4dd1-9c77-a4e3aa4d1c74"
-  name          = "Gregg Smitham"
+  definition_id = "4005a630-7276-4c58-b5da-21f73986a71e"
+  name          = "Stuart Corwin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "939b8b6b-2c09-420a-a8be-08607521b21e"
+  workspace_id  = "b81056bc-977a-43bf-8dff-8dd835d80427"
 }

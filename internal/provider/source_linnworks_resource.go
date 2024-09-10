@@ -65,6 +65,7 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"application_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Linnworks Application Secret`,
 					},
 					"start_date": schema.StringAttribute{

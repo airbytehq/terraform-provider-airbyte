@@ -18,9 +18,9 @@ resource "airbyte_destination_convex" "my_destination_convex" {
     access_key     = "...my_access_key..."
     deployment_url = "https://murky-swan-635.convex.cloud"
   }
-  definition_id = "73c0eb82-2361-43d2-bce8-75293aec4aa1"
-  name          = "Jennifer Rogahn I"
-  workspace_id  = "922581a8-8452-4de7-835e-b92a9e952da2"
+  definition_id = "e573c0eb-8223-4613-923c-e875293aec4a"
+  name          = "Miss Peter Abernathy"
+  workspace_id  = "23922581-a884-452d-a7c3-5eb92a9e952d"
 }
 ```
 

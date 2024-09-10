@@ -325,9 +325,11 @@ type DestinationSnowflake struct {
 	Role string `json:"role"`
 	// Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
 	Schema string `json:"schema"`
+	// Use MERGE for de-duplication of final tables. This option no effect if Final tables are disabled or Sync mode is not DEDUPE
+	UseMergeForUpsert *bool `default:"false" json:"use_merge_for_upsert"`
 	// Enter the name of the user you want to use to access the database
 	Username string `json:"username"`
-	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
+	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
 	Warehouse string `json:"warehouse"`
 }
 
@@ -407,6 +409,13 @@ func (o *DestinationSnowflake) GetSchema() string {
 		return ""
 	}
 	return o.Schema
+}
+
+func (o *DestinationSnowflake) GetUseMergeForUpsert() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseMergeForUpsert
 }
 
 func (o *DestinationSnowflake) GetUsername() string {

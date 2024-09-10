@@ -12,8 +12,8 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "65fdff2d-eb8c-4bf2-a74a-92033b17bfcc"
-  name          = "Theresa Kertzmann"
+  definition_id = "d83c0cc9-8dd5-4412-a565-139361b04889"
+  name          = "Stacey O'Keefe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "10da401f-b0fc-4527-b0b3-9994a41e4a89"
+  workspace_id  = "cfe2e85a-fcc9-4acc-ae7e-95c9a7c9f197"
 }

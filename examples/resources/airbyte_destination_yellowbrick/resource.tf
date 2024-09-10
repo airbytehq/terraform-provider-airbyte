@@ -13,9 +13,9 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Jonathan.Mante"
+    username = "Heath_Klocko"
   }
-  definition_id = "6f396c7c-6bf7-4372-8213-ca1059f1e303"
-  name          = "Nancy Weimann PhD"
-  workspace_id  = "aa50681b-c3ad-4b09-8c01-3842c101e265"
+  definition_id = "9a46f396-c7c6-4bf7-b724-213ca1059f1e"
+  name          = "Patricia Franecki DVM"
+  workspace_id  = "c0eaa506-81bc-43ad-b090-c013842c101e"
 }

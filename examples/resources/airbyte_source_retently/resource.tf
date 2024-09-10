@@ -9,8 +9,8 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "1cd73d2c-f401-436d-9989-e7dbace4005a"
-  name          = "Sheila Bahringer"
+  definition_id = "33710669-86a7-4b02-bd25-c7727b363542"
+  name          = "Eric Sporer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "76c58b5d-a21f-4739-86a7-1e992c2b8105"
+  workspace_id  = "7f0bc649-fe5b-408c-82dc-40ca1ab76639"
 }

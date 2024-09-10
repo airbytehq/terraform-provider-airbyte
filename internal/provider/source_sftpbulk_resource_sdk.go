@@ -237,12 +237,12 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 				SourceSftpBulkParquetFormat: sourceSftpBulkParquetFormat,
 			}
 		}
-		var sourceSftpBulkDocumentFileTypeFormatExperimental *shared.SourceSftpBulkDocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var sourceSftpBulkUnstructuredDocumentFormat *shared.SourceSftpBulkUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			var processing *shared.SourceSftpBulkProcessing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceSftpBulkLocal *shared.SourceSftpBulkLocal
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					sourceSftpBulkLocal = &shared.SourceSftpBulkLocal{}
 				}
 				if sourceSftpBulkLocal != nil {
@@ -251,21 +251,21 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 					}
 				}
 				var sourceSftpBulkViaAPI *shared.SourceSftpBulkViaAPI
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI != nil {
 					apiKey := new(string)
-					if !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.IsNull() {
-						*apiKey = streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.ValueString()
+					if !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.IsNull() {
+						*apiKey = streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.ValueString()
 					} else {
 						apiKey = nil
 					}
 					apiURL := new(string)
-					if !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.IsNull() {
-						*apiURL = streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.ValueString()
+					if !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.IsNull() {
+						*apiURL = streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.ValueString()
 					} else {
 						apiURL = nil
 					}
 					var parameters []shared.SourceSftpBulkAPIParameterConfigModel = []shared.SourceSftpBulkAPIParameterConfigModel{}
-					for _, parametersItem := range streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.Parameters {
+					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
 						name := parametersItem.Name.ValueString()
 						value := parametersItem.Value.ValueString()
 						parameters = append(parameters, shared.SourceSftpBulkAPIParameterConfigModel{
@@ -286,26 +286,35 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceSftpBulkParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.SourceSftpBulkParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceSftpBulkParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceSftpBulkDocumentFileTypeFormatExperimental = &shared.SourceSftpBulkDocumentFileTypeFormatExperimental{
+			sourceSftpBulkUnstructuredDocumentFormat = &shared.SourceSftpBulkUnstructuredDocumentFormat{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceSftpBulkDocumentFileTypeFormatExperimental != nil {
+		if sourceSftpBulkUnstructuredDocumentFormat != nil {
 			format = shared.SourceSftpBulkFormat{
-				SourceSftpBulkDocumentFileTypeFormatExperimental: sourceSftpBulkDocumentFileTypeFormatExperimental,
+				SourceSftpBulkUnstructuredDocumentFormat: sourceSftpBulkUnstructuredDocumentFormat,
+			}
+		}
+		var sourceSftpBulkExcelFormat *shared.SourceSftpBulkExcelFormat
+		if streamsItem.Format.ExcelFormat != nil {
+			sourceSftpBulkExcelFormat = &shared.SourceSftpBulkExcelFormat{}
+		}
+		if sourceSftpBulkExcelFormat != nil {
+			format = shared.SourceSftpBulkFormat{
+				SourceSftpBulkExcelFormat: sourceSftpBulkExcelFormat,
 			}
 		}
 		var globs []string = []string{}
@@ -331,6 +340,12 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 		} else {
 			primaryKey = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -344,15 +359,16 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 			validationPolicy = nil
 		}
 		streams = append(streams, shared.SourceSftpBulkFileBasedStreamConfig{
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format,
-			Globs:                     globs,
-			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
-			Name:                      name1,
-			PrimaryKey:                primaryKey,
-			Schemaless:                schemaless,
-			ValidationPolicy:          validationPolicy,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			LegacyPrefix:                         legacyPrefix,
+			Name:                                 name1,
+			PrimaryKey:                           primaryKey,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
 	username := r.Configuration.Username.ValueString()
@@ -627,12 +643,12 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 				SourceSftpBulkUpdateParquetFormat: sourceSftpBulkUpdateParquetFormat,
 			}
 		}
-		var sourceSftpBulkUpdateDocumentFileTypeFormatExperimental *shared.SourceSftpBulkUpdateDocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var sourceSftpBulkUpdateUnstructuredDocumentFormat *shared.SourceSftpBulkUpdateUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			var processing *shared.SourceSftpBulkUpdateProcessing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceSftpBulkUpdateLocal *shared.SourceSftpBulkUpdateLocal
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					sourceSftpBulkUpdateLocal = &shared.SourceSftpBulkUpdateLocal{}
 				}
 				if sourceSftpBulkUpdateLocal != nil {
@@ -640,62 +656,71 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 						SourceSftpBulkUpdateLocal: sourceSftpBulkUpdateLocal,
 					}
 				}
-				var viaAPI *shared.ViaAPI
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI != nil {
+				var sourceSftpBulkUpdateViaAPI *shared.SourceSftpBulkUpdateViaAPI
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI != nil {
 					apiKey := new(string)
-					if !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.IsNull() {
-						*apiKey = streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIKey.ValueString()
+					if !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.IsNull() {
+						*apiKey = streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIKey.ValueString()
 					} else {
 						apiKey = nil
 					}
 					apiURL := new(string)
-					if !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.IsNull() {
-						*apiURL = streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.APIURL.ValueString()
+					if !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.IsNull() {
+						*apiURL = streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.APIURL.ValueString()
 					} else {
 						apiURL = nil
 					}
-					var parameters []shared.APIParameterConfigModel = []shared.APIParameterConfigModel{}
-					for _, parametersItem := range streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.ViaAPI.Parameters {
+					var parameters []shared.SourceSftpBulkUpdateAPIParameterConfigModel = []shared.SourceSftpBulkUpdateAPIParameterConfigModel{}
+					for _, parametersItem := range streamsItem.Format.UnstructuredDocumentFormat.Processing.ViaAPI.Parameters {
 						name := parametersItem.Name.ValueString()
 						value := parametersItem.Value.ValueString()
-						parameters = append(parameters, shared.APIParameterConfigModel{
+						parameters = append(parameters, shared.SourceSftpBulkUpdateAPIParameterConfigModel{
 							Name:  name,
 							Value: value,
 						})
 					}
-					viaAPI = &shared.ViaAPI{
+					sourceSftpBulkUpdateViaAPI = &shared.SourceSftpBulkUpdateViaAPI{
 						APIKey:     apiKey,
 						APIURL:     apiURL,
 						Parameters: parameters,
 					}
 				}
-				if viaAPI != nil {
+				if sourceSftpBulkUpdateViaAPI != nil {
 					processing = &shared.SourceSftpBulkUpdateProcessing{
-						ViaAPI: viaAPI,
+						SourceSftpBulkUpdateViaAPI: sourceSftpBulkUpdateViaAPI,
 					}
 				}
 			}
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceSftpBulkUpdateParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.SourceSftpBulkUpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceSftpBulkUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
-			sourceSftpBulkUpdateDocumentFileTypeFormatExperimental = &shared.SourceSftpBulkUpdateDocumentFileTypeFormatExperimental{
+			sourceSftpBulkUpdateUnstructuredDocumentFormat = &shared.SourceSftpBulkUpdateUnstructuredDocumentFormat{
 				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 			}
 		}
-		if sourceSftpBulkUpdateDocumentFileTypeFormatExperimental != nil {
+		if sourceSftpBulkUpdateUnstructuredDocumentFormat != nil {
 			format = shared.SourceSftpBulkUpdateFormat{
-				SourceSftpBulkUpdateDocumentFileTypeFormatExperimental: sourceSftpBulkUpdateDocumentFileTypeFormatExperimental,
+				SourceSftpBulkUpdateUnstructuredDocumentFormat: sourceSftpBulkUpdateUnstructuredDocumentFormat,
+			}
+		}
+		var sourceSftpBulkUpdateExcelFormat *shared.SourceSftpBulkUpdateExcelFormat
+		if streamsItem.Format.ExcelFormat != nil {
+			sourceSftpBulkUpdateExcelFormat = &shared.SourceSftpBulkUpdateExcelFormat{}
+		}
+		if sourceSftpBulkUpdateExcelFormat != nil {
+			format = shared.SourceSftpBulkUpdateFormat{
+				SourceSftpBulkUpdateExcelFormat: sourceSftpBulkUpdateExcelFormat,
 			}
 		}
 		var globs []string = []string{}
@@ -721,6 +746,12 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 		} else {
 			primaryKey = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -734,15 +765,16 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 			validationPolicy = nil
 		}
 		streams = append(streams, shared.SourceSftpBulkUpdateFileBasedStreamConfig{
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format,
-			Globs:                     globs,
-			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
-			Name:                      name1,
-			PrimaryKey:                primaryKey,
-			Schemaless:                schemaless,
-			ValidationPolicy:          validationPolicy,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			LegacyPrefix:                         legacyPrefix,
+			Name:                                 name1,
+			PrimaryKey:                           primaryKey,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
 	username := r.Configuration.Username.ValueString()

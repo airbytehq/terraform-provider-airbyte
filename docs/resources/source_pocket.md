@@ -17,20 +17,20 @@ resource "airbyte_source_pocket" "my_source_pocket" {
   configuration = {
     access_token = "...my_access_token..."
     consumer_key = "...my_consumer_key..."
-    content_type = "image"
-    detail_type  = "simple"
+    content_type = "article"
+    detail_type  = "complete"
     domain       = "...my_domain..."
-    favorite     = false
+    favorite     = true
     search       = "...my_search..."
     since        = "2022-10-20 14:14:14"
-    sort         = "title"
-    state        = "all"
+    sort         = "site"
+    state        = "unread"
     tag          = "...my_tag..."
   }
-  definition_id = "25e4ee4a-51ab-4e7b-be4e-8da5f867ba5c"
-  name          = "Felix Swaniawski"
+  definition_id = "f8c4b4f8-d4f6-4833-a1f3-303ab045c891"
+  name          = "Ramiro Mayer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8a2cc404-7b12-40c3-acc1-558e983f33bb"
+  workspace_id  = "dcb6cc1c-d73d-42cf-8013-6d5989e7dbac"
 }
 ```
 

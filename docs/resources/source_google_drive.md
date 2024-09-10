@@ -26,27 +26,27 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 5
+        days_to_sync_if_history_is_full = 3
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Marianne Hartmann"
+        name              = "Dr. Shawna Robel"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        schemaless        = false
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "1e5baddd-2747-4bbc-bf24-1709ce4fe165"
-  name          = "Edmund Gleichner"
+  definition_id = "730b3999-4a41-4e4a-8985-c78fa7d86bdf"
+  name          = "Kristy Wilderman MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0e7fb5df-2547-47f3-b0b0-ec7c89bfb0cb"
+  workspace_id  = "cb121083-728d-489e-b51e-868df1f2c5ad"
 }
 ```
 
@@ -96,8 +96,8 @@ Optional:
 
 Required:
 
-- `client_id` (String) Client ID for the Google Drive API
-- `client_secret` (String) Client Secret for the Google Drive API
+- `client_id` (String, Sensitive) Client ID for the Google Drive API
+- `client_secret` (String, Sensitive) Client Secret for the Google Drive API
 - `refresh_token` (String, Sensitive) Refresh Token for the Google Drive API
 
 
@@ -106,7 +106,7 @@ Required:
 
 Required:
 
-- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
+- `service_account_info` (String, Sensitive) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 
 
 
@@ -123,7 +123,7 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 

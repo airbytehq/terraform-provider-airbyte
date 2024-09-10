@@ -20,10 +20,10 @@ resource "airbyte_source_marketo" "my_source_marketo" {
     domain_url    = "https://000-AAA-000.mktorest.com"
     start_date    = "2020-09-25T00:00:00Z"
   }
-  definition_id = "825bea4e-c87a-4aff-ab9e-a290f7e9f416"
-  name          = "Bridget Gutmann"
+  definition_id = "ec1a2bc2-b81e-445e-bceb-6c910dc95a96"
+  name          = "Marco Hermann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "69c61d27-bbad-43f0-bf8c-a743bfb1506e"
+  workspace_id  = "bc4b3253-e6bd-4591-a254-44d2234fd1d8"
 }
 ```
 
@@ -51,9 +51,9 @@ resource "airbyte_source_marketo" "my_source_marketo" {
 
 Required:
 
-- `client_id` (String) The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-- `client_secret` (String) The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-- `domain_url` (String) Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
+- `client_id` (String, Sensitive) The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
+- `client_secret` (String, Sensitive) The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
+- `domain_url` (String, Sensitive) Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 ## Import

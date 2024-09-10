@@ -9,33 +9,33 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type DestinationSnowflakeUpdateSchemasAuthType string
+type DestinationSnowflakeUpdateSchemasCredentialsAuthType string
 
 const (
-	DestinationSnowflakeUpdateSchemasAuthTypeOAuth20 DestinationSnowflakeUpdateSchemasAuthType = "OAuth2.0"
+	DestinationSnowflakeUpdateSchemasCredentialsAuthTypeOAuth20 DestinationSnowflakeUpdateSchemasCredentialsAuthType = "OAuth2.0"
 )
 
-func (e DestinationSnowflakeUpdateSchemasAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasAuthType {
+func (e DestinationSnowflakeUpdateSchemasCredentialsAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
 	return &e
 }
-func (e *DestinationSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth2.0":
-		*e = DestinationSnowflakeUpdateSchemasAuthType(v)
+		*e = DestinationSnowflakeUpdateSchemasCredentialsAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasAuthType: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasCredentialsAuthType: %v", v)
 	}
 }
 
 type DestinationSnowflakeUpdateOAuth20 struct {
 	// Enter you application's Access Token
-	AccessToken string                                     `json:"access_token"`
-	authType    *DestinationSnowflakeUpdateSchemasAuthType `const:"OAuth2.0" json:"auth_type"`
+	AccessToken string                                                `json:"access_token"`
+	authType    *DestinationSnowflakeUpdateSchemasCredentialsAuthType `const:"OAuth2.0" json:"auth_type"`
 	// Enter your application's Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Enter your application's Client secret
@@ -62,8 +62,8 @@ func (o *DestinationSnowflakeUpdateOAuth20) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *DestinationSnowflakeUpdateOAuth20) GetAuthType() *DestinationSnowflakeUpdateSchemasAuthType {
-	return DestinationSnowflakeUpdateSchemasAuthTypeOAuth20.ToPointer()
+func (o *DestinationSnowflakeUpdateOAuth20) GetAuthType() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
+	return DestinationSnowflakeUpdateSchemasCredentialsAuthTypeOAuth20.ToPointer()
 }
 
 func (o *DestinationSnowflakeUpdateOAuth20) GetClientID() *string {
@@ -87,31 +87,31 @@ func (o *DestinationSnowflakeUpdateOAuth20) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-type DestinationSnowflakeUpdateAuthType string
+type DestinationSnowflakeUpdateSchemasAuthType string
 
 const (
-	DestinationSnowflakeUpdateAuthTypeUsernameAndPassword DestinationSnowflakeUpdateAuthType = "Username and Password"
+	DestinationSnowflakeUpdateSchemasAuthTypeUsernameAndPassword DestinationSnowflakeUpdateSchemasAuthType = "Username and Password"
 )
 
-func (e DestinationSnowflakeUpdateAuthType) ToPointer() *DestinationSnowflakeUpdateAuthType {
+func (e DestinationSnowflakeUpdateSchemasAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasAuthType {
 	return &e
 }
-func (e *DestinationSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Username and Password":
-		*e = DestinationSnowflakeUpdateAuthType(v)
+		*e = DestinationSnowflakeUpdateSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateAuthType: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasAuthType: %v", v)
 	}
 }
 
 type UsernameAndPassword struct {
-	authType *DestinationSnowflakeUpdateAuthType `const:"Username and Password" json:"auth_type"`
+	authType *DestinationSnowflakeUpdateSchemasAuthType `const:"Username and Password" json:"auth_type"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
 }
@@ -127,8 +127,8 @@ func (u *UsernameAndPassword) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UsernameAndPassword) GetAuthType() *DestinationSnowflakeUpdateAuthType {
-	return DestinationSnowflakeUpdateAuthTypeUsernameAndPassword.ToPointer()
+func (o *UsernameAndPassword) GetAuthType() *DestinationSnowflakeUpdateSchemasAuthType {
+	return DestinationSnowflakeUpdateSchemasAuthTypeUsernameAndPassword.ToPointer()
 }
 
 func (o *UsernameAndPassword) GetPassword() string {
@@ -138,31 +138,31 @@ func (o *UsernameAndPassword) GetPassword() string {
 	return o.Password
 }
 
-type DestinationSnowflakeUpdateSchemasCredentialsAuthType string
+type DestinationSnowflakeUpdateAuthType string
 
 const (
-	DestinationSnowflakeUpdateSchemasCredentialsAuthTypeKeyPairAuthentication DestinationSnowflakeUpdateSchemasCredentialsAuthType = "Key Pair Authentication"
+	DestinationSnowflakeUpdateAuthTypeKeyPairAuthentication DestinationSnowflakeUpdateAuthType = "Key Pair Authentication"
 )
 
-func (e DestinationSnowflakeUpdateSchemasCredentialsAuthType) ToPointer() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
+func (e DestinationSnowflakeUpdateAuthType) ToPointer() *DestinationSnowflakeUpdateAuthType {
 	return &e
 }
-func (e *DestinationSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Key Pair Authentication":
-		*e = DestinationSnowflakeUpdateSchemasCredentialsAuthType(v)
+		*e = DestinationSnowflakeUpdateAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateSchemasCredentialsAuthType: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeUpdateAuthType: %v", v)
 	}
 }
 
 type KeyPairAuthentication struct {
-	authType *DestinationSnowflakeUpdateSchemasCredentialsAuthType `const:"Key Pair Authentication" json:"auth_type"`
+	authType *DestinationSnowflakeUpdateAuthType `const:"Key Pair Authentication" json:"auth_type"`
 	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Passphrase for private key
@@ -180,8 +180,8 @@ func (k *KeyPairAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *KeyPairAuthentication) GetAuthType() *DestinationSnowflakeUpdateSchemasCredentialsAuthType {
-	return DestinationSnowflakeUpdateSchemasCredentialsAuthTypeKeyPairAuthentication.ToPointer()
+func (o *KeyPairAuthentication) GetAuthType() *DestinationSnowflakeUpdateAuthType {
+	return DestinationSnowflakeUpdateAuthTypeKeyPairAuthentication.ToPointer()
 }
 
 func (o *KeyPairAuthentication) GetPrivateKey() string {
@@ -301,9 +301,11 @@ type DestinationSnowflakeUpdate struct {
 	Role string `json:"role"`
 	// Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
 	Schema string `json:"schema"`
+	// Use MERGE for de-duplication of final tables. This option no effect if Final tables are disabled or Sync mode is not DEDUPE
+	UseMergeForUpsert *bool `default:"false" json:"use_merge_for_upsert"`
 	// Enter the name of the user you want to use to access the database
 	Username string `json:"username"`
-	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
+	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to use as a compute cluster
 	Warehouse string `json:"warehouse"`
 }
 
@@ -379,6 +381,13 @@ func (o *DestinationSnowflakeUpdate) GetSchema() string {
 		return ""
 	}
 	return o.Schema
+}
+
+func (o *DestinationSnowflakeUpdate) GetUseMergeForUpsert() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseMergeForUpsert
 }
 
 func (o *DestinationSnowflakeUpdate) GetUsername() string {

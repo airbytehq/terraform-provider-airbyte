@@ -72,6 +72,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 									},
 									"api_key_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The secret associated with the API Key ID.`,
 									},
 								},
@@ -110,6 +111,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					},
 					"ca_certificate": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `CA certificate`,
 					},
 					"endpoint": schema.StringAttribute{

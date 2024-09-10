@@ -74,10 +74,12 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of the Typeform developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret the Typeform developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -87,7 +89,6 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required:    true,
-										Sensitive:   true,
 										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),

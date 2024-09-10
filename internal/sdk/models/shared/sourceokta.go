@@ -10,33 +10,33 @@ import (
 	"time"
 )
 
-type SourceOktaSchemasAuthType string
+type SourceOktaSchemasCredentialsAuthType string
 
 const (
-	SourceOktaSchemasAuthTypeAPIToken SourceOktaSchemasAuthType = "api_token"
+	SourceOktaSchemasCredentialsAuthTypeAPIToken SourceOktaSchemasCredentialsAuthType = "api_token"
 )
 
-func (e SourceOktaSchemasAuthType) ToPointer() *SourceOktaSchemasAuthType {
+func (e SourceOktaSchemasCredentialsAuthType) ToPointer() *SourceOktaSchemasCredentialsAuthType {
 	return &e
 }
-func (e *SourceOktaSchemasAuthType) UnmarshalJSON(data []byte) error {
+func (e *SourceOktaSchemasCredentialsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceOktaSchemasAuthType(v)
+		*e = SourceOktaSchemasCredentialsAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaSchemasAuthType: %v", v)
+		return fmt.Errorf("invalid value for SourceOktaSchemasCredentialsAuthType: %v", v)
 	}
 }
 
 type SourceOktaAPIToken struct {
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
-	APIToken string                    `json:"api_token"`
-	authType SourceOktaSchemasAuthType `const:"api_token" json:"auth_type"`
+	APIToken string                               `json:"api_token"`
+	authType SourceOktaSchemasCredentialsAuthType `const:"api_token" json:"auth_type"`
 }
 
 func (s SourceOktaAPIToken) MarshalJSON() ([]byte, error) {
@@ -57,8 +57,86 @@ func (o *SourceOktaAPIToken) GetAPIToken() string {
 	return o.APIToken
 }
 
-func (o *SourceOktaAPIToken) GetAuthType() SourceOktaSchemasAuthType {
-	return SourceOktaSchemasAuthTypeAPIToken
+func (o *SourceOktaAPIToken) GetAuthType() SourceOktaSchemasCredentialsAuthType {
+	return SourceOktaSchemasCredentialsAuthTypeAPIToken
+}
+
+type SourceOktaSchemasAuthType string
+
+const (
+	SourceOktaSchemasAuthTypeOauth20PrivateKey SourceOktaSchemasAuthType = "oauth2.0_private_key"
+)
+
+func (e SourceOktaSchemasAuthType) ToPointer() *SourceOktaSchemasAuthType {
+	return &e
+}
+func (e *SourceOktaSchemasAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "oauth2.0_private_key":
+		*e = SourceOktaSchemasAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOktaSchemasAuthType: %v", v)
+	}
+}
+
+type SourceOktaOAuth20WithPrivateKey struct {
+	authType SourceOktaSchemasAuthType `const:"oauth2.0_private_key" json:"auth_type"`
+	// The Client ID of your OAuth application.
+	ClientID string `json:"client_id"`
+	// The key ID (kid).
+	KeyID string `json:"key_id"`
+	// The private key in PEM format
+	PrivateKey string `json:"private_key"`
+	// The OAuth scope.
+	Scope string `json:"scope"`
+}
+
+func (s SourceOktaOAuth20WithPrivateKey) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOktaOAuth20WithPrivateKey) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOktaOAuth20WithPrivateKey) GetAuthType() SourceOktaSchemasAuthType {
+	return SourceOktaSchemasAuthTypeOauth20PrivateKey
+}
+
+func (o *SourceOktaOAuth20WithPrivateKey) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceOktaOAuth20WithPrivateKey) GetKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.KeyID
+}
+
+func (o *SourceOktaOAuth20WithPrivateKey) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
+}
+
+func (o *SourceOktaOAuth20WithPrivateKey) GetScope() string {
+	if o == nil {
+		return ""
+	}
+	return o.Scope
 }
 
 type SourceOktaAuthType string
@@ -133,13 +211,15 @@ func (o *SourceOktaOAuth20) GetRefreshToken() string {
 type SourceOktaAuthorizationMethodType string
 
 const (
-	SourceOktaAuthorizationMethodTypeSourceOktaOAuth20  SourceOktaAuthorizationMethodType = "source-okta_OAuth2.0"
-	SourceOktaAuthorizationMethodTypeSourceOktaAPIToken SourceOktaAuthorizationMethodType = "source-okta_API Token"
+	SourceOktaAuthorizationMethodTypeSourceOktaOAuth20               SourceOktaAuthorizationMethodType = "source-okta_OAuth2.0"
+	SourceOktaAuthorizationMethodTypeSourceOktaOAuth20WithPrivateKey SourceOktaAuthorizationMethodType = "source-okta_OAuth 2.0 with private key"
+	SourceOktaAuthorizationMethodTypeSourceOktaAPIToken              SourceOktaAuthorizationMethodType = "source-okta_API Token"
 )
 
 type SourceOktaAuthorizationMethod struct {
-	SourceOktaOAuth20  *SourceOktaOAuth20
-	SourceOktaAPIToken *SourceOktaAPIToken
+	SourceOktaOAuth20               *SourceOktaOAuth20
+	SourceOktaOAuth20WithPrivateKey *SourceOktaOAuth20WithPrivateKey
+	SourceOktaAPIToken              *SourceOktaAPIToken
 
 	Type SourceOktaAuthorizationMethodType
 }
@@ -150,6 +230,15 @@ func CreateSourceOktaAuthorizationMethodSourceOktaOAuth20(sourceOktaOAuth20 Sour
 	return SourceOktaAuthorizationMethod{
 		SourceOktaOAuth20: &sourceOktaOAuth20,
 		Type:              typ,
+	}
+}
+
+func CreateSourceOktaAuthorizationMethodSourceOktaOAuth20WithPrivateKey(sourceOktaOAuth20WithPrivateKey SourceOktaOAuth20WithPrivateKey) SourceOktaAuthorizationMethod {
+	typ := SourceOktaAuthorizationMethodTypeSourceOktaOAuth20WithPrivateKey
+
+	return SourceOktaAuthorizationMethod{
+		SourceOktaOAuth20WithPrivateKey: &sourceOktaOAuth20WithPrivateKey,
+		Type:                            typ,
 	}
 }
 
@@ -178,12 +267,23 @@ func (u *SourceOktaAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var sourceOktaOAuth20WithPrivateKey SourceOktaOAuth20WithPrivateKey = SourceOktaOAuth20WithPrivateKey{}
+	if err := utils.UnmarshalJSON(data, &sourceOktaOAuth20WithPrivateKey, "", true, true); err == nil {
+		u.SourceOktaOAuth20WithPrivateKey = &sourceOktaOAuth20WithPrivateKey
+		u.Type = SourceOktaAuthorizationMethodTypeSourceOktaOAuth20WithPrivateKey
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOktaAuthorizationMethod", string(data))
 }
 
 func (u SourceOktaAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	if u.SourceOktaOAuth20 != nil {
 		return utils.MarshalJSON(u.SourceOktaOAuth20, "", true)
+	}
+
+	if u.SourceOktaOAuth20WithPrivateKey != nil {
+		return utils.MarshalJSON(u.SourceOktaOAuth20WithPrivateKey, "", true)
 	}
 
 	if u.SourceOktaAPIToken != nil {

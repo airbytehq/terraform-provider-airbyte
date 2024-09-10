@@ -74,6 +74,37 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								},
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("o_auth20_with_private_key"),
+										path.MatchRelative().AtParent().AtName("o_auth20"),
+									}...),
+								},
+							},
+							"o_auth20_with_private_key": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The Client ID of your OAuth application.`,
+									},
+									"key_id": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The key ID (kid).`,
+									},
+									"private_key": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The private key in PEM format`,
+									},
+									"scope": schema.StringAttribute{
+										Required:    true,
+										Description: `The OAuth scope.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("api_token"),
 										path.MatchRelative().AtParent().AtName("o_auth20"),
 									}...),
 								},
@@ -83,10 +114,12 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -98,6 +131,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("api_token"),
+										path.MatchRelative().AtParent().AtName("o_auth20_with_private_key"),
 									}...),
 								},
 							},
@@ -108,6 +142,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"domain": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.`,
 					},
 					"start_date": schema.StringAttribute{

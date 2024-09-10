@@ -8,16 +8,17 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
     }
     database              = "AIRBYTE_DATABASE"
     disable_type_dedupe   = false
-    host                  = "accountname.snowflakecomputing.com"
+    host                  = "accountname.us-east-2.aws.snowflakecomputing.com"
     jdbc_url_params       = "...my_jdbc_url_params..."
     raw_data_schema       = "...my_raw_data_schema..."
-    retention_period_days = 5
+    retention_period_days = 9
     role                  = "AIRBYTE_ROLE"
     schema                = "AIRBYTE_SCHEMA"
+    use_merge_for_upsert  = false
     username              = "AIRBYTE_USER"
     warehouse             = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "f6fed365-1e7d-4549-a735-da213c86a8b9"
-  name          = "Santiago Will"
-  workspace_id  = "53876e3d-e30a-486e-8df1-9faac84c3184"
+  definition_id = "89a0dc02-329a-45ca-a9f3-888495eab20e"
+  name          = "Mrs. Kelvin Dickens"
+  workspace_id  = "3624c439-0072-45fa-be33-722ced92f8e0"
 }

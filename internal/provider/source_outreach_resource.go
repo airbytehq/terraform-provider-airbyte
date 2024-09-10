@@ -63,6 +63,7 @@ func (r *SourceOutreachResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Outreach developer application.`,
 					},
 					"redirect_uri": schema.StringAttribute{

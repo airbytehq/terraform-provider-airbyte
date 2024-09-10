@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type BambooHr string
@@ -37,8 +38,9 @@ type SourceBambooHr struct {
 	// Comma-separated list of fields to include in custom reports.
 	CustomReportsFields *string `json:"custom_reports_fields,omitempty"`
 	// If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
-	CustomReportsIncludeDefaultFields *bool    `default:"true" json:"custom_reports_include_default_fields"`
-	sourceType                        BambooHr `const:"bamboo-hr" json:"sourceType"`
+	CustomReportsIncludeDefaultFields *bool      `default:"true" json:"custom_reports_include_default_fields"`
+	sourceType                        BambooHr   `const:"bamboo-hr" json:"sourceType"`
+	StartDate                         *time.Time `json:"start_date,omitempty"`
 	// Sub Domain of bamboo hr
 	Subdomain string `json:"subdomain"`
 }
@@ -77,6 +79,13 @@ func (o *SourceBambooHr) GetCustomReportsIncludeDefaultFields() *bool {
 
 func (o *SourceBambooHr) GetSourceType() BambooHr {
 	return BambooHrBambooHr
+}
+
+func (o *SourceBambooHr) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceBambooHr) GetSubdomain() string {

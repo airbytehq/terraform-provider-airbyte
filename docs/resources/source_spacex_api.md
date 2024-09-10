@@ -15,13 +15,13 @@ SourceSpacexAPI Resource
 ```terraform
 resource "airbyte_source_spacex_api" "my_source_spacexapi" {
   configuration = {
-    id      = "5c9f06b5-482c-49eb-b700-3d0337f10a64"
+    id      = "e45dfad9-324f-46ab-9f83-34526eae71eb"
     options = "...my_options..."
   }
-  definition_id = "369e4ee3-2ccb-44d5-ada6-128f2436a122"
-  name          = "Travis McCullough"
+  definition_id = "759d7dd0-bf2f-4572-9957-8fbbe9226a95"
+  name          = "Elisa Wunsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c8198a6b-f6f1-4cbd-b35a-96cd0e48f1e4"
+  workspace_id  = "3d12e392-ce90-4b91-a9fb-30db2efb21ef"
 }
 ```
 

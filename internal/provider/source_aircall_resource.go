@@ -61,6 +61,7 @@ func (r *SourceAircallResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"api_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `App ID found at settings https://dashboard.aircall.io/integrations/api-keys`,
 					},
 					"api_token": schema.StringAttribute{

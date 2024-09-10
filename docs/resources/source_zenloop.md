@@ -20,10 +20,10 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  definition_id = "cd819ecc-37ba-4170-8ba6-4daf2cd7c8fe"
-  name          = "Delores Hamill"
+  definition_id = "fdf3211f-15e0-4b96-bac0-fe887647e848"
+  name          = "Pauline Bechtelar"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "306443a7-5bcf-44e2-a137-8db01d76f7dd"
+  workspace_id  = "f14991dd-b8a5-49a6-bc83-fdb6d5a0b32f"
 }
 ```
 
@@ -56,8 +56,8 @@ Required:
 Optional:
 
 - `date_from` (String) Zenloop date_from. Format: 2021-10-24T03:30:30Z or 2021-10-24. Leave empty if only data from current data should be synced
-- `survey_group_id` (String) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
-- `survey_id` (String) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
+- `survey_group_id` (String, Sensitive) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
+- `survey_id` (String, Sensitive) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
 
 ## Import
 

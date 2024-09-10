@@ -1,12 +1,12 @@
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      4,
+      6,
     ]
     ad_analytics_reports = [
       {
-        name             = "Carolyn Bednar"
-        pivot_by         = "MEMBER_COUNTRY_V2"
+        name             = "Orlando Schuppe"
+        pivot_by         = "MEMBER_INDUSTRY"
         time_granularity = "ALL"
       },
     ]
@@ -17,8 +17,8 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     }
     start_date = "2021-05-17"
   }
-  definition_id = "1ce49a8f-c7f8-4e24-a726-45cfb2449eef"
-  name          = "Cory Johnson"
+  definition_id = "72879b60-69b6-4a28-9f31-96ea9203cb78"
+  name          = "Kristen Toy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b4b875ea-1fa6-43f6-80fa-c1403cfd915c"
+  workspace_id  = "a531f3b4-802a-43b9-9674-976dbe116c78"
 }

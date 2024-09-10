@@ -61,10 +61,12 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 						Attributes: map[string]schema.Attribute{
 							"client_id": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client ID of your Google Sheets developer application.`,
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of your Google Sheets developer application.`,
 							},
 							"refresh_token": schema.StringAttribute{

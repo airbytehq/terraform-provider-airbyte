@@ -18,16 +18,16 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
     credentials = {
       api_token = {
         api_token = "...my_api_token..."
-        email     = "Jannie_Zulauf@hotmail.com"
+        email     = "Gracie_Howell@gmail.com"
       }
     }
     start_date = "2021-01-01T00:00:00Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "badf74d2-3a87-4a42-abf6-ae57802daa82"
-  name          = "Ramona Marvin"
+  definition_id = "7c9141ac-8dcf-4207-806d-a07742c26203"
+  name          = "Felix Beer II"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ac7526c0-e68d-441f-a947-8bd831a4caf6"
+  workspace_id  = "4956e9a2-d9da-4eda-9833-c055c950c18b"
 }
 ```
 
@@ -85,8 +85,8 @@ Required:
 Required:
 
 - `access_token` (String, Sensitive) Long-term access Token for making authenticated requests.
-- `client_id` (String) The Client ID of your OAuth application.
-- `client_secret` (String) The Client Secret of your OAuth application.
+- `client_id` (String, Sensitive) The Client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The Client Secret of your OAuth application.
 
 ## Import
 

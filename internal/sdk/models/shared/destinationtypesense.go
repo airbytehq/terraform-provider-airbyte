@@ -37,7 +37,7 @@ type DestinationTypesense struct {
 	// How many documents should be imported together. Default 1000
 	BatchSize       *int64    `json:"batch_size,omitempty"`
 	destinationType Typesense `const:"typesense" json:"destinationType"`
-	// Hostname of the Typesense instance without protocol.
+	// Hostname of the Typesense instance without protocol. Accept multiple hosts separated by comma.
 	Host string `json:"host"`
 	// Path of the Typesense instance. Default is none
 	Path *string `json:"path,omitempty"`

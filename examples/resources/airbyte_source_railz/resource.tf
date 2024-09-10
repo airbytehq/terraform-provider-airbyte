@@ -4,8 +4,8 @@ resource "airbyte_source_railz" "my_source_railz" {
     secret_key = "...my_secret_key..."
     start_date = "...my_start_date..."
   }
-  definition_id = "72ede129-9d48-4414-90fd-6e7ec48816b0"
-  name          = "Reginald Dibbert"
+  definition_id = "a0917a61-51fa-4c3e-8ec6-9babb338974c"
+  name          = "Paul Spencer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "975147c3-e6c8-4bd1-8cca-d3b1c4065293"
+  workspace_id  = "9af2319a-6f88-498d-b4d7-cd0670b63c63"
 }

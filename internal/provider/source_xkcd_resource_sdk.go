@@ -8,7 +8,15 @@ import (
 )
 
 func (r *SourceXkcdResourceModel) ToSharedSourceXkcdCreateRequest() *shared.SourceXkcdCreateRequest {
-	configuration := shared.SourceXkcd{}
+	comicNumber := new(string)
+	if !r.Configuration.ComicNumber.IsUnknown() && !r.Configuration.ComicNumber.IsNull() {
+		*comicNumber = r.Configuration.ComicNumber.ValueString()
+	} else {
+		comicNumber = nil
+	}
+	configuration := shared.SourceXkcd{
+		ComicNumber: comicNumber,
+	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
 		*definitionID = r.DefinitionID.ValueString()
@@ -43,7 +51,15 @@ func (r *SourceXkcdResourceModel) RefreshFromSharedSourceResponse(resp *shared.S
 }
 
 func (r *SourceXkcdResourceModel) ToSharedSourceXkcdPutRequest() *shared.SourceXkcdPutRequest {
-	configuration := shared.SourceXkcdUpdate{}
+	comicNumber := new(string)
+	if !r.Configuration.ComicNumber.IsUnknown() && !r.Configuration.ComicNumber.IsNull() {
+		*comicNumber = r.Configuration.ComicNumber.ValueString()
+	} else {
+		comicNumber = nil
+	}
+	configuration := shared.SourceXkcdUpdate{
+		ComicNumber: comicNumber,
+	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceXkcdPutRequest{

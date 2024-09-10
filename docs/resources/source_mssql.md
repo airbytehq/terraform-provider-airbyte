@@ -22,9 +22,10 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     port            = 1433
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
-        initial_waiting_seconds              = 7
+        initial_load_timeout_hours           = 3
+        initial_waiting_seconds              = 2
         invalid_cdc_cursor_position_behavior = "Re-sync data"
-        queue_size                           = 7
+        queue_size                           = 3
       }
     }
     schemas = [
@@ -36,12 +37,12 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Caroline_Harvey"
+    username = "Ayden.Sanford17"
   }
-  definition_id = "4141a21c-8938-4ad6-bcbb-78bed98212c7"
-  name          = "Eleanor O'Hara V"
+  definition_id = "5b489304-8e9c-41af-9961-b1c883a57271"
+  name          = "Kari Lemke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "387527d5-e3ef-4724-ad0c-0b7968b72421"
+  workspace_id  = "b6433cb8-2b32-4ad0-bfd9-a9d8ba9b0df8"
 }
 ```
 
@@ -96,6 +97,7 @@ Optional:
 
 Optional:
 
+- `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 3600 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300
 - `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
@@ -124,7 +126,7 @@ Optional:
 
 Optional:
 
-- `certificate` (String) certificate of the server, or of the CA that signed the server certificate
+- `certificate` (String, Sensitive) certificate of the server, or of the CA that signed the server certificate
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 
 

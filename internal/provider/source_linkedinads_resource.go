@@ -141,10 +141,12 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{

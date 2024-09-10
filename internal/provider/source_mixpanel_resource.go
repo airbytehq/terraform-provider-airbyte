@@ -78,6 +78,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
 								},
@@ -96,6 +97,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 									"username": schema.StringAttribute{
@@ -127,6 +129,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+					},
+					"page_size": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(1000),
+						Description: `The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value. Default: 1000`,
 					},
 					"project_timezone": schema.StringAttribute{
 						Computed:    true,

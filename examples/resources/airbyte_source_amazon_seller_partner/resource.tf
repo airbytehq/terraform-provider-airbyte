@@ -1,12 +1,12 @@
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
     account_type           = "Seller"
-    aws_environment        = "SANDBOX"
+    aws_environment        = "PRODUCTION"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
     period_in_days         = 5
     refresh_token          = "...my_refresh_token..."
-    region                 = "MX"
+    region                 = "AU"
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -17,13 +17,14 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
             option_value = "...my_option_value..."
           },
         ]
-        report_name = "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING"
+        report_name = "GET_XML_BROWSE_TREE_DATA"
         stream_name = "...my_stream_name..."
       },
     ]
+    wait_to_avoid_fatal_errors = false
   }
-  definition_id = "b1d1d8bb-57bf-4001-9db3-cf074d627d20"
-  name          = "Karla Adams III"
+  definition_id = "e8959afe-ef69-4ead-9e5d-3690efc6e828"
+  name          = "Walter Spinka"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9bb26e6b-9f25-4aa9-b8c7-d4107048d9ff"
+  workspace_id  = "db5daa9e-a927-4cae-bb29-c85e6b856286"
 }

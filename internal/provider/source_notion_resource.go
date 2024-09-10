@@ -88,10 +88,12 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.`,
 									},
 								},

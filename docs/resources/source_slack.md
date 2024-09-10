@@ -23,15 +23,15 @@ resource "airbyte_source_slack" "my_source_slack" {
         api_token = "...my_api_token..."
       }
     }
-    include_private_channels = false
-    join_channels            = true
+    include_private_channels = true
+    join_channels            = false
     lookback_window          = 7
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "6f1b8331-df02-45a1-9458-6c7cdfb558f8"
-  name          = "Kay Bauch"
+  definition_id = "894bdd98-fe3f-492c-86a9-aa72702875ab"
+  name          = "Everett Leuschke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3d1fcf2b-6755-4110-90ec-6c18f2017e88"
+  workspace_id  = "98d79666-080f-43ec-ae3c-b491ea7992cd"
 }
 ```
 
@@ -92,7 +92,7 @@ Required:
 
 - `access_token` (String, Sensitive) Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.
 - `client_id` (String) Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
-- `client_secret` (String) Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
+- `client_secret` (String, Sensitive) Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
 
 ## Import
 

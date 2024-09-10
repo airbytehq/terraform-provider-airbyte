@@ -3,6 +3,6 @@
 package types
 
 type DestinationBigqueryLoadingMethod struct {
-	GCSStaging      *GCSStaging `tfsdk:"gcs_staging" tfPlanOnly:"true"`
-	StandardInserts *Fake       `tfsdk:"standard_inserts" tfPlanOnly:"true"`
+	BatchedStandardInserts *Fake       `tfsdk:"batched_standard_inserts" tfPlanOnly:"true"`
+	GCSStaging             *GCSStaging `tfsdk:"gcs_staging" tfPlanOnly:"true"`
 }

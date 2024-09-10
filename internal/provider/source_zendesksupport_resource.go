@@ -107,10 +107,12 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
 								},

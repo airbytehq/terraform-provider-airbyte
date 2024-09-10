@@ -3,8 +3,8 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "64f99d67-745a-4fb6-9f17-20bd7a7ec191"
-  name          = "Irene Huels"
+  definition_id = "9e7c8aee-eb09-4ffd-b753-fe46a1403ba1"
+  name          = "Mr. Gilberto Lebsack"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e680e441-7c6f-44b5-89c8-206a4b043ef0"
+  workspace_id  = "cfb42284-9b58-4575-9fd7-9d74aa20ea69"
 }

@@ -173,6 +173,12 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 						Default:     int64default.StaticInt64(10000),
 						Description: `The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000`,
 					},
+					"initial_load_timeout_hours": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(8),
+						Description: `The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8`,
+					},
 					"initial_waiting_seconds": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,

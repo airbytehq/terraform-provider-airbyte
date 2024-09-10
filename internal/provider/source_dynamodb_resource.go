@@ -174,6 +174,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"reserved_attribute_names": schema.StringAttribute{
 						Optional:    true,
+						Sensitive:   true,
 						Description: `Comma separated reserved attribute names present in your tables`,
 					},
 				},

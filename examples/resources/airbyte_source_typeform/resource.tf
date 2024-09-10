@@ -6,7 +6,7 @@ resource "airbyte_source_typeform" "my_source_typeform" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-12-23T20:48:01.588Z"
+        token_expiry_date = "2020-01-31T16:32:17.420Z"
       }
     }
     form_ids = [
@@ -14,8 +14,8 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "9e4deda3-0dd3-4cfb-8aa2-fad058413083"
-  name          = "Krystal Dietrich"
+  definition_id = "e297d6f5-cf39-4b34-b958-9f42198f3282"
+  name          = "Latoya Leuschke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "de43c907-f63c-4c02-bc2f-7f5dfb2c26b4"
+  workspace_id  = "159ebc2b-7c1d-4354-8fbb-e2d8a9d00100"
 }

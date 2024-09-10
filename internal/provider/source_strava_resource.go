@@ -69,6 +69,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"client_secret": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `The Client Secret of your Strava developer application.`,
 					},
 					"refresh_token": schema.StringAttribute{

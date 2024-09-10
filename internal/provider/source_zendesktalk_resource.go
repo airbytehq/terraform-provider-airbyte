@@ -106,10 +106,12 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client ID`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `Client Secret`,
 									},
 								},

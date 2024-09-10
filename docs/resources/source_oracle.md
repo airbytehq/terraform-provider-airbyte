@@ -22,7 +22,7 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     }
     encryption = {
       native_network_encryption_nne = {
-        encryption_algorithm = "RC4_56"
+        encryption_algorithm = "3DES168"
       }
     }
     host            = "...my_host..."
@@ -35,12 +35,12 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Neha.Abbott"
+    username = "Jammie.Steuber"
   }
-  definition_id = "3f94739c-c80e-4e5b-b122-5778f7a023c1"
-  name          = "Charles Littel"
+  definition_id = "9b8b6b2c-0920-4aa8-be08-607521b21ea9"
+  name          = "Edmund Mraz DDS"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0f694c48-e9d0-4f84-8cba-d71dab038014"
+  workspace_id  = "88f1ee12-f8a7-4db0-98a7-41266a87d389"
 }
 ```
 
@@ -106,7 +106,7 @@ Optional:
 
 Required:
 
-- `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
 

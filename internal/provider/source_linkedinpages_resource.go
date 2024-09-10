@@ -85,10 +85,12 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of the LinkedIn developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret of the LinkedIn developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -110,6 +112,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 					},
 					"org_id": schema.StringAttribute{
 						Required:    true,
+						Sensitive:   true,
 						Description: `Specify the Organization ID`,
 					},
 					"start_date": schema.StringAttribute{

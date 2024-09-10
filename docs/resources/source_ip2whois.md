@@ -18,10 +18,10 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
     api_key = "...my_api_key..."
     domain  = "www.facebook.com"
   }
-  definition_id = "85711ab9-4fe7-45a5-93e0-0977793827c0"
-  name          = "Mable Stroman"
+  definition_id = "4b875ea1-fa63-4f6c-8fac-1403cfd915cc"
+  name          = "Victoria Murazik DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b4fbde6a-e539-4551-88cd-8df8fddacae8"
+  workspace_id  = "1c37b350-ebb3-4981-889f-963f1e6164cc"
 }
 ```
 

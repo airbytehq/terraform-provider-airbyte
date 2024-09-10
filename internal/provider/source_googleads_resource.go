@@ -80,6 +80,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
+								Sensitive:   true,
 								Description: `The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"developer_token": schema.StringAttribute{

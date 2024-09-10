@@ -16,12 +16,12 @@ SourceConfigcat Resource
 resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
     password = "...my_password..."
-    username = "Wilmer_Bernier"
+    username = "Barney_Koss91"
   }
-  definition_id = "2d50cb6e-6ff3-432b-9f14-5775fcbb81a7"
-  name          = "Tonya Kautzer"
+  definition_id = "b4f73b7e-8dc3-471e-8bee-10511b439ed1"
+  name          = "Stephanie Runte"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "78b3b7de-de54-47fc-bc1c-b53c351689dd"
+  workspace_id  = "9f9b4783-ac23-42bf-a41c-80b23345c949"
 }
 ```
 

@@ -8,8 +8,8 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     start_date = "2023-08-05T00:43:59.244Z"
   }
-  definition_id = "007bc041-91be-4b05-bf07-c546621bdba9"
-  name          = "Victoria Haley"
+  definition_id = "cdfaf2b0-5210-4208-a036-b268d758466c"
+  name          = "Hector Ebert Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "51ed0a81-81e6-4e55-bd9e-be7b2f5ca6ec"
+  workspace_id  = "b1b394b8-4acd-4f8d-b6a4-f7e23711b260"
 }

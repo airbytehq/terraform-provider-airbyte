@@ -19,10 +19,10 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     dataset_id       = "...my_dataset_id..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "b7f8882a-1973-48b2-98b7-0494da21b79c"
-  name          = "Lionel McKenzie"
+  definition_id = "e9c7e740-1902-4821-9543-0f8964a321f4"
+  name          = "Mildred Weimann"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f3821deb-7264-4dad-9e5f-b53126691bfb"
+  workspace_id  = "aad078a3-612f-4cb5-a7fd-d854e0c39c22"
 }
 ```
 
@@ -50,7 +50,7 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
 
 Required:
 
-- `credentials_json` (String) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
+- `credentials_json` (String, Sensitive) The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 Optional:

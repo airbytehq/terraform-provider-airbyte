@@ -22,10 +22,10 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "e07eadc6-f53d-4253-9b8b-1e39d437be8f"
-  name          = "Vicky Welch"
+  definition_id = "9bb7b45d-9607-443b-824b-c119f8fb36f9"
+  name          = "Ms. Marie Cummings"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7fa8ae01-2beb-4a22-8996-41ef630f5d87"
+  workspace_id  = "49978c5f-0c0b-470c-9d08-d732ef691ae1"
 }
 ```
 
@@ -60,8 +60,8 @@ Required:
 
 Required:
 
-- `client_id` (String) The Client ID of your developer application
-- `client_secret` (String) The client secret of your developer application
+- `client_id` (String, Sensitive) The Client ID of your developer application
+- `client_secret` (String, Sensitive) The client secret of your developer application
 - `refresh_token` (String, Sensitive) A refresh token generated using the above client ID and secret
 
 Optional:

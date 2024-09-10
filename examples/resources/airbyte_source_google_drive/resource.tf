@@ -11,25 +11,25 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 5
+        days_to_sync_if_history_is_full = 3
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Marianne Hartmann"
+        name              = "Dr. Shawna Robel"
         primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        schemaless        = false
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "1e5baddd-2747-4bbc-bf24-1709ce4fe165"
-  name          = "Edmund Gleichner"
+  definition_id = "730b3999-4a41-4e4a-8985-c78fa7d86bdf"
+  name          = "Kristy Wilderman MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0e7fb5df-2547-47f3-b0b0-ec7c89bfb0cb"
+  workspace_id  = "cb121083-728d-489e-b51e-868df1f2c5ad"
 }

@@ -1,12 +1,12 @@
 resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
   configuration = {
-    domestic_schedule_country_code = "US"
+    domestic_schedule_country_code = "GB"
     end_date                       = "...my_end_date..."
     start_date                     = "...my_start_date..."
-    web_schedule_country_code      = "global"
+    web_schedule_country_code      = "GB"
   }
-  definition_id = "fe3f7d5a-433d-430c-a4aa-9f684d9ab345"
-  name          = "Ms. Moses Dibbert"
+  definition_id = "eac7526c-0e68-4d41-b294-78bd831a4caf"
+  name          = "Hattie Beer DVM"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb2e52a8-6adb-4b57-85cb-e7ccff9d0724"
+  workspace_id  = "2320a84c-82fe-4ed3-9fd4-712605259781"
 }

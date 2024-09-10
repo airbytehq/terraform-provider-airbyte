@@ -22,10 +22,10 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
     }
     start_date = "2020-11-16T00:00:00Z"
   }
-  definition_id = "b6d0d209-32d7-4e88-9861-9ec39811786e"
-  name          = "Darlene Vandervort"
+  definition_id = "d57541c3-612b-40e8-88cf-11a0d259943d"
+  name          = "Shannon Heller"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "72c20971-d544-4a65-a7d2-b4609d4ec646"
+  workspace_id  = "9e475abf-fba2-4c1e-bb69-08ecd761f19b"
 }
 ```
 
@@ -79,9 +79,9 @@ Required:
 
 - `access_token` (String, Sensitive) Access Token for making authenticated requests.
 - `client_id` (String) The Client ID of your Salesloft developer application.
-- `client_secret` (String) The Client Secret of your Salesloft developer application.
+- `client_secret` (String, Sensitive) The Client Secret of your Salesloft developer application.
 - `refresh_token` (String, Sensitive) The token for obtaining a new access token.
-- `token_expiry_date` (String, Sensitive) The date-time when the access token should be refreshed.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 ## Import
 

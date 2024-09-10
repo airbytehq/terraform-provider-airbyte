@@ -91,6 +91,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							"read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
+									"initial_load_timeout_hours": schema.Int64Attribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     int64default.StaticInt64(8),
+										Description: `The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8`,
+									},
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed:    true,
 										Optional:    true,
@@ -166,6 +172,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"certificate": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `certificate of the server, or of the CA that signed the server certificate`,
 									},
 									"host_name_in_certificate": schema.StringAttribute{

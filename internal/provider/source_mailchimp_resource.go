@@ -88,10 +88,12 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Optional:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
 								},

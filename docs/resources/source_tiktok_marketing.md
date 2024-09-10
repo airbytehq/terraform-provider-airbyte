@@ -15,7 +15,7 @@ SourceTiktokMarketing Resource
 ```terraform
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 8
+    attribution_window = 6
     credentials = {
       o_auth20 = {
         access_token  = "...my_access_token..."
@@ -24,14 +24,14 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date        = "2022-04-17"
+    end_date        = "2022-01-13"
     include_deleted = true
-    start_date      = "2021-05-10"
+    start_date      = "2021-09-07"
   }
-  definition_id = "13a2ccf2-b1ad-4e2f-8984-bfb0e1b3d2b8"
-  name          = "Jean Dare"
+  definition_id = "e012beba-22c9-4964-9ef6-30f5d8739c0e"
+  name          = "Hazel Pfeffer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8838cf8d-227f-4318-9424-0654f4782740"
+  workspace_id  = "2ddb04c9-bce3-487d-a644-4a186797a763"
 }
 ```
 
@@ -62,7 +62,7 @@ Optional:
 - `attribution_window` (Number) The attribution window in days. Default: 3
 - `credentials` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-- `include_deleted` (Boolean) Set to active if you want to include deleted data in reports. Default: false
+- `include_deleted` (Boolean) Set to active if you want to include deleted data in report based streams and Ads, Ad Groups and Campaign streams. Default: false
 - `start_date` (String) The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated. Default: "2016-09-01"
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -79,8 +79,8 @@ Optional:
 Required:
 
 - `access_token` (String, Sensitive) Long-term Authorized Access Token.
-- `app_id` (String) The Developer Application App ID.
-- `secret` (String) The Developer Application Secret.
+- `app_id` (String, Sensitive) The Developer Application App ID.
+- `secret` (String, Sensitive) The Developer Application Secret.
 
 Optional:
 

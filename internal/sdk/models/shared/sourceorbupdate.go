@@ -4,6 +4,7 @@ package shared
 
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type SourceOrbUpdate struct {
@@ -18,7 +19,7 @@ type SourceOrbUpdate struct {
 	// Orb Plan ID to filter subscriptions that should have usage fetched.
 	PlanID *string `json:"plan_id,omitempty"`
 	// UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
-	StartDate string `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
 	// Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 	StringEventPropertiesKeys []string `json:"string_event_properties_keys,omitempty"`
 	// Property key name to group subscription usage by.
@@ -71,9 +72,9 @@ func (o *SourceOrbUpdate) GetPlanID() *string {
 	return o.PlanID
 }
 
-func (o *SourceOrbUpdate) GetStartDate() string {
+func (o *SourceOrbUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
 	return o.StartDate
 }

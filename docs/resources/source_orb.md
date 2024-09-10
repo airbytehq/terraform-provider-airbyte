@@ -17,7 +17,7 @@ resource "airbyte_source_orb" "my_source_orb" {
   configuration = {
     api_key              = "...my_api_key..."
     end_date             = "2024-03-01T00:00:00Z"
-    lookback_window_days = 7
+    lookback_window_days = 0
     numeric_event_properties_keys = [
       "...",
     ]
@@ -28,10 +28,10 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  definition_id = "124b6e7b-2083-4a37-b0c9-92762a38aa73"
-  name          = "Julio Mayer"
+  definition_id = "efa67bbe-a9f5-4a35-91bd-0fb6321f6b4c"
+  name          = "Nathaniel Gorczany"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5cb72465-1802-4161-9872-363e09a2aae6"
+  workspace_id  = "a5f8aec8-fedb-48fc-b536-7bfee523e36b"
 }
 ```
 
@@ -66,10 +66,10 @@ Optional:
 
 - `end_date` (String) UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at after this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
 - `lookback_window_days` (Number) When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced. Default: 0
-- `numeric_event_properties_keys` (List of String, Sensitive) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
+- `numeric_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 - `plan_id` (String) Orb Plan ID to filter subscriptions that should have usage fetched.
-- `string_event_properties_keys` (List of String, Sensitive) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
-- `subscription_usage_grouping_key` (String, Sensitive) Property key name to group subscription usage by.
+- `string_event_properties_keys` (List of String) Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
+- `subscription_usage_grouping_key` (String) Property key name to group subscription usage by.
 
 ## Import
 

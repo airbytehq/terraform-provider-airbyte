@@ -4,5 +4,5 @@ package types
 
 type SourceAsanaAuthenticationMechanism struct {
 	AuthenticateViaAsanaOauth           *DestinationGoogleSheetsAuthenticationViaGoogleOAuth `tfsdk:"authenticate_via_asana_oauth" tfPlanOnly:"true"`
-	AuthenticateWithPersonalAccessToken *AuthenticateWithPersonalAccessToken                 `tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
+	AuthenticateWithPersonalAccessToken *PersonalAccessToken                                 `tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
 }

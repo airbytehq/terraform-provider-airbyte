@@ -4,8 +4,8 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     api_url      = "...my_api_url..."
     workspace_id = "...my_workspace_id..."
   }
-  definition_id = "2d15b828-621a-4877-92e6-25cdd80ba5ff"
-  name          = "Tiffany Runolfsdottir"
+  definition_id = "abf17c2d-50cb-46e6-bf33-2bdf145775fc"
+  name          = "Miss Ira Lesch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c10ca67a-827c-43d3-89f4-44d8a8589d84"
+  workspace_id  = "466bf78b-3b7d-4ede-947f-c7c1cb53c351"
 }

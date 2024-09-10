@@ -73,10 +73,12 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client ID of the Airtable developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The client secret the Airtable developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -86,7 +88,6 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Optional:    true,
-										Sensitive:   true,
 										Description: `The date-time when the access token should be refreshed.`,
 										Validators: []validator.String{
 											validators.IsRFC3339(),

@@ -7,6 +7,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceMongodbV2 struct {
 	DatabaseConfig                   SourceMongodbV2ClusterType `tfsdk:"database_config"`
 	DiscoverSampleSize               types.Int64                `tfsdk:"discover_sample_size"`
+	InitialLoadTimeoutHours          types.Int64                `tfsdk:"initial_load_timeout_hours"`
 	InitialWaitingSeconds            types.Int64                `tfsdk:"initial_waiting_seconds"`
 	InvalidCdcCursorPositionBehavior types.String               `tfsdk:"invalid_cdc_cursor_position_behavior"`
 	QueueSize                        types.Int64                `tfsdk:"queue_size"`

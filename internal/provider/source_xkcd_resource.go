@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -34,13 +35,13 @@ type SourceXkcdResource struct {
 
 // SourceXkcdResourceModel describes the resource data model.
 type SourceXkcdResourceModel struct {
-	Configuration tfTypes.Fake `tfsdk:"configuration"`
-	DefinitionID  types.String `tfsdk:"definition_id"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration tfTypes.SourceXkcd `tfsdk:"configuration"`
+	DefinitionID  types.String       `tfsdk:"definition_id"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceXkcdResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,8 +56,15 @@ func (r *SourceXkcdResource) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.Object{
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
-				Required:   true,
-				Attributes: map[string]schema.Attribute{},
+				Required: true,
+				Attributes: map[string]schema.Attribute{
+					"comic_number": schema.StringAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     stringdefault.StaticString("2960"),
+						Description: `Specifies the comic number in which details are to be extracted, pagination will begin with that number to end of available comics. Default: "2960"`,
+					},
+				},
 			},
 			"definition_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -281,6 +289,32 @@ func (r *SourceXkcdResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	sourceId1 := data.SourceID.ValueString()
+	request1 := operations.GetSourceXkcdRequest{
+		SourceID: sourceId1,
+	}
+	res1, err := r.client.Sources.GetSourceXkcd(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.SourceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

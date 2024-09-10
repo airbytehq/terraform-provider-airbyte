@@ -29,27 +29,27 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 6
+        days_to_sync_if_history_is_full = 2
         format = {
           avro_format = {
-            double_as_string = true
+            double_as_string = false
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Jeanette Larson"
+        name              = "Krystal Hamill"
         primary_key       = "...my_primary_key..."
         schemaless        = true
         validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "45d14463-0331-48f2-9cf1-0b0742b93b49"
-  name          = "Miss Joshua Brekke"
+  definition_id = "598db92c-72d5-441f-9389-28a50561c1cc"
+  name          = "Miss Judith McGlynn MD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20ccad5a-dc13-430e-b574-88395b5ae042"
+  workspace_id  = "d7b3d761-e29e-4f26-ae07-d2b59ab56edb"
 }
 ```
 
@@ -103,10 +103,10 @@ This class is structured similarly to OAuthCredentials but for a different authe
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
 - `refresh_token` (String, Sensitive) Refresh Token of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft OneDrive user
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft OneDrive user
 
 
 <a id="nestedatt--configuration--credentials--service_key_authentication"></a>
@@ -114,10 +114,10 @@ Required:
 
 Required:
 
-- `client_id` (String) Client ID of your Microsoft developer application
-- `client_secret` (String) Client Secret of your Microsoft developer application
-- `tenant_id` (String) Tenant ID of the Microsoft OneDrive user
-- `user_principal_name` (String) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+- `client_id` (String, Sensitive) Client ID of your Microsoft developer application
+- `client_secret` (String, Sensitive) Client Secret of your Microsoft developer application
+- `tenant_id` (String, Sensitive) Tenant ID of the Microsoft OneDrive user
+- `user_principal_name` (String, Sensitive) Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
 
 
 
@@ -134,7 +134,7 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-- `primary_key` (String, Sensitive) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
+- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 
@@ -145,12 +145,12 @@ Optional:
 
 - `avro_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
 - `csv_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
-- `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
 - `jsonl_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
 - `parquet_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
+- `unstructured_document_format` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format))
 
 <a id="nestedatt--configuration--streams--format--avro_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
@@ -158,7 +158,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--streams--format--csv_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
@@ -167,7 +167,7 @@ Optional:
 - `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"
 - `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
-- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition))
+- `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition))
 - `ignore_errors_on_fields_mismatch` (Boolean) Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 - `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""
@@ -176,25 +176,25 @@ Optional:
 - `strings_can_be_null` (Boolean) Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself. Default: true
 - `true_values` (List of String) A set of case-sensitive strings that should be interpreted as true values.
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition`
 
 Optional:
 
-- `autogenerated` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated))
-- `from_csv` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv))
-- `user_provided` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided))
+- `autogenerated` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--autogenerated))
+- `from_csv` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--from_csv))
+- `user_provided` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition--user_provided))
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--autogenerated"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
-
-
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--from_csv"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--autogenerated"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
 
 
-<a id="nestedatt--configuration--streams--format--parquet_format--header_definition--user_provided"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.header_definition.user_provided`
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--from_csv"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
+
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--header_definition--user_provided"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.header_definition.user_provided`
 
 Required:
 
@@ -203,38 +203,36 @@ Required:
 
 
 
-<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
-
-Optional:
-
-- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing))
-- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
-- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"
-
-<a id="nestedatt--configuration--streams--format--parquet_format--processing"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.processing`
-
-Optional:
-
-- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format--processing--local))
-
-<a id="nestedatt--configuration--streams--format--parquet_format--processing--local"></a>
-### Nested Schema for `configuration.streams.format.parquet_format.processing.local`
-
-
-
-
 <a id="nestedatt--configuration--streams--format--jsonl_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 
 <a id="nestedatt--configuration--streams--format--parquet_format"></a>
-### Nested Schema for `configuration.streams.format.parquet_format`
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
 
 Optional:
 
 - `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false
+
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
+
+Optional:
+
+- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing))
+- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
+- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. must be one of ["auto", "fast", "ocr_only", "hi_res"]; Default: "auto"
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing`
+
+Optional:
+
+- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing--local))
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing--local"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing.local`
 
 ## Import
 

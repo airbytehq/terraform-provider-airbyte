@@ -87,6 +87,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 									},
 									"client_secret": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The Client Secret of your Google Analytics developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -106,6 +107,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								Attributes: map[string]schema.Attribute{
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
+										Sensitive:   true,
 										Description: `The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.`,
 									},
 								},

@@ -22,10 +22,10 @@ resource "airbyte_source_notion" "my_source_notion" {
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "7b86cdec-1a2b-4c2b-81e4-5e3ceb6c910d"
-  name          = "Terrence Haley"
+  definition_id = "8b38fe3b-5201-4125-b292-52a784d2d0f1"
+  name          = "Sharon Koss"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6cb5f3bc-4b32-453e-abd5-91e25444d223"
+  workspace_id  = "5e2d6a49-780b-4a1d-aa28-c6eefe59b72d"
 }
 ```
 
@@ -78,8 +78,8 @@ Required:
 Required:
 
 - `access_token` (String, Sensitive) The Access Token received by completing the OAuth flow for your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
-- `client_id` (String) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
-- `client_secret` (String) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_id` (String, Sensitive) The Client ID of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
+- `client_secret` (String, Sensitive) The Client Secret of your Notion integration. See our <a href='https://docs.airbyte.com/integrations/sources/notion#step-2-set-permissions-and-acquire-authorization-credentials'>docs</a> for more information.
 
 ## Import
 
