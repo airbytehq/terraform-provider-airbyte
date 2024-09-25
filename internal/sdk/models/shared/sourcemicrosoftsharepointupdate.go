@@ -1211,8 +1211,6 @@ type SourceMicrosoftSharepointUpdateFileBasedStreamConfig struct {
 	InputSchema *string `json:"input_schema,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
-	PrimaryKey *string `json:"primary_key,omitempty"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
@@ -1265,13 +1263,6 @@ func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetName() string 
 		return ""
 	}
 	return o.Name
-}
-
-func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetPrimaryKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
 }
 
 func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {

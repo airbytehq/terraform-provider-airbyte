@@ -4,8 +4,8 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     api_key        = "a very long hex sequence"
     site_id        = "a relatively long hex sequence"
   }
-  definition_id = "1920e562-c711-4d3e-b646-ca6a0584e97a"
-  name          = "Leon Corkery DDS"
+  definition_id = "64f6ff9e-8e9f-4b1f-942f-e101b4395357"
+  name          = "Geoffrey Rowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d22882d9-facb-48ad-8cb7-919041885bed"
+  workspace_id  = "4750edd3-b5b4-4d0f-887b-07cfdecccf7a"
 }

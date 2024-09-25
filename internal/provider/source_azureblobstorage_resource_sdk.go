@@ -152,12 +152,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.SourceAzureBlobStorageInferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.SourceAzureBlobStorageInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -198,7 +192,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -285,19 +278,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -315,9 +296,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 			Format:                    format,
 			Globs:                     globs,
 			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})
@@ -507,12 +486,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.InferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.InferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -553,7 +526,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -640,19 +612,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -670,9 +630,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 			Format:                    format,
 			Globs:                     globs,
 			InputSchema:               inputSchema,
-			LegacyPrefix:              legacyPrefix,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})

@@ -19,11 +19,11 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Kristin95"
+    username         = "Peyton_Lang"
   }
-  definition_id = "9eaf9a8e-2157-4a85-a0c8-9e77fd0c2020"
-  name          = "Rick Sporer"
-  workspace_id  = "6de60f94-2f93-47a3-8595-08dd11c7ed17"
+  definition_id = "77fd0c20-2086-4d39-ade6-0f942f937a3c"
+  name          = "Ms. Ada Heidenreich"
+  workspace_id  = "d11c7ed1-7b1d-45b0-8289-a0dc02329a5c"
 }
 ```
 

@@ -19,10 +19,10 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
     start_date = 1666261656
     token      = "...my_token..."
   }
-  definition_id = "bbab0457-d926-4398-a6ec-d841e72a766a"
-  name          = "Cassandra Hoppe"
+  definition_id = "40178456-a4c1-4173-9e2c-277a8e2388fd"
+  name          = "Dr. Martha Cummings"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a512d804-4b05-4c5b-b112-361f26d47b86"
+  workspace_id  = "2c51a267-6b4d-4928-aad1-9d25d5253fa0"
 }
 ```
 

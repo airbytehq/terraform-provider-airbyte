@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceAsana struct {
 	Credentials           *SourceAsanaAuthenticationMechanism `tfsdk:"credentials"`
 	OrganizationExportIds []types.String                      `tfsdk:"organization_export_ids"`
-	TestMode              types.Bool                          `tfsdk:"test_mode"`
 }

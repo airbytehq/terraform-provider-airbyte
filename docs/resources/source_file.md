@@ -16,7 +16,7 @@ SourceFile Resource
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "yaml"
+    format       = "jsonl"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -27,10 +27,10 @@ resource "airbyte_source_file" "my_source_file" {
     reader_options = "{\"sep\": \" \"}"
     url            = "gs://my-google-bucket/data.csv"
   }
-  definition_id = "16116fc8-03c8-4311-a97a-1ae894962943"
-  name          = "Kristine Bailey"
+  definition_id = "b53a479a-0805-4ff1-b93b-f9b799d63199"
+  name          = "Gilberto Jones"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eacfe7e0-17f9-4052-b204-0e069282dd6a"
+  workspace_id  = "68c85ec2-1a9a-4b56-bf13-c77e51fa773f"
 }
 ```
 
@@ -75,6 +75,7 @@ Optional:
 - `az_blob_azure_blob_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--az_blob_azure_blob_storage))
 - `gcs_google_cloud_storage` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--gcs_google_cloud_storage))
 - `https_public_web` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--https_public_web))
+- `local_filesystem_limited` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--local_filesystem_limited))
 - `s3_amazon_web_services` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--s3_amazon_web_services))
 - `scp_secure_copy_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--scp_secure_copy_protocol))
 - `sftp_secure_file_transfer_protocol` (Attributes) (see [below for nested schema](#nestedatt--configuration--provider--sftp_secure_file_transfer_protocol))
@@ -107,6 +108,10 @@ Optional:
 Optional:
 
 - `user_agent` (Boolean) Add User-Agent to request. Default: false
+
+
+<a id="nestedatt--configuration--provider--local_filesystem_limited"></a>
+### Nested Schema for `configuration.provider.local_filesystem_limited`
 
 
 <a id="nestedatt--configuration--provider--s3_amazon_web_services"></a>

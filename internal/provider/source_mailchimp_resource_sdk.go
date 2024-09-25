@@ -50,12 +50,6 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest() *s
 			}
 		}
 	}
-	dataCenter := new(string)
-	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
-		*dataCenter = r.Configuration.DataCenter.ValueString()
-	} else {
-		dataCenter = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -64,7 +58,6 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpCreateRequest() *s
 	}
 	configuration := shared.SourceMailchimp{
 		Credentials: credentials,
-		DataCenter:  dataCenter,
 		StartDate:   startDate,
 	}
 	definitionID := new(string)
@@ -142,12 +135,6 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpPutRequest() *shar
 			}
 		}
 	}
-	dataCenter := new(string)
-	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
-		*dataCenter = r.Configuration.DataCenter.ValueString()
-	} else {
-		dataCenter = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -156,7 +143,6 @@ func (r *SourceMailchimpResourceModel) ToSharedSourceMailchimpPutRequest() *shar
 	}
 	configuration := shared.SourceMailchimpUpdate{
 		Credentials: credentials,
-		DataCenter:  dataCenter,
 		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()

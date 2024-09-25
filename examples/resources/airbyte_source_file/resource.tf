@@ -1,7 +1,7 @@
 resource "airbyte_source_file" "my_source_file" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "yaml"
+    format       = "jsonl"
     provider = {
       az_blob_azure_blob_storage = {
         sas_token       = "...my_sas_token..."
@@ -12,8 +12,8 @@ resource "airbyte_source_file" "my_source_file" {
     reader_options = "{\"sep\": \" \"}"
     url            = "gs://my-google-bucket/data.csv"
   }
-  definition_id = "16116fc8-03c8-4311-a97a-1ae894962943"
-  name          = "Kristine Bailey"
+  definition_id = "b53a479a-0805-4ff1-b93b-f9b799d63199"
+  name          = "Gilberto Jones"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "eacfe7e0-17f9-4052-b204-0e069282dd6a"
+  workspace_id  = "68c85ec2-1a9a-4b56-bf13-c77e51fa773f"
 }

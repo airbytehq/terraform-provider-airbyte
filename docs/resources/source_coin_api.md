@@ -19,14 +19,14 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
     limit       = 10
-    period      = "2MTH"
+    period      = "5SEC"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  definition_id = "851a3541-ba6f-45d9-8d5a-8a349e2072bd"
-  name          = "Jan DuBuque IV"
+  definition_id = "49e5b0b6-8d5f-4b4b-99e2-f7dc2833c76b"
+  name          = "Sammy Hauck"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dbe50fcb-32a7-4817-babb-82e6a7189e92"
+  workspace_id  = "566b4ade-0498-4ec4-8fd8-ad9161a05c5e"
 }
 ```
 

@@ -18,10 +18,10 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
   }
-  definition_id = "b09b9a90-3f60-4eb4-a54b-7cf533c55d68"
-  name          = "Lloyd Kertzmann DVM"
+  definition_id = "3a2ccf2b-1ade-42f4-984b-fb0e1b3d2b89"
+  name          = "Jesse Kassulke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7b10c6dd-1e62-4eb5-bcf3-65dccaec2ce4"
+  workspace_id  = "838cf8d2-27f3-418d-8240-654f4782740a"
 }
 ```
 

@@ -184,6 +184,15 @@ func (r *SourceFileResourceModel) ToSharedSourceFileCreateRequest() *shared.Sour
 			SourceFileSFTPSecureFileTransferProtocol: sourceFileSFTPSecureFileTransferProtocol,
 		}
 	}
+	var sourceFileLocalFilesystemLimited *shared.SourceFileLocalFilesystemLimited
+	if r.Configuration.Provider.LocalFilesystemLimited != nil {
+		sourceFileLocalFilesystemLimited = &shared.SourceFileLocalFilesystemLimited{}
+	}
+	if sourceFileLocalFilesystemLimited != nil {
+		provider = shared.SourceFileStorageProvider{
+			SourceFileLocalFilesystemLimited: sourceFileLocalFilesystemLimited,
+		}
+	}
 	readerOptions := new(string)
 	if !r.Configuration.ReaderOptions.IsUnknown() && !r.Configuration.ReaderOptions.IsNull() {
 		*readerOptions = r.Configuration.ReaderOptions.ValueString()
@@ -274,7 +283,7 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 			GCSGoogleCloudStorage: gcsGoogleCloudStorage,
 		}
 	}
-	var sourceFileUpdateS3AmazonWebServices *shared.SourceFileUpdateS3AmazonWebServices
+	var s3AmazonWebServices *shared.S3AmazonWebServices
 	if r.Configuration.Provider.S3AmazonWebServices != nil {
 		awsAccessKeyID := new(string)
 		if !r.Configuration.Provider.S3AmazonWebServices.AwsAccessKeyID.IsUnknown() && !r.Configuration.Provider.S3AmazonWebServices.AwsAccessKeyID.IsNull() {
@@ -288,14 +297,14 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 		} else {
 			awsSecretAccessKey = nil
 		}
-		sourceFileUpdateS3AmazonWebServices = &shared.SourceFileUpdateS3AmazonWebServices{
+		s3AmazonWebServices = &shared.S3AmazonWebServices{
 			AwsAccessKeyID:     awsAccessKeyID,
 			AwsSecretAccessKey: awsSecretAccessKey,
 		}
 	}
-	if sourceFileUpdateS3AmazonWebServices != nil {
+	if s3AmazonWebServices != nil {
 		provider = shared.StorageProvider{
-			SourceFileUpdateS3AmazonWebServices: sourceFileUpdateS3AmazonWebServices,
+			S3AmazonWebServices: s3AmazonWebServices,
 		}
 	}
 	var azBlobAzureBlobStorage *shared.AzBlobAzureBlobStorage
@@ -406,6 +415,15 @@ func (r *SourceFileResourceModel) ToSharedSourceFilePutRequest() *shared.SourceF
 	if sftpSecureFileTransferProtocol != nil {
 		provider = shared.StorageProvider{
 			SFTPSecureFileTransferProtocol: sftpSecureFileTransferProtocol,
+		}
+	}
+	var localFilesystemLimited *shared.LocalFilesystemLimited
+	if r.Configuration.Provider.LocalFilesystemLimited != nil {
+		localFilesystemLimited = &shared.LocalFilesystemLimited{}
+	}
+	if localFilesystemLimited != nil {
+		provider = shared.StorageProvider{
+			LocalFilesystemLimited: localFilesystemLimited,
 		}
 	}
 	readerOptions := new(string)

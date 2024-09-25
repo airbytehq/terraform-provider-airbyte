@@ -17,10 +17,10 @@ resource "airbyte_source_glassfrog" "my_source_glassfrog" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "5714db07-d769-4873-b386-b53a479a0805"
-  name          = "Emmett Bruen"
+  definition_id = "a4612744-2775-4ed0-8074-e17a64885711"
+  name          = "Jean McGlynn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3bf9b799-d631-499b-96b4-68c85ec21a9a"
+  workspace_id  = "e75a513e-0097-4779-b827-c06dd86b4fbd"
 }
 ```
 

@@ -12,10 +12,10 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       pinecone_environment = "us-west1-gcp"
       pinecone_key         = "...my_pinecone_key..."
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 0
-      chunk_size    = 4
+      chunk_overlap = 5
+      chunk_size    = 3
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -30,12 +30,12 @@ resource "airbyte_destination_pinecone" "my_destination_pinecone" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 3
+          split_level = 6
         }
       }
     }
   }
-  definition_id = "90e1a2bc-7de0-4ff6-b737-4915d3efc2cd"
-  name          = "Jorge Beahan"
-  workspace_id  = "6acc1e6f-1291-4560-8b55-b326e06d2448"
+  definition_id = "15d3efc2-cd95-40e3-aacc-1e6f12915604"
+  name          = "Lloyd Hartmann"
+  workspace_id  = "26e06d24-48e4-4e42-a530-50a9afbc66c9"
 }

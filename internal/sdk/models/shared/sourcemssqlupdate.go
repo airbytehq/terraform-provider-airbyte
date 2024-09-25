@@ -349,49 +349,49 @@ func (e *SourceMssqlUpdateSchemasSslMethod) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Unencrypted - Data transfer will not be encrypted.
-type Unencrypted struct {
+// SourceMssqlUpdateUnencrypted - Data transfer will not be encrypted.
+type SourceMssqlUpdateUnencrypted struct {
 	sslMethod SourceMssqlUpdateSchemasSslMethod `const:"unencrypted" json:"ssl_method"`
 }
 
-func (u Unencrypted) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(u, "", false)
+func (s SourceMssqlUpdateUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (u *Unencrypted) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+func (s *SourceMssqlUpdateUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Unencrypted) GetSslMethod() SourceMssqlUpdateSchemasSslMethod {
+func (o *SourceMssqlUpdateUnencrypted) GetSslMethod() SourceMssqlUpdateSchemasSslMethod {
 	return SourceMssqlUpdateSchemasSslMethodUnencrypted
 }
 
 type SourceMssqlUpdateSSLMethodType string
 
 const (
-	SourceMssqlUpdateSSLMethodTypeUnencrypted                                      SourceMssqlUpdateSSLMethodType = "Unencrypted"
+	SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateUnencrypted                     SourceMssqlUpdateSSLMethodType = "source-mssql-update_Unencrypted"
 	SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateEncryptedTrustServerCertificate SourceMssqlUpdateSSLMethodType = "source-mssql-update_Encrypted (trust server certificate)"
 	SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateEncryptedVerifyCertificate      SourceMssqlUpdateSSLMethodType = "source-mssql-update_Encrypted (verify certificate)"
 )
 
 // SourceMssqlUpdateSSLMethod - The encryption method which is used when communicating with the database.
 type SourceMssqlUpdateSSLMethod struct {
-	Unencrypted                                      *Unencrypted
+	SourceMssqlUpdateUnencrypted                     *SourceMssqlUpdateUnencrypted
 	SourceMssqlUpdateEncryptedTrustServerCertificate *SourceMssqlUpdateEncryptedTrustServerCertificate
 	SourceMssqlUpdateEncryptedVerifyCertificate      *SourceMssqlUpdateEncryptedVerifyCertificate
 
 	Type SourceMssqlUpdateSSLMethodType
 }
 
-func CreateSourceMssqlUpdateSSLMethodUnencrypted(unencrypted Unencrypted) SourceMssqlUpdateSSLMethod {
-	typ := SourceMssqlUpdateSSLMethodTypeUnencrypted
+func CreateSourceMssqlUpdateSSLMethodSourceMssqlUpdateUnencrypted(sourceMssqlUpdateUnencrypted SourceMssqlUpdateUnencrypted) SourceMssqlUpdateSSLMethod {
+	typ := SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateUnencrypted
 
 	return SourceMssqlUpdateSSLMethod{
-		Unencrypted: &unencrypted,
-		Type:        typ,
+		SourceMssqlUpdateUnencrypted: &sourceMssqlUpdateUnencrypted,
+		Type:                         typ,
 	}
 }
 
@@ -415,10 +415,10 @@ func CreateSourceMssqlUpdateSSLMethodSourceMssqlUpdateEncryptedVerifyCertificate
 
 func (u *SourceMssqlUpdateSSLMethod) UnmarshalJSON(data []byte) error {
 
-	var unencrypted Unencrypted = Unencrypted{}
-	if err := utils.UnmarshalJSON(data, &unencrypted, "", true, true); err == nil {
-		u.Unencrypted = &unencrypted
-		u.Type = SourceMssqlUpdateSSLMethodTypeUnencrypted
+	var sourceMssqlUpdateUnencrypted SourceMssqlUpdateUnencrypted = SourceMssqlUpdateUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &sourceMssqlUpdateUnencrypted, "", true, true); err == nil {
+		u.SourceMssqlUpdateUnencrypted = &sourceMssqlUpdateUnencrypted
+		u.Type = SourceMssqlUpdateSSLMethodTypeSourceMssqlUpdateUnencrypted
 		return nil
 	}
 
@@ -440,8 +440,8 @@ func (u *SourceMssqlUpdateSSLMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceMssqlUpdateSSLMethod) MarshalJSON() ([]byte, error) {
-	if u.Unencrypted != nil {
-		return utils.MarshalJSON(u.Unencrypted, "", true)
+	if u.SourceMssqlUpdateUnencrypted != nil {
+		return utils.MarshalJSON(u.SourceMssqlUpdateUnencrypted, "", true)
 	}
 
 	if u.SourceMssqlUpdateEncryptedTrustServerCertificate != nil {

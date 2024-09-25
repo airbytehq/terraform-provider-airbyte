@@ -19,15 +19,15 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     schema          = "airbyte_td"
-    ssl             = true
+    ssl             = false
     ssl_mode = {
       allow = {}
     }
-    username = "Lillian.Keebler"
+    username = "Rocio.Gibson"
   }
-  definition_id = "4bb9666e-7d15-4e7e-add4-643586b689fd"
-  name          = "Eric Fadel"
-  workspace_id  = "92fcfab7-3b9b-4a5d-b045-674ad28dce71"
+  definition_id = "3586b689-fdc1-43c2-92fc-fab73b9ba5d3"
+  name          = "Amber Hansen"
+  workspace_id  = "4ad28dce-71d7-4fd7-9366-4c8ab088c248"
 }
 ```
 

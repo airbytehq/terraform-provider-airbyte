@@ -10,6 +10,15 @@ import (
 func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearchCreateRequest() *shared.DestinationElasticsearchCreateRequest {
 	var authenticationMethod *shared.DestinationElasticsearchAuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
+		var destinationElasticsearchNone *shared.DestinationElasticsearchNone
+		if r.Configuration.AuthenticationMethod.None != nil {
+			destinationElasticsearchNone = &shared.DestinationElasticsearchNone{}
+		}
+		if destinationElasticsearchNone != nil {
+			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
+				DestinationElasticsearchNone: destinationElasticsearchNone,
+			}
+		}
 		var destinationElasticsearchAPIKeySecret *shared.DestinationElasticsearchAPIKeySecret
 		if r.Configuration.AuthenticationMethod.APIKeySecret != nil {
 			apiKeyID := r.Configuration.AuthenticationMethod.APIKeySecret.APIKeyID.ValueString()
@@ -46,6 +55,64 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		caCertificate = nil
 	}
 	endpoint := r.Configuration.Endpoint.ValueString()
+	var tunnelMethod *shared.DestinationElasticsearchSSHTunnelMethod
+	if r.Configuration.TunnelMethod != nil {
+		var destinationElasticsearchNoTunnel *shared.DestinationElasticsearchNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationElasticsearchNoTunnel = &shared.DestinationElasticsearchNoTunnel{}
+		}
+		if destinationElasticsearchNoTunnel != nil {
+			tunnelMethod = &shared.DestinationElasticsearchSSHTunnelMethod{
+				DestinationElasticsearchNoTunnel: destinationElasticsearchNoTunnel,
+			}
+		}
+		var destinationElasticsearchSSHKeyAuthentication *shared.DestinationElasticsearchSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationElasticsearchSSHKeyAuthentication = &shared.DestinationElasticsearchSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
+			}
+		}
+		if destinationElasticsearchSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationElasticsearchSSHTunnelMethod{
+				DestinationElasticsearchSSHKeyAuthentication: destinationElasticsearchSSHKeyAuthentication,
+			}
+		}
+		var destinationElasticsearchPasswordAuthentication *shared.DestinationElasticsearchPasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationElasticsearchPasswordAuthentication = &shared.DestinationElasticsearchPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
+		}
+		if destinationElasticsearchPasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationElasticsearchSSHTunnelMethod{
+				DestinationElasticsearchPasswordAuthentication: destinationElasticsearchPasswordAuthentication,
+			}
+		}
+	}
 	upsert := new(bool)
 	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
 		*upsert = r.Configuration.Upsert.ValueBool()
@@ -56,6 +123,7 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		AuthenticationMethod: authenticationMethod,
 		CaCertificate:        caCertificate,
 		Endpoint:             endpoint,
+		TunnelMethod:         tunnelMethod,
 		Upsert:               upsert,
 	}
 	definitionID := new(string)
@@ -87,6 +155,15 @@ func (r *DestinationElasticsearchResourceModel) RefreshFromSharedDestinationResp
 func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearchPutRequest() *shared.DestinationElasticsearchPutRequest {
 	var authenticationMethod *shared.AuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
+		var none *shared.None
+		if r.Configuration.AuthenticationMethod.None != nil {
+			none = &shared.None{}
+		}
+		if none != nil {
+			authenticationMethod = &shared.AuthenticationMethod{
+				None: none,
+			}
+		}
 		var apiKeySecret *shared.APIKeySecret
 		if r.Configuration.AuthenticationMethod.APIKeySecret != nil {
 			apiKeyID := r.Configuration.AuthenticationMethod.APIKeySecret.APIKeyID.ValueString()
@@ -123,6 +200,64 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		caCertificate = nil
 	}
 	endpoint := r.Configuration.Endpoint.ValueString()
+	var tunnelMethod *shared.DestinationElasticsearchUpdateSSHTunnelMethod
+	if r.Configuration.TunnelMethod != nil {
+		var destinationElasticsearchUpdateNoTunnel *shared.DestinationElasticsearchUpdateNoTunnel
+		if r.Configuration.TunnelMethod.NoTunnel != nil {
+			destinationElasticsearchUpdateNoTunnel = &shared.DestinationElasticsearchUpdateNoTunnel{}
+		}
+		if destinationElasticsearchUpdateNoTunnel != nil {
+			tunnelMethod = &shared.DestinationElasticsearchUpdateSSHTunnelMethod{
+				DestinationElasticsearchUpdateNoTunnel: destinationElasticsearchUpdateNoTunnel,
+			}
+		}
+		var destinationElasticsearchUpdateSSHKeyAuthentication *shared.DestinationElasticsearchUpdateSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelPort := new(int64)
+			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort = nil
+			}
+			tunnelUser := r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+			destinationElasticsearchUpdateSSHKeyAuthentication = &shared.DestinationElasticsearchUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
+				TunnelHost: tunnelHost,
+				TunnelPort: tunnelPort,
+				TunnelUser: tunnelUser,
+			}
+		}
+		if destinationElasticsearchUpdateSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationElasticsearchUpdateSSHTunnelMethod{
+				DestinationElasticsearchUpdateSSHKeyAuthentication: destinationElasticsearchUpdateSSHKeyAuthentication,
+			}
+		}
+		var destinationElasticsearchUpdatePasswordAuthentication *shared.DestinationElasticsearchUpdatePasswordAuthentication
+		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+			tunnelPort1 := new(int64)
+			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+			} else {
+				tunnelPort1 = nil
+			}
+			tunnelUser1 := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationElasticsearchUpdatePasswordAuthentication = &shared.DestinationElasticsearchUpdatePasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
+		}
+		if destinationElasticsearchUpdatePasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationElasticsearchUpdateSSHTunnelMethod{
+				DestinationElasticsearchUpdatePasswordAuthentication: destinationElasticsearchUpdatePasswordAuthentication,
+			}
+		}
+	}
 	upsert := new(bool)
 	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
 		*upsert = r.Configuration.Upsert.ValueBool()
@@ -133,6 +268,7 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		AuthenticationMethod: authenticationMethod,
 		CaCertificate:        caCertificate,
 		Endpoint:             endpoint,
+		TunnelMethod:         tunnelMethod,
 		Upsert:               upsert,
 	}
 	name := r.Name.ValueString()

@@ -52,6 +52,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 	} else {
 		schema = nil
 	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
 	var sslMode *shared.DestinationPostgresSSLModes
 	if r.Configuration.SslMode != nil {
 		var destinationPostgresDisable *shared.DestinationPostgresDisable
@@ -202,6 +208,7 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 		Port:              port,
 		RawDataSchema:     rawDataSchema,
 		Schema:            schema,
+		Ssl:               ssl,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
@@ -276,6 +283,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 		*schema = r.Configuration.Schema.ValueString()
 	} else {
 		schema = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var sslMode *shared.SSLModes
 	if r.Configuration.SslMode != nil {
@@ -427,6 +440,7 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 		Port:              port,
 		RawDataSchema:     rawDataSchema,
 		Schema:            schema,
+		Ssl:               ssl,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,

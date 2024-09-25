@@ -24,32 +24,31 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
       }
     }
     folder_path  = "...my_folder_path..."
-    search_scope = "SHARED_ITEMS"
+    search_scope = "ALL"
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 0
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema                                = "...my_input_schema..."
-        name                                        = "Rosalie Schmitt"
-        primary_key                                 = "...my_primary_key..."
-        recent_n_files_to_read_for_schema_discovery = 9
+        name                                        = "Jeremiah Bechtelar"
+        recent_n_files_to_read_for_schema_discovery = 10
         schemaless                                  = false
-        validation_policy                           = "Emit Record"
+        validation_policy                           = "Wait for Discover"
       },
     ]
   }
-  definition_id = "2bd5eb73-d022-4a60-8737-f9f9cf17c9c1"
-  name          = "Jackie Bergstrom"
+  definition_id = "67bbea9f-5a35-4d1b-90fb-6321f6b4ca64"
+  name          = "Beverly Ondricka"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "61900dfc-3504-41fc-9cac-22262ef24d92"
+  workspace_id  = "8aec8fed-b8fc-4353-a7bf-ee523e36b74e"
 }
 ```
 
@@ -136,7 +135,6 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `recent_n_files_to_read_for_schema_discovery` (Number) The number of resent files which will be used to discover the schema for this stream.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"

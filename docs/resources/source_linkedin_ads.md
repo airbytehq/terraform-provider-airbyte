@@ -16,13 +16,13 @@ SourceLinkedinAds Resource
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      6,
+      2,
     ]
     ad_analytics_reports = [
       {
-        name             = "Orlando Schuppe"
-        pivot_by         = "MEMBER_INDUSTRY"
-        time_granularity = "ALL"
+        name             = "Kathy Muller"
+        pivot_by         = "CONVERSATION_NODE_OPTION_INDEX"
+        time_granularity = "MONTHLY"
       },
     ]
     credentials = {
@@ -30,12 +30,13 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
         access_token = "...my_access_token..."
       }
     }
-    start_date = "2021-05-17"
+    lookback_window = 5
+    start_date      = "2021-05-17"
   }
-  definition_id = "72879b60-69b6-4a28-9f31-96ea9203cb78"
-  name          = "Kristen Toy"
+  definition_id = "dbfafbdd-349a-4fd0-8d95-bcfe3342dc40"
+  name          = "Kristi Tromp"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a531f3b4-802a-43b9-9674-976dbe116c78"
+  workspace_id  = "1635af9f-94f9-485a-a22e-677c77be4e42"
 }
 ```
 
@@ -70,6 +71,7 @@ Optional:
 - `account_ids` (List of Number) Specify the account IDs to pull data from, separated by a space. Leave this field empty if you want to pull the data from all accounts accessible by the authenticated user. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn docs</a> to locate these IDs.
 - `ad_analytics_reports` (Attributes List) (see [below for nested schema](#nestedatt--configuration--ad_analytics_reports))
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `lookback_window` (Number) How far into the past to look for records. (in days). Default: 0
 
 <a id="nestedatt--configuration--ad_analytics_reports"></a>
 ### Nested Schema for `configuration.ad_analytics_reports`

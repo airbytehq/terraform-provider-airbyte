@@ -19,12 +19,6 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueString())
 	}
-	actionBreakdownsAllowEmpty := new(bool)
-	if !r.Configuration.ActionBreakdownsAllowEmpty.IsUnknown() && !r.Configuration.ActionBreakdownsAllowEmpty.IsNull() {
-		*actionBreakdownsAllowEmpty = r.Configuration.ActionBreakdownsAllowEmpty.ValueBool()
-	} else {
-		actionBreakdownsAllowEmpty = nil
-	}
 	var adStatuses []shared.SourceFacebookMarketingValidAdStatuses = []shared.SourceFacebookMarketingValidAdStatuses{}
 	for _, adStatusesItem := range r.Configuration.AdStatuses {
 		adStatuses = append(adStatuses, shared.SourceFacebookMarketingValidAdStatuses(adStatusesItem.ValueString()))
@@ -37,18 +31,6 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 	for _, campaignStatusesItem := range r.Configuration.CampaignStatuses {
 		campaignStatuses = append(campaignStatuses, shared.SourceFacebookMarketingValidCampaignStatuses(campaignStatusesItem.ValueString()))
 	}
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	var credentials shared.SourceFacebookMarketingAuthentication
 	var sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth *shared.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth
 	if r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth != nil {
@@ -58,12 +40,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		} else {
 			accessToken1 = nil
 		}
-		clientId1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
-		clientSecret1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
+		clientID := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
 		sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth = &shared.SourceFacebookMarketingAuthenticateViaFacebookMarketingOauth{
 			AccessToken:  accessToken1,
-			ClientID:     clientId1,
-			ClientSecret: clientSecret1,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 		}
 	}
 	if sourceFacebookMarketingAuthenticateViaFacebookMarketingOauth != nil {
@@ -191,22 +173,19 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingCr
 		startDate1 = nil
 	}
 	configuration := shared.SourceFacebookMarketing{
-		AccessToken:                accessToken,
-		AccountIds:                 accountIds,
-		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
-		AdStatuses:                 adStatuses,
-		AdsetStatuses:              adsetStatuses,
-		CampaignStatuses:           campaignStatuses,
-		ClientID:                   clientID,
-		ClientSecret:               clientSecret,
-		Credentials:                credentials,
-		CustomInsights:             customInsights,
-		EndDate:                    endDate1,
-		FetchThumbnailImages:       fetchThumbnailImages,
-		InsightsJobTimeout:         insightsJobTimeout1,
-		InsightsLookbackWindow:     insightsLookbackWindow1,
-		PageSize:                   pageSize,
-		StartDate:                  startDate1,
+		AccessToken:            accessToken,
+		AccountIds:             accountIds,
+		AdStatuses:             adStatuses,
+		AdsetStatuses:          adsetStatuses,
+		CampaignStatuses:       campaignStatuses,
+		Credentials:            credentials,
+		CustomInsights:         customInsights,
+		EndDate:                endDate1,
+		FetchThumbnailImages:   fetchThumbnailImages,
+		InsightsJobTimeout:     insightsJobTimeout1,
+		InsightsLookbackWindow: insightsLookbackWindow1,
+		PageSize:               pageSize,
+		StartDate:              startDate1,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -252,12 +231,6 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueString())
 	}
-	actionBreakdownsAllowEmpty := new(bool)
-	if !r.Configuration.ActionBreakdownsAllowEmpty.IsUnknown() && !r.Configuration.ActionBreakdownsAllowEmpty.IsNull() {
-		*actionBreakdownsAllowEmpty = r.Configuration.ActionBreakdownsAllowEmpty.ValueBool()
-	} else {
-		actionBreakdownsAllowEmpty = nil
-	}
 	var adStatuses []shared.ValidAdStatuses = []shared.ValidAdStatuses{}
 	for _, adStatusesItem := range r.Configuration.AdStatuses {
 		adStatuses = append(adStatuses, shared.ValidAdStatuses(adStatusesItem.ValueString()))
@@ -270,18 +243,6 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 	for _, campaignStatusesItem := range r.Configuration.CampaignStatuses {
 		campaignStatuses = append(campaignStatuses, shared.ValidCampaignStatuses(campaignStatusesItem.ValueString()))
 	}
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	var credentials shared.SourceFacebookMarketingUpdateAuthentication
 	var authenticateViaFacebookMarketingOauth *shared.AuthenticateViaFacebookMarketingOauth
 	if r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth != nil {
@@ -291,12 +252,12 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		} else {
 			accessToken1 = nil
 		}
-		clientId1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
-		clientSecret1 := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
+		clientID := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.AuthenticateViaFacebookMarketingOauth.ClientSecret.ValueString()
 		authenticateViaFacebookMarketingOauth = &shared.AuthenticateViaFacebookMarketingOauth{
 			AccessToken:  accessToken1,
-			ClientID:     clientId1,
-			ClientSecret: clientSecret1,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
 		}
 	}
 	if authenticateViaFacebookMarketingOauth != nil {
@@ -424,22 +385,19 @@ func (r *SourceFacebookMarketingResourceModel) ToSharedSourceFacebookMarketingPu
 		startDate1 = nil
 	}
 	configuration := shared.SourceFacebookMarketingUpdate{
-		AccessToken:                accessToken,
-		AccountIds:                 accountIds,
-		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
-		AdStatuses:                 adStatuses,
-		AdsetStatuses:              adsetStatuses,
-		CampaignStatuses:           campaignStatuses,
-		ClientID:                   clientID,
-		ClientSecret:               clientSecret,
-		Credentials:                credentials,
-		CustomInsights:             customInsights,
-		EndDate:                    endDate1,
-		FetchThumbnailImages:       fetchThumbnailImages,
-		InsightsJobTimeout:         insightsJobTimeout1,
-		InsightsLookbackWindow:     insightsLookbackWindow1,
-		PageSize:                   pageSize,
-		StartDate:                  startDate1,
+		AccessToken:            accessToken,
+		AccountIds:             accountIds,
+		AdStatuses:             adStatuses,
+		AdsetStatuses:          adsetStatuses,
+		CampaignStatuses:       campaignStatuses,
+		Credentials:            credentials,
+		CustomInsights:         customInsights,
+		EndDate:                endDate1,
+		FetchThumbnailImages:   fetchThumbnailImages,
+		InsightsJobTimeout:     insightsJobTimeout1,
+		InsightsLookbackWindow: insightsLookbackWindow1,
+		PageSize:               pageSize,
+		StartDate:              startDate1,
 	}
 	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

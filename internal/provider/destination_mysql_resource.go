@@ -94,6 +94,12 @@ func (r *DestinationMysqlResource) Schema(ctx context.Context, req resource.Sche
 						Optional:    true,
 						Description: `The database to write raw tables into`,
 					},
+					"ssl": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `Encrypt data using SSL. Default: true`,
+					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{

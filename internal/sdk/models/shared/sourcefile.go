@@ -57,6 +57,50 @@ func (e *SourceFileFileFormat) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// SourceFileSchemasProviderStorageProvider8Storage - WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
+type SourceFileSchemasProviderStorageProvider8Storage string
+
+const (
+	SourceFileSchemasProviderStorageProvider8StorageLocal SourceFileSchemasProviderStorageProvider8Storage = "local"
+)
+
+func (e SourceFileSchemasProviderStorageProvider8Storage) ToPointer() *SourceFileSchemasProviderStorageProvider8Storage {
+	return &e
+}
+func (e *SourceFileSchemasProviderStorageProvider8Storage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceFileSchemasProviderStorageProvider8Storage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFileSchemasProviderStorageProvider8Storage: %v", v)
+	}
+}
+
+type SourceFileLocalFilesystemLimited struct {
+	// WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
+	storage SourceFileSchemasProviderStorageProvider8Storage `const:"local" json:"storage"`
+}
+
+func (s SourceFileLocalFilesystemLimited) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceFileLocalFilesystemLimited) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceFileLocalFilesystemLimited) GetStorage() SourceFileSchemasProviderStorageProvider8Storage {
+	return SourceFileSchemasProviderStorageProvider8StorageLocal
+}
+
 type SourceFileSchemasProviderStorageProvider7Storage string
 
 const (
@@ -520,6 +564,7 @@ const (
 	SourceFileStorageProviderTypeSourceFileSSHSecureShell                 SourceFileStorageProviderType = "source-file_SSH: Secure Shell"
 	SourceFileStorageProviderTypeSourceFileSCPSecureCopyProtocol          SourceFileStorageProviderType = "source-file_SCP: Secure copy protocol"
 	SourceFileStorageProviderTypeSourceFileSFTPSecureFileTransferProtocol SourceFileStorageProviderType = "source-file_SFTP: Secure File Transfer Protocol"
+	SourceFileStorageProviderTypeSourceFileLocalFilesystemLimited         SourceFileStorageProviderType = "source-file_Local Filesystem (limited)"
 )
 
 // SourceFileStorageProvider - The storage Provider or Location of the file(s) which should be replicated.
@@ -531,6 +576,7 @@ type SourceFileStorageProvider struct {
 	SourceFileSSHSecureShell                 *SourceFileSSHSecureShell
 	SourceFileSCPSecureCopyProtocol          *SourceFileSCPSecureCopyProtocol
 	SourceFileSFTPSecureFileTransferProtocol *SourceFileSFTPSecureFileTransferProtocol
+	SourceFileLocalFilesystemLimited         *SourceFileLocalFilesystemLimited
 
 	Type SourceFileStorageProviderType
 }
@@ -598,7 +644,23 @@ func CreateSourceFileStorageProviderSourceFileSFTPSecureFileTransferProtocol(sou
 	}
 }
 
+func CreateSourceFileStorageProviderSourceFileLocalFilesystemLimited(sourceFileLocalFilesystemLimited SourceFileLocalFilesystemLimited) SourceFileStorageProvider {
+	typ := SourceFileStorageProviderTypeSourceFileLocalFilesystemLimited
+
+	return SourceFileStorageProvider{
+		SourceFileLocalFilesystemLimited: &sourceFileLocalFilesystemLimited,
+		Type:                             typ,
+	}
+}
+
 func (u *SourceFileStorageProvider) UnmarshalJSON(data []byte) error {
+
+	var sourceFileLocalFilesystemLimited SourceFileLocalFilesystemLimited = SourceFileLocalFilesystemLimited{}
+	if err := utils.UnmarshalJSON(data, &sourceFileLocalFilesystemLimited, "", true, true); err == nil {
+		u.SourceFileLocalFilesystemLimited = &sourceFileLocalFilesystemLimited
+		u.Type = SourceFileStorageProviderTypeSourceFileLocalFilesystemLimited
+		return nil
+	}
 
 	var sourceFileHTTPSPublicWeb SourceFileHTTPSPublicWeb = SourceFileHTTPSPublicWeb{}
 	if err := utils.UnmarshalJSON(data, &sourceFileHTTPSPublicWeb, "", true, true); err == nil {
@@ -679,6 +741,10 @@ func (u SourceFileStorageProvider) MarshalJSON() ([]byte, error) {
 
 	if u.SourceFileSFTPSecureFileTransferProtocol != nil {
 		return utils.MarshalJSON(u.SourceFileSFTPSecureFileTransferProtocol, "", true)
+	}
+
+	if u.SourceFileLocalFilesystemLimited != nil {
+		return utils.MarshalJSON(u.SourceFileLocalFilesystemLimited, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceFileStorageProvider: all fields are null")

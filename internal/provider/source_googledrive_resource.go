@@ -389,10 +389,6 @@ func (r *SourceGoogleDriveResource) Schema(ctx context.Context, req resource.Sch
 									Required:    true,
 									Description: `The name of the stream.`,
 								},
-								"primary_key": schema.StringAttribute{
-									Optional:    true,
-									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
-								},
 								"schemaless": schema.BoolAttribute{
 									Computed:    true,
 									Optional:    true,

@@ -218,9 +218,7 @@ func (e *Mailchimp) UnmarshalJSON(data []byte) error {
 
 type SourceMailchimp struct {
 	Credentials *SourceMailchimpAuthentication `json:"credentials,omitempty"`
-	// Technical fields used to identify datacenter to send request to
-	DataCenter *string   `json:"data_center,omitempty"`
-	sourceType Mailchimp `const:"mailchimp" json:"sourceType"`
+	sourceType  Mailchimp                      `const:"mailchimp" json:"sourceType"`
 	// The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -241,13 +239,6 @@ func (o *SourceMailchimp) GetCredentials() *SourceMailchimpAuthentication {
 		return nil
 	}
 	return o.Credentials
-}
-
-func (o *SourceMailchimp) GetDataCenter() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DataCenter
 }
 
 func (o *SourceMailchimp) GetSourceType() Mailchimp {

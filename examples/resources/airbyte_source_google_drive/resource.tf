@@ -11,7 +11,7 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 3
+        days_to_sync_if_history_is_full = 5
         format = {
           avro_format = {
             double_as_string = true
@@ -21,15 +21,14 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Dr. Shawna Robel"
-        primary_key       = "...my_primary_key..."
-        schemaless        = false
-        validation_policy = "Emit Record"
+        name              = "Adrienne Mraz DDS"
+        schemaless        = true
+        validation_policy = "Skip Record"
       },
     ]
   }
-  definition_id = "730b3999-4a41-4e4a-8985-c78fa7d86bdf"
-  name          = "Kristy Wilderman MD"
+  definition_id = "284a2115-5c54-4910-a09b-e9a984e4b07b"
+  name          = "Mrs. Rex Witting"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cb121083-728d-489e-b51e-868df1f2c5ad"
+  workspace_id  = "d5606ac5-9e7c-48ae-aeb0-9ffd3753fe46"
 }

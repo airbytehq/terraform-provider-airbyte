@@ -1,12 +1,10 @@
 resource "airbyte_source_instagram" "my_source_instagram" {
   configuration = {
-    access_token  = "...my_access_token..."
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
-    start_date    = "2017-01-25T00:00:00Z"
+    access_token = "...my_access_token..."
+    start_date   = "2017-01-25T00:00:00Z"
   }
-  definition_id = "b1a975dd-1b5a-4029-9b19-7bbb0227d625"
-  name          = "Earl Bruen"
+  definition_id = "c47d5036-1610-47c0-bf83-920634c9db1c"
+  name          = "Julia Huels V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f731c6e6-bc1c-4af1-a6ae-e78925477f38"
+  workspace_id  = "282f0b30-8e78-4729-bf50-24b690b2736f"
 }

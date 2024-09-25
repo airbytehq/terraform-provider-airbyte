@@ -1170,8 +1170,6 @@ type SourceMicrosoftOnedriveFileBasedStreamConfig struct {
 	InputSchema *string `json:"input_schema,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
-	PrimaryKey *string `json:"primary_key,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
@@ -1222,13 +1220,6 @@ func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetName() string {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetPrimaryKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
 }
 
 func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetSchemaless() *bool {

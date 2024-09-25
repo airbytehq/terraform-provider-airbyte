@@ -23,12 +23,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 82.98
+                        value = 59.26
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 63.94
+                        value = 93.52
                       }
                     }
                   }
@@ -49,12 +49,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                   between_filter = {
                     from_value = {
                       double_value = {
-                        value = 51.9
+                        value = 72.46
                       }
                     }
                     to_value = {
                       double_value = {
-                        value = 4.5
+                        value = 58.88
                       }
                     }
                   }
@@ -66,19 +66,19 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         metrics = [
           "...",
         ]
-        name = "Todd Rodriguez"
+        name = "Mrs. Julia Windler"
       },
     ]
     date_ranges_start_date = "2021-01-01"
-    keep_empty_rows        = false
-    lookback_window        = 4
+    keep_empty_rows        = true
+    lookback_window        = 3
     property_ids = [
       "...",
     ]
-    window_in_days = 120
+    window_in_days = 364
   }
-  definition_id = "950935ad-536c-4500-8734-e30b46b959e4"
-  name          = "Julio Harber"
+  definition_id = "8f9d1baa-c6e0-45b1-a50c-14468d231cdd"
+  name          = "Jordan Wunsch PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c0922711-9b95-4b60-898b-b7037ab5561c"
+  workspace_id  = "deee1be4-e723-4eea-b419-bc59e04a869e"
 }

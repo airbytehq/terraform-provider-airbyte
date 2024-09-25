@@ -22,10 +22,10 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "9bb7b45d-9607-443b-824b-c119f8fb36f9"
-  name          = "Ms. Marie Cummings"
+  definition_id = "9bfc35e9-0346-480b-8207-4084a44f8250"
+  name          = "Delbert Pfeffer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "49978c5f-0c0b-470c-9d08-d732ef691ae1"
+  workspace_id  = "e137bba0-0e04-4662-b501-253647b50bf3"
 }
 ```
 

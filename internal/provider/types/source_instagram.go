@@ -5,8 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceInstagram struct {
-	AccessToken  types.String `tfsdk:"access_token"`
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	StartDate    types.String `tfsdk:"start_date"`
+	AccessToken types.String `tfsdk:"access_token"`
+	StartDate   types.String `tfsdk:"start_date"`
 }

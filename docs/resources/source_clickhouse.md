@@ -20,15 +20,16 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
     port            = 8123
+    ssl             = true
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Otho19"
+    username = "Brittany75"
   }
-  definition_id = "e8783d50-d4d2-4b80-850d-c344f66cbf0e"
-  name          = "Trevor Bednar"
+  definition_id = "5465b457-a2c2-4618-be1b-91dcce8e649d"
+  name          = "Jessie Kunze"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "994ace41-dc5b-442f-aa22-8e88647f2d42"
+  workspace_id  = "b58122af-6a8a-4c65-936a-205f1e4d309e"
 }
 ```
 
@@ -65,6 +66,7 @@ Optional:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 - `password` (String, Sensitive) The password associated with this username.
 - `port` (Number) The port of the database. Default: 8123
+- `ssl` (Boolean) Encrypt data using SSL. Default: true
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>

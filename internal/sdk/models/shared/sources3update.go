@@ -10,567 +10,26 @@ import (
 	"time"
 )
 
-type SourceS3UpdateSchemasFormatFiletype string
+type SourceS3UpdateSchemasStreamsFormatFormatFiletype string
 
 const (
-	SourceS3UpdateSchemasFormatFiletypeJsonl SourceS3UpdateSchemasFormatFiletype = "jsonl"
+	SourceS3UpdateSchemasStreamsFormatFormatFiletypeUnstructured SourceS3UpdateSchemasStreamsFormatFormatFiletype = "unstructured"
 )
 
-func (e SourceS3UpdateSchemasFormatFiletype) ToPointer() *SourceS3UpdateSchemasFormatFiletype {
+func (e SourceS3UpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFormatFiletype {
 	return &e
 }
-func (e *SourceS3UpdateSchemasFormatFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "jsonl":
-		*e = SourceS3UpdateSchemasFormatFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasFormatFiletype: %v", v)
-	}
-}
-
-// UnexpectedFieldBehavior - How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
-type UnexpectedFieldBehavior string
-
-const (
-	UnexpectedFieldBehaviorIgnore UnexpectedFieldBehavior = "ignore"
-	UnexpectedFieldBehaviorInfer  UnexpectedFieldBehavior = "infer"
-	UnexpectedFieldBehaviorError  UnexpectedFieldBehavior = "error"
-)
-
-func (e UnexpectedFieldBehavior) ToPointer() *UnexpectedFieldBehavior {
-	return &e
-}
-func (e *UnexpectedFieldBehavior) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ignore":
-		fallthrough
-	case "infer":
-		fallthrough
-	case "error":
-		*e = UnexpectedFieldBehavior(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UnexpectedFieldBehavior: %v", v)
-	}
-}
-
-// Jsonl - This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.
-type Jsonl struct {
-	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-	BlockSize *int64                               `default:"0" json:"block_size"`
-	filetype  *SourceS3UpdateSchemasFormatFiletype `const:"jsonl" json:"filetype"`
-	// Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
-	NewlinesInValues *bool `default:"false" json:"newlines_in_values"`
-	// How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
-	UnexpectedFieldBehavior *UnexpectedFieldBehavior `default:"infer" json:"unexpected_field_behavior"`
-}
-
-func (j Jsonl) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(j, "", false)
-}
-
-func (j *Jsonl) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &j, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *Jsonl) GetBlockSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BlockSize
-}
-
-func (o *Jsonl) GetFiletype() *SourceS3UpdateSchemasFormatFiletype {
-	return SourceS3UpdateSchemasFormatFiletypeJsonl.ToPointer()
-}
-
-func (o *Jsonl) GetNewlinesInValues() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.NewlinesInValues
-}
-
-func (o *Jsonl) GetUnexpectedFieldBehavior() *UnexpectedFieldBehavior {
-	if o == nil {
-		return nil
-	}
-	return o.UnexpectedFieldBehavior
-}
-
-type SourceS3UpdateSchemasFiletype string
-
-const (
-	SourceS3UpdateSchemasFiletypeAvro SourceS3UpdateSchemasFiletype = "avro"
-)
-
-func (e SourceS3UpdateSchemasFiletype) ToPointer() *SourceS3UpdateSchemasFiletype {
-	return &e
-}
-func (e *SourceS3UpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "avro":
-		*e = SourceS3UpdateSchemasFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasFiletype: %v", v)
-	}
-}
-
-// Avro - This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.
-type Avro struct {
-	filetype *SourceS3UpdateSchemasFiletype `const:"avro" json:"filetype"`
-}
-
-func (a Avro) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *Avro) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *Avro) GetFiletype() *SourceS3UpdateSchemasFiletype {
-	return SourceS3UpdateSchemasFiletypeAvro.ToPointer()
-}
-
-type SourceS3UpdateFiletype string
-
-const (
-	SourceS3UpdateFiletypeParquet SourceS3UpdateFiletype = "parquet"
-)
-
-func (e SourceS3UpdateFiletype) ToPointer() *SourceS3UpdateFiletype {
-	return &e
-}
-func (e *SourceS3UpdateFiletype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "parquet":
-		*e = SourceS3UpdateFiletype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateFiletype: %v", v)
-	}
-}
-
-// Parquet - This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.
-type Parquet struct {
-	// Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.
-	BatchSize *int64 `default:"65536" json:"batch_size"`
-	// Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
-	BufferSize *int64 `default:"2" json:"buffer_size"`
-	// If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-	Columns  []string                `json:"columns,omitempty"`
-	filetype *SourceS3UpdateFiletype `const:"parquet" json:"filetype"`
-}
-
-func (p Parquet) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(p, "", false)
-}
-
-func (p *Parquet) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *Parquet) GetBatchSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BatchSize
-}
-
-func (o *Parquet) GetBufferSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BufferSize
-}
-
-func (o *Parquet) GetColumns() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Columns
-}
-
-func (o *Parquet) GetFiletype() *SourceS3UpdateFiletype {
-	return SourceS3UpdateFiletypeParquet.ToPointer()
-}
-
-type Filetype string
-
-const (
-	FiletypeCsv Filetype = "csv"
-)
-
-func (e Filetype) ToPointer() *Filetype {
-	return &e
-}
-func (e *Filetype) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "csv":
-		*e = Filetype(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Filetype: %v", v)
-	}
-}
-
-// Csv - This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.
-type Csv struct {
-	// Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
-	AdditionalReaderOptions *string `json:"additional_reader_options,omitempty"`
-	// Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-	AdvancedOptions *string `json:"advanced_options,omitempty"`
-	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-	BlockSize *int64 `default:"10000" json:"block_size"`
-	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
-	Delimiter *string `default:"," json:"delimiter"`
-	// Whether two quotes in a quoted CSV value denote a single quote in the data.
-	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string   `json:"escape_char,omitempty"`
-	filetype   *Filetype `const:"csv" json:"filetype"`
-	// Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
-	InferDatatypes *bool `default:"true" json:"infer_datatypes"`
-	// Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
-	NewlinesInValues *bool `default:"false" json:"newlines_in_values"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-}
-
-func (c Csv) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(c, "", false)
-}
-
-func (c *Csv) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *Csv) GetAdditionalReaderOptions() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalReaderOptions
-}
-
-func (o *Csv) GetAdvancedOptions() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AdvancedOptions
-}
-
-func (o *Csv) GetBlockSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.BlockSize
-}
-
-func (o *Csv) GetDelimiter() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Delimiter
-}
-
-func (o *Csv) GetDoubleQuote() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DoubleQuote
-}
-
-func (o *Csv) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
-}
-
-func (o *Csv) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *Csv) GetFiletype() *Filetype {
-	return FiletypeCsv.ToPointer()
-}
-
-func (o *Csv) GetInferDatatypes() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.InferDatatypes
-}
-
-func (o *Csv) GetNewlinesInValues() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.NewlinesInValues
-}
-
-func (o *Csv) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-type SourceS3UpdateFileFormatType string
-
-const (
-	SourceS3UpdateFileFormatTypeCsv     SourceS3UpdateFileFormatType = "CSV"
-	SourceS3UpdateFileFormatTypeParquet SourceS3UpdateFileFormatType = "Parquet"
-	SourceS3UpdateFileFormatTypeAvro    SourceS3UpdateFileFormatType = "Avro"
-	SourceS3UpdateFileFormatTypeJsonl   SourceS3UpdateFileFormatType = "Jsonl"
-)
-
-// SourceS3UpdateFileFormat - Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
-type SourceS3UpdateFileFormat struct {
-	Csv     *Csv
-	Parquet *Parquet
-	Avro    *Avro
-	Jsonl   *Jsonl
-
-	Type SourceS3UpdateFileFormatType
-}
-
-func CreateSourceS3UpdateFileFormatCsv(csv Csv) SourceS3UpdateFileFormat {
-	typ := SourceS3UpdateFileFormatTypeCsv
-
-	return SourceS3UpdateFileFormat{
-		Csv:  &csv,
-		Type: typ,
-	}
-}
-
-func CreateSourceS3UpdateFileFormatParquet(parquet Parquet) SourceS3UpdateFileFormat {
-	typ := SourceS3UpdateFileFormatTypeParquet
-
-	return SourceS3UpdateFileFormat{
-		Parquet: &parquet,
-		Type:    typ,
-	}
-}
-
-func CreateSourceS3UpdateFileFormatAvro(avro Avro) SourceS3UpdateFileFormat {
-	typ := SourceS3UpdateFileFormatTypeAvro
-
-	return SourceS3UpdateFileFormat{
-		Avro: &avro,
-		Type: typ,
-	}
-}
-
-func CreateSourceS3UpdateFileFormatJsonl(jsonl Jsonl) SourceS3UpdateFileFormat {
-	typ := SourceS3UpdateFileFormatTypeJsonl
-
-	return SourceS3UpdateFileFormat{
-		Jsonl: &jsonl,
-		Type:  typ,
-	}
-}
-
-func (u *SourceS3UpdateFileFormat) UnmarshalJSON(data []byte) error {
-
-	var avro Avro = Avro{}
-	if err := utils.UnmarshalJSON(data, &avro, "", true, true); err == nil {
-		u.Avro = &avro
-		u.Type = SourceS3UpdateFileFormatTypeAvro
-		return nil
-	}
-
-	var parquet Parquet = Parquet{}
-	if err := utils.UnmarshalJSON(data, &parquet, "", true, true); err == nil {
-		u.Parquet = &parquet
-		u.Type = SourceS3UpdateFileFormatTypeParquet
-		return nil
-	}
-
-	var jsonl Jsonl = Jsonl{}
-	if err := utils.UnmarshalJSON(data, &jsonl, "", true, true); err == nil {
-		u.Jsonl = &jsonl
-		u.Type = SourceS3UpdateFileFormatTypeJsonl
-		return nil
-	}
-
-	var csv Csv = Csv{}
-	if err := utils.UnmarshalJSON(data, &csv, "", true, true); err == nil {
-		u.Csv = &csv
-		u.Type = SourceS3UpdateFileFormatTypeCsv
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3UpdateFileFormat", string(data))
-}
-
-func (u SourceS3UpdateFileFormat) MarshalJSON() ([]byte, error) {
-	if u.Csv != nil {
-		return utils.MarshalJSON(u.Csv, "", true)
-	}
-
-	if u.Parquet != nil {
-		return utils.MarshalJSON(u.Parquet, "", true)
-	}
-
-	if u.Avro != nil {
-		return utils.MarshalJSON(u.Avro, "", true)
-	}
-
-	if u.Jsonl != nil {
-		return utils.MarshalJSON(u.Jsonl, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceS3UpdateFileFormat: all fields are null")
-}
-
-// S3AmazonWebServices - Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
-type S3AmazonWebServices struct {
-	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
-	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
-	// Name of the S3 bucket where the file(s) exist.
-	Bucket *string `json:"bucket,omitempty"`
-	// Endpoint to an S3 compatible service. Leave empty to use AWS.
-	Endpoint *string `default:"" json:"endpoint"`
-	// By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
-	PathPrefix *string `default:"" json:"path_prefix"`
-	// AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.
-	RegionName *string `json:"region_name,omitempty"`
-	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
-	RoleArn *string `json:"role_arn,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
-}
-
-func (s S3AmazonWebServices) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *S3AmazonWebServices) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *S3AmazonWebServices) GetAwsAccessKeyID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AwsAccessKeyID
-}
-
-func (o *S3AmazonWebServices) GetAwsSecretAccessKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AwsSecretAccessKey
-}
-
-func (o *S3AmazonWebServices) GetBucket() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Bucket
-}
-
-func (o *S3AmazonWebServices) GetEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Endpoint
-}
-
-func (o *S3AmazonWebServices) GetPathPrefix() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathPrefix
-}
-
-func (o *S3AmazonWebServices) GetRegionName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RegionName
-}
-
-func (o *S3AmazonWebServices) GetRoleArn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RoleArn
-}
-
-func (o *S3AmazonWebServices) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-type SourceS3UpdateSchemasStreamsFormatFormat5Filetype string
-
-const (
-	SourceS3UpdateSchemasStreamsFormatFormat5FiletypeUnstructured SourceS3UpdateSchemasStreamsFormatFormat5Filetype = "unstructured"
-)
-
-func (e SourceS3UpdateSchemasStreamsFormatFormat5Filetype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFormat5Filetype {
-	return &e
-}
-func (e *SourceS3UpdateSchemasStreamsFormatFormat5Filetype) UnmarshalJSON(data []byte) error {
+func (e *SourceS3UpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "unstructured":
-		*e = SourceS3UpdateSchemasStreamsFormatFormat5Filetype(v)
+		*e = SourceS3UpdateSchemasStreamsFormatFormatFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFormat5Filetype: %v", v)
+		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFormatFiletype: %v", v)
 	}
 }
 
@@ -694,7 +153,7 @@ func (e *SourceS3UpdateParsingStrategy) UnmarshalJSON(data []byte) error {
 
 // SourceS3UpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceS3UpdateUnstructuredDocumentFormat struct {
-	filetype *SourceS3UpdateSchemasStreamsFormatFormat5Filetype `const:"unstructured" json:"filetype"`
+	filetype *SourceS3UpdateSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// Processing configuration
 	Processing *SourceS3UpdateProcessing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
@@ -714,8 +173,8 @@ func (s *SourceS3UpdateUnstructuredDocumentFormat) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *SourceS3UpdateUnstructuredDocumentFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormat5Filetype {
-	return SourceS3UpdateSchemasStreamsFormatFormat5FiletypeUnstructured.ToPointer()
+func (o *SourceS3UpdateUnstructuredDocumentFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormatFiletype {
+	return SourceS3UpdateSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
 func (o *SourceS3UpdateUnstructuredDocumentFormat) GetProcessing() *SourceS3UpdateProcessing {
@@ -739,33 +198,33 @@ func (o *SourceS3UpdateUnstructuredDocumentFormat) GetStrategy() *SourceS3Update
 	return o.Strategy
 }
 
-type SourceS3UpdateSchemasStreamsFormatFormat4Filetype string
+type SourceS3UpdateSchemasStreamsFormatFiletype string
 
 const (
-	SourceS3UpdateSchemasStreamsFormatFormat4FiletypeParquet SourceS3UpdateSchemasStreamsFormatFormat4Filetype = "parquet"
+	SourceS3UpdateSchemasStreamsFormatFiletypeParquet SourceS3UpdateSchemasStreamsFormatFiletype = "parquet"
 )
 
-func (e SourceS3UpdateSchemasStreamsFormatFormat4Filetype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFormat4Filetype {
+func (e SourceS3UpdateSchemasStreamsFormatFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFiletype {
 	return &e
 }
-func (e *SourceS3UpdateSchemasStreamsFormatFormat4Filetype) UnmarshalJSON(data []byte) error {
+func (e *SourceS3UpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "parquet":
-		*e = SourceS3UpdateSchemasStreamsFormatFormat4Filetype(v)
+		*e = SourceS3UpdateSchemasStreamsFormatFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFormat4Filetype: %v", v)
+		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFiletype: %v", v)
 	}
 }
 
 type SourceS3UpdateParquetFormat struct {
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool                                              `default:"false" json:"decimal_as_float"`
-	filetype       *SourceS3UpdateSchemasStreamsFormatFormat4Filetype `const:"parquet" json:"filetype"`
+	DecimalAsFloat *bool                                       `default:"false" json:"decimal_as_float"`
+	filetype       *SourceS3UpdateSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 }
 
 func (s SourceS3UpdateParquetFormat) MarshalJSON() ([]byte, error) {
@@ -786,35 +245,35 @@ func (o *SourceS3UpdateParquetFormat) GetDecimalAsFloat() *bool {
 	return o.DecimalAsFloat
 }
 
-func (o *SourceS3UpdateParquetFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormat4Filetype {
-	return SourceS3UpdateSchemasStreamsFormatFormat4FiletypeParquet.ToPointer()
+func (o *SourceS3UpdateParquetFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFiletype {
+	return SourceS3UpdateSchemasStreamsFormatFiletypeParquet.ToPointer()
 }
 
-type SourceS3UpdateSchemasStreamsFormatFormatFiletype string
+type SourceS3UpdateSchemasStreamsFiletype string
 
 const (
-	SourceS3UpdateSchemasStreamsFormatFormatFiletypeJsonl SourceS3UpdateSchemasStreamsFormatFormatFiletype = "jsonl"
+	SourceS3UpdateSchemasStreamsFiletypeJsonl SourceS3UpdateSchemasStreamsFiletype = "jsonl"
 )
 
-func (e SourceS3UpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFormatFiletype {
+func (e SourceS3UpdateSchemasStreamsFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFiletype {
 	return &e
 }
-func (e *SourceS3UpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+func (e *SourceS3UpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "jsonl":
-		*e = SourceS3UpdateSchemasStreamsFormatFormatFiletype(v)
+		*e = SourceS3UpdateSchemasStreamsFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFormatFiletype: %v", v)
+		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFiletype: %v", v)
 	}
 }
 
 type SourceS3UpdateJsonlFormat struct {
-	filetype *SourceS3UpdateSchemasStreamsFormatFormatFiletype `const:"jsonl" json:"filetype"`
+	filetype *SourceS3UpdateSchemasStreamsFiletype `const:"jsonl" json:"filetype"`
 }
 
 func (s SourceS3UpdateJsonlFormat) MarshalJSON() ([]byte, error) {
@@ -828,30 +287,30 @@ func (s *SourceS3UpdateJsonlFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3UpdateJsonlFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFormatFiletype {
-	return SourceS3UpdateSchemasStreamsFormatFormatFiletypeJsonl.ToPointer()
+func (o *SourceS3UpdateJsonlFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFiletype {
+	return SourceS3UpdateSchemasStreamsFiletypeJsonl.ToPointer()
 }
 
-type SourceS3UpdateSchemasStreamsFormatFiletype string
+type SourceS3UpdateSchemasFiletype string
 
 const (
-	SourceS3UpdateSchemasStreamsFormatFiletypeCsv SourceS3UpdateSchemasStreamsFormatFiletype = "csv"
+	SourceS3UpdateSchemasFiletypeCsv SourceS3UpdateSchemasFiletype = "csv"
 )
 
-func (e SourceS3UpdateSchemasStreamsFormatFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFormatFiletype {
+func (e SourceS3UpdateSchemasFiletype) ToPointer() *SourceS3UpdateSchemasFiletype {
 	return &e
 }
-func (e *SourceS3UpdateSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error {
+func (e *SourceS3UpdateSchemasFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "csv":
-		*e = SourceS3UpdateSchemasStreamsFormatFiletype(v)
+		*e = SourceS3UpdateSchemasFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFormatFiletype: %v", v)
+		return fmt.Errorf("invalid value for SourceS3UpdateSchemasFiletype: %v", v)
 	}
 }
 
@@ -1076,33 +535,6 @@ func (u SourceS3UpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceS3UpdateCSVHeaderDefinition: all fields are null")
 }
 
-// SourceS3UpdateInferenceType - How to infer the types of the columns. If none, inference default to strings.
-type SourceS3UpdateInferenceType string
-
-const (
-	SourceS3UpdateInferenceTypeNone               SourceS3UpdateInferenceType = "None"
-	SourceS3UpdateInferenceTypePrimitiveTypesOnly SourceS3UpdateInferenceType = "Primitive Types Only"
-)
-
-func (e SourceS3UpdateInferenceType) ToPointer() *SourceS3UpdateInferenceType {
-	return &e
-}
-func (e *SourceS3UpdateInferenceType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "None":
-		fallthrough
-	case "Primitive Types Only":
-		*e = SourceS3UpdateInferenceType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateInferenceType: %v", v)
-	}
-}
-
 type SourceS3UpdateCSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -1113,14 +545,12 @@ type SourceS3UpdateCSVFormat struct {
 	// The character used for escaping special characters. To disallow escaping, leave this field blank.
 	EscapeChar *string `json:"escape_char,omitempty"`
 	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string                                    `json:"false_values,omitempty"`
-	filetype    *SourceS3UpdateSchemasStreamsFormatFiletype `const:"csv" json:"filetype"`
+	FalseValues []string                       `json:"false_values,omitempty"`
+	filetype    *SourceS3UpdateSchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceS3UpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
-	// How to infer the types of the columns. If none, inference default to strings.
-	InferenceType *SourceS3UpdateInferenceType `default:"None" json:"inference_type"`
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
@@ -1181,8 +611,8 @@ func (o *SourceS3UpdateCSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
-func (o *SourceS3UpdateCSVFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFormatFiletype {
-	return SourceS3UpdateSchemasStreamsFormatFiletypeCsv.ToPointer()
+func (o *SourceS3UpdateCSVFormat) GetFiletype() *SourceS3UpdateSchemasFiletype {
+	return SourceS3UpdateSchemasFiletypeCsv.ToPointer()
 }
 
 func (o *SourceS3UpdateCSVFormat) GetHeaderDefinition() *SourceS3UpdateCSVHeaderDefinition {
@@ -1197,13 +627,6 @@ func (o *SourceS3UpdateCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
-}
-
-func (o *SourceS3UpdateCSVFormat) GetInferenceType() *SourceS3UpdateInferenceType {
-	if o == nil {
-		return nil
-	}
-	return o.InferenceType
 }
 
 func (o *SourceS3UpdateCSVFormat) GetNullValues() []string {
@@ -1248,33 +671,33 @@ func (o *SourceS3UpdateCSVFormat) GetTrueValues() []string {
 	return o.TrueValues
 }
 
-type SourceS3UpdateSchemasStreamsFiletype string
+type SourceS3UpdateFiletype string
 
 const (
-	SourceS3UpdateSchemasStreamsFiletypeAvro SourceS3UpdateSchemasStreamsFiletype = "avro"
+	SourceS3UpdateFiletypeAvro SourceS3UpdateFiletype = "avro"
 )
 
-func (e SourceS3UpdateSchemasStreamsFiletype) ToPointer() *SourceS3UpdateSchemasStreamsFiletype {
+func (e SourceS3UpdateFiletype) ToPointer() *SourceS3UpdateFiletype {
 	return &e
 }
-func (e *SourceS3UpdateSchemasStreamsFiletype) UnmarshalJSON(data []byte) error {
+func (e *SourceS3UpdateFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "avro":
-		*e = SourceS3UpdateSchemasStreamsFiletype(v)
+		*e = SourceS3UpdateFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3UpdateSchemasStreamsFiletype: %v", v)
+		return fmt.Errorf("invalid value for SourceS3UpdateFiletype: %v", v)
 	}
 }
 
 type SourceS3UpdateAvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool                                 `default:"false" json:"double_as_string"`
-	filetype       *SourceS3UpdateSchemasStreamsFiletype `const:"avro" json:"filetype"`
+	DoubleAsString *bool                   `default:"false" json:"double_as_string"`
+	filetype       *SourceS3UpdateFiletype `const:"avro" json:"filetype"`
 }
 
 func (s SourceS3UpdateAvroFormat) MarshalJSON() ([]byte, error) {
@@ -1295,8 +718,8 @@ func (o *SourceS3UpdateAvroFormat) GetDoubleAsString() *bool {
 	return o.DoubleAsString
 }
 
-func (o *SourceS3UpdateAvroFormat) GetFiletype() *SourceS3UpdateSchemasStreamsFiletype {
-	return SourceS3UpdateSchemasStreamsFiletypeAvro.ToPointer()
+func (o *SourceS3UpdateAvroFormat) GetFiletype() *SourceS3UpdateFiletype {
+	return SourceS3UpdateFiletypeAvro.ToPointer()
 }
 
 type SourceS3UpdateFormatType string
@@ -1468,12 +891,8 @@ type SourceS3UpdateFileBasedStreamConfig struct {
 	Globs []string `json:"globs,omitempty"`
 	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 	InputSchema *string `json:"input_schema,omitempty"`
-	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
-	PrimaryKey *string `json:"primary_key,omitempty"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
@@ -1521,25 +940,11 @@ func (o *SourceS3UpdateFileBasedStreamConfig) GetInputSchema() *string {
 	return o.InputSchema
 }
 
-func (o *SourceS3UpdateFileBasedStreamConfig) GetLegacyPrefix() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LegacyPrefix
-}
-
 func (o *SourceS3UpdateFileBasedStreamConfig) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *SourceS3UpdateFileBasedStreamConfig) GetPrimaryKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
 }
 
 func (o *SourceS3UpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
@@ -1572,22 +977,12 @@ type SourceS3Update struct {
 	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
 	// Name of the S3 bucket where the file(s) exist.
 	Bucket string `json:"bucket"`
-	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
-	Dataset *string `json:"dataset,omitempty"`
-	// Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required.
+	// Endpoint to an S3 compatible service. Leave empty to use AWS.
 	Endpoint *string `default:"" json:"endpoint"`
-	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
-	Format *SourceS3UpdateFileFormat `json:"format,omitempty"`
-	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
-	PathPattern *string `json:"path_pattern,omitempty"`
-	// Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
-	Provider *S3AmazonWebServices `json:"provider,omitempty"`
 	// AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.
 	RegionName *string `json:"region_name,omitempty"`
 	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
 	RoleArn *string `json:"role_arn,omitempty"`
-	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
-	Schema *string `default:"{}" json:"schema"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
@@ -1626,39 +1021,11 @@ func (o *SourceS3Update) GetBucket() string {
 	return o.Bucket
 }
 
-func (o *SourceS3Update) GetDataset() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Dataset
-}
-
 func (o *SourceS3Update) GetEndpoint() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Endpoint
-}
-
-func (o *SourceS3Update) GetFormat() *SourceS3UpdateFileFormat {
-	if o == nil {
-		return nil
-	}
-	return o.Format
-}
-
-func (o *SourceS3Update) GetPathPattern() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PathPattern
-}
-
-func (o *SourceS3Update) GetProvider() *S3AmazonWebServices {
-	if o == nil {
-		return nil
-	}
-	return o.Provider
 }
 
 func (o *SourceS3Update) GetRegionName() *string {
@@ -1673,13 +1040,6 @@ func (o *SourceS3Update) GetRoleArn() *string {
 		return nil
 	}
 	return o.RoleArn
-}
-
-func (o *SourceS3Update) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
 }
 
 func (o *SourceS3Update) GetStartDate() *time.Time {

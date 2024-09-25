@@ -40,6 +40,12 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 	} else {
 		rawDataSchema = nil
 	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
 	var tunnelMethod *shared.DestinationMysqlSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationMysqlNoTunnel *shared.DestinationMysqlNoTunnel
@@ -107,6 +113,7 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlCreateRequest() 
 		Password:          password,
 		Port:              port,
 		RawDataSchema:     rawDataSchema,
+		Ssl:               ssl,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
 	}
@@ -168,6 +175,12 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
 	} else {
 		rawDataSchema = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var tunnelMethod *shared.DestinationMysqlUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -236,6 +249,7 @@ func (r *DestinationMysqlResourceModel) ToSharedDestinationMysqlPutRequest() *sh
 		Password:          password,
 		Port:              port,
 		RawDataSchema:     rawDataSchema,
+		Ssl:               ssl,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
 	}

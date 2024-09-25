@@ -29,10 +29,10 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "05e9e4de-da30-4dd3-8fb0-aa2fad058413"
-  name          = "Penny Franecki"
+  definition_id = "f7ab2ac7-0a33-47a3-9131-b5bdf0c811e9"
+  name          = "Pam Hoeger"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3e5de43c-907f-463c-802b-c2f7f5dfb2c2"
+  workspace_id  = "0a295138-174c-4fa4-9536-74966ff0c642"
 }
 ```
 

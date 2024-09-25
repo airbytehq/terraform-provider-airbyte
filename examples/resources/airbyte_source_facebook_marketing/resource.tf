@@ -4,9 +4,8 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     account_ids = [
       "...",
     ]
-    action_breakdowns_allow_empty = true
     ad_statuses = [
-      "PENDING_BILLING_INFO",
+      "DELETED",
     ]
     adset_statuses = [
       "PAUSED",
@@ -14,8 +13,6 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     campaign_statuses = [
       "IN_PROCESS",
     ]
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
     credentials = {
       authenticate_via_facebook_marketing_oauth = {
         access_token  = "...my_access_token..."
@@ -26,33 +23,33 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_destination",
+          "action_type",
         ]
-        action_report_time = "impression"
+        action_report_time = "mixed"
         breakdowns = [
           "skan_conversion_id",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "video_avg_time_watched_actions",
+          "account_currency",
         ]
-        insights_job_timeout     = 0
-        insights_lookback_window = 10
-        level                    = "campaign"
-        name                     = "Darryl Wunsch"
+        insights_job_timeout     = 10
+        insights_lookback_window = 0
+        level                    = "account"
+        name                     = "Kara Macejkovic"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 8
+        time_increment           = 10
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
-    fetch_thumbnail_images   = true
-    insights_job_timeout     = 10
-    insights_lookback_window = 6
-    page_size                = 8
+    fetch_thumbnail_images   = false
+    insights_job_timeout     = 8
+    insights_lookback_window = 7
+    page_size                = 10
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "a3dd0007-daef-4770-881f-95c5b8dd2d32"
-  name          = "Stanley Kutch"
+  definition_id = "6a32dc31-e1b4-4b67-a953-bf2defea2fd1"
+  name          = "Dana Wuckert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fec5cd0a-4fda-452f-a954-3b8620d9bb50"
+  workspace_id  = "d3631398-5539-4f35-ad32-06afb3a724a6"
 }

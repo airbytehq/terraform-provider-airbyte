@@ -790,6 +790,8 @@ type DestinationPostgresUpdate struct {
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 	Schema *string `default:"public" json:"schema"`
+	// Encrypt data using SSL. When activating SSL, please select one of the connection modes.
+	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
 	//  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
 	//  <b>allow</b> - Chose this mode to enable encryption only when required by the source database
@@ -877,6 +879,13 @@ func (o *DestinationPostgresUpdate) GetSchema() *string {
 		return nil
 	}
 	return o.Schema
+}
+
+func (o *DestinationPostgresUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *DestinationPostgresUpdate) GetSslMode() *SSLModes {

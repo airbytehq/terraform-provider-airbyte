@@ -76,6 +76,12 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 			SourceMysqlScanChangesWithUserDefinedCursor: sourceMysqlScanChangesWithUserDefinedCursor,
 		}
 	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
 	var sslMode *shared.SourceMysqlSSLModes
 	if r.Configuration.SslMode != nil {
 		var sourceMysqlPreferred *shared.SourceMysqlPreferred
@@ -229,6 +235,7 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlCreateRequest() *shared.So
 		Password:          password,
 		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Ssl:               ssl,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,
@@ -334,6 +341,12 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
 			SourceMysqlUpdateScanChangesWithUserDefinedCursor: sourceMysqlUpdateScanChangesWithUserDefinedCursor,
 		}
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var sslMode *shared.SourceMysqlUpdateSSLModes
 	if r.Configuration.SslMode != nil {
@@ -488,6 +501,7 @@ func (r *SourceMysqlResourceModel) ToSharedSourceMysqlPutRequest() *shared.Sourc
 		Password:          password,
 		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Ssl:               ssl,
 		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
 		Username:          username,

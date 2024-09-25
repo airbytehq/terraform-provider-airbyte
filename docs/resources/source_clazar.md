@@ -18,10 +18,10 @@ resource "airbyte_source_clazar" "my_source_clazar" {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
   }
-  definition_id = "3ab4d447-55b9-410e-9c99-9e89cbd0e8f2"
-  name          = "Vincent Kshlerin"
+  definition_id = "be209caa-593e-4b80-8ec8-c0a1f11671a5"
+  name          = "Mercedes Abernathy"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1fbec883-da2f-4ecd-acab-29e0bc6002c3"
+  workspace_id  = "f4b5e4c1-9596-4433-a1d5-1484aac586d0"
 }
 ```
 

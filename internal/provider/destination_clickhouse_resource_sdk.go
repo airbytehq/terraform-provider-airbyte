@@ -34,6 +34,12 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 	} else {
 		rawDataSchema = nil
 	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
 	var tunnelMethod *shared.DestinationClickhouseSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationClickhouseNoTunnel *shared.DestinationClickhouseNoTunnel
@@ -100,6 +106,7 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhouseCreate
 		Password:      password,
 		Port:          port,
 		RawDataSchema: rawDataSchema,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}
@@ -155,6 +162,12 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
 	} else {
 		rawDataSchema = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var tunnelMethod *shared.SSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -222,6 +235,7 @@ func (r *DestinationClickhouseResourceModel) ToSharedDestinationClickhousePutReq
 		Password:      password,
 		Port:          port,
 		RawDataSchema: rawDataSchema,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}

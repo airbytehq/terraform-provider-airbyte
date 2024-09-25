@@ -93,47 +93,47 @@ func (e *Authorization) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// None - None.
-type None struct {
+// DestinationMongodbUpdateNone - None.
+type DestinationMongodbUpdateNone struct {
 	authorization Authorization `const:"none" json:"authorization"`
 }
 
-func (n None) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(n, "", false)
+func (d DestinationMongodbUpdateNone) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
 }
 
-func (n *None) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+func (d *DestinationMongodbUpdateNone) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *None) GetAuthorization() Authorization {
+func (o *DestinationMongodbUpdateNone) GetAuthorization() Authorization {
 	return AuthorizationNone
 }
 
 type AuthorizationTypeType string
 
 const (
-	AuthorizationTypeTypeNone          AuthorizationTypeType = "None"
-	AuthorizationTypeTypeLoginPassword AuthorizationTypeType = "Login/Password"
+	AuthorizationTypeTypeDestinationMongodbUpdateNone AuthorizationTypeType = "destination-mongodb-update_None"
+	AuthorizationTypeTypeLoginPassword                AuthorizationTypeType = "Login/Password"
 )
 
 // AuthorizationType - Authorization type.
 type AuthorizationType struct {
-	None          *None
-	LoginPassword *LoginPassword
+	DestinationMongodbUpdateNone *DestinationMongodbUpdateNone
+	LoginPassword                *LoginPassword
 
 	Type AuthorizationTypeType
 }
 
-func CreateAuthorizationTypeNone(none None) AuthorizationType {
-	typ := AuthorizationTypeTypeNone
+func CreateAuthorizationTypeDestinationMongodbUpdateNone(destinationMongodbUpdateNone DestinationMongodbUpdateNone) AuthorizationType {
+	typ := AuthorizationTypeTypeDestinationMongodbUpdateNone
 
 	return AuthorizationType{
-		None: &none,
-		Type: typ,
+		DestinationMongodbUpdateNone: &destinationMongodbUpdateNone,
+		Type:                         typ,
 	}
 }
 
@@ -148,10 +148,10 @@ func CreateAuthorizationTypeLoginPassword(loginPassword LoginPassword) Authoriza
 
 func (u *AuthorizationType) UnmarshalJSON(data []byte) error {
 
-	var none None = None{}
-	if err := utils.UnmarshalJSON(data, &none, "", true, true); err == nil {
-		u.None = &none
-		u.Type = AuthorizationTypeTypeNone
+	var destinationMongodbUpdateNone DestinationMongodbUpdateNone = DestinationMongodbUpdateNone{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbUpdateNone, "", true, true); err == nil {
+		u.DestinationMongodbUpdateNone = &destinationMongodbUpdateNone
+		u.Type = AuthorizationTypeTypeDestinationMongodbUpdateNone
 		return nil
 	}
 
@@ -166,8 +166,8 @@ func (u *AuthorizationType) UnmarshalJSON(data []byte) error {
 }
 
 func (u AuthorizationType) MarshalJSON() ([]byte, error) {
-	if u.None != nil {
-		return utils.MarshalJSON(u.None, "", true)
+	if u.DestinationMongodbUpdateNone != nil {
+		return utils.MarshalJSON(u.DestinationMongodbUpdateNone, "", true)
 	}
 
 	if u.LoginPassword != nil {
@@ -323,6 +323,8 @@ type StandaloneMongoDbInstance struct {
 	Instance *Instance `default:"standalone" json:"instance"`
 	// The Port of a Mongo database to be replicated.
 	Port *int64 `default:"27017" json:"port"`
+	// Indicates whether TLS encryption protocol will be used to connect to MongoDB. It is recommended to use TLS connection if possible. For more information see <a href="https://docs.airbyte.com/integrations/sources/mongodb-v2">documentation</a>.
+	TLS *bool `default:"false" json:"tls"`
 }
 
 func (s StandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
@@ -355,6 +357,13 @@ func (o *StandaloneMongoDbInstance) GetPort() *int64 {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *StandaloneMongoDbInstance) GetTLS() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TLS
 }
 
 type MongoDbInstanceTypeType string
@@ -410,17 +419,17 @@ func (u *MongoDbInstanceType) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var standaloneMongoDbInstance StandaloneMongoDbInstance = StandaloneMongoDbInstance{}
-	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
-		u.StandaloneMongoDbInstance = &standaloneMongoDbInstance
-		u.Type = MongoDbInstanceTypeTypeStandaloneMongoDbInstance
-		return nil
-	}
-
 	var replicaSet ReplicaSet = ReplicaSet{}
 	if err := utils.UnmarshalJSON(data, &replicaSet, "", true, true); err == nil {
 		u.ReplicaSet = &replicaSet
 		u.Type = MongoDbInstanceTypeTypeReplicaSet
+		return nil
+	}
+
+	var standaloneMongoDbInstance StandaloneMongoDbInstance = StandaloneMongoDbInstance{}
+	if err := utils.UnmarshalJSON(data, &standaloneMongoDbInstance, "", true, true); err == nil {
+		u.StandaloneMongoDbInstance = &standaloneMongoDbInstance
+		u.Type = MongoDbInstanceTypeTypeStandaloneMongoDbInstance
 		return nil
 	}
 

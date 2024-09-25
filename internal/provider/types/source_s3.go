@@ -8,14 +8,9 @@ type SourceS3 struct {
 	AwsAccessKeyID     types.String                    `tfsdk:"aws_access_key_id"`
 	AwsSecretAccessKey types.String                    `tfsdk:"aws_secret_access_key"`
 	Bucket             types.String                    `tfsdk:"bucket"`
-	Dataset            types.String                    `tfsdk:"dataset"`
 	Endpoint           types.String                    `tfsdk:"endpoint"`
-	Format             *SourceS3FileFormat             `tfsdk:"format"`
-	PathPattern        types.String                    `tfsdk:"path_pattern"`
-	Provider           *SourceS3S3AmazonWebServices    `tfsdk:"provider"`
 	RegionName         types.String                    `tfsdk:"region_name"`
 	RoleArn            types.String                    `tfsdk:"role_arn"`
-	Schema             types.String                    `tfsdk:"schema"`
 	StartDate          types.String                    `tfsdk:"start_date"`
 	Streams            []SourceS3FileBasedStreamConfig `tfsdk:"streams"`
 }

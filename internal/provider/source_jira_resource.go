@@ -80,23 +80,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Default:     booldefault.StaticBool(false),
 						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info. Default: false`,
 					},
-					"expand_issue_changelog": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Expand the changelog when replicating issues. Default: false`,
-					},
-					"expand_issue_transition": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Expand the transitions when replicating issues. Default: false`,
-					},
-					"issues_stream_expand_with": schema.ListAttribute{
-						Optional:    true,
-						ElementType: types.StringType,
-						Description: `Select fields to Expand the ` + "`" + `Issues` + "`" + ` stream when replicating with: `,
-					},
 					"lookback_window_minutes": schema.Int64Attribute{
 						Computed:    true,
 						Optional:    true,
@@ -107,12 +90,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
-					},
-					"render_fields": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `(DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format. Default: false`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

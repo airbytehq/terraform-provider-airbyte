@@ -690,33 +690,6 @@ func (u SourceGcsUpdateCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceGcsUpdateCSVHeaderDefinition: all fields are null")
 }
 
-// SourceGcsUpdateInferenceType - How to infer the types of the columns. If none, inference default to strings.
-type SourceGcsUpdateInferenceType string
-
-const (
-	SourceGcsUpdateInferenceTypeNone               SourceGcsUpdateInferenceType = "None"
-	SourceGcsUpdateInferenceTypePrimitiveTypesOnly SourceGcsUpdateInferenceType = "Primitive Types Only"
-)
-
-func (e SourceGcsUpdateInferenceType) ToPointer() *SourceGcsUpdateInferenceType {
-	return &e
-}
-func (e *SourceGcsUpdateInferenceType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "None":
-		fallthrough
-	case "Primitive Types Only":
-		*e = SourceGcsUpdateInferenceType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceGcsUpdateInferenceType: %v", v)
-	}
-}
-
 type SourceGcsUpdateCSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -733,8 +706,6 @@ type SourceGcsUpdateCSVFormat struct {
 	HeaderDefinition *SourceGcsUpdateCSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
-	// How to infer the types of the columns. If none, inference default to strings.
-	InferenceType *SourceGcsUpdateInferenceType `default:"None" json:"inference_type"`
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
@@ -811,13 +782,6 @@ func (o *SourceGcsUpdateCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
-}
-
-func (o *SourceGcsUpdateCSVFormat) GetInferenceType() *SourceGcsUpdateInferenceType {
-	if o == nil {
-		return nil
-	}
-	return o.InferenceType
 }
 
 func (o *SourceGcsUpdateCSVFormat) GetNullValues() []string {
@@ -1104,12 +1068,8 @@ type SourceGcsUpdateFileBasedStreamConfig struct {
 	Globs []string `json:"globs,omitempty"`
 	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 	InputSchema *string `json:"input_schema,omitempty"`
-	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
-	PrimaryKey *string `json:"primary_key,omitempty"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
@@ -1157,25 +1117,11 @@ func (o *SourceGcsUpdateFileBasedStreamConfig) GetInputSchema() *string {
 	return o.InputSchema
 }
 
-func (o *SourceGcsUpdateFileBasedStreamConfig) GetLegacyPrefix() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LegacyPrefix
-}
-
 func (o *SourceGcsUpdateFileBasedStreamConfig) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *SourceGcsUpdateFileBasedStreamConfig) GetPrimaryKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
 }
 
 func (o *SourceGcsUpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {

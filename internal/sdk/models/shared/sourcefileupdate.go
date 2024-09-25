@@ -57,6 +57,50 @@ func (e *FileFormat) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// SourceFileUpdateSchemasProviderStorageProvider8Storage - WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
+type SourceFileUpdateSchemasProviderStorageProvider8Storage string
+
+const (
+	SourceFileUpdateSchemasProviderStorageProvider8StorageLocal SourceFileUpdateSchemasProviderStorageProvider8Storage = "local"
+)
+
+func (e SourceFileUpdateSchemasProviderStorageProvider8Storage) ToPointer() *SourceFileUpdateSchemasProviderStorageProvider8Storage {
+	return &e
+}
+func (e *SourceFileUpdateSchemasProviderStorageProvider8Storage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "local":
+		*e = SourceFileUpdateSchemasProviderStorageProvider8Storage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFileUpdateSchemasProviderStorageProvider8Storage: %v", v)
+	}
+}
+
+type LocalFilesystemLimited struct {
+	// WARNING: Note that the local storage URL available for reading must start with the local mount "/local/" at the moment until we implement more advanced docker mounting options.
+	storage SourceFileUpdateSchemasProviderStorageProvider8Storage `const:"local" json:"storage"`
+}
+
+func (l LocalFilesystemLimited) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(l, "", false)
+}
+
+func (l *LocalFilesystemLimited) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &l, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *LocalFilesystemLimited) GetStorage() SourceFileUpdateSchemasProviderStorageProvider8Storage {
+	return SourceFileUpdateSchemasProviderStorageProvider8StorageLocal
+}
+
 type SourceFileUpdateSchemasProviderStorageProvider7Storage string
 
 const (
@@ -371,7 +415,7 @@ func (e *SourceFileUpdateSchemasStorage) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceFileUpdateS3AmazonWebServices struct {
+type S3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
@@ -379,32 +423,32 @@ type SourceFileUpdateS3AmazonWebServices struct {
 	storage            SourceFileUpdateSchemasStorage `const:"S3" json:"storage"`
 }
 
-func (s SourceFileUpdateS3AmazonWebServices) MarshalJSON() ([]byte, error) {
+func (s S3AmazonWebServices) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceFileUpdateS3AmazonWebServices) UnmarshalJSON(data []byte) error {
+func (s *S3AmazonWebServices) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceFileUpdateS3AmazonWebServices) GetAwsAccessKeyID() *string {
+func (o *S3AmazonWebServices) GetAwsAccessKeyID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AwsAccessKeyID
 }
 
-func (o *SourceFileUpdateS3AmazonWebServices) GetAwsSecretAccessKey() *string {
+func (o *S3AmazonWebServices) GetAwsSecretAccessKey() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AwsSecretAccessKey
 }
 
-func (o *SourceFileUpdateS3AmazonWebServices) GetStorage() SourceFileUpdateSchemasStorage {
+func (o *S3AmazonWebServices) GetStorage() SourceFileUpdateSchemasStorage {
 	return SourceFileUpdateSchemasStorageS3
 }
 
@@ -513,24 +557,26 @@ func (o *HTTPSPublicWeb) GetUserAgent() *bool {
 type StorageProviderType string
 
 const (
-	StorageProviderTypeHTTPSPublicWeb                      StorageProviderType = "HTTPS: Public Web"
-	StorageProviderTypeGCSGoogleCloudStorage               StorageProviderType = "GCS: Google Cloud Storage"
-	StorageProviderTypeSourceFileUpdateS3AmazonWebServices StorageProviderType = "source-file-update_S3: Amazon Web Services"
-	StorageProviderTypeAzBlobAzureBlobStorage              StorageProviderType = "AzBlob: Azure Blob Storage"
-	StorageProviderTypeSSHSecureShell                      StorageProviderType = "SSH: Secure Shell"
-	StorageProviderTypeSCPSecureCopyProtocol               StorageProviderType = "SCP: Secure copy protocol"
-	StorageProviderTypeSFTPSecureFileTransferProtocol      StorageProviderType = "SFTP: Secure File Transfer Protocol"
+	StorageProviderTypeHTTPSPublicWeb                 StorageProviderType = "HTTPS: Public Web"
+	StorageProviderTypeGCSGoogleCloudStorage          StorageProviderType = "GCS: Google Cloud Storage"
+	StorageProviderTypeS3AmazonWebServices            StorageProviderType = "S3: Amazon Web Services"
+	StorageProviderTypeAzBlobAzureBlobStorage         StorageProviderType = "AzBlob: Azure Blob Storage"
+	StorageProviderTypeSSHSecureShell                 StorageProviderType = "SSH: Secure Shell"
+	StorageProviderTypeSCPSecureCopyProtocol          StorageProviderType = "SCP: Secure copy protocol"
+	StorageProviderTypeSFTPSecureFileTransferProtocol StorageProviderType = "SFTP: Secure File Transfer Protocol"
+	StorageProviderTypeLocalFilesystemLimited         StorageProviderType = "Local Filesystem (limited)"
 )
 
 // StorageProvider - The storage Provider or Location of the file(s) which should be replicated.
 type StorageProvider struct {
-	HTTPSPublicWeb                      *HTTPSPublicWeb
-	GCSGoogleCloudStorage               *GCSGoogleCloudStorage
-	SourceFileUpdateS3AmazonWebServices *SourceFileUpdateS3AmazonWebServices
-	AzBlobAzureBlobStorage              *AzBlobAzureBlobStorage
-	SSHSecureShell                      *SSHSecureShell
-	SCPSecureCopyProtocol               *SCPSecureCopyProtocol
-	SFTPSecureFileTransferProtocol      *SFTPSecureFileTransferProtocol
+	HTTPSPublicWeb                 *HTTPSPublicWeb
+	GCSGoogleCloudStorage          *GCSGoogleCloudStorage
+	S3AmazonWebServices            *S3AmazonWebServices
+	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage
+	SSHSecureShell                 *SSHSecureShell
+	SCPSecureCopyProtocol          *SCPSecureCopyProtocol
+	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol
+	LocalFilesystemLimited         *LocalFilesystemLimited
 
 	Type StorageProviderType
 }
@@ -553,12 +599,12 @@ func CreateStorageProviderGCSGoogleCloudStorage(gcsGoogleCloudStorage GCSGoogleC
 	}
 }
 
-func CreateStorageProviderSourceFileUpdateS3AmazonWebServices(sourceFileUpdateS3AmazonWebServices SourceFileUpdateS3AmazonWebServices) StorageProvider {
-	typ := StorageProviderTypeSourceFileUpdateS3AmazonWebServices
+func CreateStorageProviderS3AmazonWebServices(s3AmazonWebServices S3AmazonWebServices) StorageProvider {
+	typ := StorageProviderTypeS3AmazonWebServices
 
 	return StorageProvider{
-		SourceFileUpdateS3AmazonWebServices: &sourceFileUpdateS3AmazonWebServices,
-		Type:                                typ,
+		S3AmazonWebServices: &s3AmazonWebServices,
+		Type:                typ,
 	}
 }
 
@@ -598,7 +644,23 @@ func CreateStorageProviderSFTPSecureFileTransferProtocol(sftpSecureFileTransferP
 	}
 }
 
+func CreateStorageProviderLocalFilesystemLimited(localFilesystemLimited LocalFilesystemLimited) StorageProvider {
+	typ := StorageProviderTypeLocalFilesystemLimited
+
+	return StorageProvider{
+		LocalFilesystemLimited: &localFilesystemLimited,
+		Type:                   typ,
+	}
+}
+
 func (u *StorageProvider) UnmarshalJSON(data []byte) error {
+
+	var localFilesystemLimited LocalFilesystemLimited = LocalFilesystemLimited{}
+	if err := utils.UnmarshalJSON(data, &localFilesystemLimited, "", true, true); err == nil {
+		u.LocalFilesystemLimited = &localFilesystemLimited
+		u.Type = StorageProviderTypeLocalFilesystemLimited
+		return nil
+	}
 
 	var httpsPublicWeb HTTPSPublicWeb = HTTPSPublicWeb{}
 	if err := utils.UnmarshalJSON(data, &httpsPublicWeb, "", true, true); err == nil {
@@ -614,10 +676,10 @@ func (u *StorageProvider) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceFileUpdateS3AmazonWebServices SourceFileUpdateS3AmazonWebServices = SourceFileUpdateS3AmazonWebServices{}
-	if err := utils.UnmarshalJSON(data, &sourceFileUpdateS3AmazonWebServices, "", true, true); err == nil {
-		u.SourceFileUpdateS3AmazonWebServices = &sourceFileUpdateS3AmazonWebServices
-		u.Type = StorageProviderTypeSourceFileUpdateS3AmazonWebServices
+	var s3AmazonWebServices S3AmazonWebServices = S3AmazonWebServices{}
+	if err := utils.UnmarshalJSON(data, &s3AmazonWebServices, "", true, true); err == nil {
+		u.S3AmazonWebServices = &s3AmazonWebServices
+		u.Type = StorageProviderTypeS3AmazonWebServices
 		return nil
 	}
 
@@ -661,8 +723,8 @@ func (u StorageProvider) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.GCSGoogleCloudStorage, "", true)
 	}
 
-	if u.SourceFileUpdateS3AmazonWebServices != nil {
-		return utils.MarshalJSON(u.SourceFileUpdateS3AmazonWebServices, "", true)
+	if u.S3AmazonWebServices != nil {
+		return utils.MarshalJSON(u.S3AmazonWebServices, "", true)
 	}
 
 	if u.AzBlobAzureBlobStorage != nil {
@@ -679,6 +741,10 @@ func (u StorageProvider) MarshalJSON() ([]byte, error) {
 
 	if u.SFTPSecureFileTransferProtocol != nil {
 		return utils.MarshalJSON(u.SFTPSecureFileTransferProtocol, "", true)
+	}
+
+	if u.LocalFilesystemLimited != nil {
+		return utils.MarshalJSON(u.LocalFilesystemLimited, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type StorageProvider: all fields are null")

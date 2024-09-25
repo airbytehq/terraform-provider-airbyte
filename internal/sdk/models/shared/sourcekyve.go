@@ -32,10 +32,6 @@ func (e *Kyve) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKyve struct {
-	// The maximum amount of pages to go trough. Set to 'null' for all pages.
-	MaxPages *int64 `json:"max_pages,omitempty"`
-	// The pagesize for pagination, smaller numbers are used in integration tests.
-	PageSize *int64 `default:"100" json:"page_size"`
 	// The IDs of the KYVE storage pool you want to archive. (Comma separated)
 	PoolIds    string `json:"pool_ids"`
 	sourceType Kyve   `const:"kyve" json:"sourceType"`
@@ -54,20 +50,6 @@ func (s *SourceKyve) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceKyve) GetMaxPages() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.MaxPages
-}
-
-func (o *SourceKyve) GetPageSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PageSize
 }
 
 func (o *SourceKyve) GetPoolIds() string {

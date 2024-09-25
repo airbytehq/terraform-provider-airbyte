@@ -254,18 +254,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 													Default:     booldefault.StaticBool(false),
 													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
 												},
-												"inference_type": schema.StringAttribute{
-													Computed:    true,
-													Optional:    true,
-													Default:     stringdefault.StaticString("None"),
-													Description: `How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]; Default: "None"`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"None",
-															"Primitive Types Only",
-														),
-													},
-												},
 												"null_values": schema.ListAttribute{
 													Optional:    true,
 													ElementType: types.StringType,
@@ -410,17 +398,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 									Optional:    true,
 									Description: `The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.`,
 								},
-								"legacy_prefix": schema.StringAttribute{
-									Optional:    true,
-									Description: `The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.`,
-								},
 								"name": schema.StringAttribute{
 									Required:    true,
 									Description: `The name of the stream.`,
-								},
-								"primary_key": schema.StringAttribute{
-									Optional:    true,
-									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"schemaless": schema.BoolAttribute{
 									Computed:    true,

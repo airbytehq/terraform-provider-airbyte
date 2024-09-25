@@ -199,8 +199,6 @@ type SourceAsanaUpdate struct {
 	Credentials *AuthenticationMechanism `json:"credentials,omitempty"`
 	// Globally unique identifiers for the organization exports
 	OrganizationExportIds []any `json:"organization_export_ids,omitempty"`
-	// This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.
-	TestMode *bool `json:"test_mode,omitempty"`
 }
 
 func (o *SourceAsanaUpdate) GetCredentials() *AuthenticationMechanism {
@@ -215,11 +213,4 @@ func (o *SourceAsanaUpdate) GetOrganizationExportIds() []any {
 		return nil
 	}
 	return o.OrganizationExportIds
-}
-
-func (o *SourceAsanaUpdate) GetTestMode() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TestMode
 }

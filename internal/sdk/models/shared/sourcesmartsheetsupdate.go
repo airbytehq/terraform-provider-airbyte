@@ -288,19 +288,6 @@ type SourceSmartsheetsUpdate struct {
 	MetadataFields []Validenums `json:"metadata_fields,omitempty"`
 	// The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 	SpreadsheetID string `json:"spreadsheet_id"`
-	// Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`
-	StartDatetime *time.Time `default:"2020-01-01T00:00:00+00:00" json:"start_datetime"`
-}
-
-func (s SourceSmartsheetsUpdate) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceSmartsheetsUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *SourceSmartsheetsUpdate) GetCredentials() SourceSmartsheetsUpdateAuthorizationMethod {
@@ -322,11 +309,4 @@ func (o *SourceSmartsheetsUpdate) GetSpreadsheetID() string {
 		return ""
 	}
 	return o.SpreadsheetID
-}
-
-func (o *SourceSmartsheetsUpdate) GetStartDatetime() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDatetime
 }

@@ -7,6 +7,5 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceHarvest struct {
 	AccountID            types.String                          `tfsdk:"account_id"`
 	Credentials          *SourceHarvestAuthenticationMechanism `tfsdk:"credentials"`
-	ReplicationEndDate   types.String                          `tfsdk:"replication_end_date"`
 	ReplicationStartDate types.String                          `tfsdk:"replication_start_date"`
 }

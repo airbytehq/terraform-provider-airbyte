@@ -1,5 +1,10 @@
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
+    encryption = {
+      native_network_encryption_nne = {
+        encryption_algorithm = "3DES168"
+      }
+    }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
@@ -10,9 +15,9 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Emmalee.Towne89"
+    username = "Dolores.Cummerata25"
   }
-  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
-  name          = "Adrienne Lockman"
-  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
+  definition_id = "b7b603cc-8cd8-487e-b603-813ef7fc0d17"
+  name          = "Eloise Hilpert"
+  workspace_id  = "14549f12-4218-42d1-9ef4-e895c9212618"
 }

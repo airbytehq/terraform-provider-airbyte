@@ -3,6 +3,6 @@
 package types
 
 type SourceSftpBulkAuthentication struct {
-	AuthenticateViaPassword   *UsernameAndPassword       `tfsdk:"authenticate_via_password" tfPlanOnly:"true"`
-	AuthenticateViaPrivateKey *AuthenticateViaPrivateKey `tfsdk:"authenticate_via_private_key" tfPlanOnly:"true"`
+	AuthenticateViaPassword   *DestinationPgvectorCredentials `tfsdk:"authenticate_via_password" tfPlanOnly:"true"`
+	AuthenticateViaPrivateKey *AuthenticateViaPrivateKey      `tfsdk:"authenticate_via_private_key" tfPlanOnly:"true"`
 }

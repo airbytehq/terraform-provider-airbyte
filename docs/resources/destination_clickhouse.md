@@ -21,14 +21,15 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     password        = "...my_password..."
     port            = 8123
     raw_data_schema = "...my_raw_data_schema..."
+    ssl             = false
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Adah75"
+    username = "Mekhi.Cronin85"
   }
-  definition_id = "6d65d335-e03a-4beb-b71b-58e872ec68b6"
-  name          = "Shawn Olson"
-  workspace_id  = "48b53694-1566-4f22-bd30-a28af8c1d27b"
+  definition_id = "65d335e0-3abe-4bb7-9b58-e872ec68b6d2"
+  name          = "Wade Schimmel"
+  workspace_id  = "b5369415-66f2-42fd-b0a2-8af8c1d27b3e"
 }
 ```
 
@@ -65,6 +66,7 @@ Optional:
 - `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) HTTP port of the database. Default: 8123
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
+- `ssl` (Boolean) Encrypt data using SSL. Default: false
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>

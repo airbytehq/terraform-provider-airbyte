@@ -336,6 +336,8 @@ type DestinationClickhouse struct {
 	Port *int64 `default:"8123" json:"port"`
 	// The schema to write raw tables into (default: airbyte_internal)
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"false" json:"ssl"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
@@ -397,6 +399,13 @@ func (o *DestinationClickhouse) GetRawDataSchema() *string {
 		return nil
 	}
 	return o.RawDataSchema
+}
+
+func (o *DestinationClickhouse) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *DestinationClickhouse) GetTunnelMethod() *DestinationClickhouseSSHTunnelMethod {

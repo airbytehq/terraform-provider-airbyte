@@ -55,11 +55,18 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest(
 			}
 		}
 	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAds{
 		AccountIds:         accountIds,
 		AdAnalyticsReports: adAnalyticsReports,
 		Credentials:        credentials,
+		LookbackWindow:     lookbackWindow,
 		StartDate:          startDate,
 	}
 	definitionID := new(string)
@@ -142,11 +149,18 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsPutRequest() *
 			}
 		}
 	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAdsUpdate{
 		AccountIds:         accountIds,
 		AdAnalyticsReports: adAnalyticsReports,
 		Credentials:        credentials,
+		LookbackWindow:     lookbackWindow,
 		StartDate:          startDate,
 	}
 	name1 := r.Name.ValueString()

@@ -19,9 +19,9 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "asia-northeast3"
+    gcs_bucket_region = "northamerica-northeast2"
   }
-  definition_id = "13f0bea6-4a23-47e4-a59e-7bfd1d496bd1"
-  name          = "Christie Altenwerth"
-  workspace_id  = "4a7d5d4b-2ee1-453b-82c3-2f48f6e543a0"
+  definition_id = "56553a4e-50cd-4de3-bcff-11f630fa923b"
+  name          = "Elisa Lakin"
+  workspace_id  = "15f868bf-0372-497d-8d66-bcb9a13f0bea"
 }

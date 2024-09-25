@@ -25,10 +25,10 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     visibility_timeout   = 15
   }
-  definition_id = "f83c21b5-17b1-46f1-b884-6bcd51374519"
-  name          = "Renee Schamberger"
+  definition_id = "82a17eb0-af63-4def-a733-56f39bea5e20"
+  name          = "Dr. Salvador White"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "360526ae-8aa3-4c4f-a879-13b8668105e1"
+  workspace_id  = "905c8543-b918-44ca-87dc-adad2938da57"
 }
 ```
 

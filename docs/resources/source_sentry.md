@@ -19,14 +19,14 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "firsthand-hospice.com"
+    hostname     = "essential-doctrine.net"
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "d7c84461-977a-41b2-b1a5-b009f29606a3"
-  name          = "Estelle Murray"
+  definition_id = "352ddb04-c9bc-4e38-bd66-444a186797a7"
+  name          = "Mr. Robin Walker"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9592aaeb-21d8-49b3-9b55-8d4aa1770fe2"
+  workspace_id  = "99e00879-e494-484a-b485-520644aee427"
 }
 ```
 

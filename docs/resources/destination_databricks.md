@@ -15,7 +15,7 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = false
+    accept_terms = true
     authentication = {
       o_auth2_recommended = {
         client_id = "...my_client_id..."
@@ -30,9 +30,9 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     raw_schema_override = "...my_raw_schema_override..."
     schema              = "default"
   }
-  definition_id = "bfbb5605-d730-46cf-a6f6-0bfc11e74f73"
-  name          = "Janis Kohler"
-  workspace_id  = "53e98a4c-0499-445e-9d6e-956416d119e8"
+  definition_id = "bb5605d7-306c-4fa6-b60b-fc11e74f736d"
+  name          = "Molly Medhurst"
+  workspace_id  = "e98a4c04-9945-4edd-ae95-6416d119e802"
 }
 ```
 

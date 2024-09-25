@@ -19,10 +19,10 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_subdomain = "...my_api_subdomain..."
     api_username  = "...my_api_username..."
   }
-  definition_id = "63d3381e-fe3f-47d5-a433-d30ca4aa9f68"
-  name          = "Elena Miller"
+  definition_id = "d8a9d001-0028-4d11-8128-0d807cdd8eb8"
+  name          = "Ron Hermiston"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "345ef318-3cb2-4e52-a86a-dbb57c5cbe7c"
+  workspace_id  = "610938eb-2433-4624-98c5-c5aa0b5368b2"
 }
 ```
 

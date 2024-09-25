@@ -6,12 +6,12 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-08-17T07:42:16.884Z"
+        token_expiry_date = "2021-06-09T01:32:17.584Z"
       }
     }
   }
-  definition_id = "0d6ef09f-b849-4b0b-9f3d-5ca96c63354a"
-  name          = "Juan Smitham"
+  definition_id = "bb57bf00-1ddb-43cf-874d-627d201b0d06"
+  name          = "Johnathan Renner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c3d11ff9-34df-40d7-96d8-b0d90daf9186"
+  workspace_id  = "e6b9f25a-a9f8-4c7d-8107-048d9ffe8959"
 }

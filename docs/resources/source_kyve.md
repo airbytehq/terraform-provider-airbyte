@@ -15,16 +15,14 @@ SourceKyve Resource
 ```terraform
 resource "airbyte_source_kyve" "my_source_kyve" {
   configuration = {
-    max_pages = 7
-    page_size = 4
     pool_ids  = "0,1"
     start_ids = "0,0"
-    url_base  = "https://api.korellia.kyve.network/"
+    url_base  = "https://api.kaon.kyve.network/"
   }
-  definition_id = "6cb6bf32-faf8-425b-aa4e-c87aaffeb9ea"
-  name          = "Geneva Abshire"
+  definition_id = "8a50561c-1cc6-4291-a1ad-7b3d761e29ef"
+  name          = "Natalie Murphy IV"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e9f4166b-42b6-49c6-9d27-bbad3f0bf8ca"
+  workspace_id  = "d2b59ab5-6edb-457c-800c-cdeed12bd5eb"
 }
 ```
 
@@ -57,8 +55,6 @@ Required:
 
 Optional:
 
-- `max_pages` (Number) The maximum amount of pages to go trough. Set to 'null' for all pages.
-- `page_size` (Number) The pagesize for pagination, smaller numbers are used in integration tests. Default: 100
 - `url_base` (String) URL to the KYVE Chain API. Default: "https://api.kyve.network"
 
 ## Import

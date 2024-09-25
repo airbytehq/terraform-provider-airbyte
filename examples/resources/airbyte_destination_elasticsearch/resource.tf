@@ -8,9 +8,12 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     }
     ca_certificate = "...my_ca_certificate..."
     endpoint       = "...my_endpoint..."
-    upsert         = false
+    tunnel_method = {
+      no_tunnel = {}
+    }
+    upsert = false
   }
-  definition_id = "635457da-65ed-4465-a758-afd2ad38ed7e"
-  name          = "Thomas Vandervort"
-  workspace_id  = "2212dc7d-0e4e-4509-9ed9-4b4ecb397d06"
+  definition_id = "07f993ef-ae2d-4caf-8658-9dab1153f466"
+  name          = "Miss Harvey Mohr IV"
+  workspace_id  = "55aa0db7-9794-42be-be5f-1f7885566354"
 }

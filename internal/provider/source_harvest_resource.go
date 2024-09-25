@@ -127,13 +127,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							validators.ExactlyOneChild(),
 						},
 					},
-					"replication_end_date": schema.StringAttribute{
-						Optional:    true,
-						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.`,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"replication_start_date": schema.StringAttribute{
 						Required:    true,
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,

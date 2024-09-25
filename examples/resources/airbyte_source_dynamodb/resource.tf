@@ -8,12 +8,12 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
       }
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
-    ignore_missing_read_permissions_tables = false
-    region                                 = "af-south-1"
+    ignore_missing_read_permissions_tables = true
+    region                                 = "il-central-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "c62aeeab-6a16-4bc0-b1be-5567777324c6"
-  name          = "Horace Kunde"
+  definition_id = "ad00caee-12c4-4e65-b57e-54a27b617a01"
+  name          = "Lorena Huel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dac63878-54b6-49c4-ae8b-9a534c06fe5a"
+  workspace_id  = "68e1922d-f283-4a61-8313-a52314031fd7"
 }

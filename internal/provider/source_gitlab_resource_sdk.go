@@ -48,21 +48,9 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 			SourceGitlabPrivateToken: sourceGitlabPrivateToken,
 		}
 	}
-	groups := new(string)
-	if !r.Configuration.Groups.IsUnknown() && !r.Configuration.Groups.IsNull() {
-		*groups = r.Configuration.Groups.ValueString()
-	} else {
-		groups = nil
-	}
 	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
-	}
-	projects := new(string)
-	if !r.Configuration.Projects.IsUnknown() && !r.Configuration.Projects.IsNull() {
-		*projects = r.Configuration.Projects.ValueString()
-	} else {
-		projects = nil
 	}
 	var projectsList []string = []string{}
 	for _, projectsListItem := range r.Configuration.ProjectsList {
@@ -77,9 +65,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabCreateRequest() *shared.
 	configuration := shared.SourceGitlab{
 		APIURL:       apiURL,
 		Credentials:  credentials,
-		Groups:       groups,
 		GroupsList:   groupsList,
-		Projects:     projects,
 		ProjectsList: projectsList,
 		StartDate:    startDate,
 	}
@@ -156,21 +142,9 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 			PrivateToken: privateToken,
 		}
 	}
-	groups := new(string)
-	if !r.Configuration.Groups.IsUnknown() && !r.Configuration.Groups.IsNull() {
-		*groups = r.Configuration.Groups.ValueString()
-	} else {
-		groups = nil
-	}
 	var groupsList []string = []string{}
 	for _, groupsListItem := range r.Configuration.GroupsList {
 		groupsList = append(groupsList, groupsListItem.ValueString())
-	}
-	projects := new(string)
-	if !r.Configuration.Projects.IsUnknown() && !r.Configuration.Projects.IsNull() {
-		*projects = r.Configuration.Projects.ValueString()
-	} else {
-		projects = nil
 	}
 	var projectsList []string = []string{}
 	for _, projectsListItem := range r.Configuration.ProjectsList {
@@ -185,9 +159,7 @@ func (r *SourceGitlabResourceModel) ToSharedSourceGitlabPutRequest() *shared.Sou
 	configuration := shared.SourceGitlabUpdate{
 		APIURL:       apiURL,
 		Credentials:  credentials,
-		Groups:       groups,
 		GroupsList:   groupsList,
-		Projects:     projects,
 		ProjectsList: projectsList,
 		StartDate:    startDate,
 	}

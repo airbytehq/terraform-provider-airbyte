@@ -69,3 +69,13 @@ Based on:
 - [terraform v0.11.0] .
 ### Releases
 - [Terraform v0.11.0] https://registry.terraform.io/providers/airbytehq/airbyte/0.11.0 - .
+
+## 2024-09-25 00:53:23
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.402.12 (2.422.15) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [terraform v0.13.0] .
+### Releases
+- [Terraform v0.13.0] https://registry.terraform.io/providers/airbytehq/airbyte/0.13.0 - .

@@ -115,10 +115,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
 					},
-					"test_mode": schema.BoolAttribute{
-						Optional:    true,
-						Description: `This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.`,
-					},
 				},
 			},
 			"definition_id": schema.StringAttribute{

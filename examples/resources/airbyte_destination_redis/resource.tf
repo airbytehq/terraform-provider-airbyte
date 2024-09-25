@@ -3,7 +3,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     cache_type = "hash"
     host       = "localhost,127.0.0.1"
     password   = "...my_password..."
-    port       = 6
+    port       = 10
     ssl        = true
     ssl_mode = {
       disable = {}
@@ -11,9 +11,9 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Salma59"
+    username = "Isaiah_Fay61"
   }
-  definition_id = "e64b83f6-3d34-4837-8e17-3ec9d4f32d3e"
-  name          = "Shelly Connelly"
-  workspace_id  = "a43c0f29-f7cb-4d12-b320-943801c3678d"
+  definition_id = "d4f32d3e-192a-48a4-bc0f-29f7cbd12b32"
+  name          = "Guadalupe Gerlach"
+  workspace_id  = "01c3678d-42b6-4294-a31a-29aaf3c68070"
 }

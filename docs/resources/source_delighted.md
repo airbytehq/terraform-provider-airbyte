@@ -16,12 +16,12 @@ SourceDelighted Resource
 resource "airbyte_source_delighted" "my_source_delighted" {
   configuration = {
     api_key = "...my_api_key..."
-    since   = "2022-05-30 04:50:23"
+    since   = "2022-05-30T04:50:23Z"
   }
-  definition_id = "7f28ef97-5a7b-4102-a548-7915a2f449e5"
-  name          = "Jose Price"
+  definition_id = "16fc803c-8311-4a97-a1ae-8949629432a0"
+  name          = "Nichole Wehner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d5fb4b99-e2f7-4dc2-833c-76bbd55f566b"
+  workspace_id  = "fe7e017f-9052-4f20-80e0-69282dd6a12c"
 }
 ```
 

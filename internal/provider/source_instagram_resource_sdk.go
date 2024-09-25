@@ -10,18 +10,6 @@ import (
 
 func (r *SourceInstagramResourceModel) ToSharedSourceInstagramCreateRequest() *shared.SourceInstagramCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -29,10 +17,8 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramCreateRequest() *s
 		startDate = nil
 	}
 	configuration := shared.SourceInstagram{
-		AccessToken:  accessToken,
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		StartDate:    startDate,
+		AccessToken: accessToken,
+		StartDate:   startDate,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -69,18 +55,6 @@ func (r *SourceInstagramResourceModel) RefreshFromSharedSourceResponse(resp *sha
 
 func (r *SourceInstagramResourceModel) ToSharedSourceInstagramPutRequest() *shared.SourceInstagramPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -88,10 +62,8 @@ func (r *SourceInstagramResourceModel) ToSharedSourceInstagramPutRequest() *shar
 		startDate = nil
 	}
 	configuration := shared.SourceInstagramUpdate{
-		AccessToken:  accessToken,
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		StartDate:    startDate,
+		AccessToken: accessToken,
+		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

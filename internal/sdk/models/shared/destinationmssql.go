@@ -32,34 +32,34 @@ func (e *Mssql) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationMssqlSchemasSslMethodSslMethod string
+type DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod string
 
 const (
-	DestinationMssqlSchemasSslMethodSslMethodEncryptedVerifyCertificate DestinationMssqlSchemasSslMethodSslMethod = "encrypted_verify_certificate"
+	DestinationMssqlSchemasSSLMethodSSLMethodSSLMethodEncryptedVerifyCertificate DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod = "encrypted_verify_certificate"
 )
 
-func (e DestinationMssqlSchemasSslMethodSslMethod) ToPointer() *DestinationMssqlSchemasSslMethodSslMethod {
+func (e DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod) ToPointer() *DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod {
 	return &e
 }
-func (e *DestinationMssqlSchemasSslMethodSslMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_verify_certificate":
-		*e = DestinationMssqlSchemasSslMethodSslMethod(v)
+		*e = DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSchemasSslMethodSslMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod: %v", v)
 	}
 }
 
 // DestinationMssqlEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type DestinationMssqlEncryptedVerifyCertificate struct {
 	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-	HostNameInCertificate *string                                    `json:"hostNameInCertificate,omitempty"`
-	sslMethod             *DestinationMssqlSchemasSslMethodSslMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
+	HostNameInCertificate *string                                             `json:"hostNameInCertificate,omitempty"`
+	sslMethod             *DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
 }
 
 func (d DestinationMssqlEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
@@ -80,36 +80,36 @@ func (o *DestinationMssqlEncryptedVerifyCertificate) GetHostNameInCertificate() 
 	return o.HostNameInCertificate
 }
 
-func (o *DestinationMssqlEncryptedVerifyCertificate) GetSslMethod() *DestinationMssqlSchemasSslMethodSslMethod {
-	return DestinationMssqlSchemasSslMethodSslMethodEncryptedVerifyCertificate.ToPointer()
+func (o *DestinationMssqlEncryptedVerifyCertificate) GetSslMethod() *DestinationMssqlSchemasSSLMethodSSLMethodSSLMethod {
+	return DestinationMssqlSchemasSSLMethodSSLMethodSSLMethodEncryptedVerifyCertificate.ToPointer()
 }
 
-type DestinationMssqlSchemasSslMethod string
+type DestinationMssqlSchemasSslMethodSslMethod string
 
 const (
-	DestinationMssqlSchemasSslMethodEncryptedTrustServerCertificate DestinationMssqlSchemasSslMethod = "encrypted_trust_server_certificate"
+	DestinationMssqlSchemasSslMethodSslMethodEncryptedTrustServerCertificate DestinationMssqlSchemasSslMethodSslMethod = "encrypted_trust_server_certificate"
 )
 
-func (e DestinationMssqlSchemasSslMethod) ToPointer() *DestinationMssqlSchemasSslMethod {
+func (e DestinationMssqlSchemasSslMethodSslMethod) ToPointer() *DestinationMssqlSchemasSslMethodSslMethod {
 	return &e
 }
-func (e *DestinationMssqlSchemasSslMethod) UnmarshalJSON(data []byte) error {
+func (e *DestinationMssqlSchemasSslMethodSslMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_trust_server_certificate":
-		*e = DestinationMssqlSchemasSslMethod(v)
+		*e = DestinationMssqlSchemasSslMethodSslMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSchemasSslMethod: %v", v)
+		return fmt.Errorf("invalid value for DestinationMssqlSchemasSslMethodSslMethod: %v", v)
 	}
 }
 
 // DestinationMssqlEncryptedTrustServerCertificate - Use the certificate provided by the server without verification. (For testing purposes only!)
 type DestinationMssqlEncryptedTrustServerCertificate struct {
-	sslMethod *DestinationMssqlSchemasSslMethod `const:"encrypted_trust_server_certificate" json:"ssl_method"`
+	sslMethod *DestinationMssqlSchemasSslMethodSslMethod `const:"encrypted_trust_server_certificate" json:"ssl_method"`
 }
 
 func (d DestinationMssqlEncryptedTrustServerCertificate) MarshalJSON() ([]byte, error) {
@@ -123,23 +123,77 @@ func (d *DestinationMssqlEncryptedTrustServerCertificate) UnmarshalJSON(data []b
 	return nil
 }
 
-func (o *DestinationMssqlEncryptedTrustServerCertificate) GetSslMethod() *DestinationMssqlSchemasSslMethod {
-	return DestinationMssqlSchemasSslMethodEncryptedTrustServerCertificate.ToPointer()
+func (o *DestinationMssqlEncryptedTrustServerCertificate) GetSslMethod() *DestinationMssqlSchemasSslMethodSslMethod {
+	return DestinationMssqlSchemasSslMethodSslMethodEncryptedTrustServerCertificate.ToPointer()
+}
+
+type DestinationMssqlSchemasSslMethod string
+
+const (
+	DestinationMssqlSchemasSslMethodUnencrypted DestinationMssqlSchemasSslMethod = "unencrypted"
+)
+
+func (e DestinationMssqlSchemasSslMethod) ToPointer() *DestinationMssqlSchemasSslMethod {
+	return &e
+}
+func (e *DestinationMssqlSchemasSslMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "unencrypted":
+		*e = DestinationMssqlSchemasSslMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMssqlSchemasSslMethod: %v", v)
+	}
+}
+
+// DestinationMssqlUnencrypted - The data transfer will not be encrypted.
+type DestinationMssqlUnencrypted struct {
+	sslMethod *DestinationMssqlSchemasSslMethod `const:"unencrypted" json:"ssl_method"`
+}
+
+func (d DestinationMssqlUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMssqlUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMssqlUnencrypted) GetSslMethod() *DestinationMssqlSchemasSslMethod {
+	return DestinationMssqlSchemasSslMethodUnencrypted.ToPointer()
 }
 
 type DestinationMssqlSSLMethodType string
 
 const (
+	DestinationMssqlSSLMethodTypeDestinationMssqlUnencrypted                     DestinationMssqlSSLMethodType = "destination-mssql_Unencrypted"
 	DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedTrustServerCertificate DestinationMssqlSSLMethodType = "destination-mssql_Encrypted (trust server certificate)"
 	DestinationMssqlSSLMethodTypeDestinationMssqlEncryptedVerifyCertificate      DestinationMssqlSSLMethodType = "destination-mssql_Encrypted (verify certificate)"
 )
 
 // DestinationMssqlSSLMethod - The encryption method which is used to communicate with the database.
 type DestinationMssqlSSLMethod struct {
+	DestinationMssqlUnencrypted                     *DestinationMssqlUnencrypted
 	DestinationMssqlEncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate
 	DestinationMssqlEncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate
 
 	Type DestinationMssqlSSLMethodType
+}
+
+func CreateDestinationMssqlSSLMethodDestinationMssqlUnencrypted(destinationMssqlUnencrypted DestinationMssqlUnencrypted) DestinationMssqlSSLMethod {
+	typ := DestinationMssqlSSLMethodTypeDestinationMssqlUnencrypted
+
+	return DestinationMssqlSSLMethod{
+		DestinationMssqlUnencrypted: &destinationMssqlUnencrypted,
+		Type:                        typ,
+	}
 }
 
 func CreateDestinationMssqlSSLMethodDestinationMssqlEncryptedTrustServerCertificate(destinationMssqlEncryptedTrustServerCertificate DestinationMssqlEncryptedTrustServerCertificate) DestinationMssqlSSLMethod {
@@ -162,6 +216,13 @@ func CreateDestinationMssqlSSLMethodDestinationMssqlEncryptedVerifyCertificate(d
 
 func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 
+	var destinationMssqlUnencrypted DestinationMssqlUnencrypted = DestinationMssqlUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &destinationMssqlUnencrypted, "", true, true); err == nil {
+		u.DestinationMssqlUnencrypted = &destinationMssqlUnencrypted
+		u.Type = DestinationMssqlSSLMethodTypeDestinationMssqlUnencrypted
+		return nil
+	}
+
 	var destinationMssqlEncryptedTrustServerCertificate DestinationMssqlEncryptedTrustServerCertificate = DestinationMssqlEncryptedTrustServerCertificate{}
 	if err := utils.UnmarshalJSON(data, &destinationMssqlEncryptedTrustServerCertificate, "", true, true); err == nil {
 		u.DestinationMssqlEncryptedTrustServerCertificate = &destinationMssqlEncryptedTrustServerCertificate
@@ -180,6 +241,10 @@ func (u *DestinationMssqlSSLMethod) UnmarshalJSON(data []byte) error {
 }
 
 func (u DestinationMssqlSSLMethod) MarshalJSON() ([]byte, error) {
+	if u.DestinationMssqlUnencrypted != nil {
+		return utils.MarshalJSON(u.DestinationMssqlUnencrypted, "", true)
+	}
+
 	if u.DestinationMssqlEncryptedTrustServerCertificate != nil {
 		return utils.MarshalJSON(u.DestinationMssqlEncryptedTrustServerCertificate, "", true)
 	}

@@ -288,13 +288,13 @@ func (r *SourceMssqlResourceModel) ToSharedSourceMssqlPutRequest() *shared.Sourc
 	}
 	var sslMethod *shared.SourceMssqlUpdateSSLMethod
 	if r.Configuration.SslMethod != nil {
-		var unencrypted *shared.Unencrypted
+		var sourceMssqlUpdateUnencrypted *shared.SourceMssqlUpdateUnencrypted
 		if r.Configuration.SslMethod.Unencrypted != nil {
-			unencrypted = &shared.Unencrypted{}
+			sourceMssqlUpdateUnencrypted = &shared.SourceMssqlUpdateUnencrypted{}
 		}
-		if unencrypted != nil {
+		if sourceMssqlUpdateUnencrypted != nil {
 			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
-				Unencrypted: unencrypted,
+				SourceMssqlUpdateUnencrypted: sourceMssqlUpdateUnencrypted,
 			}
 		}
 		var sourceMssqlUpdateEncryptedTrustServerCertificate *shared.SourceMssqlUpdateEncryptedTrustServerCertificate

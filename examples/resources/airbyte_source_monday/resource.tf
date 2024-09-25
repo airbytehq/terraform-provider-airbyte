@@ -6,8 +6,8 @@ resource "airbyte_source_monday" "my_source_monday" {
       }
     }
   }
-  definition_id = "d79a85cb-7246-4518-8216-19872363e09a"
-  name          = "Monique Nitzsche"
+  definition_id = "e7b59a4e-7815-42cb-9266-e4c12d05e7f5"
+  name          = "Drew Gerlach III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2d9d7702-5755-4e69-95c5-7652df199422"
+  workspace_id  = "25cbff5b-31f2-4b93-84d3-ebf32902de61"
 }

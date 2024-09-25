@@ -245,9 +245,7 @@ func (e *ZendeskSupport) UnmarshalJSON(data []byte) error {
 type SourceZendeskSupport struct {
 	// Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users.
 	Credentials *SourceZendeskSupportAuthentication `json:"credentials,omitempty"`
-	// Makes each stream read a single page of data.
-	IgnorePagination *bool          `default:"false" json:"ignore_pagination"`
-	sourceType       ZendeskSupport `const:"zendesk-support" json:"sourceType"`
+	sourceType  ZendeskSupport                      `const:"zendesk-support" json:"sourceType"`
 	// The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
@@ -270,13 +268,6 @@ func (o *SourceZendeskSupport) GetCredentials() *SourceZendeskSupportAuthenticat
 		return nil
 	}
 	return o.Credentials
-}
-
-func (o *SourceZendeskSupport) GetIgnorePagination() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IgnorePagination
 }
 
 func (o *SourceZendeskSupport) GetSourceType() ZendeskSupport {

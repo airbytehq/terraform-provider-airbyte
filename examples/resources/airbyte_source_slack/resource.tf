@@ -13,8 +13,8 @@ resource "airbyte_source_slack" "my_source_slack" {
     lookback_window          = 7
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "894bdd98-fe3f-492c-86a9-aa72702875ab"
-  name          = "Everett Leuschke"
+  definition_id = "0cbfe39d-f03e-4297-96f5-cf39b34f9589"
+  name          = "Ms. Miguel Crona"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "98d79666-080f-43ec-ae3c-b491ea7992cd"
+  workspace_id  = "f32822b8-2a15-49eb-82b7-c1d3540fbbe2"
 }

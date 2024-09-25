@@ -14,6 +14,7 @@ type DestinationPostgres struct {
 	Port              types.Int64                           `tfsdk:"port"`
 	RawDataSchema     types.String                          `tfsdk:"raw_data_schema"`
 	Schema            types.String                          `tfsdk:"schema"`
+	Ssl               types.Bool                            `tfsdk:"ssl"`
 	SslMode           *DestinationPostgresSSLModes          `tfsdk:"ssl_mode"`
 	TunnelMethod      *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username          types.String                          `tfsdk:"username"`

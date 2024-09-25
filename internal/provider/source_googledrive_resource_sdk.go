@@ -270,12 +270,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -294,7 +288,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 			Globs:                     globs,
 			InputSchema:               inputSchema,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})
@@ -600,12 +593,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -624,7 +611,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 			Globs:                     globs,
 			InputSchema:               inputSchema,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})

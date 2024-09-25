@@ -25,12 +25,11 @@ resource "airbyte_source_asana" "my_source_asana" {
     organization_export_ids = [
       "{ \"see\": \"documentation\" }",
     ]
-    test_mode = true
   }
-  definition_id = "f007bc04-191b-4eb0-97f0-7c546621bdba"
-  name          = "Robert Feeney"
+  definition_id = "92fd4888-7cb1-49c4-8ec8-b4573d66d007"
+  name          = "Derek Crist"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f51ed0a8-181e-46e5-9fd9-ebe7b2f5ca6e"
+  workspace_id  = "e4396e74-03ea-42d5-8959-a4fa50e807c8"
 }
 ```
 
@@ -60,7 +59,6 @@ Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials))
 - `organization_export_ids` (List of String) Globally unique identifiers for the organization exports
-- `test_mode` (Boolean) This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

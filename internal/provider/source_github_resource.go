@@ -69,10 +69,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Default:     stringdefault.StaticString("https://api.github.com/"),
 						Description: `Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub. Default: "https://api.github.com/"`,
 					},
-					"branch": schema.StringAttribute{
-						Optional:    true,
-						Description: `(DEPRCATED) Space-delimited list of GitHub repository branches to pull commits for, e.g. ` + "`" + `airbytehq/airbyte/master` + "`" + `. If no branches are specified for a repository, the default branch will be pulled.`,
-					},
 					"branches": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
@@ -140,10 +136,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.List{
 							listvalidator.SizeAtLeast(1),
 						},
-					},
-					"repository": schema.StringAttribute{
-						Optional:    true,
-						Description: `(DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. ` + "`" + `airbytehq/airbyte` + "`" + ` for single repository, ` + "`" + `airbytehq/*` + "`" + ` for get all repositories from organization and ` + "`" + `airbytehq/airbyte airbytehq/another-repo` + "`" + ` for multiple repositories.`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

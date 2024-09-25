@@ -4,7 +4,7 @@ package types
 
 type SourceMicrosoftSharepointFormat struct {
 	AvroFormat                 *AvroFormat                         `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceGoogleDriveCSVFormat         `tfsdk:"csv_format" tfPlanOnly:"true"`
+	CSVFormat                  *CSVFormat                          `tfsdk:"csv_format" tfPlanOnly:"true"`
 	ExcelFormat                *Fake                               `tfsdk:"excel_format" tfPlanOnly:"true"`
 	JsonlFormat                *Fake                               `tfsdk:"jsonl_format" tfPlanOnly:"true"`
 	ParquetFormat              *ParquetFormat                      `tfsdk:"parquet_format" tfPlanOnly:"true"`

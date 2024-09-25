@@ -16,20 +16,21 @@ DestinationMysql Resource
 resource "airbyte_destination_mysql" "my_destination_mysql" {
   configuration = {
     database            = "...my_database..."
-    disable_type_dedupe = false
+    disable_type_dedupe = true
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
     port                = 3306
     raw_data_schema     = "...my_raw_data_schema..."
+    ssl                 = false
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Deon.Russel49"
+    username = "Melody_Abernathy"
   }
-  definition_id = "a6683bb7-6cbd-4d42-804b-7b603cc8cd88"
-  name          = "Tricia Klocko I"
-  workspace_id  = "813ef7fc-0d17-46e5-b414-549f1242182d"
+  definition_id = "f86fe4a6-f8bb-4810-ad64-6f802e7b2183"
+  name          = "Phillip Prohaska"
+  workspace_id  = "f6db7afd-acad-42c1-8cf1-7a6683bb76cb"
 }
 ```
 
@@ -67,6 +68,7 @@ Optional:
 - `password` (String, Sensitive) Password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
 - `raw_data_schema` (String) The database to write raw tables into
+- `ssl` (Boolean) Encrypt data using SSL. Default: true
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>

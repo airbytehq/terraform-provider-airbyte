@@ -25,10 +25,10 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     }
     start_date = "%Y-%m-%dT%H:%M:%SZ"
   }
-  definition_id = "992622de-7b1a-493e-9915-fe5844c8d7f9"
-  name          = "Reginald Kreiger"
+  definition_id = "a76308e2-8188-410e-b61b-40ea12469466"
+  name          = "Crystal Rutherford"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "df74d23a-87a4-42ab-b6ae-57802daa8219"
+  workspace_id  = "f85dbdf8-ab2f-4267-87a5-b6047904d383"
 }
 ```
 

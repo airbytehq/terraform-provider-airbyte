@@ -79,12 +79,6 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 							listvalidator.UniqueValues(),
 						},
 					},
-					"action_breakdowns_allow_empty": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(true),
-						Description: `Allows action_breakdowns to be an empty list. Default: true`,
-					},
 					"ad_statuses": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
@@ -99,16 +93,6 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.`,
-					},
-					"client_id": schema.StringAttribute{
-						Optional:    true,
-						Sensitive:   true,
-						Description: `The Client Id for your OAuth app`,
-					},
-					"client_secret": schema.StringAttribute{
-						Optional:    true,
-						Sensitive:   true,
-						Description: `The Client Secret for your OAuth app`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,

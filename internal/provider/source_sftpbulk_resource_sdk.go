@@ -151,12 +151,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.SourceSftpBulkInferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.SourceSftpBulkInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -197,7 +191,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -327,19 +320,7 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name1 := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -363,9 +344,7 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkCreateRequest() *sha
 			Format:                               format,
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
-			LegacyPrefix:                         legacyPrefix,
 			Name:                                 name1,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,
@@ -557,12 +536,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.SourceSftpBulkUpdateInferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.SourceSftpBulkUpdateInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -603,7 +576,6 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -733,19 +705,7 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name1 := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -769,9 +729,7 @@ func (r *SourceSftpBulkResourceModel) ToSharedSourceSftpBulkPutRequest() *shared
 			Format:                               format,
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
-			LegacyPrefix:                         legacyPrefix,
 			Name:                                 name1,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,

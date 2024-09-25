@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "bc947d1a-36d8-4135-b42d-9b671ba3daf1"
-  name          = "Faith Watsica"
+  definition_id = "5b33aab9-bd23-403d-b2a1-c65a55e757d5"
+  name          = "Nancy Grady"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d62693dd-fcad-432b-811f-0852299485bd"
+  workspace_id  = "5c9b62f3-d937-4ad7-80fd-70a723540d37"
 }
 ```
 

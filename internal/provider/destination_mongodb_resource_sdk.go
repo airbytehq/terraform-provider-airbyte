@@ -50,10 +50,17 @@ func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbCreateReques
 			} else {
 				port = nil
 			}
+			tls := new(bool)
+			if !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsUnknown() && !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsNull() {
+				*tls = r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.ValueBool()
+			} else {
+				tls = nil
+			}
 			destinationMongodbStandaloneMongoDbInstance = &shared.DestinationMongodbStandaloneMongoDbInstance{
 				Host:     host,
 				Instance: instance,
 				Port:     port,
+				TLS:      tls,
 			}
 		}
 		if destinationMongodbStandaloneMongoDbInstance != nil {
@@ -199,13 +206,13 @@ func (r *DestinationMongodbResourceModel) RefreshFromSharedDestinationResponse(r
 
 func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbPutRequest() *shared.DestinationMongodbPutRequest {
 	var authType shared.AuthorizationType
-	var none *shared.None
+	var destinationMongodbUpdateNone *shared.DestinationMongodbUpdateNone
 	if r.Configuration.AuthType.None != nil {
-		none = &shared.None{}
+		destinationMongodbUpdateNone = &shared.DestinationMongodbUpdateNone{}
 	}
-	if none != nil {
+	if destinationMongodbUpdateNone != nil {
 		authType = shared.AuthorizationType{
-			None: none,
+			DestinationMongodbUpdateNone: destinationMongodbUpdateNone,
 		}
 	}
 	var loginPassword *shared.LoginPassword
@@ -240,10 +247,17 @@ func (r *DestinationMongodbResourceModel) ToSharedDestinationMongodbPutRequest()
 			} else {
 				port = nil
 			}
+			tls := new(bool)
+			if !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsUnknown() && !r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.IsNull() {
+				*tls = r.Configuration.InstanceType.StandaloneMongoDbInstance.TLS.ValueBool()
+			} else {
+				tls = nil
+			}
 			standaloneMongoDbInstance = &shared.StandaloneMongoDbInstance{
 				Host:     host,
 				Instance: instance,
 				Port:     port,
+				TLS:      tls,
 			}
 		}
 		if standaloneMongoDbInstance != nil {

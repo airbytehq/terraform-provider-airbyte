@@ -28,11 +28,11 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Hope.Toy"
+    username = "Justus_Hahn54"
   }
-  definition_id = "f1c50c9e-c767-447b-86cf-86fe4a6f8bb8"
-  name          = "Lisa Von"
-  workspace_id  = "46f802e7-b218-43b2-bc4f-6db7afdacad2"
+  definition_id = "7b5cce36-1485-4433-bdf2-3c5e509f4525"
+  name          = "Mrs. Anna Pfannerstill"
+  workspace_id  = "878c254c-d184-4fd1-96e7-5f1c50c9ec76"
 }
 ```
 
@@ -80,6 +80,7 @@ Optional:
 
 - `encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--encrypted_trust_server_certificate))
 - `encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--encrypted_verify_certificate))
+- `unencrypted` (Attributes) The data transfer will not be encrypted. (see [below for nested schema](#nestedatt--configuration--ssl_method--unencrypted))
 
 <a id="nestedatt--configuration--ssl_method--encrypted_trust_server_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.encrypted_trust_server_certificate`
@@ -91,6 +92,10 @@ Optional:
 Optional:
 
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
+
+
+<a id="nestedatt--configuration--ssl_method--unencrypted"></a>
+### Nested Schema for `configuration.ssl_method.unencrypted`
 
 
 

@@ -12,6 +12,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -61,6 +62,68 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"encryption": schema.SingleNestedAttribute{
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"native_network_encryption_nne": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"encryption_algorithm": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString("AES256"),
+										Description: `This parameter defines the database encryption algorithm. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"AES256",
+												"RC4_56",
+												"3DES168",
+											),
+										},
+									},
+								},
+								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("tls_encrypted_verify_certificate"),
+										path.MatchRelative().AtParent().AtName("unencrypted"),
+									}...),
+								},
+							},
+							"tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"ssl_certificate": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
+									},
+								},
+								Description: `Verify and use the certificate provided by the server.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("native_network_encryption_nne"),
+										path.MatchRelative().AtParent().AtName("unencrypted"),
+									}...),
+								},
+							},
+							"unencrypted": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
+								Description: `Data transfer will not be encrypted.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("native_network_encryption_nne"),
+										path.MatchRelative().AtParent().AtName("tls_encrypted_verify_certificate"),
+									}...),
+								},
+							},
+						},
+						Description: `The encryption method which is used when communicating with the database.`,
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
+					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `The hostname of the database.`,

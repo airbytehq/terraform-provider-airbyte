@@ -47,17 +47,10 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 		metadataFields = append(metadataFields, shared.SourceSmartsheetsValidenums(metadataFieldsItem.ValueString()))
 	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	configuration := shared.SourceSmartsheets{
 		Credentials:    credentials,
 		MetadataFields: metadataFields,
 		SpreadsheetID:  spreadsheetID,
-		StartDatetime:  startDatetime,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -131,17 +124,10 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *
 		metadataFields = append(metadataFields, shared.Validenums(metadataFieldsItem.ValueString()))
 	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	configuration := shared.SourceSmartsheetsUpdate{
 		Credentials:    credentials,
 		MetadataFields: metadataFields,
 		SpreadsheetID:  spreadsheetID,
-		StartDatetime:  startDatetime,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

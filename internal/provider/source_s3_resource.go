@@ -79,222 +79,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Required:    true,
 						Description: `Name of the S3 bucket where the file(s) exist.`,
 					},
-					"dataset": schema.StringAttribute{
-						Optional:    true,
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.`,
-					},
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString(""),
-						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required. Default: ""`,
-					},
-					"format": schema.SingleNestedAttribute{
-						Optional: true,
-						Attributes: map[string]schema.Attribute{
-							"avro": schema.SingleNestedAttribute{
-								Optional:    true,
-								Attributes:  map[string]schema.Attribute{},
-								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("csv"),
-										path.MatchRelative().AtParent().AtName("jsonl"),
-										path.MatchRelative().AtParent().AtName("parquet"),
-									}...),
-								},
-							},
-							"csv": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"additional_reader_options": schema.StringAttribute{
-										Optional:    true,
-										Description: `Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.`,
-									},
-									"advanced_options": schema.StringAttribute{
-										Optional:    true,
-										Description: `Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.`,
-									},
-									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(10000),
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors. Default: 10000`,
-									},
-									"delimiter": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString(","),
-										Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'. Default: ","`,
-									},
-									"double_quote": schema.BoolAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     booldefault.StaticBool(true),
-										Description: `Whether two quotes in a quoted CSV value denote a single quote in the data. Default: true`,
-									},
-									"encoding": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString("utf8"),
-										Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"`,
-									},
-									"escape_char": schema.StringAttribute{
-										Optional:    true,
-										Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
-									},
-									"infer_datatypes": schema.BoolAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     booldefault.StaticBool(true),
-										Description: `Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings. Default: true`,
-									},
-									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     booldefault.StaticBool(false),
-										Description: `Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False. Default: false`,
-									},
-									"quote_char": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString("\""),
-										Description: `The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""`,
-									},
-								},
-								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("avro"),
-										path.MatchRelative().AtParent().AtName("jsonl"),
-										path.MatchRelative().AtParent().AtName("parquet"),
-									}...),
-								},
-							},
-							"jsonl": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"block_size": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(0),
-										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors. Default: 0`,
-									},
-									"newlines_in_values": schema.BoolAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     booldefault.StaticBool(false),
-										Description: `Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False. Default: false`,
-									},
-									"unexpected_field_behavior": schema.StringAttribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     stringdefault.StaticString("infer"),
-										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details. must be one of ["ignore", "infer", "error"]; Default: "infer"`,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"ignore",
-												"infer",
-												"error",
-											),
-										},
-									},
-								},
-								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("avro"),
-										path.MatchRelative().AtParent().AtName("csv"),
-										path.MatchRelative().AtParent().AtName("parquet"),
-									}...),
-								},
-							},
-							"parquet": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"batch_size": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(65536),
-										Description: `Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide. Default: 65536`,
-									},
-									"buffer_size": schema.Int64Attribute{
-										Computed:    true,
-										Optional:    true,
-										Default:     int64default.StaticInt64(2),
-										Description: `Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide. Default: 2`,
-									},
-									"columns": schema.ListAttribute{
-										Optional:    true,
-										ElementType: types.StringType,
-										Description: `If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.`,
-									},
-								},
-								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
-								Validators: []validator.Object{
-									objectvalidator.ConflictsWith(path.Expressions{
-										path.MatchRelative().AtParent().AtName("avro"),
-										path.MatchRelative().AtParent().AtName("csv"),
-										path.MatchRelative().AtParent().AtName("jsonl"),
-									}...),
-								},
-							},
-						},
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate`,
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-					},
-					"path_pattern": schema.StringAttribute{
-						Optional:    true,
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.`,
-					},
-					"provider": schema.SingleNestedAttribute{
-						Optional: true,
-						Attributes: map[string]schema.Attribute{
-							"aws_access_key_id": schema.StringAttribute{
-								Optional:    true,
-								Sensitive:   true,
-								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
-							},
-							"aws_secret_access_key": schema.StringAttribute{
-								Optional:    true,
-								Sensitive:   true,
-								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
-							},
-							"bucket": schema.StringAttribute{
-								Optional:    true,
-								Description: `Name of the S3 bucket where the file(s) exist.`,
-							},
-							"endpoint": schema.StringAttribute{
-								Computed:    true,
-								Optional:    true,
-								Default:     stringdefault.StaticString(""),
-								Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""`,
-							},
-							"path_prefix": schema.StringAttribute{
-								Computed:    true,
-								Optional:    true,
-								Default:     stringdefault.StaticString(""),
-								Description: `By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate. Default: ""`,
-							},
-							"region_name": schema.StringAttribute{
-								Optional:    true,
-								Description: `AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.`,
-							},
-							"role_arn": schema.StringAttribute{
-								Optional:    true,
-								Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.`,
-							},
-							"start_date": schema.StringAttribute{
-								Optional:    true,
-								Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.`,
-								Validators: []validator.String{
-									validators.IsRFC3339(),
-								},
-							},
-						},
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services`,
+						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""`,
 					},
 					"region_name": schema.StringAttribute{
 						Optional:    true,
@@ -303,12 +92,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					"role_arn": schema.StringAttribute{
 						Optional:    true,
 						Description: `Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.`,
-					},
-					"schema": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     stringdefault.StaticString("{}"),
-						Description: `Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema. Default: "{}"`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -432,18 +215,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 													Optional:    true,
 													Default:     booldefault.StaticBool(false),
 													Description: `Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false`,
-												},
-												"inference_type": schema.StringAttribute{
-													Computed:    true,
-													Optional:    true,
-													Default:     stringdefault.StaticString("None"),
-													Description: `How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]; Default: "None"`,
-													Validators: []validator.String{
-														stringvalidator.OneOf(
-															"None",
-															"Primitive Types Only",
-														),
-													},
 												},
 												"null_values": schema.ListAttribute{
 													Optional:    true,
@@ -589,17 +360,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									Optional:    true,
 									Description: `The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.`,
 								},
-								"legacy_prefix": schema.StringAttribute{
-									Optional:    true,
-									Description: `The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.`,
-								},
 								"name": schema.StringAttribute{
 									Required:    true,
 									Description: `The name of the stream.`,
-								},
-								"primary_key": schema.StringAttribute{
-									Optional:    true,
-									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
 								},
 								"recent_n_files_to_read_for_schema_discovery": schema.Int64Attribute{
 									Optional:    true,

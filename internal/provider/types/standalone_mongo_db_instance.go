@@ -8,4 +8,5 @@ type StandaloneMongoDbInstance struct {
 	Host     types.String `tfsdk:"host"`
 	Instance types.String `tfsdk:"instance"`
 	Port     types.Int64  `tfsdk:"port"`
+	TLS      types.Bool   `tfsdk:"tls"`
 }

@@ -10,10 +10,9 @@ resource "airbyte_source_asana" "my_source_asana" {
     organization_export_ids = [
       "{ \"see\": \"documentation\" }",
     ]
-    test_mode = true
   }
-  definition_id = "f007bc04-191b-4eb0-97f0-7c546621bdba"
-  name          = "Robert Feeney"
+  definition_id = "92fd4888-7cb1-49c4-8ec8-b4573d66d007"
+  name          = "Derek Crist"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f51ed0a8-181e-46e5-9fd9-ebe7b2f5ca6e"
+  workspace_id  = "e4396e74-03ea-42d5-8959-a4fa50e807c8"
 }

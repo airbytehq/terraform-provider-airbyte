@@ -3,7 +3,7 @@
 package types
 
 type DestinationSnowflakeAuthorizationMethod struct {
-	KeyPairAuthentication *KeyPairAuthentication       `tfsdk:"key_pair_authentication" tfPlanOnly:"true"`
-	OAuth20               *DestinationSnowflakeOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
-	UsernameAndPassword   *UsernameAndPassword         `tfsdk:"username_and_password" tfPlanOnly:"true"`
+	KeyPairAuthentication *KeyPairAuthentication          `tfsdk:"key_pair_authentication" tfPlanOnly:"true"`
+	OAuth20               *DestinationSnowflakeOAuth20    `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	UsernameAndPassword   *DestinationPgvectorCredentials `tfsdk:"username_and_password" tfPlanOnly:"true"`
 }

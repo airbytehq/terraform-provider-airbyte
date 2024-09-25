@@ -52,17 +52,10 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestCreateRequest() *share
 			}
 		}
 	}
-	replicationEndDate := new(time.Time)
-	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
-		*replicationEndDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationEndDate.ValueString())
-	} else {
-		replicationEndDate = nil
-	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	configuration := shared.SourceHarvest{
 		AccountID:            accountID,
 		Credentials:          credentials,
-		ReplicationEndDate:   replicationEndDate,
 		ReplicationStartDate: replicationStartDate,
 	}
 	definitionID := new(string)
@@ -141,17 +134,10 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestPutRequest() *shared.S
 			}
 		}
 	}
-	replicationEndDate := new(time.Time)
-	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
-		*replicationEndDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationEndDate.ValueString())
-	} else {
-		replicationEndDate = nil
-	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	configuration := shared.SourceHarvestUpdate{
 		AccountID:            accountID,
 		Credentials:          credentials,
-		ReplicationEndDate:   replicationEndDate,
 		ReplicationStartDate: replicationStartDate,
 	}
 	name := r.Name.ValueString()

@@ -119,10 +119,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							validators.ExactlyOneChild(),
 						},
 					},
-					"custom_reports": schema.StringAttribute{
-						Optional:    true,
-						Description: `(DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.`,
-					},
 					"custom_reports_array": schema.ListNestedAttribute{
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{

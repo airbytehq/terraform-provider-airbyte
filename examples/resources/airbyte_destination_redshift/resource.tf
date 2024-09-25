@@ -2,7 +2,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
     disable_type_dedupe = true
-    drop_cascade        = true
+    drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -15,17 +15,17 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     uploading_method = {
       awss3_staging = {
         access_key_id      = "...my_access_key_id..."
-        file_name_pattern  = "{timestamp}"
-        purge_staging_data = false
+        file_name_pattern  = "{date}"
+        purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "eu-south-2"
+        s3_bucket_region   = "ap-south-1"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Devante10"
+    username = "Jacky18"
   }
-  definition_id = "a29aaf3c-6807-40ec-a153-7042295e6e54"
-  name          = "Ms. Edmund Douglas III"
-  workspace_id  = "586b7399-0fea-469b-aba7-dc7cde8f8d83"
+  definition_id = "295e6e54-dc30-4616-986b-73990fea69be"
+  name          = "Hubert Kub"
+  workspace_id  = "7cde8f8d-8392-4aab-95fb-458bad9ea767"
 }

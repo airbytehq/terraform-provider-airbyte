@@ -220,8 +220,6 @@ func (e *Github) UnmarshalJSON(data []byte) error {
 type SourceGithub struct {
 	// Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub.
 	APIURL *string `default:"https://api.github.com/" json:"api_url"`
-	// (DEPRCATED) Space-delimited list of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
-	Branch *string `json:"branch,omitempty"`
 	// List of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 	Branches []string `json:"branches,omitempty"`
 	// Choose how to authenticate to GitHub
@@ -230,9 +228,7 @@ type SourceGithub struct {
 	MaxWaitingTime *int64 `default:"10" json:"max_waiting_time"`
 	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
 	Repositories []string `json:"repositories"`
-	// (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
-	Repository *string `json:"repository,omitempty"`
-	sourceType Github  `const:"github" json:"sourceType"`
+	sourceType   Github   `const:"github" json:"sourceType"`
 	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -253,13 +249,6 @@ func (o *SourceGithub) GetAPIURL() *string {
 		return nil
 	}
 	return o.APIURL
-}
-
-func (o *SourceGithub) GetBranch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Branch
 }
 
 func (o *SourceGithub) GetBranches() []string {
@@ -288,13 +277,6 @@ func (o *SourceGithub) GetRepositories() []string {
 		return []string{}
 	}
 	return o.Repositories
-}
-
-func (o *SourceGithub) GetRepository() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Repository
 }
 
 func (o *SourceGithub) GetSourceType() Github {

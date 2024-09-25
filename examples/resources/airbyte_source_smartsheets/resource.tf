@@ -6,13 +6,12 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
       }
     }
     metadata_fields = [
-      "row_created_by",
+      "sheetcreatedAt",
     ]
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00"
   }
-  definition_id = "1fb8be04-16cb-449d-a06c-239e7af3ca2c"
-  name          = "Shawn Pfannerstill"
+  definition_id = "1b079c0c-4f41-4192-8e56-2c711d3ef646"
+  name          = "Donnie Kertzmann III"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "92d74588-9040-4904-b267-ce86a322e02b"
+  workspace_id  = "84e97a85-2f0c-4d22-882d-9facb8adccb7"
 }

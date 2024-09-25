@@ -8,5 +8,4 @@ type SourceSmartsheets struct {
 	Credentials    SourceSmartsheetsAuthorizationMethod `tfsdk:"credentials"`
 	MetadataFields []types.String                       `tfsdk:"metadata_fields"`
 	SpreadsheetID  types.String                         `tfsdk:"spreadsheet_id"`
-	StartDatetime  types.String                         `tfsdk:"start_datetime"`
 }

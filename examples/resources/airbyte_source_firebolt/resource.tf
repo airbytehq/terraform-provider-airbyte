@@ -7,8 +7,8 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     engine        = "...my_engine..."
     host          = "api.app.firebolt.io"
   }
-  definition_id = "12cb01cb-d9fa-4eed-a058-28527913edfc"
-  name          = "Virgil Rosenbaum II"
+  definition_id = "cf1a4306-e082-4909-997b-fabbad3671a9"
+  name          = "Shaun Bosco"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8e69d20e-e3e4-4cb5-9c69-5e2f08eb76e3"
+  workspace_id  = "c174fee4-1455-462d-a757-6235e52bb8ad"
 }

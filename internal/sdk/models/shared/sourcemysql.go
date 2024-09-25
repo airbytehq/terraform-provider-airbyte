@@ -901,6 +901,8 @@ type SourceMysql struct {
 	// Configures how data is extracted from the database.
 	ReplicationMethod SourceMysqlUpdateMethod `json:"replication_method"`
 	sourceType        SourceMysqlMysql        `const:"mysql" json:"sourceType"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"true" json:"ssl"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 	SslMode *SourceMysqlSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -964,6 +966,13 @@ func (o *SourceMysql) GetReplicationMethod() SourceMysqlUpdateMethod {
 
 func (o *SourceMysql) GetSourceType() SourceMysqlMysql {
 	return SourceMysqlMysqlMysql
+}
+
+func (o *SourceMysql) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *SourceMysql) GetSslMode() *SourceMysqlSSLModes {

@@ -16,12 +16,12 @@ SourcePennylane Resource
 resource "airbyte_source_pennylane" "my_source_pennylane" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_time = "2021-06-24T10:30:39.947Z"
+    start_time = "2022-10-13T03:28:32.102Z"
   }
-  definition_id = "ad5c4b83-3469-4d34-90e3-95a0aac55dc9"
-  name          = "Richard Moen"
+  definition_id = "3c55d68a-56e1-4f7b-90c6-dd1e62eb5fcf"
+  name          = "Vicki Harris"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "82142799-2f65-4a71-85f2-e570ad372ede"
+  workspace_id  = "caec2ce4-1cbe-41d2-acd0-1501d52f6c56"
 }
 ```
 

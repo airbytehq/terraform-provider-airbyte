@@ -22,24 +22,25 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     port            = 3306
     replication_method = {
       read_changes_using_binary_log_cdc = {
-        initial_load_timeout_hours           = 6
-        initial_waiting_seconds              = 1
+        initial_load_timeout_hours           = 3
+        initial_waiting_seconds              = 3
         invalid_cdc_cursor_position_behavior = "Re-sync data"
         server_time_zone                     = "...my_server_time_zone..."
       }
     }
+    ssl = false
     ssl_mode = {
       preferred = {}
     }
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Harrison_Steuber"
+    username = "Leann60"
   }
-  definition_id = "05ab7b93-31a5-4dda-bad6-ab5ec8caacd8"
-  name          = "Victor Pacocha"
+  definition_id = "78821427-992f-465a-b105-f2e570ad372e"
+  name          = "Tomas Buckridge"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "dc0f3381-1dda-4d7d-b9aa-2af68e00dcda"
+  workspace_id  = "9d484141-0fd6-4e7e-8488-16b0c62b8975"
 }
 ```
 
@@ -77,6 +78,7 @@ Optional:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3). For more information read about <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-jdbc-url-format.html">JDBC URL parameters</a>.
 - `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) The port to connect to. Default: 3306
+- `ssl` (Boolean) Encrypt data using SSL. Default: true
 - `ssl_mode` (Attributes) SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 

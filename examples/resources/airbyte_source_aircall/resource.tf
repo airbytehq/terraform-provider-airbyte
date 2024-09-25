@@ -4,8 +4,8 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     api_token  = "...my_api_token..."
     start_date = "2022-03-01T00:00:00.000Z"
   }
-  definition_id = "45275644-5179-430e-98d4-3c0dabba6ef9"
-  name          = "Myron Emard"
+  definition_id = "a96c6335-4ae1-4d23-83d1-1ff934df0d75"
+  name          = "Chelsea Lubowitz PhD"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "744fd252-e57a-4a67-bd28-259f0c220e39"
+  workspace_id  = "90daf918-6ab6-43a7-b2e3-879ec566b1d1"
 }
