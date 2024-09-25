@@ -295,12 +295,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -319,7 +313,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 			Globs:                     globs,
 			InputSchema:               inputSchema,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})
@@ -652,12 +645,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
@@ -676,7 +663,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 			Globs:                     globs,
 			InputSchema:               inputSchema,
 			Name:                      name,
-			PrimaryKey:                primaryKey,
 			Schemaless:                schemaless,
 			ValidationPolicy:          validationPolicy,
 		})

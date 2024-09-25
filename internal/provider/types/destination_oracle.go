@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationOracle struct {
+	Encryption    *DestinationOracleEncryption          `tfsdk:"encryption"`
 	Host          types.String                          `tfsdk:"host"`
 	JdbcURLParams types.String                          `tfsdk:"jdbc_url_params"`
 	Password      types.String                          `tfsdk:"password"`

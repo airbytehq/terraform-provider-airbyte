@@ -5,8 +5,8 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     lookback_window = 60
     start_date      = "2020-10-01T00:00:00Z"
   }
-  definition_id = "214e979a-9787-43ec-aec2-3f8936834bb7"
-  name          = "Howard Herman"
+  definition_id = "23a3cf02-bc52-434b-8593-a96f3714908f"
+  name          = "Dixie Gorczany"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a2eed97a-7ac9-43ce-a101-f692eff8de56"
+  workspace_id  = "87082bd5-be86-4662-8ddb-59a0cab9b4c3"
 }

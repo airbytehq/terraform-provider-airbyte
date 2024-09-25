@@ -35,34 +35,45 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 			}
 		}
 	}
-	var encryption shared.SourceOracleEncryption
-	var sourceOracleNativeNetworkEncryptionNNE *shared.SourceOracleNativeNetworkEncryptionNNE
-	if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
-		encryptionAlgorithm := new(shared.SourceOracleEncryptionAlgorithm)
-		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
-			*encryptionAlgorithm = shared.SourceOracleEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
-		} else {
-			encryptionAlgorithm = nil
+	var encryption *shared.SourceOracleEncryption
+	if r.Configuration.Encryption != nil {
+		var sourceOracleUnencrypted *shared.SourceOracleUnencrypted
+		if r.Configuration.Encryption.Unencrypted != nil {
+			sourceOracleUnencrypted = &shared.SourceOracleUnencrypted{}
 		}
-		sourceOracleNativeNetworkEncryptionNNE = &shared.SourceOracleNativeNetworkEncryptionNNE{
-			EncryptionAlgorithm: encryptionAlgorithm,
+		if sourceOracleUnencrypted != nil {
+			encryption = &shared.SourceOracleEncryption{
+				SourceOracleUnencrypted: sourceOracleUnencrypted,
+			}
 		}
-	}
-	if sourceOracleNativeNetworkEncryptionNNE != nil {
-		encryption = shared.SourceOracleEncryption{
-			SourceOracleNativeNetworkEncryptionNNE: sourceOracleNativeNetworkEncryptionNNE,
+		var sourceOracleNativeNetworkEncryptionNNE *shared.SourceOracleNativeNetworkEncryptionNNE
+		if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
+			encryptionAlgorithm := new(shared.SourceOracleEncryptionAlgorithm)
+			if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
+				*encryptionAlgorithm = shared.SourceOracleEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
+			} else {
+				encryptionAlgorithm = nil
+			}
+			sourceOracleNativeNetworkEncryptionNNE = &shared.SourceOracleNativeNetworkEncryptionNNE{
+				EncryptionAlgorithm: encryptionAlgorithm,
+			}
 		}
-	}
-	var sourceOracleTLSEncryptedVerifyCertificate *shared.SourceOracleTLSEncryptedVerifyCertificate
-	if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
-		sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
-		sourceOracleTLSEncryptedVerifyCertificate = &shared.SourceOracleTLSEncryptedVerifyCertificate{
-			SslCertificate: sslCertificate,
+		if sourceOracleNativeNetworkEncryptionNNE != nil {
+			encryption = &shared.SourceOracleEncryption{
+				SourceOracleNativeNetworkEncryptionNNE: sourceOracleNativeNetworkEncryptionNNE,
+			}
 		}
-	}
-	if sourceOracleTLSEncryptedVerifyCertificate != nil {
-		encryption = shared.SourceOracleEncryption{
-			SourceOracleTLSEncryptedVerifyCertificate: sourceOracleTLSEncryptedVerifyCertificate,
+		var sourceOracleTLSEncryptedVerifyCertificate *shared.SourceOracleTLSEncryptedVerifyCertificate
+		if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
+			sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
+			sourceOracleTLSEncryptedVerifyCertificate = &shared.SourceOracleTLSEncryptedVerifyCertificate{
+				SslCertificate: sslCertificate,
+			}
+		}
+		if sourceOracleTLSEncryptedVerifyCertificate != nil {
+			encryption = &shared.SourceOracleEncryption{
+				SourceOracleTLSEncryptedVerifyCertificate: sourceOracleTLSEncryptedVerifyCertificate,
+			}
 		}
 	}
 	host := r.Configuration.Host.ValueString()
@@ -219,34 +230,45 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 			}
 		}
 	}
-	var encryption shared.Encryption
-	var nativeNetworkEncryptionNNE *shared.NativeNetworkEncryptionNNE
-	if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
-		encryptionAlgorithm := new(shared.EncryptionAlgorithm)
-		if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
-			*encryptionAlgorithm = shared.EncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
-		} else {
-			encryptionAlgorithm = nil
+	var encryption *shared.SourceOracleUpdateEncryption
+	if r.Configuration.Encryption != nil {
+		var sourceOracleUpdateUnencrypted *shared.SourceOracleUpdateUnencrypted
+		if r.Configuration.Encryption.Unencrypted != nil {
+			sourceOracleUpdateUnencrypted = &shared.SourceOracleUpdateUnencrypted{}
 		}
-		nativeNetworkEncryptionNNE = &shared.NativeNetworkEncryptionNNE{
-			EncryptionAlgorithm: encryptionAlgorithm,
+		if sourceOracleUpdateUnencrypted != nil {
+			encryption = &shared.SourceOracleUpdateEncryption{
+				SourceOracleUpdateUnencrypted: sourceOracleUpdateUnencrypted,
+			}
 		}
-	}
-	if nativeNetworkEncryptionNNE != nil {
-		encryption = shared.Encryption{
-			NativeNetworkEncryptionNNE: nativeNetworkEncryptionNNE,
+		var sourceOracleUpdateNativeNetworkEncryptionNNE *shared.SourceOracleUpdateNativeNetworkEncryptionNNE
+		if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
+			encryptionAlgorithm := new(shared.SourceOracleUpdateEncryptionAlgorithm)
+			if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
+				*encryptionAlgorithm = shared.SourceOracleUpdateEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
+			} else {
+				encryptionAlgorithm = nil
+			}
+			sourceOracleUpdateNativeNetworkEncryptionNNE = &shared.SourceOracleUpdateNativeNetworkEncryptionNNE{
+				EncryptionAlgorithm: encryptionAlgorithm,
+			}
 		}
-	}
-	var tlsEncryptedVerifyCertificate *shared.TLSEncryptedVerifyCertificate
-	if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
-		sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
-		tlsEncryptedVerifyCertificate = &shared.TLSEncryptedVerifyCertificate{
-			SslCertificate: sslCertificate,
+		if sourceOracleUpdateNativeNetworkEncryptionNNE != nil {
+			encryption = &shared.SourceOracleUpdateEncryption{
+				SourceOracleUpdateNativeNetworkEncryptionNNE: sourceOracleUpdateNativeNetworkEncryptionNNE,
+			}
 		}
-	}
-	if tlsEncryptedVerifyCertificate != nil {
-		encryption = shared.Encryption{
-			TLSEncryptedVerifyCertificate: tlsEncryptedVerifyCertificate,
+		var sourceOracleUpdateTLSEncryptedVerifyCertificate *shared.SourceOracleUpdateTLSEncryptedVerifyCertificate
+		if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
+			sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
+			sourceOracleUpdateTLSEncryptedVerifyCertificate = &shared.SourceOracleUpdateTLSEncryptedVerifyCertificate{
+				SslCertificate: sslCertificate,
+			}
+		}
+		if sourceOracleUpdateTLSEncryptedVerifyCertificate != nil {
+			encryption = &shared.SourceOracleUpdateEncryption{
+				SourceOracleUpdateTLSEncryptedVerifyCertificate: sourceOracleUpdateTLSEncryptedVerifyCertificate,
+			}
 		}
 	}
 	host := r.Configuration.Host.ValueString()

@@ -107,6 +107,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Default:     stringdefault.StaticString("public"),
 						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 					},
+					"ssl": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: false`,
+					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{

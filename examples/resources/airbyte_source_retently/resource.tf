@@ -9,8 +9,8 @@ resource "airbyte_source_retently" "my_source_retently" {
       }
     }
   }
-  definition_id = "33710669-86a7-4b02-bd25-c7727b363542"
-  name          = "Eric Sporer"
+  definition_id = "9da06c23-9e7a-4f3c-a2cc-2a5392d74588"
+  name          = "Miss Gary Gerhold II"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7f0bc649-fe5b-408c-82dc-40ca1ab76639"
+  workspace_id  = "7267ce86-a322-4e02-b7e6-dd49df5c3592"
 }

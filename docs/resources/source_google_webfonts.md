@@ -20,10 +20,10 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
   }
-  definition_id = "391630fd-2f13-41d4-bbef-253f33ac135d"
-  name          = "Jackie Bayer"
+  definition_id = "3ae1f1c3-7b35-40eb-b398-1c89f963f1e6"
+  name          = "Tara Goldner"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3794a97d-5acf-4562-93a6-6e5ad3919293"
+  workspace_id  = "8788ff77-a589-433f-b738-d63dc7b7f8b1"
 }
 ```
 

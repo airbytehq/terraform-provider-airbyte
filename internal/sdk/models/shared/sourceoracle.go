@@ -175,32 +175,32 @@ func (u SourceOracleConnectBy) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceOracleConnectBy: all fields are null")
 }
 
-type SourceOracleSchemasEncryptionMethod string
+type SourceOracleSchemasEncryptionEncryptionMethod string
 
 const (
-	SourceOracleSchemasEncryptionMethodEncryptedVerifyCertificate SourceOracleSchemasEncryptionMethod = "encrypted_verify_certificate"
+	SourceOracleSchemasEncryptionEncryptionMethodEncryptedVerifyCertificate SourceOracleSchemasEncryptionEncryptionMethod = "encrypted_verify_certificate"
 )
 
-func (e SourceOracleSchemasEncryptionMethod) ToPointer() *SourceOracleSchemasEncryptionMethod {
+func (e SourceOracleSchemasEncryptionEncryptionMethod) ToPointer() *SourceOracleSchemasEncryptionEncryptionMethod {
 	return &e
 }
-func (e *SourceOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleSchemasEncryptionEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_verify_certificate":
-		*e = SourceOracleSchemasEncryptionMethod(v)
+		*e = SourceOracleSchemasEncryptionEncryptionMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleSchemasEncryptionMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleSchemasEncryptionEncryptionMethod: %v", v)
 	}
 }
 
 // SourceOracleTLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type SourceOracleTLSEncryptedVerifyCertificate struct {
-	encryptionMethod SourceOracleSchemasEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
+	encryptionMethod SourceOracleSchemasEncryptionEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
 	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 	SslCertificate string `json:"ssl_certificate"`
 }
@@ -216,8 +216,8 @@ func (s *SourceOracleTLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (o *SourceOracleTLSEncryptedVerifyCertificate) GetEncryptionMethod() SourceOracleSchemasEncryptionMethod {
-	return SourceOracleSchemasEncryptionMethodEncryptedVerifyCertificate
+func (o *SourceOracleTLSEncryptedVerifyCertificate) GetEncryptionMethod() SourceOracleSchemasEncryptionEncryptionMethod {
+	return SourceOracleSchemasEncryptionEncryptionMethodEncryptedVerifyCertificate
 }
 
 func (o *SourceOracleTLSEncryptedVerifyCertificate) GetSslCertificate() string {
@@ -257,34 +257,34 @@ func (e *SourceOracleEncryptionAlgorithm) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceOracleEncryptionMethod string
+type SourceOracleSchemasEncryptionMethod string
 
 const (
-	SourceOracleEncryptionMethodClientNne SourceOracleEncryptionMethod = "client_nne"
+	SourceOracleSchemasEncryptionMethodClientNne SourceOracleSchemasEncryptionMethod = "client_nne"
 )
 
-func (e SourceOracleEncryptionMethod) ToPointer() *SourceOracleEncryptionMethod {
+func (e SourceOracleSchemasEncryptionMethod) ToPointer() *SourceOracleSchemasEncryptionMethod {
 	return &e
 }
-func (e *SourceOracleEncryptionMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "client_nne":
-		*e = SourceOracleEncryptionMethod(v)
+		*e = SourceOracleSchemasEncryptionMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOracleEncryptionMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceOracleSchemasEncryptionMethod: %v", v)
 	}
 }
 
 // SourceOracleNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type SourceOracleNativeNetworkEncryptionNNE struct {
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm *SourceOracleEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	encryptionMethod    SourceOracleEncryptionMethod     `const:"client_nne" json:"encryption_method"`
+	EncryptionAlgorithm *SourceOracleEncryptionAlgorithm    `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    SourceOracleSchemasEncryptionMethod `const:"client_nne" json:"encryption_method"`
 }
 
 func (s SourceOracleNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -305,23 +305,77 @@ func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *Sourc
 	return o.EncryptionAlgorithm
 }
 
-func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() SourceOracleEncryptionMethod {
-	return SourceOracleEncryptionMethodClientNne
+func (o *SourceOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() SourceOracleSchemasEncryptionMethod {
+	return SourceOracleSchemasEncryptionMethodClientNne
+}
+
+type SourceOracleEncryptionMethod string
+
+const (
+	SourceOracleEncryptionMethodUnencrypted SourceOracleEncryptionMethod = "unencrypted"
+)
+
+func (e SourceOracleEncryptionMethod) ToPointer() *SourceOracleEncryptionMethod {
+	return &e
+}
+func (e *SourceOracleEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "unencrypted":
+		*e = SourceOracleEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleEncryptionMethod: %v", v)
+	}
+}
+
+// SourceOracleUnencrypted - Data transfer will not be encrypted.
+type SourceOracleUnencrypted struct {
+	encryptionMethod SourceOracleEncryptionMethod `const:"unencrypted" json:"encryption_method"`
+}
+
+func (s SourceOracleUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleUnencrypted) GetEncryptionMethod() SourceOracleEncryptionMethod {
+	return SourceOracleEncryptionMethodUnencrypted
 }
 
 type SourceOracleEncryptionType string
 
 const (
+	SourceOracleEncryptionTypeSourceOracleUnencrypted                   SourceOracleEncryptionType = "source-oracle_Unencrypted"
 	SourceOracleEncryptionTypeSourceOracleNativeNetworkEncryptionNNE    SourceOracleEncryptionType = "source-oracle_Native Network Encryption (NNE)"
 	SourceOracleEncryptionTypeSourceOracleTLSEncryptedVerifyCertificate SourceOracleEncryptionType = "source-oracle_TLS Encrypted (verify certificate)"
 )
 
 // SourceOracleEncryption - The encryption method with is used when communicating with the database.
 type SourceOracleEncryption struct {
+	SourceOracleUnencrypted                   *SourceOracleUnencrypted
 	SourceOracleNativeNetworkEncryptionNNE    *SourceOracleNativeNetworkEncryptionNNE
 	SourceOracleTLSEncryptedVerifyCertificate *SourceOracleTLSEncryptedVerifyCertificate
 
 	Type SourceOracleEncryptionType
+}
+
+func CreateSourceOracleEncryptionSourceOracleUnencrypted(sourceOracleUnencrypted SourceOracleUnencrypted) SourceOracleEncryption {
+	typ := SourceOracleEncryptionTypeSourceOracleUnencrypted
+
+	return SourceOracleEncryption{
+		SourceOracleUnencrypted: &sourceOracleUnencrypted,
+		Type:                    typ,
+	}
 }
 
 func CreateSourceOracleEncryptionSourceOracleNativeNetworkEncryptionNNE(sourceOracleNativeNetworkEncryptionNNE SourceOracleNativeNetworkEncryptionNNE) SourceOracleEncryption {
@@ -344,6 +398,13 @@ func CreateSourceOracleEncryptionSourceOracleTLSEncryptedVerifyCertificate(sourc
 
 func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 
+	var sourceOracleUnencrypted SourceOracleUnencrypted = SourceOracleUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &sourceOracleUnencrypted, "", true, true); err == nil {
+		u.SourceOracleUnencrypted = &sourceOracleUnencrypted
+		u.Type = SourceOracleEncryptionTypeSourceOracleUnencrypted
+		return nil
+	}
+
 	var sourceOracleNativeNetworkEncryptionNNE SourceOracleNativeNetworkEncryptionNNE = SourceOracleNativeNetworkEncryptionNNE{}
 	if err := utils.UnmarshalJSON(data, &sourceOracleNativeNetworkEncryptionNNE, "", true, true); err == nil {
 		u.SourceOracleNativeNetworkEncryptionNNE = &sourceOracleNativeNetworkEncryptionNNE
@@ -362,6 +423,10 @@ func (u *SourceOracleEncryption) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceOracleEncryption) MarshalJSON() ([]byte, error) {
+	if u.SourceOracleUnencrypted != nil {
+		return utils.MarshalJSON(u.SourceOracleUnencrypted, "", true)
+	}
+
 	if u.SourceOracleNativeNetworkEncryptionNNE != nil {
 		return utils.MarshalJSON(u.SourceOracleNativeNetworkEncryptionNNE, "", true)
 	}
@@ -690,7 +755,7 @@ type SourceOracle struct {
 	// Connect data that will be used for DB connection
 	ConnectionData *SourceOracleConnectBy `json:"connection_data,omitempty"`
 	// The encryption method with is used when communicating with the database.
-	Encryption SourceOracleEncryption `json:"encryption"`
+	Encryption *SourceOracleEncryption `json:"encryption,omitempty"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -729,9 +794,9 @@ func (o *SourceOracle) GetConnectionData() *SourceOracleConnectBy {
 	return o.ConnectionData
 }
 
-func (o *SourceOracle) GetEncryption() SourceOracleEncryption {
+func (o *SourceOracle) GetEncryption() *SourceOracleEncryption {
 	if o == nil {
-		return SourceOracleEncryption{}
+		return nil
 	}
 	return o.Encryption
 }

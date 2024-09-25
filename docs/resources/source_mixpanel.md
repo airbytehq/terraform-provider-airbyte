@@ -15,24 +15,24 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 5
+    attribution_window = 9
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
     }
-    date_window_size             = 5
+    date_window_size             = 0
     end_date                     = "2021-11-16"
-    page_size                    = 6
+    page_size                    = 4
     project_timezone             = "US/Pacific"
-    region                       = "US"
+    region                       = "EU"
     select_properties_by_default = false
     start_date                   = "2021-11-16"
   }
-  definition_id = "e08d80f6-94c4-48e9-90f8-4ccbad71dab0"
-  name          = "Mrs. Vickie Barrows"
+  definition_id = "5b91e126-100f-409e-b706-bb016ea0ac6b"
+  name          = "Alfonso Turcotte"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "124b6e7b-2083-4a37-b0c9-92762a38aa73"
+  workspace_id  = "40c173d4-d611-433d-9b2a-95937ced0062"
 }
 ```
 

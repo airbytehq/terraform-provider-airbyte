@@ -195,8 +195,6 @@ func (u SourceMailchimpUpdateAuthentication) MarshalJSON() ([]byte, error) {
 
 type SourceMailchimpUpdate struct {
 	Credentials *SourceMailchimpUpdateAuthentication `json:"credentials,omitempty"`
-	// Technical fields used to identify datacenter to send request to
-	DataCenter *string `json:"data_center,omitempty"`
 	// The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -217,13 +215,6 @@ func (o *SourceMailchimpUpdate) GetCredentials() *SourceMailchimpUpdateAuthentic
 		return nil
 	}
 	return o.Credentials
-}
-
-func (o *SourceMailchimpUpdate) GetDataCenter() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DataCenter
 }
 
 func (o *SourceMailchimpUpdate) GetStartDate() *time.Time {

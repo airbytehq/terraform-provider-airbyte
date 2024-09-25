@@ -8,18 +8,6 @@ import (
 )
 
 func (r *SourceKyveResourceModel) ToSharedSourceKyveCreateRequest() *shared.SourceKyveCreateRequest {
-	maxPages := new(int64)
-	if !r.Configuration.MaxPages.IsUnknown() && !r.Configuration.MaxPages.IsNull() {
-		*maxPages = r.Configuration.MaxPages.ValueInt64()
-	} else {
-		maxPages = nil
-	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
 	poolIds := r.Configuration.PoolIds.ValueString()
 	startIds := r.Configuration.StartIds.ValueString()
 	urlBase := new(string)
@@ -29,8 +17,6 @@ func (r *SourceKyveResourceModel) ToSharedSourceKyveCreateRequest() *shared.Sour
 		urlBase = nil
 	}
 	configuration := shared.SourceKyve{
-		MaxPages: maxPages,
-		PageSize: pageSize,
 		PoolIds:  poolIds,
 		StartIds: startIds,
 		URLBase:  urlBase,
@@ -69,18 +55,6 @@ func (r *SourceKyveResourceModel) RefreshFromSharedSourceResponse(resp *shared.S
 }
 
 func (r *SourceKyveResourceModel) ToSharedSourceKyvePutRequest() *shared.SourceKyvePutRequest {
-	maxPages := new(int64)
-	if !r.Configuration.MaxPages.IsUnknown() && !r.Configuration.MaxPages.IsNull() {
-		*maxPages = r.Configuration.MaxPages.ValueInt64()
-	} else {
-		maxPages = nil
-	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
 	poolIds := r.Configuration.PoolIds.ValueString()
 	startIds := r.Configuration.StartIds.ValueString()
 	urlBase := new(string)
@@ -90,8 +64,6 @@ func (r *SourceKyveResourceModel) ToSharedSourceKyvePutRequest() *shared.SourceK
 		urlBase = nil
 	}
 	configuration := shared.SourceKyveUpdate{
-		MaxPages: maxPages,
-		PageSize: pageSize,
 		PoolIds:  poolIds,
 		StartIds: startIds,
 		URLBase:  urlBase,

@@ -10,7 +10,6 @@ type SourceMicrosoftOnedriveFileBasedStreamConfig struct {
 	Globs                     []types.String                `tfsdk:"globs"`
 	InputSchema               types.String                  `tfsdk:"input_schema"`
 	Name                      types.String                  `tfsdk:"name"`
-	PrimaryKey                types.String                  `tfsdk:"primary_key"`
 	Schemaless                types.Bool                    `tfsdk:"schemaless"`
 	ValidationPolicy          types.String                  `tfsdk:"validation_policy"`
 }

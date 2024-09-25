@@ -8,6 +8,47 @@ import (
 )
 
 func (r *DestinationOracleResourceModel) ToSharedDestinationOracleCreateRequest() *shared.DestinationOracleCreateRequest {
+	var encryption *shared.DestinationOracleEncryption
+	if r.Configuration.Encryption != nil {
+		var destinationOracleUnencrypted *shared.DestinationOracleUnencrypted
+		if r.Configuration.Encryption.Unencrypted != nil {
+			destinationOracleUnencrypted = &shared.DestinationOracleUnencrypted{}
+		}
+		if destinationOracleUnencrypted != nil {
+			encryption = &shared.DestinationOracleEncryption{
+				DestinationOracleUnencrypted: destinationOracleUnencrypted,
+			}
+		}
+		var destinationOracleNativeNetworkEncryptionNNE *shared.DestinationOracleNativeNetworkEncryptionNNE
+		if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
+			encryptionAlgorithm := new(shared.DestinationOracleEncryptionAlgorithm)
+			if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
+				*encryptionAlgorithm = shared.DestinationOracleEncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
+			} else {
+				encryptionAlgorithm = nil
+			}
+			destinationOracleNativeNetworkEncryptionNNE = &shared.DestinationOracleNativeNetworkEncryptionNNE{
+				EncryptionAlgorithm: encryptionAlgorithm,
+			}
+		}
+		if destinationOracleNativeNetworkEncryptionNNE != nil {
+			encryption = &shared.DestinationOracleEncryption{
+				DestinationOracleNativeNetworkEncryptionNNE: destinationOracleNativeNetworkEncryptionNNE,
+			}
+		}
+		var destinationOracleTLSEncryptedVerifyCertificate *shared.DestinationOracleTLSEncryptedVerifyCertificate
+		if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
+			sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
+			destinationOracleTLSEncryptedVerifyCertificate = &shared.DestinationOracleTLSEncryptedVerifyCertificate{
+				SslCertificate: sslCertificate,
+			}
+		}
+		if destinationOracleTLSEncryptedVerifyCertificate != nil {
+			encryption = &shared.DestinationOracleEncryption{
+				DestinationOracleTLSEncryptedVerifyCertificate: destinationOracleTLSEncryptedVerifyCertificate,
+			}
+		}
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -100,6 +141,7 @@ func (r *DestinationOracleResourceModel) ToSharedDestinationOracleCreateRequest(
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationOracle{
+		Encryption:    encryption,
 		Host:          host,
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
@@ -137,6 +179,47 @@ func (r *DestinationOracleResourceModel) RefreshFromSharedDestinationResponse(re
 }
 
 func (r *DestinationOracleResourceModel) ToSharedDestinationOraclePutRequest() *shared.DestinationOraclePutRequest {
+	var encryption *shared.Encryption
+	if r.Configuration.Encryption != nil {
+		var destinationOracleUpdateUnencrypted *shared.DestinationOracleUpdateUnencrypted
+		if r.Configuration.Encryption.Unencrypted != nil {
+			destinationOracleUpdateUnencrypted = &shared.DestinationOracleUpdateUnencrypted{}
+		}
+		if destinationOracleUpdateUnencrypted != nil {
+			encryption = &shared.Encryption{
+				DestinationOracleUpdateUnencrypted: destinationOracleUpdateUnencrypted,
+			}
+		}
+		var nativeNetworkEncryptionNNE *shared.NativeNetworkEncryptionNNE
+		if r.Configuration.Encryption.NativeNetworkEncryptionNNE != nil {
+			encryptionAlgorithm := new(shared.EncryptionAlgorithm)
+			if !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
+				*encryptionAlgorithm = shared.EncryptionAlgorithm(r.Configuration.Encryption.NativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
+			} else {
+				encryptionAlgorithm = nil
+			}
+			nativeNetworkEncryptionNNE = &shared.NativeNetworkEncryptionNNE{
+				EncryptionAlgorithm: encryptionAlgorithm,
+			}
+		}
+		if nativeNetworkEncryptionNNE != nil {
+			encryption = &shared.Encryption{
+				NativeNetworkEncryptionNNE: nativeNetworkEncryptionNNE,
+			}
+		}
+		var tlsEncryptedVerifyCertificate *shared.TLSEncryptedVerifyCertificate
+		if r.Configuration.Encryption.TLSEncryptedVerifyCertificate != nil {
+			sslCertificate := r.Configuration.Encryption.TLSEncryptedVerifyCertificate.SslCertificate.ValueString()
+			tlsEncryptedVerifyCertificate = &shared.TLSEncryptedVerifyCertificate{
+				SslCertificate: sslCertificate,
+			}
+		}
+		if tlsEncryptedVerifyCertificate != nil {
+			encryption = &shared.Encryption{
+				TLSEncryptedVerifyCertificate: tlsEncryptedVerifyCertificate,
+			}
+		}
+	}
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -229,6 +312,7 @@ func (r *DestinationOracleResourceModel) ToSharedDestinationOraclePutRequest() *
 	}
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.DestinationOracleUpdate{
+		Encryption:    encryption,
 		Host:          host,
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,

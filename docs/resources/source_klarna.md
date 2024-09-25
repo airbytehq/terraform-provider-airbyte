@@ -16,14 +16,14 @@ SourceKlarna Resource
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
     password   = "...my_password..."
-    playground = true
-    region     = "eu"
-    username   = "Orland.Schmeler"
+    playground = false
+    region     = "oc"
+    username   = "Lauren_Haley"
   }
-  definition_id = "e76e9fde-f541-4f06-8a13-b1e89c1488fa"
-  name          = "Dr. Randall Casper"
+  definition_id = "6cb5f3bc-4b32-453e-abd5-91e25444d223"
+  name          = "Dr. Dixie Strosin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d922269c-9d64-48f0-bccd-d2e95af6ed3c"
+  workspace_id  = "ea1c7d43-320f-4ac9-81a8-dab7e73a5971"
 }
 ```
 

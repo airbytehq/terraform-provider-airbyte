@@ -346,6 +346,8 @@ type DestinationMongodbStandaloneMongoDbInstance struct {
 	Instance *DestinationMongodbInstance `default:"standalone" json:"instance"`
 	// The Port of a Mongo database to be replicated.
 	Port *int64 `default:"27017" json:"port"`
+	// Indicates whether TLS encryption protocol will be used to connect to MongoDB. It is recommended to use TLS connection if possible. For more information see <a href="https://docs.airbyte.com/integrations/sources/mongodb-v2">documentation</a>.
+	TLS *bool `default:"false" json:"tls"`
 }
 
 func (d DestinationMongodbStandaloneMongoDbInstance) MarshalJSON() ([]byte, error) {
@@ -378,6 +380,13 @@ func (o *DestinationMongodbStandaloneMongoDbInstance) GetPort() *int64 {
 		return nil
 	}
 	return o.Port
+}
+
+func (o *DestinationMongodbStandaloneMongoDbInstance) GetTLS() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TLS
 }
 
 type DestinationMongodbMongoDbInstanceTypeType string
@@ -433,17 +442,17 @@ func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	var destinationMongodbStandaloneMongoDbInstance DestinationMongodbStandaloneMongoDbInstance = DestinationMongodbStandaloneMongoDbInstance{}
-	if err := utils.UnmarshalJSON(data, &destinationMongodbStandaloneMongoDbInstance, "", true, true); err == nil {
-		u.DestinationMongodbStandaloneMongoDbInstance = &destinationMongodbStandaloneMongoDbInstance
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
-		return nil
-	}
-
 	var destinationMongodbReplicaSet DestinationMongodbReplicaSet = DestinationMongodbReplicaSet{}
 	if err := utils.UnmarshalJSON(data, &destinationMongodbReplicaSet, "", true, true); err == nil {
 		u.DestinationMongodbReplicaSet = &destinationMongodbReplicaSet
 		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbReplicaSet
+		return nil
+	}
+
+	var destinationMongodbStandaloneMongoDbInstance DestinationMongodbStandaloneMongoDbInstance = DestinationMongodbStandaloneMongoDbInstance{}
+	if err := utils.UnmarshalJSON(data, &destinationMongodbStandaloneMongoDbInstance, "", true, true); err == nil {
+		u.DestinationMongodbStandaloneMongoDbInstance = &destinationMongodbStandaloneMongoDbInstance
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbStandaloneMongoDbInstance
 		return nil
 	}
 

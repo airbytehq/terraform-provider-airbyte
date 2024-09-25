@@ -10,6 +10,7 @@ type SourceClickhouse struct {
 	JdbcURLParams types.String                          `tfsdk:"jdbc_url_params"`
 	Password      types.String                          `tfsdk:"password"`
 	Port          types.Int64                           `tfsdk:"port"`
+	Ssl           types.Bool                            `tfsdk:"ssl"`
 	TunnelMethod  *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username      types.String                          `tfsdk:"username"`
 }

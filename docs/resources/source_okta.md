@@ -23,10 +23,10 @@ resource "airbyte_source_okta" "my_source_okta" {
     domain     = "...my_domain..."
     start_date = "2022-07-22T00:00:00Z"
   }
-  definition_id = "2c277a8e-2388-4fd0-920f-62c51a2676b4"
-  name          = "Sergio Crooks"
+  definition_id = "3303ab04-5c89-41fe-9c8d-cb6cc1cd73d2"
+  name          = "Mr. Jerald Gorczany"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ad19d25d-5253-4fa0-aef0-08f118d81572"
+  workspace_id  = "6d5989e7-dbac-4e40-85a6-307276c58b5d"
 }
 ```
 

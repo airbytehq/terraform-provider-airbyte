@@ -24,10 +24,10 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     }
     period = "D7"
   }
-  definition_id = "369b1ff5-a7ba-4288-b10a-0635ff19f388"
-  name          = "Margie Heidenreich"
+  definition_id = "8f7b837d-76b0-42a3-9797-c2fd02395071"
+  name          = "Ms. Melody Dach"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "941e7db0-723f-4947-b9cc-80ee5b712257"
+  workspace_id  = "8fda8b48-bf3f-40e9-a31e-bcafaa2ee7a1"
 }
 ```
 

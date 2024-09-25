@@ -1,11 +1,11 @@
 resource "airbyte_source_braze" "my_source_braze" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2022-10-27"
+    start_date = "2020-07-22"
     url        = "...my_url..."
   }
-  definition_id = "305e0c1f-4b65-4d9e-bd75-7e5946981cb4"
-  name          = "Maria Lubowitz"
+  definition_id = "d80ba5ff-53c6-4fc1-8ca6-7a827c3d349f"
+  name          = "Bertha Hagenes"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1686308e-adb7-43c3-a9be-0c12ece59b9f"
+  workspace_id  = "a8589d84-94dc-4fae-a550-03801e9f4469"
 }

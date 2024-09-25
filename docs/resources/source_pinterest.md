@@ -27,13 +27,13 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
         ]
         click_window_days = "7"
         columns = [
-          "TOTAL_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR",
+          "OUTBOUND_CLICK_2",
         ]
         conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "60"
-        granularity            = "HOUR"
-        level                  = "KEYWORD"
-        name                   = "Stanley Green"
+        engagement_window_days = "0"
+        granularity            = "WEEK"
+        level                  = "PRODUCT_ITEM"
+        name                   = "Kristen Wisoky"
         start_date             = "2022-07-28"
         view_window_days       = "30"
       },
@@ -43,10 +43,10 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
       "PAUSED",
     ]
   }
-  definition_id = "dc5f9765-35f7-43a4-9535-fff5d1d34f0c"
-  name          = "Conrad Hane"
+  definition_id = "1ac64878-76fc-4ad6-95bc-ace687b33710"
+  name          = "Alma Marks"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6a3a161d-c53f-4641-88ac-b8b41d5bf94a"
+  workspace_id  = "a7b02fd2-5c77-427b-b635-4281d3e7f0bc"
 }
 ```
 

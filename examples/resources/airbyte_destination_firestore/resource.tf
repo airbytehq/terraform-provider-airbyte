@@ -3,7 +3,7 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
     credentials_json = "...my_credentials_json..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "fa9c0130-5655-43a4-a50c-dde3bcff11f6"
-  name          = "Angela Will"
-  workspace_id  = "23b2f88e-15f8-468b-b037-297dcd66bcb9"
+  definition_id = "fb7ef5d3-7ea6-4e5c-bc1c-0786ea3ea494"
+  name          = "Mr. Ray Cummerata V"
+  workspace_id  = "7dcad1af-a414-45a8-aad6-44361fa9c013"
 }

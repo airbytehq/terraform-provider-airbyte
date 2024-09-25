@@ -8,18 +8,18 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         database              = "...my_database..."
         password              = "...my_password..."
         schema_enforced       = false
-        username              = "Cole62"
+        username              = "Austin_Blanda50"
       }
     }
     discover_sample_size                 = 6
-    initial_load_timeout_hours           = 5
-    initial_waiting_seconds              = 4
-    invalid_cdc_cursor_position_behavior = "Re-sync data"
-    queue_size                           = 5
-    update_capture_mode                  = "Lookup"
+    initial_load_timeout_hours           = 1
+    initial_waiting_seconds              = 6
+    invalid_cdc_cursor_position_behavior = "Fail sync"
+    queue_size                           = 3
+    update_capture_mode                  = "Post Image"
   }
-  definition_id = "1dbfafbd-d349-4afd-8cd9-5bcfe3342dc4"
-  name          = "Anne Nienow"
+  definition_id = "e80aa298-0d84-4713-abef-014dd9af7c7e"
+  name          = "Cedric Fritsch"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "61635af9-f94f-4985-aa22-e677c77be4e4"
+  workspace_id  = "09ea52c7-07cb-405c-8a8d-21cf34658e52"
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -165,6 +166,12 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+					},
+					"lookback_window": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(0),
+						Description: `How far into the past to look for records. (in days). Default: 0`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

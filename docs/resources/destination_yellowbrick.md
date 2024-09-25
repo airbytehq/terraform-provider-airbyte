@@ -21,18 +21,18 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     password        = "...my_password..."
     port            = 5432
     schema          = "public"
-    ssl             = false
+    ssl             = true
     ssl_mode = {
       allow = {}
     }
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Heath_Klocko"
+    username = "Cathryn7"
   }
-  definition_id = "9a46f396-c7c6-4bf7-b724-213ca1059f1e"
-  name          = "Patricia Franecki DVM"
-  workspace_id  = "c0eaa506-81bc-43ad-b090-c013842c101e"
+  definition_id = "3ca1059f-1e30-4360-bc0e-aa50681bc3ad"
+  name          = "Miss Edward Mueller Sr."
+  workspace_id  = "3842c101-e265-4eeb-8230-b15094cc2185"
 }
 ```
 

@@ -9,11 +9,10 @@ resource "airbyte_source_harvest" "my_source_harvest" {
         refresh_token         = "...my_refresh_token..."
       }
     }
-    replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "d83c0cc9-8dd5-4412-a565-139361b04889"
-  name          = "Stacey O'Keefe"
+  definition_id = "b5eaa64b-86a4-42db-bb85-3ec4b5e6a18b"
+  name          = "Christie Kshlerin Jr."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfe2e85a-fcc9-4acc-ae7e-95c9a7c9f197"
+  workspace_id  = "3de8da44-3bfa-4add-a9a6-dff6cb6bf32f"
 }

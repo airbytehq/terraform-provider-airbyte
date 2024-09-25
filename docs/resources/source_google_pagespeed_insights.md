@@ -17,7 +17,7 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
   configuration = {
     api_key = "...my_api_key..."
     categories = [
-      "performance",
+      "pwa",
     ]
     strategies = [
       "desktop",
@@ -26,10 +26,10 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "...",
     ]
   }
-  definition_id = "a46153eb-240d-4626-9488-7ccaaf58e0f5"
-  name          = "Lawrence Casper"
+  definition_id = "403ba1bd-8103-4cfb-8228-49b585759fd7"
+  name          = "Ervin Koss"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d6014991-0eec-4fc7-b384-ec604057d045"
+  workspace_id  = "a20ea69f-1b1a-4975-9d1b-5a0295b197bb"
 }
 ```
 

@@ -12,7 +12,6 @@ type CSVFormat struct {
 	FalseValues                  []types.String                             `tfsdk:"false_values"`
 	HeaderDefinition             *SourceAzureBlobStorageCSVHeaderDefinition `tfsdk:"header_definition"`
 	IgnoreErrorsOnFieldsMismatch types.Bool                                 `tfsdk:"ignore_errors_on_fields_mismatch"`
-	InferenceType                types.String                               `tfsdk:"inference_type"`
 	NullValues                   []types.String                             `tfsdk:"null_values"`
 	QuoteChar                    types.String                               `tfsdk:"quote_char"`
 	SkipRowsAfterHeader          types.Int64                                `tfsdk:"skip_rows_after_header"`

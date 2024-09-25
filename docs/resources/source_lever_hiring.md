@@ -20,13 +20,13 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
         api_key = "...my_api_key..."
       }
     }
-    environment = "Production"
+    environment = "Sandbox"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  definition_id = "299a611c-c7be-43e8-ba71-88dc05c92c20"
-  name          = "Linda White"
+  definition_id = "79a85cb7-2465-4180-a161-9872363e09a2"
+  name          = "Homer Tremblay"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2ba7d43d-20d3-4384-a15e-d53522788fae"
+  workspace_id  = "d9d77025-755e-4699-9c57-652df199422b"
 }
 ```
 

@@ -23,13 +23,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         refresh_token = "...my_refresh_token..."
       }
     }
-    custom_reports = "...my_custom_reports..."
     custom_reports_array = [
       {
         dimensions = [
-          "country",
+          "page",
         ]
-        name = "Peter Luettgen"
+        name = "Judith Crona"
       },
     ]
     data_state = "final"
@@ -37,12 +36,12 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     site_urls = [
       "...",
     ]
-    start_date = "2020-11-18"
+    start_date = "2022-06-01"
   }
-  definition_id = "bbdb3119-64f9-49d6-b745-afb65f1720bd"
-  name          = "Harriet Kiehn"
+  definition_id = "155f731c-6e6b-4c1c-af16-6aee78925477"
+  name          = "Jimmy Lockman"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "19162647-e680-4e44-97c6-f4b509c8206a"
+  workspace_id  = "53022ba4-aed2-4995-8663-b6d13c6e3bbb"
 }
 ```
 
@@ -75,7 +74,6 @@ Required:
 
 Optional:
 
-- `custom_reports` (String) (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
 - `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
 - `data_state` (String) If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>. must be one of ["final", "all"]; Default: "final"
 - `end_date` (String) UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.

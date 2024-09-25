@@ -16,25 +16,19 @@ SourceJira Resource
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "jira.<your-domain>.com"
-    email                       = "Hayley_Rohan@hotmail.com"
-    enable_experimental_streams = false
-    expand_issue_changelog      = true
-    expand_issue_transition     = true
-    issues_stream_expand_with = [
-      "transitions",
-    ]
-    lookback_window_minutes = 60
+    domain                      = "<your-domain>.jira.com"
+    email                       = "Jeramie79@gmail.com"
+    enable_experimental_streams = true
+    lookback_window_minutes     = 60
     projects = [
       "...",
     ]
-    render_fields = false
-    start_date    = "2021-03-01T00:00:00Z"
+    start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "2eafdc45-3fb6-4a01-92c4-47712b4a0208"
-  name          = "Lee Aufderhar"
+  definition_id = "8014d1f2-6365-41b7-bf9f-e0e5e5f386d0"
+  name          = "Leland Herzog"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "beffb8d9-7651-4059-b440-a5f2f61a4e46"
+  workspace_id  = "3c6558d9-b03d-425b-ae3d-badc477cb62b"
 }
 ```
 
@@ -69,12 +63,8 @@ Required:
 Optional:
 
 - `enable_experimental_streams` (Boolean) Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info. Default: false
-- `expand_issue_changelog` (Boolean) (DEPRECATED) Expand the changelog when replicating issues. Default: false
-- `expand_issue_transition` (Boolean) (DEPRECATED) Expand the transitions when replicating issues. Default: false
-- `issues_stream_expand_with` (List of String) Select fields to Expand the `Issues` stream when replicating with:
 - `lookback_window_minutes` (Number) When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced. Default: 0
 - `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
-- `render_fields` (Boolean) (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format. Default: false
 - `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
 ## Import

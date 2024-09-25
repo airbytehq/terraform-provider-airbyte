@@ -20,10 +20,10 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  definition_id = "fdf3211f-15e0-4b96-bac0-fe887647e848"
-  name          = "Pauline Bechtelar"
+  definition_id = "515d7f66-3f4a-4f02-981b-fb7704b3ca57"
+  name          = "Mrs. Cassandra Schmidt"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f14991dd-b8a5-49a6-bc83-fdb6d5a0b32f"
+  workspace_id  = "ea5ae8be-9a74-4d2f-a902-70b8919de211"
 }
 ```
 

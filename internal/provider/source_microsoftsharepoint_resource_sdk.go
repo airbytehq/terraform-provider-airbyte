@@ -303,12 +303,6 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -333,7 +327,6 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
 			Name:                                 name,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,
@@ -674,12 +667,6 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			inputSchema = nil
 		}
 		name := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -704,7 +691,6 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
 			Name:                                 name,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,

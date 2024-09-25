@@ -9,35 +9,6 @@ import (
 	"time"
 )
 
-type SourceJiraIssuesStreamExpandWith string
-
-const (
-	SourceJiraIssuesStreamExpandWithRenderedFields SourceJiraIssuesStreamExpandWith = "renderedFields"
-	SourceJiraIssuesStreamExpandWithTransitions    SourceJiraIssuesStreamExpandWith = "transitions"
-	SourceJiraIssuesStreamExpandWithChangelog      SourceJiraIssuesStreamExpandWith = "changelog"
-)
-
-func (e SourceJiraIssuesStreamExpandWith) ToPointer() *SourceJiraIssuesStreamExpandWith {
-	return &e
-}
-func (e *SourceJiraIssuesStreamExpandWith) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "renderedFields":
-		fallthrough
-	case "transitions":
-		fallthrough
-	case "changelog":
-		*e = SourceJiraIssuesStreamExpandWith(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceJiraIssuesStreamExpandWith: %v", v)
-	}
-}
-
 type Jira string
 
 const (
@@ -70,19 +41,11 @@ type SourceJira struct {
 	Email string `json:"email"`
 	// Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
 	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
-	// (DEPRECATED) Expand the changelog when replicating issues.
-	ExpandIssueChangelog *bool `default:"false" json:"expand_issue_changelog"`
-	// (DEPRECATED) Expand the transitions when replicating issues.
-	ExpandIssueTransition *bool `default:"false" json:"expand_issue_transition"`
-	// Select fields to Expand the `Issues` stream when replicating with:
-	IssuesStreamExpandWith []SourceJiraIssuesStreamExpandWith `json:"issues_stream_expand_with,omitempty"`
 	// When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced.
 	LookbackWindowMinutes *int64 `default:"0" json:"lookback_window_minutes"`
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
-	Projects []string `json:"projects,omitempty"`
-	// (DEPRECATED) Render issue fields in HTML format in addition to Jira JSON-like format.
-	RenderFields *bool `default:"false" json:"render_fields"`
-	sourceType   Jira  `const:"jira" json:"sourceType"`
+	Projects   []string `json:"projects,omitempty"`
+	sourceType Jira     `const:"jira" json:"sourceType"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -126,27 +89,6 @@ func (o *SourceJira) GetEnableExperimentalStreams() *bool {
 	return o.EnableExperimentalStreams
 }
 
-func (o *SourceJira) GetExpandIssueChangelog() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ExpandIssueChangelog
-}
-
-func (o *SourceJira) GetExpandIssueTransition() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ExpandIssueTransition
-}
-
-func (o *SourceJira) GetIssuesStreamExpandWith() []SourceJiraIssuesStreamExpandWith {
-	if o == nil {
-		return nil
-	}
-	return o.IssuesStreamExpandWith
-}
-
 func (o *SourceJira) GetLookbackWindowMinutes() *int64 {
 	if o == nil {
 		return nil
@@ -159,13 +101,6 @@ func (o *SourceJira) GetProjects() []string {
 		return nil
 	}
 	return o.Projects
-}
-
-func (o *SourceJira) GetRenderFields() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RenderFields
 }
 
 func (o *SourceJira) GetSourceType() Jira {

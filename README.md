@@ -24,8 +24,9 @@ airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 
-* [SDK Installation](#sdk-installation)
-* [SDK Example Usage](#sdk-example-usage)
+* [Installation](#installation)
+* [Available Resources and Data Sources](#available-resources-and-data-sources)
+* [Testing the provider locally](#testing-the-provider-locally)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -38,7 +39,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.11.0"
+      version = "0.13.0"
     }
   }
 }

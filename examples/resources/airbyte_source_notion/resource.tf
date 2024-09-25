@@ -7,8 +7,8 @@ resource "airbyte_source_notion" "my_source_notion" {
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "8b38fe3b-5201-4125-b292-52a784d2d0f1"
-  name          = "Sharon Koss"
+  definition_id = "3a45535f-ff5d-41d3-8f0c-ce5486a3a161"
+  name          = "Simon Hansen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5e2d6a49-780b-4a1d-aa28-c6eefe59b72d"
+  workspace_id  = "64148acb-8b41-4d5b-b94a-01397d3dfd90"
 }

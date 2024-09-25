@@ -63,12 +63,6 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 			}
 		}
 	}
-	ignorePagination := new(bool)
-	if !r.Configuration.IgnorePagination.IsUnknown() && !r.Configuration.IgnorePagination.IsNull() {
-		*ignorePagination = r.Configuration.IgnorePagination.ValueBool()
-	} else {
-		ignorePagination = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -77,10 +71,9 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSupport{
-		Credentials:      credentials,
-		IgnorePagination: ignorePagination,
-		StartDate:        startDate,
-		Subdomain:        subdomain,
+		Credentials: credentials,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -169,12 +162,6 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutReque
 			}
 		}
 	}
-	ignorePagination := new(bool)
-	if !r.Configuration.IgnorePagination.IsUnknown() && !r.Configuration.IgnorePagination.IsNull() {
-		*ignorePagination = r.Configuration.IgnorePagination.ValueBool()
-	} else {
-		ignorePagination = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -183,10 +170,9 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutReque
 	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSupportUpdate{
-		Credentials:      credentials,
-		IgnorePagination: ignorePagination,
-		StartDate:        startDate,
-		Subdomain:        subdomain,
+		Credentials: credentials,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

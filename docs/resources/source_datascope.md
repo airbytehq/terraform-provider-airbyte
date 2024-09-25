@@ -18,10 +18,10 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     api_key    = "...my_api_key..."
     start_date = "dd/mm/YYYY HH:MM"
   }
-  definition_id = "56b2ffd5-d6c6-49da-9497-add71ffdea58"
-  name          = "Kristi Beahan"
+  definition_id = "e08fd2ca-f83f-4045-910a-7c570570b889"
+  name          = "Tara Medhurst"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "09edcef2-c435-47e7-ab14-9e6fe9a76bd2"
+  workspace_id  = "4e6d7c2f-caa3-486d-a1d2-ddf0351c49c6"
 }
 ```
 

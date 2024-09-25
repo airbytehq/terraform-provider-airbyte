@@ -25,11 +25,11 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
     }
     drive_name   = "...my_drive_name..."
     folder_path  = "...my_folder_path..."
-    search_scope = "ALL"
+    search_scope = "ACCESSIBLE_DRIVES"
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 2
+        days_to_sync_if_history_is_full = 7
         format = {
           avro_format = {
             double_as_string = false
@@ -39,17 +39,16 @@ resource "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        name              = "Krystal Hamill"
-        primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Emit Record"
+        name              = "Nadine Breitenberg"
+        schemaless        = false
+        validation_policy = "Wait for Discover"
       },
     ]
   }
-  definition_id = "598db92c-72d5-441f-9389-28a50561c1cc"
-  name          = "Miss Judith McGlynn MD"
+  definition_id = "cd7d939b-8b6b-42c0-920a-a8be08607521"
+  name          = "Alan Brekke"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d7b3d761-e29e-4f26-ae07-d2b59ab56edb"
+  workspace_id  = "9bc9d1c8-8f1e-4e12-b8a7-db098a741266"
 }
 ```
 
@@ -134,7 +133,6 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
 

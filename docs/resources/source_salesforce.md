@@ -20,19 +20,19 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     force_use_bulk_api = true
     is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
-    start_date         = "2021-07-25"
-    stream_slice_step  = "P1Y"
+    start_date         = "2021-07-25T00:00:00Z"
+    stream_slice_step  = "P30D"
     streams_criteria = [
       {
-        criteria = "not contains"
+        criteria = "ends with"
         value    = "...my_value..."
       },
     ]
   }
-  definition_id = "3d512342-f997-4d05-9d38-a2e5fcf99c41"
-  name          = "Jessie Howe"
+  definition_id = "34526eae-71eb-4759-97dd-0bf2f5721957"
+  name          = "Roman Robel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0cbc1b99-ee1e-4960-9660-5b0d51b3114e"
+  workspace_id  = "9226a954-fff9-43d1-ae39-2ce90b9169fb"
 }
 ```
 

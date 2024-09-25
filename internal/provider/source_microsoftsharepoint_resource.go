@@ -446,10 +446,6 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 									Required:    true,
 									Description: `The name of the stream.`,
 								},
-								"primary_key": schema.StringAttribute{
-									Optional:    true,
-									Description: `The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.`,
-								},
 								"recent_n_files_to_read_for_schema_discovery": schema.Int64Attribute{
 									Optional:    true,
 									Description: `The number of resent files which will be used to discover the schema for this stream.`,

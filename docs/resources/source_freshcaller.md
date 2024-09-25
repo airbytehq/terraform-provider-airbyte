@@ -17,14 +17,14 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "snaptravel"
-    requests_per_minute = 0
+    requests_per_minute = 6
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 9
+    sync_lag_minutes    = 2
   }
-  definition_id = "2de4b8db-33d2-4b3a-a7b0-b342a10fbc47"
-  name          = "Ms. Grant Krajcik I"
+  definition_id = "3c0f294c-11e4-4e99-bd29-474281bb54df"
+  name          = "Sam Sawayn"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9037c7ee-f972-4df3-814a-349fde89ab27"
+  workspace_id  = "b79e2328-88b6-4bde-a515-4a52da80f2bf"
 }
 ```
 

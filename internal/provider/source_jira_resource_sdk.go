@@ -18,22 +18,6 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	} else {
 		enableExperimentalStreams = nil
 	}
-	expandIssueChangelog := new(bool)
-	if !r.Configuration.ExpandIssueChangelog.IsUnknown() && !r.Configuration.ExpandIssueChangelog.IsNull() {
-		*expandIssueChangelog = r.Configuration.ExpandIssueChangelog.ValueBool()
-	} else {
-		expandIssueChangelog = nil
-	}
-	expandIssueTransition := new(bool)
-	if !r.Configuration.ExpandIssueTransition.IsUnknown() && !r.Configuration.ExpandIssueTransition.IsNull() {
-		*expandIssueTransition = r.Configuration.ExpandIssueTransition.ValueBool()
-	} else {
-		expandIssueTransition = nil
-	}
-	var issuesStreamExpandWith []shared.SourceJiraIssuesStreamExpandWith = []shared.SourceJiraIssuesStreamExpandWith{}
-	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
-		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.SourceJiraIssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
-	}
 	lookbackWindowMinutes := new(int64)
 	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
 		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
@@ -43,12 +27,6 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
-	}
-	renderFields := new(bool)
-	if !r.Configuration.RenderFields.IsUnknown() && !r.Configuration.RenderFields.IsNull() {
-		*renderFields = r.Configuration.RenderFields.ValueBool()
-	} else {
-		renderFields = nil
 	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -61,12 +39,8 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 		Domain:                    domain,
 		Email:                     email,
 		EnableExperimentalStreams: enableExperimentalStreams,
-		ExpandIssueChangelog:      expandIssueChangelog,
-		ExpandIssueTransition:     expandIssueTransition,
-		IssuesStreamExpandWith:    issuesStreamExpandWith,
 		LookbackWindowMinutes:     lookbackWindowMinutes,
 		Projects:                  projects,
-		RenderFields:              renderFields,
 		StartDate:                 startDate,
 	}
 	definitionID := new(string)
@@ -112,22 +86,6 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	} else {
 		enableExperimentalStreams = nil
 	}
-	expandIssueChangelog := new(bool)
-	if !r.Configuration.ExpandIssueChangelog.IsUnknown() && !r.Configuration.ExpandIssueChangelog.IsNull() {
-		*expandIssueChangelog = r.Configuration.ExpandIssueChangelog.ValueBool()
-	} else {
-		expandIssueChangelog = nil
-	}
-	expandIssueTransition := new(bool)
-	if !r.Configuration.ExpandIssueTransition.IsUnknown() && !r.Configuration.ExpandIssueTransition.IsNull() {
-		*expandIssueTransition = r.Configuration.ExpandIssueTransition.ValueBool()
-	} else {
-		expandIssueTransition = nil
-	}
-	var issuesStreamExpandWith []shared.IssuesStreamExpandWith = []shared.IssuesStreamExpandWith{}
-	for _, issuesStreamExpandWithItem := range r.Configuration.IssuesStreamExpandWith {
-		issuesStreamExpandWith = append(issuesStreamExpandWith, shared.IssuesStreamExpandWith(issuesStreamExpandWithItem.ValueString()))
-	}
 	lookbackWindowMinutes := new(int64)
 	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
 		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
@@ -137,12 +95,6 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
-	}
-	renderFields := new(bool)
-	if !r.Configuration.RenderFields.IsUnknown() && !r.Configuration.RenderFields.IsNull() {
-		*renderFields = r.Configuration.RenderFields.ValueBool()
-	} else {
-		renderFields = nil
 	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -155,12 +107,8 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 		Domain:                    domain,
 		Email:                     email,
 		EnableExperimentalStreams: enableExperimentalStreams,
-		ExpandIssueChangelog:      expandIssueChangelog,
-		ExpandIssueTransition:     expandIssueTransition,
-		IssuesStreamExpandWith:    issuesStreamExpandWith,
 		LookbackWindowMinutes:     lookbackWindowMinutes,
 		Projects:                  projects,
-		RenderFields:              renderFields,
 		StartDate:                 startDate,
 	}
 	name := r.Name.ValueString()

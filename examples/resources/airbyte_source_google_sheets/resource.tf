@@ -1,6 +1,6 @@
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
-    batch_size = 2
+    batch_size = 6
     credentials = {
       authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
@@ -11,8 +11,8 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
     names_conversion = false
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "043ef09e-61b7-45b7-a676-5eab1ad84295"
-  name          = "Juana Stroman"
+  definition_id = "bd413d75-c669-43a6-b92e-f16650e4c312"
+  name          = "Betsy Koss"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9bdc8b93-f80b-47f5-9709-4a97b6356d53"
+  workspace_id  = "566ac796-fdac-41f4-8b8f-86701054c1db"
 }

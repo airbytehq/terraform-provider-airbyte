@@ -108,10 +108,6 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 							validators.ExactlyOneChild(),
 						},
 					},
-					"data_center": schema.StringAttribute{
-						Optional:    true,
-						Description: `Technical fields used to identify datacenter to send request to`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `The date from which you want to start syncing data for Incremental streams. Only records that have been created or modified since this date will be synced. If left blank, all data will by synced.`,

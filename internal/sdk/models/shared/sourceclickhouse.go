@@ -334,6 +334,8 @@ type SourceClickhouse struct {
 	// The port of the database.
 	Port       *int64                     `default:"8123" json:"port"`
 	sourceType SourceClickhouseClickhouse `const:"clickhouse" json:"sourceType"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"true" json:"ssl"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.
@@ -388,6 +390,13 @@ func (o *SourceClickhouse) GetPort() *int64 {
 
 func (o *SourceClickhouse) GetSourceType() SourceClickhouseClickhouse {
 	return SourceClickhouseClickhouseClickhouse
+}
+
+func (o *SourceClickhouse) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *SourceClickhouse) GetTunnelMethod() *SourceClickhouseSSHTunnelMethod {

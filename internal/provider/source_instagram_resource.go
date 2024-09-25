@@ -64,16 +64,6 @@ func (r *SourceInstagramResource) Schema(ctx context.Context, req resource.Schem
 						Sensitive:   true,
 						Description: `The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information`,
 					},
-					"client_id": schema.StringAttribute{
-						Optional:    true,
-						Sensitive:   true,
-						Description: `The Client ID for your Oauth application`,
-					},
-					"client_secret": schema.StringAttribute{
-						Optional:    true,
-						Sensitive:   true,
-						Description: `The Client Secret for your Oauth application`,
-					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.`,

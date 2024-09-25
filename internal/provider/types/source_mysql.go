@@ -11,6 +11,7 @@ type SourceMysql struct {
 	Password          types.String                          `tfsdk:"password"`
 	Port              types.Int64                           `tfsdk:"port"`
 	ReplicationMethod SourceMysqlUpdateMethod               `tfsdk:"replication_method"`
+	Ssl               types.Bool                            `tfsdk:"ssl"`
 	SslMode           *SourceMysqlSSLModes                  `tfsdk:"ssl_mode"`
 	TunnelMethod      *DestinationClickhouseSSHTunnelMethod `tfsdk:"tunnel_method"`
 	Username          types.String                          `tfsdk:"username"`

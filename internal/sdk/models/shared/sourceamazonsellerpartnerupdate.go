@@ -232,6 +232,14 @@ const (
 	ReportNameGetXMLAllOrdersDataByOrderDateGeneral            ReportName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
 	ReportNameGetXMLBrowseTreeData                             ReportName = "GET_XML_BROWSE_TREE_DATA"
 	ReportNameGetVendorRealTimeInventoryReport                 ReportName = "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"
+	ReportNameGetBrandAnalyticsMarketBasketReport              ReportName = "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT"
+	ReportNameGetBrandAnalyticsSearchTermsReport               ReportName = "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT"
+	ReportNameGetBrandAnalyticsRepeatPurchaseReport            ReportName = "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT"
+	ReportNameGetSalesAndTrafficReport                         ReportName = "GET_SALES_AND_TRAFFIC_REPORT"
+	ReportNameGetVendorSalesReport                             ReportName = "GET_VENDOR_SALES_REPORT"
+	ReportNameGetVendorInventoryReport                         ReportName = "GET_VENDOR_INVENTORY_REPORT"
+	ReportNameGetVendorNetPureProductMarginReport              ReportName = "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT"
+	ReportNameGetVendorTrafficReport                           ReportName = "GET_VENDOR_TRAFFIC_REPORT"
 )
 
 func (e ReportName) ToPointer() *ReportName {
@@ -316,6 +324,22 @@ func (e *ReportName) UnmarshalJSON(data []byte) error {
 	case "GET_XML_BROWSE_TREE_DATA":
 		fallthrough
 	case "GET_VENDOR_REAL_TIME_INVENTORY_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT":
+		fallthrough
+	case "GET_SALES_AND_TRAFFIC_REPORT":
+		fallthrough
+	case "GET_VENDOR_SALES_REPORT":
+		fallthrough
+	case "GET_VENDOR_INVENTORY_REPORT":
+		fallthrough
+	case "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT":
+		fallthrough
+	case "GET_VENDOR_TRAFFIC_REPORT":
 		*e = ReportName(v)
 		return nil
 	default:

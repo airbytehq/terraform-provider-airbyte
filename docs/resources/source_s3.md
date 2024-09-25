@@ -18,51 +18,33 @@ resource "airbyte_source_s3" "my_source_s3" {
     aws_access_key_id     = "...my_aws_access_key_id..."
     aws_secret_access_key = "...my_aws_secret_access_key..."
     bucket                = "...my_bucket..."
-    dataset               = "...my_dataset..."
-    endpoint              = "my-s3-endpoint.com"
-    format = {
-      avro = {}
-    }
-    path_pattern = "**"
-    provider = {
-      aws_access_key_id     = "...my_aws_access_key_id..."
-      aws_secret_access_key = "...my_aws_secret_access_key..."
-      bucket                = "...my_bucket..."
-      endpoint              = "...my_endpoint..."
-      path_prefix           = "...my_path_prefix..."
-      region_name           = "...my_region_name..."
-      role_arn              = "...my_role_arn..."
-      start_date            = "2021-01-01T00:00:00Z"
-    }
-    region_name = "...my_region_name..."
-    role_arn    = "...my_role_arn..."
-    schema      = "{\"column_1\": \"number\", \"column_2\": \"string\", \"column_3\": \"array\", \"column_4\": \"object\", \"column_5\": \"boolean\"}"
-    start_date  = "2021-01-01T00:00:00.000000Z"
+    endpoint              = "https://my-s3-endpoint.com"
+    region_name           = "...my_region_name..."
+    role_arn              = "...my_role_arn..."
+    start_date            = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 4
+        days_to_sync_if_history_is_full = 6
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema                                = "...my_input_schema..."
-        legacy_prefix                               = "...my_legacy_prefix..."
-        name                                        = "Mr. Gladys Metz"
-        primary_key                                 = "...my_primary_key..."
-        recent_n_files_to_read_for_schema_discovery = 6
+        name                                        = "Christie Emard"
+        recent_n_files_to_read_for_schema_discovery = 3
         schemaless                                  = true
-        validation_policy                           = "Wait for Discover"
+        validation_policy                           = "Emit Record"
       },
     ]
   }
-  definition_id = "9df1af8f-5013-4d5d-8cf4-03b2856e98a6"
-  name          = "Herman Bartoletti Jr."
+  definition_id = "819ff393-429d-4316-9dd8-595e9c61e20d"
+  name          = "Pedro West"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "07e33047-d953-458a-9681-9d2abec21d7e"
+  workspace_id  = "b11c60c3-a7ba-4336-a48b-e45dfad9324f"
 }
 ```
 
@@ -98,14 +80,9 @@ Optional:
 
 - `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 - `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `dataset` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS. The custom endpoint must be secure, but the 'https' prefix is not required. Default: ""
-- `format` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate (see [below for nested schema](#nestedatt--configuration--format))
-- `path_pattern` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
-- `provider` (Attributes) Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services (see [below for nested schema](#nestedatt--configuration--provider))
+- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""
 - `region_name` (String) AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.
 - `role_arn` (String) Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
-- `schema` (String) Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema. Default: "{}"
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 
 <a id="nestedatt--configuration--streams"></a>
@@ -121,8 +98,6 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-- `legacy_prefix` (String) The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-- `primary_key` (String) The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
 - `recent_n_files_to_read_for_schema_discovery` (Number) The number of resent files which will be used to discover the schema for this stream.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. must be one of ["Emit Record", "Skip Record", "Wait for Discover"]; Default: "Emit Record"
@@ -158,7 +133,6 @@ Optional:
 - `false_values` (List of String) A set of case-sensitive strings that should be interpreted as false values.
 - `header_definition` (Attributes) How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--header_definition))
 - `ignore_errors_on_fields_mismatch` (Boolean) Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema. Default: false
-- `inference_type` (String) How to infer the types of the columns. If none, inference default to strings. must be one of ["None", "Primitive Types Only"]; Default: "None"
 - `null_values` (List of String) A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 - `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""
 - `skip_rows_after_header` (Number) The number of rows to skip after the header row. Default: 0
@@ -223,77 +197,6 @@ Optional:
 
 <a id="nestedatt--configuration--streams--format--unstructured_document_format--processing--local"></a>
 ### Nested Schema for `configuration.streams.format.unstructured_document_format.processing.local`
-
-
-
-
-
-
-<a id="nestedatt--configuration--format"></a>
-### Nested Schema for `configuration.format`
-
-Optional:
-
-- `avro` (Attributes) This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing. (see [below for nested schema](#nestedatt--configuration--format--avro))
-- `csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--csv))
-- `jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--jsonl))
-- `parquet` (Attributes) This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing. (see [below for nested schema](#nestedatt--configuration--format--parquet))
-
-<a id="nestedatt--configuration--format--avro"></a>
-### Nested Schema for `configuration.format.avro`
-
-
-<a id="nestedatt--configuration--format--csv"></a>
-### Nested Schema for `configuration.format.csv`
-
-Optional:
-
-- `additional_reader_options` (String) Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.
-- `advanced_options` (String) Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors. Default: 10000
-- `delimiter` (String) The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'. Default: ","
-- `double_quote` (Boolean) Whether two quotes in a quoted CSV value denote a single quote in the data. Default: true
-- `encoding` (String) The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"
-- `escape_char` (String) The character used for escaping special characters. To disallow escaping, leave this field blank.
-- `infer_datatypes` (Boolean) Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings. Default: true
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False. Default: false
-- `quote_char` (String) The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""
-
-
-<a id="nestedatt--configuration--format--jsonl"></a>
-### Nested Schema for `configuration.format.jsonl`
-
-Optional:
-
-- `block_size` (Number) The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors. Default: 0
-- `newlines_in_values` (Boolean) Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False. Default: false
-- `unexpected_field_behavior` (String) How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details. must be one of ["ignore", "infer", "error"]; Default: "infer"
-
-
-<a id="nestedatt--configuration--format--parquet"></a>
-### Nested Schema for `configuration.format.parquet`
-
-Optional:
-
-- `batch_size` (Number) Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide. Default: 65536
-- `buffer_size` (Number) Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide. Default: 2
-- `columns` (List of String) If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-
-
-
-<a id="nestedatt--configuration--provider"></a>
-### Nested Schema for `configuration.provider`
-
-Optional:
-
-- `aws_access_key_id` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `aws_secret_access_key` (String, Sensitive) In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-- `bucket` (String) Name of the S3 bucket where the file(s) exist.
-- `endpoint` (String) Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""
-- `path_prefix` (String) By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate. Default: ""
-- `region_name` (String) AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.
-- `role_arn` (String) Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
 
 ## Import
 

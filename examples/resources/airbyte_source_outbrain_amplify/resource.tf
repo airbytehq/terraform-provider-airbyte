@@ -6,12 +6,12 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "subregion"
-    report_granularity     = "weekly"
+    geo_location_breakdown = "country"
+    report_granularity     = "monthly"
     start_date             = "...my_start_date..."
   }
-  definition_id = "a1e0cb61-9709-45b9-9e12-6100f09eb706"
-  name          = "Mrs. Randolph Aufderhar"
+  definition_id = "5272c209-71d5-444a-a5a7-d2b4609d4ec6"
+  name          = "Melanie Kshlerin"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a0ac6bfa-e2b4-40c1-b3d4-d61133ddb2a9"
+  workspace_id  = "68cce933-94d8-4a35-9b32-f900f8cfe737"
 }

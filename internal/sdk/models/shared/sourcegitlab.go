@@ -238,12 +238,8 @@ type SourceGitlab struct {
 	// Please enter your basic URL from GitLab instance.
 	APIURL      *string                         `default:"gitlab.com" json:"api_url"`
 	Credentials SourceGitlabAuthorizationMethod `json:"credentials"`
-	// [DEPRECATED] Space-delimited list of groups. e.g. airbyte.io.
-	Groups *string `json:"groups,omitempty"`
 	// List of groups. e.g. airbyte.io.
 	GroupsList []string `json:"groups_list,omitempty"`
-	// [DEPRECATED] Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
-	Projects *string `json:"projects,omitempty"`
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
 	ProjectsList []string `json:"projects_list,omitempty"`
 	sourceType   Gitlab   `const:"gitlab" json:"sourceType"`
@@ -276,25 +272,11 @@ func (o *SourceGitlab) GetCredentials() SourceGitlabAuthorizationMethod {
 	return o.Credentials
 }
 
-func (o *SourceGitlab) GetGroups() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Groups
-}
-
 func (o *SourceGitlab) GetGroupsList() []string {
 	if o == nil {
 		return nil
 	}
 	return o.GroupsList
-}
-
-func (o *SourceGitlab) GetProjects() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Projects
 }
 
 func (o *SourceGitlab) GetProjectsList() []string {

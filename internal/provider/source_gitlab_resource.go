@@ -127,18 +127,10 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 							validators.ExactlyOneChild(),
 						},
 					},
-					"groups": schema.StringAttribute{
-						Optional:    true,
-						Description: `[DEPRECATED] Space-delimited list of groups. e.g. airbyte.io.`,
-					},
 					"groups_list": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
 						Description: `List of groups. e.g. airbyte.io.`,
-					},
-					"projects": schema.StringAttribute{
-						Optional:    true,
-						Description: `[DEPRECATED] Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.`,
 					},
 					"projects_list": schema.ListAttribute{
 						Optional:    true,

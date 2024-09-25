@@ -232,6 +232,14 @@ const (
 	SourceAmazonSellerPartnerReportNameGetXMLAllOrdersDataByOrderDateGeneral            SourceAmazonSellerPartnerReportName = "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL"
 	SourceAmazonSellerPartnerReportNameGetXMLBrowseTreeData                             SourceAmazonSellerPartnerReportName = "GET_XML_BROWSE_TREE_DATA"
 	SourceAmazonSellerPartnerReportNameGetVendorRealTimeInventoryReport                 SourceAmazonSellerPartnerReportName = "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"
+	SourceAmazonSellerPartnerReportNameGetBrandAnalyticsMarketBasketReport              SourceAmazonSellerPartnerReportName = "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT"
+	SourceAmazonSellerPartnerReportNameGetBrandAnalyticsSearchTermsReport               SourceAmazonSellerPartnerReportName = "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT"
+	SourceAmazonSellerPartnerReportNameGetBrandAnalyticsRepeatPurchaseReport            SourceAmazonSellerPartnerReportName = "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT"
+	SourceAmazonSellerPartnerReportNameGetSalesAndTrafficReport                         SourceAmazonSellerPartnerReportName = "GET_SALES_AND_TRAFFIC_REPORT"
+	SourceAmazonSellerPartnerReportNameGetVendorSalesReport                             SourceAmazonSellerPartnerReportName = "GET_VENDOR_SALES_REPORT"
+	SourceAmazonSellerPartnerReportNameGetVendorInventoryReport                         SourceAmazonSellerPartnerReportName = "GET_VENDOR_INVENTORY_REPORT"
+	SourceAmazonSellerPartnerReportNameGetVendorNetPureProductMarginReport              SourceAmazonSellerPartnerReportName = "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT"
+	SourceAmazonSellerPartnerReportNameGetVendorTrafficReport                           SourceAmazonSellerPartnerReportName = "GET_VENDOR_TRAFFIC_REPORT"
 )
 
 func (e SourceAmazonSellerPartnerReportName) ToPointer() *SourceAmazonSellerPartnerReportName {
@@ -316,6 +324,22 @@ func (e *SourceAmazonSellerPartnerReportName) UnmarshalJSON(data []byte) error {
 	case "GET_XML_BROWSE_TREE_DATA":
 		fallthrough
 	case "GET_VENDOR_REAL_TIME_INVENTORY_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT":
+		fallthrough
+	case "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT":
+		fallthrough
+	case "GET_SALES_AND_TRAFFIC_REPORT":
+		fallthrough
+	case "GET_VENDOR_SALES_REPORT":
+		fallthrough
+	case "GET_VENDOR_INVENTORY_REPORT":
+		fallthrough
+	case "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT":
+		fallthrough
+	case "GET_VENDOR_TRAFFIC_REPORT":
 		*e = SourceAmazonSellerPartnerReportName(v)
 		return nil
 	default:

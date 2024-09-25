@@ -17,10 +17,10 @@ resource "airbyte_source_secoda" "my_source_secoda" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "6f1cbdb3-5a96-4cd0-a48f-1e4b30469b6c"
-  name          = "George Ritchie I"
+  definition_id = "61382854-2bb3-47a4-98fa-cd1771a16fff"
+  name          = "Mindy Beahan"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cf017cd9-7836-43f1-be7e-9b4aabfc5ff7"
+  workspace_id  = "eebc306c-4f33-497c-a047-5faadeba481e"
 }
 ```
 

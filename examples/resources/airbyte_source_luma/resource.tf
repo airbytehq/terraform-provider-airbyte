@@ -2,8 +2,8 @@ resource "airbyte_source_luma" "my_source_luma" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "b78bed98-212c-4704-ae19-387527d5e3ef"
-  name          = "Sara Gibson"
+  definition_id = "41f13919-c925-4e38-a517-a80112166a5e"
+  name          = "Kyle Jones"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0c0b7968-b724-4213-bfe2-e9e26c4c104f"
+  workspace_id  = "bce2e77b-bcce-4f58-8ac5-48be8a7a9dbf"
 }

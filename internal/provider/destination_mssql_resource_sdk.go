@@ -42,6 +42,15 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 	}
 	var sslMethod *shared.DestinationMssqlSSLMethod
 	if r.Configuration.SslMethod != nil {
+		var destinationMssqlUnencrypted *shared.DestinationMssqlUnencrypted
+		if r.Configuration.SslMethod.Unencrypted != nil {
+			destinationMssqlUnencrypted = &shared.DestinationMssqlUnencrypted{}
+		}
+		if destinationMssqlUnencrypted != nil {
+			sslMethod = &shared.DestinationMssqlSSLMethod{
+				DestinationMssqlUnencrypted: destinationMssqlUnencrypted,
+			}
+		}
 		var destinationMssqlEncryptedTrustServerCertificate *shared.DestinationMssqlEncryptedTrustServerCertificate
 		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
 			destinationMssqlEncryptedTrustServerCertificate = &shared.DestinationMssqlEncryptedTrustServerCertificate{}
@@ -201,6 +210,15 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 	}
 	var sslMethod *shared.SSLMethod
 	if r.Configuration.SslMethod != nil {
+		var unencrypted *shared.Unencrypted
+		if r.Configuration.SslMethod.Unencrypted != nil {
+			unencrypted = &shared.Unencrypted{}
+		}
+		if unencrypted != nil {
+			sslMethod = &shared.SSLMethod{
+				Unencrypted: unencrypted,
+			}
+		}
 		var encryptedTrustServerCertificate *shared.EncryptedTrustServerCertificate
 		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
 			encryptedTrustServerCertificate = &shared.EncryptedTrustServerCertificate{}

@@ -8,8 +8,8 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
     start_date   = "YYYY-MM-DD"
     user_token   = "...my_user_token..."
   }
-  definition_id = "86915d33-24b4-4819-bf39-3429d3165dd8"
-  name          = "Erika Hills"
+  definition_id = "d8ebc947-d1a3-46d8-935b-42d9b671ba3d"
+  name          = "Dominick Boyer"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c61e20db-5f4b-4b11-860c-3a7ba336248b"
+  workspace_id  = "eb3d6269-3ddf-4cad-b2b0-11f085229948"
 }

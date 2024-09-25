@@ -34,16 +34,16 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
           token = "...my_token..."
         }
       }
-      batch_size         = 9
-      default_vectorizer = "text2vec-transformers"
+      batch_size         = 6
+      default_vectorizer = "text2vec-huggingface"
       host               = "https://my-cluster.weaviate.network"
       tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 6
+      chunk_overlap = 5
+      chunk_size    = 8
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -58,14 +58,14 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 0
+          split_level = 8
         }
       }
     }
   }
-  definition_id = "0858467e-5cd3-4332-85c7-cc3fde334f78"
-  name          = "Maggie Nolan"
-  workspace_id  = "aaf527fe-19eb-41bf-8ee2-339467597e80"
+  definition_id = "3fde334f-786a-4ae3-aaf5-27fe19eb1bf8"
+  name          = "Sheldon Crooks"
+  workspace_id  = "9467597e-801e-4676-89a4-6f396c7c6bf7"
 }
 ```
 

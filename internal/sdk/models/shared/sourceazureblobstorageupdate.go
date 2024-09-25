@@ -728,33 +728,6 @@ func (u CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CSVHeaderDefinition: all fields are null")
 }
 
-// InferenceType - How to infer the types of the columns. If none, inference default to strings.
-type InferenceType string
-
-const (
-	InferenceTypeNone               InferenceType = "None"
-	InferenceTypePrimitiveTypesOnly InferenceType = "Primitive Types Only"
-)
-
-func (e InferenceType) ToPointer() *InferenceType {
-	return &e
-}
-func (e *InferenceType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "None":
-		fallthrough
-	case "Primitive Types Only":
-		*e = InferenceType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for InferenceType: %v", v)
-	}
-}
-
 type CSVFormat struct {
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
@@ -771,8 +744,6 @@ type CSVFormat struct {
 	HeaderDefinition *CSVHeaderDefinition `json:"header_definition,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
-	// How to infer the types of the columns. If none, inference default to strings.
-	InferenceType *InferenceType `default:"None" json:"inference_type"`
 	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
 	NullValues []string `json:"null_values,omitempty"`
 	// The character used for quoting CSV values. To disallow quoting, make this field blank.
@@ -851,13 +822,6 @@ func (o *CSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	return o.IgnoreErrorsOnFieldsMismatch
 }
 
-func (o *CSVFormat) GetInferenceType() *InferenceType {
-	if o == nil {
-		return nil
-	}
-	return o.InferenceType
-}
-
 func (o *CSVFormat) GetNullValues() []string {
 	if o == nil {
 		return nil
@@ -900,33 +864,33 @@ func (o *CSVFormat) GetTrueValues() []string {
 	return o.TrueValues
 }
 
-type SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype string
+type Filetype string
 
 const (
-	SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletypeAvro SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype = "avro"
+	FiletypeAvro Filetype = "avro"
 )
 
-func (e SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) ToPointer() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
+func (e Filetype) ToPointer() *Filetype {
 	return &e
 }
-func (e *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) error {
+func (e *Filetype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "avro":
-		*e = SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype(v)
+		*e = Filetype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype: %v", v)
+		return fmt.Errorf("invalid value for Filetype: %v", v)
 	}
 }
 
 type AvroFormat struct {
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool                                                           `default:"false" json:"double_as_string"`
-	filetype       *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype `const:"avro" json:"filetype"`
+	DoubleAsString *bool     `default:"false" json:"double_as_string"`
+	filetype       *Filetype `const:"avro" json:"filetype"`
 }
 
 func (a AvroFormat) MarshalJSON() ([]byte, error) {
@@ -947,8 +911,8 @@ func (o *AvroFormat) GetDoubleAsString() *bool {
 	return o.DoubleAsString
 }
 
-func (o *AvroFormat) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
-	return SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletypeAvro.ToPointer()
+func (o *AvroFormat) GetFiletype() *Filetype {
+	return FiletypeAvro.ToPointer()
 }
 
 type FormatUnionType string
@@ -1120,12 +1084,8 @@ type FileBasedStreamConfig struct {
 	Globs []string `json:"globs,omitempty"`
 	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
 	InputSchema *string `json:"input_schema,omitempty"`
-	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
-	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
 	// The name of the stream.
 	Name string `json:"name"`
-	// The column or columns (for a composite key) that serves as the unique identifier of a record. If empty, the primary key will default to the parser's default primary key.
-	PrimaryKey *string `json:"primary_key,omitempty"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
 	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
@@ -1171,25 +1131,11 @@ func (o *FileBasedStreamConfig) GetInputSchema() *string {
 	return o.InputSchema
 }
 
-func (o *FileBasedStreamConfig) GetLegacyPrefix() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LegacyPrefix
-}
-
 func (o *FileBasedStreamConfig) GetName() string {
 	if o == nil {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *FileBasedStreamConfig) GetPrimaryKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PrimaryKey
 }
 
 func (o *FileBasedStreamConfig) GetSchemaless() *bool {

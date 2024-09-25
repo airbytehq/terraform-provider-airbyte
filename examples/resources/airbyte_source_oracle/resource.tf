@@ -7,23 +7,23 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     }
     encryption = {
       native_network_encryption_nne = {
-        encryption_algorithm = "3DES168"
+        encryption_algorithm = "AES256"
       }
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 9
+    port            = 10
     schemas = [
       "...",
     ]
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Jammie.Steuber"
+    username = "Nicole_Abernathy"
   }
-  definition_id = "9b8b6b2c-0920-4aa8-be08-607521b21ea9"
-  name          = "Edmund Mraz DDS"
+  definition_id = "d3b8cc64-e95a-47a3-a92d-b06d3b499dcb"
+  name          = "Oliver Torp"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "88f1ee12-f8a7-4db0-98a7-41266a87d389"
+  workspace_id  = "afcb0631-8407-4294-84d2-b8965caababe"
 }

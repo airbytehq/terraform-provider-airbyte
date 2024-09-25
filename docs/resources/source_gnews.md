@@ -16,25 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "ru"
+    country  = "ua"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "title",
-    ]
-    language = "hi"
-    nullable = [
       "description",
     ]
-    query               = "Intel AND (i7 OR i9)"
+    language = "no"
+    nullable = [
+      "content",
+    ]
+    query               = "Apple OR Microsoft"
     sortby              = "publishedAt"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple OR Microsoft"
-    top_headlines_topic = "sports"
+    top_headlines_query = "Apple AND NOT iPhone"
+    top_headlines_topic = "nation"
   }
-  definition_id = "77e51fa7-73fc-4f1a-8306-e082909d97bf"
-  name          = "Kerry Reinger"
+  definition_id = "5108cd8d-f8fd-4dac-ae82-61af8b9bb485"
+  name          = "Nadine Jenkins"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3671a9ca-1d9c-4174-bee4-145562d27576"
+  workspace_id  = "be1e785d-e7e3-427e-b787-5126eb569443"
 }
 ```
 

@@ -19,9 +19,8 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     account_ids = [
       "...",
     ]
-    action_breakdowns_allow_empty = true
     ad_statuses = [
-      "PENDING_BILLING_INFO",
+      "DELETED",
     ]
     adset_statuses = [
       "PAUSED",
@@ -29,8 +28,6 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     campaign_statuses = [
       "IN_PROCESS",
     ]
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
     credentials = {
       authenticate_via_facebook_marketing_oauth = {
         access_token  = "...my_access_token..."
@@ -41,35 +38,35 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_destination",
+          "action_type",
         ]
-        action_report_time = "impression"
+        action_report_time = "mixed"
         breakdowns = [
           "skan_conversion_id",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "video_avg_time_watched_actions",
+          "account_currency",
         ]
-        insights_job_timeout     = 0
-        insights_lookback_window = 10
-        level                    = "campaign"
-        name                     = "Darryl Wunsch"
+        insights_job_timeout     = 10
+        insights_lookback_window = 0
+        level                    = "account"
+        name                     = "Kara Macejkovic"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 8
+        time_increment           = 10
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
-    fetch_thumbnail_images   = true
-    insights_job_timeout     = 10
-    insights_lookback_window = 6
-    page_size                = 8
+    fetch_thumbnail_images   = false
+    insights_job_timeout     = 8
+    insights_lookback_window = 7
+    page_size                = 10
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "a3dd0007-daef-4770-881f-95c5b8dd2d32"
-  name          = "Stanley Kutch"
+  definition_id = "6a32dc31-e1b4-4b67-a953-bf2defea2fd1"
+  name          = "Dana Wuckert"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fec5cd0a-4fda-452f-a954-3b8620d9bb50"
+  workspace_id  = "d3631398-5539-4f35-ad32-06afb3a724a6"
 }
 ```
 
@@ -103,12 +100,9 @@ Required:
 Optional:
 
 - `access_token` (String, Sensitive) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
-- `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list. Default: true
 - `ad_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 - `adset_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
 - `campaign_statuses` (List of String) Select the statuses you want to be loaded in the stream. If no specific statuses are selected, the API's default behavior applies, and some statuses may be filtered out.
-- `client_id` (String, Sensitive) The Client Id for your OAuth app
-- `client_secret` (String, Sensitive) The Client Secret for your OAuth app
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative. Default: false

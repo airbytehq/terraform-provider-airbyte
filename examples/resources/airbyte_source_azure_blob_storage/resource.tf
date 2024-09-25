@@ -14,26 +14,24 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     start_date = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 9
+        days_to_sync_if_history_is_full = 10
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema      = "...my_input_schema..."
-        legacy_prefix     = "...my_legacy_prefix..."
-        name              = "Mrs. Olive Hills"
-        primary_key       = "...my_primary_key..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        name              = "Dwayne Pfeffer"
+        schemaless        = false
+        validation_policy = "Emit Record"
       },
     ]
   }
-  definition_id = "cf4f6487-4e62-4c58-9879-2fd48887cb19"
-  name          = "Jim Kuvalis"
+  definition_id = "8227a333-08df-4445-b49b-e62599f17b5c"
+  name          = "Pamela Schimmel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8b4573d6-6d00-47e5-aa2e-4396e7403ea2"
+  workspace_id  = "2f7dd6ee-9c7e-4740-9902-82195430f896"
 }

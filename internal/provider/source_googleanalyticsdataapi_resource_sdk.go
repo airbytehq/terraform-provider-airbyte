@@ -1692,7 +1692,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expressions []shared.Expression = []shared.Expression{}
 				for _, expressionsItem := range customReportsArrayItem.DimensionFilter.AndGroup.Expressions {
 					fieldName := expressionsItem.FieldName.ValueString()
-					var filter shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter
+					var filter shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter
 					if expressionsItem.Filter.StringFilter != nil {
 						caseSensitive := new(bool)
@@ -1713,7 +1713,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter != nil {
-						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter,
 						}
 					}
@@ -1735,7 +1735,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter != nil {
-						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter,
 						}
 					}
@@ -1776,7 +1776,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter != nil {
-						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayNumericFilter,
 						}
 					}
@@ -1838,7 +1838,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter != nil {
-						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter{
+						filter = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayBetweenFilter,
 						}
 					}
@@ -1861,7 +1861,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expressions1 []shared.SourceGoogleAnalyticsDataAPIUpdateExpression = []shared.SourceGoogleAnalyticsDataAPIUpdateExpression{}
 				for _, expressionsItem1 := range customReportsArrayItem.DimensionFilter.OrGroup.Expressions {
 					fieldName1 := expressionsItem1.FieldName.ValueString()
-					var filter1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter
+					var filter1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter
 					if expressionsItem1.Filter.StringFilter != nil {
 						caseSensitive2 := new(bool)
@@ -1882,7 +1882,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter != nil {
-						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter,
 						}
 					}
@@ -1904,7 +1904,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter != nil {
-						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter,
 						}
 					}
@@ -1945,7 +1945,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter != nil {
-						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterNumericFilter,
 						}
 					}
@@ -2007,7 +2007,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter != nil {
-						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter{
+						filter1 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterBetweenFilter,
 						}
 					}
@@ -2030,7 +2030,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expression *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasExpression
 				if customReportsArrayItem.DimensionFilter.NotExpression.Expression != nil {
 					fieldName2 := customReportsArrayItem.DimensionFilter.NotExpression.Expression.FieldName.ValueString()
-					var filter2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
+					var filter2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter
 					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter != nil {
 						caseSensitive4 := new(bool)
@@ -2051,7 +2051,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter != nil {
-						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter,
 						}
 					}
@@ -2073,7 +2073,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter != nil {
-						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter,
 						}
 					}
@@ -2114,7 +2114,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter != nil {
-						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasNumericFilter,
 						}
 					}
@@ -2176,7 +2176,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter != nil {
-						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter{
+						filter2 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasBetweenFilter,
 						}
 					}
@@ -2194,10 +2194,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					NotExpression: notExpression,
 				}
 			}
-			var filter3 *shared.Filter
+			var sourceGoogleAnalyticsDataAPIUpdateFilter *shared.SourceGoogleAnalyticsDataAPIUpdateFilter
 			if customReportsArrayItem.DimensionFilter.Filter != nil {
 				fieldName3 := customReportsArrayItem.DimensionFilter.Filter.FieldName.ValueString()
-				var filter4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter
+				var filter3 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter
 				var stringFilter *shared.StringFilter
 				if customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter != nil {
 					caseSensitive6 := new(bool)
@@ -2218,7 +2218,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if stringFilter != nil {
-					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+					filter3 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
 						StringFilter: stringFilter,
 					}
 				}
@@ -2240,7 +2240,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if inListFilter != nil {
-					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+					filter3 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
 						InListFilter: inListFilter,
 					}
 				}
@@ -2281,7 +2281,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if numericFilter != nil {
-					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+					filter3 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
 						NumericFilter: numericFilter,
 					}
 				}
@@ -2343,18 +2343,18 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if betweenFilter != nil {
-					filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
+					filter3 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
 						BetweenFilter: betweenFilter,
 					}
 				}
-				filter3 = &shared.Filter{
+				sourceGoogleAnalyticsDataAPIUpdateFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateFilter{
 					FieldName: fieldName3,
-					Filter:    filter4,
+					Filter:    filter3,
 				}
 			}
-			if filter3 != nil {
+			if sourceGoogleAnalyticsDataAPIUpdateFilter != nil {
 				dimensionFilter = &shared.DimensionsFilter{
-					Filter: filter3,
+					SourceGoogleAnalyticsDataAPIUpdateFilter: sourceGoogleAnalyticsDataAPIUpdateFilter,
 				}
 			}
 		}
@@ -2369,7 +2369,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expressions2 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayExpression = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayExpression{}
 				for _, expressionsItem2 := range customReportsArrayItem.MetricFilter.AndGroup.Expressions {
 					fieldName4 := expressionsItem2.FieldName.ValueString()
-					var filter5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter
+					var filter4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter
 					if expressionsItem2.Filter.StringFilter != nil {
 						caseSensitive8 := new(bool)
@@ -2390,7 +2390,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter != nil {
-						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+						filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter,
 						}
 					}
@@ -2412,7 +2412,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter != nil {
-						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+						filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter,
 						}
 					}
@@ -2453,7 +2453,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter != nil {
-						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+						filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterNumericFilter,
 						}
 					}
@@ -2515,13 +2515,13 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter != nil {
-						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
+						filter4 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterBetweenFilter,
 						}
 					}
 					expressions2 = append(expressions2, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayExpression{
 						FieldName: fieldName4,
-						Filter:    filter5,
+						Filter:    filter4,
 					})
 				}
 				sourceGoogleAnalyticsDataAPIUpdateAndGroup = &shared.SourceGoogleAnalyticsDataAPIUpdateAndGroup{
@@ -2538,7 +2538,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expressions3 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterExpression = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterExpression{}
 				for _, expressionsItem3 := range customReportsArrayItem.MetricFilter.OrGroup.Expressions {
 					fieldName5 := expressionsItem3.FieldName.ValueString()
-					var filter6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter
+					var filter5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter
 					if expressionsItem3.Filter.StringFilter != nil {
 						caseSensitive10 := new(bool)
@@ -2559,7 +2559,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter != nil {
-						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter,
 						}
 					}
@@ -2581,7 +2581,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter != nil {
-						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter,
 						}
 					}
@@ -2622,7 +2622,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter != nil {
-						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterNumericFilter,
 						}
 					}
@@ -2684,13 +2684,13 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter != nil {
-						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
+						filter5 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterBetweenFilter,
 						}
 					}
 					expressions3 = append(expressions3, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterExpression{
 						FieldName: fieldName5,
-						Filter:    filter6,
+						Filter:    filter5,
 					})
 				}
 				sourceGoogleAnalyticsDataAPIUpdateOrGroup = &shared.SourceGoogleAnalyticsDataAPIUpdateOrGroup{
@@ -2707,7 +2707,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var expression1 *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterExpression
 				if customReportsArrayItem.MetricFilter.NotExpression.Expression != nil {
 					fieldName6 := customReportsArrayItem.MetricFilter.NotExpression.Expression.FieldName.ValueString()
-					var filter7 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
+					var filter6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter
 					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter != nil {
 						caseSensitive12 := new(bool)
@@ -2728,7 +2728,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter != nil {
-						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter,
 						}
 					}
@@ -2750,7 +2750,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter != nil {
-						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter,
 						}
 					}
@@ -2791,7 +2791,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter != nil {
-						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter,
 						}
 					}
@@ -2853,13 +2853,13 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter != nil {
-						filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
+						filter6 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter{
 							SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter,
 						}
 					}
 					expression1 = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterExpression{
 						FieldName: fieldName6,
-						Filter:    filter7,
+						Filter:    filter6,
 					}
 				}
 				sourceGoogleAnalyticsDataAPIUpdateNotExpression = &shared.SourceGoogleAnalyticsDataAPIUpdateNotExpression{
@@ -2871,10 +2871,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					SourceGoogleAnalyticsDataAPIUpdateNotExpression: sourceGoogleAnalyticsDataAPIUpdateNotExpression,
 				}
 			}
-			var sourceGoogleAnalyticsDataAPIUpdateFilter *shared.SourceGoogleAnalyticsDataAPIUpdateFilter
+			var sourceGoogleAnalyticsDataAPIUpdateSchemasFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter
 			if customReportsArrayItem.MetricFilter.Filter != nil {
 				fieldName7 := customReportsArrayItem.MetricFilter.Filter.FieldName.ValueString()
-				var filter8 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter
+				var filter7 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter
 				var sourceGoogleAnalyticsDataAPIUpdateStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateStringFilter
 				if customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter != nil {
 					caseSensitive14 := new(bool)
@@ -2895,7 +2895,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateStringFilter != nil {
-					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+					filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
 						SourceGoogleAnalyticsDataAPIUpdateStringFilter: sourceGoogleAnalyticsDataAPIUpdateStringFilter,
 					}
 				}
@@ -2917,7 +2917,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateInListFilter != nil {
-					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+					filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
 						SourceGoogleAnalyticsDataAPIUpdateInListFilter: sourceGoogleAnalyticsDataAPIUpdateInListFilter,
 					}
 				}
@@ -2958,7 +2958,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateNumericFilter != nil {
-					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+					filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
 						SourceGoogleAnalyticsDataAPIUpdateNumericFilter: sourceGoogleAnalyticsDataAPIUpdateNumericFilter,
 					}
 				}
@@ -3020,18 +3020,18 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateBetweenFilter != nil {
-					filter8 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter{
+					filter7 = shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter{
 						SourceGoogleAnalyticsDataAPIUpdateBetweenFilter: sourceGoogleAnalyticsDataAPIUpdateBetweenFilter,
 					}
 				}
-				sourceGoogleAnalyticsDataAPIUpdateFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateFilter{
+				sourceGoogleAnalyticsDataAPIUpdateSchemasFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasFilter{
 					FieldName: fieldName7,
-					Filter:    filter8,
+					Filter:    filter7,
 				}
 			}
-			if sourceGoogleAnalyticsDataAPIUpdateFilter != nil {
+			if sourceGoogleAnalyticsDataAPIUpdateSchemasFilter != nil {
 				metricFilter = &shared.MetricsFilter{
-					SourceGoogleAnalyticsDataAPIUpdateFilter: sourceGoogleAnalyticsDataAPIUpdateFilter,
+					SourceGoogleAnalyticsDataAPIUpdateSchemasFilter: sourceGoogleAnalyticsDataAPIUpdateSchemasFilter,
 				}
 			}
 		}

@@ -8,8 +8,8 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  definition_id = "f1f04aee-bc30-46c4-b339-7c20475faade"
-  name          = "Wilbur Gleichner DVM"
+  definition_id = "47f127a6-aa10-4ba7-afbf-e0de8798ad00"
+  name          = "Micheal DuBuque"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "413dd760-cc3a-4e1d-b75e-e978f160f457"
+  workspace_id  = "8a627c91-41ac-48dc-b207-c06da07742c2"
 }

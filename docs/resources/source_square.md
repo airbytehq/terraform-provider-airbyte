@@ -20,14 +20,14 @@ resource "airbyte_source_square" "my_source_square" {
         api_key = "...my_api_key..."
       }
     }
-    include_deleted_objects = true
-    is_sandbox              = true
-    start_date              = "2022-03-17"
+    include_deleted_objects = false
+    is_sandbox              = false
+    start_date              = "2022-02-02"
   }
-  definition_id = "8bf07f2e-7721-4366-a46f-a9b2db7532b2"
-  name          = "Edmund Reynolds"
+  definition_id = "4ba31afc-75cd-4175-a719-6a7541fa2a79"
+  name          = "Rhonda Stehr I"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5b8d4ad9-bb4c-42d0-8c6c-eb0e4409659d"
+  workspace_id  = "eedefb0b-3778-4954-a670-34f3e4d7496d"
 }
 ```
 

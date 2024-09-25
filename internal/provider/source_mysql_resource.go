@@ -16,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -143,6 +144,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+					},
+					"ssl": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(true),
+						Description: `Encrypt data using SSL. Default: true`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,

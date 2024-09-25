@@ -17,12 +17,12 @@ resource "airbyte_source_airbyte" "my_source_airbyte" {
   configuration = {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    start_date    = "2022-02-13T07:54:38.533Z"
+    start_date    = "2022-03-19T07:46:59.910Z"
   }
-  definition_id = "1cc19313-7221-4402-bee7-1b638bd648d5"
-  name          = "Nina Boyle"
+  definition_id = "0dabba6e-f9fc-43c3-b44f-d252e57aa673"
+  name          = "Steve Luettgen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "feb93d4b-bde9-4f2b-b80c-d3fe4ad28293"
+  workspace_id  = "9f0c220e-39e1-40d6-af09-fb849b0bdf3d"
 }
 ```
 

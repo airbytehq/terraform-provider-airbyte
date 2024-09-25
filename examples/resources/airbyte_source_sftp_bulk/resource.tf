@@ -6,12 +6,12 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
       }
     }
     folder_path = "/logs/2022"
-    host        = "www.host.com"
+    host        = "192.0.2.1"
     port        = 22
     start_date  = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 2
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
             double_as_string = true
@@ -21,18 +21,16 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
           "...",
         ]
         input_schema                                = "...my_input_schema..."
-        legacy_prefix                               = "...my_legacy_prefix..."
-        name                                        = "Tony Collier"
-        primary_key                                 = "...my_primary_key..."
-        recent_n_files_to_read_for_schema_discovery = 4
-        schemaless                                  = true
+        name                                        = "Blanche MacGyver"
+        recent_n_files_to_read_for_schema_discovery = 2
+        schemaless                                  = false
         validation_policy                           = "Wait for Discover"
       },
     ]
-    username = "Santos_Leuschke"
+    username = "Matt_Wilkinson"
   }
-  definition_id = "7e494b9e-5830-4e9e-bbf4-12cdcae9f85c"
-  name          = "Maria Bernhard"
+  definition_id = "e57802da-a821-4998-aac7-526c0e68d41f"
+  name          = "Misty Gibson"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "80526f88-56cd-4f3f-9efb-e1999214f3ff"
+  workspace_id  = "bd831a4c-af6a-4030-b232-0a84c82feed3"
 }

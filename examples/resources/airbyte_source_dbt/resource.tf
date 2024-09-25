@@ -3,8 +3,8 @@ resource "airbyte_source_dbt" "my_source_dbt" {
     account_id = "...my_account_id..."
     api_key_2  = "...my_api_key_2..."
   }
-  definition_id = "71d6f7a7-7e51-4b04-b8d5-2e6bc1e22381"
-  name          = "Clint Sanford"
+  definition_id = "86900517-4142-45e4-938a-30ea56cdfa27"
+  name          = "Dominic Will"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9642f3c2-fe19-4c32-adfe-e92bc3373ad2"
+  workspace_id  = "25b4bae6-1112-4211-be87-b490ecc6bf75"
 }

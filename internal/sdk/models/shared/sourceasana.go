@@ -223,8 +223,6 @@ type SourceAsana struct {
 	// Globally unique identifiers for the organization exports
 	OrganizationExportIds []any  `json:"organization_export_ids,omitempty"`
 	sourceType            *Asana `const:"asana" json:"sourceType,omitempty"`
-	// This flag is used for testing purposes for certain streams that return a lot of data. This flag is not meant to be enabled for prod.
-	TestMode *bool `json:"test_mode,omitempty"`
 }
 
 func (s SourceAsana) MarshalJSON() ([]byte, error) {
@@ -254,11 +252,4 @@ func (o *SourceAsana) GetOrganizationExportIds() []any {
 
 func (o *SourceAsana) GetSourceType() *Asana {
 	return AsanaAsana.ToPointer()
-}
-
-func (o *SourceAsana) GetTestMode() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TestMode
 }

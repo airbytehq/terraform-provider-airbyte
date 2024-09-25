@@ -104,6 +104,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("encrypted_verify_certificate"),
+										path.MatchRelative().AtParent().AtName("unencrypted"),
 									}...),
 								},
 							},
@@ -119,6 +120,18 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								Validators: []validator.Object{
 									objectvalidator.ConflictsWith(path.Expressions{
 										path.MatchRelative().AtParent().AtName("encrypted_trust_server_certificate"),
+										path.MatchRelative().AtParent().AtName("unencrypted"),
+									}...),
+								},
+							},
+							"unencrypted": schema.SingleNestedAttribute{
+								Optional:    true,
+								Attributes:  map[string]schema.Attribute{},
+								Description: `The data transfer will not be encrypted.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("encrypted_trust_server_certificate"),
+										path.MatchRelative().AtParent().AtName("encrypted_verify_certificate"),
 									}...),
 								},
 							},

@@ -34,12 +34,8 @@ func (e *Instagram) UnmarshalJSON(data []byte) error {
 
 type SourceInstagram struct {
 	// The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
-	AccessToken string `json:"access_token"`
-	// The Client ID for your Oauth application
-	ClientID *string `json:"client_id,omitempty"`
-	// The Client Secret for your Oauth application
-	ClientSecret *string   `json:"client_secret,omitempty"`
-	sourceType   Instagram `const:"instagram" json:"sourceType"`
+	AccessToken string    `json:"access_token"`
+	sourceType  Instagram `const:"instagram" json:"sourceType"`
 	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
@@ -60,20 +56,6 @@ func (o *SourceInstagram) GetAccessToken() string {
 		return ""
 	}
 	return o.AccessToken
-}
-
-func (o *SourceInstagram) GetClientID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientID
-}
-
-func (o *SourceInstagram) GetClientSecret() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ClientSecret
 }
 
 func (o *SourceInstagram) GetSourceType() Instagram {

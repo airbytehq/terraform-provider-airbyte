@@ -3,8 +3,8 @@ resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
     dataset_id = "rHuMdwm6xCFt6WiGU"
     token      = "apify_api_PbVwb1cBbuvbfg2jRmAIHZKgx3NQyfEMG7uk"
   }
-  definition_id = "184cac7d-cada-4d29-b8da-5765e7880f00"
-  name          = "Curtis Berge"
+  definition_id = "02c915f5-97cf-4589-a557-ce17ccd6b10d"
+  name          = "Carmen Littel"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ef9a90fa-7f8f-4441-b58d-fc559a0bee1c"
+  workspace_id  = "4fdfb9af-007b-4c04-991b-eb057f07c546"
 }

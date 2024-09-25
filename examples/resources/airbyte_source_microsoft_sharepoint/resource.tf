@@ -9,30 +9,29 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
       }
     }
     folder_path  = "...my_folder_path..."
-    search_scope = "SHARED_ITEMS"
+    search_scope = "ALL"
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {
-        days_to_sync_if_history_is_full = 0
+        days_to_sync_if_history_is_full = 9
         format = {
           avro_format = {
-            double_as_string = false
+            double_as_string = true
           }
         }
         globs = [
           "...",
         ]
         input_schema                                = "...my_input_schema..."
-        name                                        = "Rosalie Schmitt"
-        primary_key                                 = "...my_primary_key..."
-        recent_n_files_to_read_for_schema_discovery = 9
+        name                                        = "Jeremiah Bechtelar"
+        recent_n_files_to_read_for_schema_discovery = 10
         schemaless                                  = false
-        validation_policy                           = "Emit Record"
+        validation_policy                           = "Wait for Discover"
       },
     ]
   }
-  definition_id = "2bd5eb73-d022-4a60-8737-f9f9cf17c9c1"
-  name          = "Jackie Bergstrom"
+  definition_id = "67bbea9f-5a35-4d1b-90fb-6321f6b4ca64"
+  name          = "Beverly Ondricka"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "61900dfc-3504-41fc-9cac-22262ef24d92"
+  workspace_id  = "8aec8fed-b8fc-4353-a7bf-ee523e36b74e"
 }

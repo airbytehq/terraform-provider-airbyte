@@ -215,8 +215,6 @@ type SourceHarvestUpdate struct {
 	AccountID string `json:"account_id"`
 	// Choose how to authenticate to Harvest.
 	Credentials *SourceHarvestUpdateAuthenticationMechanism `json:"credentials,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
-	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	ReplicationStartDate time.Time `json:"replication_start_date"`
 }
@@ -244,13 +242,6 @@ func (o *SourceHarvestUpdate) GetCredentials() *SourceHarvestUpdateAuthenticatio
 		return nil
 	}
 	return o.Credentials
-}
-
-func (o *SourceHarvestUpdate) GetReplicationEndDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.ReplicationEndDate
 }
 
 func (o *SourceHarvestUpdate) GetReplicationStartDate() time.Time {

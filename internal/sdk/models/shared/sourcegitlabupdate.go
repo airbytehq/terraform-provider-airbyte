@@ -215,12 +215,8 @@ type SourceGitlabUpdate struct {
 	// Please enter your basic URL from GitLab instance.
 	APIURL      *string                               `default:"gitlab.com" json:"api_url"`
 	Credentials SourceGitlabUpdateAuthorizationMethod `json:"credentials"`
-	// [DEPRECATED] Space-delimited list of groups. e.g. airbyte.io.
-	Groups *string `json:"groups,omitempty"`
 	// List of groups. e.g. airbyte.io.
 	GroupsList []string `json:"groups_list,omitempty"`
-	// [DEPRECATED] Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
-	Projects *string `json:"projects,omitempty"`
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
 	ProjectsList []string `json:"projects_list,omitempty"`
 	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. Optional. If not set, all data will be replicated. All data generated after this date will be replicated.
@@ -252,25 +248,11 @@ func (o *SourceGitlabUpdate) GetCredentials() SourceGitlabUpdateAuthorizationMet
 	return o.Credentials
 }
 
-func (o *SourceGitlabUpdate) GetGroups() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Groups
-}
-
 func (o *SourceGitlabUpdate) GetGroupsList() []string {
 	if o == nil {
 		return nil
 	}
 	return o.GroupsList
-}
-
-func (o *SourceGitlabUpdate) GetProjects() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Projects
 }
 
 func (o *SourceGitlabUpdate) GetProjectsList() []string {

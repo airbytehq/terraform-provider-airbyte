@@ -47,12 +47,6 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 			SourceGoogleSearchConsoleServiceAccountKeyAuthentication: sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		}
 	}
-	customReports := new(string)
-	if !r.Configuration.CustomReports.IsUnknown() && !r.Configuration.CustomReports.IsNull() {
-		*customReports = r.Configuration.CustomReports.ValueString()
-	} else {
-		customReports = nil
-	}
 	var customReportsArray []shared.SourceGoogleSearchConsoleCustomReportConfig = []shared.SourceGoogleSearchConsoleCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
 		var dimensions []shared.SourceGoogleSearchConsoleValidEnums = []shared.SourceGoogleSearchConsoleValidEnums{}
@@ -89,7 +83,6 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	configuration := shared.SourceGoogleSearchConsole{
 		Authorization:      authorization,
-		CustomReports:      customReports,
 		CustomReportsArray: customReportsArray,
 		DataState:          dataState,
 		EndDate:            endDate,
@@ -168,12 +161,6 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 			SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication: sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication,
 		}
 	}
-	customReports := new(string)
-	if !r.Configuration.CustomReports.IsUnknown() && !r.Configuration.CustomReports.IsNull() {
-		*customReports = r.Configuration.CustomReports.ValueString()
-	} else {
-		customReports = nil
-	}
 	var customReportsArray []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig = []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
 		var dimensions []shared.SourceGoogleSearchConsoleUpdateValidEnums = []shared.SourceGoogleSearchConsoleUpdateValidEnums{}
@@ -210,7 +197,6 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	configuration := shared.SourceGoogleSearchConsoleUpdate{
 		Authorization:      authorization,
-		CustomReports:      customReports,
 		CustomReportsArray: customReportsArray,
 		DataState:          dataState,
 		EndDate:            endDate,

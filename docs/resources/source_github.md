@@ -15,8 +15,7 @@ SourceGithub Resource
 ```terraform
 resource "airbyte_source_github" "my_source_github" {
   configuration = {
-    api_url = "https://github.company.org"
-    branch  = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
+    api_url = "https://github.com"
     branches = [
       "...",
     ]
@@ -31,13 +30,12 @@ resource "airbyte_source_github" "my_source_github" {
     repositories = [
       "...",
     ]
-    repository = "airbytehq/*"
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "3206afb3-a724-4a60-9401-34e58876cb03"
-  name          = "Jan Bernier"
+  definition_id = "7f557094-a97b-4635-ad53-391630fd2f13"
+  name          = "Lynette Gulgowski"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "ae06a57c-7c57-47af-9e5b-addd2747bbc7"
+  workspace_id  = "ef253f33-ac13-45dc-90f6-3794a97d5acf"
 }
 ```
 
@@ -71,10 +69,8 @@ Required:
 Optional:
 
 - `api_url` (String) Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub. Default: "https://api.github.com/"
-- `branch` (String) (DEPRCATED) Space-delimited list of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 - `branches` (List of String) List of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 - `max_waiting_time` (Number) Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync. Default: 10
-- `repository` (String) (DEPRCATED) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 - `start_date` (String) The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 
 <a id="nestedatt--configuration--credentials"></a>

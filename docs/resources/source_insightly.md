@@ -18,10 +18,10 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date = "2021-03-01T00:00:00Z"
     token      = "...my_token..."
   }
-  definition_id = "9e7c8aee-eb09-4ffd-b753-fe46a1403ba1"
-  name          = "Mr. Gilberto Lebsack"
+  definition_id = "6a28df31-96ea-4920-bcb7-876e75a531f3"
+  name          = "Mr. Bradley Luettgen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cfb42284-9b58-4575-9fd7-9d74aa20ea69"
+  workspace_id  = "3b9d6749-76db-4e11-ac78-116c70bfb326"
 }
 ```
 

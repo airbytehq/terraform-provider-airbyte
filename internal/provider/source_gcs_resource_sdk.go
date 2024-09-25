@@ -115,12 +115,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.SourceGcsInferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.SourceGcsInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -161,7 +155,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -291,19 +284,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name1 := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -327,9 +308,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 			Format:                               format,
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
-			LegacyPrefix:                         legacyPrefix,
 			Name:                                 name1,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,
@@ -481,12 +460,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
-			inferenceType := new(shared.SourceGcsUpdateInferenceType)
-			if !streamsItem.Format.CSVFormat.InferenceType.IsUnknown() && !streamsItem.Format.CSVFormat.InferenceType.IsNull() {
-				*inferenceType = shared.SourceGcsUpdateInferenceType(streamsItem.Format.CSVFormat.InferenceType.ValueString())
-			} else {
-				inferenceType = nil
-			}
 			var nullValues []string = []string{}
 			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
 				nullValues = append(nullValues, nullValuesItem.ValueString())
@@ -527,7 +500,6 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 				FalseValues:                  falseValues,
 				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-				InferenceType:                inferenceType,
 				NullValues:                   nullValues,
 				QuoteChar:                    quoteChar,
 				SkipRowsAfterHeader:          skipRowsAfterHeader,
@@ -657,19 +629,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 		} else {
 			inputSchema = nil
 		}
-		legacyPrefix := new(string)
-		if !streamsItem.LegacyPrefix.IsUnknown() && !streamsItem.LegacyPrefix.IsNull() {
-			*legacyPrefix = streamsItem.LegacyPrefix.ValueString()
-		} else {
-			legacyPrefix = nil
-		}
 		name1 := streamsItem.Name.ValueString()
-		primaryKey := new(string)
-		if !streamsItem.PrimaryKey.IsUnknown() && !streamsItem.PrimaryKey.IsNull() {
-			*primaryKey = streamsItem.PrimaryKey.ValueString()
-		} else {
-			primaryKey = nil
-		}
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
@@ -693,9 +653,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsPutRequest() *shared.SourceGcs
 			Format:                               format,
 			Globs:                                globs,
 			InputSchema:                          inputSchema,
-			LegacyPrefix:                         legacyPrefix,
 			Name:                                 name1,
-			PrimaryKey:                           primaryKey,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 			Schemaless:                           schemaless,
 			ValidationPolicy:                     validationPolicy,

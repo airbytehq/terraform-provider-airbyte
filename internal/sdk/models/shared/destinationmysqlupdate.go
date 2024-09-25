@@ -314,6 +314,8 @@ type DestinationMysqlUpdate struct {
 	Port *int64 `default:"3306" json:"port"`
 	// The database to write raw tables into
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"true" json:"ssl"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationMysqlUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// Username to use to access the database.
@@ -378,6 +380,13 @@ func (o *DestinationMysqlUpdate) GetRawDataSchema() *string {
 		return nil
 	}
 	return o.RawDataSchema
+}
+
+func (o *DestinationMysqlUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *DestinationMysqlUpdate) GetTunnelMethod() *DestinationMysqlUpdateSSHTunnelMethod {

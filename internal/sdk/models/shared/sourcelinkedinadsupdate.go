@@ -346,6 +346,8 @@ type SourceLinkedinAdsUpdate struct {
 	AccountIds         []int64                                `json:"account_ids,omitempty"`
 	AdAnalyticsReports []AdAnalyticsReportConfiguration       `json:"ad_analytics_reports,omitempty"`
 	Credentials        *SourceLinkedinAdsUpdateAuthentication `json:"credentials,omitempty"`
+	// How far into the past to look for records. (in days)
+	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }
@@ -380,6 +382,13 @@ func (o *SourceLinkedinAdsUpdate) GetCredentials() *SourceLinkedinAdsUpdateAuthe
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceLinkedinAdsUpdate) GetLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindow
 }
 
 func (o *SourceLinkedinAdsUpdate) GetStartDate() types.Date {

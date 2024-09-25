@@ -46,16 +46,9 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaCreateRequest() *shared.So
 		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
 		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
 	}
-	testMode := new(bool)
-	if !r.Configuration.TestMode.IsUnknown() && !r.Configuration.TestMode.IsNull() {
-		*testMode = r.Configuration.TestMode.ValueBool()
-	} else {
-		testMode = nil
-	}
 	configuration := shared.SourceAsana{
 		Credentials:           credentials,
 		OrganizationExportIds: organizationExportIds,
-		TestMode:              testMode,
 	}
 	definitionID := new(string)
 	if !r.DefinitionID.IsUnknown() && !r.DefinitionID.IsNull() {
@@ -128,16 +121,9 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaPutRequest() *shared.Sourc
 		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
 		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
 	}
-	testMode := new(bool)
-	if !r.Configuration.TestMode.IsUnknown() && !r.Configuration.TestMode.IsNull() {
-		*testMode = r.Configuration.TestMode.ValueBool()
-	} else {
-		testMode = nil
-	}
 	configuration := shared.SourceAsanaUpdate{
 		Credentials:           credentials,
 		OrganizationExportIds: organizationExportIds,
-		TestMode:              testMode,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

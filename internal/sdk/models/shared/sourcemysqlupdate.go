@@ -877,6 +877,8 @@ type SourceMysqlUpdate struct {
 	Port *int64 `default:"3306" json:"port"`
 	// Configures how data is extracted from the database.
 	ReplicationMethod SourceMysqlUpdateUpdateMethod `json:"replication_method"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"true" json:"ssl"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 	SslMode *SourceMysqlUpdateSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -936,6 +938,13 @@ func (o *SourceMysqlUpdate) GetReplicationMethod() SourceMysqlUpdateUpdateMethod
 		return SourceMysqlUpdateUpdateMethod{}
 	}
 	return o.ReplicationMethod
+}
+
+func (o *SourceMysqlUpdate) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
 }
 
 func (o *SourceMysqlUpdate) GetSslMode() *SourceMysqlUpdateSSLModes {

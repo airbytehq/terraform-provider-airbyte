@@ -14,14 +14,14 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       database       = "AIRBYTE_DATABASE"
       default_schema = "AIRBYTE_SCHEMA"
       host           = "AIRBYTE_ACCOUNT"
-      role           = "AIRBYTE_ROLE"
+      role           = "ACCOUNTADMIN"
       username       = "AIRBYTE_USER"
       warehouse      = "AIRBYTE_WAREHOUSE"
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 9
-      chunk_size    = 2
+      chunk_overlap = 5
+      chunk_size    = 4
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -36,12 +36,12 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 4
+          split_level = 7
         }
       }
     }
   }
-  definition_id = "51e7d549-6735-4da2-93c8-6a8b9fef8f53"
-  name          = "Jessie Jones"
-  workspace_id  = "de30a86e-4df1-49fa-ac84-c31846ef3644"
+  definition_id = "8b9fef8f-5387-46e3-9e30-a86e4df19faa"
+  name          = "Willard Gerhold"
+  workspace_id  = "1846ef36-4419-46a0-8bb9-666e7d15e7ee"
 }

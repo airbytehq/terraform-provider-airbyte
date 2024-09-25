@@ -15,12 +15,6 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	} else {
 		apiURL = nil
 	}
-	branch := new(string)
-	if !r.Configuration.Branch.IsUnknown() && !r.Configuration.Branch.IsNull() {
-		*branch = r.Configuration.Branch.ValueString()
-	} else {
-		branch = nil
-	}
 	var branches []string = []string{}
 	for _, branchesItem := range r.Configuration.Branches {
 		branches = append(branches, branchesItem.ValueString())
@@ -74,12 +68,6 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
 	}
-	repository := new(string)
-	if !r.Configuration.Repository.IsUnknown() && !r.Configuration.Repository.IsNull() {
-		*repository = r.Configuration.Repository.ValueString()
-	} else {
-		repository = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -88,12 +76,10 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	}
 	configuration := shared.SourceGithub{
 		APIURL:         apiURL,
-		Branch:         branch,
 		Branches:       branches,
 		Credentials:    credentials,
 		MaxWaitingTime: maxWaitingTime,
 		Repositories:   repositories,
-		Repository:     repository,
 		StartDate:      startDate,
 	}
 	definitionID := new(string)
@@ -135,12 +121,6 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 		*apiURL = r.Configuration.APIURL.ValueString()
 	} else {
 		apiURL = nil
-	}
-	branch := new(string)
-	if !r.Configuration.Branch.IsUnknown() && !r.Configuration.Branch.IsNull() {
-		*branch = r.Configuration.Branch.ValueString()
-	} else {
-		branch = nil
 	}
 	var branches []string = []string{}
 	for _, branchesItem := range r.Configuration.Branches {
@@ -195,12 +175,6 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
 	}
-	repository := new(string)
-	if !r.Configuration.Repository.IsUnknown() && !r.Configuration.Repository.IsNull() {
-		*repository = r.Configuration.Repository.ValueString()
-	} else {
-		repository = nil
-	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -209,12 +183,10 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 	}
 	configuration := shared.SourceGithubUpdate{
 		APIURL:         apiURL,
-		Branch:         branch,
 		Branches:       branches,
 		Credentials:    credentials,
 		MaxWaitingTime: maxWaitingTime,
 		Repositories:   repositories,
-		Repository:     repository,
 		StartDate:      startDate,
 	}
 	name := r.Name.ValueString()

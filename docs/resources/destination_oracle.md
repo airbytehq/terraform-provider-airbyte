@@ -15,6 +15,11 @@ DestinationOracle Resource
 ```terraform
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
+    encryption = {
+      native_network_encryption_nne = {
+        encryption_algorithm = "3DES168"
+      }
+    }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
@@ -25,11 +30,11 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Emmalee.Towne89"
+    username = "Dolores.Cummerata25"
   }
-  definition_id = "895c9212-6184-452d-9432-f33897fec4ca"
-  name          = "Adrienne Lockman"
-  workspace_id  = "bf882725-c3c6-4bc3-9a6d-3f396b39ea0e"
+  definition_id = "b7b603cc-8cd8-487e-b603-813ef7fc0d17"
+  name          = "Eloise Hilpert"
+  workspace_id  = "14549f12-4218-42d1-9ef4-e895c9212618"
 }
 ```
 
@@ -62,12 +67,43 @@ Required:
 
 Optional:
 
+- `encryption` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--encryption))
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) The port of the database. Default: 1521
 - `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+
+<a id="nestedatt--configuration--encryption"></a>
+### Nested Schema for `configuration.encryption`
+
+Optional:
+
+- `native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--native_network_encryption_nne))
+- `tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--tls_encrypted_verify_certificate))
+- `unencrypted` (Attributes) Data transfer will not be encrypted. (see [below for nested schema](#nestedatt--configuration--encryption--unencrypted))
+
+<a id="nestedatt--configuration--encryption--native_network_encryption_nne"></a>
+### Nested Schema for `configuration.encryption.native_network_encryption_nne`
+
+Optional:
+
+- `encryption_algorithm` (String) This parameter defines the database encryption algorithm. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
+
+
+<a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.encryption.tls_encrypted_verify_certificate`
+
+Required:
+
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+
+
+<a id="nestedatt--configuration--encryption--unencrypted"></a>
+### Nested Schema for `configuration.encryption.unencrypted`
+
+
 
 <a id="nestedatt--configuration--tunnel_method"></a>
 ### Nested Schema for `configuration.tunnel_method`

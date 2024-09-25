@@ -28,6 +28,12 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 	} else {
 		port = nil
 	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
 	var tunnelMethod *shared.SourceClickhouseSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var sourceClickhouseNoTunnel *shared.SourceClickhouseNoTunnel
@@ -93,6 +99,7 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhouseCreateRequest() 
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}
@@ -149,6 +156,12 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
+	}
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
 	}
 	var tunnelMethod *shared.SourceClickhouseUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -215,6 +228,7 @@ func (r *SourceClickhouseResourceModel) ToSharedSourceClickhousePutRequest() *sh
 		JdbcURLParams: jdbcURLParams,
 		Password:      password,
 		Port:          port,
+		Ssl:           ssl,
 		TunnelMethod:  tunnelMethod,
 		Username:      username,
 	}

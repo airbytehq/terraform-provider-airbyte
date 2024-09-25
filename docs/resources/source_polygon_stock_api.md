@@ -15,20 +15,20 @@ SourcePolygonStockAPI Resource
 ```terraform
 resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
   configuration = {
-    adjusted      = "false"
+    adjusted      = "true"
     api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
-    limit         = 120
+    limit         = 100
     multiplier    = 2
-    sort          = "desc"
+    sort          = "asc"
     start_date    = "2020-10-14"
-    stocks_ticker = "IBM"
+    stocks_ticker = "MSFT"
     timespan      = "day"
   }
-  definition_id = "23c8e5e2-59fe-44ef-a493-875b5a324c61"
-  name          = "Tracey Paucek"
+  definition_id = "52a9e475-abff-4ba2-81e7-b6908ecd761f"
+  name          = "Sheryl Predovic V"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "bad07307-82c3-4e82-a825-101e3e25c699"
+  workspace_id  = "a0804c97-1e60-4235-9c09-fadad73b79d2"
 }
 ```
 

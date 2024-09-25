@@ -21,16 +21,16 @@ resource "airbyte_source_sftp" "my_source_sftp" {
       }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
-    file_types   = "csv,json"
+    file_types   = "csv"
     folder_path  = "/logs/2022"
     host         = "192.0.2.1"
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "b03b315a-f19b-4c4a-9418-c27e2e49fbe8"
-  name          = "Stella Hammes"
+  definition_id = "df9bf84b-784e-4daa-b2f4-24ed308606f0"
+  name          = "Wendell Dare"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "48e30ccc-b1d3-49dd-bc64-9b7a58a56364"
+  workspace_id  = "2de7b1a9-3e59-415f-a584-4c8d7f9e67ba"
 }
 ```
 

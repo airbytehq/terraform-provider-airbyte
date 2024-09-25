@@ -3,11 +3,12 @@
 package types
 
 type SourceFileStorageProvider struct {
-	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage        `tfsdk:"az_blob_azure_blob_storage" tfPlanOnly:"true"`
-	GCSGoogleCloudStorage          *GCSGoogleCloudStorage         `tfsdk:"gcs_google_cloud_storage" tfPlanOnly:"true"`
-	HTTPSPublicWeb                 *HTTPSPublicWeb                `tfsdk:"https_public_web" tfPlanOnly:"true"`
-	S3AmazonWebServices            *SourceFileS3AmazonWebServices `tfsdk:"s3_amazon_web_services" tfPlanOnly:"true"`
-	SCPSecureCopyProtocol          *SCPSecureCopyProtocol         `tfsdk:"scp_secure_copy_protocol" tfPlanOnly:"true"`
-	SFTPSecureFileTransferProtocol *SCPSecureCopyProtocol         `tfsdk:"sftp_secure_file_transfer_protocol" tfPlanOnly:"true"`
-	SSHSecureShell                 *SCPSecureCopyProtocol         `tfsdk:"ssh_secure_shell" tfPlanOnly:"true"`
+	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage `tfsdk:"az_blob_azure_blob_storage" tfPlanOnly:"true"`
+	GCSGoogleCloudStorage          *GCSGoogleCloudStorage  `tfsdk:"gcs_google_cloud_storage" tfPlanOnly:"true"`
+	HTTPSPublicWeb                 *HTTPSPublicWeb         `tfsdk:"https_public_web" tfPlanOnly:"true"`
+	LocalFilesystemLimited         *Fake                   `tfsdk:"local_filesystem_limited" tfPlanOnly:"true"`
+	S3AmazonWebServices            *S3AmazonWebServices    `tfsdk:"s3_amazon_web_services" tfPlanOnly:"true"`
+	SCPSecureCopyProtocol          *SCPSecureCopyProtocol  `tfsdk:"scp_secure_copy_protocol" tfPlanOnly:"true"`
+	SFTPSecureFileTransferProtocol *SCPSecureCopyProtocol  `tfsdk:"sftp_secure_file_transfer_protocol" tfPlanOnly:"true"`
+	SSHSecureShell                 *SCPSecureCopyProtocol  `tfsdk:"ssh_secure_shell" tfPlanOnly:"true"`
 }

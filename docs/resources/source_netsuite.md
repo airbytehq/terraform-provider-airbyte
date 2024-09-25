@@ -24,12 +24,12 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 9
+    window_in_days = 1
   }
-  definition_id = "d4796116-8b4f-4a72-a2d2-a48f976dd11d"
-  name          = "Brian Marvin"
+  definition_id = "47c3e6c8-bd1c-4cca-93b1-c40652931936"
+  name          = "Patsy Rowe"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9375f622-7890-4d41-b139-19c925e38651"
+  workspace_id  = "83b58652-384b-4db8-a1f9-c8efa40dc207"
 }
 ```
 

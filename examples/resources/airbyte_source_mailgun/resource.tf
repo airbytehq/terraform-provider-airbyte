@@ -4,8 +4,8 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
     private_key   = "...my_private_key..."
     start_date    = "2023-08-01T00:00:00Z"
   }
-  definition_id = "b03d25be-e3db-4adc-877c-b62b59b9f1ee"
-  name          = "Wanda Greenfelder"
+  definition_id = "28c6eefe-59b7-42db-a240-7ce310da7633"
+  name          = "Samantha Becker"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "78a5bcbb-c2cb-483b-ac4d-d4d42907741e"
+  workspace_id  = "fec241f7-3646-4e1c-8795-83a59a825531"
 }

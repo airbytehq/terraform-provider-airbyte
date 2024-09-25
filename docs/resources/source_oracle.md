@@ -22,25 +22,25 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     }
     encryption = {
       native_network_encryption_nne = {
-        encryption_algorithm = "3DES168"
+        encryption_algorithm = "AES256"
       }
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 9
+    port            = 10
     schemas = [
       "...",
     ]
     tunnel_method = {
       no_tunnel = {}
     }
-    username = "Jammie.Steuber"
+    username = "Nicole_Abernathy"
   }
-  definition_id = "9b8b6b2c-0920-4aa8-be08-607521b21ea9"
-  name          = "Edmund Mraz DDS"
+  definition_id = "d3b8cc64-e95a-47a3-a92d-b06d3b499dcb"
+  name          = "Oliver Torp"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "88f1ee12-f8a7-4db0-98a7-41266a87d389"
+  workspace_id  = "afcb0631-8407-4294-84d2-b8965caababe"
 }
 ```
 
@@ -68,13 +68,13 @@ resource "airbyte_source_oracle" "my_source_oracle" {
 
 Required:
 
-- `encryption` (Attributes) The encryption method with is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--encryption))
 - `host` (String) Hostname of the database.
 - `username` (String) The username which is used to access the database.
 
 Optional:
 
 - `connection_data` (Attributes) Connect data that will be used for DB connection (see [below for nested schema](#nestedatt--configuration--connection_data))
+- `encryption` (Attributes) The encryption method with is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--encryption))
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database.
@@ -84,31 +84,6 @@ Oracle Corporations recommends the following port numbers:
 Default: 1521
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
-
-<a id="nestedatt--configuration--encryption"></a>
-### Nested Schema for `configuration.encryption`
-
-Optional:
-
-- `native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--native_network_encryption_nne))
-- `tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--tls_encrypted_verify_certificate))
-
-<a id="nestedatt--configuration--encryption--native_network_encryption_nne"></a>
-### Nested Schema for `configuration.encryption.native_network_encryption_nne`
-
-Optional:
-
-- `encryption_algorithm` (String) This parameter defines what encryption algorithm is used. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
-
-
-<a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>
-### Nested Schema for `configuration.encryption.tls_encrypted_verify_certificate`
-
-Required:
-
-- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
-
-
 
 <a id="nestedatt--configuration--connection_data"></a>
 ### Nested Schema for `configuration.connection_data`
@@ -132,6 +107,36 @@ Required:
 Required:
 
 - `sid` (String)
+
+
+
+<a id="nestedatt--configuration--encryption"></a>
+### Nested Schema for `configuration.encryption`
+
+Optional:
+
+- `native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--native_network_encryption_nne))
+- `tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--tls_encrypted_verify_certificate))
+- `unencrypted` (Attributes) Data transfer will not be encrypted. (see [below for nested schema](#nestedatt--configuration--encryption--unencrypted))
+
+<a id="nestedatt--configuration--encryption--native_network_encryption_nne"></a>
+### Nested Schema for `configuration.encryption.native_network_encryption_nne`
+
+Optional:
+
+- `encryption_algorithm` (String) This parameter defines what encryption algorithm is used. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
+
+
+<a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.encryption.tls_encrypted_verify_certificate`
+
+Required:
+
+- `ssl_certificate` (String, Sensitive) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+
+
+<a id="nestedatt--configuration--encryption--unencrypted"></a>
+### Nested Schema for `configuration.encryption.unencrypted`
 
 
 

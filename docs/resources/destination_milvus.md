@@ -30,14 +30,14 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       }
       collection   = "...my_collection..."
       db           = "...my_db..."
-      host         = "tcp://host.docker.internal:19530"
+      host         = "tcp://my-local-milvus:19530"
       text_field   = "...my_text_field..."
       vector_field = "...my_vector_field..."
     }
-    omit_raw_text = true
+    omit_raw_text = false
     processing = {
-      chunk_overlap = 6
-      chunk_size    = 4
+      chunk_overlap = 3
+      chunk_size    = 0
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
@@ -52,14 +52,14 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 2
+          split_level = 7
         }
       }
     }
   }
-  definition_id = "5a4e1801-23f0-4d76-bb78-bf74fa22de12"
-  name          = "Jenny Braun"
-  workspace_id  = "f134d000-7497-474a-a87c-30892ffb0f41"
+  definition_id = "78cf13c3-589b-4c3e-aba6-3d3987f09ed8"
+  name          = "Ms. Marilyn Sporer"
+  workspace_id  = "ddbef1f8-7bb5-4069-a16a-5a735a4e1801"
 }
 ```
 

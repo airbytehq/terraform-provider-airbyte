@@ -3,8 +3,8 @@ resource "airbyte_source_dremio" "my_source_dremio" {
     api_key  = "...my_api_key..."
     base_url = "...my_base_url..."
   }
-  definition_id = "713464ed-5bf6-4d67-b06c-c548e68cfaef"
-  name          = "Dr. Tom Langworth"
+  definition_id = "4b8db33d-2b3a-427b-8b34-2a10fbc47ca7"
+  name          = "Lucy Bruen"
   secret_id     = "...my_secret_id..."
-  workspace_id  = "143ee10f-8279-4e42-bb2c-340e1d4b428b"
+  workspace_id  = "037c7eef-972d-4f3c-94a3-49fde89ab276"
 }

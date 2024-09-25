@@ -9,6 +9,269 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type DestinationOracleUpdateSchemasEncryptionMethod string
+
+const (
+	DestinationOracleUpdateSchemasEncryptionMethodEncryptedVerifyCertificate DestinationOracleUpdateSchemasEncryptionMethod = "encrypted_verify_certificate"
+)
+
+func (e DestinationOracleUpdateSchemasEncryptionMethod) ToPointer() *DestinationOracleUpdateSchemasEncryptionMethod {
+	return &e
+}
+func (e *DestinationOracleUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "encrypted_verify_certificate":
+		*e = DestinationOracleUpdateSchemasEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationOracleUpdateSchemasEncryptionMethod: %v", v)
+	}
+}
+
+// TLSEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
+type TLSEncryptedVerifyCertificate struct {
+	encryptionMethod *DestinationOracleUpdateSchemasEncryptionMethod `const:"encrypted_verify_certificate" json:"encryption_method"`
+	// Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
+	SslCertificate string `json:"ssl_certificate"`
+}
+
+func (t TLSEncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TLSEncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TLSEncryptedVerifyCertificate) GetEncryptionMethod() *DestinationOracleUpdateSchemasEncryptionMethod {
+	return DestinationOracleUpdateSchemasEncryptionMethodEncryptedVerifyCertificate.ToPointer()
+}
+
+func (o *TLSEncryptedVerifyCertificate) GetSslCertificate() string {
+	if o == nil {
+		return ""
+	}
+	return o.SslCertificate
+}
+
+// EncryptionAlgorithm - This parameter defines the database encryption algorithm.
+type EncryptionAlgorithm string
+
+const (
+	EncryptionAlgorithmAes256      EncryptionAlgorithm = "AES256"
+	EncryptionAlgorithmRc456       EncryptionAlgorithm = "RC4_56"
+	EncryptionAlgorithmThreeDes168 EncryptionAlgorithm = "3DES168"
+)
+
+func (e EncryptionAlgorithm) ToPointer() *EncryptionAlgorithm {
+	return &e
+}
+func (e *EncryptionAlgorithm) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "AES256":
+		fallthrough
+	case "RC4_56":
+		fallthrough
+	case "3DES168":
+		*e = EncryptionAlgorithm(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EncryptionAlgorithm: %v", v)
+	}
+}
+
+type DestinationOracleUpdateEncryptionMethod string
+
+const (
+	DestinationOracleUpdateEncryptionMethodClientNne DestinationOracleUpdateEncryptionMethod = "client_nne"
+)
+
+func (e DestinationOracleUpdateEncryptionMethod) ToPointer() *DestinationOracleUpdateEncryptionMethod {
+	return &e
+}
+func (e *DestinationOracleUpdateEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_nne":
+		*e = DestinationOracleUpdateEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationOracleUpdateEncryptionMethod: %v", v)
+	}
+}
+
+// NativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
+type NativeNetworkEncryptionNNE struct {
+	// This parameter defines the database encryption algorithm.
+	EncryptionAlgorithm *EncryptionAlgorithm                     `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    *DestinationOracleUpdateEncryptionMethod `const:"client_nne" json:"encryption_method"`
+}
+
+func (n NativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
+}
+
+func (n *NativeNetworkEncryptionNNE) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *NativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *EncryptionAlgorithm {
+	if o == nil {
+		return nil
+	}
+	return o.EncryptionAlgorithm
+}
+
+func (o *NativeNetworkEncryptionNNE) GetEncryptionMethod() *DestinationOracleUpdateEncryptionMethod {
+	return DestinationOracleUpdateEncryptionMethodClientNne.ToPointer()
+}
+
+type EncryptionMethod string
+
+const (
+	EncryptionMethodUnencrypted EncryptionMethod = "unencrypted"
+)
+
+func (e EncryptionMethod) ToPointer() *EncryptionMethod {
+	return &e
+}
+func (e *EncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "unencrypted":
+		*e = EncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EncryptionMethod: %v", v)
+	}
+}
+
+// DestinationOracleUpdateUnencrypted - Data transfer will not be encrypted.
+type DestinationOracleUpdateUnencrypted struct {
+	encryptionMethod *EncryptionMethod `const:"unencrypted" json:"encryption_method"`
+}
+
+func (d DestinationOracleUpdateUnencrypted) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationOracleUpdateUnencrypted) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationOracleUpdateUnencrypted) GetEncryptionMethod() *EncryptionMethod {
+	return EncryptionMethodUnencrypted.ToPointer()
+}
+
+type EncryptionType string
+
+const (
+	EncryptionTypeDestinationOracleUpdateUnencrypted EncryptionType = "destination-oracle-update_Unencrypted"
+	EncryptionTypeNativeNetworkEncryptionNNE         EncryptionType = "Native Network Encryption (NNE)"
+	EncryptionTypeTLSEncryptedVerifyCertificate      EncryptionType = "TLS Encrypted (verify certificate)"
+)
+
+// Encryption - The encryption method which is used when communicating with the database.
+type Encryption struct {
+	DestinationOracleUpdateUnencrypted *DestinationOracleUpdateUnencrypted
+	NativeNetworkEncryptionNNE         *NativeNetworkEncryptionNNE
+	TLSEncryptedVerifyCertificate      *TLSEncryptedVerifyCertificate
+
+	Type EncryptionType
+}
+
+func CreateEncryptionDestinationOracleUpdateUnencrypted(destinationOracleUpdateUnencrypted DestinationOracleUpdateUnencrypted) Encryption {
+	typ := EncryptionTypeDestinationOracleUpdateUnencrypted
+
+	return Encryption{
+		DestinationOracleUpdateUnencrypted: &destinationOracleUpdateUnencrypted,
+		Type:                               typ,
+	}
+}
+
+func CreateEncryptionNativeNetworkEncryptionNNE(nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE) Encryption {
+	typ := EncryptionTypeNativeNetworkEncryptionNNE
+
+	return Encryption{
+		NativeNetworkEncryptionNNE: &nativeNetworkEncryptionNNE,
+		Type:                       typ,
+	}
+}
+
+func CreateEncryptionTLSEncryptedVerifyCertificate(tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate) Encryption {
+	typ := EncryptionTypeTLSEncryptedVerifyCertificate
+
+	return Encryption{
+		TLSEncryptedVerifyCertificate: &tlsEncryptedVerifyCertificate,
+		Type:                          typ,
+	}
+}
+
+func (u *Encryption) UnmarshalJSON(data []byte) error {
+
+	var destinationOracleUpdateUnencrypted DestinationOracleUpdateUnencrypted = DestinationOracleUpdateUnencrypted{}
+	if err := utils.UnmarshalJSON(data, &destinationOracleUpdateUnencrypted, "", true, true); err == nil {
+		u.DestinationOracleUpdateUnencrypted = &destinationOracleUpdateUnencrypted
+		u.Type = EncryptionTypeDestinationOracleUpdateUnencrypted
+		return nil
+	}
+
+	var nativeNetworkEncryptionNNE NativeNetworkEncryptionNNE = NativeNetworkEncryptionNNE{}
+	if err := utils.UnmarshalJSON(data, &nativeNetworkEncryptionNNE, "", true, true); err == nil {
+		u.NativeNetworkEncryptionNNE = &nativeNetworkEncryptionNNE
+		u.Type = EncryptionTypeNativeNetworkEncryptionNNE
+		return nil
+	}
+
+	var tlsEncryptedVerifyCertificate TLSEncryptedVerifyCertificate = TLSEncryptedVerifyCertificate{}
+	if err := utils.UnmarshalJSON(data, &tlsEncryptedVerifyCertificate, "", true, true); err == nil {
+		u.TLSEncryptedVerifyCertificate = &tlsEncryptedVerifyCertificate
+		u.Type = EncryptionTypeTLSEncryptedVerifyCertificate
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Encryption", string(data))
+}
+
+func (u Encryption) MarshalJSON() ([]byte, error) {
+	if u.DestinationOracleUpdateUnencrypted != nil {
+		return utils.MarshalJSON(u.DestinationOracleUpdateUnencrypted, "", true)
+	}
+
+	if u.NativeNetworkEncryptionNNE != nil {
+		return utils.MarshalJSON(u.NativeNetworkEncryptionNNE, "", true)
+	}
+
+	if u.TLSEncryptedVerifyCertificate != nil {
+		return utils.MarshalJSON(u.TLSEncryptedVerifyCertificate, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Encryption: all fields are null")
+}
+
 // DestinationOracleUpdateSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
 type DestinationOracleUpdateSchemasTunnelMethodTunnelMethod string
 
@@ -300,6 +563,8 @@ func (u DestinationOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type DestinationOracleUpdate struct {
+	// The encryption method which is used when communicating with the database.
+	Encryption *Encryption `json:"encryption,omitempty"`
 	// The hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
@@ -329,6 +594,13 @@ func (d *DestinationOracleUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationOracleUpdate) GetEncryption() *Encryption {
+	if o == nil {
+		return nil
+	}
+	return o.Encryption
 }
 
 func (o *DestinationOracleUpdate) GetHost() string {

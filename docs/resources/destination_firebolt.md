@@ -30,9 +30,9 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
       }
     }
   }
-  definition_id = "4562efb7-ef5d-437e-a6e5-cbc1c0786ea3"
-  name          = "Alfonso Grimes"
-  workspace_id  = "c4202097-dcad-41af-a414-5a8ead644361"
+  definition_id = "57da65ed-465e-4758-afd2-ad38ed7ed0e5"
+  name          = "Mr. Benjamin Collins"
+  workspace_id  = "c7d0e4e5-095e-4d94-b4ec-b397d064562e"
 }
 ```
 
