@@ -1,9 +1,10 @@
 .PHONY: all docs
-all: speakeasy docs
+all: speakeasy
 
 speakeasy:
-	speakeasy generate sdk --lang terraform -o . -s airbyte.yaml
+	speakeasy run
 
 docs:
+	go mod download
 	go generate ./...
 
