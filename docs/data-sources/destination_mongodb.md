@@ -31,5 +31,3 @@ data "airbyte_destination_mongodb" "my_destination_mongodb" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

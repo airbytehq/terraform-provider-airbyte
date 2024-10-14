@@ -17,10 +17,10 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "6c6167f1-e8f0-4042-b922-10b5c8f204e6"
-  name          = "Clinton Kunde"
+  definition_id = "ee4f5101-585f-409a-b84b-23d08728538c"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "47eb6bab-c0f9-4b18-b2ea-fdc453fb6a01"
+  workspace_id  = "de002c3a-71ed-41e6-84a0-69f88d5d5733"
 }
 ```
 

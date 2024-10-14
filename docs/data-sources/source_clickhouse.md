@@ -31,5 +31,3 @@ data "airbyte_source_clickhouse" "my_source_clickhouse" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

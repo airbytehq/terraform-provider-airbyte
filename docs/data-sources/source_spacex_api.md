@@ -31,5 +31,3 @@ data "airbyte_source_spacex_api" "my_source_spacexapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

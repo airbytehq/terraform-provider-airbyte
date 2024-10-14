@@ -31,5 +31,3 @@ data "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataap
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

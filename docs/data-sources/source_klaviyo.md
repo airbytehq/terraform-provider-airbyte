@@ -31,5 +31,3 @@ data "airbyte_source_klaviyo" "my_source_klaviyo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

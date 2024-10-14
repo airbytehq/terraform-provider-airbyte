@@ -31,5 +31,3 @@ data "airbyte_source_my_hours" "my_source_myhours" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -2,8 +2,8 @@ resource "airbyte_source_canny" "my_source_canny" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "16442d85-f5b6-4382-a70e-18a8172f9322"
-  name          = "Rebecca Satterfield"
+  definition_id = "1669bb94-0387-4a8c-a15d-5b4462394d07"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9cbaa542-e6e0-4809-a1d8-4c3fbc24f860"
+  workspace_id  = "b8c01cfc-349e-44ef-9eb4-3b1bf0259ecc"
 }

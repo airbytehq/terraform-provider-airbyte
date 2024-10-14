@@ -7,12 +7,26 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     port            = 8123
     ssl             = true
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Brittany75"
+    username = "...my_username..."
   }
-  definition_id = "5465b457-a2c2-4618-be1b-91dcce8e649d"
-  name          = "Jessie Kunze"
+  definition_id = "00b2c59e-fb58-46ac-b669-7fa91692b680"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b58122af-6a8a-4c65-936a-205f1e4d309e"
+  workspace_id  = "d293fe7d-2312-4e0a-bed1-1c816b32f541"
 }

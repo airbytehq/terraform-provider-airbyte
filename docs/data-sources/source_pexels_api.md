@@ -31,5 +31,3 @@ data "airbyte_source_pexels_api" "my_source_pexelsapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

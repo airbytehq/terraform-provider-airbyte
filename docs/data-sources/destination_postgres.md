@@ -31,5 +31,3 @@ data "airbyte_destination_postgres" "my_destination_postgres" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

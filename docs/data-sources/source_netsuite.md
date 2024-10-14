@@ -31,5 +31,3 @@ data "airbyte_source_netsuite" "my_source_netsuite" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

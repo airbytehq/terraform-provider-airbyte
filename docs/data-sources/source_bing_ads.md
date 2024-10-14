@@ -31,5 +31,3 @@ data "airbyte_source_bing_ads" "my_source_bingads" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

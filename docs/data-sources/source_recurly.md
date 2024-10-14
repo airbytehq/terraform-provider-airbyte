@@ -31,5 +31,3 @@ data "airbyte_source_recurly" "my_source_recurly" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

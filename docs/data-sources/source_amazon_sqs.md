@@ -31,5 +31,3 @@ data "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

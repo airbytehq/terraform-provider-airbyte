@@ -31,5 +31,3 @@ data "airbyte_destination_databricks" "my_destination_databricks" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

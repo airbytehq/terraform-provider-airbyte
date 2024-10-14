@@ -4,8 +4,8 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date = "2022-01-01"
     url        = "...my_url..."
   }
-  definition_id = "78363f1b-e7e9-4b4a-abfc-5ff7146c36bb"
-  name          = "Victoria Feest"
+  definition_id = "4a4cd606-ed40-4f24-92ed-025d55b2820e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f0beca93-a8ae-478e-9e53-7d96eb6d5dc1"
+  workspace_id  = "6919f880-78f8-4f27-84d5-724da2f0b39a"
 }

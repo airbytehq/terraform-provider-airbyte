@@ -31,5 +31,3 @@ data "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedinsigh
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

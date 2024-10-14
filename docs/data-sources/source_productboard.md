@@ -31,5 +31,3 @@ data "airbyte_source_productboard" "my_source_productboard" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -19,28 +19,51 @@ resource "airbyte_source_oracle" "my_source_oracle" {
       service_name = {
         service_name = "...my_service_name..."
       }
+      system_idsid = {
+        sid = "...my_sid..."
+      }
     }
     encryption = {
       native_network_encryption_nne = {
-        encryption_algorithm = "AES256"
+        encryption_algorithm = "3DES168"
+      }
+      tls_encrypted_verify_certificate = {
+        ssl_certificate = "...my_ssl_certificate..."
+      }
+      unencrypted = {
+        # ...
       }
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 10
+    port            = 22568
     schemas = [
-      "...",
+      "..."
     ]
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Nicole_Abernathy"
+    username = "...my_username..."
   }
-  definition_id = "d3b8cc64-e95a-47a3-a92d-b06d3b499dcb"
-  name          = "Oliver Torp"
+  definition_id = "19b6db41-3eb9-40e4-9d70-9711de027975"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "afcb0631-8407-4294-84d2-b8965caababe"
+  workspace_id  = "a4ecddd5-3505-44b1-8fbf-25c1225b2856"
 }
 ```
 
@@ -124,7 +147,7 @@ Optional:
 
 Optional:
 
-- `encryption_algorithm` (String) This parameter defines what encryption algorithm is used. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
+- `encryption_algorithm` (String) This parameter defines what encryption algorithm is used. Default: "AES256"; must be one of ["AES256", "RC4_56", "3DES168"]
 
 
 <a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>

@@ -31,5 +31,3 @@ data "airbyte_source_rki_covid" "my_source_rkicovid" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

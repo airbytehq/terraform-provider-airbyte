@@ -31,5 +31,3 @@ data "airbyte_source_close_com" "my_source_closecom" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

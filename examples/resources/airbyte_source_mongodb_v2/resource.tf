@@ -7,19 +7,28 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
         connection_string     = "mongodb+srv://cluster0.abcd1.mongodb.net/"
         database              = "...my_database..."
         password              = "...my_password..."
+        schema_enforced       = true
+        username              = "...my_username..."
+      }
+      self_managed_replica_set = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        auth_source           = "admin"
+        connection_string     = "mongodb://example1.host.com:27017,example2.host.com:27017,example3.host.com:27017/"
+        database              = "...my_database..."
+        password              = "...my_password..."
         schema_enforced       = false
-        username              = "Austin_Blanda50"
+        username              = "...my_username..."
       }
     }
-    discover_sample_size                 = 6
-    initial_load_timeout_hours           = 1
-    initial_waiting_seconds              = 6
+    discover_sample_size                 = 95684
+    initial_load_timeout_hours           = 0
+    initial_waiting_seconds              = 7
     invalid_cdc_cursor_position_behavior = "Fail sync"
-    queue_size                           = 3
-    update_capture_mode                  = "Post Image"
+    queue_size                           = 4
+    update_capture_mode                  = "Lookup"
   }
-  definition_id = "e80aa298-0d84-4713-abef-014dd9af7c7e"
-  name          = "Cedric Fritsch"
+  definition_id = "e30b0d99-fa62-4e68-8f19-2a57eaddc53f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "09ea52c7-07cb-405c-8a8d-21cf34658e52"
+  workspace_id  = "fa7bf7db-d8dc-4773-80b5-3e3a9ea84f0d"
 }

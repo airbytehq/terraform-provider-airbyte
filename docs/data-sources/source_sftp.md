@@ -31,5 +31,3 @@ data "airbyte_source_sftp" "my_source_sftp" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

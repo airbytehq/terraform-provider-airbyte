@@ -31,5 +31,3 @@ data "airbyte_source_us_census" "my_source_uscensus" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

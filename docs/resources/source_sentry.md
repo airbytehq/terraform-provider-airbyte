@@ -17,16 +17,16 @@ resource "airbyte_source_sentry" "my_source_sentry" {
   configuration = {
     auth_token = "...my_auth_token..."
     discover_fields = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
-    hostname     = "essential-doctrine.net"
+    hostname     = "...my_hostname..."
     organization = "...my_organization..."
     project      = "...my_project..."
   }
-  definition_id = "352ddb04-c9bc-4e38-bd66-444a186797a7"
-  name          = "Mr. Robin Walker"
+  definition_id = "224b3e94-d53b-4e9f-81ae-9a2d6b899fdf"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "99e00879-e494-484a-b485-520644aee427"
+  workspace_id  = "f98e0e59-4799-4e21-9773-f1fd5decb3e6"
 }
 ```
 

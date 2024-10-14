@@ -31,5 +31,3 @@ data "airbyte_source_dynamodb" "my_source_dynamodb" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

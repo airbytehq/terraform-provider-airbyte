@@ -9,8 +9,8 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     }
     start_date = "2021-01-01"
   }
-  definition_id = "70494da2-1b79-4cfd-9baf-3821deb7264d"
-  name          = "Rufus McCullough"
+  definition_id = "552bff18-4067-44af-bc96-8a4b1825bd55"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fb531266-91bf-4b5d-b9ea-24da51fb73f4"
+  workspace_id  = "74a290f5-806c-40bd-8860-ace07aaedafd"
 }

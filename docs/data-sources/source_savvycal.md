@@ -31,5 +31,3 @@ data "airbyte_source_savvycal" "my_source_savvycal" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

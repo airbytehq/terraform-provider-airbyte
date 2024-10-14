@@ -31,5 +31,3 @@ data "airbyte_source_exchange_rates" "my_source_exchangerates" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

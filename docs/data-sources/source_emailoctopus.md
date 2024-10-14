@@ -31,5 +31,3 @@ data "airbyte_source_emailoctopus" "my_source_emailoctopus" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_shortio" "my_source_shortio" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

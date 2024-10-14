@@ -31,5 +31,3 @@ data "airbyte_source_pipedrive" "my_source_pipedrive" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

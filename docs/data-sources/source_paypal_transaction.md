@@ -31,5 +31,3 @@ data "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

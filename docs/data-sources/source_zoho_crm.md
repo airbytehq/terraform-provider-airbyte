@@ -31,5 +31,3 @@ data "airbyte_source_zoho_crm" "my_source_zohocrm" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

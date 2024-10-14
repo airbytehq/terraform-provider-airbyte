@@ -31,5 +31,3 @@ data "airbyte_source_postgres" "my_source_postgres" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

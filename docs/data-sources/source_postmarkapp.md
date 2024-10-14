@@ -31,5 +31,3 @@ data "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

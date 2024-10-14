@@ -31,5 +31,3 @@ data "airbyte_source_convex" "my_source_convex" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

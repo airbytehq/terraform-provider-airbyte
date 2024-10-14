@@ -31,5 +31,3 @@ data "airbyte_source_hubplanner" "my_source_hubplanner" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

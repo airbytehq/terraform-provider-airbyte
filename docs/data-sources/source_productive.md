@@ -31,5 +31,3 @@ data "airbyte_source_productive" "my_source_productive" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

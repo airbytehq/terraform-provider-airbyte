@@ -31,5 +31,3 @@ data "airbyte_source_customer_io" "my_source_customerio" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

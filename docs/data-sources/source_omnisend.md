@@ -31,5 +31,3 @@ data "airbyte_source_omnisend" "my_source_omnisend" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

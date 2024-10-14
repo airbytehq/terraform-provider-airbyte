@@ -2,8 +2,8 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "e08d80f6-94c4-48e9-90f8-4ccbad71dab0"
-  name          = "Mrs. Vickie Barrows"
+  definition_id = "1ae5ddc1-32e1-440d-abfd-bbc323d309da"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "124b6e7b-2083-4a37-b0c9-92762a38aa73"
+  workspace_id  = "03e45880-e36d-4da5-991d-5ad676e17dd1"
 }

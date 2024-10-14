@@ -31,5 +31,3 @@ data "airbyte_source_typeform" "my_source_typeform" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

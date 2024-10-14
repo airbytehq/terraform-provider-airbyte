@@ -31,5 +31,3 @@ data "airbyte_source_intercom" "my_source_intercom" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

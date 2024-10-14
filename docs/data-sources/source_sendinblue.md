@@ -31,5 +31,3 @@ data "airbyte_source_sendinblue" "my_source_sendinblue" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

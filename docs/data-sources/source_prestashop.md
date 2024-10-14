@@ -31,5 +31,3 @@ data "airbyte_source_prestashop" "my_source_prestashop" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_piwik" "my_source_piwik" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

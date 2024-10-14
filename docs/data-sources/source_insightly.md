@@ -31,5 +31,3 @@ data "airbyte_source_insightly" "my_source_insightly" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

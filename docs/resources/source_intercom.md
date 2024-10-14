@@ -16,15 +16,15 @@ SourceIntercom Resource
 resource "airbyte_source_intercom" "my_source_intercom" {
   configuration = {
     access_token            = "...my_access_token..."
-    activity_logs_time_step = 10
+    activity_logs_time_step = 30
     client_id               = "...my_client_id..."
     client_secret           = "...my_client_secret..."
     start_date              = "2020-11-16T00:00:00Z"
   }
-  definition_id = "20cd618d-7428-4068-92ca-7b2695261555"
-  name          = "Mrs. Maggie Kihn"
+  definition_id = "ba1133d3-c5a5-4970-9a43-797e5df4ec84"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "98a3f979-9a12-4d6e-b3e6-6d700d477245"
+  workspace_id  = "84e9b47b-01ac-499b-b969-63ece4bac1b1"
 }
 ```
 

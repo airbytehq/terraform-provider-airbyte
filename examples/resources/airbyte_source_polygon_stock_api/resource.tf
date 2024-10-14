@@ -4,14 +4,14 @@ resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
     api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
     limit         = 100
-    multiplier    = 2
+    multiplier    = 1
     sort          = "asc"
     start_date    = "2020-10-14"
-    stocks_ticker = "MSFT"
+    stocks_ticker = "IBM"
     timespan      = "day"
   }
-  definition_id = "52a9e475-abff-4ba2-81e7-b6908ecd761f"
-  name          = "Sheryl Predovic V"
+  definition_id = "4b695283-4e49-4369-9fc3-8a9878680f1b"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a0804c97-1e60-4235-9c09-fadad73b79d2"
+  workspace_id  = "107f0754-ac3a-433a-939c-817661495e42"
 }

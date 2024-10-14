@@ -31,5 +31,3 @@ data "airbyte_source_pinterest" "my_source_pinterest" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

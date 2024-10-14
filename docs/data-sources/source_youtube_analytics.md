@@ -31,5 +31,3 @@ data "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -7,7 +7,7 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     }
     spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  definition_id = "64a237e4-a59e-47bf-91d4-96bd14d08d4a"
-  name          = "Marcella Hand"
-  workspace_id  = "b2ee153b-42c3-42f4-8f6e-543a0f0f39a6"
+  definition_id = "54b2059a-b951-4dde-91ec-07e2a536925c"
+  name          = "...my_name..."
+  workspace_id  = "ac77879a-e5ab-4e85-8084-095399f78bac"
 }

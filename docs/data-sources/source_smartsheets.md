@@ -31,5 +31,3 @@ data "airbyte_source_smartsheets" "my_source_smartsheets" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

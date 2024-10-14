@@ -31,5 +31,3 @@ data "airbyte_source_clockify" "my_source_clockify" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_smartengage" "my_source_smartengage" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_dockerhub" "my_source_dockerhub" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

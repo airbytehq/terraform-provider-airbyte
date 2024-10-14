@@ -31,5 +31,3 @@ data "airbyte_source_mssql" "my_source_mssql" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

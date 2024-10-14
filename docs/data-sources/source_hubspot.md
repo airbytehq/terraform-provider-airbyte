@@ -31,5 +31,3 @@ data "airbyte_source_hubspot" "my_source_hubspot" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

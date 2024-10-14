@@ -2,21 +2,21 @@ resource "airbyte_source_cimis" "my_source_cimis" {
   configuration = {
     api_key = "...my_api_key..."
     daily_data_items = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
-    end_date = "2022-11-12T10:35:00.527Z"
+    end_date = "2020-09-27T05:27:28.289Z"
     hourly_data_items = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
-    start_date = "2022-02-11T00:33:21.405Z"
+    start_date = "2021-04-23T12:14:10.894Z"
     targets = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
     targets_type    = "California zip codes"
     unit_of_measure = "E"
   }
-  definition_id = "27fd51b6-6ec3-445b-9c1b-ae74726a8cd9"
-  name          = "Floyd Orn"
+  definition_id = "58ad382d-b84b-4901-9270-1ea4e0d67c63"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "47afda11-e10d-4002-a1c7-3f9ba1e39a63"
+  workspace_id  = "7a77ac9a-00d4-4975-8d98-cec7c9a9a112"
 }

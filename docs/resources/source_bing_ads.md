@@ -17,32 +17,32 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
   configuration = {
     account_names = [
       {
-        name     = "Sherri Bayer"
+        name     = "...my_name..."
         operator = "Equals"
-      },
+      }
     ]
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
     custom_reports = [
       {
-        name               = "custom report"
+        name               = "Account Performance"
         report_aggregation = "...my_report_aggregation..."
         report_columns = [
-          "...",
+          "..."
         ]
-        reporting_object = "HotelGroupPerformanceReportRequest"
-      },
+        reporting_object = "AdExtensionDetailReportRequest"
+      }
     ]
     developer_token    = "...my_developer_token..."
-    lookback_window    = 4
+    lookback_window    = 80
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-10-01"
+    reports_start_date = "2021-12-24"
     tenant_id          = "...my_tenant_id..."
   }
-  definition_id = "a681eea7-4b87-4a1f-b187-d33223d80bb9"
-  name          = "Curtis Jenkins"
+  definition_id = "8a913fc3-a81b-4dc2-af5d-8db1e8246d7a"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2f45974a-2ebc-4368-8abb-376bce66a7c0"
+  workspace_id  = "4b3ac887-f124-40a8-ae8c-9b91fd955bc7"
 }
 ```
 

@@ -16,12 +16,12 @@ SourceBrevo Resource
 resource "airbyte_source_brevo" "my_source_brevo" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2020-11-02T09:08:40.811Z"
+    start_date = "2022-07-31T08:25:33.562Z"
   }
-  definition_id = "d0e8f2a3-7cc1-4fbe-8883-da2fecd2cab2"
-  name          = "Darin Adams"
+  definition_id = "c6f78ebe-bdc0-473f-8ce8-d4b01bcd2208"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6002c3cc-123e-4878-bd50-d4d2b80c50dc"
+  workspace_id  = "b1edff7f-a272-48f5-a008-77388d6dc78b"
 }
 ```
 

@@ -31,5 +31,3 @@ data "airbyte_source_basecamp" "my_source_basecamp" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

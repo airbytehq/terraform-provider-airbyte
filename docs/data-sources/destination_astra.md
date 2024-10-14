@@ -31,5 +31,3 @@ data "airbyte_destination_astra" "my_destination_astra" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

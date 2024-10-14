@@ -18,9 +18,9 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
     apikey   = "...my_apikey..."
     endpoint = "https://us-west-2.timeplus.cloud/workspace_id"
   }
-  definition_id = "e91396f3-4075-445d-9006-86d04e608039"
-  name          = "Roosevelt Kuphal"
-  workspace_id  = "0732a475-24bb-4490-aa75-3ad11902ba18"
+  definition_id = "d43166cf-9bf8-41f3-8eda-35047cfcd627"
+  name          = "...my_name..."
+  workspace_id  = "3a25c57b-6ce4-4605-b223-5b0f748fcaee"
 }
 ```
 

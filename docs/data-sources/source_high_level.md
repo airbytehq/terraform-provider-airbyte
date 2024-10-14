@@ -31,5 +31,3 @@ data "airbyte_source_high_level" "my_source_highlevel" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

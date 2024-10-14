@@ -31,5 +31,3 @@ data "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_appcues" "my_source_appcues" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

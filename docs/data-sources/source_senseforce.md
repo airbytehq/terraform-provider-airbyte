@@ -31,5 +31,3 @@ data "airbyte_source_senseforce" "my_source_senseforce" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

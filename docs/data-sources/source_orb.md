@@ -31,5 +31,3 @@ data "airbyte_source_orb" "my_source_orb" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

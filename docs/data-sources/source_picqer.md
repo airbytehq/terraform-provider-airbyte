@@ -31,5 +31,3 @@ data "airbyte_source_picqer" "my_source_picqer" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

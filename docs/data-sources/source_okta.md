@@ -31,5 +31,3 @@ data "airbyte_source_okta" "my_source_okta" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

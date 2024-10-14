@@ -31,5 +31,3 @@ data "airbyte_source_rss" "my_source_rss" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

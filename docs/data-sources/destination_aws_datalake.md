@@ -31,5 +31,3 @@ data "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

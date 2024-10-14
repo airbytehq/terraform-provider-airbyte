@@ -31,5 +31,3 @@ data "airbyte_source_freshcaller" "my_source_freshcaller" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

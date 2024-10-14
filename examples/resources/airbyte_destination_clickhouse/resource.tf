@@ -6,13 +6,27 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     password        = "...my_password..."
     port            = 8123
     raw_data_schema = "...my_raw_data_schema..."
-    ssl             = false
+    ssl             = true
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Mekhi.Cronin85"
+    username = "...my_username..."
   }
-  definition_id = "65d335e0-3abe-4bb7-9b58-e872ec68b6d2"
-  name          = "Wade Schimmel"
-  workspace_id  = "b5369415-66f2-42fd-b0a2-8af8c1d27b3e"
+  definition_id = "f7e79763-e821-47f1-9f09-071b66436a92"
+  name          = "...my_name..."
+  workspace_id  = "18cdd7db-9638-49f4-915d-c14e35de40fa"
 }

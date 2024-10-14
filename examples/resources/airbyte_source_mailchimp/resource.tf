@@ -4,11 +4,16 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
       api_key = {
         apikey = "...my_apikey..."
       }
+      o_auth20 = {
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+      }
     }
     start_date = "2020-01-01T00:00:00.000Z"
   }
-  definition_id = "c79293e2-8aa8-4190-b348-b38fe3b52011"
-  name          = "Ms. Beatrice Ratke"
+  definition_id = "9bebd7b1-c88a-4dd4-aa37-8172eb64f49e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "52a784d2-d0f1-4707-875e-2d6a49780ba1"
+  workspace_id  = "c255ad32-1802-4521-bc9b-94b258ea8fe1"
 }

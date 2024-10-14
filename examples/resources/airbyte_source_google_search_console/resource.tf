@@ -7,24 +7,27 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
+      service_account_key_authentication = {
+        email                = "...my_email..."
+        service_account_info = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
+      }
     }
     custom_reports_array = [
       {
         dimensions = [
-          "page",
         ]
-        name = "Judith Crona"
-      },
+        name = "...my_name..."
+      }
     ]
     data_state = "final"
     end_date   = "2021-12-12"
     site_urls = [
-      "...",
+      "..."
     ]
-    start_date = "2022-06-01"
+    start_date = "2022-02-19"
   }
-  definition_id = "155f731c-6e6b-4c1c-af16-6aee78925477"
-  name          = "Jimmy Lockman"
+  definition_id = "38737380-4b05-400b-8478-4fc78e02be0f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "53022ba4-aed2-4995-8663-b6d13c6e3bbb"
+  workspace_id  = "6406adf4-523d-4b9e-8f60-e386f18bd02c"
 }

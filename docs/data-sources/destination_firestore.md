@@ -31,5 +31,3 @@ data "airbyte_destination_firestore" "my_destination_firestore" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

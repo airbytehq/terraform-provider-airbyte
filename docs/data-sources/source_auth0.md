@@ -31,5 +31,3 @@ data "airbyte_source_auth0" "my_source_auth0" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

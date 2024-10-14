@@ -1,23 +1,23 @@
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "ua"
+    country  = "gr"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "description",
+      "description"
     ]
-    language = "no"
+    language = "el"
     nullable = [
-      "content",
+      "content"
     ]
-    query               = "Apple OR Microsoft"
+    query               = "Microsoft Windows 10"
     sortby              = "publishedAt"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple AND NOT iPhone"
-    top_headlines_topic = "nation"
+    top_headlines_query = "Microsoft Windows 10"
+    top_headlines_topic = "health"
   }
-  definition_id = "5108cd8d-f8fd-4dac-ae82-61af8b9bb485"
-  name          = "Nadine Jenkins"
+  definition_id = "c6b2adaf-5531-41d5-90fd-e24b104a9d91"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "be1e785d-e7e3-427e-b787-5126eb569443"
+  workspace_id  = "a4cd7e01-eaeb-4a47-98ed-9dadb5de4147"
 }

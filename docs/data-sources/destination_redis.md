@@ -31,5 +31,3 @@ data "airbyte_destination_redis" "my_destination_redis" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_airtable" "my_source_airtable" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

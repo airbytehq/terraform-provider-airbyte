@@ -31,5 +31,3 @@ data "airbyte_source_qualaroo" "my_source_qualaroo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

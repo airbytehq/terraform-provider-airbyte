@@ -31,5 +31,3 @@ data "airbyte_source_goldcast" "my_source_goldcast" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

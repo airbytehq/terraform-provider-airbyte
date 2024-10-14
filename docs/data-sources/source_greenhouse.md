@@ -31,5 +31,3 @@ data "airbyte_source_greenhouse" "my_source_greenhouse" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

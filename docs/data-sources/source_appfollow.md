@@ -31,5 +31,3 @@ data "airbyte_source_appfollow" "my_source_appfollow" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

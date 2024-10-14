@@ -31,5 +31,3 @@ data "airbyte_source_getlago" "my_source_getlago" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

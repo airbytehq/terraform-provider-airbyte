@@ -31,5 +31,3 @@ data "airbyte_source_file" "my_source_file" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

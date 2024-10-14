@@ -31,5 +31,3 @@ data "airbyte_source_mailgun" "my_source_mailgun" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

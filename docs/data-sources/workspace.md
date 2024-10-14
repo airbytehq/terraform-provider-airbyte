@@ -27,7 +27,5 @@ data "airbyte_workspace" "my_workspace" {
 
 ### Read-Only
 
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String)
 - `name` (String)
-
-

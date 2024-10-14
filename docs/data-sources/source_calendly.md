@@ -31,5 +31,3 @@ data "airbyte_source_calendly" "my_source_calendly" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

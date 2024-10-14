@@ -31,5 +31,3 @@ data "airbyte_source_railz" "my_source_railz" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

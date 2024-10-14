@@ -28,16 +28,16 @@ data "airbyte_connection" "my_connection" {
 ### Read-Only
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String)
 - `destination_id` (String)
 - `name` (String)
-- `namespace_definition` (String) Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]
+- `namespace_definition` (String) Define the location where the data will be stored in the destination
 - `namespace_format` (String)
-- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
+- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 - `prefix` (String)
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)
-- `status` (String) must be one of ["active", "inactive", "deprecated"]
+- `status` (String)
 - `workspace_id` (String)
 
 <a id="nestedatt--configurations"></a>
@@ -54,9 +54,13 @@ Read-Only:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
 - `name` (String)
-- `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
+- `primary_key` (Attributes List) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema. (see [below for nested schema](#nestedatt--configurations--streams--primary_key))
 - `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
-- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+- `sync_mode` (String)
+
+<a id="nestedatt--configurations--streams--primary_key"></a>
+### Nested Schema for `configurations.streams.primary_key`
+
 
 <a id="nestedatt--configurations--streams--selected_fields"></a>
 ### Nested Schema for `configurations.streams.selected_fields`
@@ -75,6 +79,4 @@ Read-Only:
 
 - `basic_timing` (String)
 - `cron_expression` (String)
-- `schedule_type` (String) must be one of ["manual", "cron", "basic"]
-
-
+- `schedule_type` (String)

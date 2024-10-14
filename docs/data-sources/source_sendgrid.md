@@ -31,5 +31,3 @@ data "airbyte_source_sendgrid" "my_source_sendgrid" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

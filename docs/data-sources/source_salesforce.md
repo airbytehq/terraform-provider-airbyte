@@ -31,5 +31,3 @@ data "airbyte_source_salesforce" "my_source_salesforce" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

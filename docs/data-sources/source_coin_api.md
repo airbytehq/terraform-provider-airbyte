@@ -31,5 +31,3 @@ data "airbyte_source_coin_api" "my_source_coinapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

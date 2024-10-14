@@ -31,5 +31,3 @@ data "airbyte_source_secoda" "my_source_secoda" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

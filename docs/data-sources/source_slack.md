@@ -31,5 +31,3 @@ data "airbyte_source_slack" "my_source_slack" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

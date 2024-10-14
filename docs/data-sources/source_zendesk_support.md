@@ -31,5 +31,3 @@ data "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

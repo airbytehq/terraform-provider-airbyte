@@ -31,5 +31,3 @@ data "airbyte_destination_clickhouse" "my_destination_clickhouse" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

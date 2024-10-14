@@ -31,5 +31,3 @@ data "airbyte_source_metabase" "my_source_metabase" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

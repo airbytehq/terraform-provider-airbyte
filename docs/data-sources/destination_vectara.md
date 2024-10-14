@@ -31,5 +31,3 @@ data "airbyte_destination_vectara" "my_destination_vectara" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

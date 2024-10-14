@@ -31,5 +31,3 @@ data "airbyte_source_buzzsprout" "my_source_buzzsprout" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

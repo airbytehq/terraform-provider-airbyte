@@ -17,10 +17,10 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "6a568aa6-dc34-40bb-9546-957c12385870"
-  name          = "Belinda Mills"
+  definition_id = "d3e2ce71-4d5a-432d-856f-2c21c4b5c771"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "832c86da-d817-4ef7-9b41-7c7a0b7ebf79"
+  workspace_id  = "5c310aaf-bccb-4aee-98e1-e4a1a00d278e"
 }
 ```
 

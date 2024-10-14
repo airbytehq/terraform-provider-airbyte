@@ -31,5 +31,3 @@ data "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

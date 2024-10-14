@@ -31,5 +31,3 @@ data "airbyte_source_twitter" "my_source_twitter" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

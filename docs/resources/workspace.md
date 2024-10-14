@@ -14,8 +14,8 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name            = "Tara Wiza"
-  organization_id = "a0c5318a-3511-4952-a18f-333c5e795edb"
+  name            = "...my_name..."
+  organization_id = "4d886138-b4b4-4da8-9dca-f4d28f8550f8"
 }
 ```
 
@@ -32,7 +32,7 @@ resource "airbyte_workspace" "my_workspace" {
 
 ### Read-Only
 
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
 - `workspace_id` (String)
 
 ## Import

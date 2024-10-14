@@ -16,13 +16,13 @@ SourceBraze Resource
 resource "airbyte_source_braze" "my_source_braze" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2020-07-22"
+    start_date = "2021-01-26"
     url        = "...my_url..."
   }
-  definition_id = "d80ba5ff-53c6-4fc1-8ca6-7a827c3d349f"
-  name          = "Bertha Hagenes"
+  definition_id = "a2f148c3-3358-47ca-9b91-0c33376dae7a"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a8589d84-94dc-4fae-a550-03801e9f4469"
+  workspace_id  = "c0f377ae-fdbc-457d-b28d-f51ddd3ff681"
 }
 ```
 

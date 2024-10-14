@@ -21,13 +21,13 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     end_date                    = "2022-01-30"
     refresh_token               = "...my_refresh_token..."
     start_date                  = "2022-01-01"
-    swipe_up_attribution_window = "1_DAY"
-    view_attribution_window     = "6_HOUR"
+    swipe_up_attribution_window = "7_DAY"
+    view_attribution_window     = "1_HOUR"
   }
-  definition_id = "85bedf1b-6a60-4ed1-862f-411dc6a0a7c7"
-  name          = "Kathy Franecki III"
+  definition_id = "1299fa04-4937-407e-99e4-bc441ad499f0"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4dd37177-b9cd-4d67-9dcd-9c0fa1c23293"
+  workspace_id  = "a5e72bda-13a9-4a82-ab4d-94fe6a570980"
 }
 ```
 
@@ -61,11 +61,11 @@ Required:
 
 Optional:
 
-- `action_report_time` (String) Specifies the principle for conversion reporting. must be one of ["conversion", "impression"]; Default: "conversion"
+- `action_report_time` (String) Specifies the principle for conversion reporting. Default: "conversion"; must be one of ["conversion", "impression"]
 - `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
 - `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated. Default: "2022-01-01"
-- `swipe_up_attribution_window` (String) Attribution window for swipe ups. must be one of ["1_DAY", "7_DAY", "28_DAY"]; Default: "28_DAY"
-- `view_attribution_window` (String) Attribution window for views. must be one of ["1_HOUR", "3_HOUR", "6_HOUR", "1_DAY", "7_DAY"]; Default: "1_DAY"
+- `swipe_up_attribution_window` (String) Attribution window for swipe ups. Default: "28_DAY"; must be one of ["1_DAY", "7_DAY", "28_DAY"]
+- `view_attribution_window` (String) Attribution window for views. Default: "1_DAY"; must be one of ["1_HOUR", "3_HOUR", "6_HOUR", "1_DAY", "7_DAY"]
 
 ## Import
 

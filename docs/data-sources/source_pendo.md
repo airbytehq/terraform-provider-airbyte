@@ -31,5 +31,3 @@ data "airbyte_source_pendo" "my_source_pendo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_breezy_hr" "my_source_breezyhr" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

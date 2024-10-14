@@ -31,5 +31,3 @@ data "airbyte_source_gcs" "my_source_gcs" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

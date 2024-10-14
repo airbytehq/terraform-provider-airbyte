@@ -31,5 +31,3 @@ data "airbyte_source_canny" "my_source_canny" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

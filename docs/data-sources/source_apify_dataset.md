@@ -31,5 +31,3 @@ data "airbyte_source_apify_dataset" "my_source_apifydataset" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

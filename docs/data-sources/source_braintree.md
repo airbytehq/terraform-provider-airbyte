@@ -31,5 +31,3 @@ data "airbyte_source_braintree" "my_source_braintree" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

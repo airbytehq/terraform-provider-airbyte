@@ -31,5 +31,3 @@ data "airbyte_source_microsoft_onedrive" "my_source_microsoftonedrive" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

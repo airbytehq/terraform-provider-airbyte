@@ -18,15 +18,15 @@ resource "airbyte_source_zoho_crm" "my_source_zohocrm" {
     client_id      = "...my_client_id..."
     client_secret  = "...my_client_secret..."
     dc_region      = "EU"
-    edition        = "Enterprise"
-    environment    = "Sandbox"
+    edition        = "Professional"
+    environment    = "Developer"
     refresh_token  = "...my_refresh_token..."
-    start_datetime = "2000-01-01 13:00"
+    start_datetime = "2000-01-01"
   }
-  definition_id = "6f243316-dd2c-4a1b-893b-a4ee10def03d"
-  name          = "Dr. Alice Wuckert"
+  definition_id = "e74e0328-b159-45d6-af04-f64ce40616cc"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d688efce-4cb4-4a0c-8783-aaeb2f046b35"
+  workspace_id  = "f80b4296-5ba4-4f22-a9e0-b04a62eca8b6"
 }
 ```
 
@@ -62,7 +62,7 @@ Required:
 
 Optional:
 
-- `edition` (String) Choose your Edition of Zoho CRM to determine API Concurrency Limits. must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]; Default: "Free"
+- `edition` (String) Choose your Edition of Zoho CRM to determine API Concurrency Limits. Default: "Free"; must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]
 - `start_datetime` (String) ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 
 ## Import

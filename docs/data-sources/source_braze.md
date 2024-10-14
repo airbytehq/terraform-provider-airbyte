@@ -31,5 +31,3 @@ data "airbyte_source_braze" "my_source_braze" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

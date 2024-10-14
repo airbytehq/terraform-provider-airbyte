@@ -3,8 +3,8 @@ resource "airbyte_source_delighted" "my_source_delighted" {
     api_key = "...my_api_key..."
     since   = "2022-05-30T04:50:23Z"
   }
-  definition_id = "16fc803c-8311-4a97-a1ae-8949629432a0"
-  name          = "Nichole Wehner"
+  definition_id = "19a9b67f-a853-4ae1-846b-10537ca52404"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fe7e017f-9052-4f20-80e0-69282dd6a12c"
+  workspace_id  = "c8b7a745-6e54-4a64-b6b8-c11deac52738"
 }

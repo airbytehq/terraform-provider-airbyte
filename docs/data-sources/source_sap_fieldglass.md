@@ -31,5 +31,3 @@ data "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

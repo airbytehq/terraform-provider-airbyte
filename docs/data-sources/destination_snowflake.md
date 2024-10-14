@@ -31,5 +31,3 @@ data "airbyte_destination_snowflake" "my_destination_snowflake" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

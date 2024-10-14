@@ -31,5 +31,3 @@ data "airbyte_source_google_ads" "my_source_googleads" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

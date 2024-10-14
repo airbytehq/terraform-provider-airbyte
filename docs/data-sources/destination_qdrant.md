@@ -31,5 +31,3 @@ data "airbyte_destination_qdrant" "my_destination_qdrant" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

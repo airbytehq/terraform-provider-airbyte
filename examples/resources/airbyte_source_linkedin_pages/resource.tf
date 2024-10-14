@@ -4,13 +4,18 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
       access_token = {
         access_token = "...my_access_token..."
       }
+      o_auth20 = {
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     org_id                = "123456789"
-    start_date            = "2022-09-30T20:13:15.681Z"
+    start_date            = "2021-01-19T08:22:37.981Z"
     time_granularity_type = "MONTH"
   }
-  definition_id = "41ce525b-4893-4048-a9c1-af9961b1c883"
-  name          = "Clyde King"
+  definition_id = "b7320995-89cb-4a35-929d-c298cd64bbd8"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "12d8f3b6-433c-4b82-b32a-d03fd9a9d8ba"
+  workspace_id  = "25451ff1-20df-4bf1-bbc0-fffa15035a0e"
 }

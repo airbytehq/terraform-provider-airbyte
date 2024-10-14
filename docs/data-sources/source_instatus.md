@@ -31,5 +31,3 @@ data "airbyte_source_instatus" "my_source_instatus" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

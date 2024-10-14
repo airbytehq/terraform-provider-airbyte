@@ -1,21 +1,26 @@
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 9
+    attribution_window = 10
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
+      service_account = {
+        project_id = 10
+        secret     = "...my_secret..."
+        username   = "...my_username..."
+      }
     }
-    date_window_size             = 0
+    date_window_size             = 10
     end_date                     = "2021-11-16"
-    page_size                    = 4
+    page_size                    = 6
     project_timezone             = "US/Pacific"
-    region                       = "EU"
-    select_properties_by_default = false
+    region                       = "US"
+    select_properties_by_default = true
     start_date                   = "2021-11-16"
   }
-  definition_id = "5b91e126-100f-409e-b706-bb016ea0ac6b"
-  name          = "Alfonso Turcotte"
+  definition_id = "ec7b9d35-13cb-4117-b2ed-d8a6874a4325"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "40c173d4-d611-433d-9b2a-95937ced0062"
+  workspace_id  = "350068e1-f8f0-490a-ba81-d5400042882c"
 }

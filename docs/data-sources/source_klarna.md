@@ -31,5 +31,3 @@ data "airbyte_source_klarna" "my_source_klarna" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

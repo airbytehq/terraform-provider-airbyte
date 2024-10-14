@@ -31,5 +31,3 @@ data "airbyte_source_brevo" "my_source_brevo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

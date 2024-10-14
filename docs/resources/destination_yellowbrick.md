@@ -23,16 +23,51 @@ resource "airbyte_destination_yellowbrick" "my_destination_yellowbrick" {
     schema          = "public"
     ssl             = true
     ssl_mode = {
-      allow = {}
+      allow = {
+        # ...
+      }
+      disable = {
+        # ...
+      }
+      prefer = {
+        # ...
+      }
+      require = {
+        # ...
+      }
+      verify_ca = {
+        ca_certificate      = "...my_ca_certificate..."
+        client_key_password = "...my_client_key_password..."
+      }
+      verify_full = {
+        ca_certificate      = "...my_ca_certificate..."
+        client_certificate  = "...my_client_certificate..."
+        client_key          = "...my_client_key..."
+        client_key_password = "...my_client_key_password..."
+      }
     }
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Cathryn7"
+    username = "...my_username..."
   }
-  definition_id = "3ca1059f-1e30-4360-bc0e-aa50681bc3ad"
-  name          = "Miss Edward Mueller Sr."
-  workspace_id  = "3842c101-e265-4eeb-8230-b15094cc2185"
+  definition_id = "81a773ac-fba0-424f-a74b-6a91a45ce8fe"
+  name          = "...my_name..."
+  workspace_id  = "2d4bfbc0-aa6b-42b1-9222-6303d0c9671f"
 }
 ```
 

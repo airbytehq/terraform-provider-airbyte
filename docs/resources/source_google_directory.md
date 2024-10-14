@@ -18,14 +18,19 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
     credentials = {
       service_account_key = {
         credentials_json = "...my_credentials_json..."
-        email            = "Rey57@yahoo.com"
+        email            = "...my_email..."
+      }
+      sign_in_via_google_o_auth = {
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
       }
     }
   }
-  definition_id = "f3b04e32-dc64-49b6-bc8e-2c7d0de0f8a2"
-  name          = "Dustin Kozey"
+  definition_id = "6d56a1a1-2344-4792-8dbf-ef3c86125ff9"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "de20e751-11fd-4061-affd-3df11978b385"
+  workspace_id  = "192bea1a-00c3-4227-ba9d-6ca81cd994fc"
 }
 ```
 

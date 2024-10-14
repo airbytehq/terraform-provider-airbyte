@@ -20,16 +20,16 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       client_id     = "...my_client_id..."
       client_secret = "...my_client_secret..."
     }
-    origin     = "USA"
+    origin     = "Canada"
     start_date = "2021-01-01T00:00:00Z"
     survey_ids = [
-      "...",
+      "..."
     ]
   }
-  definition_id = "fb370ea7-b020-459e-aef2-3fc13e66cf8a"
-  name          = "Phil Mayer"
+  definition_id = "8788e4f2-cdf7-4f67-bc21-9b9f4fffbea1"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "89f10b55-b793-412b-ab1b-52fdccb22b2f"
+  workspace_id  = "a08cdcf1-32b9-4e64-bdd5-c4df18b0d751"
 }
 ```
 
@@ -62,7 +62,7 @@ Required:
 
 Optional:
 
-- `origin` (String) Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different. must be one of ["USA", "Europe", "Canada"]; Default: "USA"
+- `origin` (String) Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different. Default: "USA"; must be one of ["USA", "Europe", "Canada"]
 - `survey_ids` (List of String) IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>

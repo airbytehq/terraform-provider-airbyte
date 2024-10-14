@@ -31,5 +31,3 @@ data "airbyte_source_clazar" "my_source_clazar" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

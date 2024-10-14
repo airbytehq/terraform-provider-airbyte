@@ -16,14 +16,14 @@ SourceTwitter Resource
 resource "airbyte_source_twitter" "my_source_twitter" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2021-04-21T11:17:41.200Z"
+    end_date   = "2022-05-19T10:38:49.102Z"
     query      = "...my_query..."
-    start_date = "2022-09-15T17:46:04.469Z"
+    start_date = "2021-11-30T06:32:05.076Z"
   }
-  definition_id = "daf01c7b-ae15-429d-8545-fe15a70ff5c6"
-  name          = "Sally Pollich"
+  definition_id = "403050ea-593a-4c26-b683-f00421b6bddb"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "edc6409a-047c-475e-8f25-490869daf063"
+  workspace_id  = "01babc36-0067-4c21-b3d6-3d2c2351d667"
 }
 ```
 

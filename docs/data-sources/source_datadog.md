@@ -31,5 +31,3 @@ data "airbyte_source_datadog" "my_source_datadog" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

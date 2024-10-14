@@ -31,5 +31,3 @@ data "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

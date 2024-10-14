@@ -31,5 +31,3 @@ data "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

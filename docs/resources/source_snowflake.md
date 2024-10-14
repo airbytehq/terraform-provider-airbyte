@@ -21,6 +21,16 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
         private_key_password = "...my_private_key_password..."
         username             = "AIRBYTE_USER"
       }
+      o_auth20 = {
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
+      username_and_password = {
+        password = "...my_password..."
+        username = "AIRBYTE_USER"
+      }
     }
     database        = "AIRBYTE_DATABASE"
     host            = "accountname.us-east-2.aws.snowflakecomputing.com"
@@ -29,10 +39,10 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     schema          = "AIRBYTE_SCHEMA"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  definition_id = "f7ab2ac7-0a33-47a3-9131-b5bdf0c811e9"
-  name          = "Pam Hoeger"
+  definition_id = "27125485-2542-4c33-816b-4945c1b73270"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0a295138-174c-4fa4-9536-74966ff0c642"
+  workspace_id  = "f456591a-a491-49d7-af41-2d440d1ae6ee"
 }
 ```
 

@@ -31,5 +31,3 @@ data "airbyte_source_gridly" "my_source_gridly" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

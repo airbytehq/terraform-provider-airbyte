@@ -31,5 +31,3 @@ data "airbyte_destination_redshift" "my_destination_redshift" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

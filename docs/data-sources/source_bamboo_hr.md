@@ -31,5 +31,3 @@ data "airbyte_source_bamboo_hr" "my_source_bamboohr" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

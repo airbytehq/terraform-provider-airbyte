@@ -31,5 +31,3 @@ data "airbyte_source_amplitude" "my_source_amplitude" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

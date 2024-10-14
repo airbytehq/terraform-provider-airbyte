@@ -17,16 +17,16 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
   configuration = {
     access_token = "...my_access_token..."
     account_ids = [
-      "...",
+      "..."
     ]
     ad_statuses = [
-      "DELETED",
+      "ADSET_PAUSED"
     ]
     adset_statuses = [
-      "PAUSED",
+      "IN_PROCESS"
     ]
     campaign_statuses = [
-      "IN_PROCESS",
+      "PAUSED"
     ]
     credentials = {
       authenticate_via_facebook_marketing_oauth = {
@@ -34,39 +34,42 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
       }
+      service_account_key_authentication = {
+        access_token = "...my_access_token..."
+      }
     }
     custom_insights = [
       {
         action_breakdowns = [
-          "action_type",
+          "action_destination"
         ]
-        action_report_time = "mixed"
+        action_report_time = "impression"
         breakdowns = [
-          "skan_conversion_id",
+          "media_destination_url"
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "account_currency",
+          "cost_per_outbound_click"
         ]
-        insights_job_timeout     = 10
-        insights_lookback_window = 0
+        insights_job_timeout     = 50
+        insights_lookback_window = 9
         level                    = "account"
-        name                     = "Kara Macejkovic"
+        name                     = "...my_name..."
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 10
-      },
+        time_increment           = 33
+      }
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    insights_job_timeout     = 8
-    insights_lookback_window = 7
-    page_size                = 10
+    insights_job_timeout     = 55
+    insights_lookback_window = 9
+    page_size                = 7
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "6a32dc31-e1b4-4b67-a953-bf2defea2fd1"
-  name          = "Dana Wuckert"
+  definition_id = "efac1af8-dd35-4940-8819-0027d27f358d"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d3631398-5539-4f35-ad32-06afb3a724a6"
+  workspace_id  = "1c443315-5b54-4630-ad55-2f2c6821ece4"
 }
 ```
 
@@ -151,13 +154,13 @@ Required:
 Optional:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
-- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. must be one of ["conversion", "impression", "mixed"]; Default: "mixed"
+- `action_report_time` (String) Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter
 - `insights_job_timeout` (Number) The insights job timeout. Default: 60
 - `insights_lookback_window` (Number) The attribution window. Default: 28
-- `level` (String) Chosen level for API. must be one of ["ad", "adset", "campaign", "account"]; Default: "ad"
+- `level` (String) Chosen level for API. Default: "ad"; must be one of ["ad", "adset", "campaign", "account"]
 - `start_date` (String) The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
 - `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only). The minimum allowed value for this field is 1, and the maximum is 89. Default: 1
 

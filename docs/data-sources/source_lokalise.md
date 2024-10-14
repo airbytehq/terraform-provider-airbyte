@@ -31,5 +31,3 @@ data "airbyte_source_lokalise" "my_source_lokalise" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

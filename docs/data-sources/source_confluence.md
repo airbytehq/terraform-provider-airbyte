@@ -31,5 +31,3 @@ data "airbyte_source_confluence" "my_source_confluence" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

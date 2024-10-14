@@ -31,5 +31,3 @@ data "airbyte_source_leadfeeder" "my_source_leadfeeder" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

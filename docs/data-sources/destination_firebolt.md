@@ -31,5 +31,3 @@ data "airbyte_destination_firebolt" "my_destination_firebolt" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

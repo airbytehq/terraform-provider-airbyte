@@ -31,5 +31,3 @@ data "airbyte_source_snowflake" "my_source_snowflake" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

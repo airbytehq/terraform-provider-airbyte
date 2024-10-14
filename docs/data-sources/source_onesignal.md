@@ -31,5 +31,3 @@ data "airbyte_source_onesignal" "my_source_onesignal" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-
