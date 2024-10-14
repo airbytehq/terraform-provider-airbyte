@@ -31,5 +31,3 @@ data "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

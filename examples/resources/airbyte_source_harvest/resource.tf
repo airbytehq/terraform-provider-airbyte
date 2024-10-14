@@ -8,11 +8,15 @@ resource "airbyte_source_harvest" "my_source_harvest" {
         client_secret         = "...my_client_secret..."
         refresh_token         = "...my_refresh_token..."
       }
+      authenticate_with_personal_access_token = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_token             = "...my_api_token..."
+      }
     }
     replication_start_date = "2017-01-25T00:00:00Z"
   }
-  definition_id = "b5eaa64b-86a4-42db-bb85-3ec4b5e6a18b"
-  name          = "Christie Kshlerin Jr."
+  definition_id = "ce100c29-1a0e-4458-807d-89392892e3da"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3de8da44-3bfa-4add-a9a6-dff6cb6bf32f"
+  workspace_id  = "7a62499e-b740-4a2d-a2c0-621f38c60e24"
 }

@@ -31,5 +31,3 @@ data "airbyte_source_lever_hiring" "my_source_leverhiring" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

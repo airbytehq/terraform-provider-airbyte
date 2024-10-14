@@ -31,5 +31,3 @@ data "airbyte_source_harvest" "my_source_harvest" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

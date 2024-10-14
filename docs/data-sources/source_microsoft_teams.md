@@ -31,5 +31,3 @@ data "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

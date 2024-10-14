@@ -31,5 +31,3 @@ data "airbyte_destination_s3_glue" "my_destination_s3glue" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

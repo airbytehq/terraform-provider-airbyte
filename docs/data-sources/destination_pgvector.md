@@ -31,5 +31,3 @@ data "airbyte_destination_pgvector" "my_destination_pgvector" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

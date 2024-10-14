@@ -31,5 +31,3 @@ data "airbyte_source_pocket" "my_source_pocket" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_retently" "my_source_retently" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

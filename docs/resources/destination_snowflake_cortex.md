@@ -21,6 +21,21 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
       }
+      cohere = {
+        cohere_key = "...my_cohere_key..."
+      }
+      fake = {
+        # ...
+      }
+      open_ai = {
+        openai_key = "...my_openai_key..."
+      }
+      open_ai_compatible = {
+        api_key    = "...my_api_key..."
+        base_url   = "https://your-service-name.com"
+        dimensions = 1536
+        model_name = "text-embedding-ada-002"
+      }
     }
     indexing = {
       credentials = {
@@ -29,36 +44,45 @@ resource "airbyte_destination_snowflake_cortex" "my_destination_snowflakecortex"
       database       = "AIRBYTE_DATABASE"
       default_schema = "AIRBYTE_SCHEMA"
       host           = "AIRBYTE_ACCOUNT"
-      role           = "ACCOUNTADMIN"
+      role           = "AIRBYTE_ROLE"
       username       = "AIRBYTE_USER"
       warehouse      = "AIRBYTE_WAREHOUSE"
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 5
-      chunk_size    = 4
+      chunk_overlap = 3
+      chunk_size    = 6147
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
           to_field   = "...my_to_field..."
-        },
+        }
       ]
       metadata_fields = [
-        "...",
+        "..."
       ]
       text_fields = [
-        "...",
+        "..."
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 7
+          split_level = 3
+        }
+        by_programming_language = {
+          language = "rst"
+        }
+        by_separator = {
+          keep_separator = true
+          separators = [
+            "..."
+          ]
         }
       }
     }
   }
-  definition_id = "8b9fef8f-5387-46e3-9e30-a86e4df19faa"
-  name          = "Willard Gerhold"
-  workspace_id  = "1846ef36-4419-46a0-8bb9-666e7d15e7ee"
+  definition_id = "4e970f65-b8a4-4398-b19e-2a5644731a72"
+  name          = "...my_name..."
+  workspace_id  = "d33dd7fd-91b5-4245-9a6e-0c987c8003c9"
 }
 ```
 
@@ -214,7 +238,7 @@ Optional:
 - `by_separator` (Attributes) Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_separator))
 
 <a id="nestedatt--configuration--processing--text_splitter--by_markdown_header"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_markdown_header`
 
 Optional:
 
@@ -222,7 +246,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_programming_language`
 
 Required:
 

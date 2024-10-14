@@ -31,5 +31,3 @@ data "airbyte_source_northpass_lms" "my_source_northpasslms" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

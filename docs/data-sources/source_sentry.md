@@ -31,5 +31,3 @@ data "airbyte_source_sentry" "my_source_sentry" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

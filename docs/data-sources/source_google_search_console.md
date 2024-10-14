@@ -31,5 +31,3 @@ data "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

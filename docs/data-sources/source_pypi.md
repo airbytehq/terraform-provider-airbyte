@@ -31,5 +31,3 @@ data "airbyte_source_pypi" "my_source_pypi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

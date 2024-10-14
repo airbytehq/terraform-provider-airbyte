@@ -31,5 +31,3 @@ data "airbyte_source_google_drive" "my_source_googledrive" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

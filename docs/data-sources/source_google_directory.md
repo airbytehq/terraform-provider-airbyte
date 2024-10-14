@@ -31,5 +31,3 @@ data "airbyte_source_google_directory" "my_source_googledirectory" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

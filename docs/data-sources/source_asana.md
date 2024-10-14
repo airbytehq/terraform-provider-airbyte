@@ -31,5 +31,3 @@ data "airbyte_source_asana" "my_source_asana" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

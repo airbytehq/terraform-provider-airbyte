@@ -31,5 +31,3 @@ data "airbyte_source_datascope" "my_source_datascope" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

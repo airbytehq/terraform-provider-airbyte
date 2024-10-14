@@ -31,5 +31,3 @@ data "airbyte_source_twilio" "my_source_twilio" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

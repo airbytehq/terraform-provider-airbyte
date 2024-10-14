@@ -31,5 +31,3 @@ data "airbyte_source_outreach" "my_source_outreach" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

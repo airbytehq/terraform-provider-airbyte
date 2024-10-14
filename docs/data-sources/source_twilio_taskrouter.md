@@ -31,5 +31,3 @@ data "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

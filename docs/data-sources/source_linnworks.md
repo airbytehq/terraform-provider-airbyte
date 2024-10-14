@@ -31,5 +31,3 @@ data "airbyte_source_linnworks" "my_source_linnworks" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

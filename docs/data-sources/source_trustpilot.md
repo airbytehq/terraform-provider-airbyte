@@ -31,5 +31,3 @@ data "airbyte_source_trustpilot" "my_source_trustpilot" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

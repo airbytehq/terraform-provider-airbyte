@@ -31,5 +31,3 @@ data "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

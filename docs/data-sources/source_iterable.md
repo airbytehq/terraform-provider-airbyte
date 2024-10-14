@@ -31,5 +31,3 @@ data "airbyte_source_iterable" "my_source_iterable" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

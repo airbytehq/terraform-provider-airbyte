@@ -31,5 +31,3 @@ data "airbyte_source_webflow" "my_source_webflow" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

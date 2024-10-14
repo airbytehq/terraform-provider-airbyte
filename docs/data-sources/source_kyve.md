@@ -31,5 +31,3 @@ data "airbyte_source_kyve" "my_source_kyve" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

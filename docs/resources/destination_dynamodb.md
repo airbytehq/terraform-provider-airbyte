@@ -17,13 +17,13 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
   configuration = {
     access_key_id              = "A012345678910EXAMPLE"
     dynamodb_endpoint          = "http://localhost:9000"
-    dynamodb_region            = "us-gov-west-1"
+    dynamodb_region            = "ca-west-1"
     dynamodb_table_name_prefix = "airbyte_sync"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "eca9f91e-b58c-4332-9745-6993f0626846"
-  name          = "Ms. Betty Shanahan"
-  workspace_id  = "7ed52cbf-f018-4589-b5bd-fe2750539f4b"
+  definition_id = "f47ce6b2-d7a7-4fd6-8cc3-8ee7d32ea81a"
+  name          = "...my_name..."
+  workspace_id  = "613ace27-5b83-4144-af10-cde0eac3bedf"
 }
 ```
 
@@ -57,7 +57,7 @@ Required:
 Optional:
 
 - `dynamodb_endpoint` (String) This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty). Default: ""
-- `dynamodb_region` (String) The region of the DynamoDB. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `dynamodb_region` (String) The region of the DynamoDB. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 
 ## Import
 

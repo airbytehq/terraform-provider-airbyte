@@ -31,5 +31,3 @@ data "airbyte_source_teamwork" "my_source_teamwork" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

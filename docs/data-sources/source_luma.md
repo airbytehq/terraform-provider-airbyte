@@ -31,5 +31,3 @@ data "airbyte_source_luma" "my_source_luma" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

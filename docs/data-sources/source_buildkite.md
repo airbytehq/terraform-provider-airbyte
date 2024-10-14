@@ -31,5 +31,3 @@ data "airbyte_source_buildkite" "my_source_buildkite" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_persistiq" "my_source_persistiq" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

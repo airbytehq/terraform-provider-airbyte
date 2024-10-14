@@ -22,24 +22,32 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
       iam_role = {
         role_arn = "...my_role_arn..."
       }
+      iam_user = {
+        aws_access_key_id     = "...my_aws_access_key_id..."
+        aws_secret_access_key = "...my_aws_secret_access_key..."
+      }
     }
     format = {
       json_lines_newline_delimited_json = {
-        compression_codec = "GZIP"
+        compression_codec = "UNCOMPRESSED"
         format_type       = "JSONL"
       }
+      parquet_columnar_storage = {
+        compression_codec = "GZIP"
+        format_type       = "Parquet"
+      }
     }
-    glue_catalog_float_as_decimal             = false
+    glue_catalog_float_as_decimal             = true
     lakeformation_database_default_tag_key    = "pii_level"
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
-    lakeformation_governed_tables             = false
+    lakeformation_governed_tables             = true
     partitioning                              = "DAY"
-    region                                    = "ap-southeast-3"
+    region                                    = "ap-southeast-4"
   }
-  definition_id = "c3f592b3-8acf-43b2-bea4-e36bf4ba0e7a"
-  name          = "Charlie Fisher"
-  workspace_id  = "aaebb5cd-76c9-4fd0-bc96-8decb9cb44c8"
+  definition_id = "aa9c2d01-84b7-4474-ba6f-e45dbbc28cdd"
+  name          = "...my_name..."
+  workspace_id  = "3df68150-9956-454d-8144-1645f409cdd1"
 }
 ```
 
@@ -79,8 +87,8 @@ Optional:
 - `lakeformation_database_default_tag_key` (String) Add a default tag key to databases created by this destination
 - `lakeformation_database_default_tag_values` (String) Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
 - `lakeformation_governed_tables` (Boolean) Whether to create tables as LF governed tables. Default: false
-- `partitioning` (String) Partition data by cursor fields when a cursor field is a date. must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]; Default: "NO PARTITIONING"
-- `region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `partitioning` (String) Partition data by cursor fields when a cursor field is a date. Default: "NO PARTITIONING"; must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]
+- `region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -121,8 +129,8 @@ Optional:
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data. must be one of ["UNCOMPRESSED", "GZIP"]; Default: "UNCOMPRESSED"
-- `format_type` (String) must be one of ["JSONL"]; Default: "JSONL"
+- `compression_codec` (String) The compression algorithm used to compress data. Default: "UNCOMPRESSED"; must be one of ["UNCOMPRESSED", "GZIP"]
+- `format_type` (String) Default: "JSONL"; must be "JSONL"
 
 
 <a id="nestedatt--configuration--format--parquet_columnar_storage"></a>
@@ -130,8 +138,8 @@ Optional:
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]; Default: "SNAPPY"
-- `format_type` (String) must be one of ["Parquet"]; Default: "Parquet"
+- `compression_codec` (String) The compression algorithm used to compress data. Default: "SNAPPY"; must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]
+- `format_type` (String) Default: "Parquet"; must be "Parquet"
 
 ## Import
 

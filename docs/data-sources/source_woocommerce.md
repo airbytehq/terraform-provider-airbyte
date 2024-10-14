@@ -31,5 +31,3 @@ data "airbyte_source_woocommerce" "my_source_woocommerce" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_destination_bigquery" "my_destination_bigquery" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

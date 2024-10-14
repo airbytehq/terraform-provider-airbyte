@@ -31,5 +31,3 @@ data "airbyte_source_coda" "my_source_coda" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

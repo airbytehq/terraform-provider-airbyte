@@ -17,13 +17,13 @@ resource "airbyte_source_appcues" "my_source_appcues" {
   configuration = {
     account_id = "...my_account_id..."
     password   = "...my_password..."
-    start_date = "2022-11-14T00:29:49.884Z"
-    username   = "Bettie_Rice68"
+    start_date = "2022-10-13T19:22:32.624Z"
+    username   = "...my_username..."
   }
-  definition_id = "90354f51-ed0a-4818-9e6e-55fd9ebe7b2f"
-  name          = "Rachael O'Conner"
+  definition_id = "fea44672-fa4f-455f-a885-5df047bc60ae"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "cdfaf2b0-5210-4208-a036-b268d758466c"
+  workspace_id  = "2b0c8cf4-c3c9-438c-8a6c-75a2b0d52f29"
 }
 ```
 

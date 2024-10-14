@@ -31,5 +31,3 @@ data "airbyte_source_reddit" "my_source_reddit" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

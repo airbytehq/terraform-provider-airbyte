@@ -21,10 +21,10 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     refresh_token = "...my_refresh_token..."
     start_date    = "2020-11-16T00:00:00Z"
   }
-  definition_id = "8a587702-2972-4e23-bec3-d2ab4198d2ef"
-  name          = "Gordon Vandervort"
+  definition_id = "41648eec-a1c3-45f3-ba36-fe8c53db7a98"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c931e7a7-2ef9-4ee2-ac4d-080cde039dd5"
+  workspace_id  = "f594140b-f616-4961-9529-4b6bdebbb064"
 }
 ```
 

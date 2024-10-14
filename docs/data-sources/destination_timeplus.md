@@ -31,5 +31,3 @@ data "airbyte_destination_timeplus" "my_destination_timeplus" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

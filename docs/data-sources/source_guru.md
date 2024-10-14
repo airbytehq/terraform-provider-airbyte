@@ -31,5 +31,3 @@ data "airbyte_source_guru" "my_source_guru" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

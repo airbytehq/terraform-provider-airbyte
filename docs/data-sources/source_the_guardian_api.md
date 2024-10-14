@@ -31,5 +31,3 @@ data "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

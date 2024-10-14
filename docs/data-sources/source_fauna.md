@@ -31,5 +31,3 @@ data "airbyte_source_fauna" "my_source_fauna" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

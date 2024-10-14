@@ -31,5 +31,3 @@ data "airbyte_source_fleetio" "my_source_fleetio" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

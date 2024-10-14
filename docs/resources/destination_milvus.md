@@ -21,45 +21,76 @@ resource "airbyte_destination_milvus" "my_destination_milvus" {
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
       }
+      cohere = {
+        cohere_key = "...my_cohere_key..."
+      }
+      fake = {
+        # ...
+      }
+      open_ai = {
+        openai_key = "...my_openai_key..."
+      }
+      open_ai_compatible = {
+        api_key    = "...my_api_key..."
+        base_url   = "https://your-service-name.com"
+        dimensions = 1536
+        model_name = "text-embedding-ada-002"
+      }
     }
     indexing = {
       auth = {
         api_token = {
           token = "...my_token..."
         }
+        no_auth = {
+          # ...
+        }
+        username_password = {
+          password = "...my_password..."
+          username = "...my_username..."
+        }
       }
       collection   = "...my_collection..."
       db           = "...my_db..."
-      host         = "tcp://my-local-milvus:19530"
+      host         = "https://my-instance.zone.zillizcloud.com"
       text_field   = "...my_text_field..."
       vector_field = "...my_vector_field..."
     }
     omit_raw_text = false
     processing = {
-      chunk_overlap = 3
-      chunk_size    = 0
+      chunk_overlap = 4
+      chunk_size    = 7640
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
           to_field   = "...my_to_field..."
-        },
+        }
       ]
       metadata_fields = [
-        "...",
+        "..."
       ]
       text_fields = [
-        "...",
+        "..."
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 7
+          split_level = 1
+        }
+        by_programming_language = {
+          language = "ruby"
+        }
+        by_separator = {
+          keep_separator = true
+          separators = [
+            "..."
+          ]
         }
       }
     }
   }
-  definition_id = "78cf13c3-589b-4c3e-aba6-3d3987f09ed8"
-  name          = "Ms. Marilyn Sporer"
-  workspace_id  = "ddbef1f8-7bb5-4069-a16a-5a735a4e1801"
+  definition_id = "ef42b409-b99a-4d1e-b7d4-f74e61200199"
+  name          = "...my_name..."
+  workspace_id  = "1da00420-023b-48f0-a8d8-4c9079cc6179"
 }
 ```
 
@@ -184,7 +215,7 @@ Optional:
 - `username_password` (Attributes) Authenticate using username and password (suitable for self-managed Milvus clusters) (see [below for nested schema](#nestedatt--configuration--indexing--auth--username_password))
 
 <a id="nestedatt--configuration--indexing--auth--api_token"></a>
-### Nested Schema for `configuration.indexing.auth.username_password`
+### Nested Schema for `configuration.indexing.auth.api_token`
 
 Required:
 
@@ -192,7 +223,7 @@ Required:
 
 
 <a id="nestedatt--configuration--indexing--auth--no_auth"></a>
-### Nested Schema for `configuration.indexing.auth.username_password`
+### Nested Schema for `configuration.indexing.auth.no_auth`
 
 
 <a id="nestedatt--configuration--indexing--auth--username_password"></a>
@@ -240,7 +271,7 @@ Optional:
 - `by_separator` (Attributes) Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_separator))
 
 <a id="nestedatt--configuration--processing--text_splitter--by_markdown_header"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_markdown_header`
 
 Optional:
 
@@ -248,7 +279,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_programming_language`
 
 Required:
 

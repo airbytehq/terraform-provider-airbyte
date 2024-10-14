@@ -31,5 +31,3 @@ data "airbyte_source_front" "my_source_front" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

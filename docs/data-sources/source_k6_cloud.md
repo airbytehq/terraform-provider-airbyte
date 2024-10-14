@@ -31,5 +31,3 @@ data "airbyte_source_k6_cloud" "my_source_k6cloud" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

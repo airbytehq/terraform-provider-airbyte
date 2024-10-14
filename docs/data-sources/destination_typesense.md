@@ -31,5 +31,3 @@ data "airbyte_destination_typesense" "my_destination_typesense" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

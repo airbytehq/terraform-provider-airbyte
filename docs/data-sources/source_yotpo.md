@@ -31,5 +31,3 @@ data "airbyte_source_yotpo" "my_source_yotpo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

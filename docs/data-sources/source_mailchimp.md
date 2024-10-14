@@ -31,5 +31,3 @@ data "airbyte_source_mailchimp" "my_source_mailchimp" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

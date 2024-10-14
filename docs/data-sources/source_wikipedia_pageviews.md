@@ -31,5 +31,3 @@ data "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

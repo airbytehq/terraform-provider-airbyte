@@ -31,5 +31,3 @@ data "airbyte_source_nytimes" "my_source_nytimes" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

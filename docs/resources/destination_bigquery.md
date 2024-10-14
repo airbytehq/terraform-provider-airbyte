@@ -18,18 +18,31 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
     big_query_client_buffer_size_mb = 15
     credentials_json                = "...my_credentials_json..."
     dataset_id                      = "...my_dataset_id..."
-    dataset_location                = "southamerica-west1"
+    dataset_location                = "US"
     disable_type_dedupe             = true
     loading_method = {
-      batched_standard_inserts = {}
+      batched_standard_inserts = {
+        # ...
+      }
+      gcs_staging = {
+        credential = {
+          hmac_key = {
+            hmac_key_access_id = "1234567890abcdefghij1234"
+            hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
+          }
+        }
+        gcs_bucket_name          = "airbyte_sync"
+        gcs_bucket_path          = "data_sync/test"
+        keep_files_in_gcs_bucket = "Delete all tmp files from GCS"
+      }
     }
     project_id              = "...my_project_id..."
     raw_data_dataset        = "...my_raw_data_dataset..."
-    transformation_priority = "batch"
+    transformation_priority = "interactive"
   }
-  definition_id = "15759d85-e2c2-4763-98b4-688adb42653c"
-  name          = "Lori Kunde"
-  workspace_id  = "18b5ab2e-b4f4-41e2-ae39-b661a09af712"
+  definition_id = "92c3eb2b-6d61-4610-adf2-eee065419ed9"
+  name          = "...my_name..."
+  workspace_id  = "acee73dd-54d3-476f-a8ea-d39d218f52cd"
 }
 ```
 
@@ -67,7 +80,7 @@ Optional:
 - `disable_type_dedupe` (Boolean) Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions. Default: false
 - `loading_method` (Attributes) The way data will be uploaded to BigQuery. (see [below for nested schema](#nestedatt--configuration--loading_method))
 - `raw_data_dataset` (String) The dataset to write raw tables into (default: airbyte_internal)
-- `transformation_priority` (String) Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly. must be one of ["interactive", "batch"]; Default: "interactive"
+- `transformation_priority` (String) Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly. Default: "interactive"; must be one of ["interactive", "batch"]
 
 <a id="nestedatt--configuration--loading_method"></a>
 ### Nested Schema for `configuration.loading_method`
@@ -92,17 +105,17 @@ Required:
 
 Optional:
 
-- `keep_files_in_gcs_bucket` (String) This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly. must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]; Default: "Delete all tmp files from GCS"
+- `keep_files_in_gcs_bucket` (String) This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly. Default: "Delete all tmp files from GCS"; must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]
 
 <a id="nestedatt--configuration--loading_method--gcs_staging--credential"></a>
-### Nested Schema for `configuration.loading_method.gcs_staging.keep_files_in_gcs_bucket`
+### Nested Schema for `configuration.loading_method.gcs_staging.credential`
 
 Optional:
 
-- `hmac_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging--keep_files_in_gcs_bucket--hmac_key))
+- `hmac_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--gcs_staging--credential--hmac_key))
 
-<a id="nestedatt--configuration--loading_method--gcs_staging--keep_files_in_gcs_bucket--hmac_key"></a>
-### Nested Schema for `configuration.loading_method.gcs_staging.keep_files_in_gcs_bucket.hmac_key`
+<a id="nestedatt--configuration--loading_method--gcs_staging--credential--hmac_key"></a>
+### Nested Schema for `configuration.loading_method.gcs_staging.credential.hmac_key`
 
 Required:
 

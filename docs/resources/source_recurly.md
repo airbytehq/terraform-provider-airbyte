@@ -19,10 +19,10 @@ resource "airbyte_source_recurly" "my_source_recurly" {
     begin_time = "2021-12-01T00:00:00"
     end_time   = "2021-12-01T00:00:00"
   }
-  definition_id = "98fe3f92-c06a-49aa-b270-2875abb88c39"
-  name          = "Marcos Kuhic"
+  definition_id = "1b86db68-e6fd-41f2-aaf4-a216a5175319"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "66080f3e-cae3-4cb4-91ea-7992cd63d338"
+  workspace_id  = "6eacf260-b477-41b6-8093-1c461d8bd3e7"
 }
 ```
 

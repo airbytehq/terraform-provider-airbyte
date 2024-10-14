@@ -31,5 +31,3 @@ data "airbyte_source_firebolt" "my_source_firebolt" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

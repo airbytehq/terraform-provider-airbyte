@@ -31,5 +31,3 @@ data "airbyte_source_jotform" "my_source_jotform" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

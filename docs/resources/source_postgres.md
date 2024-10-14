@@ -21,25 +21,78 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      detect_changes_with_xmin_system_column = {}
+      detect_changes_with_xmin_system_column = {
+        # ...
+      }
+      read_changes_using_write_ahead_log_cdc = {
+        additional_properties                = "{ \"see\": \"documentation\" }"
+        heartbeat_action_query               = "...my_heartbeat_action_query..."
+        initial_load_timeout_hours           = 3
+        initial_waiting_seconds              = 3
+        invalid_cdc_cursor_position_behavior = "Fail sync"
+        lsn_commit_behaviour                 = "While reading Data"
+        plugin                               = "pgoutput"
+        publication                          = "...my_publication..."
+        queue_size                           = 5
+        replication_slot                     = "...my_replication_slot..."
+      }
+      scan_changes_with_user_defined_cursor = {
+        # ...
+      }
     }
     schemas = [
-      "...",
     ]
     ssl_mode = {
       allow = {
         additional_properties = "{ \"see\": \"documentation\" }"
       }
+      disable = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+      }
+      prefer = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+      }
+      require = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+      }
+      verify_ca = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        ca_certificate        = "...my_ca_certificate..."
+        client_certificate    = "...my_client_certificate..."
+        client_key            = "...my_client_key..."
+        client_key_password   = "...my_client_key_password..."
+      }
+      verify_full = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        ca_certificate        = "...my_ca_certificate..."
+        client_certificate    = "...my_client_certificate..."
+        client_key            = "...my_client_key..."
+        client_key_password   = "...my_client_key_password..."
+      }
     }
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Nellie_Grady"
+    username = "...my_username..."
   }
-  definition_id = "cfdc6fb5-04a1-42b7-b23c-bf0223ae822e"
-  name          = "Thelma Connelly"
+  definition_id = "be56435e-cbaf-420b-889d-1d220ff21125"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8cbc0547-dc93-4d7d-b628-c47813582a6f"
+  workspace_id  = "d122fa45-e536-42be-a02d-5e851e4eb0a6"
 }
 ```
 
@@ -109,9 +162,9 @@ Optional:
 - `heartbeat_action_query` (String) Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""
 - `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 1200 seconds. Valid range: 120 seconds to 2400 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-setting-up-initial-cdc-waiting-time">initial waiting time</a>. Default: 1200
-- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
-- `lsn_commit_behaviour` (String) Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. must be one of ["While reading Data", "After loading Data in the destination"]; Default: "After loading Data in the destination"
-- `plugin` (String) A logical decoding plugin installed on the PostgreSQL server. must be one of ["pgoutput"]; Default: "pgoutput"
+- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]
+- `lsn_commit_behaviour` (String) Determines when Airbyte should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. Default: "After loading Data in the destination"; must be one of ["While reading Data", "After loading Data in the destination"]
+- `plugin` (String) A logical decoding plugin installed on the PostgreSQL server. Default: "pgoutput"; must be "pgoutput"
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
 
 

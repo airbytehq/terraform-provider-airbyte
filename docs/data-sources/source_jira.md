@@ -31,5 +31,3 @@ data "airbyte_source_jira" "my_source_jira" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

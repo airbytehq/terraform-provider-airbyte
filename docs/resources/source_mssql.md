@@ -22,27 +22,52 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     port            = 1433
     replication_method = {
       read_changes_using_change_data_capture_cdc = {
-        initial_load_timeout_hours           = 10
-        initial_waiting_seconds              = 5
-        invalid_cdc_cursor_position_behavior = "Fail sync"
-        queue_size                           = 3
+        initial_load_timeout_hours           = 4
+        initial_waiting_seconds              = 0
+        invalid_cdc_cursor_position_behavior = "Re-sync data"
+        queue_size                           = 9
+      }
+      scan_changes_with_user_defined_cursor = {
+        # ...
       }
     }
     schemas = [
-      "...",
     ]
     ssl_method = {
-      encrypted_trust_server_certificate = {}
+      encrypted_trust_server_certificate = {
+        # ...
+      }
+      encrypted_verify_certificate = {
+        certificate              = "...my_certificate..."
+        host_name_in_certificate = "...my_host_name_in_certificate..."
+      }
+      unencrypted = {
+        # ...
+      }
     }
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Marjorie.Herzog"
+    username = "...my_username..."
   }
-  definition_id = "309cc0ee-4bba-47fa-ad57-2054daa84a4e"
-  name          = "Tracey Wolf"
+  definition_id = "3156776f-a553-4f83-b7be-07e1d515092f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "10a8a64b-77a4-4fe6-b039-288c95001e51"
+  workspace_id  = "89a5f137-cba1-4f2e-85cc-db4cd4426082"
 }
 ```
 
@@ -99,7 +124,7 @@ Optional:
 
 - `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 3600 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>. Default: 300
-- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. must be one of ["Fail sync", "Re-sync data"]; Default: "Fail sync"
+- `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful. Default: 10000
 
 

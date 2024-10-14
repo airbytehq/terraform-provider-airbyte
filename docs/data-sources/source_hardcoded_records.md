@@ -31,5 +31,3 @@ data "airbyte_source_hardcoded_records" "my_source_hardcodedrecords" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

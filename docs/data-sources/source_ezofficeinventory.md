@@ -31,5 +31,3 @@ data "airbyte_source_ezofficeinventory" "my_source_ezofficeinventory" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

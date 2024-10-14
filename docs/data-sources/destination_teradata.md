@@ -31,5 +31,3 @@ data "airbyte_destination_teradata" "my_destination_teradata" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

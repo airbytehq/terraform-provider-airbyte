@@ -31,5 +31,3 @@ data "airbyte_source_azure_table" "my_source_azuretable" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

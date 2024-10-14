@@ -31,5 +31,3 @@ data "airbyte_source_planhat" "my_source_planhat" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

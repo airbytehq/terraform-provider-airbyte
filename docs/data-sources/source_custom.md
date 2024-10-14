@@ -31,5 +31,3 @@ data "airbyte_source_custom" "my_source_custom" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

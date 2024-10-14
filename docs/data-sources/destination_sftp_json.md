@@ -31,5 +31,3 @@ data "airbyte_destination_sftp_json" "my_destination_sftpjson" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

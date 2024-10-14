@@ -31,5 +31,3 @@ data "airbyte_source_xkcd" "my_source_xkcd" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

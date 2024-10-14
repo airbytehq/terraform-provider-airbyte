@@ -31,5 +31,3 @@ data "airbyte_source_dbt" "my_source_dbt" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

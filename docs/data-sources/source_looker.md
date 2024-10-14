@@ -31,5 +31,3 @@ data "airbyte_source_looker" "my_source_looker" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

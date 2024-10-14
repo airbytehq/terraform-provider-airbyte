@@ -31,5 +31,3 @@ data "airbyte_source_instagram" "my_source_instagram" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -28,11 +28,14 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
         s3_bucket      = "...my_s3_bucket..."
         s3_region      = "us-east-1"
       }
+      sql_inserts = {
+        # ...
+      }
     }
   }
-  definition_id = "57da65ed-465e-4758-afd2-ad38ed7ed0e5"
-  name          = "Mr. Benjamin Collins"
-  workspace_id  = "c7d0e4e5-095e-4d94-b4ec-b397d064562e"
+  definition_id = "cb044c1f-5609-4f2c-a0f3-7f7fd2ae8ba8"
+  name          = "...my_name..."
+  workspace_id  = "3a7065bd-8875-464a-a7d2-4af683bf7d5f"
 }
 ```
 

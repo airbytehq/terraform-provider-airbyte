@@ -31,5 +31,3 @@ data "airbyte_source_hibob" "my_source_hibob" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

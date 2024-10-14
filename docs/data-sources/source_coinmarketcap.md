@@ -31,5 +31,3 @@ data "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_google_sheets" "my_source_googlesheets" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

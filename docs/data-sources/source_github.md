@@ -31,5 +31,3 @@ data "airbyte_source_github" "my_source_github" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

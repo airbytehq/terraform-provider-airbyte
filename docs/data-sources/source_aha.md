@@ -31,5 +31,3 @@ data "airbyte_source_aha" "my_source_aha" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

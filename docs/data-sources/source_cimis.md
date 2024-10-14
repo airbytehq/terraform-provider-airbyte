@@ -31,5 +31,3 @@ data "airbyte_source_cimis" "my_source_cimis" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_tempo" "my_source_tempo" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_ip2whois" "my_source_ip2whois" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

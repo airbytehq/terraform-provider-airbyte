@@ -31,5 +31,3 @@ data "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

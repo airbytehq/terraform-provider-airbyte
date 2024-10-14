@@ -31,5 +31,3 @@ data "airbyte_destination_convex" "my_destination_convex" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

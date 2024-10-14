@@ -16,16 +16,16 @@ SourcePexelsAPI Resource
 resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
-    color       = "orange"
+    color       = "red"
     locale      = "en-US"
     orientation = "square"
-    query       = "oceans"
+    query       = "people"
     size        = "large"
   }
-  definition_id = "89bbf5d2-4f5b-4116-8e1d-c4a01d44fb97"
-  name          = "Frances Armstrong"
+  definition_id = "e04d8ce1-5827-4406-85b5-3f0edc9bc353"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d0de91ea-a4a7-40c9-8b87-0eb98050c39e"
+  workspace_id  = "72aedbff-463d-41bc-bf02-099fc30a9d8e"
 }
 ```
 

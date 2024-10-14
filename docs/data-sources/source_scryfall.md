@@ -31,5 +31,3 @@ data "airbyte_source_scryfall" "my_source_scryfall" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

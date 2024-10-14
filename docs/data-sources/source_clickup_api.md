@@ -31,5 +31,3 @@ data "airbyte_source_clickup_api" "my_source_clickupapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

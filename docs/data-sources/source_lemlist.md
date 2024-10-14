@@ -31,5 +31,3 @@ data "airbyte_source_lemlist" "my_source_lemlist" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

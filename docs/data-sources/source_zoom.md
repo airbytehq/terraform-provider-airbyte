@@ -31,5 +31,3 @@ data "airbyte_source_zoom" "my_source_zoom" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

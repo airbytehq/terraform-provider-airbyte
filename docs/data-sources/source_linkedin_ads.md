@@ -31,5 +31,3 @@ data "airbyte_source_linkedin_ads" "my_source_linkedinads" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

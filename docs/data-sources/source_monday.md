@@ -31,5 +31,3 @@ data "airbyte_source_monday" "my_source_monday" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

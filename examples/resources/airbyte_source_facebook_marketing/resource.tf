@@ -2,16 +2,16 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
   configuration = {
     access_token = "...my_access_token..."
     account_ids = [
-      "...",
+      "..."
     ]
     ad_statuses = [
-      "DELETED",
+      "ADSET_PAUSED"
     ]
     adset_statuses = [
-      "PAUSED",
+      "IN_PROCESS"
     ]
     campaign_statuses = [
-      "IN_PROCESS",
+      "PAUSED"
     ]
     credentials = {
       authenticate_via_facebook_marketing_oauth = {
@@ -19,37 +19,40 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
       }
+      service_account_key_authentication = {
+        access_token = "...my_access_token..."
+      }
     }
     custom_insights = [
       {
         action_breakdowns = [
-          "action_type",
+          "action_destination"
         ]
-        action_report_time = "mixed"
+        action_report_time = "impression"
         breakdowns = [
-          "skan_conversion_id",
+          "media_destination_url"
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "account_currency",
+          "cost_per_outbound_click"
         ]
-        insights_job_timeout     = 10
-        insights_lookback_window = 0
+        insights_job_timeout     = 50
+        insights_lookback_window = 9
         level                    = "account"
-        name                     = "Kara Macejkovic"
+        name                     = "...my_name..."
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 10
-      },
+        time_increment           = 33
+      }
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
-    insights_job_timeout     = 8
-    insights_lookback_window = 7
-    page_size                = 10
+    insights_job_timeout     = 55
+    insights_lookback_window = 9
+    page_size                = 7
     start_date               = "2017-01-25T00:00:00Z"
   }
-  definition_id = "6a32dc31-e1b4-4b67-a953-bf2defea2fd1"
-  name          = "Dana Wuckert"
+  definition_id = "efac1af8-dd35-4940-8819-0027d27f358d"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d3631398-5539-4f35-ad32-06afb3a724a6"
+  workspace_id  = "1c443315-5b54-4630-ad55-2f2c6821ece4"
 }

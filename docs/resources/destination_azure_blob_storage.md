@@ -23,14 +23,17 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_spill_size           = 500
     format = {
       csv_comma_separated_values = {
-        file_extension = true
-        flattening     = "No flattening"
+        file_extension = false
+        flattening     = "Root level flattening"
+      }
+      json_lines_newline_delimited_json = {
+        file_extension = false
       }
     }
   }
-  definition_id = "63ca2e92-d142-4842-85e9-75e40d11a3c6"
-  name          = "Virgil Dickens"
-  workspace_id  = "c05b91a7-2d27-400d-8d43-ac809ede88b1"
+  definition_id = "0b662a17-77d2-477f-ba0e-7117eb18de2e"
+  name          = "...my_name..."
+  workspace_id  = "617341df-1fde-4735-ba68-f98eeb6e6bd6"
 }
 ```
 
@@ -82,7 +85,7 @@ Optional:
 Optional:
 
 - `file_extension` (Boolean) Add file extensions to the output file. Default: false
-- `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
+- `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]
 
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>

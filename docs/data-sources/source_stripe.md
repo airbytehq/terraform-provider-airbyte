@@ -31,5 +31,3 @@ data "airbyte_source_stripe" "my_source_stripe" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -18,10 +18,10 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     api_token              = "...my_api_token..."
     replication_start_date = "2017-01-25 00:00:00Z"
   }
-  definition_id = "649fe5b0-8c82-4dc4-8ca1-ab76639716f1"
-  name          = "Clayton Doyle PhD"
+  definition_id = "cd6a105b-fe90-4389-8c90-c65a961a65fa"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f025a154-586c-47cd-bb55-8f87809d3d1f"
+  workspace_id  = "09d58107-79a7-4e46-8d32-f0e8063bd034"
 }
 ```
 

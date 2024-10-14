@@ -3,8 +3,8 @@ resource "airbyte_source_instagram" "my_source_instagram" {
     access_token = "...my_access_token..."
     start_date   = "2017-01-25T00:00:00Z"
   }
-  definition_id = "c47d5036-1610-47c0-bf83-920634c9db1c"
-  name          = "Julia Huels V"
+  definition_id = "f2ba9b6a-282f-49c9-ad1c-418c8b8d173c"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "282f0b30-8e78-4729-bf50-24b690b2736f"
+  workspace_id  = "c12b19f2-4972-490b-ae38-c64d9c068d4d"
 }

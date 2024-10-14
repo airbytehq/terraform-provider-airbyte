@@ -31,5 +31,3 @@ data "airbyte_source_height" "my_source_height" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_destination_weaviate" "my_destination_weaviate" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

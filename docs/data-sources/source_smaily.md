@@ -31,5 +31,3 @@ data "airbyte_source_smaily" "my_source_smaily" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

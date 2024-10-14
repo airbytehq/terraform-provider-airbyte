@@ -17,17 +17,20 @@ resource "airbyte_source_jotform" "my_source_jotform" {
   configuration = {
     api_endpoint = {
       basic = {
-        url_prefix = "EU"
+        url_prefix = "HIPAA"
+      }
+      enterprise = {
+        enterprise_url = "...my_enterprise_url..."
       }
     }
     api_key    = "...my_api_key..."
-    end_date   = "2021-08-10T17:15:31.398Z"
-    start_date = "2021-02-10T10:54:29.564Z"
+    end_date   = "2022-06-27T20:19:13.324Z"
+    start_date = "2021-12-12T15:58:25.922Z"
   }
-  definition_id = "1ee42495-78a5-4bcb-bc2c-b83b2c4dd4d4"
-  name          = "Ada Bartell"
+  definition_id = "bc700c3e-1398-401e-810a-54a9f3e86b27"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "41ee0bba-b045-47d9-a639-8e6ecd841e72"
+  workspace_id  = "33d17617-4812-4fd7-aad4-651de8e9f868"
 }
 ```
 
@@ -73,7 +76,7 @@ Optional:
 
 Optional:
 
-- `url_prefix` (String) You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com). must be one of ["Standard", "EU", "HIPAA"]; Default: "Standard"
+- `url_prefix` (String) You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com). Default: "Standard"; must be one of ["Standard", "EU", "HIPAA"]
 
 
 <a id="nestedatt--configuration--api_endpoint--enterprise"></a>

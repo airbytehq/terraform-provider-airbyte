@@ -31,5 +31,3 @@ data "airbyte_source_chartmogul" "my_source_chartmogul" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

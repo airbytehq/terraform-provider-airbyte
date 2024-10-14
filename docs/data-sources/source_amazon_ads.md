@@ -31,5 +31,3 @@ data "airbyte_source_amazon_ads" "my_source_amazonads" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

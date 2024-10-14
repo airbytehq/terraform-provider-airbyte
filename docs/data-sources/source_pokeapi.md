@@ -31,5 +31,3 @@ data "airbyte_source_pokeapi" "my_source_pokeapi" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

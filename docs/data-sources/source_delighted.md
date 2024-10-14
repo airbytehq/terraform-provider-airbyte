@@ -31,5 +31,3 @@ data "airbyte_source_delighted" "my_source_delighted" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

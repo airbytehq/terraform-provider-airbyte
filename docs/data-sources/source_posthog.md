@@ -31,5 +31,3 @@ data "airbyte_source_posthog" "my_source_posthog" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

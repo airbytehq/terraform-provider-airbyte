@@ -31,5 +31,3 @@ data "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

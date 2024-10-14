@@ -31,5 +31,3 @@ data "airbyte_source_oracle" "my_source_oracle" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

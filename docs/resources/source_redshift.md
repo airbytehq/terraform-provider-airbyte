@@ -21,14 +21,13 @@ resource "airbyte_source_redshift" "my_source_redshift" {
     password        = "...my_password..."
     port            = 5439
     schemas = [
-      "...",
     ]
-    username = "Lupe.Fritsch49"
+    username = "...my_username..."
   }
-  definition_id = "eb205ddb-7f1b-4711-95e0-7e103643a6df"
-  name          = "Eugene Parker Sr."
+  definition_id = "e25148e3-3c6f-4e5f-88e2-c90d1e9f9593"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "25b2ac62-eb10-4f1a-8d51-fb8be0416cb4"
+  workspace_id  = "84353b00-31b2-4302-bdea-2a56e10ac383"
 }
 ```
 

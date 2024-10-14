@@ -31,5 +31,3 @@ data "airbyte_source_salesloft" "my_source_salesloft" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

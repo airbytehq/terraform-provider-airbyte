@@ -31,5 +31,3 @@ data "airbyte_source_strava" "my_source_strava" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_pennylane" "my_source_pennylane" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

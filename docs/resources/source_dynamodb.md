@@ -21,16 +21,19 @@ resource "airbyte_source_dynamodb" "my_source_dynamodb" {
         additional_properties = "{ \"see\": \"documentation\" }"
         secret_access_key     = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
       }
+      role_based_authentication = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+      }
     }
     endpoint                               = "https://{aws_dynamo_db_url}.com"
     ignore_missing_read_permissions_tables = true
-    region                                 = "il-central-1"
+    region                                 = "ap-southeast-1"
     reserved_attribute_names               = "name, field_name, field-name"
   }
-  definition_id = "ad00caee-12c4-4e65-b57e-54a27b617a01"
-  name          = "Lorena Huel"
+  definition_id = "4102f2b2-2d6c-4289-a4cb-9348fe710c97"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "68e1922d-f283-4a61-8313-a52314031fd7"
+  workspace_id  = "6e654cbb-f82e-40a5-9542-939f3129c0d9"
 }
 ```
 
@@ -61,7 +64,7 @@ Optional:
 - `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
 - `endpoint` (String) the URL of the Dynamodb database. Default: ""
 - `ignore_missing_read_permissions_tables` (Boolean) Ignore tables with missing scan/read permissions. Default: false
-- `region` (String) The region of the Dynamodb database. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `region` (String) The region of the Dynamodb database. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 - `reserved_attribute_names` (String, Sensitive) Comma separated reserved attribute names present in your tables
 
 <a id="nestedatt--configuration--credentials"></a>

@@ -31,5 +31,3 @@ data "airbyte_source_mixpanel" "my_source_mixpanel" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

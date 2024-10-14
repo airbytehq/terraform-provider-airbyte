@@ -21,14 +21,14 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "ap-northeast-1"
+    region               = "ap-southeast-2"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     visibility_timeout   = 15
   }
-  definition_id = "82a17eb0-af63-4def-a733-56f39bea5e20"
-  name          = "Dr. Salvador White"
+  definition_id = "838e1ff6-5ade-49bb-b0dc-2f1fb8c96dde"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "905c8543-b918-44ca-87dc-adad2938da57"
+  workspace_id  = "d064f44a-5875-4cf2-8a32-a321d2eb3460"
 }
 ```
 
@@ -63,7 +63,7 @@ Optional:
 
 - `access_key` (String, Sensitive) The Access Key ID of the AWS IAM Role to use for pulling messages
 - `attributes_to_return` (String) Comma separated list of Mesage Attribute names to return
-- `delete_messages` (Boolean) If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. . Default: false
+- `delete_messages` (Boolean) If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. Default: false
 - `max_batch_size` (Number) Max amount of messages to get in one batch (10 max)
 - `max_wait_time` (Number) Max amount of time in seconds to wait for messages in a single poll (20 max)
 - `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages

@@ -31,5 +31,3 @@ data "airbyte_destination_pinecone" "my_destination_pinecone" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

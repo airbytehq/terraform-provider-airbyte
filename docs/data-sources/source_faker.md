@@ -31,5 +31,3 @@ data "airbyte_source_faker" "my_source_faker" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

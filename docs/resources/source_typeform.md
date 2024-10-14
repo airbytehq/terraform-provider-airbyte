@@ -21,18 +21,21 @@ resource "airbyte_source_typeform" "my_source_typeform" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-07-29T12:53:45.825Z"
+        token_expiry_date = "2022-06-26T16:18:42.881Z"
+      }
+      private_token = {
+        access_token = "...my_access_token..."
       }
     }
     form_ids = [
-      "...",
+      "..."
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "fb2f6de2-ea36-4801-8ecd-1ad5ec49d168"
-  name          = "Jennie Klocko"
+  definition_id = "bd0ee776-77dc-42cf-9652-75d60b24ac1b"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "da8c4417-78e3-4947-a95b-8130b0d1b71f"
+  workspace_id  = "b21de812-8c61-487c-b7b3-9e15f5256664"
 }
 ```
 

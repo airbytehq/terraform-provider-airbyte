@@ -14,10 +14,10 @@ Permission Resource
 
 ```terraform
 resource "airbyte_permission" "my_permission" {
-  organization_id = "4edb75e7-d1c9-4ddc-ada3-62faf1b28fe2"
-  permission_type = "organization_member"
-  user_id         = "cb1bb055-0b4e-4344-926e-7f29336e2378"
-  workspace_id    = "18d15373-da8d-46ee-b047-57630ddbc2db"
+  organization_id = "d109e1f3-ec33-4ca2-89ba-9b654ec67eae"
+  permission_type = "organization_reader"
+  user_id         = "c3231461-7373-4a98-aed1-9a79ad305d18"
+  workspace_id    = "8b030f86-f6a4-490a-92a7-a996c2b017ea"
 }
 ```
 

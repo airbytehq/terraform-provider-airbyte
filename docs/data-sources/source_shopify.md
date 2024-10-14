@@ -31,5 +31,3 @@ data "airbyte_source_shopify" "my_source_shopify" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

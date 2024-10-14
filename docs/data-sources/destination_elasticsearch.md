@@ -31,5 +31,3 @@ data "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

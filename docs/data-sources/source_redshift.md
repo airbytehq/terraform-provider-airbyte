@@ -31,5 +31,3 @@ data "airbyte_source_redshift" "my_source_redshift" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

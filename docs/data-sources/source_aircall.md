@@ -31,5 +31,3 @@ data "airbyte_source_aircall" "my_source_aircall" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

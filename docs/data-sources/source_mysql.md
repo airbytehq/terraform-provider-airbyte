@@ -31,5 +31,3 @@ data "airbyte_source_mysql" "my_source_mysql" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

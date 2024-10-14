@@ -31,5 +31,3 @@ data "airbyte_source_shortcut" "my_source_shortcut" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

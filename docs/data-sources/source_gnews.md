@@ -31,5 +31,3 @@ data "airbyte_source_gnews" "my_source_gnews" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

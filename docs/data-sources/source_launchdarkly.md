@@ -31,5 +31,3 @@ data "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

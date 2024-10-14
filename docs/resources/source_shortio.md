@@ -19,10 +19,10 @@ resource "airbyte_source_shortio" "my_source_shortio" {
     secret_key = "...my_secret_key..."
     start_date = "2023-07-30T03:43:59.244Z"
   }
-  definition_id = "700ba64d-af2c-4d7c-8fe5-757a306443a7"
-  name          = "Flora Ruecker"
+  definition_id = "4143d169-b0b2-420a-9b61-e7168ba1e301"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e2e1378d-b01d-476f-bdd2-7aa6e51f0c20"
+  workspace_id  = "7f65e904-170f-40c2-ab5b-c04214652b27"
 }
 ```
 

@@ -31,5 +31,3 @@ data "airbyte_source_square" "my_source_square" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

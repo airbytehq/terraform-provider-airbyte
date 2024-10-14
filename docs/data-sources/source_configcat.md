@@ -31,5 +31,3 @@ data "airbyte_source_configcat" "my_source_configcat" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

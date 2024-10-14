@@ -22,10 +22,10 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
       refresh_token         = "...my_refresh_token..."
     }
   }
-  definition_id = "9bfc35e9-0346-480b-8207-4084a44f8250"
-  name          = "Delbert Pfeffer"
+  definition_id = "277cc3f8-b558-4609-821a-eb821b00a3f7"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e137bba0-0e04-4662-b501-253647b50bf3"
+  workspace_id  = "ddc4ab00-8822-4a78-bd4f-944dac4fd75d"
 }
 ```
 

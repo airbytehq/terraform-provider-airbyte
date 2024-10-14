@@ -31,5 +31,3 @@ data "airbyte_destination_gcs" "my_destination_gcs" {
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-

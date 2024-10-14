@@ -31,5 +31,3 @@ data "airbyte_source_cart" "my_source_cart" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

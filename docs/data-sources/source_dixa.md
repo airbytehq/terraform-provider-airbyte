@@ -31,5 +31,3 @@ data "airbyte_source_dixa" "my_source_dixa" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

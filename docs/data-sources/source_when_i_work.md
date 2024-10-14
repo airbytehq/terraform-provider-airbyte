@@ -31,5 +31,3 @@ data "airbyte_source_when_i_work" "my_source_wheniwork" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

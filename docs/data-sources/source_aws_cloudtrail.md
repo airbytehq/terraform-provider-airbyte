@@ -31,5 +31,3 @@ data "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

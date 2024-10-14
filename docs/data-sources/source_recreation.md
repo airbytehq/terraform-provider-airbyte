@@ -31,5 +31,3 @@ data "airbyte_source_recreation" "my_source_recreation" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

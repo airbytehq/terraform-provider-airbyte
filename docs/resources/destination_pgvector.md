@@ -21,6 +21,21 @@ resource "airbyte_destination_pgvector" "my_destination_pgvector" {
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
       }
+      cohere = {
+        cohere_key = "...my_cohere_key..."
+      }
+      fake = {
+        # ...
+      }
+      open_ai = {
+        openai_key = "...my_openai_key..."
+      }
+      open_ai_compatible = {
+        api_key    = "...my_api_key..."
+        base_url   = "https://your-service-name.com"
+        dimensions = 1536
+        model_name = "text-embedding-ada-002"
+      }
     }
     indexing = {
       credentials = {
@@ -34,30 +49,39 @@ resource "airbyte_destination_pgvector" "my_destination_pgvector" {
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 1
-      chunk_size    = 10
+      chunk_overlap = 7
+      chunk_size    = 8035
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
           to_field   = "...my_to_field..."
-        },
+        }
       ]
       metadata_fields = [
-        "...",
+        "..."
       ]
       text_fields = [
-        "...",
+        "..."
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 2
+          split_level = 5
+        }
+        by_programming_language = {
+          language = "js"
+        }
+        by_separator = {
+          keep_separator = false
+          separators = [
+            "..."
+          ]
         }
       }
     }
   }
-  definition_id = "3897fec4-ca4c-48c4-bf88-2725c3c6bc39"
-  name          = "Tyler Smith"
-  workspace_id  = "396b39ea-0e10-4165-90e1-a2bc7de0ff63"
+  definition_id = "ace91495-b654-40da-a8bd-73a5b3a4b3ee"
+  name          = "...my_name..."
+  workspace_id  = "0b8f211f-70ad-47f2-a6ea-1e915e8005be"
 }
 ```
 
@@ -164,10 +188,13 @@ Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--indexing--credentials))
 - `database` (String) Enter the name of the database that you want to sync data into
-- `default_schema` (String) Enter the name of the default schema
 - `host` (String) Enter the account name you want to use to access the database.
-- `port` (Number) Enter the port you want to use to access the database
 - `username` (String) Enter the name of the user you want to use to access the database
+
+Optional:
+
+- `default_schema` (String) Enter the name of the default schema. Default: "public"
+- `port` (Number) Enter the port you want to use to access the database. Default: 5432
 
 <a id="nestedatt--configuration--indexing--credentials"></a>
 ### Nested Schema for `configuration.indexing.credentials`
@@ -212,7 +239,7 @@ Optional:
 - `by_separator` (Attributes) Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_separator))
 
 <a id="nestedatt--configuration--processing--text_splitter--by_markdown_header"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_markdown_header`
 
 Optional:
 
@@ -220,7 +247,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_programming_language`
 
 Required:
 

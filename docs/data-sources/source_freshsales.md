@@ -31,5 +31,3 @@ data "airbyte_source_freshsales" "my_source_freshsales" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_trello" "my_source_trello" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

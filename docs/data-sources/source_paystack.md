@@ -31,5 +31,3 @@ data "airbyte_source_paystack" "my_source_paystack" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -31,5 +31,3 @@ data "airbyte_source_glassfrog" "my_source_glassfrog" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

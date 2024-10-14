@@ -31,5 +31,3 @@ data "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

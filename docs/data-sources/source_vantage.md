@@ -31,5 +31,3 @@ data "airbyte_source_vantage" "my_source_vantage" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

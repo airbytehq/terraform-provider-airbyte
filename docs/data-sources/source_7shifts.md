@@ -31,5 +31,3 @@ data "airbyte_source_7shifts" "my_source_7shifts" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

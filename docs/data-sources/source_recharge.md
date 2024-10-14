@@ -31,5 +31,3 @@ data "airbyte_source_recharge" "my_source_recharge" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

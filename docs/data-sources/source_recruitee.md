@@ -31,5 +31,3 @@ data "airbyte_source_recruitee" "my_source_recruitee" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

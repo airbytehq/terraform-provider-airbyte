@@ -31,5 +31,3 @@ data "airbyte_source_bigquery" "my_source_bigquery" {
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-
