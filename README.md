@@ -3,7 +3,7 @@
         <img src="https://user-images.githubusercontent.com/68016351/222853569-b35cc448-6481-4cf2-a237-bd5da47e94fd.png" width="500">
     </picture>
     <p>Programatically control Airbyte Cloud through an API.</p>
-    <a href="https://reference.airbyte.com/reference/start"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000000&style=for-the-badge" /></a>
+    <a href="https://reference.airbyte.com/reference/getting-started"><img src="https://img.shields.io/static/v1?label=Docs&message=API Ref&color=000000&style=for-the-badge" /></a>
     <a href="https://registry.terraform.io/providers/airbytehq/airbyte/latest/docs"><img src="https://img.shields.io/static/v1?label=Docs&message=terraform-provider-airbyte&color=000000&style=for-the-badge" /></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" /></a>
 </div>
