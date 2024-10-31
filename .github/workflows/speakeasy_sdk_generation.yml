@@ -11,6 +11,8 @@ permissions:
                 description: Force generation of SDKs
                 type: boolean
                 default: false
+    schedule:
+        - cron: 0 0 * * *
 jobs:
     generate:
         uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
