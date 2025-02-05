@@ -104,6 +104,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"selected_fields": schema.ListNestedAttribute{
 									Computed: true,
 									Optional: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.EnsureSelectedFieldsDiff(),
+									},
 									NestedObject: schema.NestedAttributeObject{
 										Attributes: map[string]schema.Attribute{
 											"field_path": schema.ListAttribute{
