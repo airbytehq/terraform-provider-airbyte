@@ -21,14 +21,17 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2021-06-09T01:32:17.584Z"
+        token_expiry_date = "2022-01-14T11:50:58.504Z"
+      }
+      personal_access_token = {
+        api_key = "key1234567890"
       }
     }
   }
-  definition_id = "bb57bf00-1ddb-43cf-874d-627d201b0d06"
-  name          = "Johnathan Renner"
+  definition_id = "fdd0b7d7-bc62-4e45-9809-2513b5f90d61"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e6b9f25a-a9f8-4c7d-8107-048d9ffe8959"
+  workspace_id  = "110737e7-1846-4cca-8ebc-d0f82e4b8ffb"
 }
 ```
 
@@ -48,6 +51,7 @@ resource "airbyte_source_airtable" "my_source_airtable" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

@@ -20,10 +20,10 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     password        = "...my_password..."
     start_date      = "%Y-%m-%d"
   }
-  definition_id = "22a67dad-65e8-4ae1-9217-c0fcbe7d2d34"
-  name          = "Connie Treutel"
+  definition_id = "36dbf122-e4bc-4016-a9fd-e3af6f38ae20"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "62799cad-5c4b-4833-869d-3410e395a0aa"
+  workspace_id  = "b63b6385-c282-4a24-b2df-4452ed4c92a3"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

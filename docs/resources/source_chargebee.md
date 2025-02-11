@@ -15,15 +15,16 @@ SourceChargebee Resource
 ```terraform
 resource "airbyte_source_chargebee" "my_source_chargebee" {
   configuration = {
+    num_workers     = 1
     product_catalog = "1.0"
     site            = "airbyte-test"
     site_api_key    = "...my_site_api_key..."
     start_date      = "2021-01-25T00:00:00Z"
   }
-  definition_id = "f6b9b8b8-f8f6-4afb-b365-d687e087e390"
-  name          = "Kelli Howell"
+  definition_id = "7e4892fa-00dc-4d82-9782-addab8c4f2fe"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "17faeb4f-73b7-4e8d-8371-ecbee10511b4"
+  workspace_id  = "0b341506-9eb2-4891-a794-54f7de03f91f"
 }
 ```
 
@@ -43,6 +44,7 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -57,7 +59,8 @@ Required:
 
 Optional:
 
-- `product_catalog` (String) Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0. must be one of ["1.0", "2.0"]; Default: "2.0"
+- `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://support.chargebee.com/support/solutions/articles/243576-what-are-the-chargebee-api-limits-">docs</a>. Default: 3
+- `product_catalog` (String) Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0. Default: "2.0"; must be one of ["1.0", "2.0"]
 
 ## Import
 

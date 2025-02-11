@@ -16,12 +16,12 @@ SourceCalendly Resource
 resource "airbyte_source_calendly" "my_source_calendly" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2022-09-22T09:32:58.921Z"
+    start_date = "2021-01-29T13:25:58.736Z"
   }
-  definition_id = "5775fcbb-81a7-4466-bf78-b3b7dede547f"
-  name          = "Miss Lonnie Schaden"
+  definition_id = "8be0c388-cbc0-4fe1-b922-5904f219f8ad"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "53c35168-9ddb-43b3-9740-139dc2cf2cb4"
+  workspace_id  = "c6953f07-0b86-4105-8f27-e4fb9d5b9fc8"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_calendly" "my_source_calendly" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

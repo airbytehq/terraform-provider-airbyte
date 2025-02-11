@@ -17,10 +17,10 @@ resource "airbyte_source_vantage" "my_source_vantage" {
   configuration = {
     access_token = "...my_access_token..."
   }
-  definition_id = "8990fea4-c7f8-425f-b877-6c87f290dbb5"
-  name          = "Carl Bins"
+  definition_id = "ec1a23b7-466d-4987-acf2-eae96eb456d0"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "33e77c5c-900b-46e5-95bf-b7e7038464bf"
+  workspace_id  = "cbcd9ed5-c667-4714-989a-779bea742d01"
 }
 ```
 
@@ -40,6 +40,7 @@ resource "airbyte_source_vantage" "my_source_vantage" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

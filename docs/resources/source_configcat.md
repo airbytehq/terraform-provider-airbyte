@@ -16,12 +16,12 @@ SourceConfigcat Resource
 resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
     password = "...my_password..."
-    username = "Alena_Satterfield76"
+    username = "...my_username..."
   }
-  definition_id = "f802e3e6-0165-4466-b52d-a9b04e26c5d5"
-  name          = "Dr. Roman Heaney"
+  definition_id = "3b7c7a4b-4f66-48de-899f-77af4d977324"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f713464e-d5bf-46d6-b306-cc548e68cfae"
+  workspace_id  = "c2bc536b-e1b7-409e-9c86-db64c9844ec9"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_configcat" "my_source_configcat" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

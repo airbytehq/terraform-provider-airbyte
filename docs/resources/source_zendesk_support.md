@@ -19,16 +19,23 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
       api_token = {
         additional_properties = "{ \"see\": \"documentation\" }"
         api_token             = "...my_api_token..."
-        email                 = "Sibyl.Kuhn37@hotmail.com"
+        email                 = "...my_email..."
+      }
+      o_auth20 = {
+        access_token          = "...my_access_token..."
+        additional_properties = "{ \"see\": \"documentation\" }"
+        client_id             = "...my_client_id..."
+        client_secret         = "...my_client_secret..."
       }
     }
-    start_date = "2020-10-15T00:00:00Z"
-    subdomain  = "...my_subdomain..."
+    num_workers = 1
+    start_date  = "2020-10-15T00:00:00Z"
+    subdomain   = "...my_subdomain..."
   }
-  definition_id = "7d0d61fb-64b1-495d-b09b-664eddec27a2"
-  name          = "Byron Lakin"
+  definition_id = "2f4827bb-f12c-45a8-a7c8-fc92af717ff3"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "54579de1-c1b0-4368-bea0-77f09d380eb8"
+  workspace_id  = "88e43c5a-c5bf-4914-bf88-1d261e2148a9"
 }
 ```
 
@@ -48,6 +55,7 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -61,6 +69,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
+- `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Zendesk Support plan. More info about the rate limit plan tiers can be found on Zendesk's API <a href="https://developer.zendesk.com/api-reference/introduction/rate-limits/#zendesk-support-plan-limits">docs</a>. Default: 3
 - `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>

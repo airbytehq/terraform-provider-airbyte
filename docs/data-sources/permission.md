@@ -28,8 +28,6 @@ data "airbyte_permission" "my_permission" {
 ### Read-Only
 
 - `organization_id` (String)
-- `permission_type` (String) Describes what actions/endpoints the permission entitles to. must be one of ["instance_admin", "organization_admin", "organization_editor", "organization_reader", "organization_member", "workspace_owner", "workspace_admin", "workspace_editor", "workspace_reader"]
+- `permission_type` (String) Describes what actions/endpoints the permission entitles to
 - `user_id` (String) Internal Airbyte user ID
 - `workspace_id` (String)
-
-

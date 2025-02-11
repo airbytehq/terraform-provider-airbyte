@@ -28,8 +28,8 @@ data "airbyte_source_coin_api" "my_source_coinapi" {
 ### Read-Only
 
 - `configuration` (String) The values required to configure the source. Parsed as JSON.
+- `created_at` (Number)
+- `definition_id` (String)
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -16,12 +16,12 @@ SourcePennylane Resource
 resource "airbyte_source_pennylane" "my_source_pennylane" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_time = "2022-10-13T03:28:32.102Z"
+    start_time = "2021-06-03T08:32:57.060Z"
   }
-  definition_id = "3c55d68a-56e1-4f7b-90c6-dd1e62eb5fcf"
-  name          = "Vicki Harris"
+  definition_id = "de6b6c68-8e04-4edf-a164-38f873c25347"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "caec2ce4-1cbe-41d2-acd0-1501d52f6c56"
+  workspace_id  = "68c0608d-791c-40e1-afa5-c0f0594a51ec"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_pennylane" "my_source_pennylane" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

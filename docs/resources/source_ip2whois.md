@@ -18,10 +18,10 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
     api_key = "...my_api_key..."
     domain  = "www.google.com"
   }
-  definition_id = "d0d26d91-47bb-4356-aca6-47ba4f7aaba2"
-  name          = "Joy Lowe I"
+  definition_id = "a9ade1a0-a3b3-4b7c-a67f-1f4b3c936361"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1a21c893-8ad6-4fcb-b78b-ed98212c704a"
+  workspace_id  = "56bae1c6-f099-43b9-9370-ca3d497ec2b1"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_ip2whois" "my_source_ip2whois" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

@@ -17,10 +17,10 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
   configuration = {
     docker_username = "airbyte"
   }
-  definition_id = "de4cfc33-2b42-4c84-8d8b-c6076e714fbf"
-  name          = "Erma Wyman"
+  definition_id = "3cca0b98-4ec1-477b-959c-b0f3c4e3f3b0"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "aed54ef2-4d0d-4e80-a3db-90502015d2de"
+  workspace_id  = "a2e0924a-f414-46a4-be78-5d0365407d70"
 }
 ```
 
@@ -40,6 +40,7 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

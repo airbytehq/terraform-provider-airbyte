@@ -17,12 +17,12 @@ resource "airbyte_source_buzzsprout" "my_source_buzzsprout" {
   configuration = {
     api_key    = "...my_api_key..."
     podcast_id = "...my_podcast_id..."
-    start_date = "2022-12-25T14:11:43.769Z"
+    start_date = "2021-01-02T16:36:23.396Z"
   }
-  definition_id = "238eba13-61d3-4c00-8fe1-ba68d340502b"
-  name          = "Ricardo Altenwerth"
+  definition_id = "825e9450-fd21-4d25-a60d-bc286af3156d"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "febd39e6-abf1-47c2-950c-b6e6ff332bdf"
+  workspace_id  = "7e2d1632-6917-4150-87aa-55da9f37c37f"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_buzzsprout" "my_source_buzzsprout" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

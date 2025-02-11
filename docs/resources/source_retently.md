@@ -22,12 +22,16 @@ resource "airbyte_source_retently" "my_source_retently" {
         client_secret         = "...my_client_secret..."
         refresh_token         = "...my_refresh_token..."
       }
+      authenticate_with_api_token = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        api_key               = "...my_api_key..."
+      }
     }
   }
-  definition_id = "9da06c23-9e7a-4f3c-a2cc-2a5392d74588"
-  name          = "Miss Gary Gerhold II"
+  definition_id = "cca4315f-0685-4a8f-b821-e7a8f8d7f4b8"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7267ce86-a322-4e02-b7e6-dd49df5c3592"
+  workspace_id  = "fff20602-c218-4268-935e-a746cd7a8c6c"
 }
 ```
 
@@ -47,6 +51,7 @@ resource "airbyte_source_retently" "my_source_retently" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

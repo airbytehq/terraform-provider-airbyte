@@ -28,16 +28,17 @@ data "airbyte_connection" "my_connection" {
 ### Read-Only
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `created_at` (Number)
+- `data_residency` (String)
 - `destination_id` (String)
 - `name` (String)
-- `namespace_definition` (String) Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]
+- `namespace_definition` (String) Define the location where the data will be stored in the destination
 - `namespace_format` (String)
-- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
+- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 - `prefix` (String)
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)
-- `status` (String) must be one of ["active", "inactive", "deprecated"]
+- `status` (String)
 - `workspace_id` (String)
 
 <a id="nestedatt--configurations"></a>
@@ -53,10 +54,96 @@ Read-Only:
 Read-Only:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String)
-- `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
+- `primary_key` (Attributes List) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema. (see [below for nested schema](#nestedatt--configurations--streams--primary_key))
 - `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
-- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+- `sync_mode` (String)
+
+<a id="nestedatt--configurations--streams--mappers"></a>
+### Nested Schema for `configurations.streams.mappers`
+
+Read-Only:
+
+- `id` (String)
+- `mapper_configuration` (Attributes) The values required to configure the mapper. (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration))
+- `type` (String)
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration`
+
+Read-Only:
+
+- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption))
+- `field_renaming` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming))
+- `hashing` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing))
+- `row_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering))
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption`
+
+Read-Only:
+
+- `aes` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes))
+- `rsa` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa))
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.aes`
+
+Read-Only:
+
+- `algorithm` (String)
+- `field_name_suffix` (String)
+- `key` (String, Sensitive)
+- `mode` (String)
+- `padding` (String)
+- `target_field` (String)
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.rsa`
+
+Read-Only:
+
+- `algorithm` (String)
+- `field_name_suffix` (String)
+- `public_key` (String)
+- `target_field` (String)
+
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_renaming`
+
+Read-Only:
+
+- `new_field_name` (String) The new name for the field after renaming.
+- `original_field_name` (String) The current name of the field to rename.
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--hashing"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.hashing`
+
+Read-Only:
+
+- `field_name_suffix` (String) The suffix to append to the field name after hashing.
+- `method` (String) The hashing algorithm to use.
+- `target_field` (String) The name of the field to be hashed.
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.row_filtering`
+
+Read-Only:
+
+- `conditions` (String) Parsed as JSON.
+
+
+
+
+<a id="nestedatt--configurations--streams--primary_key"></a>
+### Nested Schema for `configurations.streams.primary_key`
+
 
 <a id="nestedatt--configurations--streams--selected_fields"></a>
 ### Nested Schema for `configurations.streams.selected_fields`
@@ -75,6 +162,4 @@ Read-Only:
 
 - `basic_timing` (String)
 - `cron_expression` (String)
-- `schedule_type` (String) must be one of ["manual", "cron", "basic"]
-
-
+- `schedule_type` (String)

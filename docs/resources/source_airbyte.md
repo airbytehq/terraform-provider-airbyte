@@ -17,12 +17,12 @@ resource "airbyte_source_airbyte" "my_source_airbyte" {
   configuration = {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    start_date    = "2022-03-19T07:46:59.910Z"
+    start_date    = "2022-12-29T07:07:00.688Z"
   }
-  definition_id = "0dabba6e-f9fc-43c3-b44f-d252e57aa673"
-  name          = "Steve Luettgen"
+  definition_id = "6fa8ac99-ed55-45de-a619-5d351af078c3"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9f0c220e-39e1-40d6-af09-fb849b0bdf3d"
+  workspace_id  = "bdda370d-dbed-40cd-8e2a-2a6cb954c379"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_airbyte" "my_source_airbyte" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

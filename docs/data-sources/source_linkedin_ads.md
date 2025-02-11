@@ -28,8 +28,8 @@ data "airbyte_source_linkedin_ads" "my_source_linkedinads" {
 ### Read-Only
 
 - `configuration` (String) The values required to configure the source. Parsed as JSON.
+- `created_at` (Number)
+- `definition_id` (String)
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

@@ -18,10 +18,10 @@ resource "airbyte_source_convex" "my_source_convex" {
     access_key     = "...my_access_key..."
     deployment_url = "https://murky-swan-635.convex.cloud"
   }
-  definition_id = "fcdac638-7854-4b69-842e-8b9a534c06fe"
-  name          = "Genevieve Corwin"
+  definition_id = "0378ab71-be33-4dd0-9f63-28c3c11356d8"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4eff211a-dfc7-421d-91f8-0239a929660c"
+  workspace_id  = "6352d97e-2166-4d0d-a165-69ad4eb4a6e3"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_convex" "my_source_convex" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

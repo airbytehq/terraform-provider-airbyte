@@ -16,15 +16,15 @@ SourceCoinmarketcap Resource
 resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
   configuration = {
     api_key   = "...my_api_key..."
-    data_type = "historical"
+    data_type = "latest"
     symbols = [
-      "...",
+      "..."
     ]
   }
-  definition_id = "89977eae-086e-43c2-9330-82ab840e5611"
-  name          = "Marianne Bradtke"
+  definition_id = "0b4d1772-2639-41fb-9b6a-f2c6652fef02"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a0210a5c-fbec-4287-a54f-12bc84028fbb"
+  workspace_id  = "739407d7-e191-4413-8d2a-cb6fba4d94ca"
 }
 ```
 
@@ -44,6 +44,7 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

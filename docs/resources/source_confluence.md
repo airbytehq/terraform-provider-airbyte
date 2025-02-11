@@ -19,10 +19,10 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     domain_name = "...my_domain_name..."
     email       = "abc@example.com"
   }
-  definition_id = "df143ee1-0f82-479e-827b-2c340e1d4b42"
-  name          = "Miss Rickey Bradtke"
+  definition_id = "ed1e98ac-2e56-44e0-8c47-a9ee6675d565"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2aeeab6a-16bc-40f1-be55-67777324c6ca"
+  workspace_id  = "3ec221a7-9e42-4d09-9767-198ecfc0508b"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_confluence" "my_source_confluence" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

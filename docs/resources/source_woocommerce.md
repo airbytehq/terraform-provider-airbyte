@@ -20,10 +20,10 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     shop       = "...my_shop..."
     start_date = "2021-01-01"
   }
-  definition_id = "5b33aab9-bd23-403d-b2a1-c65a55e757d5"
-  name          = "Nancy Grady"
+  definition_id = "5b87d40f-20e4-42b3-b267-1deb489c5b98"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5c9b62f3-d937-4ad7-80fd-70a723540d37"
+  workspace_id  = "820ccea2-91c4-433d-bca2-ae97f9986afe"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

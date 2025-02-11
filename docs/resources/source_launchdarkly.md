@@ -17,10 +17,10 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
   configuration = {
     access_token = "...my_access_token..."
   }
-  definition_id = "73d022a6-0873-47f9-b9cf-17c9c1c91886"
-  name          = "Dr. Sheryl Anderson"
+  definition_id = "b0847089-29a5-4c32-bb62-d255b7e78ce7"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c35041fc-dcac-4222-a2ef-24d92369b1ff"
+  workspace_id  = "a2969812-c02f-4568-94b3-e52d089166c6"
 }
 ```
 
@@ -40,6 +40,7 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

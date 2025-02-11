@@ -14,15 +14,78 @@ Connection Resource
 
 ```terraform
 resource "airbyte_connection" "my_connection" {
+  configurations = {
+    streams = [
+      {
+        cursor_field = [
+          "..."
+        ]
+        mappers = [
+          {
+            id = "6563d1b7-013b-4974-a129-ba463c808f28"
+            mapper_configuration = {
+              encryption = {
+                aes = {
+                  algorithm         = "AES"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  key               = "...my_key..."
+                  mode              = "CBC"
+                  padding           = "PKCS5Padding"
+                  target_field      = "...my_target_field..."
+                }
+                rsa = {
+                  algorithm         = "RSA"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  public_key        = "...my_public_key..."
+                  target_field      = "...my_target_field..."
+                }
+              }
+              field_renaming = {
+                new_field_name      = "...my_new_field_name..."
+                original_field_name = "...my_original_field_name..."
+              }
+              hashing = {
+                field_name_suffix = "...my_field_name_suffix..."
+                method            = "SHA-512"
+                target_field      = "...my_target_field..."
+              }
+              row_filtering = {
+                conditions = "{ \"see\": \"documentation\" }"
+              }
+            }
+            type = "field-renaming"
+          }
+        ]
+        name = "...my_name..."
+        primary_key = [
+          {
+            # ...
+          }
+        ]
+        selected_fields = [
+          {
+            field_path = [
+              "..."
+            ]
+          }
+        ]
+        sync_mode = "incremental_append"
+      }
+    ]
+  }
   data_residency                       = "eu"
-  destination_id                       = "669dd1e3-6208-43ea-bc85-5914e0a570f6"
-  name                                 = "Taylor Hagenes"
+  destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
+  name                                 = "...my_name..."
   namespace_definition                 = "custom_format"
   namespace_format                     = SOURCE_NAMESPACE
-  non_breaking_schema_updates_behavior = "propagate_columns"
+  non_breaking_schema_updates_behavior = "ignore"
   prefix                               = "...my_prefix..."
-  source_id                            = "3a555847-8358-4423-a5b6-c7b3fd2fd307"
-  status                               = "deprecated"
+  schedule = {
+    cron_expression = "...my_cron_expression..."
+    schedule_type   = "cron"
+  }
+  source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
+  status    = "active"
 }
 ```
 
@@ -37,11 +100,11 @@ resource "airbyte_connection" "my_connection" {
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) must be one of ["auto", "us", "eu"]; Default: "auto"
+- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
 - `name` (String) Optional name of the connection
-- `namespace_definition` (String) Define the location where the data will be stored in the destination. must be one of ["source", "destination", "custom_format"]; Default: "destination"
-- `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'. Default: null
-- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]; Default: "ignore"
+- `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
+- `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
+- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. Default: "ignore"; must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
 - `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `status` (String) must be one of ["active", "inactive", "deprecated"]
@@ -49,6 +112,7 @@ resource "airbyte_connection" "my_connection" {
 ### Read-Only
 
 - `connection_id` (String)
+- `created_at` (Number)
 - `workspace_id` (String)
 
 <a id="nestedatt--configurations"></a>
@@ -56,7 +120,7 @@ resource "airbyte_connection" "my_connection" {
 
 Optional:
 
-- `streams` (Attributes Set) (see [below for nested schema](#nestedatt--configurations--streams))
+- `streams` (Attributes List) (see [below for nested schema](#nestedatt--configurations--streams))
 
 <a id="nestedatt--configurations--streams"></a>
 ### Nested Schema for `configurations.streams`
@@ -64,10 +128,96 @@ Optional:
 Optional:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String) Not Null
-- `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
+- `primary_key` (Attributes List) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema. (see [below for nested schema](#nestedatt--configurations--streams--primary_key))
 - `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
 - `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+
+<a id="nestedatt--configurations--streams--mappers"></a>
+### Nested Schema for `configurations.streams.mappers`
+
+Optional:
+
+- `id` (String)
+- `mapper_configuration` (Attributes) The values required to configure the mapper. Not Null (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration))
+- `type` (String) Not Null; must be one of ["hashing", "field-renaming", "row-filtering", "encryption"]
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration`
+
+Optional:
+
+- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption))
+- `field_renaming` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming))
+- `hashing` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--hashing))
+- `row_filtering` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering))
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption`
+
+Optional:
+
+- `aes` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes))
+- `rsa` (Attributes) (see [below for nested schema](#nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa))
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--aes"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.aes`
+
+Optional:
+
+- `algorithm` (String) Not Null; must be one of ["RSA", "AES"]
+- `field_name_suffix` (String) Not Null
+- `key` (String, Sensitive) Not Null
+- `mode` (String) Not Null; must be one of ["CBC", "CFB", "OFB", "CTR", "GCM", "ECB"]
+- `padding` (String) Not Null; must be one of ["NoPadding", "PKCS5Padding"]
+- `target_field` (String) Not Null
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--encryption--rsa"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.encryption.rsa`
+
+Optional:
+
+- `algorithm` (String) Not Null; must be one of ["RSA", "AES"]
+- `field_name_suffix` (String) Not Null
+- `public_key` (String) Not Null
+- `target_field` (String) Not Null
+
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--field_renaming"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.field_renaming`
+
+Optional:
+
+- `new_field_name` (String) The new name for the field after renaming. Not Null
+- `original_field_name` (String) The current name of the field to rename. Not Null
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--hashing"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.hashing`
+
+Optional:
+
+- `field_name_suffix` (String) The suffix to append to the field name after hashing. Not Null
+- `method` (String) The hashing algorithm to use. Not Null; must be one of ["MD2", "MD5", "SHA-1", "SHA-224", "SHA-256", "SHA-384", "SHA-512"]
+- `target_field` (String) The name of the field to be hashed. Not Null
+
+
+<a id="nestedatt--configurations--streams--mappers--mapper_configuration--row_filtering"></a>
+### Nested Schema for `configurations.streams.mappers.mapper_configuration.row_filtering`
+
+Optional:
+
+- `conditions` (String) Not Null; Parsed as JSON.
+
+
+
+
+<a id="nestedatt--configurations--streams--primary_key"></a>
+### Nested Schema for `configurations.streams.primary_key`
+
 
 <a id="nestedatt--configurations--streams--selected_fields"></a>
 ### Nested Schema for `configurations.streams.selected_fields`

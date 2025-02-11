@@ -16,13 +16,13 @@ SourceBitly Resource
 resource "airbyte_source_bitly" "my_source_bitly" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2020-03-15T22:28:02.457Z"
-    start_date = "2022-12-31T11:13:32.886Z"
+    end_date   = "2022-02-10T12:17:54.053Z"
+    start_date = "2022-03-11T20:04:11.924Z"
   }
-  definition_id = "da3e9aab-7145-44cb-a418-93e1da46c4f6"
-  name          = "Mr. Roberto Stokes"
+  definition_id = "0ae259a3-694a-4deb-ac39-5a10cfc5a84a"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "011b8862-473b-4757-b910-8618e91445d8"
+  workspace_id  = "8889fb22-f0f2-4728-a5e7-e3b3f44f37c1"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_bitly" "my_source_bitly" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

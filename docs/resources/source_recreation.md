@@ -18,10 +18,10 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     apikey          = "...my_apikey..."
     query_campsites = "...my_query_campsites..."
   }
-  definition_id = "3a2ccf2b-1ade-42f4-984b-fb0e1b3d2b89"
-  name          = "Jesse Kassulke"
+  definition_id = "8490dfd6-866a-4fb6-bb10-35e1cccf64bd"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "838cf8d2-27f3-418d-8240-654f4782740a"
+  workspace_id  = "e7206d78-e108-4c98-9dd6-67c5c961d1d7"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_recreation" "my_source_recreation" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

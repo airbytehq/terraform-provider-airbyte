@@ -21,51 +21,89 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
         deployment = "your-resource-name"
         openai_key = "...my_openai_key..."
       }
+      cohere = {
+        cohere_key = "...my_cohere_key..."
+      }
+      fake = {
+        # ...
+      }
+      from_field = {
+        dimensions = 1536
+        field_name = "embedding"
+      }
+      no_external_embedding = {
+        # ...
+      }
+      open_ai = {
+        openai_key = "...my_openai_key..."
+      }
+      open_ai_compatible = {
+        api_key    = "...my_api_key..."
+        base_url   = "https://your-service-name.com"
+        dimensions = 1536
+        model_name = "text-embedding-ada-002"
+      }
     }
     indexing = {
       additional_headers = [
         {
           header_key = "...my_header_key..."
           value      = "...my_value..."
-        },
+        }
       ]
       auth = {
         api_token = {
           token = "...my_token..."
         }
+        no_authentication = {
+          # ...
+        }
+        username_password = {
+          password = "...my_password..."
+          username = "...my_username..."
+        }
       }
-      batch_size         = 6
-      default_vectorizer = "text2vec-huggingface"
+      batch_size         = 9
+      default_vectorizer = "text2vec-cohere"
       host               = "https://my-cluster.weaviate.network"
       tenant_id          = "...my_tenant_id..."
       text_field         = "...my_text_field..."
     }
     omit_raw_text = true
     processing = {
-      chunk_overlap = 5
-      chunk_size    = 8
+      chunk_overlap = 4
+      chunk_size    = 4921
       field_name_mappings = [
         {
           from_field = "...my_from_field..."
           to_field   = "...my_to_field..."
-        },
+        }
       ]
       metadata_fields = [
-        "...",
+        "..."
       ]
       text_fields = [
-        "...",
+        "..."
       ]
       text_splitter = {
         by_markdown_header = {
-          split_level = 8
+          split_level = 4
+        }
+        by_programming_language = {
+          language = "html"
+        }
+        by_separator = {
+          keep_separator = true
+          separators = [
+            "..."
+          ]
         }
       }
     }
   }
-  definition_id = "3fde334f-786a-4ae3-aaf5-27fe19eb1bf8"
-  name          = "Sheldon Crooks"
-  workspace_id  = "9467597e-801e-4676-89a4-6f396c7c6bf7"
+  definition_id = "37374193-1614-4ed2-9e81-293bdd2b75ef"
+  name          = "...my_name..."
+  workspace_id  = "3a2f5d63-fb57-4357-9913-ad72f8c70fbf"
 }
 ```
 
@@ -93,6 +131,7 @@ Processing, embedding and advanced configuration are provided by this base class
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -192,7 +231,7 @@ Optional:
 
 - `additional_headers` (Attributes List) Additional HTTP headers to send with every request. (see [below for nested schema](#nestedatt--configuration--indexing--additional_headers))
 - `batch_size` (Number) The number of records to send to Weaviate in each batch. Default: 128
-- `default_vectorizer` (String) The vectorizer to use if new classes need to be created. must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]; Default: "none"
+- `default_vectorizer` (String) The vectorizer to use if new classes need to be created. Default: "none"; must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]
 - `tenant_id` (String, Sensitive) The tenant ID to use for multi tenancy. Default: ""
 - `text_field` (String) The field in the object that contains the embedded text. Default: "text"
 
@@ -206,7 +245,7 @@ Optional:
 - `username_password` (Attributes) Authenticate using username and password (suitable for self-managed Weaviate clusters) (see [below for nested schema](#nestedatt--configuration--indexing--auth--username_password))
 
 <a id="nestedatt--configuration--indexing--auth--api_token"></a>
-### Nested Schema for `configuration.indexing.auth.username_password`
+### Nested Schema for `configuration.indexing.auth.api_token`
 
 Required:
 
@@ -214,7 +253,7 @@ Required:
 
 
 <a id="nestedatt--configuration--indexing--auth--no_authentication"></a>
-### Nested Schema for `configuration.indexing.auth.username_password`
+### Nested Schema for `configuration.indexing.auth.no_authentication`
 
 
 <a id="nestedatt--configuration--indexing--auth--username_password"></a>
@@ -271,7 +310,7 @@ Optional:
 - `by_separator` (Attributes) Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc. (see [below for nested schema](#nestedatt--configuration--processing--text_splitter--by_separator))
 
 <a id="nestedatt--configuration--processing--text_splitter--by_markdown_header"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_markdown_header`
 
 Optional:
 
@@ -279,7 +318,7 @@ Optional:
 
 
 <a id="nestedatt--configuration--processing--text_splitter--by_programming_language"></a>
-### Nested Schema for `configuration.processing.text_splitter.by_separator`
+### Nested Schema for `configuration.processing.text_splitter.by_programming_language`
 
 Required:
 

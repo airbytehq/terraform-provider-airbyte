@@ -28,17 +28,68 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
           bzip2 = {
             codec = "bzip2"
           }
+          deflate = {
+            codec             = "Deflate"
+            compression_level = 8
+          }
+          no_compression = {
+            codec = "no compression"
+          }
+          snappy = {
+            codec = "snappy"
+          }
+          xz = {
+            codec             = "xz"
+            compression_level = 7
+          }
+          zstandard = {
+            codec             = "zstandard"
+            compression_level = 22
+            include_checksum  = true
+          }
         }
         format_type = "Avro"
+      }
+      csv_comma_separated_values = {
+        compression = {
+          gzip = {
+            compression_type = "GZIP"
+          }
+          no_compression = {
+            compression_type = "No Compression"
+          }
+        }
+        flattening  = "Root level flattening"
+        format_type = "CSV"
+      }
+      json_lines_newline_delimited_json = {
+        compression = {
+          gzip = {
+            compression_type = "GZIP"
+          }
+          no_compression = {
+            compression_type = "No Compression"
+          }
+        }
+        format_type = "JSONL"
+      }
+      parquet_columnar_storage = {
+        block_size_mb           = 128
+        compression_codec       = "LZ4"
+        dictionary_encoding     = false
+        dictionary_page_size_kb = 1024
+        format_type             = "Parquet"
+        max_padding_size_mb     = 8
+        page_size_kb            = 1024
       }
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "northamerica-northeast2"
+    gcs_bucket_region = "australia-southeast2"
   }
-  definition_id = "56553a4e-50cd-4de3-bcff-11f630fa923b"
-  name          = "Elisa Lakin"
-  workspace_id  = "15f868bf-0372-497d-8d66-bcb9a13f0bea"
+  definition_id = "fbdeaa3f-58d4-41ca-a298-54ecee1615a0"
+  name          = "...my_name..."
+  workspace_id  = "0ffee906-5986-410b-95a7-80c6f12aeac3"
 }
 ```
 
@@ -57,6 +108,7 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -72,7 +124,7 @@ Required:
 
 Optional:
 
-- `gcs_bucket_region` (String) Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>. must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]; Default: "us"
+- `gcs_bucket_region` (String) Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>. Default: "us"; must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]
 
 <a id="nestedatt--configuration--credential"></a>
 ### Nested Schema for `configuration.credential`
@@ -91,7 +143,7 @@ Required:
 
 Optional:
 
-- `credential_type` (String) must be one of ["HMAC_KEY"]; Default: "HMAC_KEY"
+- `credential_type` (String) Default: "HMAC_KEY"; must be "HMAC_KEY"
 
 
 
@@ -114,68 +166,68 @@ Required:
 
 Optional:
 
-- `format_type` (String) must be one of ["Avro"]; Default: "Avro"
+- `format_type` (String) Default: "Avro"; must be "Avro"
 
 <a id="nestedatt--configuration--format--avro_apache_avro--compression_codec"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type`
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec`
 
 Optional:
 
-- `bzip2` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--bzip2))
-- `deflate` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--deflate))
-- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--no_compression))
-- `snappy` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--snappy))
-- `xz` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--xz))
-- `zstandard` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--format_type--zstandard))
+- `bzip2` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--bzip2))
+- `deflate` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--deflate))
+- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--no_compression))
+- `snappy` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--snappy))
+- `xz` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--xz))
+- `zstandard` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--avro_apache_avro--compression_codec--zstandard))
 
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--bzip2"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.bzip2`
-
-Optional:
-
-- `codec` (String) must be one of ["bzip2"]; Default: "bzip2"
-
-
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--deflate"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.deflate`
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--bzip2"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.bzip2`
 
 Optional:
 
-- `codec` (String) must be one of ["Deflate"]; Default: "Deflate"
+- `codec` (String) Default: "bzip2"; must be "bzip2"
+
+
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--deflate"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.deflate`
+
+Optional:
+
+- `codec` (String) Default: "Deflate"; must be "Deflate"
 - `compression_level` (Number) 0: no compression & fastest, 9: best compression & slowest. Default: 0
 
 
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--no_compression"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.no_compression`
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--no_compression"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.no_compression`
 
 Optional:
 
-- `codec` (String) must be one of ["no compression"]; Default: "no compression"
+- `codec` (String) Default: "no compression"; must be "no compression"
 
 
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--snappy"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.snappy`
-
-Optional:
-
-- `codec` (String) must be one of ["snappy"]; Default: "snappy"
-
-
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--xz"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.xz`
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--snappy"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.snappy`
 
 Optional:
 
-- `codec` (String) must be one of ["xz"]; Default: "xz"
+- `codec` (String) Default: "snappy"; must be "snappy"
+
+
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--xz"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.xz`
+
+Optional:
+
+- `codec` (String) Default: "xz"; must be "xz"
 - `compression_level` (Number) The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details. Default: 6
 
 
-<a id="nestedatt--configuration--format--avro_apache_avro--format_type--zstandard"></a>
-### Nested Schema for `configuration.format.avro_apache_avro.format_type.zstandard`
+<a id="nestedatt--configuration--format--avro_apache_avro--compression_codec--zstandard"></a>
+### Nested Schema for `configuration.format.avro_apache_avro.compression_codec.zstandard`
 
 Optional:
 
-- `codec` (String) must be one of ["zstandard"]; Default: "zstandard"
+- `codec` (String) Default: "zstandard"; must be "zstandard"
 - `compression_level` (Number) Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory. Default: 3
 - `include_checksum` (Boolean) If true, include a checksum with each data block. Default: false
 
@@ -188,31 +240,31 @@ Optional:
 Optional:
 
 - `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--compression))
-- `flattening` (String) Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "No flattening"
-- `format_type` (String) must be one of ["CSV"]; Default: "CSV"
+- `flattening` (String) Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]
+- `format_type` (String) Default: "CSV"; must be "CSV"
 
 <a id="nestedatt--configuration--format--csv_comma_separated_values--compression"></a>
-### Nested Schema for `configuration.format.csv_comma_separated_values.format_type`
+### Nested Schema for `configuration.format.csv_comma_separated_values.compression`
 
 Optional:
 
-- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--format_type--gzip))
-- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--format_type--no_compression))
+- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--compression--gzip))
+- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--csv_comma_separated_values--compression--no_compression))
 
-<a id="nestedatt--configuration--format--csv_comma_separated_values--format_type--gzip"></a>
-### Nested Schema for `configuration.format.csv_comma_separated_values.format_type.gzip`
-
-Optional:
-
-- `compression_type` (String) must be one of ["GZIP"]; Default: "GZIP"
-
-
-<a id="nestedatt--configuration--format--csv_comma_separated_values--format_type--no_compression"></a>
-### Nested Schema for `configuration.format.csv_comma_separated_values.format_type.no_compression`
+<a id="nestedatt--configuration--format--csv_comma_separated_values--compression--gzip"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values.compression.gzip`
 
 Optional:
 
-- `compression_type` (String) must be one of ["No Compression"]; Default: "No Compression"
+- `compression_type` (String) Default: "GZIP"; must be "GZIP"
+
+
+<a id="nestedatt--configuration--format--csv_comma_separated_values--compression--no_compression"></a>
+### Nested Schema for `configuration.format.csv_comma_separated_values.compression.no_compression`
+
+Optional:
+
+- `compression_type` (String) Default: "No Compression"; must be "No Compression"
 
 
 
@@ -223,30 +275,30 @@ Optional:
 Optional:
 
 - `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression))
-- `format_type` (String) must be one of ["JSONL"]; Default: "JSONL"
+- `format_type` (String) Default: "JSONL"; must be "JSONL"
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type`
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression`
 
 Optional:
 
-- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip))
-- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression))
+- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression--gzip))
+- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression--no_compression))
 
-<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.gzip`
-
-Optional:
-
-- `compression_type` (String) must be one of ["GZIP"]; Default: "GZIP"
-
-
-<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.no_compression`
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression--gzip"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression.gzip`
 
 Optional:
 
-- `compression_type` (String) must be one of ["No Compression"]; Default: "No Compression"
+- `compression_type` (String) Default: "GZIP"; must be "GZIP"
+
+
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression--no_compression"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression.no_compression`
+
+Optional:
+
+- `compression_type` (String) Default: "No Compression"; must be "No Compression"
 
 
 
@@ -257,10 +309,10 @@ Optional:
 Optional:
 
 - `block_size_mb` (Number) This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB. Default: 128
-- `compression_codec` (String) The compression algorithm used to compress data pages. must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]; Default: "UNCOMPRESSED"
+- `compression_codec` (String) The compression algorithm used to compress data pages. Default: "UNCOMPRESSED"; must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]
 - `dictionary_encoding` (Boolean) Default: true. Default: true
 - `dictionary_page_size_kb` (Number) There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB. Default: 1024
-- `format_type` (String) must be one of ["Parquet"]; Default: "Parquet"
+- `format_type` (String) Default: "Parquet"; must be "Parquet"
 - `max_padding_size_mb` (Number) Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB. Default: 8
 - `page_size_kb` (Number) The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB. Default: 1024
 
