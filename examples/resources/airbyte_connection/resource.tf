@@ -1,11 +1,74 @@
 resource "airbyte_connection" "my_connection" {
+  configurations = {
+    streams = [
+      {
+        cursor_field = [
+          "..."
+        ]
+        mappers = [
+          {
+            id = "6563d1b7-013b-4974-a129-ba463c808f28"
+            mapper_configuration = {
+              encryption = {
+                aes = {
+                  algorithm         = "AES"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  key               = "...my_key..."
+                  mode              = "CBC"
+                  padding           = "PKCS5Padding"
+                  target_field      = "...my_target_field..."
+                }
+                rsa = {
+                  algorithm         = "RSA"
+                  field_name_suffix = "...my_field_name_suffix..."
+                  public_key        = "...my_public_key..."
+                  target_field      = "...my_target_field..."
+                }
+              }
+              field_renaming = {
+                new_field_name      = "...my_new_field_name..."
+                original_field_name = "...my_original_field_name..."
+              }
+              hashing = {
+                field_name_suffix = "...my_field_name_suffix..."
+                method            = "SHA-512"
+                target_field      = "...my_target_field..."
+              }
+              row_filtering = {
+                conditions = "{ \"see\": \"documentation\" }"
+              }
+            }
+            type = "field-renaming"
+          }
+        ]
+        name = "...my_name..."
+        primary_key = [
+          {
+            # ...
+          }
+        ]
+        selected_fields = [
+          {
+            field_path = [
+              "..."
+            ]
+          }
+        ]
+        sync_mode = "incremental_append"
+      }
+    ]
+  }
   data_residency                       = "eu"
-  destination_id                       = "669dd1e3-6208-43ea-bc85-5914e0a570f6"
-  name                                 = "Taylor Hagenes"
+  destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
+  name                                 = "...my_name..."
   namespace_definition                 = "custom_format"
   namespace_format                     = SOURCE_NAMESPACE
-  non_breaking_schema_updates_behavior = "propagate_columns"
+  non_breaking_schema_updates_behavior = "ignore"
   prefix                               = "...my_prefix..."
-  source_id                            = "3a555847-8358-4423-a5b6-c7b3fd2fd307"
-  status                               = "deprecated"
+  schedule = {
+    cron_expression = "...my_cron_expression..."
+    schedule_type   = "cron"
+  }
+  source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
+  status    = "active"
 }

@@ -5,8 +5,8 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
   }
-  definition_id = "3ae1f1c3-7b35-40eb-b398-1c89f963f1e6"
-  name          = "Tara Goldner"
+  definition_id = "3dd39ae5-449b-402e-8b34-95af9a841c8e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8788ff77-a589-433f-b738-d63dc7b7f8b1"
+  workspace_id  = "de7d79c8-bd9b-41bc-bbab-b419bed9d264"
 }

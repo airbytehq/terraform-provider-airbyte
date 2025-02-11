@@ -2,10 +2,10 @@ resource "airbyte_source_height" "my_source_height" {
   configuration = {
     api_key      = "...my_api_key..."
     search_query = "...my_search_query..."
-    start_date   = "2021-02-09T19:28:34.370Z"
+    start_date   = "2022-11-15T07:21:49.481Z"
   }
-  definition_id = "825bea4e-c87a-4aff-ab9e-a290f7e9f416"
-  name          = "Bridget Gutmann"
+  definition_id = "9ed7e5b0-1d2c-44b8-9c0f-5eccba0fe53e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "69c61d27-bbad-43f0-bf8c-a743bfb1506e"
+  workspace_id  = "db192958-f04d-4508-a4b5-2a2adcca1b8b"
 }
