@@ -37,11 +37,11 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	} else {
 		techIndicatorType = nil
 	}
-	time := new(shared.TimeInterval)
+	timeInterval := new(shared.TimeInterval)
 	if !r.Configuration.Time.IsUnknown() && !r.Configuration.Time.IsNull() {
-		*time = shared.TimeInterval(r.Configuration.Time.ValueString())
+		*timeInterval = shared.TimeInterval(r.Configuration.Time.ValueString())
 	} else {
-		time = nil
+		timeInterval = nil
 	}
 	period := new(string)
 	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
@@ -66,7 +66,7 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 		APIKey:            apiKey,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
-		Time:              time,
+		Time:              timeInterval,
 		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,
@@ -121,11 +121,11 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	} else {
 		techIndicatorType = nil
 	}
-	time := new(shared.SourceFinageUpdateTimeInterval)
+	timeInterval := new(shared.SourceFinageUpdateTimeInterval)
 	if !r.Configuration.Time.IsUnknown() && !r.Configuration.Time.IsNull() {
-		*time = shared.SourceFinageUpdateTimeInterval(r.Configuration.Time.ValueString())
+		*timeInterval = shared.SourceFinageUpdateTimeInterval(r.Configuration.Time.ValueString())
 	} else {
-		time = nil
+		timeInterval = nil
 	}
 	period := new(string)
 	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
@@ -150,7 +150,7 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 		APIKey:            apiKey,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
-		Time:              time,
+		Time:              timeInterval,
 		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,
