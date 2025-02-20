@@ -11,6 +11,8 @@ import (
 type ListConnectionsRequest struct {
 	// The UUIDs of the workspaces you wish to list connections for. Empty list will retrieve all allowed workspaces.
 	WorkspaceIds []string `queryParam:"style=form,explode=true,name=workspaceIds"`
+	// The UUIDs of the tags you wish to list connections for. Empty list will retrieve all connections.
+	TagIds []string `queryParam:"style=form,explode=true,name=tagIds"`
 	// Include deleted connections in the returned results.
 	IncludeDeleted *bool `default:"false" queryParam:"style=form,explode=true,name=includeDeleted"`
 	// Set the limit on the number of Connections returned. The default is 20.
@@ -35,6 +37,13 @@ func (o *ListConnectionsRequest) GetWorkspaceIds() []string {
 		return nil
 	}
 	return o.WorkspaceIds
+}
+
+func (o *ListConnectionsRequest) GetTagIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TagIds
 }
 
 func (o *ListConnectionsRequest) GetIncludeDeleted() *bool {

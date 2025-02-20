@@ -70,7 +70,7 @@ func (r *SourceWordpressResource) Schema(ctx context.Context, req resource.Schem
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString("x"),
+						Default:     stringdefault.StaticString(`x`),
 						Description: `Placeholder for basic HTTP auth password - should be set to empty string. Default: "x"`,
 					},
 					"start_date": schema.StringAttribute{
@@ -84,7 +84,7 @@ func (r *SourceWordpressResource) Schema(ctx context.Context, req resource.Schem
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString("x"),
+						Default:     stringdefault.StaticString(`x`),
 						Description: `Placeholder for basic HTTP auth username - should be set to empty string. Default: "x"`,
 					},
 				},

@@ -70,7 +70,7 @@ func (r *SourceSegmentResource) Schema(ctx context.Context, req resource.SchemaR
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("api"),
+						Default:     stringdefault.StaticString(`api`),
 						Description: `The region for the API, e.g., 'api' for US or 'eu1' for EU. Default: "api"`,
 					},
 					"start_date": schema.StringAttribute{

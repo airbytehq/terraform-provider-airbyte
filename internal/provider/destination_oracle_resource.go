@@ -73,7 +73,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 									"encryption_algorithm": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("AES256"),
+										Default:     stringdefault.StaticString(`AES256`),
 										Description: `This parameter defines the database encryption algorithm. Default: "AES256"; must be one of ["AES256", "RC4_56", "3DES168"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -151,7 +151,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("airbyte"),
+						Default:     stringdefault.StaticString(`airbyte`),
 						Description: `The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema. Default: "airbyte"`,
 					},
 					"sid": schema.StringAttribute{

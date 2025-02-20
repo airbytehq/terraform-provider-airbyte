@@ -42,6 +42,7 @@ type ConnectionDataSourceModel struct {
 	Schedule                         tfTypes.ConnectionScheduleResponse `tfsdk:"schedule"`
 	SourceID                         types.String                       `tfsdk:"source_id"`
 	Status                           types.String                       `tfsdk:"status"`
+	Tags                             []tfTypes.Tag                      `tfsdk:"tags"`
 	WorkspaceID                      types.String                       `tfsdk:"workspace_id"`
 }
 
@@ -253,6 +254,25 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
+			},
+			"tags": schema.ListNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"color": schema.StringAttribute{
+							Computed: true,
+						},
+						"name": schema.StringAttribute{
+							Computed: true,
+						},
+						"tag_id": schema.StringAttribute{
+							Computed: true,
+						},
+						"workspace_id": schema.StringAttribute{
+							Computed: true,
+						},
+					},
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

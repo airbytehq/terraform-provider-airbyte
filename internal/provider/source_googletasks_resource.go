@@ -69,7 +69,7 @@ func (r *SourceGoogleTasksResource) Schema(ctx context.Context, req resource.Sch
 					"records_limit": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("50"),
+						Default:     stringdefault.StaticString(`50`),
 						Description: `The maximum number of records to be returned per request. Default: "50"`,
 					},
 					"start_date": schema.StringAttribute{

@@ -1,21 +1,21 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 2bf684a560443f4718110afddc0ba3c3
+  docChecksum: cc3db1e8a03131f63723c7fa88fe59b8
   docVersion: 1.0.0
-  speakeasyVersion: 1.488.0
-  generationVersion: 2.506.0
-  releaseVersion: 0.13.2
-  configChecksum: 0c7fd544733de204e646c3afbb96a1df
+  speakeasyVersion: 1.495.1
+  generationVersion: 2.515.4
+  releaseVersion: 0.14.1
+  configChecksum: e60af815b68c80960ef3b7c4bf593a69
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
-    constsAndDefaults: 0.2.0
-    core: 3.30.0
+    constsAndDefaults: 0.2.1
+    core: 3.31.1
     envVarSecurityUsage: 0.1.0
-    globalSecurity: 2.81.9
+    globalSecurity: 2.81.10
     globalServerURLs: 2.82.1
     groups: 2.81.2
     nullables: 0.0.0
@@ -1560,7 +1560,9 @@ generatedFiles:
   - go.mod
   - go.sum
   - internal/planmodifiers/boolplanmodifier/suppress_diff.go
+  - internal/planmodifiers/float32planmodifier/suppress_diff.go
   - internal/planmodifiers/float64planmodifier/suppress_diff.go
+  - internal/planmodifiers/int32planmodifier/suppress_diff.go
   - internal/planmodifiers/int64planmodifier/suppress_diff.go
   - internal/planmodifiers/listplanmodifier/suppress_diff.go
   - internal/planmodifiers/mapplanmodifier/suppress_diff.go
@@ -3963,6 +3965,7 @@ generatedFiles:
   - internal/provider/types/disabled.go
   - internal/provider/types/document_file_type_format_experimental.go
   - internal/provider/types/double_value.go
+  - internal/provider/types/email_notification_config.go
   - internal/provider/types/embedding.go
   - internal/provider/types/enabled.go
   - internal/provider/types/encrypted_trust_server_certificate.go
@@ -4030,6 +4033,8 @@ generatedFiles:
   - internal/provider/types/no_tunnel.go
   - internal/provider/types/none.go
   - internal/provider/types/not_expression.go
+  - internal/provider/types/notification_config.go
+  - internal/provider/types/notifications_config.go
   - internal/provider/types/numeric_filter.go
   - internal/provider/types/o_auth.go
   - internal/provider/types/o_auth20.go
@@ -4062,6 +4067,7 @@ generatedFiles:
   - internal/provider/types/read_changes_using_change_data_capture_cdc.go
   - internal/provider/types/read_changes_using_write_ahead_log_cdc.go
   - internal/provider/types/replica_set.go
+  - internal/provider/types/replicate_permissions_acl.go
   - internal/provider/types/replicate_records.go
   - internal/provider/types/report_config.go
   - internal/provider/types/report_options.go
@@ -4887,6 +4893,7 @@ generatedFiles:
   - internal/provider/types/string_filter.go
   - internal/provider/types/survey_monkey_authorization_method.go
   - internal/provider/types/system_idsid.go
+  - internal/provider/types/tag.go
   - internal/provider/types/test_destination.go
   - internal/provider/types/text_splitter.go
   - internal/provider/types/throttled.go
@@ -4904,6 +4911,7 @@ generatedFiles:
   - internal/provider/types/verify_full.go
   - internal/provider/types/verify_identity.go
   - internal/provider/types/via_api.go
+  - internal/provider/types/webhook_notification_config.go
   - internal/provider/types/xz.go
   - internal/provider/types/zstandard.go
   - internal/provider/utils.go
@@ -5444,6 +5452,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcezohoinvoice.go
   - internal/sdk/models/operations/createsourcezonkafeedback.go
   - internal/sdk/models/operations/createsourcezoom.go
+  - internal/sdk/models/operations/createtag.go
   - internal/sdk/models/operations/createworkspace.go
   - internal/sdk/models/operations/deleteconnection.go
   - internal/sdk/models/operations/deletedestination.go
@@ -5956,6 +5965,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcezohoinvoice.go
   - internal/sdk/models/operations/deletesourcezonkafeedback.go
   - internal/sdk/models/operations/deletesourcezoom.go
+  - internal/sdk/models/operations/deletetag.go
   - internal/sdk/models/operations/deleteworkspace.go
   - internal/sdk/models/operations/getconnection.go
   - internal/sdk/models/operations/getdestination.go
@@ -6471,6 +6481,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcezonkafeedback.go
   - internal/sdk/models/operations/getsourcezoom.go
   - internal/sdk/models/operations/getstreamproperties.go
+  - internal/sdk/models/operations/gettag.go
   - internal/sdk/models/operations/getworkspace.go
   - internal/sdk/models/operations/initiateoauth.go
   - internal/sdk/models/operations/listconnections.go
@@ -6479,6 +6490,7 @@ generatedFiles:
   - internal/sdk/models/operations/listorganizationsforuser.go
   - internal/sdk/models/operations/listpermissions.go
   - internal/sdk/models/operations/listsources.go
+  - internal/sdk/models/operations/listtags.go
   - internal/sdk/models/operations/listuserswithinanorganization.go
   - internal/sdk/models/operations/listworkspaces.go
   - internal/sdk/models/operations/options.go
@@ -6995,6 +7007,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcezonkafeedback.go
   - internal/sdk/models/operations/putsourcezoom.go
   - internal/sdk/models/operations/updatepermission.go
+  - internal/sdk/models/operations/updatetag.go
   - internal/sdk/models/operations/updateworkspace.go
   - internal/sdk/models/shared/actortypeenum.go
   - internal/sdk/models/shared/airbyteapiconnectionschedule.go
@@ -7181,6 +7194,7 @@ generatedFiles:
   - internal/sdk/models/shared/destinationyellowbrickcreaterequest.go
   - internal/sdk/models/shared/destinationyellowbrickputrequest.go
   - internal/sdk/models/shared/destinationyellowbrickupdate.go
+  - internal/sdk/models/shared/emailnotificationconfig.go
   - internal/sdk/models/shared/encryptionmapperalgorithm.go
   - internal/sdk/models/shared/geographyenum.go
   - internal/sdk/models/shared/geographyenumnodefault.go
@@ -7195,6 +7209,8 @@ generatedFiles:
   - internal/sdk/models/shared/namespacedefinitionenumnodefault.go
   - internal/sdk/models/shared/nonbreakingschemaupdatesbehaviorenum.go
   - internal/sdk/models/shared/nonbreakingschemaupdatesbehaviorenumnodefault.go
+  - internal/sdk/models/shared/notificationconfig.go
+  - internal/sdk/models/shared/notificationsconfig.go
   - internal/sdk/models/shared/oauthcredentialsconfiguration.go
   - internal/sdk/models/shared/organizationresponse.go
   - internal/sdk/models/shared/organizationsresponse.go
@@ -9075,8 +9091,14 @@ generatedFiles:
   - internal/sdk/models/shared/streamconfigurations.go
   - internal/sdk/models/shared/streammappertype.go
   - internal/sdk/models/shared/streamproperties.go
+  - internal/sdk/models/shared/tag.go
+  - internal/sdk/models/shared/tagcreaterequest.go
+  - internal/sdk/models/shared/tagpatchrequest.go
+  - internal/sdk/models/shared/tagresponse.go
+  - internal/sdk/models/shared/tagsresponse.go
   - internal/sdk/models/shared/userresponse.go
   - internal/sdk/models/shared/usersresponse.go
+  - internal/sdk/models/shared/webhooknotificationconfig.go
   - internal/sdk/models/shared/workspacecreaterequest.go
   - internal/sdk/models/shared/workspaceoauthcredentialsrequest.go
   - internal/sdk/models/shared/workspaceresponse.go
@@ -9088,6 +9110,7 @@ generatedFiles:
   - internal/sdk/sdk.go
   - internal/sdk/sources.go
   - internal/sdk/streams.go
+  - internal/sdk/tags.go
   - internal/sdk/types/bigint.go
   - internal/sdk/types/date.go
   - internal/sdk/types/datetime.go
@@ -9100,7 +9123,9 @@ generatedFiles:
   - internal/validators/JSONParseValidator.go
   - internal/validators/RFC3339Validator.go
   - internal/validators/boolvalidators/not_null.go
+  - internal/validators/float32validators/not_null.go
   - internal/validators/float64validators/not_null.go
+  - internal/validators/int32validators/not_null.go
   - internal/validators/int64validators/not_null.go
   - internal/validators/listvalidators/not_null.go
   - internal/validators/mapvalidators/not_null.go
@@ -9466,7 +9491,7 @@ examples:
   createSourceAmazonAds:
     speakeasy-default-create-source-amazon-ads:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "eb0ece7c-403c-4a9b-be7a-c7ebd2d4278c", "configuration": {"client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>", "region": "NA", "start_date": "2022-10-22", "state_filter": [], "look_back_window": 10, "report_record_types": []}}
+        application/json: {"name": "<value>", "workspaceId": "eb0ece7c-403c-4a9b-be7a-c7ebd2d4278c", "configuration": {"auth_type": "oauth2.0", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>", "region": "NA", "start_date": "2022-10-22", "look_back_window": 10}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 387801}
@@ -9484,7 +9509,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "bcfdc2af-1e28-4df1-9a9c-4339ec61449f", "configuration": {"client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>", "region": "NA", "start_date": "2022-10-22", "state_filter": [], "look_back_window": 10, "report_record_types": []}}
+        application/json: {"name": "<value>", "workspaceId": "bcfdc2af-1e28-4df1-9a9c-4339ec61449f", "configuration": {"auth_type": "oauth2.0", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>", "region": "NA", "start_date": "2022-10-22", "look_back_window": 10}}
   deleteSourceAmazonAds:
     speakeasy-default-delete-source-amazon-ads:
       parameters:
@@ -9828,7 +9853,7 @@ examples:
   createSourceAzureBlobStorage:
     speakeasy-default-create-source-azure-blob-storage:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "3e3ec521-0037-4e86-be34-37b96143bebe", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}], "credentials": {"tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}, "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_endpoint": "blob.core.windows.net"}}
+        application/json: {"name": "<value>", "workspaceId": "3e3ec521-0037-4e86-be34-37b96143bebe", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}], "credentials": {"auth_type": "oauth2", "tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}, "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_endpoint": "blob.core.windows.net"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 469671}
@@ -9846,7 +9871,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "15526e2a-9ca5-4834-a049-24ce13744c3b", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "credentials": {"app_tenant_id": "<id>", "app_client_id": "<id>", "app_client_secret": "<value>"}, "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_endpoint": "blob.core.windows.net"}}
+        application/json: {"name": "<value>", "workspaceId": "15526e2a-9ca5-4834-a049-24ce13744c3b", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "credentials": {"auth_type": "client_credentials", "app_tenant_id": "<id>", "app_client_id": "<id>", "app_client_secret": "<value>"}, "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_endpoint": "blob.core.windows.net"}}
   deleteSourceAzureBlobStorage:
     speakeasy-default-delete-source-azure-blob-storage:
       parameters:
@@ -11844,7 +11869,7 @@ examples:
   createSourceFacebookMarketing:
     speakeasy-default-create-source-facebook-marketing:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "6429bb64-ce03-46ab-9a25-a45acd8434e1", "configuration": {"account_ids": ["111111111111111"], "credentials": {"access_token": "<value>"}, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "campaign_statuses": [], "adset_statuses": [], "ad_statuses": [], "fetch_thumbnail_images": false, "custom_insights": [{"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}], "page_size": 100, "insights_lookback_window": 28, "insights_job_timeout": 60}}
+        application/json: {"name": "<value>", "workspaceId": "6429bb64-ce03-46ab-9a25-a45acd8434e1", "configuration": {"account_ids": ["111111111111111"], "credentials": {"auth_type": "Service", "access_token": "<value>"}, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "campaign_statuses": [], "adset_statuses": [], "ad_statuses": [], "fetch_thumbnail_images": false, "custom_insights": [{"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}], "page_size": 100, "insights_lookback_window": 28, "insights_job_timeout": 60}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 697673}
@@ -11862,7 +11887,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "7a152d7b-cb67-4fb4-9bbe-6b8364af4869", "configuration": {"account_ids": ["111111111111111"], "credentials": {"client_id": "<id>", "client_secret": "<value>"}, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "campaign_statuses": [], "adset_statuses": [], "ad_statuses": [], "fetch_thumbnail_images": false, "custom_insights": [{"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}], "page_size": 100, "insights_lookback_window": 28, "insights_job_timeout": 60}}
+        application/json: {"name": "<value>", "workspaceId": "7a152d7b-cb67-4fb4-9bbe-6b8364af4869", "configuration": {"account_ids": ["111111111111111"], "credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>"}, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "campaign_statuses": [], "adset_statuses": [], "ad_statuses": [], "fetch_thumbnail_images": false, "custom_insights": [{"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}, {"name": "<value>", "level": "ad", "fields": [], "breakdowns": [], "action_breakdowns": [], "action_report_time": "mixed", "time_increment": 1, "start_date": "2017-01-25T00:00:00Z", "end_date": "2017-01-26T00:00:00Z", "insights_lookback_window": 28, "insights_job_timeout": 60}], "page_size": 100, "insights_lookback_window": 28, "insights_job_timeout": 60}}
   deleteSourceFacebookMarketing:
     speakeasy-default-delete-source-facebook-marketing:
       parameters:
@@ -12539,7 +12564,7 @@ examples:
   createSourceGcs:
     speakeasy-default-create-source-gcs:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d9ede832-26da-4184-bef0-5faa30bf4056", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}], "credentials": {"client_id": "<id>", "client_secret": "<value>", "access_token": "<value>", "refresh_token": "<value>"}, "bucket": "<value>"}}
+        application/json: {"name": "<value>", "workspaceId": "d9ede832-26da-4184-bef0-5faa30bf4056", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}], "credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>", "access_token": "<value>", "refresh_token": "<value>"}, "bucket": "<value>"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 667524}
@@ -12557,7 +12582,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "65d5659f-0398-4034-bf32-c98f365de8d4", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"skip_unprocessable_files": true, "strategy": "auto", "processing": {"api_key": "", "api_url": "https://api.unstructured.com", "parameters": []}}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"decimal_as_float": false}, "schemaless": false}], "credentials": {"client_id": "<id>", "client_secret": "<value>", "access_token": "<value>", "refresh_token": "<value>"}, "bucket": "<value>"}}
+        application/json: {"name": "<value>", "workspaceId": "65d5659f-0398-4034-bf32-c98f365de8d4", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "unstructured", "skip_unprocessable_files": true, "strategy": "auto", "processing": {"mode": "api", "api_key": "", "api_url": "https://api.unstructured.com", "parameters": []}}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "parquet", "decimal_as_float": false}, "schemaless": false}], "credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>", "access_token": "<value>", "refresh_token": "<value>"}, "bucket": "<value>"}}
   deleteSourceGcs:
     speakeasy-default-delete-source-gcs:
       parameters:
@@ -12962,7 +12987,7 @@ examples:
   createSourceGoogleDrive:
     speakeasy-default-create-source-google-drive:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "e3ba361a-ab59-47fa-ab37-6fe414e587b4", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}], "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "credentials": {"client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "e3ba361a-ab59-47fa-ab37-6fe414e587b4", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "unstructured", "skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}], "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "credentials": {"auth_type": "Client", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 85061}
@@ -12980,7 +13005,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "6e678b95-7069-462a-9e58-0e84862ede92", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "credentials": {"service_account_info": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "6e678b95-7069-462a-9e58-0e84862ede92", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "unstructured", "skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "folder_url": "https://drive.google.com/drive/folders/1Xaz0vXXXX2enKnNYU5qSt9NS70gvMyYn", "credentials": {"auth_type": "Service", "service_account_info": "<value>"}}}
   deleteSourceGoogleDrive:
     speakeasy-default-delete-source-google-drive:
       parameters:
@@ -14837,7 +14862,7 @@ examples:
   createSourceMicrosoftOnedrive:
     speakeasy-default-create-source-microsoft-onedrive:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "5d5a50b8-7c27-4b50-ac09-611d953c8dec", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"decimal_as_float": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "credentials": {"tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}, "drive_name": "OneDrive", "search_scope": "ALL", "folder_path": "."}}
+        application/json: {"name": "<value>", "workspaceId": "5d5a50b8-7c27-4b50-ac09-611d953c8dec", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "parquet", "decimal_as_float": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "credentials": {"auth_type": "Client", "tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>", "refresh_token": "<value>"}, "drive_name": "OneDrive", "search_scope": "ALL", "folder_path": "."}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 80336}
@@ -14855,7 +14880,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d94f69b9-d730-4394-9e06-5c1015358db1", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"decimal_as_float": false}, "schemaless": false}], "credentials": {"tenant_id": "<id>", "user_principal_name": "<value>", "client_id": "<id>", "client_secret": "<value>"}, "drive_name": "OneDrive", "search_scope": "ALL", "folder_path": "."}}
+        application/json: {"name": "<value>", "workspaceId": "d94f69b9-d730-4394-9e06-5c1015358db1", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "parquet", "decimal_as_float": false}, "schemaless": false}], "credentials": {"auth_type": "Service", "tenant_id": "<id>", "user_principal_name": "<value>", "client_id": "<id>", "client_secret": "<value>"}, "drive_name": "OneDrive", "search_scope": "ALL", "folder_path": "."}}
   deleteSourceMicrosoftOnedrive:
     speakeasy-default-delete-source-microsoft-onedrive:
       parameters:
@@ -14864,7 +14889,7 @@ examples:
   createSourceMicrosoftSharepoint:
     speakeasy-default-create-source-microsoft-sharepoint:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d3f093fb-0518-4ff3-a41f-f1a00204a7ce", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "credentials": {"tenant_id": "<id>", "user_principal_name": "<value>", "client_id": "<id>", "client_secret": "<value>"}, "search_scope": "ALL", "folder_path": "."}}
+        application/json: {"name": "<value>", "workspaceId": "d3f093fb-0518-4ff3-a41f-f1a00204a7ce", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "credentials": {"auth_type": "Service", "tenant_id": "<id>", "user_principal_name": "<value>", "client_id": "<id>", "client_secret": "<value>"}, "search_scope": "ALL", "folder_path": "."}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 930144}
@@ -14882,7 +14907,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "b0f76974-88cd-4ad2-a687-a79312766ca1", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "credentials": {"tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>"}, "search_scope": "ALL", "folder_path": "."}}
+        application/json: {"name": "<value>", "workspaceId": "b0f76974-88cd-4ad2-a687-a79312766ca1", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {}, "schemaless": false}], "credentials": {"auth_type": "Client", "tenant_id": "<id>", "client_id": "<id>", "client_secret": "<value>"}, "search_scope": "ALL", "folder_path": "."}}
   deleteSourceMicrosoftSharepoint:
     speakeasy-default-delete-source-microsoft-sharepoint:
       parameters:
@@ -17374,7 +17399,7 @@ examples:
   createSourceS3:
     speakeasy-default-create-source-s3:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "1a84b991-5ca9-49d5-96d0-2f8aee6498a9", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "bucket": "<value>", "endpoint": "my-s3-endpoint.com"}}
+        application/json: {"name": "<value>", "workspaceId": "1a84b991-5ca9-49d5-96d0-2f8aee6498a9", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "avro", "double_as_string": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "bucket": "<value>", "endpoint": "my-s3-endpoint.com"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 635807}
@@ -17392,7 +17417,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "6ca25709-9d46-4654-b9bd-3dfe896bf096", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "bucket": "<value>", "endpoint": "my-s3-endpoint.com"}}
+        application/json: {"name": "<value>", "workspaceId": "6ca25709-9d46-4654-b9bd-3dfe896bf096", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "unstructured", "skip_unprocessable_files": true, "strategy": "auto"}, "schemaless": false}, {"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "csv", "delimiter": ",", "quote_char": "\"", "encoding": "utf8", "double_quote": true, "null_values": [], "strings_can_be_null": true, "skip_rows_before_header": 0, "skip_rows_after_header": 0, "true_values": ["y", "yes", "t", "true", "on", "1"], "false_values": ["n", "no", "f", "false", "off", "0"], "ignore_errors_on_fields_mismatch": false}, "schemaless": false}], "bucket": "<value>", "endpoint": "my-s3-endpoint.com"}}
   deleteSourceS3:
     speakeasy-default-delete-source-s3:
       parameters:
@@ -17808,7 +17833,7 @@ examples:
   createSourceSftpBulk:
     speakeasy-default-create-source-sftp-bulk:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "668ffcdd-5d4e-4e0c-8eca-278414060513", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"decimal_as_float": false}, "schemaless": false}], "host": "www.host.com", "username": "Isidro25", "credentials": {"password": "phqMG5yYfiIvEdQ"}, "port": "22", "folder_path": "/logs/2022"}}
+        application/json: {"name": "<value>", "workspaceId": "668ffcdd-5d4e-4e0c-8eca-278414060513", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "parquet", "decimal_as_float": false}, "schemaless": false}], "host": "www.host.com", "username": "Isidro25", "credentials": {"auth_type": "password", "password": "phqMG5yYfiIvEdQ"}, "port": "22", "folder_path": "/logs/2022"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 445629}
@@ -17826,7 +17851,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "1d72bab4-1a44-4a69-9370-76e9fe35ec55", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"decimal_as_float": false}, "schemaless": false}], "host": "www.host.com", "username": "Amiya.Sipes", "credentials": {"private_key": "<value>"}, "port": "22", "folder_path": "/logs/2022"}}
+        application/json: {"name": "<value>", "workspaceId": "1d72bab4-1a44-4a69-9370-76e9fe35ec55", "configuration": {"start_date": "2021-01-01T00:00:00.000000Z", "streams": [{"name": "<value>", "globs": ["**"], "validation_policy": "Emit Record", "days_to_sync_if_history_is_full": 3, "format": {"filetype": "parquet", "decimal_as_float": false}, "schemaless": false}], "host": "www.host.com", "username": "Amiya.Sipes", "credentials": {"auth_type": "private_key", "private_key": "<value>"}, "port": "22", "folder_path": "/logs/2022"}}
   deleteSourceSftpBulk:
     speakeasy-default-delete-source-sftp-bulk:
       parameters:
@@ -18526,7 +18551,7 @@ examples:
   createSourceStrava:
     speakeasy-default-create-source-strava:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "b67547e2-7eed-419a-a811-edb09100c0bf", "configuration": {"client_id": "12345", "client_secret": "fc6243f283e51f6ca989aab298b17da125496f50", "refresh_token": "fc6243f283e51f6ca989aab298b17da125496f50", "athlete_id": "17831421", "start_date": "2021-03-01T00:00:00Z"}}
+        application/json: {"name": "<value>", "workspaceId": "b67547e2-7eed-419a-a811-edb09100c0bf", "configuration": {"client_id": "12345", "client_secret": "fc6243f283e51f6ca989aab298b17da125496f50", "refresh_token": "fc6243f283e51f6ca989aab298b17da125496f50", "athlete_id": "17831421", "start_date": "2021-03-01T00:00:00Z", "auth_type": "Client"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 421441}
@@ -18544,7 +18569,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "8f12f210-7aa9-4231-a558-45606e3cd452", "configuration": {"client_id": "12345", "client_secret": "fc6243f283e51f6ca989aab298b17da125496f50", "refresh_token": "fc6243f283e51f6ca989aab298b17da125496f50", "athlete_id": "17831421", "start_date": "2021-03-01T00:00:00Z"}}
+        application/json: {"name": "<value>", "workspaceId": "8f12f210-7aa9-4231-a558-45606e3cd452", "configuration": {"client_id": "12345", "client_secret": "fc6243f283e51f6ca989aab298b17da125496f50", "refresh_token": "fc6243f283e51f6ca989aab298b17da125496f50", "athlete_id": "17831421", "start_date": "2021-03-01T00:00:00Z", "auth_type": "Client"}}
   deleteSourceStrava:
     speakeasy-default-delete-source-strava:
       parameters:
@@ -18910,7 +18935,7 @@ examples:
   createSourceTimely:
     speakeasy-default-create-source-timely:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "57f290ce-a467-4856-b82f-f87c48121e56", "configuration": {"account_id": "<id>", "bearer_token": "<value>", "start_date": "2022-05-06"}}
+        application/json: {"name": "<value>", "workspaceId": "57f290ce-a467-4856-b82f-f87c48121e56", "configuration": {"account_id": "<id>", "start_date": "2022-05-06", "bearer_token": "<value>"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 8255}
@@ -18928,7 +18953,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "d0bf82cc-2c3a-45ba-baa5-361e6d1c72ab", "configuration": {"account_id": "<id>", "bearer_token": "<value>", "start_date": "2022-05-06"}}
+        application/json: {"name": "<value>", "workspaceId": "d0bf82cc-2c3a-45ba-baa5-361e6d1c72ab", "configuration": {"account_id": "<id>", "start_date": "2022-05-06", "bearer_token": "<value>"}}
   deleteSourceTimely:
     speakeasy-default-delete-source-timely:
       parameters:
@@ -20619,7 +20644,7 @@ examples:
   createDestinationAstra:
     speakeasy-default-create-destination-astra:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "0c9ce380-8bdf-467d-a33b-c3f6d4496f2a", "configuration": {"embedding": {"openai_key": "<value>"}, "processing": {"chunk_size": 832617, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"astra_db_app_token": "<value>", "astra_db_endpoint": "https://8292d414-dd1b-4c33-8431-e838bedc04f7-us-east1.apps.astra.datastax.com", "astra_db_keyspace": "<value>", "collection": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "0c9ce380-8bdf-467d-a33b-c3f6d4496f2a", "configuration": {"embedding": {"mode": "openai", "openai_key": "<value>"}, "processing": {"chunk_size": 832617, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"astra_db_app_token": "<value>", "astra_db_endpoint": "https://8292d414-dd1b-4c33-8431-e838bedc04f7-us-east1.apps.astra.datastax.com", "astra_db_keyspace": "<value>", "collection": "<value>"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 648256}
@@ -20637,7 +20662,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "f485e022-d09d-41de-a3ac-b8713031bcae", "configuration": {"embedding": {"openai_key": "<value>"}, "processing": {"chunk_size": 627113, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["age"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"astra_db_app_token": "<value>", "astra_db_endpoint": "https://8292d414-dd1b-4c33-8431-e838bedc04f7-us-east1.apps.astra.datastax.com", "astra_db_keyspace": "<value>", "collection": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "f485e022-d09d-41de-a3ac-b8713031bcae", "configuration": {"embedding": {"mode": "openai", "openai_key": "<value>"}, "processing": {"chunk_size": 627113, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["age"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"astra_db_app_token": "<value>", "astra_db_endpoint": "https://8292d414-dd1b-4c33-8431-e838bedc04f7-us-east1.apps.astra.datastax.com", "astra_db_keyspace": "<value>", "collection": "<value>"}}}
   deleteDestinationAstra:
     speakeasy-default-delete-destination-astra:
       parameters:
@@ -20646,7 +20671,7 @@ examples:
   createDestinationAwsDatalake:
     speakeasy-default-create-destination-aws-datalake:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "266b4be7-f37c-4406-ba27-a433203c4ea9", "configuration": {"aws_account_id": "111111111111", "credentials": {"role_arn": "<value>"}, "region": "", "bucket_name": "<value>", "lakeformation_database_name": "<value>", "lakeformation_database_default_tag_key": "pii_level", "lakeformation_database_default_tag_values": "private,public", "lakeformation_governed_tables": false, "partitioning": "NO PARTITIONING", "glue_catalog_float_as_decimal": false}}
+        application/json: {"name": "<value>", "workspaceId": "266b4be7-f37c-4406-ba27-a433203c4ea9", "configuration": {"aws_account_id": "111111111111", "credentials": {"credentials_title": "IAM Role", "role_arn": "<value>"}, "region": "", "bucket_name": "<value>", "lakeformation_database_name": "<value>", "lakeformation_database_default_tag_key": "pii_level", "lakeformation_database_default_tag_values": "private,public", "lakeformation_governed_tables": false, "partitioning": "NO PARTITIONING", "glue_catalog_float_as_decimal": false}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 815879}
@@ -20664,7 +20689,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "c6fb15aa-a0b7-432f-9fe7-b3484700772b", "configuration": {"aws_account_id": "111111111111", "credentials": {"aws_access_key_id": "<id>", "aws_secret_access_key": "<value>"}, "region": "", "bucket_name": "<value>", "lakeformation_database_name": "<value>", "lakeformation_database_default_tag_key": "pii_level", "lakeformation_database_default_tag_values": "private,public", "lakeformation_governed_tables": false, "partitioning": "NO PARTITIONING", "glue_catalog_float_as_decimal": false}}
+        application/json: {"name": "<value>", "workspaceId": "c6fb15aa-a0b7-432f-9fe7-b3484700772b", "configuration": {"aws_account_id": "111111111111", "credentials": {"credentials_title": "IAM User", "aws_access_key_id": "<id>", "aws_secret_access_key": "<value>"}, "region": "", "bucket_name": "<value>", "lakeformation_database_name": "<value>", "lakeformation_database_default_tag_key": "pii_level", "lakeformation_database_default_tag_values": "private,public", "lakeformation_governed_tables": false, "partitioning": "NO PARTITIONING", "glue_catalog_float_as_decimal": false}}
   deleteDestinationAwsDatalake:
     speakeasy-default-delete-destination-aws-datalake:
       parameters:
@@ -21047,7 +21072,7 @@ examples:
   createDestinationMilvus:
     speakeasy-default-create-destination-milvus:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "a6357f0f-7743-4137-bd04-81bb2022997c", "configuration": {"embedding": {"cohere_key": "<value>"}, "processing": {"chunk_size": 175958, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-instance.zone.zillizcloud.com", "db": "", "collection": "<value>", "auth": {"username": "Domingo12", "password": "cFqDV8dl2HOAEmY"}, "vector_field": "vector", "text_field": "text"}}}
+        application/json: {"name": "<value>", "workspaceId": "a6357f0f-7743-4137-bd04-81bb2022997c", "configuration": {"embedding": {"mode": "cohere", "cohere_key": "<value>"}, "processing": {"chunk_size": 175958, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-instance.zone.zillizcloud.com", "db": "", "collection": "<value>", "auth": {"mode": "username_password", "username": "Domingo12", "password": "cFqDV8dl2HOAEmY"}, "vector_field": "vector", "text_field": "text"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 927835}
@@ -21065,7 +21090,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "3c38db08-55aa-46e0-a765-976ae6a1a54c", "configuration": {"embedding": {"openai_key": "<value>", "api_base": "https://your-resource-name.openai.azure.com", "deployment": "your-resource-name"}, "processing": {"chunk_size": 819242, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-instance.zone.zillizcloud.com", "db": "", "collection": "<value>", "auth": {}, "vector_field": "vector", "text_field": "text"}}}
+        application/json: {"name": "<value>", "workspaceId": "3c38db08-55aa-46e0-a765-976ae6a1a54c", "configuration": {"embedding": {"mode": "azure_openai", "openai_key": "<value>", "api_base": "https://your-resource-name.openai.azure.com", "deployment": "your-resource-name"}, "processing": {"chunk_size": 819242, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-instance.zone.zillizcloud.com", "db": "", "collection": "<value>", "auth": {}, "vector_field": "vector", "text_field": "text"}}}
   deleteDestinationMilvus:
     speakeasy-default-delete-destination-milvus:
       parameters:
@@ -21074,7 +21099,7 @@ examples:
   createDestinationMongodb:
     speakeasy-default-create-destination-mongodb:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "a5f04f13-9252-4d0c-939c-0edce6e2ed92", "configuration": {"instance_type": {"instance": "replica", "server_addresses": "host1:27017,host2:27017,host3:27017"}, "database": "<value>", "auth_type": {}, "tunnel_method": {"tunnel_host": "<value>", "tunnel_port": "22", "tunnel_user": "<value>", "tunnel_user_password": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "a5f04f13-9252-4d0c-939c-0edce6e2ed92", "configuration": {"instance_type": {"instance": "replica", "server_addresses": "host1:27017,host2:27017,host3:27017"}, "database": "<value>", "auth_type": {"username": "Fatima_Bailey-Graham6", "password": "D2ol3VltojvEvwr"}, "tunnel_method": {"tunnel_host": "<value>", "tunnel_port": "22", "tunnel_user": "<value>", "ssh_key": "<value>"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 78405}
@@ -21254,7 +21279,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "6557e16b-a57c-46e4-a20a-801c0c15f5a0", "configuration": {"embedding": {"openai_key": "<value>", "api_base": "https://your-resource-name.openai.azure.com", "deployment": "your-resource-name"}, "processing": {"chunk_size": 664893, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "AIRBYTE_ACCOUNT", "port": "5432", "database": "AIRBYTE_DATABASE", "default_schema": "AIRBYTE_SCHEMA", "username": "AIRBYTE_USER", "credentials": {"password": "AIRBYTE_PASSWORD"}}}}
+        application/json: {"name": "<value>", "workspaceId": "6557e16b-a57c-46e4-a20a-801c0c15f5a0", "configuration": {"embedding": {"mode": "azure_openai", "openai_key": "<value>", "api_base": "https://your-resource-name.openai.azure.com", "deployment": "your-resource-name"}, "processing": {"chunk_size": 664893, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "AIRBYTE_ACCOUNT", "port": "5432", "database": "AIRBYTE_DATABASE", "default_schema": "AIRBYTE_SCHEMA", "username": "AIRBYTE_USER", "credentials": {"password": "AIRBYTE_PASSWORD"}}}}
   deleteDestinationPgvector:
     speakeasy-default-delete-destination-pgvector:
       parameters:
@@ -21263,7 +21288,7 @@ examples:
   createDestinationPinecone:
     speakeasy-default-create-destination-pinecone:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "22ffe442-e62e-4a76-a257-343c8ff77275", "configuration": {"embedding": {"cohere_key": "<value>"}, "processing": {"chunk_size": 988932, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["age"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"pinecone_key": "<value>", "pinecone_environment": "gcp-starter", "index": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "22ffe442-e62e-4a76-a257-343c8ff77275", "configuration": {"embedding": {"mode": "cohere", "cohere_key": "<value>"}, "processing": {"chunk_size": 988932, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["age"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"pinecone_key": "<value>", "pinecone_environment": "gcp-starter", "index": "<value>"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 625169}
@@ -21281,7 +21306,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "af9b8539-17c1-47ed-9e06-851b09e6b572", "configuration": {"embedding": {"openai_key": "<value>"}, "processing": {"chunk_size": 539658, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"pinecone_key": "<value>", "pinecone_environment": "gcp-starter", "index": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "af9b8539-17c1-47ed-9e06-851b09e6b572", "configuration": {"embedding": {"mode": "openai", "openai_key": "<value>"}, "processing": {"chunk_size": 539658, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"pinecone_key": "<value>", "pinecone_environment": "gcp-starter", "index": "<value>"}}}
   deleteDestinationPinecone:
     speakeasy-default-delete-destination-pinecone:
       parameters:
@@ -21290,7 +21315,7 @@ examples:
   createDestinationPostgres:
     speakeasy-default-create-destination-postgres:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "83a50092-1f9e-49e7-86d4-adf889ce4238", "configuration": {"host": "pointed-schedule.net", "port": "5432", "database": "<value>", "schema": "public", "username": "Cullen_Wolf6", "ssl": false, "disable_type_dedupe": false, "drop_cascade": false, "tunnel_method": {"tunnel_host": "<value>", "tunnel_port": "22", "tunnel_user": "<value>", "ssh_key": "<value>"}}}
+        application/json: {"name": "<value>", "workspaceId": "83a50092-1f9e-49e7-86d4-adf889ce4238", "configuration": {"host": "pointed-schedule.net", "port": "5432", "database": "<value>", "schema": "public", "username": "Cullen_Wolf6", "ssl": false, "disable_type_dedupe": false, "drop_cascade": false, "unconstrained_number": false, "tunnel_method": {"tunnel_host": "<value>", "tunnel_port": "22", "tunnel_user": "<value>", "ssh_key": "<value>"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 506098}
@@ -21308,7 +21333,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "284f503d-0f36-4bdf-a76f-0d799c64989c", "configuration": {"host": "dental-programme.org", "port": "5432", "database": "<value>", "schema": "public", "username": "Heath_Shields", "ssl": false, "disable_type_dedupe": false, "drop_cascade": false, "tunnel_method": {}}}
+        application/json: {"name": "<value>", "workspaceId": "284f503d-0f36-4bdf-a76f-0d799c64989c", "configuration": {"host": "dental-programme.org", "port": "5432", "database": "<value>", "schema": "public", "username": "Heath_Shields", "ssl": false, "disable_type_dedupe": false, "drop_cascade": false, "unconstrained_number": false, "tunnel_method": {}}}
   deleteDestinationPostgres:
     speakeasy-default-delete-destination-postgres:
       parameters:
@@ -21340,7 +21365,7 @@ examples:
   createDestinationQdrant:
     speakeasy-default-create-destination-qdrant:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "ca631984-5514-4447-81ae-952dabaa2cee", "configuration": {"embedding": {"api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 384}, "processing": {"chunk_size": 970072, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"url": "https://scornful-hierarchy.info", "prefer_grpc": true, "collection": "<value>", "distance_metric": "cos", "text_field": "text"}}}
+        application/json: {"name": "<value>", "workspaceId": "ca631984-5514-4447-81ae-952dabaa2cee", "configuration": {"embedding": {"mode": "openai_compatible", "api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 384}, "processing": {"chunk_size": 970072, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"url": "https://scornful-hierarchy.info", "prefer_grpc": true, "collection": "<value>", "distance_metric": "cos", "text_field": "text"}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 329921}
@@ -21358,7 +21383,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "96acf71e-26ff-482d-8ad9-7e21bd882e96", "configuration": {"embedding": {"cohere_key": "<value>"}, "processing": {"chunk_size": 29154, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"url": "https://friendly-platter.net", "prefer_grpc": true, "collection": "<value>", "distance_metric": "cos", "text_field": "text"}}}
+        application/json: {"name": "<value>", "workspaceId": "96acf71e-26ff-482d-8ad9-7e21bd882e96", "configuration": {"embedding": {"mode": "cohere", "cohere_key": "<value>"}, "processing": {"chunk_size": 29154, "chunk_overlap": 0, "text_fields": ["user.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"url": "https://friendly-platter.net", "prefer_grpc": true, "collection": "<value>", "distance_metric": "cos", "text_field": "text"}}}
   deleteDestinationQdrant:
     speakeasy-default-delete-destination-qdrant:
       parameters:
@@ -21421,7 +21446,7 @@ examples:
   createDestinationS3:
     speakeasy-default-create-destination-s3:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "7bfd9999-58a9-40d1-89b5-d03f863c71a0", "configuration": {"access_key_id": "A012345678910EXAMPLE", "secret_access_key": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "role_arn": "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId", "s3_bucket_name": "airbyte_sync", "s3_bucket_path": "data_sync/test", "s3_bucket_region": "", "format": {"format_type": "CSV", "flattening": "No flattening"}, "s3_endpoint": "http://localhost:9000", "s3_path_format": "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_", "file_name_pattern": "{timestamp}"}}
+        application/json: {"name": "<value>", "workspaceId": "7bfd9999-58a9-40d1-89b5-d03f863c71a0", "configuration": {"access_key_id": "A012345678910EXAMPLE", "secret_access_key": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "role_arn": "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId", "s3_bucket_name": "airbyte_sync", "s3_bucket_path": "data_sync/test", "s3_bucket_region": "us-east-1", "format": {"format_type": "CSV", "flattening": "No flattening"}, "s3_endpoint": "http://localhost:9000", "s3_path_format": "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_", "file_name_pattern": "{timestamp}"}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 950825}
@@ -21439,7 +21464,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "51451be4-6e6d-4653-92fe-1a52f4321f2e", "configuration": {"access_key_id": "A012345678910EXAMPLE", "secret_access_key": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "role_arn": "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId", "s3_bucket_name": "airbyte_sync", "s3_bucket_path": "data_sync/test", "s3_bucket_region": "", "format": {"format_type": "Parquet", "compression_codec": "UNCOMPRESSED", "block_size_mb": 128, "max_padding_size_mb": 8, "page_size_kb": 1024, "dictionary_page_size_kb": 1024, "dictionary_encoding": true}, "s3_endpoint": "http://localhost:9000", "s3_path_format": "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_", "file_name_pattern": "{date:yyyy_MM}"}}
+        application/json: {"name": "<value>", "workspaceId": "51451be4-6e6d-4653-92fe-1a52f4321f2e", "configuration": {"access_key_id": "A012345678910EXAMPLE", "secret_access_key": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "role_arn": "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId", "s3_bucket_name": "airbyte_sync", "s3_bucket_path": "data_sync/test", "s3_bucket_region": "us-east-1", "format": {"format_type": "Parquet", "compression_codec": "UNCOMPRESSED", "block_size_mb": 128, "max_padding_size_mb": 8, "page_size_kb": 1024, "dictionary_page_size_kb": 1024, "dictionary_encoding": true}, "s3_endpoint": "http://localhost:9000", "s3_path_format": "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_", "file_name_pattern": "{date:yyyy_MM}"}}
   deleteDestinationS3:
     speakeasy-default-delete-destination-s3:
       parameters:
@@ -21556,7 +21581,7 @@ examples:
   createDestinationSnowflakeCortex:
     speakeasy-default-create-destination-snowflake-cortex:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "7f99eea9-b259-4ac9-9743-b39b1053f7c2", "configuration": {"embedding": {"api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 1536}, "processing": {"chunk_size": 962504, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "AIRBYTE_ACCOUNT", "role": "ACCOUNTADMIN", "warehouse": "AIRBYTE_WAREHOUSE", "database": "AIRBYTE_DATABASE", "default_schema": "AIRBYTE_SCHEMA", "username": "AIRBYTE_USER", "credentials": {"password": "AIRBYTE_PASSWORD"}}}}
+        application/json: {"name": "<value>", "workspaceId": "7f99eea9-b259-4ac9-9743-b39b1053f7c2", "configuration": {"embedding": {"mode": "openai_compatible", "api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 1536}, "processing": {"chunk_size": 962504, "chunk_overlap": 0, "text_fields": ["users.*.name"], "metadata_fields": ["user"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "AIRBYTE_ACCOUNT", "role": "ACCOUNTADMIN", "warehouse": "AIRBYTE_WAREHOUSE", "database": "AIRBYTE_DATABASE", "default_schema": "AIRBYTE_SCHEMA", "username": "AIRBYTE_USER", "credentials": {"password": "AIRBYTE_PASSWORD"}}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 662340}
@@ -21687,7 +21712,7 @@ examples:
   createDestinationWeaviate:
     speakeasy-default-create-destination-weaviate:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "04f9b437-8a80-4bfa-8952-fd69f9e2b771", "configuration": {"embedding": {"api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 1536}, "processing": {"chunk_size": 72300, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-cluster.weaviate.network", "auth": {"username": "Dena_Collier73", "password": "Kw60GFvEPUUd3nb"}, "batch_size": 128, "text_field": "text", "tenant_id": "", "default_vectorizer": "none", "additional_headers": [{"header_key": "X-OpenAI-Api-Key", "value": "my-openai-api-key"}]}}}
+        application/json: {"name": "<value>", "workspaceId": "04f9b437-8a80-4bfa-8952-fd69f9e2b771", "configuration": {"embedding": {"mode": "openai_compatible", "api_key": "", "base_url": "https://your-service-name.com", "model_name": "text-embedding-ada-002", "dimensions": 1536}, "processing": {"chunk_size": 72300, "chunk_overlap": 0, "text_fields": ["text"], "metadata_fields": ["user.name"], "field_name_mappings": []}, "omit_raw_text": false, "indexing": {"host": "https://my-cluster.weaviate.network", "auth": {"mode": "username_password", "username": "Dena_Collier73", "password": "Kw60GFvEPUUd3nb"}, "batch_size": 128, "text_field": "text", "tenant_id": "", "default_vectorizer": "none", "additional_headers": [{"header_key": "X-OpenAI-Api-Key", "value": "my-openai-api-key"}]}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 744866}
@@ -21766,16 +21791,16 @@ examples:
   createConnection:
     Connection Creation Request Example:
       requestBody:
-        application/json: {"name": "Postgres-to-Bigquery", "sourceId": "95e66a59-8045-4307-9678-63bc3c9b8c93", "destinationId": "e478de0d-a3a0-475c-b019-25f7dd29e281", "dataResidency": "auto", "namespaceDefinition": "destination", "namespaceFormat": "<value>", "nonBreakingSchemaUpdatesBehavior": "ignore"}
+        application/json: {"name": "Postgres-to-Bigquery", "sourceId": "95e66a59-8045-4307-9678-63bc3c9b8c93", "destinationId": "e478de0d-a3a0-475c-b019-25f7dd29e281", "dataResidency": "auto", "namespaceDefinition": "destination", "namespaceFormat": "<value>", "prefix": "", "nonBreakingSchemaUpdatesBehavior": "ignore"}
       responses:
         "200":
-          application/json: {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 872344}
+          application/json: {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 872344, "tags": [{"tagId": "6d1328ef-851e-4a7f-bd47-8a5873822bcb", "workspaceId": "2d0d0b7a-dc3b-4029-b0e4-7c6957e4827a", "name": "<value>", "color": "tan"}, {"tagId": "baa0361e-8535-423a-9fb3-ae6fb07c3dab", "workspaceId": "d69d798e-bc4c-4796-ac29-d4825954d136", "name": "<value>", "color": "grey"}, {"tagId": "c59a220d-d3c0-4ee8-91be-55d52269b68d", "workspaceId": "6337a85b-e44e-423b-a6a9-f19bcd5350ae", "name": "<value>", "color": "cyan"}]}
     Connection Creation Response Example:
       requestBody:
-        application/json: {"sourceId": "1328ef85-1ea7-4fd4-b78a-5873822bcbf2", "destinationId": "0d0b7adc-3b02-490e-a47c-6957e4827afd", "dataResidency": "auto", "namespaceDefinition": "destination", "namespaceFormat": "<value>", "nonBreakingSchemaUpdatesBehavior": "ignore"}
+        application/json: {"sourceId": "1328ef85-1ea7-4fd4-b78a-5873822bcbf2", "destinationId": "0d0b7adc-3b02-490e-a47c-6957e4827afd", "dataResidency": "auto", "namespaceDefinition": "destination", "namespaceFormat": "<value>", "prefix": "", "nonBreakingSchemaUpdatesBehavior": "ignore"}
       responses:
         "200":
-          application/json: {"connectionId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "inactive", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 18582}
+          application/json: {"connectionId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "inactive", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 18582, "tags": [{"tagId": "e7e6bdac-8564-4562-8f3a-8fcd73530b23", "workspaceId": "d3e723e4-a0b2-4928-ba85-d73e9ae5d236", "name": "<value>", "color": "black"}]}
   listConnections:
     speakeasy-default-list-connections:
       parameters:
@@ -21785,7 +21810,7 @@ examples:
           offset: 0
       responses:
         "200":
-          application/json: {"previous": "https://api.airbyte.com/v1/connections?limit=5&offset=0", "next": "https://api.airbyte.com/v1/connections?limit=5&offset=10", "data": [{"connectionId": "<value>", "name": "test-connection", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 990687}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 642000}, {"connectionId": "<value>", "name": "<value>", "sourceId": "49237019-645d-47d4-b45b-5eddf97775ce", "destinationId": "<value>", "workspaceId": "<value>", "status": "inactive", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 796739}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "al312fs-0ab1-4f72-9ed7-0b8fc27c5826", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 506462}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 753514}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 388566}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 64327}]}
+          application/json: {"previous": "https://api.airbyte.com/v1/connections?limit=5&offset=0", "next": "https://api.airbyte.com/v1/connections?limit=5&offset=10", "data": [{"connectionId": "<value>", "name": "test-connection", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 990687, "tags": [{"tagId": "3a57cb08-ec76-4271-9da7-a04783f69e67", "workspaceId": "13c65214-9922-4ce0-91ac-2001d6f740af", "name": "<value>", "color": "orchid"}, {"tagId": "f67a4cae-4cdf-4065-ab6a-a51c0435bd42", "workspaceId": "8ced986f-7e9d-4043-980f-04622226f551", "name": "<value>", "color": "turquoise"}, {"tagId": "e6e72682-684d-4975-8b84-32b202970fa0", "workspaceId": "52f301cb-a1d8-441d-a187-32c8d3acb53b", "name": "<value>", "color": "lavender"}]}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 344377, "tags": []}, {"connectionId": "<value>", "name": "<value>", "sourceId": "49237019-645d-47d4-b45b-5eddf97775ce", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 249322, "tags": [{"tagId": "8164a228-e17f-42cb-ab32-a554182adc8d", "workspaceId": "26207024-dc90-43e5-a096-9f94237c9d7c", "name": "<value>", "color": "green"}, {"tagId": "2b0cc902-bacf-4fde-bf5c-e25c37e2027c", "workspaceId": "152bb088-a99a-4c9b-843c-4fdb8fe8d361", "name": "<value>", "color": "magenta"}, {"tagId": "6af798c5-c737-4f7a-8d5c-eeb405bab6ad", "workspaceId": "7ec04abc-449b-44a6-a177-f6c0dd2c2ed6", "name": "<value>", "color": "salmon"}]}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "al312fs-0ab1-4f72-9ed7-0b8fc27c5826", "workspaceId": "<value>", "status": "inactive", "schedule": {"scheduleType": "cron"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 571958, "tags": [{"tagId": "de17d727-d797-41e6-a3c8-a8443f551b94", "workspaceId": "f40a42be-a9fa-479d-8358-cd28e26b5d26", "name": "<value>", "color": "black"}, {"tagId": "d7f8a0fc-7e3f-4f5a-b9c0-54fb599f3003", "workspaceId": "c2a86dca-0668-4277-8b19-43225cfb3db5", "name": "<value>", "color": "teal"}, {"tagId": "b15955c8-74dc-4df1-8ed4-cc9a2ad68d23", "workspaceId": "34564af4-af7b-4007-9b20-15ce5c0aa5c2", "name": "<value>", "color": "cyan"}]}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "deprecated", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 8627, "tags": []}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 811330, "tags": []}, {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 350301, "tags": []}]}
   getConnection:
     Connection Get Response Example:
       parameters:
@@ -21793,7 +21818,7 @@ examples:
           connectionId: "<value>"
       responses:
         "200":
-          application/json: {"connectionId": "<value>", "name": "Postgres To Snowflake", "sourceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "destinationId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "status": "deprecated", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 698938}
+          application/json: {"connectionId": "<value>", "name": "Postgres To Snowflake", "sourceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "destinationId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "status": "deprecated", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 698938, "tags": [{"tagId": "fbaab454-6de2-4f32-911c-694814209532", "workspaceId": "d2e417e4-951a-4e40-9778-9206b16864ce", "name": "<value>", "color": "yellow"}, {"tagId": "123cb440-5e44-4294-b783-724447b66ef5", "workspaceId": "8aec918d-2ca9-4a31-8720-3b6e805981f4", "name": "<value>", "color": "white"}, {"tagId": "e20fc304-e3a7-4607-aa6f-cb00cfbbcd0e", "workspaceId": "c5828fa3-558f-4aaf-907a-8c86793bd01e", "name": "<value>", "color": "azure"}]}
   patchConnection:
     Connection Update Request Example:
       parameters:
@@ -21803,7 +21828,7 @@ examples:
         application/json: {"name": "Postgres-to-Bigquery", "namespaceFormat": "<value>"}
       responses:
         "200":
-          application/json: {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 274142}
+          application/json: {"connectionId": "<value>", "name": "<value>", "sourceId": "<value>", "destinationId": "<value>", "workspaceId": "<value>", "status": "active", "schedule": {"scheduleType": "basic"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 274142, "tags": []}
     Connection Get Response Example:
       parameters:
         path:
@@ -21812,7 +21837,7 @@ examples:
         application/json: {"namespaceFormat": "<value>"}
       responses:
         "200":
-          application/json: {"connectionId": "<value>", "name": "Postgres To Snowflake", "sourceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "destinationId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "status": "active", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 192661}
+          application/json: {"connectionId": "<value>", "name": "Postgres To Snowflake", "sourceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "destinationId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "status": "active", "schedule": {"scheduleType": "manual"}, "dataResidency": "auto", "nonBreakingSchemaUpdatesBehavior": "ignore", "namespaceDefinition": "destination", "configurations": {}, "createdAt": 192661, "tags": [{"tagId": "424338c2-5322-430c-8083-c0b4513a87f3", "workspaceId": "0dcb5227-3f7f-4e79-85e5-2d4f4a0e68d6", "name": "<value>", "color": "white"}, {"tagId": "6f5f8ba7-61f7-4386-9b69-35f846c01122", "workspaceId": "47425fae-8035-4a4c-9bbb-eacae682a0b4", "name": "<value>", "color": "maroon"}, {"tagId": "b2ded55b-eee1-489a-a6e0-7e0bf08dd3a2", "workspaceId": "7351c14c-9e4b-4135-be45-947ef2f457e5", "name": "<value>", "color": "orchid"}]}
   deleteConnection:
     speakeasy-default-delete-connection:
       parameters:
@@ -21836,20 +21861,20 @@ examples:
           offset: 0
       responses:
         "200":
-          application/json: {"previous": "https://api.airbyte.com/v1/workspaces?limit=5&offset=0", "next": "https://api.airbyte.com/v1/workspaces?limit=5&offset=10", "data": [{"workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Acme Company", "dataResidency": "auto"}]}
+          application/json: {"previous": "https://api.airbyte.com/v1/workspaces?limit=5&offset=0", "next": "https://api.airbyte.com/v1/workspaces?limit=5&offset=10", "data": [{"workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Acme Company", "dataResidency": "auto", "notifications": {}}]}
   createWorkspace:
     Workspace Creation Request Example:
       requestBody:
         application/json: {"name": "Company Workspace Name"}
       responses:
         "200":
-          application/json: {"workspaceId": "<value>", "name": "<value>", "dataResidency": "auto"}
+          application/json: {"workspaceId": "<value>", "name": "<value>", "dataResidency": "auto", "notifications": {}}
     Workspace Creation Response Example:
       requestBody:
         application/json: {"name": "<value>"}
       responses:
         "200":
-          application/json: {"workspaceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "dataResidency": "auto"}
+          application/json: {"workspaceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "dataResidency": "auto", "notifications": {}}
   getWorkspace:
     Workspace Get Response Example:
       parameters:
@@ -21857,7 +21882,7 @@ examples:
           workspaceId: "<value>"
       responses:
         "200":
-          application/json: {"workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Acme Company", "dataResidency": "auto"}
+          application/json: {"workspaceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Acme Company", "dataResidency": "auto", "notifications": {}}
   updateWorkspace:
     Workspace Update Request Example:
       parameters:
@@ -21867,7 +21892,7 @@ examples:
         application/json: {"name": "Company Workspace Name"}
       responses:
         "200":
-          application/json: {"workspaceId": "<value>", "name": "<value>", "dataResidency": "auto"}
+          application/json: {"workspaceId": "<value>", "name": "<value>", "dataResidency": "auto", "notifications": {}}
     Workspace Update Response Example:
       parameters:
         path:
@@ -21876,7 +21901,7 @@ examples:
         application/json: {"name": "<value>"}
       responses:
         "200":
-          application/json: {"workspaceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "dataResidency": "auto"}
+          application/json: {"workspaceId": "9924bcd0-99be-453d-ba47-c2c9766f7da5", "name": "<value>", "dataResidency": "auto", "notifications": {}}
   deleteWorkspace:
     speakeasy-default-delete-workspace:
       parameters:
@@ -21943,5 +21968,40 @@ examples:
       responses:
         "200":
           application/json: {"data": [{"name": "<value>", "id": "7939467b-6f83-475a-b116-be3120b6d2c6", "email": "Jeremy63@gmail.com"}]}
+  listTags:
+    speakeasy-default-list-tags:
+      responses:
+        "200":
+          application/json: {"data": [{"tagId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team", "color": "FF5733", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e"}]}
+  createTag:
+    speakeasy-default-create-tag:
+      requestBody:
+        application/json: {"name": "<value>", "color": "blue", "workspaceId": "5f85d5ab-c889-4273-91d7-c22bac981db2"}
+      responses:
+        "200":
+          application/json: {"tagId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team", "color": "FF5733", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e"}
+  getTag:
+    speakeasy-default-get-tag:
+      parameters:
+        path:
+          tagId: "808ab48f-5790-47fe-aa1e-3073281a0300"
+      responses:
+        "200":
+          application/json: {"tagId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team", "color": "FF5733", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e"}
+  deleteTag:
+    speakeasy-default-delete-tag:
+      parameters:
+        path:
+          tagId: "da1c4fd4-2786-4b27-8b72-2335c85a5af8"
+  updateTag:
+    speakeasy-default-update-tag:
+      parameters:
+        path:
+          tagId: "3043493e-7596-4d2b-8ee9-859838c615f6"
+      requestBody:
+        application/json: {"name": "<value>", "color": "turquoise"}
+      responses:
+        "200":
+          application/json: {"tagId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team", "color": "FF5733", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e"}
 examplesVersion: 1.0.0
 generatedTests: {}

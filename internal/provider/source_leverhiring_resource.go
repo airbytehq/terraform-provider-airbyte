@@ -112,7 +112,7 @@ func (r *SourceLeverHiringResource) Schema(ctx context.Context, req resource.Sch
 					"environment": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Sandbox"),
+						Default:     stringdefault.StaticString(`Sandbox`),
 						Description: `The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use. Default: "Sandbox"; must be one of ["Production", "Sandbox"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

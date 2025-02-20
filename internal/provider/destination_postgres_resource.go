@@ -109,7 +109,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("public"),
+						Default:     stringdefault.StaticString(`public`),
 						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 					},
 					"ssl": schema.BoolAttribute{
@@ -323,6 +323,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 							},
 						},
 						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+					},
+					"unconstrained_number": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable). Default: false`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

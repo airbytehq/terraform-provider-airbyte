@@ -5,7 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3CSVCommaSeparatedValues struct {
-	Compression *DestinationS3Compression `tfsdk:"compression"`
-	Flattening  types.String              `tfsdk:"flattening"`
-	FormatType  types.String              `tfsdk:"format_type"`
+	AdditionalProperties types.String              `tfsdk:"additional_properties"`
+	Compression          *DestinationS3Compression `tfsdk:"compression"`
+	Flattening           types.String              `tfsdk:"flattening"`
+	FormatType           types.String              `tfsdk:"format_type"`
 }

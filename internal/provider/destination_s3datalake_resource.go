@@ -84,7 +84,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("GLUE"),
+										Default:     stringdefault.StaticString(`GLUE`),
 										Description: `Default: "GLUE"; must be "GLUE"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("GLUE"),
@@ -129,7 +129,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("NESSIE"),
+										Default:     stringdefault.StaticString(`NESSIE`),
 										Description: `Default: "NESSIE"; must be "NESSIE"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("NESSIE"),
@@ -167,7 +167,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("REST"),
+										Default:     stringdefault.StaticString(`REST`),
 										Description: `Default: "REST"; must be "REST"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("REST"),
@@ -198,7 +198,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 					"main_branch_name": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("main"),
+						Default:     stringdefault.StaticString(`main`),
 						Description: `The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information. Default: "main"`,
 					},
 					"s3_bucket_name": schema.StringAttribute{
@@ -258,7 +258,7 @@ func (r *DestinationS3DataLakeResource) Schema(ctx context.Context, req resource
 					},
 					"warehouse_location": schema.StringAttribute{
 						Required:    true,
-						Description: `The root location of the data warehouse used by the Iceberg catalog. Typically includes a bucket name and path within that bucket. Must include the storage protocol (such as "s3://" for Amazon S3).`,
+						Description: `The root location of the data warehouse used by the Iceberg catalog. Typically includes a bucket name and path within that bucket. For AWS Glue and Nessie, must include the storage protocol (such as "s3://" for Amazon S3).`,
 					},
 				},
 				Description: `Defines the configurations required to connect to an Iceberg catalog, including warehouse location, main branch name, and catalog type specifics.`,

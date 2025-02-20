@@ -152,7 +152,7 @@ func (r *DestinationPgvectorResource) Schema(ctx context.Context, req resource.S
 										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -166,7 +166,7 @@ func (r *DestinationPgvectorResource) Schema(ctx context.Context, req resource.S
 									"model_name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Default:     stringdefault.StaticString(`text-embedding-ada-002`),
 										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},
@@ -203,7 +203,7 @@ func (r *DestinationPgvectorResource) Schema(ctx context.Context, req resource.S
 							"default_schema": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("public"),
+								Default:     stringdefault.StaticString(`public`),
 								Description: `Enter the name of the default schema. Default: "public"`,
 							},
 							"host": schema.StringAttribute{

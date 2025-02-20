@@ -62,11 +62,15 @@ func (e *Vitally) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVitally struct {
-	// The API Token for a Vitally account.
-	APIKey string `json:"api_key"`
+	// Provide only the domain part, like https://{your-domain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
+	Domain string `json:"domain"`
 	// Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned.
-	Status     SourceVitallyStatus `json:"status"`
-	sourceType Vitally             `const:"vitally" json:"sourceType"`
+	Status SourceVitallyStatus `json:"status"`
+	// sk_live_secret_token
+	SecretToken string `json:"secret_token"`
+	// Basic Auth Header
+	BasicAuthHeader *string `json:"basic_auth_header,omitempty"`
+	sourceType      Vitally `const:"vitally" json:"sourceType"`
 }
 
 func (s SourceVitally) MarshalJSON() ([]byte, error) {
@@ -80,11 +84,11 @@ func (s *SourceVitally) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceVitally) GetAPIKey() string {
+func (o *SourceVitally) GetDomain() string {
 	if o == nil {
 		return ""
 	}
-	return o.APIKey
+	return o.Domain
 }
 
 func (o *SourceVitally) GetStatus() SourceVitallyStatus {
@@ -92,6 +96,20 @@ func (o *SourceVitally) GetStatus() SourceVitallyStatus {
 		return SourceVitallyStatus("")
 	}
 	return o.Status
+}
+
+func (o *SourceVitally) GetSecretToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.SecretToken
+}
+
+func (o *SourceVitally) GetBasicAuthHeader() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BasicAuthHeader
 }
 
 func (o *SourceVitally) GetSourceType() Vitally {

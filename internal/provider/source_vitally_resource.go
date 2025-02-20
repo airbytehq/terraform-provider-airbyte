@@ -61,10 +61,18 @@ func (r *SourceVitallyResource) Schema(ctx context.Context, req resource.SchemaR
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-					"api_key": schema.StringAttribute{
-						Required:    true,
+					"basic_auth_header": schema.StringAttribute{
+						Optional:    true,
 						Sensitive:   true,
-						Description: `The API Token for a Vitally account.`,
+						Description: `Basic Auth Header`,
+					},
+					"domain": schema.StringAttribute{
+						Required:    true,
+						Description: `Provide only the domain part, like https://{your-domain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.`,
+					},
+					"secret_token": schema.StringAttribute{
+						Required:    true,
+						Description: `sk_live_secret_token`,
 					},
 					"status": schema.StringAttribute{
 						Required:    true,

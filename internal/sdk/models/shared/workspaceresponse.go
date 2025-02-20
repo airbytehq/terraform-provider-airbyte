@@ -11,6 +11,8 @@ type WorkspaceResponse struct {
 	WorkspaceID   string         `json:"workspaceId"`
 	Name          string         `json:"name"`
 	DataResidency *GeographyEnum `default:"auto" json:"dataResidency"`
+	// Configures workspace notifications.
+	Notifications NotificationsConfig `json:"notifications"`
 }
 
 func (w WorkspaceResponse) MarshalJSON() ([]byte, error) {
@@ -43,4 +45,11 @@ func (o *WorkspaceResponse) GetDataResidency() *GeographyEnum {
 		return nil
 	}
 	return o.DataResidency
+}
+
+func (o *WorkspaceResponse) GetNotifications() NotificationsConfig {
+	if o == nil {
+		return NotificationsConfig{}
+	}
+	return o.Notifications
 }

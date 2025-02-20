@@ -74,7 +74,7 @@ func (r *SourceZohoInventoryResource) Schema(ctx context.Context, req resource.S
 					"domain": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("com"),
+						Default:     stringdefault.StaticString(`com`),
 						Description: `The domain suffix for the Zoho Inventory API based on your data center location (e.g., 'com', 'eu', 'in', etc.). Default: "com"; must be one of ["com", "in", "jp", "eu", "com.au", "ca", "com.cn", "sa"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

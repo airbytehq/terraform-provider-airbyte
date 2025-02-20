@@ -67,7 +67,7 @@ func (r *SourceZoomResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"authorization_endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://zoom.us/oauth/token"),
+						Default:     stringdefault.StaticString(`https://zoom.us/oauth/token`),
 						Description: `Default: "https://zoom.us/oauth/token"`,
 					},
 					"client_id": schema.StringAttribute{

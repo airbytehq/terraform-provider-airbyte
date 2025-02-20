@@ -108,7 +108,7 @@ func (r *DestinationVectaraResource) Schema(ctx context.Context, req resource.Sc
 					"title_field": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `A field that will be used to populate the ` + "`" + `title` + "`" + ` of each document. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. ` + "`" + `user.name` + "`" + ` will access the ` + "`" + `name` + "`" + ` field in the ` + "`" + `user` + "`" + ` object. It's also possible to use wildcards to access all fields in an object, e.g. ` + "`" + `users.*.name` + "`" + ` will access all ` + "`" + `names` + "`" + ` fields in all entries of the ` + "`" + `users` + "`" + ` array. Default: ""`,
 					},
 				},

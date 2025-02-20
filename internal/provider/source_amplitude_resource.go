@@ -80,7 +80,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 					"data_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Standard Server"),
+						Default:     stringdefault.StaticString(`Standard Server`),
 						Description: `Amplitude data region server. Default: "Standard Server"; must be one of ["Standard Server", "EU Residency Server"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

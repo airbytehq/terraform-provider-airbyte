@@ -87,7 +87,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 					"origin": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("USA"),
+						Default:     stringdefault.StaticString(`USA`),
 						Description: `Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different. Default: "USA"; must be one of ["USA", "Europe", "Canada"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

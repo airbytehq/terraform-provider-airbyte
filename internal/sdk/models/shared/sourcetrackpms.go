@@ -32,9 +32,9 @@ func (e *TrackPms) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTrackPms struct {
-	CustomerDomain string   `json:"customer_domain"`
 	APIKey         string   `json:"api_key"`
 	APISecret      *string  `json:"api_secret,omitempty"`
+	CustomerDomain string   `json:"customer_domain"`
 	sourceType     TrackPms `const:"track-pms" json:"sourceType"`
 }
 
@@ -49,13 +49,6 @@ func (s *SourceTrackPms) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTrackPms) GetCustomerDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.CustomerDomain
-}
-
 func (o *SourceTrackPms) GetAPIKey() string {
 	if o == nil {
 		return ""
@@ -68,6 +61,13 @@ func (o *SourceTrackPms) GetAPISecret() *string {
 		return nil
 	}
 	return o.APISecret
+}
+
+func (o *SourceTrackPms) GetCustomerDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerDomain
 }
 
 func (o *SourceTrackPms) GetSourceType() TrackPms {

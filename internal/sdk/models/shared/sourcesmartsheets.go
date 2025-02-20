@@ -311,7 +311,9 @@ type SourceSmartsheets struct {
 	SpreadsheetID string `json:"spreadsheet_id"`
 	// A List of available columns which metadata can be pulled from.
 	MetadataFields []Validenums `json:"metadata_fields,omitempty"`
-	sourceType     Smartsheets  `const:"smartsheets" json:"sourceType"`
+	// If true, the source will treat the provided sheet_id as a report. If false, the source will treat the provided sheet_id as a sheet.
+	IsReport   *bool       `default:"false" json:"is_report"`
+	sourceType Smartsheets `const:"smartsheets" json:"sourceType"`
 }
 
 func (s SourceSmartsheets) MarshalJSON() ([]byte, error) {
@@ -344,6 +346,13 @@ func (o *SourceSmartsheets) GetMetadataFields() []Validenums {
 		return nil
 	}
 	return o.MetadataFields
+}
+
+func (o *SourceSmartsheets) GetIsReport() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsReport
 }
 
 func (o *SourceSmartsheets) GetSourceType() Smartsheets {

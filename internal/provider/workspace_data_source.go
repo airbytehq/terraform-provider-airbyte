@@ -5,6 +5,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -28,9 +29,10 @@ type WorkspaceDataSource struct {
 
 // WorkspaceDataSourceModel describes the data model.
 type WorkspaceDataSourceModel struct {
-	DataResidency types.String `tfsdk:"data_residency"`
-	Name          types.String `tfsdk:"name"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	DataResidency types.String                `tfsdk:"data_residency"`
+	Name          types.String                `tfsdk:"name"`
+	Notifications tfTypes.NotificationsConfig `tfsdk:"notifications"`
+	WorkspaceID   types.String                `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -49,6 +51,174 @@ func (r *WorkspaceDataSource) Schema(ctx context.Context, req datasource.SchemaR
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
+			},
+			"notifications": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"connection_update": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+					"connection_update_action_required": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+					"failure": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+					"success": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+					"sync_disabled": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+					"sync_disabled_warning": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"email": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures an email notification.`,
+							},
+							"webhook": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"enabled": schema.BoolAttribute{
+										Computed: true,
+									},
+									"url": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Configures a webhook notification.`,
+							},
+						},
+						Description: `Configures a notification.`,
+					},
+				},
+				Description: `Configures workspace notifications.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

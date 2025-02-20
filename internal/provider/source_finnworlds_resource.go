@@ -94,13 +94,13 @@ func (r *SourceFinnworldsResource) Schema(ctx context.Context, req resource.Sche
 					"list": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("ticker"),
+						Default:     stringdefault.StaticString(`ticker`),
 						Description: `Choose isin, ticker, reg_lei or cik. Default: "ticker"`,
 					},
 					"list_countries_for_bonds": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("country"),
+						Default:     stringdefault.StaticString(`country`),
 						Description: `Default: "country"`,
 					},
 					"start_date": schema.StringAttribute{

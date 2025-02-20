@@ -12,6 +12,7 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
         token_expiry_date = "2021-05-13T13:15:18.521Z"
       }
     }
+    is_report = false
     metadata_fields = [
       "row_expanded"
     ]

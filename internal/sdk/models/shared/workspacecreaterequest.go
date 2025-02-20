@@ -7,6 +7,8 @@ type WorkspaceCreateRequest struct {
 	Name string `json:"name"`
 	// ID of organization to add workspace to.
 	OrganizationID *string `json:"organizationId,omitempty"`
+	// Configures workspace notifications.
+	Notifications *NotificationsConfig `json:"notifications,omitempty"`
 }
 
 func (o *WorkspaceCreateRequest) GetName() string {
@@ -21,4 +23,11 @@ func (o *WorkspaceCreateRequest) GetOrganizationID() *string {
 		return nil
 	}
 	return o.OrganizationID
+}
+
+func (o *WorkspaceCreateRequest) GetNotifications() *NotificationsConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Notifications
 }

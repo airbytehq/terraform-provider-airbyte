@@ -117,7 +117,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `Endpoint to an S3 compatible service. Leave empty to use AWS. Default: ""`,
 					},
 					"region_name": schema.StringAttribute{
@@ -174,7 +174,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"delimiter": schema.StringAttribute{
 													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString(","),
+													Default:     stringdefault.StaticString(`,`),
 													Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'. Default: ","`,
 												},
 												"double_quote": schema.BoolAttribute{
@@ -186,7 +186,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"encoding": schema.StringAttribute{
 													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString("utf8"),
+													Default:     stringdefault.StaticString(`utf8`),
 													Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options. Default: "utf8"`,
 												},
 												"escape_char": schema.StringAttribute{
@@ -260,7 +260,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"quote_char": schema.StringAttribute{
 													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString("\""),
+													Default:     stringdefault.StaticString(`"`),
 													Description: `The character used for quoting CSV values. To disallow quoting, make this field blank. Default: "\""`,
 												},
 												"skip_rows_after_header": schema.Int64Attribute{
@@ -366,7 +366,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"strategy": schema.StringAttribute{
 													Computed:    true,
 													Optional:    true,
-													Default:     stringdefault.StaticString("auto"),
+													Default:     stringdefault.StaticString(`auto`),
 													Description: `The strategy used to parse documents. ` + "`" + `fast` + "`" + ` extracts text directly from the document which doesn't work for all files. ` + "`" + `ocr_only` + "`" + ` is more reliable, but slower. ` + "`" + `hi_res` + "`" + ` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. Default: "auto"; must be one of ["auto", "fast", "ocr_only", "hi_res"]`,
 													Validators: []validator.String{
 														stringvalidator.OneOf(
@@ -418,7 +418,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								"validation_policy": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("Emit Record"),
+									Default:     stringdefault.StaticString(`Emit Record`),
 									Description: `The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. Default: "Emit Record"; must be one of ["Emit Record", "Skip Record", "Wait for Discover"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(

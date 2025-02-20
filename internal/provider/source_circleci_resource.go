@@ -73,7 +73,7 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 					"job_number": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2"),
+						Default:     stringdefault.StaticString(`2`),
 						Description: `Job Number of the workflow. Default: "2"`,
 					},
 					"org_id": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 					"workflow_name": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("build-and-test"),
+						Default:     stringdefault.StaticString(`build-and-test`),
 						Description: `Workflow name for fetching information. Default: "build-and-test"`,
 					},
 				},

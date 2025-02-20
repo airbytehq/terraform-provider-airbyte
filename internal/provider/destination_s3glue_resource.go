@@ -86,7 +86,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("GZIP"),
+														Default:     stringdefault.StaticString(`GZIP`),
 														Description: `Default: "GZIP"; must be "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("GZIP"),
@@ -105,7 +105,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("No Compression"),
+														Default:     stringdefault.StaticString(`No Compression`),
 														Description: `Default: "No Compression"; must be "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -126,7 +126,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Root level flattening"),
+										Default:     stringdefault.StaticString(`Root level flattening`),
 										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. Default: "Root level flattening"; must be one of ["No flattening", "Root level flattening"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -138,7 +138,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("JSONL"),
+										Default:     stringdefault.StaticString(`JSONL`),
 										Description: `Default: "JSONL"; must be "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("JSONL"),
@@ -156,7 +156,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					"glue_serialization_library": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("org.openx.data.jsonserde.JsonSerDe"),
+						Default:     stringdefault.StaticString(`org.openx.data.jsonserde.JsonSerDe`),
 						Description: `The library that your query engine will use for reading and writing data in your lake. Default: "org.openx.data.jsonserde.JsonSerDe"; must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -176,7 +176,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					"s3_bucket_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -220,7 +220,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					"s3_endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""`,
 					},
 					"s3_path_format": schema.StringAttribute{

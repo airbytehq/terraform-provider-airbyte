@@ -4,70 +4,84 @@ resource "airbyte_destination_s3" "my_destination_s3" {
     file_name_pattern = "{date}"
     format = {
       avro_apache_avro = {
+        additional_properties = "{ \"see\": \"documentation\" }"
         compression_codec = {
           bzip2 = {
-            codec = "bzip2"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "bzip2"
           }
           deflate = {
-            codec             = "Deflate"
-            compression_level = 3
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "Deflate"
+            compression_level     = 3
           }
           no_compression = {
-            codec = "no compression"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "no compression"
           }
           snappy = {
-            codec = "snappy"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "snappy"
           }
           xz = {
-            codec             = "xz"
-            compression_level = 2
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "xz"
+            compression_level     = 3
           }
           zstandard = {
-            codec             = "zstandard"
-            compression_level = 0
-            include_checksum  = false
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "zstandard"
+            compression_level     = 0
+            include_checksum      = false
           }
         }
         format_type = "Avro"
       }
       csv_comma_separated_values = {
+        additional_properties = "{ \"see\": \"documentation\" }"
         compression = {
           gzip = {
-            compression_type = "GZIP"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "GZIP"
           }
           no_compression = {
-            compression_type = "No Compression"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "No Compression"
           }
         }
         flattening  = "No flattening"
         format_type = "CSV"
       }
       json_lines_newline_delimited_json = {
+        additional_properties = "{ \"see\": \"documentation\" }"
         compression = {
           gzip = {
-            compression_type = "GZIP"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "GZIP"
           }
           no_compression = {
-            compression_type = "No Compression"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "No Compression"
           }
         }
         flattening  = "No flattening"
         format_type = "JSONL"
       }
       parquet_columnar_storage = {
-        block_size_mb           = 128
+        additional_properties   = "{ \"see\": \"documentation\" }"
+        block_size_mb           = 4
         compression_codec       = "SNAPPY"
         dictionary_encoding     = true
-        dictionary_page_size_kb = 1024
+        dictionary_page_size_kb = 4
         format_type             = "Parquet"
-        max_padding_size_mb     = 8
-        page_size_kb            = 1024
+        max_padding_size_mb     = 3
+        page_size_kb            = 9
       }
     }
     role_arn          = "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId"
     s3_bucket_name    = "airbyte_sync"
     s3_bucket_path    = "data_sync/test"
-    s3_bucket_region  = "eu-west-1"
+    s3_bucket_region  = "us-east-1"
     s3_endpoint       = "http://localhost:9000"
     s3_path_format    = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"

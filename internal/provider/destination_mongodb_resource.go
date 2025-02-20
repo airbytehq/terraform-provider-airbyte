@@ -117,7 +117,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 									"instance": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("atlas"),
+										Default:     stringdefault.StaticString(`atlas`),
 										Description: `Default: "atlas"; must be "atlas"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("atlas"),
@@ -137,7 +137,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 									"instance": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("replica"),
+										Default:     stringdefault.StaticString(`replica`),
 										Description: `Default: "replica"; must be "replica"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("replica"),
@@ -169,7 +169,7 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 									"instance": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("standalone"),
+										Default:     stringdefault.StaticString(`standalone`),
 										Description: `Default: "standalone"; must be "standalone"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

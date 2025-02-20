@@ -113,7 +113,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString("2023-08-05T00:43:59.244Z"),
+						Default:     stringdefault.StaticString(`2023-08-05T00:43:59.244Z`),
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. Default: "2023-08-05T00:43:59.244Z"`,
 					},
 				},

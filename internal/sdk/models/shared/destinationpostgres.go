@@ -826,6 +826,8 @@ type DestinationPostgres struct {
 	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
 	// Drop tables with CASCADE. WARNING! This will delete all data in all dependent objects (views, etc.). Use with caution. This option is intended for usecases which can easily rebuild the dependent objects.
 	DropCascade *bool `default:"false" json:"drop_cascade"`
+	// Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable)
+	UnconstrainedNumber *bool `default:"false" json:"unconstrained_number"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod    *DestinationPostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	destinationType DestinationPostgresPostgres         `const:"postgres" json:"destinationType"`
@@ -924,6 +926,13 @@ func (o *DestinationPostgres) GetDropCascade() *bool {
 		return nil
 	}
 	return o.DropCascade
+}
+
+func (o *DestinationPostgres) GetUnconstrainedNumber() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UnconstrainedNumber
 }
 
 func (o *DestinationPostgres) GetTunnelMethod() *DestinationPostgresSSHTunnelMethod {

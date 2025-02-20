@@ -4,12 +4,21 @@ package shared
 
 type WorkspaceUpdateRequest struct {
 	// Name of the workspace
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
+	// Configures workspace notifications.
+	Notifications *NotificationsConfig `json:"notifications,omitempty"`
 }
 
-func (o *WorkspaceUpdateRequest) GetName() string {
+func (o *WorkspaceUpdateRequest) GetName() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Name
+}
+
+func (o *WorkspaceUpdateRequest) GetNotifications() *NotificationsConfig {
+	if o == nil {
+		return nil
+	}
+	return o.Notifications
 }

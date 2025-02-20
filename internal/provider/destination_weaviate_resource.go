@@ -198,7 +198,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -212,7 +212,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 									"model_name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Default:     stringdefault.StaticString(`text-embedding-ada-002`),
 										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},
@@ -312,7 +312,7 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 							"default_vectorizer": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("none"),
+								Default:     stringdefault.StaticString(`none`),
 								Description: `The vectorizer to use if new classes need to be created. Default: "none"; must be one of ["none", "text2vec-cohere", "text2vec-huggingface", "text2vec-openai", "text2vec-palm", "text2vec-contextionary", "text2vec-transformers", "text2vec-gpt4all"]`,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
@@ -335,13 +335,13 @@ func (r *DestinationWeaviateResource) Schema(ctx context.Context, req resource.S
 								Computed:    true,
 								Optional:    true,
 								Sensitive:   true,
-								Default:     stringdefault.StaticString(""),
+								Default:     stringdefault.StaticString(``),
 								Description: `The tenant ID to use for multi tenancy. Default: ""`,
 							},
 							"text_field": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("text"),
+								Default:     stringdefault.StaticString(`text`),
 								Description: `The field in the object that contains the embedded text. Default: "text"`,
 							},
 						},

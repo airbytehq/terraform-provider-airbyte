@@ -119,7 +119,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									"heartbeat_action_query": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Specifies a query that the connector executes on the source database when the connector sends a heartbeat message. Please see the <a href="https://docs.airbyte.com/integrations/sources/postgres/postgres-troubleshooting#advanced-wal-disk-consumption-and-heartbeat-action-query">setup guide</a> for how and when to configure this setting. Default: ""`,
 									},
 									"initial_load_timeout_hours": schema.Int64Attribute{
@@ -137,7 +137,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Fail sync"),
+										Default:     stringdefault.StaticString(`Fail sync`),
 										Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -149,7 +149,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("After loading Data in the destination"),
+										Default:     stringdefault.StaticString(`After loading Data in the destination`),
 										Description: `Determines when Airbyte should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync. Default: "After loading Data in the destination"; must be one of ["While reading Data", "After loading Data in the destination"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -161,7 +161,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									"plugin": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("pgoutput"),
+										Default:     stringdefault.StaticString(`pgoutput`),
 										Description: `A logical decoding plugin installed on the PostgreSQL server. Default: "pgoutput"; must be "pgoutput"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("pgoutput"),

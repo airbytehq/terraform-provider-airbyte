@@ -106,6 +106,16 @@ func parseConstTag(field reflect.StructField) *string {
 	return &value
 }
 
+func parseDefaultTag(field reflect.StructField) *string {
+	value := field.Tag.Get("default")
+
+	if value == "" {
+		return nil
+	}
+
+	return &value
+}
+
 func parseStructTag(tagKey string, field reflect.StructField) map[string]string {
 	tag := field.Tag.Get(tagKey)
 	if tag == "" {

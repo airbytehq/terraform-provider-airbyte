@@ -69,7 +69,7 @@ func (r *SourceFrontResource) Schema(ctx context.Context, req resource.SchemaReq
 					"page_limit": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("50"),
+						Default:     stringdefault.StaticString(`50`),
 						Description: `Page limit for the responses. Default: "50"`,
 					},
 					"start_date": schema.StringAttribute{

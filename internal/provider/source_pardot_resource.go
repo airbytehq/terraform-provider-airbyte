@@ -82,7 +82,7 @@ func (r *SourcePardotResource) Schema(ctx context.Context, req resource.SchemaRe
 					"page_size": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("1000"),
+						Default:     stringdefault.StaticString(`1000`),
 						Description: `The maximum number of records to return per request. Default: "1000"`,
 					},
 					"pardot_business_unit_id": schema.StringAttribute{
@@ -97,7 +97,7 @@ func (r *SourcePardotResource) Schema(ctx context.Context, req resource.SchemaRe
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2007-01-01T00:00:00Z"),
+						Default:     stringdefault.StaticString(`2007-01-01T00:00:00Z`),
 						Description: `UTC date and time in the format 2000-01-01T00:00:00Z. Any data before this date will not be replicated. Defaults to the year Pardot was released. Default: "2007-01-01T00:00:00Z"`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

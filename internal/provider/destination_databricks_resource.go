@@ -120,7 +120,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 					"port": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("443"),
+						Default:     stringdefault.StaticString(`443`),
 						Description: `Databricks Cluster Port. Default: "443"`,
 					},
 					"purge_staging_data": schema.BoolAttribute{
@@ -132,13 +132,13 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 					"raw_schema_override": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("airbyte_internal"),
+						Default:     stringdefault.StaticString(`airbyte_internal`),
 						Description: `The schema to write raw tables into (default: airbyte_internal). Default: "airbyte_internal"`,
 					},
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("default"),
+						Default:     stringdefault.StaticString(`default`),
 						Description: `The default schema tables are written. If not specified otherwise, the "default" will be used. Default: "default"`,
 					},
 				},

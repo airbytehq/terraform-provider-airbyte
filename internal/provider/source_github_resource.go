@@ -69,7 +69,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 					"api_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://api.github.com/"),
+						Default:     stringdefault.StaticString(`https://api.github.com/`),
 						Description: `Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub. Default: "https://api.github.com/"`,
 					},
 					"branches": schema.ListAttribute{

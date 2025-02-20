@@ -97,7 +97,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The Client Secret of your Microsoft Advertising developer application. Default: ""`,
 					},
 					"custom_reports": schema.ListNestedAttribute{
@@ -111,7 +111,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 								"report_aggregation": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("[Hourly]"),
+									Default:     stringdefault.StaticString(`[Hourly]`),
 									Description: `A list of available aggregations. Default: "[Hourly]"`,
 								},
 								"report_columns": schema.ListAttribute{
@@ -198,7 +198,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString("common"),
+						Default:     stringdefault.StaticString(`common`),
 						Description: `The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value. Default: "common"`,
 					},
 				},

@@ -77,7 +77,7 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 					"product_catalog": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2.0"),
+						Default:     stringdefault.StaticString(`2.0`),
 						Description: `Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under ` + "`" + `API Version` + "`" + ` section. If left blank, the product catalog version will be set to 2.0. Default: "2.0"; must be one of ["1.0", "2.0"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

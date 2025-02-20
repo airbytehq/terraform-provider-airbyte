@@ -72,7 +72,7 @@ func (r *SourceIlluminaBasespaceResource) Schema(ctx context.Context, req resour
 					"user": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("current"),
+						Default:     stringdefault.StaticString(`current`),
 						Description: `Providing a user ID restricts the returned data to what that user can access. If you use the default ('current'), all data accessible to the user associated with the API key will be shown. Default: "current"`,
 					},
 				},

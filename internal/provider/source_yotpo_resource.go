@@ -74,7 +74,7 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 					"email": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("example@gmail.com"),
+						Default:     stringdefault.StaticString(`example@gmail.com`),
 						Description: `Email address registered with yotpo. Default: "example@gmail.com"`,
 					},
 					"start_date": schema.StringAttribute{

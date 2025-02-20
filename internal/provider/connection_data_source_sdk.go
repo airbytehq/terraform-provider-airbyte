@@ -134,6 +134,25 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 		r.SourceID = types.StringValue(resp.SourceID)
 		r.Status = types.StringValue(string(resp.Status))
+		r.Tags = []tfTypes.Tag{}
+		if len(r.Tags) > len(resp.Tags) {
+			r.Tags = r.Tags[:len(resp.Tags)]
+		}
+		for tagsCount, tagsItem := range resp.Tags {
+			var tags1 tfTypes.Tag
+			tags1.Color = types.StringValue(tagsItem.Color)
+			tags1.Name = types.StringValue(tagsItem.Name)
+			tags1.TagID = types.StringValue(tagsItem.TagID)
+			tags1.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
+			if tagsCount+1 > len(r.Tags) {
+				r.Tags = append(r.Tags, tags1)
+			} else {
+				r.Tags[tagsCount].Color = tags1.Color
+				r.Tags[tagsCount].Name = tags1.Name
+				r.Tags[tagsCount].TagID = tags1.TagID
+				r.Tags[tagsCount].WorkspaceID = tags1.WorkspaceID
+			}
+		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 }

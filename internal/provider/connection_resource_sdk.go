@@ -247,6 +247,27 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 	} else {
 		status = nil
 	}
+	var tags []shared.Tag = []shared.Tag{}
+	for _, tagsItem := range r.Tags {
+		var tagID string
+		tagID = tagsItem.TagID.ValueString()
+
+		var workspaceID string
+		workspaceID = tagsItem.WorkspaceID.ValueString()
+
+		var name2 string
+		name2 = tagsItem.Name.ValueString()
+
+		var color string
+		color = tagsItem.Color.ValueString()
+
+		tags = append(tags, shared.Tag{
+			TagID:       tagID,
+			WorkspaceID: workspaceID,
+			Name:        name2,
+			Color:       color,
+		})
+	}
 	out := shared.ConnectionCreateRequest{
 		Name:                             name,
 		SourceID:                         sourceID,
@@ -259,6 +280,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 		Prefix:                           prefix,
 		NonBreakingSchemaUpdatesBehavior: nonBreakingSchemaUpdatesBehavior,
 		Status:                           status,
+		Tags:                             tags,
 	}
 	return &out
 }
@@ -394,6 +416,25 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 		r.SourceID = types.StringValue(resp.SourceID)
 		r.Status = types.StringValue(string(resp.Status))
+		r.Tags = []tfTypes.Tag{}
+		if len(r.Tags) > len(resp.Tags) {
+			r.Tags = r.Tags[:len(resp.Tags)]
+		}
+		for tagsCount, tagsItem := range resp.Tags {
+			var tags1 tfTypes.Tag
+			tags1.Color = types.StringValue(tagsItem.Color)
+			tags1.Name = types.StringValue(tagsItem.Name)
+			tags1.TagID = types.StringValue(tagsItem.TagID)
+			tags1.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
+			if tagsCount+1 > len(r.Tags) {
+				r.Tags = append(r.Tags, tags1)
+			} else {
+				r.Tags[tagsCount].Color = tags1.Color
+				r.Tags[tagsCount].Name = tags1.Name
+				r.Tags[tagsCount].TagID = tags1.TagID
+				r.Tags[tagsCount].WorkspaceID = tags1.WorkspaceID
+			}
+		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 }
@@ -630,6 +671,27 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 	} else {
 		status = nil
 	}
+	var tags []shared.Tag = []shared.Tag{}
+	for _, tagsItem := range r.Tags {
+		var tagID string
+		tagID = tagsItem.TagID.ValueString()
+
+		var workspaceID string
+		workspaceID = tagsItem.WorkspaceID.ValueString()
+
+		var name2 string
+		name2 = tagsItem.Name.ValueString()
+
+		var color string
+		color = tagsItem.Color.ValueString()
+
+		tags = append(tags, shared.Tag{
+			TagID:       tagID,
+			WorkspaceID: workspaceID,
+			Name:        name2,
+			Color:       color,
+		})
+	}
 	out := shared.ConnectionPatchRequest{
 		Name:                             name,
 		Configurations:                   configurations,
@@ -640,6 +702,7 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 		Prefix:                           prefix,
 		NonBreakingSchemaUpdatesBehavior: nonBreakingSchemaUpdatesBehavior,
 		Status:                           status,
+		Tags:                             tags,
 	}
 	return &out
 }

@@ -210,7 +210,8 @@ type DestinationS3UpdateParquetColumnarStorage struct {
 	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
 	DictionaryPageSizeKb *int64 `default:"1024" json:"dictionary_page_size_kb"`
 	// Default: true.
-	DictionaryEncoding *bool `default:"true" json:"dictionary_encoding"`
+	DictionaryEncoding   *bool `json:"dictionary_encoding,omitempty"`
+	AdditionalProperties any   `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateParquetColumnarStorage) MarshalJSON() ([]byte, error) {
@@ -273,6 +274,13 @@ func (o *DestinationS3UpdateParquetColumnarStorage) GetDictionaryEncoding() *boo
 	return o.DictionaryEncoding
 }
 
+func (o *DestinationS3UpdateParquetColumnarStorage) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 type DestinationS3UpdateSchemasFormatFormatType string
 
 const (
@@ -320,7 +328,8 @@ func (e *DestinationS3UpdateSchemasFormatOutputFormat3CompressionCodecCodec) Unm
 }
 
 type DestinationS3UpdateSnappy struct {
-	Codec *DestinationS3UpdateSchemasFormatOutputFormat3CompressionCodecCodec `default:"snappy" json:"codec"`
+	Codec                *DestinationS3UpdateSchemasFormatOutputFormat3CompressionCodecCodec `default:"snappy" json:"codec"`
+	AdditionalProperties any                                                                 `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateSnappy) MarshalJSON() ([]byte, error) {
@@ -339,6 +348,13 @@ func (o *DestinationS3UpdateSnappy) GetCodec() *DestinationS3UpdateSchemasFormat
 		return nil
 	}
 	return o.Codec
+}
+
+func (o *DestinationS3UpdateSnappy) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasFormatOutputFormat3Codec string
@@ -365,11 +381,10 @@ func (e *DestinationS3UpdateSchemasFormatOutputFormat3Codec) UnmarshalJSON(data 
 }
 
 type DestinationS3UpdateZstandard struct {
-	Codec *DestinationS3UpdateSchemasFormatOutputFormat3Codec `default:"zstandard" json:"codec"`
-	// Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
-	CompressionLevel *int64 `default:"3" json:"compression_level"`
-	// If true, include a checksum with each data block.
-	IncludeChecksum *bool `default:"false" json:"include_checksum"`
+	Codec                *DestinationS3UpdateSchemasFormatOutputFormat3Codec `default:"zstandard" json:"codec"`
+	CompressionLevel     int64                                               `json:"compression_level"`
+	IncludeChecksum      bool                                                `json:"include_checksum"`
+	AdditionalProperties any                                                 `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateZstandard) MarshalJSON() ([]byte, error) {
@@ -390,18 +405,25 @@ func (o *DestinationS3UpdateZstandard) GetCodec() *DestinationS3UpdateSchemasFor
 	return o.Codec
 }
 
-func (o *DestinationS3UpdateZstandard) GetCompressionLevel() *int64 {
+func (o *DestinationS3UpdateZstandard) GetCompressionLevel() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.CompressionLevel
 }
 
-func (o *DestinationS3UpdateZstandard) GetIncludeChecksum() *bool {
+func (o *DestinationS3UpdateZstandard) GetIncludeChecksum() bool {
+	if o == nil {
+		return false
+	}
+	return o.IncludeChecksum
+}
+
+func (o *DestinationS3UpdateZstandard) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
-	return o.IncludeChecksum
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasFormatOutputFormatCodec string
@@ -428,9 +450,9 @@ func (e *DestinationS3UpdateSchemasFormatOutputFormatCodec) UnmarshalJSON(data [
 }
 
 type DestinationS3UpdateXz struct {
-	Codec *DestinationS3UpdateSchemasFormatOutputFormatCodec `default:"xz" json:"codec"`
-	// See <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
-	CompressionLevel *int64 `default:"6" json:"compression_level"`
+	Codec                *DestinationS3UpdateSchemasFormatOutputFormatCodec `default:"xz" json:"codec"`
+	CompressionLevel     int64                                              `json:"compression_level"`
+	AdditionalProperties any                                                `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateXz) MarshalJSON() ([]byte, error) {
@@ -451,11 +473,18 @@ func (o *DestinationS3UpdateXz) GetCodec() *DestinationS3UpdateSchemasFormatOutp
 	return o.Codec
 }
 
-func (o *DestinationS3UpdateXz) GetCompressionLevel() *int64 {
+func (o *DestinationS3UpdateXz) GetCompressionLevel() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CompressionLevel
+}
+
+func (o *DestinationS3UpdateXz) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
-	return o.CompressionLevel
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasFormatCodec string
@@ -482,7 +511,8 @@ func (e *DestinationS3UpdateSchemasFormatCodec) UnmarshalJSON(data []byte) error
 }
 
 type DestinationS3UpdateBzip2 struct {
-	Codec *DestinationS3UpdateSchemasFormatCodec `default:"bzip2" json:"codec"`
+	Codec                *DestinationS3UpdateSchemasFormatCodec `default:"bzip2" json:"codec"`
+	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateBzip2) MarshalJSON() ([]byte, error) {
@@ -501,6 +531,13 @@ func (o *DestinationS3UpdateBzip2) GetCodec() *DestinationS3UpdateSchemasFormatC
 		return nil
 	}
 	return o.Codec
+}
+
+func (o *DestinationS3UpdateBzip2) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasCodec string
@@ -527,9 +564,9 @@ func (e *DestinationS3UpdateSchemasCodec) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationS3UpdateDeflate struct {
-	Codec *DestinationS3UpdateSchemasCodec `default:"Deflate" json:"codec"`
-	// 0: no compression & fastest, 9: best compression & slowest.
-	CompressionLevel *int64 `default:"0" json:"compression_level"`
+	Codec                *DestinationS3UpdateSchemasCodec `default:"Deflate" json:"codec"`
+	CompressionLevel     int64                            `json:"compression_level"`
+	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateDeflate) MarshalJSON() ([]byte, error) {
@@ -550,11 +587,18 @@ func (o *DestinationS3UpdateDeflate) GetCodec() *DestinationS3UpdateSchemasCodec
 	return o.Codec
 }
 
-func (o *DestinationS3UpdateDeflate) GetCompressionLevel() *int64 {
+func (o *DestinationS3UpdateDeflate) GetCompressionLevel() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CompressionLevel
+}
+
+func (o *DestinationS3UpdateDeflate) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
-	return o.CompressionLevel
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateCodec string
@@ -581,7 +625,8 @@ func (e *DestinationS3UpdateCodec) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationS3UpdateSchemasFormatNoCompression struct {
-	Codec *DestinationS3UpdateCodec `default:"no compression" json:"codec"`
+	Codec                *DestinationS3UpdateCodec `default:"no compression" json:"codec"`
+	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateSchemasFormatNoCompression) MarshalJSON() ([]byte, error) {
@@ -602,10 +647,17 @@ func (o *DestinationS3UpdateSchemasFormatNoCompression) GetCodec() *DestinationS
 	return o.Codec
 }
 
+func (o *DestinationS3UpdateSchemasFormatNoCompression) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 type DestinationS3UpdateCompressionCodecType string
 
 const (
-	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateSchemasFormatNoCompression DestinationS3UpdateCompressionCodecType = "destination-s3-update_Schemas_format_No Compression"
+	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateSchemasFormatNoCompression DestinationS3UpdateCompressionCodecType = "destination-s3-update_Schemas_format_no compression"
 	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateDeflate                    DestinationS3UpdateCompressionCodecType = "destination-s3-update_Deflate"
 	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateBzip2                      DestinationS3UpdateCompressionCodecType = "destination-s3-update_bzip2"
 	DestinationS3UpdateCompressionCodecTypeDestinationS3UpdateXz                         DestinationS3UpdateCompressionCodecType = "destination-s3-update_xz"
@@ -757,7 +809,8 @@ func (u DestinationS3UpdateCompressionCodec) MarshalJSON() ([]byte, error) {
 type DestinationS3UpdateAvroApacheAvro struct {
 	FormatType *DestinationS3UpdateSchemasFormatFormatType `default:"Avro" json:"format_type"`
 	// The compression algorithm used to compress data. Default to no compression.
-	CompressionCodec DestinationS3UpdateCompressionCodec `json:"compression_codec"`
+	CompressionCodec     DestinationS3UpdateCompressionCodec `json:"compression_codec"`
+	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateAvroApacheAvro) MarshalJSON() ([]byte, error) {
@@ -785,6 +838,13 @@ func (o *DestinationS3UpdateAvroApacheAvro) GetCompressionCodec() DestinationS3U
 	return o.CompressionCodec
 }
 
+func (o *DestinationS3UpdateAvroApacheAvro) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 type DestinationS3UpdateSchemasFormatType string
 
 const (
@@ -808,7 +868,6 @@ func (e *DestinationS3UpdateSchemasFormatType) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// DestinationS3UpdateSchemasFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
 type DestinationS3UpdateSchemasFlattening string
 
 const (
@@ -859,7 +918,8 @@ func (e *DestinationS3UpdateSchemasFormatOutputFormatCompressionType) UnmarshalJ
 }
 
 type DestinationS3UpdateSchemasGZIP struct {
-	CompressionType *DestinationS3UpdateSchemasFormatOutputFormatCompressionType `default:"GZIP" json:"compression_type"`
+	CompressionType      *DestinationS3UpdateSchemasFormatOutputFormatCompressionType `default:"GZIP" json:"compression_type"`
+	AdditionalProperties any                                                          `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateSchemasGZIP) MarshalJSON() ([]byte, error) {
@@ -878,6 +938,13 @@ func (o *DestinationS3UpdateSchemasGZIP) GetCompressionType() *DestinationS3Upda
 		return nil
 	}
 	return o.CompressionType
+}
+
+func (o *DestinationS3UpdateSchemasGZIP) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasFormatCompressionType string
@@ -904,7 +971,8 @@ func (e *DestinationS3UpdateSchemasFormatCompressionType) UnmarshalJSON(data []b
 }
 
 type DestinationS3UpdateSchemasNoCompression struct {
-	CompressionType *DestinationS3UpdateSchemasFormatCompressionType `default:"No Compression" json:"compression_type"`
+	CompressionType      *DestinationS3UpdateSchemasFormatCompressionType `default:"No Compression" json:"compression_type"`
+	AdditionalProperties any                                              `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateSchemasNoCompression) MarshalJSON() ([]byte, error) {
@@ -923,6 +991,13 @@ func (o *DestinationS3UpdateSchemasNoCompression) GetCompressionType() *Destinat
 		return nil
 	}
 	return o.CompressionType
+}
+
+func (o *DestinationS3UpdateSchemasNoCompression) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateSchemasCompressionUnionType string
@@ -991,10 +1066,10 @@ func (u DestinationS3UpdateSchemasCompression) MarshalJSON() ([]byte, error) {
 
 type DestinationS3UpdateJSONLinesNewlineDelimitedJSON struct {
 	FormatType *DestinationS3UpdateSchemasFormatType `default:"JSONL" json:"format_type"`
-	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
 	Flattening *DestinationS3UpdateSchemasFlattening `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationS3UpdateSchemasCompression `json:"compression,omitempty"`
+	Compression          *DestinationS3UpdateSchemasCompression `json:"compression,omitempty"`
+	AdditionalProperties any                                    `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateJSONLinesNewlineDelimitedJSON) MarshalJSON() ([]byte, error) {
@@ -1029,6 +1104,13 @@ func (o *DestinationS3UpdateJSONLinesNewlineDelimitedJSON) GetCompression() *Des
 	return o.Compression
 }
 
+func (o *DestinationS3UpdateJSONLinesNewlineDelimitedJSON) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 type DestinationS3UpdateFormatType string
 
 const (
@@ -1052,7 +1134,6 @@ func (e *DestinationS3UpdateFormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3UpdateFlattening - Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 type DestinationS3UpdateFlattening string
 
 const (
@@ -1103,7 +1184,8 @@ func (e *DestinationS3UpdateSchemasCompressionType) UnmarshalJSON(data []byte) e
 }
 
 type DestinationS3UpdateGZIP struct {
-	CompressionType *DestinationS3UpdateSchemasCompressionType `default:"GZIP" json:"compression_type"`
+	CompressionType      *DestinationS3UpdateSchemasCompressionType `default:"GZIP" json:"compression_type"`
+	AdditionalProperties any                                        `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateGZIP) MarshalJSON() ([]byte, error) {
@@ -1122,6 +1204,13 @@ func (o *DestinationS3UpdateGZIP) GetCompressionType() *DestinationS3UpdateSchem
 		return nil
 	}
 	return o.CompressionType
+}
+
+func (o *DestinationS3UpdateGZIP) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateCompressionType string
@@ -1148,7 +1237,8 @@ func (e *DestinationS3UpdateCompressionType) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationS3UpdateNoCompression struct {
-	CompressionType *DestinationS3UpdateCompressionType `default:"No Compression" json:"compression_type"`
+	CompressionType      *DestinationS3UpdateCompressionType `default:"No Compression" json:"compression_type"`
+	AdditionalProperties any                                 `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateNoCompression) MarshalJSON() ([]byte, error) {
@@ -1169,6 +1259,13 @@ func (o *DestinationS3UpdateNoCompression) GetCompressionType() *DestinationS3Up
 	return o.CompressionType
 }
 
+func (o *DestinationS3UpdateNoCompression) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 type DestinationS3UpdateCompressionUnionType string
 
 const (
@@ -1176,7 +1273,7 @@ const (
 	DestinationS3UpdateCompressionUnionTypeDestinationS3UpdateGZIP          DestinationS3UpdateCompressionUnionType = "destination-s3-update_GZIP"
 )
 
-// DestinationS3UpdateCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
+// DestinationS3UpdateCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3UpdateCompression struct {
 	DestinationS3UpdateNoCompression *DestinationS3UpdateNoCompression `queryParam:"inline"`
 	DestinationS3UpdateGZIP          *DestinationS3UpdateGZIP          `queryParam:"inline"`
@@ -1235,10 +1332,10 @@ func (u DestinationS3UpdateCompression) MarshalJSON() ([]byte, error) {
 
 type DestinationS3UpdateCSVCommaSeparatedValues struct {
 	FormatType *DestinationS3UpdateFormatType `default:"CSV" json:"format_type"`
-	// Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 	Flattening *DestinationS3UpdateFlattening `default:"No flattening" json:"flattening"`
-	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
-	Compression *DestinationS3UpdateCompression `json:"compression,omitempty"`
+	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
+	Compression          *DestinationS3UpdateCompression `json:"compression,omitempty"`
+	AdditionalProperties any                             `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3UpdateCSVCommaSeparatedValues) MarshalJSON() ([]byte, error) {
@@ -1271,6 +1368,13 @@ func (o *DestinationS3UpdateCSVCommaSeparatedValues) GetCompression() *Destinati
 		return nil
 	}
 	return o.Compression
+}
+
+func (o *DestinationS3UpdateCSVCommaSeparatedValues) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 type DestinationS3UpdateOutputFormatType string
@@ -1386,7 +1490,7 @@ type DestinationS3Update struct {
 	AccessKeyID *string `json:"access_key_id,omitempty"`
 	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
 	SecretAccessKey *string `json:"secret_access_key,omitempty"`
-	// The Role ARN
+	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
 	RoleArn *string `json:"role_arn,omitempty"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	S3BucketName string `json:"s3_bucket_name"`
@@ -1397,10 +1501,10 @@ type DestinationS3Update struct {
 	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
 	Format DestinationS3UpdateOutputFormat `json:"format"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
-	S3Endpoint *string `default:"" json:"s3_endpoint"`
-	// Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
+	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	// Format string on how data will be organized inside the bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
-	// The pattern allows you to set the file-name format for the S3 staging file(s)
+	// Pattern to match file names in the bucket directory. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ListingKeysUsingAPIs.html">here</a>
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 }
 

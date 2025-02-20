@@ -102,19 +102,19 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"file_pattern": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The regular expression to specify files for sync in a chosen Folder Path. Default: ""`,
 					},
 					"file_types": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("csv,json"),
+						Default:     stringdefault.StaticString(`csv,json`),
 						Description: `Coma separated file types. Currently only 'csv' and 'json' types are supported. Default: "csv,json"`,
 					},
 					"folder_path": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The directory to search files for sync. Default: ""`,
 					},
 					"host": schema.StringAttribute{

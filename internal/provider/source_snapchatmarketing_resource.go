@@ -67,7 +67,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 					"action_report_time": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("conversion"),
+						Default:     stringdefault.StaticString(`conversion`),
 						Description: `Specifies the principle for conversion reporting. Default: "conversion"; must be one of ["conversion", "impression"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -117,7 +117,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2022-01-01"),
+						Default:     stringdefault.StaticString(`2022-01-01`),
 						Description: `Date in the format 2022-01-01. Any data before this date will not be replicated. Default: "2022-01-01"`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -126,7 +126,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 					"swipe_up_attribution_window": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("28_DAY"),
+						Default:     stringdefault.StaticString(`28_DAY`),
 						Description: `Attribution window for swipe ups. Default: "28_DAY"; must be one of ["1_DAY", "7_DAY", "28_DAY"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -139,7 +139,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 					"view_attribution_window": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("1_DAY"),
+						Default:     stringdefault.StaticString(`1_DAY`),
 						Description: `Attribution window for views. Default: "1_DAY"; must be one of ["1_HOUR", "3_HOUR", "6_HOUR", "1_DAY", "7_DAY"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

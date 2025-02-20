@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAmazonSellerPartner struct {
 	AccountType            types.String    `tfsdk:"account_type"`
+	AppID                  types.String    `tfsdk:"app_id"`
 	AwsEnvironment         types.String    `tfsdk:"aws_environment"`
 	LwaAppID               types.String    `tfsdk:"lwa_app_id"`
 	LwaClientSecret        types.String    `tfsdk:"lwa_client_secret"`

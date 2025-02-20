@@ -80,6 +80,7 @@ type SDK struct {
 	Permissions   *Permissions
 	Organizations *Organizations
 	Users         *Users
+	Tags          *Tags
 
 	sdkConfiguration sdkConfiguration
 }
@@ -157,9 +158,9 @@ func New(opts ...SDKOption) *SDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.13.2",
-			GenVersion:        "2.506.0",
-			UserAgent:         "speakeasy-sdk/terraform 0.13.2 2.506.0 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			SDKVersion:        "0.14.1",
+			GenVersion:        "2.515.4",
+			UserAgent:         "speakeasy-sdk/terraform 0.14.1 2.515.4 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -198,6 +199,8 @@ func New(opts ...SDKOption) *SDK {
 	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
 
 	sdk.Users = newUsers(sdk.sdkConfiguration)
+
+	sdk.Tags = newTags(sdk.sdkConfiguration)
 
 	return sdk
 }

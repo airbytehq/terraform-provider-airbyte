@@ -145,13 +145,13 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 					"project_timezone": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("US/Pacific"),
+						Default:     stringdefault.StaticString(`US/Pacific`),
 						Description: `Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>. Default: "US/Pacific"`,
 					},
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("US"),
+						Default:     stringdefault.StaticString(`US`),
 						Description: `The region of mixpanel domain instance either US or EU. Default: "US"; must be one of ["US", "EU"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf("US", "EU"),

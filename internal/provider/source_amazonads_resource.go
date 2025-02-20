@@ -12,14 +12,11 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -101,7 +98,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("NA"),
+						Default:     stringdefault.StaticString(`NA`),
 						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details. Default: "NA"; must be one of ["NA", "EU", "FE"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -111,31 +108,11 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 							),
 						},
 					},
-					"report_record_types": schema.ListAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{})),
-						ElementType: types.StringType,
-						Description: `Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details`,
-						Validators: []validator.List{
-							listvalidator.UniqueValues(),
-						},
-					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
 						Description: `The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
-						},
-					},
-					"state_filter": schema.ListAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     listdefault.StaticValue(types.ListValueMust(types.StringType, []attr.Value{})),
-						ElementType: types.StringType,
-						Description: `Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.`,
-						Validators: []validator.List{
-							listvalidator.UniqueValues(),
 						},
 					},
 				},

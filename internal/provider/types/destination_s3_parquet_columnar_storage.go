@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3ParquetColumnarStorage struct {
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 	BlockSizeMb          types.Int64  `tfsdk:"block_size_mb"`
 	CompressionCodec     types.String `tfsdk:"compression_codec"`
 	DictionaryEncoding   types.Bool   `tfsdk:"dictionary_encoding"`

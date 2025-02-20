@@ -165,7 +165,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								"action_report_time": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("mixed"),
+									Default:     stringdefault.StaticString(`mixed`),
 									Description: `Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -217,7 +217,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								"level": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("ad"),
+									Default:     stringdefault.StaticString(`ad`),
 									Description: `Chosen level for API. Default: "ad"; must be one of ["ad", "adset", "campaign", "account"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(

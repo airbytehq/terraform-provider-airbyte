@@ -62,81 +62,6 @@ func (e *SourceAmazonAdsUpdateRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAmazonAdsUpdateStateFilterEnum - An enumeration.
-type SourceAmazonAdsUpdateStateFilterEnum string
-
-const (
-	SourceAmazonAdsUpdateStateFilterEnumEnabled  SourceAmazonAdsUpdateStateFilterEnum = "enabled"
-	SourceAmazonAdsUpdateStateFilterEnumPaused   SourceAmazonAdsUpdateStateFilterEnum = "paused"
-	SourceAmazonAdsUpdateStateFilterEnumArchived SourceAmazonAdsUpdateStateFilterEnum = "archived"
-)
-
-func (e SourceAmazonAdsUpdateStateFilterEnum) ToPointer() *SourceAmazonAdsUpdateStateFilterEnum {
-	return &e
-}
-func (e *SourceAmazonAdsUpdateStateFilterEnum) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "enabled":
-		fallthrough
-	case "paused":
-		fallthrough
-	case "archived":
-		*e = SourceAmazonAdsUpdateStateFilterEnum(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsUpdateStateFilterEnum: %v", v)
-	}
-}
-
-// SourceAmazonAdsUpdateReportRecordTypeEnum - An enumeration.
-type SourceAmazonAdsUpdateReportRecordTypeEnum string
-
-const (
-	SourceAmazonAdsUpdateReportRecordTypeEnumAdGroups      SourceAmazonAdsUpdateReportRecordTypeEnum = "adGroups"
-	SourceAmazonAdsUpdateReportRecordTypeEnumAsins         SourceAmazonAdsUpdateReportRecordTypeEnum = "asins"
-	SourceAmazonAdsUpdateReportRecordTypeEnumAsinsKeywords SourceAmazonAdsUpdateReportRecordTypeEnum = "asins_keywords"
-	SourceAmazonAdsUpdateReportRecordTypeEnumAsinsTargets  SourceAmazonAdsUpdateReportRecordTypeEnum = "asins_targets"
-	SourceAmazonAdsUpdateReportRecordTypeEnumCampaigns     SourceAmazonAdsUpdateReportRecordTypeEnum = "campaigns"
-	SourceAmazonAdsUpdateReportRecordTypeEnumKeywords      SourceAmazonAdsUpdateReportRecordTypeEnum = "keywords"
-	SourceAmazonAdsUpdateReportRecordTypeEnumProductAds    SourceAmazonAdsUpdateReportRecordTypeEnum = "productAds"
-	SourceAmazonAdsUpdateReportRecordTypeEnumTargets       SourceAmazonAdsUpdateReportRecordTypeEnum = "targets"
-)
-
-func (e SourceAmazonAdsUpdateReportRecordTypeEnum) ToPointer() *SourceAmazonAdsUpdateReportRecordTypeEnum {
-	return &e
-}
-func (e *SourceAmazonAdsUpdateReportRecordTypeEnum) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "adGroups":
-		fallthrough
-	case "asins":
-		fallthrough
-	case "asins_keywords":
-		fallthrough
-	case "asins_targets":
-		fallthrough
-	case "campaigns":
-		fallthrough
-	case "keywords":
-		fallthrough
-	case "productAds":
-		fallthrough
-	case "targets":
-		*e = SourceAmazonAdsUpdateReportRecordTypeEnum(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsUpdateReportRecordTypeEnum: %v", v)
-	}
-}
-
 type SourceAmazonAdsUpdate struct {
 	authType *SourceAmazonAdsUpdateAuthType `const:"oauth2.0" json:"auth_type"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
@@ -153,12 +78,8 @@ type SourceAmazonAdsUpdate struct {
 	Profiles []int64 `json:"profiles,omitempty"`
 	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
-	// Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
-	StateFilter []SourceAmazonAdsUpdateStateFilterEnum `json:"state_filter,omitempty"`
 	// The amount of days to go back in time to get the updated data from Amazon Ads
 	LookBackWindow *int64 `default:"3" json:"look_back_window"`
-	// Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
-	ReportRecordTypes []SourceAmazonAdsUpdateReportRecordTypeEnum `json:"report_record_types,omitempty"`
 }
 
 func (s SourceAmazonAdsUpdate) MarshalJSON() ([]byte, error) {
@@ -225,23 +146,9 @@ func (o *SourceAmazonAdsUpdate) GetMarketplaceIds() []string {
 	return o.MarketplaceIds
 }
 
-func (o *SourceAmazonAdsUpdate) GetStateFilter() []SourceAmazonAdsUpdateStateFilterEnum {
-	if o == nil {
-		return nil
-	}
-	return o.StateFilter
-}
-
 func (o *SourceAmazonAdsUpdate) GetLookBackWindow() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LookBackWindow
-}
-
-func (o *SourceAmazonAdsUpdate) GetReportRecordTypes() []SourceAmazonAdsUpdateReportRecordTypeEnum {
-	if o == nil {
-		return nil
-	}
-	return o.ReportRecordTypes
 }

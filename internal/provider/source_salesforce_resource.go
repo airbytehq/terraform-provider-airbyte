@@ -100,7 +100,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 					"stream_slice_step": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("P30D"),
+						Default:     stringdefault.StaticString(`P30D`),
 						Description: `The size of the time window (ISO8601 duration) to slice requests. Default: "P30D"`,
 					},
 					"streams_criteria": schema.ListNestedAttribute{
@@ -110,7 +110,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								"criteria": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("contains"),
+									Default:     stringdefault.StaticString(`contains`),
 									Description: `Default: "contains"; must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(

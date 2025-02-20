@@ -88,7 +88,7 @@ type SourceAirtableUpdateOAuth20 struct {
 	authMethod *SourceAirtableUpdateAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID string `json:"client_id"`
-	// The client secret the Airtable developer application.
+	// The client secret of the Airtable developer application.
 	ClientSecret string `json:"client_secret"`
 	// Access Token for making authenticated requests.
 	AccessToken *string `json:"access_token,omitempty"`

@@ -73,7 +73,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Glue"),
+										Default:     stringdefault.StaticString(`Glue`),
 										Description: `Default: "Glue"; must be "Glue"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Glue"),
@@ -82,7 +82,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"database": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("public"),
+										Default:     stringdefault.StaticString(`public`),
 										Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 									},
 								},
@@ -102,7 +102,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Hadoop"),
+										Default:     stringdefault.StaticString(`Hadoop`),
 										Description: `Default: "Hadoop"; must be "Hadoop"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Hadoop"),
@@ -111,7 +111,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"database": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("default"),
+										Default:     stringdefault.StaticString(`default`),
 										Description: `The default database tables are written to if the source does not specify a namespace. The usual value for this field is "default". Default: "default"`,
 									},
 								},
@@ -131,7 +131,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Hive"),
+										Default:     stringdefault.StaticString(`Hive`),
 										Description: `Default: "Hive"; must be "Hive"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Hive"),
@@ -140,7 +140,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"database": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("default"),
+										Default:     stringdefault.StaticString(`default`),
 										Description: `The default database tables are written to if the source does not specify a namespace. The usual value for this field is "default". Default: "default"`,
 									},
 									"hive_thrift_uri": schema.StringAttribute{
@@ -163,13 +163,13 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"catalog_schema": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("public"),
+										Default:     stringdefault.StaticString(`public`),
 										Description: `Iceberg catalog metadata tables are written to catalog schema. The usual value for this field is "public". Default: "public"`,
 									},
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Jdbc"),
+										Default:     stringdefault.StaticString(`Jdbc`),
 										Description: `Default: "Jdbc"; must be "Jdbc"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Jdbc"),
@@ -178,7 +178,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"database": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("public"),
+										Default:     stringdefault.StaticString(`public`),
 										Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 									},
 									"jdbc_url": schema.StringAttribute{
@@ -216,7 +216,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"catalog_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Rest"),
+										Default:     stringdefault.StaticString(`Rest`),
 										Description: `Default: "Rest"; must be "Rest"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Rest"),
@@ -271,7 +271,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 							"format": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("Parquet"),
+								Default:     stringdefault.StaticString(`Parquet`),
 								Description: `Default: "Parquet"; must be one of ["Parquet", "Avro"]`,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
@@ -297,7 +297,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"s3_bucket_region": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -341,7 +341,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"s3_endpoint": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""`,
 									},
 									"s3_path_style_access": schema.BoolAttribute{
@@ -362,7 +362,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"storage_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("S3"),
+										Default:     stringdefault.StaticString(`S3`),
 										Description: `Default: "S3"; must be "S3"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("S3"),
@@ -386,7 +386,7 @@ func (r *DestinationIcebergResource) Schema(ctx context.Context, req resource.Sc
 									"storage_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("MANAGED"),
+										Default:     stringdefault.StaticString(`MANAGED`),
 										Description: `Default: "MANAGED"; must be "MANAGED"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("MANAGED"),

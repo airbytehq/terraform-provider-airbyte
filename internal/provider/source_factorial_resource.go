@@ -69,7 +69,7 @@ func (r *SourceFactorialResource) Schema(ctx context.Context, req resource.Schem
 					"limit": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("50"),
+						Default:     stringdefault.StaticString(`50`),
 						Description: `Max records per page limit. Default: "50"`,
 					},
 					"start_date": schema.StringAttribute{

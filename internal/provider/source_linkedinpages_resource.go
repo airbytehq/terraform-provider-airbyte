@@ -117,8 +117,8 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2023-01-01T00:00:00Z"),
-						Description: `Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{"{{"}} "\n" {{"}}"}} {{"{{"}} response.errorDetails {{"}}"}}. Default: "2023-01-01T00:00:00Z"`,
+						Default:     stringdefault.StaticString(`2023-01-01T00:00:00Z`),
+						Description: `Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{ "\n" }} {{ response.errorDetails }}. Default: "2023-01-01T00:00:00Z"`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
@@ -126,7 +126,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 					"time_granularity_type": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("DAY"),
+						Default:     stringdefault.StaticString(`DAY`),
 						Description: `Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH". Default: "DAY"; must be one of ["DAY", "MONTH"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

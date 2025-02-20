@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3AvroApacheAvro struct {
-	CompressionCodec DestinationS3CompressionCodec `tfsdk:"compression_codec"`
-	FormatType       types.String                  `tfsdk:"format_type"`
+	AdditionalProperties types.String                  `tfsdk:"additional_properties"`
+	CompressionCodec     DestinationS3CompressionCodec `tfsdk:"compression_codec"`
+	FormatType           types.String                  `tfsdk:"format_type"`
 }

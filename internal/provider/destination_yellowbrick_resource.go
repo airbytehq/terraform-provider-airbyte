@@ -93,7 +93,7 @@ func (r *DestinationYellowbrickResource) Schema(ctx context.Context, req resourc
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("public"),
+						Default:     stringdefault.StaticString(`public`),
 						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 					},
 					"ssl": schema.BoolAttribute{

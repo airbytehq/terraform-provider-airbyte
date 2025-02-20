@@ -20,9 +20,6 @@ func (r *SourceTrackPmsResourceModel) ToSharedSourceTrackPmsCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var customerDomain string
-	customerDomain = r.Configuration.CustomerDomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -32,10 +29,13 @@ func (r *SourceTrackPmsResourceModel) ToSharedSourceTrackPmsCreateRequest() *sha
 	} else {
 		apiSecret = nil
 	}
+	var customerDomain string
+	customerDomain = r.Configuration.CustomerDomain.ValueString()
+
 	configuration := shared.SourceTrackPms{
-		CustomerDomain: customerDomain,
 		APIKey:         apiKey,
 		APISecret:      apiSecret,
+		CustomerDomain: customerDomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -71,9 +71,6 @@ func (r *SourceTrackPmsResourceModel) ToSharedSourceTrackPmsPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var customerDomain string
-	customerDomain = r.Configuration.CustomerDomain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -83,10 +80,13 @@ func (r *SourceTrackPmsResourceModel) ToSharedSourceTrackPmsPutRequest() *shared
 	} else {
 		apiSecret = nil
 	}
+	var customerDomain string
+	customerDomain = r.Configuration.CustomerDomain.ValueString()
+
 	configuration := shared.SourceTrackPmsUpdate{
-		CustomerDomain: customerDomain,
 		APIKey:         apiKey,
 		APISecret:      apiSecret,
+		CustomerDomain: customerDomain,
 	}
 	out := shared.SourceTrackPmsPutRequest{
 		Name:          name,

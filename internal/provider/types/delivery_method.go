@@ -3,6 +3,7 @@
 package types
 
 type DeliveryMethod struct {
-	CopyRawFiles     *CopyRawFiles     `tfsdk:"copy_raw_files" tfPlanOnly:"true"`
-	ReplicateRecords *ReplicateRecords `tfsdk:"replicate_records" tfPlanOnly:"true"`
+	CopyRawFiles            *CopyRawFiles            `tfsdk:"copy_raw_files" tfPlanOnly:"true"`
+	ReplicatePermissionsACL *ReplicatePermissionsACL `tfsdk:"replicate_permissions_acl" tfPlanOnly:"true"`
+	ReplicateRecords        *ReplicateRecords        `tfsdk:"replicate_records" tfPlanOnly:"true"`
 }

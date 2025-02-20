@@ -20,13 +20,24 @@ func (r *SourceVitallyResourceModel) ToSharedSourceVitallyCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	status := shared.SourceVitallyStatus(r.Configuration.Status.ValueString())
+	var secretToken string
+	secretToken = r.Configuration.SecretToken.ValueString()
+
+	basicAuthHeader := new(string)
+	if !r.Configuration.BasicAuthHeader.IsUnknown() && !r.Configuration.BasicAuthHeader.IsNull() {
+		*basicAuthHeader = r.Configuration.BasicAuthHeader.ValueString()
+	} else {
+		basicAuthHeader = nil
+	}
 	configuration := shared.SourceVitally{
-		APIKey: apiKey,
-		Status: status,
+		Domain:          domain,
+		Status:          status,
+		SecretToken:     secretToken,
+		BasicAuthHeader: basicAuthHeader,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -62,13 +73,24 @@ func (r *SourceVitallyResourceModel) ToSharedSourceVitallyPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	status := shared.SourceVitallyUpdateStatus(r.Configuration.Status.ValueString())
+	var secretToken string
+	secretToken = r.Configuration.SecretToken.ValueString()
+
+	basicAuthHeader := new(string)
+	if !r.Configuration.BasicAuthHeader.IsUnknown() && !r.Configuration.BasicAuthHeader.IsNull() {
+		*basicAuthHeader = r.Configuration.BasicAuthHeader.ValueString()
+	} else {
+		basicAuthHeader = nil
+	}
 	configuration := shared.SourceVitallyUpdate{
-		APIKey: apiKey,
-		Status: status,
+		Domain:          domain,
+		Status:          status,
+		SecretToken:     secretToken,
+		BasicAuthHeader: basicAuthHeader,
 	}
 	out := shared.SourceVitallyPutRequest{
 		Name:          name,

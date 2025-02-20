@@ -152,7 +152,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -166,7 +166,7 @@ func (r *DestinationSnowflakeCortexResource) Schema(ctx context.Context, req res
 									"model_name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Default:     stringdefault.StaticString(`text-embedding-ada-002`),
 										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},

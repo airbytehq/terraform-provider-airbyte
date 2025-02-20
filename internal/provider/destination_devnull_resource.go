@@ -86,7 +86,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 									"test_destination_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("FAILING"),
+										Default:     stringdefault.StaticString(`FAILING`),
 										Description: `Default: "FAILING"; must be "FAILING"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("FAILING"),
@@ -127,7 +127,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 													"logging_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("EveryNth"),
+														Default:     stringdefault.StaticString(`EveryNth`),
 														Description: `Default: "EveryNth"; must be "EveryNth"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("EveryNth"),
@@ -168,7 +168,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 													"logging_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("FirstN"),
+														Default:     stringdefault.StaticString(`FirstN`),
 														Description: `Default: "FirstN"; must be "FirstN"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("FirstN"),
@@ -202,7 +202,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 													"logging_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("RandomSampling"),
+														Default:     stringdefault.StaticString(`RandomSampling`),
 														Description: `Default: "RandomSampling"; must be "RandomSampling"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -241,7 +241,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 									"test_destination_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("LOGGING"),
+										Default:     stringdefault.StaticString(`LOGGING`),
 										Description: `Default: "LOGGING"; must be "LOGGING"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("LOGGING"),
@@ -269,7 +269,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 									"test_destination_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("SILENT"),
+										Default:     stringdefault.StaticString(`SILENT`),
 										Description: `Default: "SILENT"; must be "SILENT"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("SILENT"),
@@ -301,7 +301,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 									"test_destination_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("THROTTLED"),
+										Default:     stringdefault.StaticString(`THROTTLED`),
 										Description: `Default: "THROTTLED"; must be "THROTTLED"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

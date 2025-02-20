@@ -25,13 +25,6 @@ func newHealth(sdkConfig sdkConfiguration) *Health {
 
 // GetHealthCheck - Health Check
 func (s *Health) GetHealthCheck(ctx context.Context, opts ...operations.Option) (*operations.GetHealthCheckResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getHealthCheck",
-		OAuth2Scopes:   []string{},
-		SecuritySource: nil,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -52,6 +45,14 @@ func (s *Health) GetHealthCheck(ctx context.Context, opts ...operations.Option) 
 	opURL, err := url.JoinPath(baseURL, "/health")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getHealthCheck",
+		OAuth2Scopes:   []string{},
+		SecuritySource: nil,
 	}
 
 	timeout := o.Timeout

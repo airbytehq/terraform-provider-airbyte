@@ -320,6 +320,30 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 				CopyRawFiles: copyRawFiles,
 			}
 		}
+		var replicatePermissionsACL *shared.ReplicatePermissionsACL
+		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
+			includeIdentitiesStream := new(bool)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
+				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
+			} else {
+				includeIdentitiesStream = nil
+			}
+			domain := new(string)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
+				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
+			} else {
+				domain = nil
+			}
+			replicatePermissionsACL = &shared.ReplicatePermissionsACL{
+				IncludeIdentitiesStream: includeIdentitiesStream,
+				Domain:                  domain,
+			}
+		}
+		if replicatePermissionsACL != nil {
+			deliveryMethod = &shared.DeliveryMethod{
+				ReplicatePermissionsACL: replicatePermissionsACL,
+			}
+		}
 	}
 	var folderURL string
 	folderURL = r.Configuration.FolderURL.ValueString()
@@ -699,6 +723,30 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 		if sourceGoogleDriveUpdateCopyRawFiles != nil {
 			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
 				SourceGoogleDriveUpdateCopyRawFiles: sourceGoogleDriveUpdateCopyRawFiles,
+			}
+		}
+		var sourceGoogleDriveUpdateReplicatePermissionsACL *shared.SourceGoogleDriveUpdateReplicatePermissionsACL
+		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
+			includeIdentitiesStream := new(bool)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
+				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
+			} else {
+				includeIdentitiesStream = nil
+			}
+			domain := new(string)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
+				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
+			} else {
+				domain = nil
+			}
+			sourceGoogleDriveUpdateReplicatePermissionsACL = &shared.SourceGoogleDriveUpdateReplicatePermissionsACL{
+				IncludeIdentitiesStream: includeIdentitiesStream,
+				Domain:                  domain,
+			}
+		}
+		if sourceGoogleDriveUpdateReplicatePermissionsACL != nil {
+			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
+				SourceGoogleDriveUpdateReplicatePermissionsACL: sourceGoogleDriveUpdateReplicatePermissionsACL,
 			}
 		}
 	}

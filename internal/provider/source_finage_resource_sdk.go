@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"time"
+	timepkg "time"
 )
 
 func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.SourceFinageCreateRequest {
@@ -37,11 +37,11 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	} else {
 		techIndicatorType = nil
 	}
-	timeInterval := new(shared.TimeInterval)
+	time := new(shared.TimeInterval)
 	if !r.Configuration.Time.IsUnknown() && !r.Configuration.Time.IsNull() {
-		*timeInterval = shared.TimeInterval(r.Configuration.Time.ValueString())
+		*time = shared.TimeInterval(r.Configuration.Time.ValueString())
 	} else {
-		timeInterval = nil
+		time = nil
 	}
 	period := new(string)
 	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
@@ -61,12 +61,12 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	} else {
 		timePeriod = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate, _ := timepkg.Parse(timepkg.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinage{
 		APIKey:            apiKey,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
-		Time:              timeInterval,
+		Time:              time,
 		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,
@@ -121,11 +121,11 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	} else {
 		techIndicatorType = nil
 	}
-	timeInterval := new(shared.SourceFinageUpdateTimeInterval)
+	time := new(shared.SourceFinageUpdateTimeInterval)
 	if !r.Configuration.Time.IsUnknown() && !r.Configuration.Time.IsNull() {
-		*timeInterval = shared.SourceFinageUpdateTimeInterval(r.Configuration.Time.ValueString())
+		*time = shared.SourceFinageUpdateTimeInterval(r.Configuration.Time.ValueString())
 	} else {
-		timeInterval = nil
+		time = nil
 	}
 	period := new(string)
 	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
@@ -145,12 +145,12 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	} else {
 		timePeriod = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate, _ := timepkg.Parse(timepkg.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinageUpdate{
 		APIKey:            apiKey,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
-		Time:              timeInterval,
+		Time:              time,
 		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,

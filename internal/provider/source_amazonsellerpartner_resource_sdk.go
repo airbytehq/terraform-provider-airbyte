@@ -39,6 +39,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		accountType = nil
 	}
+	appID := new(string)
+	if !r.Configuration.AppID.IsUnknown() && !r.Configuration.AppID.IsNull() {
+		*appID = r.Configuration.AppID.ValueString()
+	} else {
+		appID = nil
+	}
 	var lwaAppID string
 	lwaAppID = r.Configuration.LwaAppID.ValueString()
 
@@ -101,6 +107,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		AwsEnvironment:         awsEnvironment,
 		Region:                 region,
 		AccountType:            accountType,
+		AppID:                  appID,
 		LwaAppID:               lwaAppID,
 		LwaClientSecret:        lwaClientSecret,
 		RefreshToken:           refreshToken,
@@ -161,6 +168,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		*accountType = shared.SourceAmazonSellerPartnerUpdateAWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
 	} else {
 		accountType = nil
+	}
+	appID := new(string)
+	if !r.Configuration.AppID.IsUnknown() && !r.Configuration.AppID.IsNull() {
+		*appID = r.Configuration.AppID.ValueString()
+	} else {
+		appID = nil
 	}
 	var lwaAppID string
 	lwaAppID = r.Configuration.LwaAppID.ValueString()
@@ -224,6 +237,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		AwsEnvironment:         awsEnvironment,
 		Region:                 region,
 		AccountType:            accountType,
+		AppID:                  appID,
 		LwaAppID:               lwaAppID,
 		LwaClientSecret:        lwaClientSecret,
 		RefreshToken:           refreshToken,

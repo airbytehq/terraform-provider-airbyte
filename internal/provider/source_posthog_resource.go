@@ -72,7 +72,7 @@ func (r *SourcePosthogResource) Schema(ctx context.Context, req resource.SchemaR
 					"base_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://app.posthog.com"),
+						Default:     stringdefault.StaticString(`https://app.posthog.com`),
 						Description: `Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com). Default: "https://app.posthog.com"`,
 					},
 					"events_time_step": schema.Int64Attribute{

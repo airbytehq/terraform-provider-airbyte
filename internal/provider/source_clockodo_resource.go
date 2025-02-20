@@ -75,7 +75,7 @@ func (r *SourceClockodoResource) Schema(ctx context.Context, req resource.Schema
 					"external_application": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Airbyte"),
+						Default:     stringdefault.StaticString(`Airbyte`),
 						Description: `Identification of the calling application, including the email address of a technical contact person. Format: [name of application or company];[email address]. Default: "Airbyte"`,
 					},
 					"start_date": schema.StringAttribute{

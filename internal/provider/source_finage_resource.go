@@ -89,7 +89,7 @@ func (r *SourceFinageResource) Schema(ctx context.Context, req resource.SchemaRe
 					"tech_indicator_type": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("SMA"),
+						Default:     stringdefault.StaticString(`SMA`),
 						Description: `One of DEMA, EMA, SMA, WMA, RSI, TEMA, Williams, ADX. Default: "SMA"; must be one of ["DEMA", "EMA", "SMA", "WMA", "RSI", "TEMA", "Williams", "ADX"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -107,7 +107,7 @@ func (r *SourceFinageResource) Schema(ctx context.Context, req resource.SchemaRe
 					"time": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("daily"),
+						Default:     stringdefault.StaticString(`daily`),
 						Description: `Default: "daily"; must be one of ["daily", "1min", "5min", "15min", "30min", "1hour", "4hour"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -124,7 +124,7 @@ func (r *SourceFinageResource) Schema(ctx context.Context, req resource.SchemaRe
 					"time_aggregates": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("day"),
+						Default:     stringdefault.StaticString(`day`),
 						Description: `Size of the time. Default: "day"; must be one of ["minute", "hour", "day", "week", "month", "quarter", "year"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

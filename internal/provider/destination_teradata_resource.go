@@ -78,7 +78,7 @@ func (r *DestinationTeradataResource) Schema(ctx context.Context, req resource.S
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("airbyte_td"),
+						Default:     stringdefault.StaticString(`airbyte_td`),
 						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "airbyte_td"`,
 					},
 					"ssl": schema.BoolAttribute{

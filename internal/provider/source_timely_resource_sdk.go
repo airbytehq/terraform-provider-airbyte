@@ -5,6 +5,7 @@ package provider
 import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceTimelyResourceModel) ToSharedSourceTimelyCreateRequest() *shared.SourceTimelyCreateRequest {
@@ -23,16 +24,14 @@ func (r *SourceTimelyResourceModel) ToSharedSourceTimelyCreateRequest() *shared.
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	configuration := shared.SourceTimely{
 		AccountID:   accountID,
-		BearerToken: bearerToken,
 		StartDate:   startDate,
+		BearerToken: bearerToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -71,16 +70,14 @@ func (r *SourceTimelyResourceModel) ToSharedSourceTimelyPutRequest() *shared.Sou
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	configuration := shared.SourceTimelyUpdate{
 		AccountID:   accountID,
-		BearerToken: bearerToken,
 		StartDate:   startDate,
+		BearerToken: bearerToken,
 	}
 	out := shared.SourceTimelyPutRequest{
 		Name:          name,

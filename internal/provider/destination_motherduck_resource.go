@@ -62,7 +62,7 @@ func (r *DestinationMotherduckResource) Schema(ctx context.Context, req resource
 					"destination_path": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("md:"),
+						Default:     stringdefault.StaticString(`md:`),
 						Description: `Path to a .duckdb file or 'md:<DATABASE_NAME>' to connect to a MotherDuck database. If 'md:' is specified without a database name, the default MotherDuck database name ('my_db') will be used. Default: "md:"`,
 					},
 					"motherduck_api_key": schema.StringAttribute{

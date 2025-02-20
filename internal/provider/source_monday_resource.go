@@ -101,7 +101,7 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									"subdomain": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Slug/subdomain of the account, or the first part of the URL that comes before .monday.com. Default: ""`,
 									},
 								},

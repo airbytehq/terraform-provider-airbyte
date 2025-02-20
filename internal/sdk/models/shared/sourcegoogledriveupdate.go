@@ -1032,6 +1032,67 @@ func (o *SourceGoogleDriveUpdateFileBasedStreamConfig) GetRecentNFilesToReadForS
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
+type SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType string
+
+const (
+	SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryTypeUsePermissionsTransfer SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType = "use_permissions_transfer"
+)
+
+func (e SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType) ToPointer() *SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType {
+	return &e
+}
+func (e *SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_permissions_transfer":
+		*e = SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType: %v", v)
+	}
+}
+
+// SourceGoogleDriveUpdateReplicatePermissionsACL - Sends one identity stream and one for more permissions (ACL) streams to the destination. This data can be used in downstream systems to recreate permission restrictions mirroring the original source.
+type SourceGoogleDriveUpdateReplicatePermissionsACL struct {
+	deliveryType *SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType `const:"use_permissions_transfer" json:"delivery_type"`
+	// This data can be used in downstream systems to recreate permission restrictions mirroring the original source
+	IncludeIdentitiesStream *bool `default:"true" json:"include_identities_stream"`
+	// The Google domain of the identities.
+	Domain *string `json:"domain,omitempty"`
+}
+
+func (s SourceGoogleDriveUpdateReplicatePermissionsACL) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceGoogleDriveUpdateReplicatePermissionsACL) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceGoogleDriveUpdateReplicatePermissionsACL) GetDeliveryType() *SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryType {
+	return SourceGoogleDriveUpdateSchemasDeliveryMethodDeliveryTypeUsePermissionsTransfer.ToPointer()
+}
+
+func (o *SourceGoogleDriveUpdateReplicatePermissionsACL) GetIncludeIdentitiesStream() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeIdentitiesStream
+}
+
+func (o *SourceGoogleDriveUpdateReplicatePermissionsACL) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
 type SourceGoogleDriveUpdateSchemasDeliveryType string
 
 const (
@@ -1130,13 +1191,15 @@ func (o *SourceGoogleDriveUpdateReplicateRecords) GetDeliveryType() *SourceGoogl
 type SourceGoogleDriveUpdateDeliveryMethodType string
 
 const (
-	SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateReplicateRecords SourceGoogleDriveUpdateDeliveryMethodType = "source-google-drive-update_Replicate Records"
-	SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateCopyRawFiles     SourceGoogleDriveUpdateDeliveryMethodType = "source-google-drive-update_Copy Raw Files"
+	SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateReplicateRecords        SourceGoogleDriveUpdateDeliveryMethodType = "source-google-drive-update_Replicate Records"
+	SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateCopyRawFiles            SourceGoogleDriveUpdateDeliveryMethodType = "source-google-drive-update_Copy Raw Files"
+	SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateReplicatePermissionsACL SourceGoogleDriveUpdateDeliveryMethodType = "source-google-drive-update_Replicate Permissions ACL"
 )
 
 type SourceGoogleDriveUpdateDeliveryMethod struct {
-	SourceGoogleDriveUpdateReplicateRecords *SourceGoogleDriveUpdateReplicateRecords `queryParam:"inline"`
-	SourceGoogleDriveUpdateCopyRawFiles     *SourceGoogleDriveUpdateCopyRawFiles     `queryParam:"inline"`
+	SourceGoogleDriveUpdateReplicateRecords        *SourceGoogleDriveUpdateReplicateRecords        `queryParam:"inline"`
+	SourceGoogleDriveUpdateCopyRawFiles            *SourceGoogleDriveUpdateCopyRawFiles            `queryParam:"inline"`
+	SourceGoogleDriveUpdateReplicatePermissionsACL *SourceGoogleDriveUpdateReplicatePermissionsACL `queryParam:"inline"`
 
 	Type SourceGoogleDriveUpdateDeliveryMethodType
 }
@@ -1159,6 +1222,15 @@ func CreateSourceGoogleDriveUpdateDeliveryMethodSourceGoogleDriveUpdateCopyRawFi
 	}
 }
 
+func CreateSourceGoogleDriveUpdateDeliveryMethodSourceGoogleDriveUpdateReplicatePermissionsACL(sourceGoogleDriveUpdateReplicatePermissionsACL SourceGoogleDriveUpdateReplicatePermissionsACL) SourceGoogleDriveUpdateDeliveryMethod {
+	typ := SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateReplicatePermissionsACL
+
+	return SourceGoogleDriveUpdateDeliveryMethod{
+		SourceGoogleDriveUpdateReplicatePermissionsACL: &sourceGoogleDriveUpdateReplicatePermissionsACL,
+		Type: typ,
+	}
+}
+
 func (u *SourceGoogleDriveUpdateDeliveryMethod) UnmarshalJSON(data []byte) error {
 
 	var sourceGoogleDriveUpdateReplicateRecords SourceGoogleDriveUpdateReplicateRecords = SourceGoogleDriveUpdateReplicateRecords{}
@@ -1175,6 +1247,13 @@ func (u *SourceGoogleDriveUpdateDeliveryMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	var sourceGoogleDriveUpdateReplicatePermissionsACL SourceGoogleDriveUpdateReplicatePermissionsACL = SourceGoogleDriveUpdateReplicatePermissionsACL{}
+	if err := utils.UnmarshalJSON(data, &sourceGoogleDriveUpdateReplicatePermissionsACL, "", true, true); err == nil {
+		u.SourceGoogleDriveUpdateReplicatePermissionsACL = &sourceGoogleDriveUpdateReplicatePermissionsACL
+		u.Type = SourceGoogleDriveUpdateDeliveryMethodTypeSourceGoogleDriveUpdateReplicatePermissionsACL
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleDriveUpdateDeliveryMethod", string(data))
 }
 
@@ -1185,6 +1264,10 @@ func (u SourceGoogleDriveUpdateDeliveryMethod) MarshalJSON() ([]byte, error) {
 
 	if u.SourceGoogleDriveUpdateCopyRawFiles != nil {
 		return utils.MarshalJSON(u.SourceGoogleDriveUpdateCopyRawFiles, "", true)
+	}
+
+	if u.SourceGoogleDriveUpdateReplicatePermissionsACL != nil {
+		return utils.MarshalJSON(u.SourceGoogleDriveUpdateReplicatePermissionsACL, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceGoogleDriveUpdateDeliveryMethod: all fields are null")

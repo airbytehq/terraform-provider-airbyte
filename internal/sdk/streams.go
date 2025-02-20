@@ -27,13 +27,6 @@ func newStreams(sdkConfig sdkConfiguration) *Streams {
 
 // GetStreamProperties - Get stream properties
 func (s *Streams) GetStreamProperties(ctx context.Context, request operations.GetStreamPropertiesRequest, opts ...operations.Option) (*operations.GetStreamPropertiesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getStreamProperties",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -54,6 +47,14 @@ func (s *Streams) GetStreamProperties(ctx context.Context, request operations.Ge
 	opURL, err := url.JoinPath(baseURL, "/streams")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getStreamProperties",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

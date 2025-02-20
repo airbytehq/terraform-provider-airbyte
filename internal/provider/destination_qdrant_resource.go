@@ -152,7 +152,7 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -166,7 +166,7 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 									"model_name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Default:     stringdefault.StaticString(`text-embedding-ada-002`),
 										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},
@@ -222,7 +222,7 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 							"distance_metric": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("cos"),
+								Default:     stringdefault.StaticString(`cos`),
 								Description: `The Distance metric used to measure similarities among vectors. This field is only used if the collection defined in the does not exist yet and is created automatically by the connector. Default: "cos"; must be one of ["dot", "cos", "euc"]`,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
@@ -241,7 +241,7 @@ func (r *DestinationQdrantResource) Schema(ctx context.Context, req resource.Sch
 							"text_field": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("text"),
+								Default:     stringdefault.StaticString(`text`),
 								Description: `The field in the payload that contains the embedded text. Default: "text"`,
 							},
 							"url": schema.StringAttribute{

@@ -70,7 +70,7 @@ func (r *SourceCloseComResource) Schema(ctx context.Context, req resource.Schema
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2021-01-01"),
+						Default:     stringdefault.StaticString(`2021-01-01`),
 						Description: `The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD. Default: "2021-01-01"`,
 						Validators: []validator.String{
 							validators.IsValidDate(),

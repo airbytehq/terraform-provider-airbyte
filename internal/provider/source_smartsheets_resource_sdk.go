@@ -71,10 +71,17 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsCreateRequest(
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, shared.Validenums(metadataFieldsItem.ValueString()))
 	}
+	isReport := new(bool)
+	if !r.Configuration.IsReport.IsUnknown() && !r.Configuration.IsReport.IsNull() {
+		*isReport = r.Configuration.IsReport.ValueBool()
+	} else {
+		isReport = nil
+	}
 	configuration := shared.SourceSmartsheets{
 		Credentials:    credentials,
 		SpreadsheetID:  spreadsheetID,
 		MetadataFields: metadataFields,
+		IsReport:       isReport,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -160,10 +167,17 @@ func (r *SourceSmartsheetsResourceModel) ToSharedSourceSmartsheetsPutRequest() *
 	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
 		metadataFields = append(metadataFields, shared.SourceSmartsheetsUpdateValidenums(metadataFieldsItem.ValueString()))
 	}
+	isReport := new(bool)
+	if !r.Configuration.IsReport.IsUnknown() && !r.Configuration.IsReport.IsNull() {
+		*isReport = r.Configuration.IsReport.ValueBool()
+	} else {
+		isReport = nil
+	}
 	configuration := shared.SourceSmartsheetsUpdate{
 		Credentials:    credentials,
 		SpreadsheetID:  spreadsheetID,
 		MetadataFields: metadataFields,
+		IsReport:       isReport,
 	}
 	out := shared.SourceSmartsheetsPutRequest{
 		Name:          name,

@@ -359,6 +359,8 @@ type SourceAmazonSellerPartnerUpdate struct {
 	Region *SourceAmazonSellerPartnerUpdateAWSRegion `default:"US" json:"region"`
 	// Type of the Account you're going to authorize the Airbyte application by
 	AccountType *SourceAmazonSellerPartnerUpdateAWSSellerPartnerAccountType `default:"Seller" json:"account_type"`
+	// Your Amazon Application ID.
+	AppID *string `json:"app_id,omitempty"`
 	// Your Login with Amazon Client ID.
 	LwaAppID string `json:"lwa_app_id"`
 	// Your Login with Amazon Client Secret.
@@ -411,6 +413,13 @@ func (o *SourceAmazonSellerPartnerUpdate) GetAccountType() *SourceAmazonSellerPa
 		return nil
 	}
 	return o.AccountType
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
 }
 
 func (o *SourceAmazonSellerPartnerUpdate) GetLwaAppID() string {

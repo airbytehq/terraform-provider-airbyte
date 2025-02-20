@@ -71,4 +71,12 @@ resource "airbyte_connection" "my_connection" {
   }
   source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
   status    = "active"
+  tags = [
+    {
+      color        = "...my_color..."
+      name         = "...my_name..."
+      tag_id       = "bf69ef26-2003-4c6e-9dfa-5867d7dba86a"
+      workspace_id = "a46bf3e2-e63d-4e32-8959-37721daec43c"
+    }
+  ]
 }

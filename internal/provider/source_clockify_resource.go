@@ -68,7 +68,7 @@ func (r *SourceClockifyResource) Schema(ctx context.Context, req resource.Schema
 					"api_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://api.clockify.me"),
+						Default:     stringdefault.StaticString(`https://api.clockify.me`),
 						Description: `The URL for the Clockify API. This should only need to be modified if connecting to an enterprise version of Clockify. Default: "https://api.clockify.me"`,
 					},
 					"workspace_id": schema.StringAttribute{

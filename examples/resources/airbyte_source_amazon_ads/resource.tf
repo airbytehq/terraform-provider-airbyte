@@ -11,13 +11,7 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
     ]
     refresh_token = "...my_refresh_token..."
     region        = "FE"
-    report_record_types = [
-      "asins"
-    ]
-    start_date = "2022-10-10"
-    state_filter = [
-      "archived"
-    ]
+    start_date    = "2022-10-10"
   }
   definition_id = "af6454d1-eef9-48c7-951f-d90f8c67b58a"
   name          = "...my_name..."

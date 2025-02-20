@@ -166,6 +166,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 	} else {
 		dropCascade = nil
 	}
+	unconstrainedNumber := new(bool)
+	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
+		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
+	} else {
+		unconstrainedNumber = nil
+	}
 	var tunnelMethod *shared.DestinationPostgresSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationPostgresNoTunnel *shared.DestinationPostgresNoTunnel
@@ -237,19 +243,20 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 		}
 	}
 	configuration := shared.DestinationPostgres{
-		Host:              host,
-		Port:              port,
-		Database:          database,
-		Schema:            schema,
-		Username:          username,
-		Password:          password,
-		Ssl:               ssl,
-		SslMode:           sslMode,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
-		DisableTypeDedupe: disableTypeDedupe,
-		DropCascade:       dropCascade,
-		TunnelMethod:      tunnelMethod,
+		Host:                host,
+		Port:                port,
+		Database:            database,
+		Schema:              schema,
+		Username:            username,
+		Password:            password,
+		Ssl:                 ssl,
+		SslMode:             sslMode,
+		JdbcURLParams:       jdbcURLParams,
+		RawDataSchema:       rawDataSchema,
+		DisableTypeDedupe:   disableTypeDedupe,
+		DropCascade:         dropCascade,
+		UnconstrainedNumber: unconstrainedNumber,
+		TunnelMethod:        tunnelMethod,
 	}
 	out := shared.DestinationPostgresCreateRequest{
 		Name:          name,
@@ -424,6 +431,12 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 	} else {
 		dropCascade = nil
 	}
+	unconstrainedNumber := new(bool)
+	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
+		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
+	} else {
+		unconstrainedNumber = nil
+	}
 	var tunnelMethod *shared.DestinationPostgresUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationPostgresUpdateNoTunnel *shared.DestinationPostgresUpdateNoTunnel
@@ -495,19 +508,20 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 		}
 	}
 	configuration := shared.DestinationPostgresUpdate{
-		Host:              host,
-		Port:              port,
-		Database:          database,
-		Schema:            schema,
-		Username:          username,
-		Password:          password,
-		Ssl:               ssl,
-		SslMode:           sslMode,
-		JdbcURLParams:     jdbcURLParams,
-		RawDataSchema:     rawDataSchema,
-		DisableTypeDedupe: disableTypeDedupe,
-		DropCascade:       dropCascade,
-		TunnelMethod:      tunnelMethod,
+		Host:                host,
+		Port:                port,
+		Database:            database,
+		Schema:              schema,
+		Username:            username,
+		Password:            password,
+		Ssl:                 ssl,
+		SslMode:             sslMode,
+		JdbcURLParams:       jdbcURLParams,
+		RawDataSchema:       rawDataSchema,
+		DisableTypeDedupe:   disableTypeDedupe,
+		DropCascade:         dropCascade,
+		UnconstrainedNumber: unconstrainedNumber,
+		TunnelMethod:        tunnelMethod,
 	}
 	out := shared.DestinationPostgresPutRequest{
 		Name:          name,

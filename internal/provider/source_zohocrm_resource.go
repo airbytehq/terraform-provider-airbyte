@@ -90,7 +90,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 					"edition": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Free"),
+						Default:     stringdefault.StaticString(`Free`),
 						Description: `Choose your Edition of Zoho CRM to determine API Concurrency Limits. Default: "Free"; must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

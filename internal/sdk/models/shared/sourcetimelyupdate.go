@@ -2,13 +2,29 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
+)
+
 type SourceTimelyUpdate struct {
-	// Timely account id
+	// The Account ID for your Timely account
 	AccountID string `json:"account_id"`
-	// Timely bearer token
+	// Earliest date from which you want to pull data from.
+	StartDate time.Time `json:"start_date"`
+	// The Bearer Token for your Timely account
 	BearerToken string `json:"bearer_token"`
-	// start date
-	StartDate string `json:"start_date"`
+}
+
+func (s SourceTimelyUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceTimelyUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceTimelyUpdate) GetAccountID() string {
@@ -18,16 +34,16 @@ func (o *SourceTimelyUpdate) GetAccountID() string {
 	return o.AccountID
 }
 
+func (o *SourceTimelyUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
+}
+
 func (o *SourceTimelyUpdate) GetBearerToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.BearerToken
-}
-
-func (o *SourceTimelyUpdate) GetStartDate() string {
-	if o == nil {
-		return ""
-	}
-	return o.StartDate
 }

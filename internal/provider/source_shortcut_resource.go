@@ -69,7 +69,7 @@ func (r *SourceShortcutResource) Schema(ctx context.Context, req resource.Schema
 					"query": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("title:Our first Epic"),
+						Default:     stringdefault.StaticString(`title:Our first Epic`),
 						Description: `Query for searching as defined in ` + "`" + `https://help.shortcut.com/hc/en-us/articles/360000046646-Searching-in-Shortcut-Using-Search-Operators` + "`" + `. Default: "title:Our first Epic"`,
 					},
 					"start_date": schema.StringAttribute{

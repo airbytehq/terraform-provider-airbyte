@@ -91,7 +91,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("public"),
+						Default:     stringdefault.StaticString(`public`),
 						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"`,
 					},
 					"ssl_method": schema.SingleNestedAttribute{
@@ -110,7 +110,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 									"name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("encrypted_trust_server_certificate"),
+										Default:     stringdefault.StaticString(`encrypted_trust_server_certificate`),
 										Description: `Default: "encrypted_trust_server_certificate"; must be "encrypted_trust_server_certificate"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -144,7 +144,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 									"name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("encrypted_verify_certificate"),
+										Default:     stringdefault.StaticString(`encrypted_verify_certificate`),
 										Description: `Default: "encrypted_verify_certificate"; must be "encrypted_verify_certificate"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -183,7 +183,7 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 									"name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("unencrypted"),
+										Default:     stringdefault.StaticString(`unencrypted`),
 										Description: `Default: "unencrypted"; must be "unencrypted"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

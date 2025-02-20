@@ -123,7 +123,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								"conversion_report_time": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("TIME_OF_AD_ACTION"),
+									Default:     stringdefault.StaticString(`TIME_OF_AD_ACTION`),
 									Description: `The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event.. Default: "TIME_OF_AD_ACTION"; must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -149,7 +149,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								"granularity": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("TOTAL"),
+									Default:     stringdefault.StaticString(`TOTAL`),
 									Description: `Chosen granularity for API. Default: "TOTAL"; must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -164,7 +164,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								"level": schema.StringAttribute{
 									Computed:    true,
 									Optional:    true,
-									Default:     stringdefault.StaticString("ADVERTISER"),
+									Default:     stringdefault.StaticString(`ADVERTISER`),
 									Description: `Chosen level for API. Default: "ADVERTISER"; must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(

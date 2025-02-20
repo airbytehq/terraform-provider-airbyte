@@ -27,13 +27,6 @@ func newDestinations(sdkConfig sdkConfiguration) *Destinations {
 
 // ListDestinations - List destinations
 func (s *Destinations) ListDestinations(ctx context.Context, request operations.ListDestinationsRequest, opts ...operations.Option) (*operations.ListDestinationsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listDestinations",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -54,6 +47,14 @@ func (s *Destinations) ListDestinations(ctx context.Context, request operations.
 	opURL, err := url.JoinPath(baseURL, "/destinations")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listDestinations",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -161,13 +162,6 @@ func (s *Destinations) ListDestinations(ctx context.Context, request operations.
 // CreateDestination - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the source.
 func (s *Destinations) CreateDestination(ctx context.Context, request *shared.DestinationCreateRequest, opts ...operations.Option) (*operations.CreateDestinationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestination",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -190,6 +184,13 @@ func (s *Destinations) CreateDestination(ctx context.Context, request *shared.De
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestination",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -300,13 +301,6 @@ func (s *Destinations) CreateDestination(ctx context.Context, request *shared.De
 
 // GetDestination - Get Destination details
 func (s *Destinations) GetDestination(ctx context.Context, request operations.GetDestinationRequest, opts ...operations.Option) (*operations.GetDestinationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestination",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -327,6 +321,14 @@ func (s *Destinations) GetDestination(ctx context.Context, request operations.Ge
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestination",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -429,13 +431,6 @@ func (s *Destinations) GetDestination(ctx context.Context, request operations.Ge
 
 // DeleteDestination - Delete a Destination
 func (s *Destinations) DeleteDestination(ctx context.Context, request operations.DeleteDestinationRequest, opts ...operations.Option) (*operations.DeleteDestinationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestination",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -456,6 +451,14 @@ func (s *Destinations) DeleteDestination(ctx context.Context, request operations
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestination",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -538,13 +541,6 @@ func (s *Destinations) DeleteDestination(ctx context.Context, request operations
 
 // PatchDestination - Update a Destination
 func (s *Destinations) PatchDestination(ctx context.Context, request operations.PatchDestinationRequest, opts ...operations.Option) (*operations.PatchDestinationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "patchDestination",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -567,6 +563,13 @@ func (s *Destinations) PatchDestination(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "patchDestination",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPatchRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -675,13 +678,6 @@ func (s *Destinations) PatchDestination(ctx context.Context, request operations.
 
 // PutDestination - Update a Destination and fully overwrite it
 func (s *Destinations) PutDestination(ctx context.Context, request operations.PutDestinationRequest, opts ...operations.Option) (*operations.PutDestinationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestination",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -704,6 +700,13 @@ func (s *Destinations) PutDestination(ctx context.Context, request operations.Pu
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestination",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -813,13 +816,6 @@ func (s *Destinations) PutDestination(ctx context.Context, request operations.Pu
 // CreateDestinationAstra - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationAstra(ctx context.Context, request *shared.DestinationAstraCreateRequest, opts ...operations.Option) (*operations.CreateDestinationAstraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationAstra",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -842,6 +838,13 @@ func (s *Destinations) CreateDestinationAstra(ctx context.Context, request *shar
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationAstra",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -950,13 +953,6 @@ func (s *Destinations) CreateDestinationAstra(ctx context.Context, request *shar
 
 // GetDestinationAstra - Get Destination details
 func (s *Destinations) GetDestinationAstra(ctx context.Context, request operations.GetDestinationAstraRequest, opts ...operations.Option) (*operations.GetDestinationAstraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationAstra",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -977,6 +973,14 @@ func (s *Destinations) GetDestinationAstra(ctx context.Context, request operatio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationAstra",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1079,13 +1083,6 @@ func (s *Destinations) GetDestinationAstra(ctx context.Context, request operatio
 
 // PutDestinationAstra - Update a Destination fully
 func (s *Destinations) PutDestinationAstra(ctx context.Context, request operations.PutDestinationAstraRequest, opts ...operations.Option) (*operations.PutDestinationAstraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationAstra",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1108,6 +1105,13 @@ func (s *Destinations) PutDestinationAstra(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationAstra",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAstraPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1196,13 +1200,6 @@ func (s *Destinations) PutDestinationAstra(ctx context.Context, request operatio
 
 // DeleteDestinationAstra - Delete a Destination
 func (s *Destinations) DeleteDestinationAstra(ctx context.Context, request operations.DeleteDestinationAstraRequest, opts ...operations.Option) (*operations.DeleteDestinationAstraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationAstra",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1223,6 +1220,14 @@ func (s *Destinations) DeleteDestinationAstra(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationAstra",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1306,13 +1311,6 @@ func (s *Destinations) DeleteDestinationAstra(ctx context.Context, request opera
 // CreateDestinationAwsDatalake - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationAwsDatalake(ctx context.Context, request *shared.DestinationAwsDatalakeCreateRequest, opts ...operations.Option) (*operations.CreateDestinationAwsDatalakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1335,6 +1333,13 @@ func (s *Destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationAwsDatalake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1443,13 +1448,6 @@ func (s *Destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 
 // GetDestinationAwsDatalake - Get Destination details
 func (s *Destinations) GetDestinationAwsDatalake(ctx context.Context, request operations.GetDestinationAwsDatalakeRequest, opts ...operations.Option) (*operations.GetDestinationAwsDatalakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1470,6 +1468,14 @@ func (s *Destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationAwsDatalake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1572,13 +1578,6 @@ func (s *Destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 
 // PutDestinationAwsDatalake - Update a Destination fully
 func (s *Destinations) PutDestinationAwsDatalake(ctx context.Context, request operations.PutDestinationAwsDatalakeRequest, opts ...operations.Option) (*operations.PutDestinationAwsDatalakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1601,6 +1600,13 @@ func (s *Destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationAwsDatalake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAwsDatalakePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1689,13 +1695,6 @@ func (s *Destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 
 // DeleteDestinationAwsDatalake - Delete a Destination
 func (s *Destinations) DeleteDestinationAwsDatalake(ctx context.Context, request operations.DeleteDestinationAwsDatalakeRequest, opts ...operations.Option) (*operations.DeleteDestinationAwsDatalakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1716,6 +1715,14 @@ func (s *Destinations) DeleteDestinationAwsDatalake(ctx context.Context, request
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationAwsDatalake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1799,13 +1806,6 @@ func (s *Destinations) DeleteDestinationAwsDatalake(ctx context.Context, request
 // CreateDestinationAzureBlobStorage - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationAzureBlobStorage(ctx context.Context, request *shared.DestinationAzureBlobStorageCreateRequest, opts ...operations.Option) (*operations.CreateDestinationAzureBlobStorageResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1828,6 +1828,13 @@ func (s *Destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationAzureBlobStorage",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1936,13 +1943,6 @@ func (s *Destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 
 // GetDestinationAzureBlobStorage - Get Destination details
 func (s *Destinations) GetDestinationAzureBlobStorage(ctx context.Context, request operations.GetDestinationAzureBlobStorageRequest, opts ...operations.Option) (*operations.GetDestinationAzureBlobStorageResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -1963,6 +1963,14 @@ func (s *Destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationAzureBlobStorage",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -2065,13 +2073,6 @@ func (s *Destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 
 // PutDestinationAzureBlobStorage - Update a Destination fully
 func (s *Destinations) PutDestinationAzureBlobStorage(ctx context.Context, request operations.PutDestinationAzureBlobStorageRequest, opts ...operations.Option) (*operations.PutDestinationAzureBlobStorageResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2094,6 +2095,13 @@ func (s *Destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationAzureBlobStorage",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAzureBlobStoragePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -2182,13 +2190,6 @@ func (s *Destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 
 // DeleteDestinationAzureBlobStorage - Delete a Destination
 func (s *Destinations) DeleteDestinationAzureBlobStorage(ctx context.Context, request operations.DeleteDestinationAzureBlobStorageRequest, opts ...operations.Option) (*operations.DeleteDestinationAzureBlobStorageResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2209,6 +2210,14 @@ func (s *Destinations) DeleteDestinationAzureBlobStorage(ctx context.Context, re
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationAzureBlobStorage",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -2292,13 +2301,6 @@ func (s *Destinations) DeleteDestinationAzureBlobStorage(ctx context.Context, re
 // CreateDestinationBigquery - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationBigquery(ctx context.Context, request *shared.DestinationBigqueryCreateRequest, opts ...operations.Option) (*operations.CreateDestinationBigqueryResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationBigquery",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2321,6 +2323,13 @@ func (s *Destinations) CreateDestinationBigquery(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationBigquery",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -2429,13 +2438,6 @@ func (s *Destinations) CreateDestinationBigquery(ctx context.Context, request *s
 
 // GetDestinationBigquery - Get Destination details
 func (s *Destinations) GetDestinationBigquery(ctx context.Context, request operations.GetDestinationBigqueryRequest, opts ...operations.Option) (*operations.GetDestinationBigqueryResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationBigquery",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2456,6 +2458,14 @@ func (s *Destinations) GetDestinationBigquery(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationBigquery",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -2558,13 +2568,6 @@ func (s *Destinations) GetDestinationBigquery(ctx context.Context, request opera
 
 // PutDestinationBigquery - Update a Destination fully
 func (s *Destinations) PutDestinationBigquery(ctx context.Context, request operations.PutDestinationBigqueryRequest, opts ...operations.Option) (*operations.PutDestinationBigqueryResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationBigquery",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2587,6 +2590,13 @@ func (s *Destinations) PutDestinationBigquery(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationBigquery",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationBigqueryPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -2675,13 +2685,6 @@ func (s *Destinations) PutDestinationBigquery(ctx context.Context, request opera
 
 // DeleteDestinationBigquery - Delete a Destination
 func (s *Destinations) DeleteDestinationBigquery(ctx context.Context, request operations.DeleteDestinationBigqueryRequest, opts ...operations.Option) (*operations.DeleteDestinationBigqueryResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationBigquery",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2702,6 +2705,14 @@ func (s *Destinations) DeleteDestinationBigquery(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationBigquery",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -2785,13 +2796,6 @@ func (s *Destinations) DeleteDestinationBigquery(ctx context.Context, request op
 // CreateDestinationClickhouse - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationClickhouse(ctx context.Context, request *shared.DestinationClickhouseCreateRequest, opts ...operations.Option) (*operations.CreateDestinationClickhouseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationClickhouse",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2814,6 +2818,13 @@ func (s *Destinations) CreateDestinationClickhouse(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationClickhouse",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -2922,13 +2933,6 @@ func (s *Destinations) CreateDestinationClickhouse(ctx context.Context, request 
 
 // GetDestinationClickhouse - Get Destination details
 func (s *Destinations) GetDestinationClickhouse(ctx context.Context, request operations.GetDestinationClickhouseRequest, opts ...operations.Option) (*operations.GetDestinationClickhouseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationClickhouse",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -2949,6 +2953,14 @@ func (s *Destinations) GetDestinationClickhouse(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationClickhouse",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -3051,13 +3063,6 @@ func (s *Destinations) GetDestinationClickhouse(ctx context.Context, request ope
 
 // PutDestinationClickhouse - Update a Destination fully
 func (s *Destinations) PutDestinationClickhouse(ctx context.Context, request operations.PutDestinationClickhouseRequest, opts ...operations.Option) (*operations.PutDestinationClickhouseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationClickhouse",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3080,6 +3085,13 @@ func (s *Destinations) PutDestinationClickhouse(ctx context.Context, request ope
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationClickhouse",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationClickhousePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -3168,13 +3180,6 @@ func (s *Destinations) PutDestinationClickhouse(ctx context.Context, request ope
 
 // DeleteDestinationClickhouse - Delete a Destination
 func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request operations.DeleteDestinationClickhouseRequest, opts ...operations.Option) (*operations.DeleteDestinationClickhouseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationClickhouse",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3195,6 +3200,14 @@ func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationClickhouse",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -3278,13 +3291,6 @@ func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request 
 // CreateDestinationConvex - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *shared.DestinationConvexCreateRequest, opts ...operations.Option) (*operations.CreateDestinationConvexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationConvex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3307,6 +3313,13 @@ func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationConvex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -3415,13 +3428,6 @@ func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *sha
 
 // GetDestinationConvex - Get Destination details
 func (s *Destinations) GetDestinationConvex(ctx context.Context, request operations.GetDestinationConvexRequest, opts ...operations.Option) (*operations.GetDestinationConvexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationConvex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3442,6 +3448,14 @@ func (s *Destinations) GetDestinationConvex(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationConvex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -3544,13 +3558,6 @@ func (s *Destinations) GetDestinationConvex(ctx context.Context, request operati
 
 // PutDestinationConvex - Update a Destination fully
 func (s *Destinations) PutDestinationConvex(ctx context.Context, request operations.PutDestinationConvexRequest, opts ...operations.Option) (*operations.PutDestinationConvexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationConvex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3573,6 +3580,13 @@ func (s *Destinations) PutDestinationConvex(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationConvex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationConvexPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -3661,13 +3675,6 @@ func (s *Destinations) PutDestinationConvex(ctx context.Context, request operati
 
 // DeleteDestinationConvex - Delete a Destination
 func (s *Destinations) DeleteDestinationConvex(ctx context.Context, request operations.DeleteDestinationConvexRequest, opts ...operations.Option) (*operations.DeleteDestinationConvexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationConvex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3688,6 +3695,14 @@ func (s *Destinations) DeleteDestinationConvex(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationConvex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -3771,13 +3786,6 @@ func (s *Destinations) DeleteDestinationConvex(ctx context.Context, request oper
 // CreateDestinationDatabricks - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationDatabricks(ctx context.Context, request *shared.DestinationDatabricksCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDatabricksResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationDatabricks",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3800,6 +3808,13 @@ func (s *Destinations) CreateDestinationDatabricks(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationDatabricks",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -3908,13 +3923,6 @@ func (s *Destinations) CreateDestinationDatabricks(ctx context.Context, request 
 
 // GetDestinationDatabricks - Get Destination details
 func (s *Destinations) GetDestinationDatabricks(ctx context.Context, request operations.GetDestinationDatabricksRequest, opts ...operations.Option) (*operations.GetDestinationDatabricksResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationDatabricks",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -3935,6 +3943,14 @@ func (s *Destinations) GetDestinationDatabricks(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationDatabricks",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -4037,13 +4053,6 @@ func (s *Destinations) GetDestinationDatabricks(ctx context.Context, request ope
 
 // PutDestinationDatabricks - Update a Destination fully
 func (s *Destinations) PutDestinationDatabricks(ctx context.Context, request operations.PutDestinationDatabricksRequest, opts ...operations.Option) (*operations.PutDestinationDatabricksResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationDatabricks",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4066,6 +4075,13 @@ func (s *Destinations) PutDestinationDatabricks(ctx context.Context, request ope
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationDatabricks",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDatabricksPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -4154,13 +4170,6 @@ func (s *Destinations) PutDestinationDatabricks(ctx context.Context, request ope
 
 // DeleteDestinationDatabricks - Delete a Destination
 func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request operations.DeleteDestinationDatabricksRequest, opts ...operations.Option) (*operations.DeleteDestinationDatabricksResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationDatabricks",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4181,6 +4190,14 @@ func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationDatabricks",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -4264,13 +4281,6 @@ func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request 
 // CreateDestinationDevNull - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *shared.DestinationDevNullCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDevNullResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationDevNull",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4293,6 +4303,13 @@ func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationDevNull",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -4401,13 +4418,6 @@ func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *sh
 
 // GetDestinationDevNull - Get Destination details
 func (s *Destinations) GetDestinationDevNull(ctx context.Context, request operations.GetDestinationDevNullRequest, opts ...operations.Option) (*operations.GetDestinationDevNullResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationDevNull",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4428,6 +4438,14 @@ func (s *Destinations) GetDestinationDevNull(ctx context.Context, request operat
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationDevNull",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -4530,13 +4548,6 @@ func (s *Destinations) GetDestinationDevNull(ctx context.Context, request operat
 
 // PutDestinationDevNull - Update a Destination fully
 func (s *Destinations) PutDestinationDevNull(ctx context.Context, request operations.PutDestinationDevNullRequest, opts ...operations.Option) (*operations.PutDestinationDevNullResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationDevNull",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4559,6 +4570,13 @@ func (s *Destinations) PutDestinationDevNull(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationDevNull",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDevNullPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -4647,13 +4665,6 @@ func (s *Destinations) PutDestinationDevNull(ctx context.Context, request operat
 
 // DeleteDestinationDevNull - Delete a Destination
 func (s *Destinations) DeleteDestinationDevNull(ctx context.Context, request operations.DeleteDestinationDevNullRequest, opts ...operations.Option) (*operations.DeleteDestinationDevNullResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationDevNull",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4674,6 +4685,14 @@ func (s *Destinations) DeleteDestinationDevNull(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationDevNull",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -4757,13 +4776,6 @@ func (s *Destinations) DeleteDestinationDevNull(ctx context.Context, request ope
 // CreateDestinationDuckdb - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationDuckdb(ctx context.Context, request *shared.DestinationDuckdbCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDuckdbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationDuckdb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4786,6 +4798,13 @@ func (s *Destinations) CreateDestinationDuckdb(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationDuckdb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -4894,13 +4913,6 @@ func (s *Destinations) CreateDestinationDuckdb(ctx context.Context, request *sha
 
 // GetDestinationDuckdb - Get Destination details
 func (s *Destinations) GetDestinationDuckdb(ctx context.Context, request operations.GetDestinationDuckdbRequest, opts ...operations.Option) (*operations.GetDestinationDuckdbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationDuckdb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -4921,6 +4933,14 @@ func (s *Destinations) GetDestinationDuckdb(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationDuckdb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -5023,13 +5043,6 @@ func (s *Destinations) GetDestinationDuckdb(ctx context.Context, request operati
 
 // PutDestinationDuckdb - Update a Destination fully
 func (s *Destinations) PutDestinationDuckdb(ctx context.Context, request operations.PutDestinationDuckdbRequest, opts ...operations.Option) (*operations.PutDestinationDuckdbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationDuckdb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5052,6 +5065,13 @@ func (s *Destinations) PutDestinationDuckdb(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationDuckdb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDuckdbPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -5140,13 +5160,6 @@ func (s *Destinations) PutDestinationDuckdb(ctx context.Context, request operati
 
 // DeleteDestinationDuckdb - Delete a Destination
 func (s *Destinations) DeleteDestinationDuckdb(ctx context.Context, request operations.DeleteDestinationDuckdbRequest, opts ...operations.Option) (*operations.DeleteDestinationDuckdbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationDuckdb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5167,6 +5180,14 @@ func (s *Destinations) DeleteDestinationDuckdb(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationDuckdb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -5250,13 +5271,6 @@ func (s *Destinations) DeleteDestinationDuckdb(ctx context.Context, request oper
 // CreateDestinationDynamodb - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationDynamodb(ctx context.Context, request *shared.DestinationDynamodbCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDynamodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationDynamodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5279,6 +5293,13 @@ func (s *Destinations) CreateDestinationDynamodb(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationDynamodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -5387,13 +5408,6 @@ func (s *Destinations) CreateDestinationDynamodb(ctx context.Context, request *s
 
 // GetDestinationDynamodb - Get Destination details
 func (s *Destinations) GetDestinationDynamodb(ctx context.Context, request operations.GetDestinationDynamodbRequest, opts ...operations.Option) (*operations.GetDestinationDynamodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationDynamodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5414,6 +5428,14 @@ func (s *Destinations) GetDestinationDynamodb(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationDynamodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -5516,13 +5538,6 @@ func (s *Destinations) GetDestinationDynamodb(ctx context.Context, request opera
 
 // PutDestinationDynamodb - Update a Destination fully
 func (s *Destinations) PutDestinationDynamodb(ctx context.Context, request operations.PutDestinationDynamodbRequest, opts ...operations.Option) (*operations.PutDestinationDynamodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationDynamodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5545,6 +5560,13 @@ func (s *Destinations) PutDestinationDynamodb(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationDynamodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDynamodbPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -5633,13 +5655,6 @@ func (s *Destinations) PutDestinationDynamodb(ctx context.Context, request opera
 
 // DeleteDestinationDynamodb - Delete a Destination
 func (s *Destinations) DeleteDestinationDynamodb(ctx context.Context, request operations.DeleteDestinationDynamodbRequest, opts ...operations.Option) (*operations.DeleteDestinationDynamodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationDynamodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5660,6 +5675,14 @@ func (s *Destinations) DeleteDestinationDynamodb(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationDynamodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -5743,13 +5766,6 @@ func (s *Destinations) DeleteDestinationDynamodb(ctx context.Context, request op
 // CreateDestinationElasticsearch - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationElasticsearch(ctx context.Context, request *shared.DestinationElasticsearchCreateRequest, opts ...operations.Option) (*operations.CreateDestinationElasticsearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5772,6 +5788,13 @@ func (s *Destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationElasticsearch",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -5880,13 +5903,6 @@ func (s *Destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 
 // GetDestinationElasticsearch - Get Destination details
 func (s *Destinations) GetDestinationElasticsearch(ctx context.Context, request operations.GetDestinationElasticsearchRequest, opts ...operations.Option) (*operations.GetDestinationElasticsearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -5907,6 +5923,14 @@ func (s *Destinations) GetDestinationElasticsearch(ctx context.Context, request 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationElasticsearch",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -6009,13 +6033,6 @@ func (s *Destinations) GetDestinationElasticsearch(ctx context.Context, request 
 
 // PutDestinationElasticsearch - Update a Destination fully
 func (s *Destinations) PutDestinationElasticsearch(ctx context.Context, request operations.PutDestinationElasticsearchRequest, opts ...operations.Option) (*operations.PutDestinationElasticsearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6038,6 +6055,13 @@ func (s *Destinations) PutDestinationElasticsearch(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationElasticsearch",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationElasticsearchPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -6126,13 +6150,6 @@ func (s *Destinations) PutDestinationElasticsearch(ctx context.Context, request 
 
 // DeleteDestinationElasticsearch - Delete a Destination
 func (s *Destinations) DeleteDestinationElasticsearch(ctx context.Context, request operations.DeleteDestinationElasticsearchRequest, opts ...operations.Option) (*operations.DeleteDestinationElasticsearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6153,6 +6170,14 @@ func (s *Destinations) DeleteDestinationElasticsearch(ctx context.Context, reque
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationElasticsearch",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -6236,13 +6261,6 @@ func (s *Destinations) DeleteDestinationElasticsearch(ctx context.Context, reque
 // CreateDestinationFirebolt - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationFirebolt(ctx context.Context, request *shared.DestinationFireboltCreateRequest, opts ...operations.Option) (*operations.CreateDestinationFireboltResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationFirebolt",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6265,6 +6283,13 @@ func (s *Destinations) CreateDestinationFirebolt(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -6373,13 +6398,6 @@ func (s *Destinations) CreateDestinationFirebolt(ctx context.Context, request *s
 
 // GetDestinationFirebolt - Get Destination details
 func (s *Destinations) GetDestinationFirebolt(ctx context.Context, request operations.GetDestinationFireboltRequest, opts ...operations.Option) (*operations.GetDestinationFireboltResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationFirebolt",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6400,6 +6418,14 @@ func (s *Destinations) GetDestinationFirebolt(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -6502,13 +6528,6 @@ func (s *Destinations) GetDestinationFirebolt(ctx context.Context, request opera
 
 // PutDestinationFirebolt - Update a Destination fully
 func (s *Destinations) PutDestinationFirebolt(ctx context.Context, request operations.PutDestinationFireboltRequest, opts ...operations.Option) (*operations.PutDestinationFireboltResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationFirebolt",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6531,6 +6550,13 @@ func (s *Destinations) PutDestinationFirebolt(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationFireboltPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -6619,13 +6645,6 @@ func (s *Destinations) PutDestinationFirebolt(ctx context.Context, request opera
 
 // DeleteDestinationFirebolt - Delete a Destination
 func (s *Destinations) DeleteDestinationFirebolt(ctx context.Context, request operations.DeleteDestinationFireboltRequest, opts ...operations.Option) (*operations.DeleteDestinationFireboltResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationFirebolt",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6646,6 +6665,14 @@ func (s *Destinations) DeleteDestinationFirebolt(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationFirebolt",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -6729,13 +6756,6 @@ func (s *Destinations) DeleteDestinationFirebolt(ctx context.Context, request op
 // CreateDestinationFirestore - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationFirestore(ctx context.Context, request *shared.DestinationFirestoreCreateRequest, opts ...operations.Option) (*operations.CreateDestinationFirestoreResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationFirestore",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6758,6 +6778,13 @@ func (s *Destinations) CreateDestinationFirestore(ctx context.Context, request *
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationFirestore",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -6866,13 +6893,6 @@ func (s *Destinations) CreateDestinationFirestore(ctx context.Context, request *
 
 // GetDestinationFirestore - Get Destination details
 func (s *Destinations) GetDestinationFirestore(ctx context.Context, request operations.GetDestinationFirestoreRequest, opts ...operations.Option) (*operations.GetDestinationFirestoreResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationFirestore",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -6893,6 +6913,14 @@ func (s *Destinations) GetDestinationFirestore(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationFirestore",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -6995,13 +7023,6 @@ func (s *Destinations) GetDestinationFirestore(ctx context.Context, request oper
 
 // PutDestinationFirestore - Update a Destination fully
 func (s *Destinations) PutDestinationFirestore(ctx context.Context, request operations.PutDestinationFirestoreRequest, opts ...operations.Option) (*operations.PutDestinationFirestoreResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationFirestore",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7024,6 +7045,13 @@ func (s *Destinations) PutDestinationFirestore(ctx context.Context, request oper
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationFirestore",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationFirestorePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -7112,13 +7140,6 @@ func (s *Destinations) PutDestinationFirestore(ctx context.Context, request oper
 
 // DeleteDestinationFirestore - Delete a Destination
 func (s *Destinations) DeleteDestinationFirestore(ctx context.Context, request operations.DeleteDestinationFirestoreRequest, opts ...operations.Option) (*operations.DeleteDestinationFirestoreResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationFirestore",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7139,6 +7160,14 @@ func (s *Destinations) DeleteDestinationFirestore(ctx context.Context, request o
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationFirestore",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -7222,13 +7251,6 @@ func (s *Destinations) DeleteDestinationFirestore(ctx context.Context, request o
 // CreateDestinationGcs - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationGcs(ctx context.Context, request *shared.DestinationGcsCreateRequest, opts ...operations.Option) (*operations.CreateDestinationGcsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationGcs",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7251,6 +7273,13 @@ func (s *Destinations) CreateDestinationGcs(ctx context.Context, request *shared
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationGcs",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -7359,13 +7388,6 @@ func (s *Destinations) CreateDestinationGcs(ctx context.Context, request *shared
 
 // GetDestinationGcs - Get Destination details
 func (s *Destinations) GetDestinationGcs(ctx context.Context, request operations.GetDestinationGcsRequest, opts ...operations.Option) (*operations.GetDestinationGcsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationGcs",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7386,6 +7408,14 @@ func (s *Destinations) GetDestinationGcs(ctx context.Context, request operations
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationGcs",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -7488,13 +7518,6 @@ func (s *Destinations) GetDestinationGcs(ctx context.Context, request operations
 
 // PutDestinationGcs - Update a Destination fully
 func (s *Destinations) PutDestinationGcs(ctx context.Context, request operations.PutDestinationGcsRequest, opts ...operations.Option) (*operations.PutDestinationGcsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationGcs",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7517,6 +7540,13 @@ func (s *Destinations) PutDestinationGcs(ctx context.Context, request operations
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationGcs",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationGcsPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -7605,13 +7635,6 @@ func (s *Destinations) PutDestinationGcs(ctx context.Context, request operations
 
 // DeleteDestinationGcs - Delete a Destination
 func (s *Destinations) DeleteDestinationGcs(ctx context.Context, request operations.DeleteDestinationGcsRequest, opts ...operations.Option) (*operations.DeleteDestinationGcsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationGcs",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7632,6 +7655,14 @@ func (s *Destinations) DeleteDestinationGcs(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationGcs",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -7715,13 +7746,6 @@ func (s *Destinations) DeleteDestinationGcs(ctx context.Context, request operati
 // CreateDestinationGoogleSheets - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationGoogleSheets(ctx context.Context, request *shared.DestinationGoogleSheetsCreateRequest, opts ...operations.Option) (*operations.CreateDestinationGoogleSheetsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7744,6 +7768,13 @@ func (s *Destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationGoogleSheets",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -7852,13 +7883,6 @@ func (s *Destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 
 // GetDestinationGoogleSheets - Get Destination details
 func (s *Destinations) GetDestinationGoogleSheets(ctx context.Context, request operations.GetDestinationGoogleSheetsRequest, opts ...operations.Option) (*operations.GetDestinationGoogleSheetsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -7879,6 +7903,14 @@ func (s *Destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationGoogleSheets",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -7981,13 +8013,6 @@ func (s *Destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 
 // PutDestinationGoogleSheets - Update a Destination fully
 func (s *Destinations) PutDestinationGoogleSheets(ctx context.Context, request operations.PutDestinationGoogleSheetsRequest, opts ...operations.Option) (*operations.PutDestinationGoogleSheetsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8010,6 +8035,13 @@ func (s *Destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationGoogleSheets",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationGoogleSheetsPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -8098,13 +8130,6 @@ func (s *Destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 
 // DeleteDestinationGoogleSheets - Delete a Destination
 func (s *Destinations) DeleteDestinationGoogleSheets(ctx context.Context, request operations.DeleteDestinationGoogleSheetsRequest, opts ...operations.Option) (*operations.DeleteDestinationGoogleSheetsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8125,6 +8150,14 @@ func (s *Destinations) DeleteDestinationGoogleSheets(ctx context.Context, reques
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationGoogleSheets",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -8208,13 +8241,6 @@ func (s *Destinations) DeleteDestinationGoogleSheets(ctx context.Context, reques
 // CreateDestinationIceberg - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationIceberg(ctx context.Context, request *shared.DestinationIcebergCreateRequest, opts ...operations.Option) (*operations.CreateDestinationIcebergResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationIceberg",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8237,6 +8263,13 @@ func (s *Destinations) CreateDestinationIceberg(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationIceberg",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -8345,13 +8378,6 @@ func (s *Destinations) CreateDestinationIceberg(ctx context.Context, request *sh
 
 // GetDestinationIceberg - Get Destination details
 func (s *Destinations) GetDestinationIceberg(ctx context.Context, request operations.GetDestinationIcebergRequest, opts ...operations.Option) (*operations.GetDestinationIcebergResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationIceberg",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8372,6 +8398,14 @@ func (s *Destinations) GetDestinationIceberg(ctx context.Context, request operat
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationIceberg",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -8474,13 +8508,6 @@ func (s *Destinations) GetDestinationIceberg(ctx context.Context, request operat
 
 // PutDestinationIceberg - Update a Destination fully
 func (s *Destinations) PutDestinationIceberg(ctx context.Context, request operations.PutDestinationIcebergRequest, opts ...operations.Option) (*operations.PutDestinationIcebergResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationIceberg",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8503,6 +8530,13 @@ func (s *Destinations) PutDestinationIceberg(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationIceberg",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationIcebergPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -8591,13 +8625,6 @@ func (s *Destinations) PutDestinationIceberg(ctx context.Context, request operat
 
 // DeleteDestinationIceberg - Delete a Destination
 func (s *Destinations) DeleteDestinationIceberg(ctx context.Context, request operations.DeleteDestinationIcebergRequest, opts ...operations.Option) (*operations.DeleteDestinationIcebergResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationIceberg",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8618,6 +8645,14 @@ func (s *Destinations) DeleteDestinationIceberg(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationIceberg",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -8701,13 +8736,6 @@ func (s *Destinations) DeleteDestinationIceberg(ctx context.Context, request ope
 // CreateDestinationMilvus - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMilvus(ctx context.Context, request *shared.DestinationMilvusCreateRequest, opts ...operations.Option) (*operations.CreateDestinationMilvusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMilvus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8730,6 +8758,13 @@ func (s *Destinations) CreateDestinationMilvus(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMilvus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -8838,13 +8873,6 @@ func (s *Destinations) CreateDestinationMilvus(ctx context.Context, request *sha
 
 // GetDestinationMilvus - Get Destination details
 func (s *Destinations) GetDestinationMilvus(ctx context.Context, request operations.GetDestinationMilvusRequest, opts ...operations.Option) (*operations.GetDestinationMilvusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMilvus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8865,6 +8893,14 @@ func (s *Destinations) GetDestinationMilvus(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMilvus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -8967,13 +9003,6 @@ func (s *Destinations) GetDestinationMilvus(ctx context.Context, request operati
 
 // PutDestinationMilvus - Update a Destination fully
 func (s *Destinations) PutDestinationMilvus(ctx context.Context, request operations.PutDestinationMilvusRequest, opts ...operations.Option) (*operations.PutDestinationMilvusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMilvus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -8996,6 +9025,13 @@ func (s *Destinations) PutDestinationMilvus(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMilvus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMilvusPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -9084,13 +9120,6 @@ func (s *Destinations) PutDestinationMilvus(ctx context.Context, request operati
 
 // DeleteDestinationMilvus - Delete a Destination
 func (s *Destinations) DeleteDestinationMilvus(ctx context.Context, request operations.DeleteDestinationMilvusRequest, opts ...operations.Option) (*operations.DeleteDestinationMilvusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMilvus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9111,6 +9140,14 @@ func (s *Destinations) DeleteDestinationMilvus(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMilvus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -9194,13 +9231,6 @@ func (s *Destinations) DeleteDestinationMilvus(ctx context.Context, request oper
 // CreateDestinationMongodb - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMongodb(ctx context.Context, request *shared.DestinationMongodbCreateRequest, opts ...operations.Option) (*operations.CreateDestinationMongodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMongodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9223,6 +9253,13 @@ func (s *Destinations) CreateDestinationMongodb(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMongodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -9331,13 +9368,6 @@ func (s *Destinations) CreateDestinationMongodb(ctx context.Context, request *sh
 
 // GetDestinationMongodb - Get Destination details
 func (s *Destinations) GetDestinationMongodb(ctx context.Context, request operations.GetDestinationMongodbRequest, opts ...operations.Option) (*operations.GetDestinationMongodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMongodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9358,6 +9388,14 @@ func (s *Destinations) GetDestinationMongodb(ctx context.Context, request operat
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMongodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -9460,13 +9498,6 @@ func (s *Destinations) GetDestinationMongodb(ctx context.Context, request operat
 
 // PutDestinationMongodb - Update a Destination fully
 func (s *Destinations) PutDestinationMongodb(ctx context.Context, request operations.PutDestinationMongodbRequest, opts ...operations.Option) (*operations.PutDestinationMongodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMongodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9489,6 +9520,13 @@ func (s *Destinations) PutDestinationMongodb(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMongodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMongodbPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -9577,13 +9615,6 @@ func (s *Destinations) PutDestinationMongodb(ctx context.Context, request operat
 
 // DeleteDestinationMongodb - Delete a Destination
 func (s *Destinations) DeleteDestinationMongodb(ctx context.Context, request operations.DeleteDestinationMongodbRequest, opts ...operations.Option) (*operations.DeleteDestinationMongodbResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMongodb",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9604,6 +9635,14 @@ func (s *Destinations) DeleteDestinationMongodb(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMongodb",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -9687,13 +9726,6 @@ func (s *Destinations) DeleteDestinationMongodb(ctx context.Context, request ope
 // CreateDestinationMotherduck - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMotherduck(ctx context.Context, request *shared.DestinationMotherduckCreateRequest, opts ...operations.Option) (*operations.CreateDestinationMotherduckResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMotherduck",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9716,6 +9748,13 @@ func (s *Destinations) CreateDestinationMotherduck(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMotherduck",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -9824,13 +9863,6 @@ func (s *Destinations) CreateDestinationMotherduck(ctx context.Context, request 
 
 // GetDestinationMotherduck - Get Destination details
 func (s *Destinations) GetDestinationMotherduck(ctx context.Context, request operations.GetDestinationMotherduckRequest, opts ...operations.Option) (*operations.GetDestinationMotherduckResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMotherduck",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9851,6 +9883,14 @@ func (s *Destinations) GetDestinationMotherduck(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMotherduck",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -9953,13 +9993,6 @@ func (s *Destinations) GetDestinationMotherduck(ctx context.Context, request ope
 
 // PutDestinationMotherduck - Update a Destination fully
 func (s *Destinations) PutDestinationMotherduck(ctx context.Context, request operations.PutDestinationMotherduckRequest, opts ...operations.Option) (*operations.PutDestinationMotherduckResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMotherduck",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -9982,6 +10015,13 @@ func (s *Destinations) PutDestinationMotherduck(ctx context.Context, request ope
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMotherduck",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMotherduckPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -10070,13 +10110,6 @@ func (s *Destinations) PutDestinationMotherduck(ctx context.Context, request ope
 
 // DeleteDestinationMotherduck - Delete a Destination
 func (s *Destinations) DeleteDestinationMotherduck(ctx context.Context, request operations.DeleteDestinationMotherduckRequest, opts ...operations.Option) (*operations.DeleteDestinationMotherduckResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMotherduck",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10097,6 +10130,14 @@ func (s *Destinations) DeleteDestinationMotherduck(ctx context.Context, request 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMotherduck",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -10180,13 +10221,6 @@ func (s *Destinations) DeleteDestinationMotherduck(ctx context.Context, request 
 // CreateDestinationMssql - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMssql(ctx context.Context, request *shared.DestinationMssqlCreateRequest, opts ...operations.Option) (*operations.CreateDestinationMssqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMssql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10209,6 +10243,13 @@ func (s *Destinations) CreateDestinationMssql(ctx context.Context, request *shar
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMssql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -10317,13 +10358,6 @@ func (s *Destinations) CreateDestinationMssql(ctx context.Context, request *shar
 
 // GetDestinationMssql - Get Destination details
 func (s *Destinations) GetDestinationMssql(ctx context.Context, request operations.GetDestinationMssqlRequest, opts ...operations.Option) (*operations.GetDestinationMssqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMssql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10344,6 +10378,14 @@ func (s *Destinations) GetDestinationMssql(ctx context.Context, request operatio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMssql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -10446,13 +10488,6 @@ func (s *Destinations) GetDestinationMssql(ctx context.Context, request operatio
 
 // PutDestinationMssql - Update a Destination fully
 func (s *Destinations) PutDestinationMssql(ctx context.Context, request operations.PutDestinationMssqlRequest, opts ...operations.Option) (*operations.PutDestinationMssqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMssql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10475,6 +10510,13 @@ func (s *Destinations) PutDestinationMssql(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMssql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMssqlPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -10563,13 +10605,6 @@ func (s *Destinations) PutDestinationMssql(ctx context.Context, request operatio
 
 // DeleteDestinationMssql - Delete a Destination
 func (s *Destinations) DeleteDestinationMssql(ctx context.Context, request operations.DeleteDestinationMssqlRequest, opts ...operations.Option) (*operations.DeleteDestinationMssqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMssql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10590,6 +10625,14 @@ func (s *Destinations) DeleteDestinationMssql(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMssql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -10673,13 +10716,6 @@ func (s *Destinations) DeleteDestinationMssql(ctx context.Context, request opera
 // CreateDestinationMssqlV2 - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMssqlV2(ctx context.Context, request *shared.DestinationMssqlV2CreateRequest, opts ...operations.Option) (*operations.CreateDestinationMssqlV2Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10702,6 +10738,13 @@ func (s *Destinations) CreateDestinationMssqlV2(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMssqlV2",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -10810,13 +10853,6 @@ func (s *Destinations) CreateDestinationMssqlV2(ctx context.Context, request *sh
 
 // GetDestinationMssqlV2 - Get Destination details
 func (s *Destinations) GetDestinationMssqlV2(ctx context.Context, request operations.GetDestinationMssqlV2Request, opts ...operations.Option) (*operations.GetDestinationMssqlV2Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10837,6 +10873,14 @@ func (s *Destinations) GetDestinationMssqlV2(ctx context.Context, request operat
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMssqlV2",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -10939,13 +10983,6 @@ func (s *Destinations) GetDestinationMssqlV2(ctx context.Context, request operat
 
 // PutDestinationMssqlV2 - Update a Destination fully
 func (s *Destinations) PutDestinationMssqlV2(ctx context.Context, request operations.PutDestinationMssqlV2Request, opts ...operations.Option) (*operations.PutDestinationMssqlV2Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -10968,6 +11005,13 @@ func (s *Destinations) PutDestinationMssqlV2(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMssqlV2",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMssqlV2PutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -11056,13 +11100,6 @@ func (s *Destinations) PutDestinationMssqlV2(ctx context.Context, request operat
 
 // DeleteDestinationMssqlV2 - Delete a Destination
 func (s *Destinations) DeleteDestinationMssqlV2(ctx context.Context, request operations.DeleteDestinationMssqlV2Request, opts ...operations.Option) (*operations.DeleteDestinationMssqlV2Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11083,6 +11120,14 @@ func (s *Destinations) DeleteDestinationMssqlV2(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMssqlV2",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -11166,13 +11211,6 @@ func (s *Destinations) DeleteDestinationMssqlV2(ctx context.Context, request ope
 // CreateDestinationMysql - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationMysql(ctx context.Context, request *shared.DestinationMysqlCreateRequest, opts ...operations.Option) (*operations.CreateDestinationMysqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationMysql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11195,6 +11233,13 @@ func (s *Destinations) CreateDestinationMysql(ctx context.Context, request *shar
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationMysql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -11303,13 +11348,6 @@ func (s *Destinations) CreateDestinationMysql(ctx context.Context, request *shar
 
 // GetDestinationMysql - Get Destination details
 func (s *Destinations) GetDestinationMysql(ctx context.Context, request operations.GetDestinationMysqlRequest, opts ...operations.Option) (*operations.GetDestinationMysqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationMysql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11330,6 +11368,14 @@ func (s *Destinations) GetDestinationMysql(ctx context.Context, request operatio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationMysql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -11432,13 +11478,6 @@ func (s *Destinations) GetDestinationMysql(ctx context.Context, request operatio
 
 // PutDestinationMysql - Update a Destination fully
 func (s *Destinations) PutDestinationMysql(ctx context.Context, request operations.PutDestinationMysqlRequest, opts ...operations.Option) (*operations.PutDestinationMysqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationMysql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11461,6 +11500,13 @@ func (s *Destinations) PutDestinationMysql(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationMysql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMysqlPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -11549,13 +11595,6 @@ func (s *Destinations) PutDestinationMysql(ctx context.Context, request operatio
 
 // DeleteDestinationMysql - Delete a Destination
 func (s *Destinations) DeleteDestinationMysql(ctx context.Context, request operations.DeleteDestinationMysqlRequest, opts ...operations.Option) (*operations.DeleteDestinationMysqlResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationMysql",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11576,6 +11615,14 @@ func (s *Destinations) DeleteDestinationMysql(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationMysql",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -11659,13 +11706,6 @@ func (s *Destinations) DeleteDestinationMysql(ctx context.Context, request opera
 // CreateDestinationOracle - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationOracle(ctx context.Context, request *shared.DestinationOracleCreateRequest, opts ...operations.Option) (*operations.CreateDestinationOracleResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationOracle",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11688,6 +11728,13 @@ func (s *Destinations) CreateDestinationOracle(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationOracle",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -11796,13 +11843,6 @@ func (s *Destinations) CreateDestinationOracle(ctx context.Context, request *sha
 
 // GetDestinationOracle - Get Destination details
 func (s *Destinations) GetDestinationOracle(ctx context.Context, request operations.GetDestinationOracleRequest, opts ...operations.Option) (*operations.GetDestinationOracleResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationOracle",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11823,6 +11863,14 @@ func (s *Destinations) GetDestinationOracle(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationOracle",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -11925,13 +11973,6 @@ func (s *Destinations) GetDestinationOracle(ctx context.Context, request operati
 
 // PutDestinationOracle - Update a Destination fully
 func (s *Destinations) PutDestinationOracle(ctx context.Context, request operations.PutDestinationOracleRequest, opts ...operations.Option) (*operations.PutDestinationOracleResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationOracle",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -11954,6 +11995,13 @@ func (s *Destinations) PutDestinationOracle(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationOracle",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationOraclePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -12042,13 +12090,6 @@ func (s *Destinations) PutDestinationOracle(ctx context.Context, request operati
 
 // DeleteDestinationOracle - Delete a Destination
 func (s *Destinations) DeleteDestinationOracle(ctx context.Context, request operations.DeleteDestinationOracleRequest, opts ...operations.Option) (*operations.DeleteDestinationOracleResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationOracle",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12069,6 +12110,14 @@ func (s *Destinations) DeleteDestinationOracle(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationOracle",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -12152,13 +12201,6 @@ func (s *Destinations) DeleteDestinationOracle(ctx context.Context, request oper
 // CreateDestinationPgvector - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationPgvector(ctx context.Context, request *shared.DestinationPgvectorCreateRequest, opts ...operations.Option) (*operations.CreateDestinationPgvectorResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationPgvector",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12181,6 +12223,13 @@ func (s *Destinations) CreateDestinationPgvector(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationPgvector",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -12289,13 +12338,6 @@ func (s *Destinations) CreateDestinationPgvector(ctx context.Context, request *s
 
 // GetDestinationPgvector - Get Destination details
 func (s *Destinations) GetDestinationPgvector(ctx context.Context, request operations.GetDestinationPgvectorRequest, opts ...operations.Option) (*operations.GetDestinationPgvectorResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationPgvector",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12316,6 +12358,14 @@ func (s *Destinations) GetDestinationPgvector(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationPgvector",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -12418,13 +12468,6 @@ func (s *Destinations) GetDestinationPgvector(ctx context.Context, request opera
 
 // PutDestinationPgvector - Update a Destination fully
 func (s *Destinations) PutDestinationPgvector(ctx context.Context, request operations.PutDestinationPgvectorRequest, opts ...operations.Option) (*operations.PutDestinationPgvectorResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationPgvector",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12447,6 +12490,13 @@ func (s *Destinations) PutDestinationPgvector(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationPgvector",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPgvectorPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -12535,13 +12585,6 @@ func (s *Destinations) PutDestinationPgvector(ctx context.Context, request opera
 
 // DeleteDestinationPgvector - Delete a Destination
 func (s *Destinations) DeleteDestinationPgvector(ctx context.Context, request operations.DeleteDestinationPgvectorRequest, opts ...operations.Option) (*operations.DeleteDestinationPgvectorResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationPgvector",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12562,6 +12605,14 @@ func (s *Destinations) DeleteDestinationPgvector(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationPgvector",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -12645,13 +12696,6 @@ func (s *Destinations) DeleteDestinationPgvector(ctx context.Context, request op
 // CreateDestinationPinecone - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationPinecone(ctx context.Context, request *shared.DestinationPineconeCreateRequest, opts ...operations.Option) (*operations.CreateDestinationPineconeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationPinecone",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12674,6 +12718,13 @@ func (s *Destinations) CreateDestinationPinecone(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationPinecone",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -12782,13 +12833,6 @@ func (s *Destinations) CreateDestinationPinecone(ctx context.Context, request *s
 
 // GetDestinationPinecone - Get Destination details
 func (s *Destinations) GetDestinationPinecone(ctx context.Context, request operations.GetDestinationPineconeRequest, opts ...operations.Option) (*operations.GetDestinationPineconeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationPinecone",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12809,6 +12853,14 @@ func (s *Destinations) GetDestinationPinecone(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationPinecone",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -12911,13 +12963,6 @@ func (s *Destinations) GetDestinationPinecone(ctx context.Context, request opera
 
 // PutDestinationPinecone - Update a Destination fully
 func (s *Destinations) PutDestinationPinecone(ctx context.Context, request operations.PutDestinationPineconeRequest, opts ...operations.Option) (*operations.PutDestinationPineconeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationPinecone",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -12940,6 +12985,13 @@ func (s *Destinations) PutDestinationPinecone(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationPinecone",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPineconePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -13028,13 +13080,6 @@ func (s *Destinations) PutDestinationPinecone(ctx context.Context, request opera
 
 // DeleteDestinationPinecone - Delete a Destination
 func (s *Destinations) DeleteDestinationPinecone(ctx context.Context, request operations.DeleteDestinationPineconeRequest, opts ...operations.Option) (*operations.DeleteDestinationPineconeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationPinecone",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13055,6 +13100,14 @@ func (s *Destinations) DeleteDestinationPinecone(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationPinecone",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -13138,13 +13191,6 @@ func (s *Destinations) DeleteDestinationPinecone(ctx context.Context, request op
 // CreateDestinationPostgres - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationPostgres(ctx context.Context, request *shared.DestinationPostgresCreateRequest, opts ...operations.Option) (*operations.CreateDestinationPostgresResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationPostgres",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13167,6 +13213,13 @@ func (s *Destinations) CreateDestinationPostgres(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationPostgres",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -13275,13 +13328,6 @@ func (s *Destinations) CreateDestinationPostgres(ctx context.Context, request *s
 
 // GetDestinationPostgres - Get Destination details
 func (s *Destinations) GetDestinationPostgres(ctx context.Context, request operations.GetDestinationPostgresRequest, opts ...operations.Option) (*operations.GetDestinationPostgresResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationPostgres",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13302,6 +13348,14 @@ func (s *Destinations) GetDestinationPostgres(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationPostgres",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -13404,13 +13458,6 @@ func (s *Destinations) GetDestinationPostgres(ctx context.Context, request opera
 
 // PutDestinationPostgres - Update a Destination fully
 func (s *Destinations) PutDestinationPostgres(ctx context.Context, request operations.PutDestinationPostgresRequest, opts ...operations.Option) (*operations.PutDestinationPostgresResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationPostgres",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13433,6 +13480,13 @@ func (s *Destinations) PutDestinationPostgres(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationPostgres",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPostgresPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -13521,13 +13575,6 @@ func (s *Destinations) PutDestinationPostgres(ctx context.Context, request opera
 
 // DeleteDestinationPostgres - Delete a Destination
 func (s *Destinations) DeleteDestinationPostgres(ctx context.Context, request operations.DeleteDestinationPostgresRequest, opts ...operations.Option) (*operations.DeleteDestinationPostgresResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationPostgres",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13548,6 +13595,14 @@ func (s *Destinations) DeleteDestinationPostgres(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationPostgres",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -13631,13 +13686,6 @@ func (s *Destinations) DeleteDestinationPostgres(ctx context.Context, request op
 // CreateDestinationPubsub - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationPubsub(ctx context.Context, request *shared.DestinationPubsubCreateRequest, opts ...operations.Option) (*operations.CreateDestinationPubsubResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationPubsub",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13660,6 +13708,13 @@ func (s *Destinations) CreateDestinationPubsub(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationPubsub",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -13768,13 +13823,6 @@ func (s *Destinations) CreateDestinationPubsub(ctx context.Context, request *sha
 
 // GetDestinationPubsub - Get Destination details
 func (s *Destinations) GetDestinationPubsub(ctx context.Context, request operations.GetDestinationPubsubRequest, opts ...operations.Option) (*operations.GetDestinationPubsubResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationPubsub",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13795,6 +13843,14 @@ func (s *Destinations) GetDestinationPubsub(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationPubsub",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -13897,13 +13953,6 @@ func (s *Destinations) GetDestinationPubsub(ctx context.Context, request operati
 
 // PutDestinationPubsub - Update a Destination fully
 func (s *Destinations) PutDestinationPubsub(ctx context.Context, request operations.PutDestinationPubsubRequest, opts ...operations.Option) (*operations.PutDestinationPubsubResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationPubsub",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -13926,6 +13975,13 @@ func (s *Destinations) PutDestinationPubsub(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationPubsub",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPubsubPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -14014,13 +14070,6 @@ func (s *Destinations) PutDestinationPubsub(ctx context.Context, request operati
 
 // DeleteDestinationPubsub - Delete a Destination
 func (s *Destinations) DeleteDestinationPubsub(ctx context.Context, request operations.DeleteDestinationPubsubRequest, opts ...operations.Option) (*operations.DeleteDestinationPubsubResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationPubsub",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14041,6 +14090,14 @@ func (s *Destinations) DeleteDestinationPubsub(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationPubsub",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -14124,13 +14181,6 @@ func (s *Destinations) DeleteDestinationPubsub(ctx context.Context, request oper
 // CreateDestinationQdrant - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationQdrant(ctx context.Context, request *shared.DestinationQdrantCreateRequest, opts ...operations.Option) (*operations.CreateDestinationQdrantResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationQdrant",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14153,6 +14203,13 @@ func (s *Destinations) CreateDestinationQdrant(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationQdrant",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -14261,13 +14318,6 @@ func (s *Destinations) CreateDestinationQdrant(ctx context.Context, request *sha
 
 // GetDestinationQdrant - Get Destination details
 func (s *Destinations) GetDestinationQdrant(ctx context.Context, request operations.GetDestinationQdrantRequest, opts ...operations.Option) (*operations.GetDestinationQdrantResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationQdrant",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14288,6 +14338,14 @@ func (s *Destinations) GetDestinationQdrant(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationQdrant",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -14390,13 +14448,6 @@ func (s *Destinations) GetDestinationQdrant(ctx context.Context, request operati
 
 // PutDestinationQdrant - Update a Destination fully
 func (s *Destinations) PutDestinationQdrant(ctx context.Context, request operations.PutDestinationQdrantRequest, opts ...operations.Option) (*operations.PutDestinationQdrantResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationQdrant",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14419,6 +14470,13 @@ func (s *Destinations) PutDestinationQdrant(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationQdrant",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationQdrantPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -14507,13 +14565,6 @@ func (s *Destinations) PutDestinationQdrant(ctx context.Context, request operati
 
 // DeleteDestinationQdrant - Delete a Destination
 func (s *Destinations) DeleteDestinationQdrant(ctx context.Context, request operations.DeleteDestinationQdrantRequest, opts ...operations.Option) (*operations.DeleteDestinationQdrantResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationQdrant",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14534,6 +14585,14 @@ func (s *Destinations) DeleteDestinationQdrant(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationQdrant",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -14617,13 +14676,6 @@ func (s *Destinations) DeleteDestinationQdrant(ctx context.Context, request oper
 // CreateDestinationRedis - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationRedis(ctx context.Context, request *shared.DestinationRedisCreateRequest, opts ...operations.Option) (*operations.CreateDestinationRedisResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationRedis",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14646,6 +14698,13 @@ func (s *Destinations) CreateDestinationRedis(ctx context.Context, request *shar
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationRedis",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -14754,13 +14813,6 @@ func (s *Destinations) CreateDestinationRedis(ctx context.Context, request *shar
 
 // GetDestinationRedis - Get Destination details
 func (s *Destinations) GetDestinationRedis(ctx context.Context, request operations.GetDestinationRedisRequest, opts ...operations.Option) (*operations.GetDestinationRedisResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationRedis",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14781,6 +14833,14 @@ func (s *Destinations) GetDestinationRedis(ctx context.Context, request operatio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationRedis",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -14883,13 +14943,6 @@ func (s *Destinations) GetDestinationRedis(ctx context.Context, request operatio
 
 // PutDestinationRedis - Update a Destination fully
 func (s *Destinations) PutDestinationRedis(ctx context.Context, request operations.PutDestinationRedisRequest, opts ...operations.Option) (*operations.PutDestinationRedisResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationRedis",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -14912,6 +14965,13 @@ func (s *Destinations) PutDestinationRedis(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationRedis",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationRedisPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -15000,13 +15060,6 @@ func (s *Destinations) PutDestinationRedis(ctx context.Context, request operatio
 
 // DeleteDestinationRedis - Delete a Destination
 func (s *Destinations) DeleteDestinationRedis(ctx context.Context, request operations.DeleteDestinationRedisRequest, opts ...operations.Option) (*operations.DeleteDestinationRedisResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationRedis",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15027,6 +15080,14 @@ func (s *Destinations) DeleteDestinationRedis(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationRedis",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -15110,13 +15171,6 @@ func (s *Destinations) DeleteDestinationRedis(ctx context.Context, request opera
 // CreateDestinationRedshift - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationRedshift(ctx context.Context, request *shared.DestinationRedshiftCreateRequest, opts ...operations.Option) (*operations.CreateDestinationRedshiftResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationRedshift",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15139,6 +15193,13 @@ func (s *Destinations) CreateDestinationRedshift(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationRedshift",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -15247,13 +15308,6 @@ func (s *Destinations) CreateDestinationRedshift(ctx context.Context, request *s
 
 // GetDestinationRedshift - Get Destination details
 func (s *Destinations) GetDestinationRedshift(ctx context.Context, request operations.GetDestinationRedshiftRequest, opts ...operations.Option) (*operations.GetDestinationRedshiftResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationRedshift",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15274,6 +15328,14 @@ func (s *Destinations) GetDestinationRedshift(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationRedshift",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -15376,13 +15438,6 @@ func (s *Destinations) GetDestinationRedshift(ctx context.Context, request opera
 
 // PutDestinationRedshift - Update a Destination fully
 func (s *Destinations) PutDestinationRedshift(ctx context.Context, request operations.PutDestinationRedshiftRequest, opts ...operations.Option) (*operations.PutDestinationRedshiftResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationRedshift",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15405,6 +15460,13 @@ func (s *Destinations) PutDestinationRedshift(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationRedshift",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationRedshiftPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -15493,13 +15555,6 @@ func (s *Destinations) PutDestinationRedshift(ctx context.Context, request opera
 
 // DeleteDestinationRedshift - Delete a Destination
 func (s *Destinations) DeleteDestinationRedshift(ctx context.Context, request operations.DeleteDestinationRedshiftRequest, opts ...operations.Option) (*operations.DeleteDestinationRedshiftResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationRedshift",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15520,6 +15575,14 @@ func (s *Destinations) DeleteDestinationRedshift(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationRedshift",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -15603,13 +15666,6 @@ func (s *Destinations) DeleteDestinationRedshift(ctx context.Context, request op
 // CreateDestinationS3 - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationS3(ctx context.Context, request *shared.DestinationS3CreateRequest, opts ...operations.Option) (*operations.CreateDestinationS3Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationS3",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15632,6 +15688,13 @@ func (s *Destinations) CreateDestinationS3(ctx context.Context, request *shared.
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationS3",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -15740,13 +15803,6 @@ func (s *Destinations) CreateDestinationS3(ctx context.Context, request *shared.
 
 // GetDestinationS3 - Get Destination details
 func (s *Destinations) GetDestinationS3(ctx context.Context, request operations.GetDestinationS3Request, opts ...operations.Option) (*operations.GetDestinationS3Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationS3",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15767,6 +15823,14 @@ func (s *Destinations) GetDestinationS3(ctx context.Context, request operations.
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationS3",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -15869,13 +15933,6 @@ func (s *Destinations) GetDestinationS3(ctx context.Context, request operations.
 
 // PutDestinationS3 - Update a Destination fully
 func (s *Destinations) PutDestinationS3(ctx context.Context, request operations.PutDestinationS3Request, opts ...operations.Option) (*operations.PutDestinationS3Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationS3",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -15898,6 +15955,13 @@ func (s *Destinations) PutDestinationS3(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationS3",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3PutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -15986,13 +16050,6 @@ func (s *Destinations) PutDestinationS3(ctx context.Context, request operations.
 
 // DeleteDestinationS3 - Delete a Destination
 func (s *Destinations) DeleteDestinationS3(ctx context.Context, request operations.DeleteDestinationS3Request, opts ...operations.Option) (*operations.DeleteDestinationS3Response, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationS3",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16013,6 +16070,14 @@ func (s *Destinations) DeleteDestinationS3(ctx context.Context, request operatio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationS3",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -16096,13 +16161,6 @@ func (s *Destinations) DeleteDestinationS3(ctx context.Context, request operatio
 // CreateDestinationS3DataLake - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationS3DataLake(ctx context.Context, request *shared.DestinationS3DataLakeCreateRequest, opts ...operations.Option) (*operations.CreateDestinationS3DataLakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16125,6 +16183,13 @@ func (s *Destinations) CreateDestinationS3DataLake(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationS3DataLake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -16233,13 +16298,6 @@ func (s *Destinations) CreateDestinationS3DataLake(ctx context.Context, request 
 
 // GetDestinationS3DataLake - Get Destination details
 func (s *Destinations) GetDestinationS3DataLake(ctx context.Context, request operations.GetDestinationS3DataLakeRequest, opts ...operations.Option) (*operations.GetDestinationS3DataLakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16260,6 +16318,14 @@ func (s *Destinations) GetDestinationS3DataLake(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationS3DataLake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -16362,13 +16428,6 @@ func (s *Destinations) GetDestinationS3DataLake(ctx context.Context, request ope
 
 // PutDestinationS3DataLake - Update a Destination fully
 func (s *Destinations) PutDestinationS3DataLake(ctx context.Context, request operations.PutDestinationS3DataLakeRequest, opts ...operations.Option) (*operations.PutDestinationS3DataLakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16391,6 +16450,13 @@ func (s *Destinations) PutDestinationS3DataLake(ctx context.Context, request ope
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationS3DataLake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3DataLakePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -16479,13 +16545,6 @@ func (s *Destinations) PutDestinationS3DataLake(ctx context.Context, request ope
 
 // DeleteDestinationS3DataLake - Delete a Destination
 func (s *Destinations) DeleteDestinationS3DataLake(ctx context.Context, request operations.DeleteDestinationS3DataLakeRequest, opts ...operations.Option) (*operations.DeleteDestinationS3DataLakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16506,6 +16565,14 @@ func (s *Destinations) DeleteDestinationS3DataLake(ctx context.Context, request 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationS3DataLake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -16589,13 +16656,6 @@ func (s *Destinations) DeleteDestinationS3DataLake(ctx context.Context, request 
 // CreateDestinationS3Glue - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationS3Glue(ctx context.Context, request *shared.DestinationS3GlueCreateRequest, opts ...operations.Option) (*operations.CreateDestinationS3GlueResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationS3Glue",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16618,6 +16678,13 @@ func (s *Destinations) CreateDestinationS3Glue(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationS3Glue",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -16726,13 +16793,6 @@ func (s *Destinations) CreateDestinationS3Glue(ctx context.Context, request *sha
 
 // GetDestinationS3Glue - Get Destination details
 func (s *Destinations) GetDestinationS3Glue(ctx context.Context, request operations.GetDestinationS3GlueRequest, opts ...operations.Option) (*operations.GetDestinationS3GlueResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationS3Glue",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16753,6 +16813,14 @@ func (s *Destinations) GetDestinationS3Glue(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationS3Glue",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -16855,13 +16923,6 @@ func (s *Destinations) GetDestinationS3Glue(ctx context.Context, request operati
 
 // PutDestinationS3Glue - Update a Destination fully
 func (s *Destinations) PutDestinationS3Glue(ctx context.Context, request operations.PutDestinationS3GlueRequest, opts ...operations.Option) (*operations.PutDestinationS3GlueResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationS3Glue",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16884,6 +16945,13 @@ func (s *Destinations) PutDestinationS3Glue(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationS3Glue",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3GluePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -16972,13 +17040,6 @@ func (s *Destinations) PutDestinationS3Glue(ctx context.Context, request operati
 
 // DeleteDestinationS3Glue - Delete a Destination
 func (s *Destinations) DeleteDestinationS3Glue(ctx context.Context, request operations.DeleteDestinationS3GlueRequest, opts ...operations.Option) (*operations.DeleteDestinationS3GlueResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationS3Glue",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -16999,6 +17060,14 @@ func (s *Destinations) DeleteDestinationS3Glue(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationS3Glue",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -17082,13 +17151,6 @@ func (s *Destinations) DeleteDestinationS3Glue(ctx context.Context, request oper
 // CreateDestinationSftpJSON - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationSftpJSON(ctx context.Context, request *shared.DestinationSftpJSONCreateRequest, opts ...operations.Option) (*operations.CreateDestinationSftpJSONResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationSftpJson",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17111,6 +17173,13 @@ func (s *Destinations) CreateDestinationSftpJSON(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationSftpJson",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -17219,13 +17288,6 @@ func (s *Destinations) CreateDestinationSftpJSON(ctx context.Context, request *s
 
 // GetDestinationSftpJSON - Get Destination details
 func (s *Destinations) GetDestinationSftpJSON(ctx context.Context, request operations.GetDestinationSftpJSONRequest, opts ...operations.Option) (*operations.GetDestinationSftpJSONResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationSftpJson",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17246,6 +17308,14 @@ func (s *Destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationSftpJson",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -17348,13 +17418,6 @@ func (s *Destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 
 // PutDestinationSftpJSON - Update a Destination fully
 func (s *Destinations) PutDestinationSftpJSON(ctx context.Context, request operations.PutDestinationSftpJSONRequest, opts ...operations.Option) (*operations.PutDestinationSftpJSONResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationSftpJson",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17377,6 +17440,13 @@ func (s *Destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationSftpJson",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSftpJSONPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -17465,13 +17535,6 @@ func (s *Destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 
 // DeleteDestinationSftpJSON - Delete a Destination
 func (s *Destinations) DeleteDestinationSftpJSON(ctx context.Context, request operations.DeleteDestinationSftpJSONRequest, opts ...operations.Option) (*operations.DeleteDestinationSftpJSONResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationSftpJson",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17492,6 +17555,14 @@ func (s *Destinations) DeleteDestinationSftpJSON(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationSftpJson",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -17575,13 +17646,6 @@ func (s *Destinations) DeleteDestinationSftpJSON(ctx context.Context, request op
 // CreateDestinationSnowflake - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationSnowflake(ctx context.Context, request *shared.DestinationSnowflakeCreateRequest, opts ...operations.Option) (*operations.CreateDestinationSnowflakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationSnowflake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17604,6 +17668,13 @@ func (s *Destinations) CreateDestinationSnowflake(ctx context.Context, request *
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationSnowflake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -17712,13 +17783,6 @@ func (s *Destinations) CreateDestinationSnowflake(ctx context.Context, request *
 
 // GetDestinationSnowflake - Get Destination details
 func (s *Destinations) GetDestinationSnowflake(ctx context.Context, request operations.GetDestinationSnowflakeRequest, opts ...operations.Option) (*operations.GetDestinationSnowflakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationSnowflake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17739,6 +17803,14 @@ func (s *Destinations) GetDestinationSnowflake(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationSnowflake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -17841,13 +17913,6 @@ func (s *Destinations) GetDestinationSnowflake(ctx context.Context, request oper
 
 // PutDestinationSnowflake - Update a Destination fully
 func (s *Destinations) PutDestinationSnowflake(ctx context.Context, request operations.PutDestinationSnowflakeRequest, opts ...operations.Option) (*operations.PutDestinationSnowflakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationSnowflake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17870,6 +17935,13 @@ func (s *Destinations) PutDestinationSnowflake(ctx context.Context, request oper
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationSnowflake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSnowflakePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -17958,13 +18030,6 @@ func (s *Destinations) PutDestinationSnowflake(ctx context.Context, request oper
 
 // DeleteDestinationSnowflake - Delete a Destination
 func (s *Destinations) DeleteDestinationSnowflake(ctx context.Context, request operations.DeleteDestinationSnowflakeRequest, opts ...operations.Option) (*operations.DeleteDestinationSnowflakeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationSnowflake",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -17985,6 +18050,14 @@ func (s *Destinations) DeleteDestinationSnowflake(ctx context.Context, request o
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationSnowflake",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -18068,13 +18141,6 @@ func (s *Destinations) DeleteDestinationSnowflake(ctx context.Context, request o
 // CreateDestinationSnowflakeCortex - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationSnowflakeCortex(ctx context.Context, request *shared.DestinationSnowflakeCortexCreateRequest, opts ...operations.Option) (*operations.CreateDestinationSnowflakeCortexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18097,6 +18163,13 @@ func (s *Destinations) CreateDestinationSnowflakeCortex(ctx context.Context, req
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationSnowflakeCortex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -18205,13 +18278,6 @@ func (s *Destinations) CreateDestinationSnowflakeCortex(ctx context.Context, req
 
 // GetDestinationSnowflakeCortex - Get Destination details
 func (s *Destinations) GetDestinationSnowflakeCortex(ctx context.Context, request operations.GetDestinationSnowflakeCortexRequest, opts ...operations.Option) (*operations.GetDestinationSnowflakeCortexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18232,6 +18298,14 @@ func (s *Destinations) GetDestinationSnowflakeCortex(ctx context.Context, reques
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationSnowflakeCortex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -18334,13 +18408,6 @@ func (s *Destinations) GetDestinationSnowflakeCortex(ctx context.Context, reques
 
 // PutDestinationSnowflakeCortex - Update a Destination fully
 func (s *Destinations) PutDestinationSnowflakeCortex(ctx context.Context, request operations.PutDestinationSnowflakeCortexRequest, opts ...operations.Option) (*operations.PutDestinationSnowflakeCortexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18363,6 +18430,13 @@ func (s *Destinations) PutDestinationSnowflakeCortex(ctx context.Context, reques
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationSnowflakeCortex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSnowflakeCortexPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -18451,13 +18525,6 @@ func (s *Destinations) PutDestinationSnowflakeCortex(ctx context.Context, reques
 
 // DeleteDestinationSnowflakeCortex - Delete a Destination
 func (s *Destinations) DeleteDestinationSnowflakeCortex(ctx context.Context, request operations.DeleteDestinationSnowflakeCortexRequest, opts ...operations.Option) (*operations.DeleteDestinationSnowflakeCortexResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18478,6 +18545,14 @@ func (s *Destinations) DeleteDestinationSnowflakeCortex(ctx context.Context, req
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationSnowflakeCortex",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -18561,13 +18636,6 @@ func (s *Destinations) DeleteDestinationSnowflakeCortex(ctx context.Context, req
 // CreateDestinationTeradata - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationTeradata(ctx context.Context, request *shared.DestinationTeradataCreateRequest, opts ...operations.Option) (*operations.CreateDestinationTeradataResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationTeradata",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18590,6 +18658,13 @@ func (s *Destinations) CreateDestinationTeradata(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationTeradata",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -18698,13 +18773,6 @@ func (s *Destinations) CreateDestinationTeradata(ctx context.Context, request *s
 
 // GetDestinationTeradata - Get Destination details
 func (s *Destinations) GetDestinationTeradata(ctx context.Context, request operations.GetDestinationTeradataRequest, opts ...operations.Option) (*operations.GetDestinationTeradataResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationTeradata",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18725,6 +18793,14 @@ func (s *Destinations) GetDestinationTeradata(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationTeradata",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -18827,13 +18903,6 @@ func (s *Destinations) GetDestinationTeradata(ctx context.Context, request opera
 
 // PutDestinationTeradata - Update a Destination fully
 func (s *Destinations) PutDestinationTeradata(ctx context.Context, request operations.PutDestinationTeradataRequest, opts ...operations.Option) (*operations.PutDestinationTeradataResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationTeradata",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18856,6 +18925,13 @@ func (s *Destinations) PutDestinationTeradata(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationTeradata",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTeradataPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -18944,13 +19020,6 @@ func (s *Destinations) PutDestinationTeradata(ctx context.Context, request opera
 
 // DeleteDestinationTeradata - Delete a Destination
 func (s *Destinations) DeleteDestinationTeradata(ctx context.Context, request operations.DeleteDestinationTeradataRequest, opts ...operations.Option) (*operations.DeleteDestinationTeradataResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationTeradata",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -18971,6 +19040,14 @@ func (s *Destinations) DeleteDestinationTeradata(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationTeradata",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -19054,13 +19131,6 @@ func (s *Destinations) DeleteDestinationTeradata(ctx context.Context, request op
 // CreateDestinationTimeplus - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationTimeplus(ctx context.Context, request *shared.DestinationTimeplusCreateRequest, opts ...operations.Option) (*operations.CreateDestinationTimeplusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationTimeplus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19083,6 +19153,13 @@ func (s *Destinations) CreateDestinationTimeplus(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationTimeplus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -19191,13 +19268,6 @@ func (s *Destinations) CreateDestinationTimeplus(ctx context.Context, request *s
 
 // GetDestinationTimeplus - Get Destination details
 func (s *Destinations) GetDestinationTimeplus(ctx context.Context, request operations.GetDestinationTimeplusRequest, opts ...operations.Option) (*operations.GetDestinationTimeplusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationTimeplus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19218,6 +19288,14 @@ func (s *Destinations) GetDestinationTimeplus(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationTimeplus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -19320,13 +19398,6 @@ func (s *Destinations) GetDestinationTimeplus(ctx context.Context, request opera
 
 // PutDestinationTimeplus - Update a Destination fully
 func (s *Destinations) PutDestinationTimeplus(ctx context.Context, request operations.PutDestinationTimeplusRequest, opts ...operations.Option) (*operations.PutDestinationTimeplusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationTimeplus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19349,6 +19420,13 @@ func (s *Destinations) PutDestinationTimeplus(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationTimeplus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTimeplusPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -19437,13 +19515,6 @@ func (s *Destinations) PutDestinationTimeplus(ctx context.Context, request opera
 
 // DeleteDestinationTimeplus - Delete a Destination
 func (s *Destinations) DeleteDestinationTimeplus(ctx context.Context, request operations.DeleteDestinationTimeplusRequest, opts ...operations.Option) (*operations.DeleteDestinationTimeplusResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationTimeplus",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19464,6 +19535,14 @@ func (s *Destinations) DeleteDestinationTimeplus(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationTimeplus",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -19547,13 +19626,6 @@ func (s *Destinations) DeleteDestinationTimeplus(ctx context.Context, request op
 // CreateDestinationTypesense - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationTypesense(ctx context.Context, request *shared.DestinationTypesenseCreateRequest, opts ...operations.Option) (*operations.CreateDestinationTypesenseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationTypesense",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19576,6 +19648,13 @@ func (s *Destinations) CreateDestinationTypesense(ctx context.Context, request *
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationTypesense",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -19684,13 +19763,6 @@ func (s *Destinations) CreateDestinationTypesense(ctx context.Context, request *
 
 // GetDestinationTypesense - Get Destination details
 func (s *Destinations) GetDestinationTypesense(ctx context.Context, request operations.GetDestinationTypesenseRequest, opts ...operations.Option) (*operations.GetDestinationTypesenseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationTypesense",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19711,6 +19783,14 @@ func (s *Destinations) GetDestinationTypesense(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationTypesense",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -19813,13 +19893,6 @@ func (s *Destinations) GetDestinationTypesense(ctx context.Context, request oper
 
 // PutDestinationTypesense - Update a Destination fully
 func (s *Destinations) PutDestinationTypesense(ctx context.Context, request operations.PutDestinationTypesenseRequest, opts ...operations.Option) (*operations.PutDestinationTypesenseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationTypesense",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19842,6 +19915,13 @@ func (s *Destinations) PutDestinationTypesense(ctx context.Context, request oper
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationTypesense",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTypesensePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -19930,13 +20010,6 @@ func (s *Destinations) PutDestinationTypesense(ctx context.Context, request oper
 
 // DeleteDestinationTypesense - Delete a Destination
 func (s *Destinations) DeleteDestinationTypesense(ctx context.Context, request operations.DeleteDestinationTypesenseRequest, opts ...operations.Option) (*operations.DeleteDestinationTypesenseResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationTypesense",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -19957,6 +20030,14 @@ func (s *Destinations) DeleteDestinationTypesense(ctx context.Context, request o
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationTypesense",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -20040,13 +20121,6 @@ func (s *Destinations) DeleteDestinationTypesense(ctx context.Context, request o
 // CreateDestinationVectara - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationVectara(ctx context.Context, request *shared.DestinationVectaraCreateRequest, opts ...operations.Option) (*operations.CreateDestinationVectaraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationVectara",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20069,6 +20143,13 @@ func (s *Destinations) CreateDestinationVectara(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationVectara",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -20177,13 +20258,6 @@ func (s *Destinations) CreateDestinationVectara(ctx context.Context, request *sh
 
 // GetDestinationVectara - Get Destination details
 func (s *Destinations) GetDestinationVectara(ctx context.Context, request operations.GetDestinationVectaraRequest, opts ...operations.Option) (*operations.GetDestinationVectaraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationVectara",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20204,6 +20278,14 @@ func (s *Destinations) GetDestinationVectara(ctx context.Context, request operat
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationVectara",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -20306,13 +20388,6 @@ func (s *Destinations) GetDestinationVectara(ctx context.Context, request operat
 
 // PutDestinationVectara - Update a Destination fully
 func (s *Destinations) PutDestinationVectara(ctx context.Context, request operations.PutDestinationVectaraRequest, opts ...operations.Option) (*operations.PutDestinationVectaraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationVectara",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20335,6 +20410,13 @@ func (s *Destinations) PutDestinationVectara(ctx context.Context, request operat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationVectara",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationVectaraPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -20423,13 +20505,6 @@ func (s *Destinations) PutDestinationVectara(ctx context.Context, request operat
 
 // DeleteDestinationVectara - Delete a Destination
 func (s *Destinations) DeleteDestinationVectara(ctx context.Context, request operations.DeleteDestinationVectaraRequest, opts ...operations.Option) (*operations.DeleteDestinationVectaraResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationVectara",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20450,6 +20525,14 @@ func (s *Destinations) DeleteDestinationVectara(ctx context.Context, request ope
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationVectara",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -20533,13 +20616,6 @@ func (s *Destinations) DeleteDestinationVectara(ctx context.Context, request ope
 // CreateDestinationWeaviate - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationWeaviate(ctx context.Context, request *shared.DestinationWeaviateCreateRequest, opts ...operations.Option) (*operations.CreateDestinationWeaviateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationWeaviate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20562,6 +20638,13 @@ func (s *Destinations) CreateDestinationWeaviate(ctx context.Context, request *s
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationWeaviate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -20670,13 +20753,6 @@ func (s *Destinations) CreateDestinationWeaviate(ctx context.Context, request *s
 
 // GetDestinationWeaviate - Get Destination details
 func (s *Destinations) GetDestinationWeaviate(ctx context.Context, request operations.GetDestinationWeaviateRequest, opts ...operations.Option) (*operations.GetDestinationWeaviateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationWeaviate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20697,6 +20773,14 @@ func (s *Destinations) GetDestinationWeaviate(ctx context.Context, request opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationWeaviate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -20799,13 +20883,6 @@ func (s *Destinations) GetDestinationWeaviate(ctx context.Context, request opera
 
 // PutDestinationWeaviate - Update a Destination fully
 func (s *Destinations) PutDestinationWeaviate(ctx context.Context, request operations.PutDestinationWeaviateRequest, opts ...operations.Option) (*operations.PutDestinationWeaviateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationWeaviate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20828,6 +20905,13 @@ func (s *Destinations) PutDestinationWeaviate(ctx context.Context, request opera
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationWeaviate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationWeaviatePutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -20916,13 +21000,6 @@ func (s *Destinations) PutDestinationWeaviate(ctx context.Context, request opera
 
 // DeleteDestinationWeaviate - Delete a Destination
 func (s *Destinations) DeleteDestinationWeaviate(ctx context.Context, request operations.DeleteDestinationWeaviateRequest, opts ...operations.Option) (*operations.DeleteDestinationWeaviateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationWeaviate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -20943,6 +21020,14 @@ func (s *Destinations) DeleteDestinationWeaviate(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationWeaviate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -21026,13 +21111,6 @@ func (s *Destinations) DeleteDestinationWeaviate(ctx context.Context, request op
 // CreateDestinationYellowbrick - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationYellowbrick(ctx context.Context, request *shared.DestinationYellowbrickCreateRequest, opts ...operations.Option) (*operations.CreateDestinationYellowbrickResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21055,6 +21133,13 @@ func (s *Destinations) CreateDestinationYellowbrick(ctx context.Context, request
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationYellowbrick",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -21163,13 +21248,6 @@ func (s *Destinations) CreateDestinationYellowbrick(ctx context.Context, request
 
 // GetDestinationYellowbrick - Get Destination details
 func (s *Destinations) GetDestinationYellowbrick(ctx context.Context, request operations.GetDestinationYellowbrickRequest, opts ...operations.Option) (*operations.GetDestinationYellowbrickResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21190,6 +21268,14 @@ func (s *Destinations) GetDestinationYellowbrick(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationYellowbrick",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -21292,13 +21378,6 @@ func (s *Destinations) GetDestinationYellowbrick(ctx context.Context, request op
 
 // PutDestinationYellowbrick - Update a Destination fully
 func (s *Destinations) PutDestinationYellowbrick(ctx context.Context, request operations.PutDestinationYellowbrickRequest, opts ...operations.Option) (*operations.PutDestinationYellowbrickResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21321,6 +21400,13 @@ func (s *Destinations) PutDestinationYellowbrick(ctx context.Context, request op
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationYellowbrick",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationYellowbrickPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -21409,13 +21495,6 @@ func (s *Destinations) PutDestinationYellowbrick(ctx context.Context, request op
 
 // DeleteDestinationYellowbrick - Delete a Destination
 func (s *Destinations) DeleteDestinationYellowbrick(ctx context.Context, request operations.DeleteDestinationYellowbrickRequest, opts ...operations.Option) (*operations.DeleteDestinationYellowbrickResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21436,6 +21515,14 @@ func (s *Destinations) DeleteDestinationYellowbrick(ctx context.Context, request
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationYellowbrick",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -21519,13 +21606,6 @@ func (s *Destinations) DeleteDestinationYellowbrick(ctx context.Context, request
 // CreateDestinationCustom - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationCustom(ctx context.Context, request *shared.DestinationCustomCreateRequest, opts ...operations.Option) (*operations.CreateDestinationCustomResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createDestinationCustom",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21548,6 +21628,13 @@ func (s *Destinations) CreateDestinationCustom(ctx context.Context, request *sha
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationCustom",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -21656,13 +21743,6 @@ func (s *Destinations) CreateDestinationCustom(ctx context.Context, request *sha
 
 // GetDestinationCustom - Get Destination details
 func (s *Destinations) GetDestinationCustom(ctx context.Context, request operations.GetDestinationCustomRequest, opts ...operations.Option) (*operations.GetDestinationCustomResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getDestinationCustom",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21683,6 +21763,14 @@ func (s *Destinations) GetDestinationCustom(ctx context.Context, request operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationCustom",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -21785,13 +21873,6 @@ func (s *Destinations) GetDestinationCustom(ctx context.Context, request operati
 
 // PutDestinationCustom - Update a Destination fully
 func (s *Destinations) PutDestinationCustom(ctx context.Context, request operations.PutDestinationCustomRequest, opts ...operations.Option) (*operations.PutDestinationCustomResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "putDestinationCustom",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21814,6 +21895,13 @@ func (s *Destinations) PutDestinationCustom(ctx context.Context, request operati
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationCustom",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationCustomPutRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -21902,13 +21990,6 @@ func (s *Destinations) PutDestinationCustom(ctx context.Context, request operati
 
 // DeleteDestinationCustom - Delete a Destination
 func (s *Destinations) DeleteDestinationCustom(ctx context.Context, request operations.DeleteDestinationCustomRequest, opts ...operations.Option) (*operations.DeleteDestinationCustomResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteDestinationCustom",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -21929,6 +22010,14 @@ func (s *Destinations) DeleteDestinationCustom(ctx context.Context, request oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationCustom",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

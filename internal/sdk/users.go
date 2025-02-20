@@ -28,13 +28,6 @@ func newUsers(sdkConfig sdkConfiguration) *Users {
 // ListUsersWithinAnOrganization - List all users within an organization
 // Organization Admin user can list all users within the same organization. Also provide filtering on a list of user IDs or/and a list of user emails.
 func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request operations.ListUsersWithinAnOrganizationRequest, opts ...operations.Option) (*operations.ListUsersWithinAnOrganizationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listUsersWithinAnOrganization",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -55,6 +48,14 @@ func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request opera
 	opURL, err := url.JoinPath(baseURL, "/users")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listUsersWithinAnOrganization",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

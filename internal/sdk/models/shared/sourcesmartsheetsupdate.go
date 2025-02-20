@@ -288,6 +288,19 @@ type SourceSmartsheetsUpdate struct {
 	SpreadsheetID string `json:"spreadsheet_id"`
 	// A List of available columns which metadata can be pulled from.
 	MetadataFields []SourceSmartsheetsUpdateValidenums `json:"metadata_fields,omitempty"`
+	// If true, the source will treat the provided sheet_id as a report. If false, the source will treat the provided sheet_id as a sheet.
+	IsReport *bool `default:"false" json:"is_report"`
+}
+
+func (s SourceSmartsheetsUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceSmartsheetsUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceSmartsheetsUpdate) GetCredentials() SourceSmartsheetsUpdateAuthorizationMethod {
@@ -309,4 +322,11 @@ func (o *SourceSmartsheetsUpdate) GetMetadataFields() []SourceSmartsheetsUpdateV
 		return nil
 	}
 	return o.MetadataFields
+}
+
+func (o *SourceSmartsheetsUpdate) GetIsReport() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsReport
 }

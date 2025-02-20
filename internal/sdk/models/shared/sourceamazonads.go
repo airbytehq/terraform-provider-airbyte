@@ -62,81 +62,6 @@ func (e *Region) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// StateFilterEnum - An enumeration.
-type StateFilterEnum string
-
-const (
-	StateFilterEnumEnabled  StateFilterEnum = "enabled"
-	StateFilterEnumPaused   StateFilterEnum = "paused"
-	StateFilterEnumArchived StateFilterEnum = "archived"
-)
-
-func (e StateFilterEnum) ToPointer() *StateFilterEnum {
-	return &e
-}
-func (e *StateFilterEnum) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "enabled":
-		fallthrough
-	case "paused":
-		fallthrough
-	case "archived":
-		*e = StateFilterEnum(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for StateFilterEnum: %v", v)
-	}
-}
-
-// ReportRecordTypeEnum - An enumeration.
-type ReportRecordTypeEnum string
-
-const (
-	ReportRecordTypeEnumAdGroups      ReportRecordTypeEnum = "adGroups"
-	ReportRecordTypeEnumAsins         ReportRecordTypeEnum = "asins"
-	ReportRecordTypeEnumAsinsKeywords ReportRecordTypeEnum = "asins_keywords"
-	ReportRecordTypeEnumAsinsTargets  ReportRecordTypeEnum = "asins_targets"
-	ReportRecordTypeEnumCampaigns     ReportRecordTypeEnum = "campaigns"
-	ReportRecordTypeEnumKeywords      ReportRecordTypeEnum = "keywords"
-	ReportRecordTypeEnumProductAds    ReportRecordTypeEnum = "productAds"
-	ReportRecordTypeEnumTargets       ReportRecordTypeEnum = "targets"
-)
-
-func (e ReportRecordTypeEnum) ToPointer() *ReportRecordTypeEnum {
-	return &e
-}
-func (e *ReportRecordTypeEnum) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "adGroups":
-		fallthrough
-	case "asins":
-		fallthrough
-	case "asins_keywords":
-		fallthrough
-	case "asins_targets":
-		fallthrough
-	case "campaigns":
-		fallthrough
-	case "keywords":
-		fallthrough
-	case "productAds":
-		fallthrough
-	case "targets":
-		*e = ReportRecordTypeEnum(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ReportRecordTypeEnum: %v", v)
-	}
-}
-
 type AmazonAds string
 
 const (
@@ -176,13 +101,9 @@ type SourceAmazonAds struct {
 	Profiles []int64 `json:"profiles,omitempty"`
 	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
-	// Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
-	StateFilter []StateFilterEnum `json:"state_filter,omitempty"`
 	// The amount of days to go back in time to get the updated data from Amazon Ads
-	LookBackWindow *int64 `default:"3" json:"look_back_window"`
-	// Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
-	ReportRecordTypes []ReportRecordTypeEnum `json:"report_record_types,omitempty"`
-	sourceType        AmazonAds              `const:"amazon-ads" json:"sourceType"`
+	LookBackWindow *int64    `default:"3" json:"look_back_window"`
+	sourceType     AmazonAds `const:"amazon-ads" json:"sourceType"`
 }
 
 func (s SourceAmazonAds) MarshalJSON() ([]byte, error) {
@@ -249,25 +170,11 @@ func (o *SourceAmazonAds) GetMarketplaceIds() []string {
 	return o.MarketplaceIds
 }
 
-func (o *SourceAmazonAds) GetStateFilter() []StateFilterEnum {
-	if o == nil {
-		return nil
-	}
-	return o.StateFilter
-}
-
 func (o *SourceAmazonAds) GetLookBackWindow() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.LookBackWindow
-}
-
-func (o *SourceAmazonAds) GetReportRecordTypes() []ReportRecordTypeEnum {
-	if o == nil {
-		return nil
-	}
-	return o.ReportRecordTypes
 }
 
 func (o *SourceAmazonAds) GetSourceType() AmazonAds {

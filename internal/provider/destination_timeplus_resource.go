@@ -67,7 +67,7 @@ func (r *DestinationTimeplusResource) Schema(ctx context.Context, req resource.S
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://us-west-2.timeplus.cloud/<workspace_id>"),
+						Default:     stringdefault.StaticString(`https://us-west-2.timeplus.cloud/<workspace_id>`),
 						Description: `Timeplus workspace endpoint. Default: "https://us-west-2.timeplus.cloud/<workspace_id>"`,
 					},
 				},

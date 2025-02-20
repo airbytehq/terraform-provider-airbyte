@@ -152,7 +152,7 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 										Computed:    true,
 										Optional:    true,
 										Sensitive:   true,
-										Default:     stringdefault.StaticString(""),
+										Default:     stringdefault.StaticString(``),
 										Description: `Default: ""`,
 									},
 									"base_url": schema.StringAttribute{
@@ -166,7 +166,7 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 									"model_name": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("text-embedding-ada-002"),
+										Default:     stringdefault.StaticString(`text-embedding-ada-002`),
 										Description: `The name of the model to use for embedding. Default: "text-embedding-ada-002"`,
 									},
 								},
@@ -247,7 +247,7 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 							"db": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString(""),
+								Default:     stringdefault.StaticString(``),
 								Description: `The database to connect to. Default: ""`,
 							},
 							"host": schema.StringAttribute{
@@ -257,13 +257,13 @@ func (r *DestinationMilvusResource) Schema(ctx context.Context, req resource.Sch
 							"text_field": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("text"),
+								Default:     stringdefault.StaticString(`text`),
 								Description: `The field in the entity that contains the embedded text. Default: "text"`,
 							},
 							"vector_field": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("vector"),
+								Default:     stringdefault.StaticString(`vector`),
 								Description: `The field in the entity that contains the vector. Default: "vector"`,
 							},
 						},

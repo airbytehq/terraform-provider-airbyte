@@ -123,7 +123,7 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 					"subdomain": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The unique subdomain of your Zendesk account (without https://). <a href="https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain">See the Zendesk docs to find your subdomain</a>. Default: ""`,
 					},
 				},

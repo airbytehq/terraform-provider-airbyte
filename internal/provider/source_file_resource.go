@@ -71,7 +71,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"format": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("csv"),
+						Default:     stringdefault.StaticString(`csv`),
 						Description: `The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs). Default: "csv"; must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "fwf", "feather", "parquet", "yaml"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -215,7 +215,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 									"port": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("22"),
+										Default:     stringdefault.StaticString(`22`),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
@@ -247,7 +247,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 									"port": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("22"),
+										Default:     stringdefault.StaticString(`22`),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{
@@ -279,7 +279,7 @@ func (r *SourceFileResource) Schema(ctx context.Context, req resource.SchemaRequ
 									"port": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("22"),
+										Default:     stringdefault.StaticString(`22`),
 										Description: `Default: "22"`,
 									},
 									"user": schema.StringAttribute{

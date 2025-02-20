@@ -109,7 +109,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 									"encryption_algorithm": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("AES256"),
+										Default:     stringdefault.StaticString(`AES256`),
 										Description: `This parameter defines what encryption algorithm is used. Default: "AES256"; must be one of ["AES256", "RC4_56", "3DES168"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

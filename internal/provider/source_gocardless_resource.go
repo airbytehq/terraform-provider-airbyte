@@ -74,7 +74,7 @@ func (r *SourceGocardlessResource) Schema(ctx context.Context, req resource.Sche
 					"gocardless_environment": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("sandbox"),
+						Default:     stringdefault.StaticString(`sandbox`),
 						Description: `Environment you are trying to connect to. Default: "sandbox"; must be one of ["sandbox", "live"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

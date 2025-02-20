@@ -82,7 +82,7 @@ func (r *SourceCastorEdcResource) Schema(ctx context.Context, req resource.Schem
 					"url_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("uk"),
+						Default:     stringdefault.StaticString(`uk`),
 						Description: `The url region given at time of registration. Default: "uk"; must be one of ["uk", "nl", "us"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

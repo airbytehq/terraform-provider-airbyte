@@ -27,13 +27,6 @@ func newWorkspaces(sdkConfig sdkConfiguration) *Workspaces {
 
 // ListWorkspaces - List workspaces
 func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.ListWorkspacesRequest, opts ...operations.Option) (*operations.ListWorkspacesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listWorkspaces",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -54,6 +47,14 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 	opURL, err := url.JoinPath(baseURL, "/workspaces")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listWorkspaces",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -160,13 +161,6 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 
 // CreateWorkspace - Create a workspace
 func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.WorkspaceCreateRequest, opts ...operations.Option) (*operations.CreateWorkspaceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createWorkspace",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -189,6 +183,13 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createWorkspace",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -297,13 +298,6 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 
 // GetWorkspace - Get Workspace details
 func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWorkspaceRequest, opts ...operations.Option) (*operations.GetWorkspaceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getWorkspace",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -324,6 +318,14 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/workspaces/{workspaceId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getWorkspace",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -426,13 +428,6 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 
 // UpdateWorkspace - Update a workspace
 func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.UpdateWorkspaceRequest, opts ...operations.Option) (*operations.UpdateWorkspaceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "updateWorkspace",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -455,6 +450,13 @@ func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "updateWorkspace",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -563,13 +565,6 @@ func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 
 // DeleteWorkspace - Delete a Workspace
 func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.DeleteWorkspaceRequest, opts ...operations.Option) (*operations.DeleteWorkspaceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deleteWorkspace",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -590,6 +585,14 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/workspaces/{workspaceId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteWorkspace",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -674,13 +677,6 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 // Create/update a set of OAuth credentials to override the Airbyte-provided OAuth credentials used for source/destination OAuth.
 // In order to determine what the credential configuration needs to be, please see the connector specification of the relevant source/destination.
 func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context, request operations.CreateOrUpdateWorkspaceOAuthCredentialsRequest, opts ...operations.Option) (*operations.CreateOrUpdateWorkspaceOAuthCredentialsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createOrUpdateWorkspaceOAuthCredentials",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -703,6 +699,13 @@ func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createOrUpdateWorkspaceOAuthCredentials",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceOAuthCredentialsRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -85,7 +85,7 @@ func (r *SourceRedditResource) Schema(ctx context.Context, req resource.SchemaRe
 					"query": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("airbyte"),
+						Default:     stringdefault.StaticString(`airbyte`),
 						Description: `Specifies the query for searching in reddits and subreddits. Default: "airbyte"`,
 					},
 					"start_date": schema.StringAttribute{

@@ -71,7 +71,7 @@ func (r *SourceOpsgenieResource) Schema(ctx context.Context, req resource.Schema
 					"endpoint": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("api.opsgenie.com"),
+						Default:     stringdefault.StaticString(`api.opsgenie.com`),
 						Description: `Service endpoint to use for API calls. Default: "api.opsgenie.com"`,
 					},
 					"start_date": schema.StringAttribute{

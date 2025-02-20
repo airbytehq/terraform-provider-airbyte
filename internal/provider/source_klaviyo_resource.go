@@ -76,7 +76,7 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 						Computed:    true,
 						Optional:    true,
 						Default:     int64default.StaticInt64(10),
-						Description: `The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>. Default: 10`,
+						Description: `The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>. Default: 10`,
 						Validators: []validator.Int64{
 							int64validator.Between(1, 50),
 						},

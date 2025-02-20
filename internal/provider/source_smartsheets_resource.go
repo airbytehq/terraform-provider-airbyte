@@ -16,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -118,6 +119,12 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 								},
 							},
 						},
+					},
+					"is_report": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `If true, the source will treat the provided sheet_id as a report. If false, the source will treat the provided sheet_id as a sheet. Default: false`,
 					},
 					"metadata_fields": schema.ListAttribute{
 						Optional:    true,

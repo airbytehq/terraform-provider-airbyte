@@ -76,7 +76,7 @@ func (r *SourceMentionResource) Schema(ctx context.Context, req resource.SchemaR
 					"stats_interval": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("P1D"),
+						Default:     stringdefault.StaticString(`P1D`),
 						Description: `Periodicity of statistics returned. it may be daily(P1D), weekly(P1W) or monthly(P1M). Default: "P1D"; must be one of ["P1D", "P1W", "P1M"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

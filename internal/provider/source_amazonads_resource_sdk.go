@@ -50,31 +50,21 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsCreateRequest() *s
 	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
 		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
 	}
-	var stateFilter []shared.StateFilterEnum = []shared.StateFilterEnum{}
-	for _, stateFilterItem := range r.Configuration.StateFilter {
-		stateFilter = append(stateFilter, shared.StateFilterEnum(stateFilterItem.ValueString()))
-	}
 	lookBackWindow := new(int64)
 	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
 		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
 	} else {
 		lookBackWindow = nil
 	}
-	var reportRecordTypes []shared.ReportRecordTypeEnum = []shared.ReportRecordTypeEnum{}
-	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
-		reportRecordTypes = append(reportRecordTypes, shared.ReportRecordTypeEnum(reportRecordTypesItem.ValueString()))
-	}
 	configuration := shared.SourceAmazonAds{
-		ClientID:          clientID,
-		ClientSecret:      clientSecret,
-		RefreshToken:      refreshToken,
-		Region:            region,
-		StartDate:         startDate,
-		Profiles:          profiles,
-		MarketplaceIds:    marketplaceIds,
-		StateFilter:       stateFilter,
-		LookBackWindow:    lookBackWindow,
-		ReportRecordTypes: reportRecordTypes,
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
+		RefreshToken:   refreshToken,
+		Region:         region,
+		StartDate:      startDate,
+		Profiles:       profiles,
+		MarketplaceIds: marketplaceIds,
+		LookBackWindow: lookBackWindow,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -139,31 +129,21 @@ func (r *SourceAmazonAdsResourceModel) ToSharedSourceAmazonAdsPutRequest() *shar
 	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
 		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
 	}
-	var stateFilter []shared.SourceAmazonAdsUpdateStateFilterEnum = []shared.SourceAmazonAdsUpdateStateFilterEnum{}
-	for _, stateFilterItem := range r.Configuration.StateFilter {
-		stateFilter = append(stateFilter, shared.SourceAmazonAdsUpdateStateFilterEnum(stateFilterItem.ValueString()))
-	}
 	lookBackWindow := new(int64)
 	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
 		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
 	} else {
 		lookBackWindow = nil
 	}
-	var reportRecordTypes []shared.SourceAmazonAdsUpdateReportRecordTypeEnum = []shared.SourceAmazonAdsUpdateReportRecordTypeEnum{}
-	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
-		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsUpdateReportRecordTypeEnum(reportRecordTypesItem.ValueString()))
-	}
 	configuration := shared.SourceAmazonAdsUpdate{
-		ClientID:          clientID,
-		ClientSecret:      clientSecret,
-		RefreshToken:      refreshToken,
-		Region:            region,
-		StartDate:         startDate,
-		Profiles:          profiles,
-		MarketplaceIds:    marketplaceIds,
-		StateFilter:       stateFilter,
-		LookBackWindow:    lookBackWindow,
-		ReportRecordTypes: reportRecordTypes,
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
+		RefreshToken:   refreshToken,
+		Region:         region,
+		StartDate:      startDate,
+		Profiles:       profiles,
+		MarketplaceIds: marketplaceIds,
+		LookBackWindow: lookBackWindow,
 	}
 	out := shared.SourceAmazonAdsPutRequest{
 		Name:          name,

@@ -5,6 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceVitally struct {
-	APIKey types.String `tfsdk:"api_key"`
-	Status types.String `tfsdk:"status"`
+	BasicAuthHeader types.String `tfsdk:"basic_auth_header"`
+	Domain          types.String `tfsdk:"domain"`
+	SecretToken     types.String `tfsdk:"secret_token"`
+	Status          types.String `tfsdk:"status"`
 }

@@ -70,7 +70,7 @@ func (r *SourceFinancialModellingResource) Schema(ctx context.Context, req resou
 					"exchange": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("NASDAQ"),
+						Default:     stringdefault.StaticString(`NASDAQ`),
 						Description: `The stock exchange : AMEX, AMS, AQS, ASX, ATH, BER, BME, BRU, BSE, BUD, BUE, BVC, CAI, CBOE, CNQ, CPH, DFM, DOH, DUS, DXE, EGX, EURONEXT, HAM, HEL, HKSE, ICE, IOB, IST, JKT, JNB, JPX, KLS, KOE, KSC, KUW, LSE, MCX, MEX, MIL, MUN, NASDAQ, NEO, NSE, NYSE, NZE, OEM, OQX, OSL, OTC, PNK, PRA, RIS, SAO, SAU, SES, SET, SGO, SHH, SHZ, SIX, STO, STU, TAI, TLV, TSX, TSXV, TWO, VIE, VSE, WSE, XETRA. Default: "NASDAQ"`,
 					},
 					"marketcaplowerthan": schema.StringAttribute{
@@ -90,7 +90,7 @@ func (r *SourceFinancialModellingResource) Schema(ctx context.Context, req resou
 					"time_frame": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("4hour"),
+						Default:     stringdefault.StaticString(`4hour`),
 						Description: `For example 1min, 5min, 15min, 30min, 1hour, 4hour. Default: "4hour"; must be one of ["1min", "5min", "15min", "30min", "1hour", "4hour"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

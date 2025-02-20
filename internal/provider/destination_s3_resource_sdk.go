@@ -3,6 +3,7 @@
 package provider
 
 import (
+	"encoding/json"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -75,8 +76,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				} else {
 					compressionType = nil
 				}
+				var additionalProperties interface{}
+				if !r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.ValueString()), &additionalProperties)
+				}
 				destinationS3NoCompression = &shared.DestinationS3NoCompression{
-					CompressionType: compressionType,
+					CompressionType:      compressionType,
+					AdditionalProperties: additionalProperties,
 				}
 			}
 			if destinationS3NoCompression != nil {
@@ -92,8 +98,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				} else {
 					compressionType1 = nil
 				}
+				var additionalProperties1 interface{}
+				if !r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.ValueString()), &additionalProperties1)
+				}
 				destinationS3GZIP = &shared.DestinationS3GZIP{
-					CompressionType: compressionType1,
+					CompressionType:      compressionType1,
+					AdditionalProperties: additionalProperties1,
 				}
 			}
 			if destinationS3GZIP != nil {
@@ -102,10 +113,15 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				}
 			}
 		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
 		destinationS3CSVCommaSeparatedValues = &shared.DestinationS3CSVCommaSeparatedValues{
-			FormatType:  formatType,
-			Flattening:  flattening,
-			Compression: compression,
+			FormatType:           formatType,
+			Flattening:           flattening,
+			Compression:          compression,
+			AdditionalProperties: additionalProperties2,
 		}
 	}
 	if destinationS3CSVCommaSeparatedValues != nil {
@@ -137,8 +153,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				} else {
 					compressionType2 = nil
 				}
+				var additionalProperties3 interface{}
+				if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.ValueString()), &additionalProperties3)
+				}
 				destinationS3SchemasNoCompression = &shared.DestinationS3SchemasNoCompression{
-					CompressionType: compressionType2,
+					CompressionType:      compressionType2,
+					AdditionalProperties: additionalProperties3,
 				}
 			}
 			if destinationS3SchemasNoCompression != nil {
@@ -154,8 +175,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				} else {
 					compressionType3 = nil
 				}
+				var additionalProperties4 interface{}
+				if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.ValueString()), &additionalProperties4)
+				}
 				destinationS3SchemasGZIP = &shared.DestinationS3SchemasGZIP{
-					CompressionType: compressionType3,
+					CompressionType:      compressionType3,
+					AdditionalProperties: additionalProperties4,
 				}
 			}
 			if destinationS3SchemasGZIP != nil {
@@ -164,10 +190,15 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				}
 			}
 		}
+		var additionalProperties5 interface{}
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.ValueString()), &additionalProperties5)
+		}
 		destinationS3JSONLinesNewlineDelimitedJSON = &shared.DestinationS3JSONLinesNewlineDelimitedJSON{
-			FormatType:  formatType1,
-			Flattening:  flattening1,
-			Compression: compression1,
+			FormatType:           formatType1,
+			Flattening:           flattening1,
+			Compression:          compression1,
+			AdditionalProperties: additionalProperties5,
 		}
 	}
 	if destinationS3JSONLinesNewlineDelimitedJSON != nil {
@@ -192,8 +223,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec = nil
 			}
+			var additionalProperties6 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.ValueString()), &additionalProperties6)
+			}
 			destinationS3SchemasFormatNoCompression = &shared.DestinationS3SchemasFormatNoCompression{
-				Codec: codec,
+				Codec:                codec,
+				AdditionalProperties: additionalProperties6,
 			}
 		}
 		if destinationS3SchemasFormatNoCompression != nil {
@@ -209,15 +245,17 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec1 = nil
 			}
-			compressionLevel := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.IsNull() {
-				*compressionLevel = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel = nil
+			var compressionLevel int64
+			compressionLevel = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.ValueInt64()
+
+			var additionalProperties7 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.ValueString()), &additionalProperties7)
 			}
 			destinationS3Deflate = &shared.DestinationS3Deflate{
-				Codec:            codec1,
-				CompressionLevel: compressionLevel,
+				Codec:                codec1,
+				CompressionLevel:     compressionLevel,
+				AdditionalProperties: additionalProperties7,
 			}
 		}
 		if destinationS3Deflate != nil {
@@ -233,8 +271,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec2 = nil
 			}
+			var additionalProperties8 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.ValueString()), &additionalProperties8)
+			}
 			destinationS3Bzip2 = &shared.DestinationS3Bzip2{
-				Codec: codec2,
+				Codec:                codec2,
+				AdditionalProperties: additionalProperties8,
 			}
 		}
 		if destinationS3Bzip2 != nil {
@@ -250,15 +293,17 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec3 = nil
 			}
-			compressionLevel1 := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.IsNull() {
-				*compressionLevel1 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel1 = nil
+			var compressionLevel1 int64
+			compressionLevel1 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.ValueInt64()
+
+			var additionalProperties9 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.ValueString()), &additionalProperties9)
 			}
 			destinationS3Xz = &shared.DestinationS3Xz{
-				Codec:            codec3,
-				CompressionLevel: compressionLevel1,
+				Codec:                codec3,
+				CompressionLevel:     compressionLevel1,
+				AdditionalProperties: additionalProperties9,
 			}
 		}
 		if destinationS3Xz != nil {
@@ -274,22 +319,21 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec4 = nil
 			}
-			compressionLevel2 := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.IsNull() {
-				*compressionLevel2 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel2 = nil
-			}
-			includeChecksum := new(bool)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.IsNull() {
-				*includeChecksum = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.ValueBool()
-			} else {
-				includeChecksum = nil
+			var compressionLevel2 int64
+			compressionLevel2 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.ValueInt64()
+
+			var includeChecksum bool
+			includeChecksum = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.ValueBool()
+
+			var additionalProperties10 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.ValueString()), &additionalProperties10)
 			}
 			destinationS3Zstandard = &shared.DestinationS3Zstandard{
-				Codec:            codec4,
-				CompressionLevel: compressionLevel2,
-				IncludeChecksum:  includeChecksum,
+				Codec:                codec4,
+				CompressionLevel:     compressionLevel2,
+				IncludeChecksum:      includeChecksum,
+				AdditionalProperties: additionalProperties10,
 			}
 		}
 		if destinationS3Zstandard != nil {
@@ -305,8 +349,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			} else {
 				codec5 = nil
 			}
+			var additionalProperties11 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.ValueString()), &additionalProperties11)
+			}
 			destinationS3Snappy = &shared.DestinationS3Snappy{
-				Codec: codec5,
+				Codec:                codec5,
+				AdditionalProperties: additionalProperties11,
 			}
 		}
 		if destinationS3Snappy != nil {
@@ -314,9 +363,14 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 				DestinationS3Snappy: destinationS3Snappy,
 			}
 		}
+		var additionalProperties12 interface{}
+		if !r.Configuration.Format.AvroApacheAvro.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.AdditionalProperties.ValueString()), &additionalProperties12)
+		}
 		destinationS3AvroApacheAvro = &shared.DestinationS3AvroApacheAvro{
-			FormatType:       formatType2,
-			CompressionCodec: compressionCodec,
+			FormatType:           formatType2,
+			CompressionCodec:     compressionCodec,
+			AdditionalProperties: additionalProperties12,
 		}
 	}
 	if destinationS3AvroApacheAvro != nil {
@@ -368,6 +422,10 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 		} else {
 			dictionaryEncoding = nil
 		}
+		var additionalProperties13 interface{}
+		if !r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.ValueString()), &additionalProperties13)
+		}
 		destinationS3ParquetColumnarStorage = &shared.DestinationS3ParquetColumnarStorage{
 			FormatType:           formatType3,
 			CompressionCodec:     compressionCodec1,
@@ -376,6 +434,7 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 			PageSizeKb:           pageSizeKb,
 			DictionaryPageSizeKb: dictionaryPageSizeKb,
 			DictionaryEncoding:   dictionaryEncoding,
+			AdditionalProperties: additionalProperties13,
 		}
 	}
 	if destinationS3ParquetColumnarStorage != nil {
@@ -495,8 +554,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				} else {
 					compressionType = nil
 				}
+				var additionalProperties interface{}
+				if !r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.Compression.NoCompression.AdditionalProperties.ValueString()), &additionalProperties)
+				}
 				destinationS3UpdateNoCompression = &shared.DestinationS3UpdateNoCompression{
-					CompressionType: compressionType,
+					CompressionType:      compressionType,
+					AdditionalProperties: additionalProperties,
 				}
 			}
 			if destinationS3UpdateNoCompression != nil {
@@ -512,8 +576,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				} else {
 					compressionType1 = nil
 				}
+				var additionalProperties1 interface{}
+				if !r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.Compression.Gzip.AdditionalProperties.ValueString()), &additionalProperties1)
+				}
 				destinationS3UpdateGZIP = &shared.DestinationS3UpdateGZIP{
-					CompressionType: compressionType1,
+					CompressionType:      compressionType1,
+					AdditionalProperties: additionalProperties1,
 				}
 			}
 			if destinationS3UpdateGZIP != nil {
@@ -522,10 +591,15 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				}
 			}
 		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
 		destinationS3UpdateCSVCommaSeparatedValues = &shared.DestinationS3UpdateCSVCommaSeparatedValues{
-			FormatType:  formatType,
-			Flattening:  flattening,
-			Compression: compression,
+			FormatType:           formatType,
+			Flattening:           flattening,
+			Compression:          compression,
+			AdditionalProperties: additionalProperties2,
 		}
 	}
 	if destinationS3UpdateCSVCommaSeparatedValues != nil {
@@ -557,8 +631,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				} else {
 					compressionType2 = nil
 				}
+				var additionalProperties3 interface{}
+				if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.NoCompression.AdditionalProperties.ValueString()), &additionalProperties3)
+				}
 				destinationS3UpdateSchemasNoCompression = &shared.DestinationS3UpdateSchemasNoCompression{
-					CompressionType: compressionType2,
+					CompressionType:      compressionType2,
+					AdditionalProperties: additionalProperties3,
 				}
 			}
 			if destinationS3UpdateSchemasNoCompression != nil {
@@ -574,8 +653,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				} else {
 					compressionType3 = nil
 				}
+				var additionalProperties4 interface{}
+				if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.IsNull() {
+					_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression.Gzip.AdditionalProperties.ValueString()), &additionalProperties4)
+				}
 				destinationS3UpdateSchemasGZIP = &shared.DestinationS3UpdateSchemasGZIP{
-					CompressionType: compressionType3,
+					CompressionType:      compressionType3,
+					AdditionalProperties: additionalProperties4,
 				}
 			}
 			if destinationS3UpdateSchemasGZIP != nil {
@@ -584,10 +668,15 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				}
 			}
 		}
+		var additionalProperties5 interface{}
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.ValueString()), &additionalProperties5)
+		}
 		destinationS3UpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationS3UpdateJSONLinesNewlineDelimitedJSON{
-			FormatType:  formatType1,
-			Flattening:  flattening1,
-			Compression: compression1,
+			FormatType:           formatType1,
+			Flattening:           flattening1,
+			Compression:          compression1,
+			AdditionalProperties: additionalProperties5,
 		}
 	}
 	if destinationS3UpdateJSONLinesNewlineDelimitedJSON != nil {
@@ -612,8 +701,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec = nil
 			}
+			var additionalProperties6 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression.AdditionalProperties.ValueString()), &additionalProperties6)
+			}
 			destinationS3UpdateSchemasFormatNoCompression = &shared.DestinationS3UpdateSchemasFormatNoCompression{
-				Codec: codec,
+				Codec:                codec,
+				AdditionalProperties: additionalProperties6,
 			}
 		}
 		if destinationS3UpdateSchemasFormatNoCompression != nil {
@@ -629,15 +723,17 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec1 = nil
 			}
-			compressionLevel := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.IsNull() {
-				*compressionLevel = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel = nil
+			var compressionLevel int64
+			compressionLevel = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.CompressionLevel.ValueInt64()
+
+			var additionalProperties7 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Deflate.AdditionalProperties.ValueString()), &additionalProperties7)
 			}
 			destinationS3UpdateDeflate = &shared.DestinationS3UpdateDeflate{
-				Codec:            codec1,
-				CompressionLevel: compressionLevel,
+				Codec:                codec1,
+				CompressionLevel:     compressionLevel,
+				AdditionalProperties: additionalProperties7,
 			}
 		}
 		if destinationS3UpdateDeflate != nil {
@@ -653,8 +749,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec2 = nil
 			}
+			var additionalProperties8 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Bzip2.AdditionalProperties.ValueString()), &additionalProperties8)
+			}
 			destinationS3UpdateBzip2 = &shared.DestinationS3UpdateBzip2{
-				Codec: codec2,
+				Codec:                codec2,
+				AdditionalProperties: additionalProperties8,
 			}
 		}
 		if destinationS3UpdateBzip2 != nil {
@@ -670,15 +771,17 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec3 = nil
 			}
-			compressionLevel1 := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.IsNull() {
-				*compressionLevel1 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel1 = nil
+			var compressionLevel1 int64
+			compressionLevel1 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.CompressionLevel.ValueInt64()
+
+			var additionalProperties9 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Xz.AdditionalProperties.ValueString()), &additionalProperties9)
 			}
 			destinationS3UpdateXz = &shared.DestinationS3UpdateXz{
-				Codec:            codec3,
-				CompressionLevel: compressionLevel1,
+				Codec:                codec3,
+				CompressionLevel:     compressionLevel1,
+				AdditionalProperties: additionalProperties9,
 			}
 		}
 		if destinationS3UpdateXz != nil {
@@ -694,22 +797,21 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec4 = nil
 			}
-			compressionLevel2 := new(int64)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.IsNull() {
-				*compressionLevel2 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.ValueInt64()
-			} else {
-				compressionLevel2 = nil
-			}
-			includeChecksum := new(bool)
-			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.IsNull() {
-				*includeChecksum = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.ValueBool()
-			} else {
-				includeChecksum = nil
+			var compressionLevel2 int64
+			compressionLevel2 = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.CompressionLevel.ValueInt64()
+
+			var includeChecksum bool
+			includeChecksum = r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.IncludeChecksum.ValueBool()
+
+			var additionalProperties10 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Zstandard.AdditionalProperties.ValueString()), &additionalProperties10)
 			}
 			destinationS3UpdateZstandard = &shared.DestinationS3UpdateZstandard{
-				Codec:            codec4,
-				CompressionLevel: compressionLevel2,
-				IncludeChecksum:  includeChecksum,
+				Codec:                codec4,
+				CompressionLevel:     compressionLevel2,
+				IncludeChecksum:      includeChecksum,
+				AdditionalProperties: additionalProperties10,
 			}
 		}
 		if destinationS3UpdateZstandard != nil {
@@ -725,8 +827,13 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			} else {
 				codec5 = nil
 			}
+			var additionalProperties11 interface{}
+			if !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.CompressionCodec.Snappy.AdditionalProperties.ValueString()), &additionalProperties11)
+			}
 			destinationS3UpdateSnappy = &shared.DestinationS3UpdateSnappy{
-				Codec: codec5,
+				Codec:                codec5,
+				AdditionalProperties: additionalProperties11,
 			}
 		}
 		if destinationS3UpdateSnappy != nil {
@@ -734,9 +841,14 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 				DestinationS3UpdateSnappy: destinationS3UpdateSnappy,
 			}
 		}
+		var additionalProperties12 interface{}
+		if !r.Configuration.Format.AvroApacheAvro.AdditionalProperties.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.AvroApacheAvro.AdditionalProperties.ValueString()), &additionalProperties12)
+		}
 		destinationS3UpdateAvroApacheAvro = &shared.DestinationS3UpdateAvroApacheAvro{
-			FormatType:       formatType2,
-			CompressionCodec: compressionCodec,
+			FormatType:           formatType2,
+			CompressionCodec:     compressionCodec,
+			AdditionalProperties: additionalProperties12,
 		}
 	}
 	if destinationS3UpdateAvroApacheAvro != nil {
@@ -788,6 +900,10 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 		} else {
 			dictionaryEncoding = nil
 		}
+		var additionalProperties13 interface{}
+		if !r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.ParquetColumnarStorage.AdditionalProperties.ValueString()), &additionalProperties13)
+		}
 		destinationS3UpdateParquetColumnarStorage = &shared.DestinationS3UpdateParquetColumnarStorage{
 			FormatType:           formatType3,
 			CompressionCodec:     compressionCodec1,
@@ -796,6 +912,7 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3PutRequest() *shared.D
 			PageSizeKb:           pageSizeKb,
 			DictionaryPageSizeKb: dictionaryPageSizeKb,
 			DictionaryEncoding:   dictionaryEncoding,
+			AdditionalProperties: additionalProperties13,
 		}
 	}
 	if destinationS3UpdateParquetColumnarStorage != nil {

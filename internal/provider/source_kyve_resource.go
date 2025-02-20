@@ -71,7 +71,7 @@ func (r *SourceKyveResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"url_base": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://api.kyve.network"),
+						Default:     stringdefault.StaticString(`https://api.kyve.network`),
 						Description: `URL to the KYVE Chain API. Default: "https://api.kyve.network"`,
 					},
 				},

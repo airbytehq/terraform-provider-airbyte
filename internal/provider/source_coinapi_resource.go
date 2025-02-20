@@ -82,7 +82,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"environment": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("sandbox"),
+						Default:     stringdefault.StaticString(`sandbox`),
 						Description: `The environment to use. Either sandbox or production. Default: "sandbox"; must be one of ["sandbox", "production"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

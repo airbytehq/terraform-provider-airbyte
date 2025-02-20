@@ -51,7 +51,8 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
         tunnel_user = "...my_tunnel_user..."
       }
     }
-    username = "...my_username..."
+    unconstrained_number = false
+    username             = "...my_username..."
   }
   definition_id = "6cc561e7-8b38-4621-919b-0687fe3682b7"
   name          = "...my_name..."

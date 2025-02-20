@@ -77,7 +77,7 @@ func (r *SourceTwelveDataResource) Schema(ctx context.Context, req resource.Sche
 					"interval": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("1day"),
+						Default:     stringdefault.StaticString(`1day`),
 						Description: `Between two consecutive points in time series Supports: 1min, 5min, 15min, 30min, 45min, 1h, 2h, 4h, 1day, 1week, 1month. Default: "1day"; must be one of ["1min", "5min", "15min", "30min", "45min", "1h", "2h", "4h", "1day", "1week", "1month"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

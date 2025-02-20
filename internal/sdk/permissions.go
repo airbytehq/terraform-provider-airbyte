@@ -27,13 +27,6 @@ func newPermissions(sdkConfig sdkConfiguration) *Permissions {
 
 // GetPermission - Get Permission details
 func (s *Permissions) GetPermission(ctx context.Context, request operations.GetPermissionRequest, opts ...operations.Option) (*operations.GetPermissionResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getPermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -54,6 +47,14 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/permissions/{permissionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getPermission",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -158,13 +159,6 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 
 // UpdatePermission - Update a permission
 func (s *Permissions) UpdatePermission(ctx context.Context, request operations.UpdatePermissionRequest, opts ...operations.Option) (*operations.UpdatePermissionResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "updatePermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -187,6 +181,13 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "updatePermission",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PermissionUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -299,13 +300,6 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 
 // DeletePermission - Delete a Permission
 func (s *Permissions) DeletePermission(ctx context.Context, request operations.DeletePermissionRequest, opts ...operations.Option) (*operations.DeletePermissionResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "deletePermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -326,6 +320,14 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/permissions/{permissionId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deletePermission",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -410,13 +412,6 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 
 // ListPermissions - List Permissions by user id
 func (s *Permissions) ListPermissions(ctx context.Context, request operations.ListPermissionsRequest, opts ...operations.Option) (*operations.ListPermissionsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listPermissions",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -437,6 +432,14 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 	opURL, err := url.JoinPath(baseURL, "/permissions")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listPermissions",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -543,13 +546,6 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 
 // CreatePermission - Create a permission
 func (s *Permissions) CreatePermission(ctx context.Context, request shared.PermissionCreateRequest, opts ...operations.Option) (*operations.CreatePermissionResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createPermission",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -572,6 +568,13 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createPermission",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

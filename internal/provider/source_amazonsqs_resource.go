@@ -71,7 +71,7 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					"attributes_to_return": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("All"),
+						Default:     stringdefault.StaticString(`All`),
 						Description: `Comma separated list of Mesage Attribute names to return. Default: "All"`,
 					},
 					"max_batch_size": schema.Int64Attribute{
@@ -93,7 +93,7 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("us-east-1"),
+						Default:     stringdefault.StaticString(`us-east-1`),
 						Description: `AWS Region of the SQS Queue. Default: "us-east-1"; must be one of ["af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -141,7 +141,7 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					"target": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("ReceiveMessage"),
+						Default:     stringdefault.StaticString(`ReceiveMessage`),
 						Description: `Note - Different targets have different attribute enum requirements, please refer actions sections in https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/Welcome.html. Default: "ReceiveMessage"; must be one of ["GetQueueAttributes", "ReceiveMessage"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

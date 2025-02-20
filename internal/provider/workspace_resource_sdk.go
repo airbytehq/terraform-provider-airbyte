@@ -3,6 +3,7 @@
 package provider
 
 import (
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -17,9 +18,249 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest() *shared.Worksp
 	} else {
 		organizationID = nil
 	}
+	var notifications *shared.NotificationsConfig
+	if r.Notifications != nil {
+		var failure *shared.NotificationConfig
+		if r.Notifications.Failure != nil {
+			var email *shared.EmailNotificationConfig
+			if r.Notifications.Failure.Email != nil {
+				enabled := new(bool)
+				if !r.Notifications.Failure.Email.Enabled.IsUnknown() && !r.Notifications.Failure.Email.Enabled.IsNull() {
+					*enabled = r.Notifications.Failure.Email.Enabled.ValueBool()
+				} else {
+					enabled = nil
+				}
+				email = &shared.EmailNotificationConfig{
+					Enabled: enabled,
+				}
+			}
+			var webhook *shared.WebhookNotificationConfig
+			if r.Notifications.Failure.Webhook != nil {
+				enabled1 := new(bool)
+				if !r.Notifications.Failure.Webhook.Enabled.IsUnknown() && !r.Notifications.Failure.Webhook.Enabled.IsNull() {
+					*enabled1 = r.Notifications.Failure.Webhook.Enabled.ValueBool()
+				} else {
+					enabled1 = nil
+				}
+				url := new(string)
+				if !r.Notifications.Failure.Webhook.URL.IsUnknown() && !r.Notifications.Failure.Webhook.URL.IsNull() {
+					*url = r.Notifications.Failure.Webhook.URL.ValueString()
+				} else {
+					url = nil
+				}
+				webhook = &shared.WebhookNotificationConfig{
+					Enabled: enabled1,
+					URL:     url,
+				}
+			}
+			failure = &shared.NotificationConfig{
+				Email:   email,
+				Webhook: webhook,
+			}
+		}
+		var success *shared.NotificationConfig
+		if r.Notifications.Success != nil {
+			var email1 *shared.EmailNotificationConfig
+			if r.Notifications.Success.Email != nil {
+				enabled2 := new(bool)
+				if !r.Notifications.Success.Email.Enabled.IsUnknown() && !r.Notifications.Success.Email.Enabled.IsNull() {
+					*enabled2 = r.Notifications.Success.Email.Enabled.ValueBool()
+				} else {
+					enabled2 = nil
+				}
+				email1 = &shared.EmailNotificationConfig{
+					Enabled: enabled2,
+				}
+			}
+			var webhook1 *shared.WebhookNotificationConfig
+			if r.Notifications.Success.Webhook != nil {
+				enabled3 := new(bool)
+				if !r.Notifications.Success.Webhook.Enabled.IsUnknown() && !r.Notifications.Success.Webhook.Enabled.IsNull() {
+					*enabled3 = r.Notifications.Success.Webhook.Enabled.ValueBool()
+				} else {
+					enabled3 = nil
+				}
+				url1 := new(string)
+				if !r.Notifications.Success.Webhook.URL.IsUnknown() && !r.Notifications.Success.Webhook.URL.IsNull() {
+					*url1 = r.Notifications.Success.Webhook.URL.ValueString()
+				} else {
+					url1 = nil
+				}
+				webhook1 = &shared.WebhookNotificationConfig{
+					Enabled: enabled3,
+					URL:     url1,
+				}
+			}
+			success = &shared.NotificationConfig{
+				Email:   email1,
+				Webhook: webhook1,
+			}
+		}
+		var connectionUpdate *shared.NotificationConfig
+		if r.Notifications.ConnectionUpdate != nil {
+			var email2 *shared.EmailNotificationConfig
+			if r.Notifications.ConnectionUpdate.Email != nil {
+				enabled4 := new(bool)
+				if !r.Notifications.ConnectionUpdate.Email.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdate.Email.Enabled.IsNull() {
+					*enabled4 = r.Notifications.ConnectionUpdate.Email.Enabled.ValueBool()
+				} else {
+					enabled4 = nil
+				}
+				email2 = &shared.EmailNotificationConfig{
+					Enabled: enabled4,
+				}
+			}
+			var webhook2 *shared.WebhookNotificationConfig
+			if r.Notifications.ConnectionUpdate.Webhook != nil {
+				enabled5 := new(bool)
+				if !r.Notifications.ConnectionUpdate.Webhook.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdate.Webhook.Enabled.IsNull() {
+					*enabled5 = r.Notifications.ConnectionUpdate.Webhook.Enabled.ValueBool()
+				} else {
+					enabled5 = nil
+				}
+				url2 := new(string)
+				if !r.Notifications.ConnectionUpdate.Webhook.URL.IsUnknown() && !r.Notifications.ConnectionUpdate.Webhook.URL.IsNull() {
+					*url2 = r.Notifications.ConnectionUpdate.Webhook.URL.ValueString()
+				} else {
+					url2 = nil
+				}
+				webhook2 = &shared.WebhookNotificationConfig{
+					Enabled: enabled5,
+					URL:     url2,
+				}
+			}
+			connectionUpdate = &shared.NotificationConfig{
+				Email:   email2,
+				Webhook: webhook2,
+			}
+		}
+		var connectionUpdateActionRequired *shared.NotificationConfig
+		if r.Notifications.ConnectionUpdateActionRequired != nil {
+			var email3 *shared.EmailNotificationConfig
+			if r.Notifications.ConnectionUpdateActionRequired.Email != nil {
+				enabled6 := new(bool)
+				if !r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.IsNull() {
+					*enabled6 = r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.ValueBool()
+				} else {
+					enabled6 = nil
+				}
+				email3 = &shared.EmailNotificationConfig{
+					Enabled: enabled6,
+				}
+			}
+			var webhook3 *shared.WebhookNotificationConfig
+			if r.Notifications.ConnectionUpdateActionRequired.Webhook != nil {
+				enabled7 := new(bool)
+				if !r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.IsNull() {
+					*enabled7 = r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.ValueBool()
+				} else {
+					enabled7 = nil
+				}
+				url3 := new(string)
+				if !r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.IsNull() {
+					*url3 = r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.ValueString()
+				} else {
+					url3 = nil
+				}
+				webhook3 = &shared.WebhookNotificationConfig{
+					Enabled: enabled7,
+					URL:     url3,
+				}
+			}
+			connectionUpdateActionRequired = &shared.NotificationConfig{
+				Email:   email3,
+				Webhook: webhook3,
+			}
+		}
+		var syncDisabled *shared.NotificationConfig
+		if r.Notifications.SyncDisabled != nil {
+			var email4 *shared.EmailNotificationConfig
+			if r.Notifications.SyncDisabled.Email != nil {
+				enabled8 := new(bool)
+				if !r.Notifications.SyncDisabled.Email.Enabled.IsUnknown() && !r.Notifications.SyncDisabled.Email.Enabled.IsNull() {
+					*enabled8 = r.Notifications.SyncDisabled.Email.Enabled.ValueBool()
+				} else {
+					enabled8 = nil
+				}
+				email4 = &shared.EmailNotificationConfig{
+					Enabled: enabled8,
+				}
+			}
+			var webhook4 *shared.WebhookNotificationConfig
+			if r.Notifications.SyncDisabled.Webhook != nil {
+				enabled9 := new(bool)
+				if !r.Notifications.SyncDisabled.Webhook.Enabled.IsUnknown() && !r.Notifications.SyncDisabled.Webhook.Enabled.IsNull() {
+					*enabled9 = r.Notifications.SyncDisabled.Webhook.Enabled.ValueBool()
+				} else {
+					enabled9 = nil
+				}
+				url4 := new(string)
+				if !r.Notifications.SyncDisabled.Webhook.URL.IsUnknown() && !r.Notifications.SyncDisabled.Webhook.URL.IsNull() {
+					*url4 = r.Notifications.SyncDisabled.Webhook.URL.ValueString()
+				} else {
+					url4 = nil
+				}
+				webhook4 = &shared.WebhookNotificationConfig{
+					Enabled: enabled9,
+					URL:     url4,
+				}
+			}
+			syncDisabled = &shared.NotificationConfig{
+				Email:   email4,
+				Webhook: webhook4,
+			}
+		}
+		var syncDisabledWarning *shared.NotificationConfig
+		if r.Notifications.SyncDisabledWarning != nil {
+			var email5 *shared.EmailNotificationConfig
+			if r.Notifications.SyncDisabledWarning.Email != nil {
+				enabled10 := new(bool)
+				if !r.Notifications.SyncDisabledWarning.Email.Enabled.IsUnknown() && !r.Notifications.SyncDisabledWarning.Email.Enabled.IsNull() {
+					*enabled10 = r.Notifications.SyncDisabledWarning.Email.Enabled.ValueBool()
+				} else {
+					enabled10 = nil
+				}
+				email5 = &shared.EmailNotificationConfig{
+					Enabled: enabled10,
+				}
+			}
+			var webhook5 *shared.WebhookNotificationConfig
+			if r.Notifications.SyncDisabledWarning.Webhook != nil {
+				enabled11 := new(bool)
+				if !r.Notifications.SyncDisabledWarning.Webhook.Enabled.IsUnknown() && !r.Notifications.SyncDisabledWarning.Webhook.Enabled.IsNull() {
+					*enabled11 = r.Notifications.SyncDisabledWarning.Webhook.Enabled.ValueBool()
+				} else {
+					enabled11 = nil
+				}
+				url5 := new(string)
+				if !r.Notifications.SyncDisabledWarning.Webhook.URL.IsUnknown() && !r.Notifications.SyncDisabledWarning.Webhook.URL.IsNull() {
+					*url5 = r.Notifications.SyncDisabledWarning.Webhook.URL.ValueString()
+				} else {
+					url5 = nil
+				}
+				webhook5 = &shared.WebhookNotificationConfig{
+					Enabled: enabled11,
+					URL:     url5,
+				}
+			}
+			syncDisabledWarning = &shared.NotificationConfig{
+				Email:   email5,
+				Webhook: webhook5,
+			}
+		}
+		notifications = &shared.NotificationsConfig{
+			Failure:                        failure,
+			Success:                        success,
+			ConnectionUpdate:               connectionUpdate,
+			ConnectionUpdateActionRequired: connectionUpdateActionRequired,
+			SyncDisabled:                   syncDisabled,
+			SyncDisabledWarning:            syncDisabledWarning,
+		}
+	}
 	out := shared.WorkspaceCreateRequest{
 		Name:           name,
 		OrganizationID: organizationID,
+		Notifications:  notifications,
 	}
 	return &out
 }
@@ -32,16 +273,370 @@ func (r *WorkspaceResourceModel) RefreshFromSharedWorkspaceResponse(resp *shared
 			r.DataResidency = types.StringNull()
 		}
 		r.Name = types.StringValue(resp.Name)
+		if r.Notifications == nil {
+			r.Notifications = &tfTypes.NotificationsConfig{}
+		}
+		if resp.Notifications.ConnectionUpdate == nil {
+			r.Notifications.ConnectionUpdate = nil
+		} else {
+			r.Notifications.ConnectionUpdate = &tfTypes.NotificationConfig{}
+			if resp.Notifications.ConnectionUpdate.Email == nil {
+				r.Notifications.ConnectionUpdate.Email = nil
+			} else {
+				r.Notifications.ConnectionUpdate.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.ConnectionUpdate.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Email.Enabled)
+			}
+			if resp.Notifications.ConnectionUpdate.Webhook == nil {
+				r.Notifications.ConnectionUpdate.Webhook = nil
+			} else {
+				r.Notifications.ConnectionUpdate.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.ConnectionUpdate.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Webhook.Enabled)
+				r.Notifications.ConnectionUpdate.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdate.Webhook.URL)
+			}
+		}
+		if resp.Notifications.ConnectionUpdateActionRequired == nil {
+			r.Notifications.ConnectionUpdateActionRequired = nil
+		} else {
+			r.Notifications.ConnectionUpdateActionRequired = &tfTypes.NotificationConfig{}
+			if resp.Notifications.ConnectionUpdateActionRequired.Email == nil {
+				r.Notifications.ConnectionUpdateActionRequired.Email = nil
+			} else {
+				r.Notifications.ConnectionUpdateActionRequired.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.ConnectionUpdateActionRequired.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Email.Enabled)
+			}
+			if resp.Notifications.ConnectionUpdateActionRequired.Webhook == nil {
+				r.Notifications.ConnectionUpdateActionRequired.Webhook = nil
+			} else {
+				r.Notifications.ConnectionUpdateActionRequired.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled)
+				r.Notifications.ConnectionUpdateActionRequired.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.URL)
+			}
+		}
+		if resp.Notifications.Failure == nil {
+			r.Notifications.Failure = nil
+		} else {
+			r.Notifications.Failure = &tfTypes.NotificationConfig{}
+			if resp.Notifications.Failure.Email == nil {
+				r.Notifications.Failure.Email = nil
+			} else {
+				r.Notifications.Failure.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.Failure.Email.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Email.Enabled)
+			}
+			if resp.Notifications.Failure.Webhook == nil {
+				r.Notifications.Failure.Webhook = nil
+			} else {
+				r.Notifications.Failure.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.Failure.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Webhook.Enabled)
+				r.Notifications.Failure.Webhook.URL = types.StringPointerValue(resp.Notifications.Failure.Webhook.URL)
+			}
+		}
+		if resp.Notifications.Success == nil {
+			r.Notifications.Success = nil
+		} else {
+			r.Notifications.Success = &tfTypes.NotificationConfig{}
+			if resp.Notifications.Success.Email == nil {
+				r.Notifications.Success.Email = nil
+			} else {
+				r.Notifications.Success.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.Success.Email.Enabled = types.BoolPointerValue(resp.Notifications.Success.Email.Enabled)
+			}
+			if resp.Notifications.Success.Webhook == nil {
+				r.Notifications.Success.Webhook = nil
+			} else {
+				r.Notifications.Success.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.Success.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Success.Webhook.Enabled)
+				r.Notifications.Success.Webhook.URL = types.StringPointerValue(resp.Notifications.Success.Webhook.URL)
+			}
+		}
+		if resp.Notifications.SyncDisabled == nil {
+			r.Notifications.SyncDisabled = nil
+		} else {
+			r.Notifications.SyncDisabled = &tfTypes.NotificationConfig{}
+			if resp.Notifications.SyncDisabled.Email == nil {
+				r.Notifications.SyncDisabled.Email = nil
+			} else {
+				r.Notifications.SyncDisabled.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.SyncDisabled.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Email.Enabled)
+			}
+			if resp.Notifications.SyncDisabled.Webhook == nil {
+				r.Notifications.SyncDisabled.Webhook = nil
+			} else {
+				r.Notifications.SyncDisabled.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.SyncDisabled.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Webhook.Enabled)
+				r.Notifications.SyncDisabled.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabled.Webhook.URL)
+			}
+		}
+		if resp.Notifications.SyncDisabledWarning == nil {
+			r.Notifications.SyncDisabledWarning = nil
+		} else {
+			r.Notifications.SyncDisabledWarning = &tfTypes.NotificationConfig{}
+			if resp.Notifications.SyncDisabledWarning.Email == nil {
+				r.Notifications.SyncDisabledWarning.Email = nil
+			} else {
+				r.Notifications.SyncDisabledWarning.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.SyncDisabledWarning.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Email.Enabled)
+			}
+			if resp.Notifications.SyncDisabledWarning.Webhook == nil {
+				r.Notifications.SyncDisabledWarning.Webhook = nil
+			} else {
+				r.Notifications.SyncDisabledWarning.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.SyncDisabledWarning.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.Enabled)
+				r.Notifications.SyncDisabledWarning.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.URL)
+			}
+		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 }
 
 func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest() *shared.WorkspaceUpdateRequest {
-	var name string
-	name = r.Name.ValueString()
-
+	name := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name = r.Name.ValueString()
+	} else {
+		name = nil
+	}
+	var notifications *shared.NotificationsConfig
+	if r.Notifications != nil {
+		var failure *shared.NotificationConfig
+		if r.Notifications.Failure != nil {
+			var email *shared.EmailNotificationConfig
+			if r.Notifications.Failure.Email != nil {
+				enabled := new(bool)
+				if !r.Notifications.Failure.Email.Enabled.IsUnknown() && !r.Notifications.Failure.Email.Enabled.IsNull() {
+					*enabled = r.Notifications.Failure.Email.Enabled.ValueBool()
+				} else {
+					enabled = nil
+				}
+				email = &shared.EmailNotificationConfig{
+					Enabled: enabled,
+				}
+			}
+			var webhook *shared.WebhookNotificationConfig
+			if r.Notifications.Failure.Webhook != nil {
+				enabled1 := new(bool)
+				if !r.Notifications.Failure.Webhook.Enabled.IsUnknown() && !r.Notifications.Failure.Webhook.Enabled.IsNull() {
+					*enabled1 = r.Notifications.Failure.Webhook.Enabled.ValueBool()
+				} else {
+					enabled1 = nil
+				}
+				url := new(string)
+				if !r.Notifications.Failure.Webhook.URL.IsUnknown() && !r.Notifications.Failure.Webhook.URL.IsNull() {
+					*url = r.Notifications.Failure.Webhook.URL.ValueString()
+				} else {
+					url = nil
+				}
+				webhook = &shared.WebhookNotificationConfig{
+					Enabled: enabled1,
+					URL:     url,
+				}
+			}
+			failure = &shared.NotificationConfig{
+				Email:   email,
+				Webhook: webhook,
+			}
+		}
+		var success *shared.NotificationConfig
+		if r.Notifications.Success != nil {
+			var email1 *shared.EmailNotificationConfig
+			if r.Notifications.Success.Email != nil {
+				enabled2 := new(bool)
+				if !r.Notifications.Success.Email.Enabled.IsUnknown() && !r.Notifications.Success.Email.Enabled.IsNull() {
+					*enabled2 = r.Notifications.Success.Email.Enabled.ValueBool()
+				} else {
+					enabled2 = nil
+				}
+				email1 = &shared.EmailNotificationConfig{
+					Enabled: enabled2,
+				}
+			}
+			var webhook1 *shared.WebhookNotificationConfig
+			if r.Notifications.Success.Webhook != nil {
+				enabled3 := new(bool)
+				if !r.Notifications.Success.Webhook.Enabled.IsUnknown() && !r.Notifications.Success.Webhook.Enabled.IsNull() {
+					*enabled3 = r.Notifications.Success.Webhook.Enabled.ValueBool()
+				} else {
+					enabled3 = nil
+				}
+				url1 := new(string)
+				if !r.Notifications.Success.Webhook.URL.IsUnknown() && !r.Notifications.Success.Webhook.URL.IsNull() {
+					*url1 = r.Notifications.Success.Webhook.URL.ValueString()
+				} else {
+					url1 = nil
+				}
+				webhook1 = &shared.WebhookNotificationConfig{
+					Enabled: enabled3,
+					URL:     url1,
+				}
+			}
+			success = &shared.NotificationConfig{
+				Email:   email1,
+				Webhook: webhook1,
+			}
+		}
+		var connectionUpdate *shared.NotificationConfig
+		if r.Notifications.ConnectionUpdate != nil {
+			var email2 *shared.EmailNotificationConfig
+			if r.Notifications.ConnectionUpdate.Email != nil {
+				enabled4 := new(bool)
+				if !r.Notifications.ConnectionUpdate.Email.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdate.Email.Enabled.IsNull() {
+					*enabled4 = r.Notifications.ConnectionUpdate.Email.Enabled.ValueBool()
+				} else {
+					enabled4 = nil
+				}
+				email2 = &shared.EmailNotificationConfig{
+					Enabled: enabled4,
+				}
+			}
+			var webhook2 *shared.WebhookNotificationConfig
+			if r.Notifications.ConnectionUpdate.Webhook != nil {
+				enabled5 := new(bool)
+				if !r.Notifications.ConnectionUpdate.Webhook.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdate.Webhook.Enabled.IsNull() {
+					*enabled5 = r.Notifications.ConnectionUpdate.Webhook.Enabled.ValueBool()
+				} else {
+					enabled5 = nil
+				}
+				url2 := new(string)
+				if !r.Notifications.ConnectionUpdate.Webhook.URL.IsUnknown() && !r.Notifications.ConnectionUpdate.Webhook.URL.IsNull() {
+					*url2 = r.Notifications.ConnectionUpdate.Webhook.URL.ValueString()
+				} else {
+					url2 = nil
+				}
+				webhook2 = &shared.WebhookNotificationConfig{
+					Enabled: enabled5,
+					URL:     url2,
+				}
+			}
+			connectionUpdate = &shared.NotificationConfig{
+				Email:   email2,
+				Webhook: webhook2,
+			}
+		}
+		var connectionUpdateActionRequired *shared.NotificationConfig
+		if r.Notifications.ConnectionUpdateActionRequired != nil {
+			var email3 *shared.EmailNotificationConfig
+			if r.Notifications.ConnectionUpdateActionRequired.Email != nil {
+				enabled6 := new(bool)
+				if !r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.IsNull() {
+					*enabled6 = r.Notifications.ConnectionUpdateActionRequired.Email.Enabled.ValueBool()
+				} else {
+					enabled6 = nil
+				}
+				email3 = &shared.EmailNotificationConfig{
+					Enabled: enabled6,
+				}
+			}
+			var webhook3 *shared.WebhookNotificationConfig
+			if r.Notifications.ConnectionUpdateActionRequired.Webhook != nil {
+				enabled7 := new(bool)
+				if !r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.IsNull() {
+					*enabled7 = r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled.ValueBool()
+				} else {
+					enabled7 = nil
+				}
+				url3 := new(string)
+				if !r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.IsUnknown() && !r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.IsNull() {
+					*url3 = r.Notifications.ConnectionUpdateActionRequired.Webhook.URL.ValueString()
+				} else {
+					url3 = nil
+				}
+				webhook3 = &shared.WebhookNotificationConfig{
+					Enabled: enabled7,
+					URL:     url3,
+				}
+			}
+			connectionUpdateActionRequired = &shared.NotificationConfig{
+				Email:   email3,
+				Webhook: webhook3,
+			}
+		}
+		var syncDisabled *shared.NotificationConfig
+		if r.Notifications.SyncDisabled != nil {
+			var email4 *shared.EmailNotificationConfig
+			if r.Notifications.SyncDisabled.Email != nil {
+				enabled8 := new(bool)
+				if !r.Notifications.SyncDisabled.Email.Enabled.IsUnknown() && !r.Notifications.SyncDisabled.Email.Enabled.IsNull() {
+					*enabled8 = r.Notifications.SyncDisabled.Email.Enabled.ValueBool()
+				} else {
+					enabled8 = nil
+				}
+				email4 = &shared.EmailNotificationConfig{
+					Enabled: enabled8,
+				}
+			}
+			var webhook4 *shared.WebhookNotificationConfig
+			if r.Notifications.SyncDisabled.Webhook != nil {
+				enabled9 := new(bool)
+				if !r.Notifications.SyncDisabled.Webhook.Enabled.IsUnknown() && !r.Notifications.SyncDisabled.Webhook.Enabled.IsNull() {
+					*enabled9 = r.Notifications.SyncDisabled.Webhook.Enabled.ValueBool()
+				} else {
+					enabled9 = nil
+				}
+				url4 := new(string)
+				if !r.Notifications.SyncDisabled.Webhook.URL.IsUnknown() && !r.Notifications.SyncDisabled.Webhook.URL.IsNull() {
+					*url4 = r.Notifications.SyncDisabled.Webhook.URL.ValueString()
+				} else {
+					url4 = nil
+				}
+				webhook4 = &shared.WebhookNotificationConfig{
+					Enabled: enabled9,
+					URL:     url4,
+				}
+			}
+			syncDisabled = &shared.NotificationConfig{
+				Email:   email4,
+				Webhook: webhook4,
+			}
+		}
+		var syncDisabledWarning *shared.NotificationConfig
+		if r.Notifications.SyncDisabledWarning != nil {
+			var email5 *shared.EmailNotificationConfig
+			if r.Notifications.SyncDisabledWarning.Email != nil {
+				enabled10 := new(bool)
+				if !r.Notifications.SyncDisabledWarning.Email.Enabled.IsUnknown() && !r.Notifications.SyncDisabledWarning.Email.Enabled.IsNull() {
+					*enabled10 = r.Notifications.SyncDisabledWarning.Email.Enabled.ValueBool()
+				} else {
+					enabled10 = nil
+				}
+				email5 = &shared.EmailNotificationConfig{
+					Enabled: enabled10,
+				}
+			}
+			var webhook5 *shared.WebhookNotificationConfig
+			if r.Notifications.SyncDisabledWarning.Webhook != nil {
+				enabled11 := new(bool)
+				if !r.Notifications.SyncDisabledWarning.Webhook.Enabled.IsUnknown() && !r.Notifications.SyncDisabledWarning.Webhook.Enabled.IsNull() {
+					*enabled11 = r.Notifications.SyncDisabledWarning.Webhook.Enabled.ValueBool()
+				} else {
+					enabled11 = nil
+				}
+				url5 := new(string)
+				if !r.Notifications.SyncDisabledWarning.Webhook.URL.IsUnknown() && !r.Notifications.SyncDisabledWarning.Webhook.URL.IsNull() {
+					*url5 = r.Notifications.SyncDisabledWarning.Webhook.URL.ValueString()
+				} else {
+					url5 = nil
+				}
+				webhook5 = &shared.WebhookNotificationConfig{
+					Enabled: enabled11,
+					URL:     url5,
+				}
+			}
+			syncDisabledWarning = &shared.NotificationConfig{
+				Email:   email5,
+				Webhook: webhook5,
+			}
+		}
+		notifications = &shared.NotificationsConfig{
+			Failure:                        failure,
+			Success:                        success,
+			ConnectionUpdate:               connectionUpdate,
+			ConnectionUpdateActionRequired: connectionUpdateActionRequired,
+			SyncDisabled:                   syncDisabled,
+			SyncDisabledWarning:            syncDisabledWarning,
+		}
+	}
 	out := shared.WorkspaceUpdateRequest{
-		Name: name,
+		Name:          name,
+		Notifications: notifications,
 	}
 	return &out
 }

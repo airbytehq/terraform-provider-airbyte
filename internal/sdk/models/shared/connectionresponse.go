@@ -26,6 +26,7 @@ type ConnectionResponse struct {
 	// A list of configured stream options for a connection.
 	Configurations StreamConfigurations `json:"configurations"`
 	CreatedAt      int64                `json:"createdAt"`
+	Tags           []Tag                `json:"tags"`
 }
 
 func (c ConnectionResponse) MarshalJSON() ([]byte, error) {
@@ -135,4 +136,11 @@ func (o *ConnectionResponse) GetCreatedAt() int64 {
 		return 0
 	}
 	return o.CreatedAt
+}
+
+func (o *ConnectionResponse) GetTags() []Tag {
+	if o == nil {
+		return []Tag{}
+	}
+	return o.Tags
 }

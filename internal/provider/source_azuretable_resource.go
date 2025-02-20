@@ -74,7 +74,7 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 						Computed:    true,
 						Optional:    true,
 						Sensitive:   true,
-						Default:     stringdefault.StaticString("core.windows.net"),
+						Default:     stringdefault.StaticString(`core.windows.net`),
 						Description: `Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix. Default: "core.windows.net"`,
 					},
 				},

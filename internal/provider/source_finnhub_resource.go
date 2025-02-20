@@ -72,13 +72,13 @@ func (r *SourceFinnhubResource) Schema(ctx context.Context, req resource.SchemaR
 					"exchange": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("US"),
+						Default:     stringdefault.StaticString(`US`),
 						Description: `More info: https://finnhub.io/docs/api/stock-symbols. Default: "US"`,
 					},
 					"market_news_category": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("general"),
+						Default:     stringdefault.StaticString(`general`),
 						Description: `This parameter can be 1 of the following values general, forex, crypto, merger. Default: "general"; must be one of ["general", "forex", "crypto", "merger"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

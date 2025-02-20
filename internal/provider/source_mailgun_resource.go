@@ -66,7 +66,7 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 					"domain_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("US"),
+						Default:     stringdefault.StaticString(`US`),
 						Description: `Domain region code. 'EU' or 'US' are possible values. The default is 'US'. Default: "US"; must be one of ["US", "EU"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf("US", "EU"),

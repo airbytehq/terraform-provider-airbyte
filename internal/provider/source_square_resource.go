@@ -125,7 +125,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2021-01-01"),
+						Default:     stringdefault.StaticString(`2021-01-01`),
 						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated. Default: "2021-01-01"`,
 						Validators: []validator.String{
 							validators.IsValidDate(),

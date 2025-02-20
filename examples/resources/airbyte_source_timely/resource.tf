@@ -2,7 +2,7 @@ resource "airbyte_source_timely" "my_source_timely" {
   configuration = {
     account_id   = "...my_account_id..."
     bearer_token = "...my_bearer_token..."
-    start_date   = "2022-05-06"
+    start_date   = "2021-07-25T17:34:15.578Z"
   }
   definition_id = "5fd14cb8-5430-409c-9514-2e1de03f03e6"
   name          = "...my_name..."

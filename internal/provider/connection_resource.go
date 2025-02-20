@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
+	custom_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
@@ -56,6 +57,7 @@ type ConnectionResourceModel struct {
 	Schedule                         *tfTypes.AirbyteAPIConnectionSchedule `tfsdk:"schedule"`
 	SourceID                         types.String                          `tfsdk:"source_id"`
 	Status                           types.String                          `tfsdk:"status"`
+	Tags                             []tfTypes.Tag                         `tfsdk:"tags"`
 	WorkspaceID                      types.String                          `tfsdk:"workspace_id"`
 }
 
@@ -78,6 +80,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Computed: true,
 						Optional: true,
 						PlanModifiers: []planmodifier.List{
+							custom_listplanmodifier.StreamConfigurationModifier(),
 							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 						},
 						NestedObject: schema.NestedAttributeObject{
@@ -462,20 +465,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 										speakeasy_stringvalidators.NotNull(),
 									},
 								},
-								"primary_key": schema.ListNestedAttribute{
+								"primary_key": schema.ListAttribute{
 									Computed: true,
 									Optional: true,
 									PlanModifiers: []planmodifier.List{
 										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
-									NestedObject: schema.NestedAttributeObject{
-										Validators: []validator.Object{
-											speakeasy_objectvalidators.NotNull(),
-										},
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
-										},
-										Attributes: map[string]schema.Attribute{},
+									ElementType: types.ListType {
+										ElemType: types.StringType,
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},
@@ -511,10 +508,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									PlanModifiers: []planmodifier.String{
 										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 									},
-									Description: `must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
+									Description: `must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
 											"full_refresh_overwrite",
+											"full_refresh_overwrite_deduped",
 											"full_refresh_append",
 											"incremental_append",
 											"incremental_deduped_history",
@@ -542,7 +540,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"data_residency": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
-				Default:  stringdefault.StaticString("auto"),
+				Default:  stringdefault.StaticString(`auto`),
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
@@ -574,7 +572,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
-				Default:  stringdefault.StaticString("destination"),
+				Default:  stringdefault.StaticString(`destination`),
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
@@ -598,7 +596,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
-				Default:  stringdefault.StaticString("ignore"),
+				Default:  stringdefault.StaticString(`ignore`),
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
@@ -615,10 +613,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"prefix": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
+				Default:  stringdefault.StaticString(``),
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
-				Description: `Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).`,
+				Description: `Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”). Default: ""`,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
@@ -679,6 +678,67 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"inactive",
 						"deprecated",
 					),
+				},
+			},
+			"tags": schema.ListNestedAttribute{
+				Computed: true,
+				Optional: true,
+				PlanModifiers: []planmodifier.List{
+					speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+				},
+				NestedObject: schema.NestedAttributeObject{
+					Validators: []validator.Object{
+						speakeasy_objectvalidators.NotNull(),
+					},
+					PlanModifiers: []planmodifier.Object{
+						speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+					},
+					Attributes: map[string]schema.Attribute{
+						"color": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
+							Description: `Not Null`,
+							Validators: []validator.String{
+								speakeasy_stringvalidators.NotNull(),
+							},
+						},
+						"name": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
+							Description: `Not Null`,
+							Validators: []validator.String{
+								speakeasy_stringvalidators.NotNull(),
+							},
+						},
+						"tag_id": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
+							Description: `Not Null`,
+							Validators: []validator.String{
+								speakeasy_stringvalidators.NotNull(),
+							},
+						},
+						"workspace_id": schema.StringAttribute{
+							Computed: true,
+							Optional: true,
+							PlanModifiers: []planmodifier.String{
+								speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+							},
+							Description: `Not Null`,
+							Validators: []validator.String{
+								speakeasy_stringvalidators.NotNull(),
+							},
+						},
+					},
 				},
 			},
 			"workspace_id": schema.StringAttribute{

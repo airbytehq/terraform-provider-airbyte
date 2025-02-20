@@ -69,7 +69,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					"account_type": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Seller"),
+						Default:     stringdefault.StaticString(`Seller`),
 						Description: `Type of the Account you're going to authorize the Airbyte application by. Default: "Seller"; must be one of ["Seller", "Vendor"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -78,10 +78,15 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 							),
 						},
 					},
+					"app_id": schema.StringAttribute{
+						Optional:    true,
+						Sensitive:   true,
+						Description: `Your Amazon Application ID.`,
+					},
 					"aws_environment": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("PRODUCTION"),
+						Default:     stringdefault.StaticString(`PRODUCTION`),
 						Description: `Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -117,7 +122,7 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("US"),
+						Default:     stringdefault.StaticString(`US`),
 						Description: `Select the AWS Region. Default: "US"; must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

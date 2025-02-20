@@ -68,7 +68,7 @@ func (r *SourceDremioResource) Schema(ctx context.Context, req resource.SchemaRe
 					"base_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://app.dremio.cloud"),
+						Default:     stringdefault.StaticString(`https://app.dremio.cloud`),
 						Description: `URL of your Dremio instance. Default: "https://app.dremio.cloud"`,
 					},
 				},

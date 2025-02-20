@@ -73,7 +73,7 @@ func (r *SourceZohoExpenseResource) Schema(ctx context.Context, req resource.Sch
 					"data_center": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("com"),
+						Default:     stringdefault.StaticString(`com`),
 						Description: `The domain suffix for the Zoho Expense API based on your data center location (e.g., 'com', 'eu', 'in', etc.). Default: "com"; must be one of ["com", "in", "jp", "ca", "com.cn", "sa", "com.au", "eu"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

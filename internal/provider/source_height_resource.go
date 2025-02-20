@@ -69,7 +69,7 @@ func (r *SourceHeightResource) Schema(ctx context.Context, req resource.SchemaRe
 					"search_query": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("task"),
+						Default:     stringdefault.StaticString(`task`),
 						Description: `Search query to be used with search stream. Default: "task"`,
 					},
 					"start_date": schema.StringAttribute{

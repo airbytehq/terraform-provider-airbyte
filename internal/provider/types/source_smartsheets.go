@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSmartsheets struct {
 	Credentials    SourceSmartsheetsAuthorizationMethod `tfsdk:"credentials"`
+	IsReport       types.Bool                           `tfsdk:"is_report"`
 	MetadataFields []types.String                       `tfsdk:"metadata_fields"`
 	SpreadsheetID  types.String                         `tfsdk:"spreadsheet_id"`
 }

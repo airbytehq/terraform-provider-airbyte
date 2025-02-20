@@ -70,7 +70,7 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 					"aws_region_name": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("us-east-1"),
+						Default:     stringdefault.StaticString(`us-east-1`),
 						Description: `The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name. Default: "us-east-1"`,
 					},
 					"aws_secret_key": schema.StringAttribute{
@@ -84,13 +84,13 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 							"attribute_key": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("EventName"),
+								Default:     stringdefault.StaticString(`EventName`),
 								Description: `Default: "EventName"`,
 							},
 							"attribute_value": schema.StringAttribute{
 								Computed:    true,
 								Optional:    true,
-								Default:     stringdefault.StaticString("ListInstanceAssociations"),
+								Default:     stringdefault.StaticString(`ListInstanceAssociations`),
 								Description: `Default: "ListInstanceAssociations"`,
 							},
 						},

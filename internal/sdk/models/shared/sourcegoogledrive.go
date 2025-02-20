@@ -1032,6 +1032,67 @@ func (o *SourceGoogleDriveFileBasedStreamConfig) GetRecentNFilesToReadForSchemaD
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
+type SourceGoogleDriveSchemasDeliveryType string
+
+const (
+	SourceGoogleDriveSchemasDeliveryTypeUsePermissionsTransfer SourceGoogleDriveSchemasDeliveryType = "use_permissions_transfer"
+)
+
+func (e SourceGoogleDriveSchemasDeliveryType) ToPointer() *SourceGoogleDriveSchemasDeliveryType {
+	return &e
+}
+func (e *SourceGoogleDriveSchemasDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_permissions_transfer":
+		*e = SourceGoogleDriveSchemasDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDriveSchemasDeliveryType: %v", v)
+	}
+}
+
+// ReplicatePermissionsACL - Sends one identity stream and one for more permissions (ACL) streams to the destination. This data can be used in downstream systems to recreate permission restrictions mirroring the original source.
+type ReplicatePermissionsACL struct {
+	deliveryType *SourceGoogleDriveSchemasDeliveryType `const:"use_permissions_transfer" json:"delivery_type"`
+	// This data can be used in downstream systems to recreate permission restrictions mirroring the original source
+	IncludeIdentitiesStream *bool `default:"true" json:"include_identities_stream"`
+	// The Google domain of the identities.
+	Domain *string `json:"domain,omitempty"`
+}
+
+func (r ReplicatePermissionsACL) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReplicatePermissionsACL) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ReplicatePermissionsACL) GetDeliveryType() *SourceGoogleDriveSchemasDeliveryType {
+	return SourceGoogleDriveSchemasDeliveryTypeUsePermissionsTransfer.ToPointer()
+}
+
+func (o *ReplicatePermissionsACL) GetIncludeIdentitiesStream() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeIdentitiesStream
+}
+
+func (o *ReplicatePermissionsACL) GetDomain() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
 type SourceGoogleDriveDeliveryType string
 
 const (
@@ -1130,13 +1191,15 @@ func (o *ReplicateRecords) GetDeliveryType() *DeliveryType {
 type DeliveryMethodType string
 
 const (
-	DeliveryMethodTypeReplicateRecords DeliveryMethodType = "Replicate Records"
-	DeliveryMethodTypeCopyRawFiles     DeliveryMethodType = "Copy Raw Files"
+	DeliveryMethodTypeReplicateRecords        DeliveryMethodType = "Replicate Records"
+	DeliveryMethodTypeCopyRawFiles            DeliveryMethodType = "Copy Raw Files"
+	DeliveryMethodTypeReplicatePermissionsACL DeliveryMethodType = "Replicate Permissions ACL"
 )
 
 type DeliveryMethod struct {
-	ReplicateRecords *ReplicateRecords `queryParam:"inline"`
-	CopyRawFiles     *CopyRawFiles     `queryParam:"inline"`
+	ReplicateRecords        *ReplicateRecords        `queryParam:"inline"`
+	CopyRawFiles            *CopyRawFiles            `queryParam:"inline"`
+	ReplicatePermissionsACL *ReplicatePermissionsACL `queryParam:"inline"`
 
 	Type DeliveryMethodType
 }
@@ -1159,6 +1222,15 @@ func CreateDeliveryMethodCopyRawFiles(copyRawFiles CopyRawFiles) DeliveryMethod 
 	}
 }
 
+func CreateDeliveryMethodReplicatePermissionsACL(replicatePermissionsACL ReplicatePermissionsACL) DeliveryMethod {
+	typ := DeliveryMethodTypeReplicatePermissionsACL
+
+	return DeliveryMethod{
+		ReplicatePermissionsACL: &replicatePermissionsACL,
+		Type:                    typ,
+	}
+}
+
 func (u *DeliveryMethod) UnmarshalJSON(data []byte) error {
 
 	var replicateRecords ReplicateRecords = ReplicateRecords{}
@@ -1175,6 +1247,13 @@ func (u *DeliveryMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var replicatePermissionsACL ReplicatePermissionsACL = ReplicatePermissionsACL{}
+	if err := utils.UnmarshalJSON(data, &replicatePermissionsACL, "", true, true); err == nil {
+		u.ReplicatePermissionsACL = &replicatePermissionsACL
+		u.Type = DeliveryMethodTypeReplicatePermissionsACL
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DeliveryMethod", string(data))
 }
 
@@ -1185,6 +1264,10 @@ func (u DeliveryMethod) MarshalJSON() ([]byte, error) {
 
 	if u.CopyRawFiles != nil {
 		return utils.MarshalJSON(u.CopyRawFiles, "", true)
+	}
+
+	if u.ReplicatePermissionsACL != nil {
+		return utils.MarshalJSON(u.ReplicatePermissionsACL, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type DeliveryMethod: all fields are null")

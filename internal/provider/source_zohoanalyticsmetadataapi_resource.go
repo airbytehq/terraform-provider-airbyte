@@ -73,7 +73,7 @@ func (r *SourceZohoAnalyticsMetadataAPIResource) Schema(ctx context.Context, req
 					"data_center": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("com"),
+						Default:     stringdefault.StaticString(`com`),
 						Description: `Default: "com"; must be one of ["com", "eu", "in", "com.au", "com.cn", "jp"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

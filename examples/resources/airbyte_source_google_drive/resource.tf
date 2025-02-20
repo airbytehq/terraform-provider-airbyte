@@ -14,6 +14,10 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
       copy_raw_files = {
         preserve_directory_structure = false
       }
+      replicate_permissions_acl = {
+        domain                    = "...my_domain..."
+        include_identities_stream = true
+      }
       replicate_records = {
         # ...
       }

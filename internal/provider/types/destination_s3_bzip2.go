@@ -5,5 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3Bzip2 struct {
-	Codec types.String `tfsdk:"codec"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	Codec                types.String `tfsdk:"codec"`
 }

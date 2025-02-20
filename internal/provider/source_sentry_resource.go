@@ -79,7 +79,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 					"hostname": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("sentry.io"),
+						Default:     stringdefault.StaticString(`sentry.io`),
 						Description: `Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty. Default: "sentry.io"`,
 					},
 					"organization": schema.StringAttribute{

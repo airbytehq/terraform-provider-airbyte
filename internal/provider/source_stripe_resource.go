@@ -104,7 +104,7 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2017-01-25T00:00:00Z"),
+						Default:     stringdefault.StaticString(`2017-01-25T00:00:00Z`),
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated. Default: "2017-01-25T00:00:00Z"`,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

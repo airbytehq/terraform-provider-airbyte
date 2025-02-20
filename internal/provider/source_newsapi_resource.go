@@ -71,7 +71,7 @@ func (r *SourceNewsAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"category": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("business"),
+						Default:     stringdefault.StaticString(`business`),
 						Description: `The category you want to get top headlines for. Default: "business"; must be one of ["business", "entertainment", "general", "health", "science", "sports", "technology"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -88,7 +88,7 @@ func (r *SourceNewsAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"country": schema.StringAttribute{
 						Computed: true,
 						Optional: true,
-						Default:  stringdefault.StaticString("us"),
+						Default:  stringdefault.StaticString(`us`),
 						MarkdownDescription: `The 2-letter ISO 3166-1 code of the country you want to get headlines` + "\n" +
 							`for. You can't mix this with the sources parameter.` + "\n" +
 							`Default: "us"; must be one of ["ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de", "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt", "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"]`,
@@ -209,7 +209,7 @@ func (r *SourceNewsAPIResource) Schema(ctx context.Context, req resource.SchemaR
 					"sort_by": schema.StringAttribute{
 						Computed: true,
 						Optional: true,
-						Default:  stringdefault.StaticString("publishedAt"),
+						Default:  stringdefault.StaticString(`publishedAt`),
 						MarkdownDescription: `The order to sort the articles in. Possible options: relevancy,` + "\n" +
 							`popularity, publishedAt.` + "\n" +
 							`Default: "publishedAt"; must be one of ["relevancy", "popularity", "publishedAt"]`,

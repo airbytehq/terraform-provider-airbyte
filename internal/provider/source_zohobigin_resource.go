@@ -77,7 +77,7 @@ func (r *SourceZohoBiginResource) Schema(ctx context.Context, req resource.Schem
 					"data_center": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("com"),
+						Default:     stringdefault.StaticString(`com`),
 						Description: `The data center where the Bigin account's resources are hosted. Default: "com"; must be one of ["com", "com.au", "eu", "in", "com.cn", "jp"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

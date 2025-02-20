@@ -81,7 +81,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 									"client_secret": schema.StringAttribute{
 										Required:    true,
 										Sensitive:   true,
-										Description: `The client secret the Airtable developer application.`,
+										Description: `The client secret of the Airtable developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required:    true,

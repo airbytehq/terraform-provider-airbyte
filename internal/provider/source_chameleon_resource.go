@@ -77,7 +77,7 @@ func (r *SourceChameleonResource) Schema(ctx context.Context, req resource.Schem
 					"filter": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("tour"),
+						Default:     stringdefault.StaticString(`tour`),
 						Description: `Filter for using in the ` + "`" + `segments_experiences` + "`" + ` stream. Default: "tour"; must be one of ["tour", "survey", "launcher"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -90,7 +90,7 @@ func (r *SourceChameleonResource) Schema(ctx context.Context, req resource.Schem
 					"limit": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("50"),
+						Default:     stringdefault.StaticString(`50`),
 						Description: `Max records per page limit. Default: "50"`,
 					},
 					"start_date": schema.StringAttribute{

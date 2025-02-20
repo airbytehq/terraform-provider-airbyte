@@ -21,10 +21,11 @@ type ConnectionCreateRequest struct {
 	// Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
 	NamespaceFormat *string `default:"null" json:"namespaceFormat"`
 	// Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
-	Prefix *string `json:"prefix,omitempty"`
+	Prefix *string `default:"" json:"prefix"`
 	// Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 	NonBreakingSchemaUpdatesBehavior *NonBreakingSchemaUpdatesBehaviorEnum `default:"ignore" json:"nonBreakingSchemaUpdatesBehavior"`
 	Status                           *ConnectionStatusEnum                 `json:"status,omitempty"`
+	Tags                             []Tag                                 `json:"tags,omitempty"`
 }
 
 func (c ConnectionCreateRequest) MarshalJSON() ([]byte, error) {
@@ -113,4 +114,11 @@ func (o *ConnectionCreateRequest) GetStatus() *ConnectionStatusEnum {
 		return nil
 	}
 	return o.Status
+}
+
+func (o *ConnectionCreateRequest) GetTags() []Tag {
+	if o == nil {
+		return nil
+	}
+	return o.Tags
 }

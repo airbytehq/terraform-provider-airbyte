@@ -70,7 +70,7 @@ func (r *SourceSmartwaiverResource) Schema(ctx context.Context, req resource.Sch
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2017-01-24 13:12:29"),
+						Default:     stringdefault.StaticString(`2017-01-24 13:12:29`),
 						Description: `Default: "2017-01-24 13:12:29"`,
 					},
 					"start_date_2": schema.StringAttribute{

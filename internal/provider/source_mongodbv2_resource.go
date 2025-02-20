@@ -83,7 +83,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									"auth_source": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("admin"),
+										Default:     stringdefault.StaticString(`admin`),
 										Description: `The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details. Default: "admin"`,
 									},
 									"connection_string": schema.StringAttribute{
@@ -130,7 +130,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 									"auth_source": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("admin"),
+										Default:     stringdefault.StaticString(`admin`),
 										Description: `The authentication source where the user information is stored. Default: "admin"`,
 									},
 									"connection_string": schema.StringAttribute{
@@ -191,7 +191,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 					"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Fail sync"),
+						Default:     stringdefault.StaticString(`Fail sync`),
 						Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -209,7 +209,7 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 					"update_capture_mode": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("Lookup"),
+						Default:     stringdefault.StaticString(`Lookup`),
 						Description: `Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images. Default: "Lookup"; must be one of ["Lookup", "Post Image"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

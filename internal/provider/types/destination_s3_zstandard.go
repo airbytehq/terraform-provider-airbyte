@@ -5,7 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3Zstandard struct {
-	Codec            types.String `tfsdk:"codec"`
-	CompressionLevel types.Int64  `tfsdk:"compression_level"`
-	IncludeChecksum  types.Bool   `tfsdk:"include_checksum"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	Codec                types.String `tfsdk:"codec"`
+	CompressionLevel     types.Int64  `tfsdk:"compression_level"`
+	IncludeChecksum      types.Bool   `tfsdk:"include_checksum"`
 }

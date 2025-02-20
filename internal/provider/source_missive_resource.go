@@ -70,7 +70,7 @@ func (r *SourceMissiveResource) Schema(ctx context.Context, req resource.SchemaR
 					"kind": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("group"),
+						Default:     stringdefault.StaticString(`group`),
 						Description: `Kind parameter for ` + "`" + `contact_groups` + "`" + ` stream. Default: "group"; must be one of ["group", "organization"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -82,7 +82,7 @@ func (r *SourceMissiveResource) Schema(ctx context.Context, req resource.SchemaR
 					"limit": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("50"),
+						Default:     stringdefault.StaticString(`50`),
 						Description: `Max records per page limit. Default: "50"`,
 					},
 					"start_date": schema.StringAttribute{

@@ -73,7 +73,7 @@ func (r *SourceJotformResource) Schema(ctx context.Context, req resource.SchemaR
 									"url_prefix": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Standard"),
+										Default:     stringdefault.StaticString(`Standard`),
 										Description: `You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com). Default: "Standard"; must be one of ["Standard", "EU", "HIPAA"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

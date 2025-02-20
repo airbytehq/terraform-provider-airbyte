@@ -78,7 +78,7 @@ func (r *SourceWrikeResource) Schema(ctx context.Context, req resource.SchemaReq
 					"wrike_instance": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("app-us2.wrike.com"),
+						Default:     stringdefault.StaticString(`app-us2.wrike.com`),
 						Description: `Wrike's instance such as ` + "`" + `app-us2.wrike.com` + "`" + `. Default: "app-us2.wrike.com"`,
 					},
 				},

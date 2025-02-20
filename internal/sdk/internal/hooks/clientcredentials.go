@@ -40,7 +40,6 @@ type credentials struct {
 }
 
 type clientCredentialsHook struct {
-	baseURL  string
 	client   HTTPClient
 	sessions sync.Map
 
@@ -61,7 +60,6 @@ func NewClientCredentialsHook() *clientCredentialsHook {
 }
 
 func (c *clientCredentialsHook) SDKInit(baseURL string, client HTTPClient) (string, HTTPClient) {
-	c.baseURL = baseURL
 	c.client = client
 	return baseURL, client
 }
@@ -72,7 +70,7 @@ func (c *clientCredentialsHook) BeforeRequest(ctx BeforeRequestContext, req *htt
 		return req, nil
 	}
 
-	credentials, err := c.getCredentials(ctx.Context, ctx.SecuritySource)
+	credentials, err := c.getCredentials(ctx.HookContext, ctx.SecuritySource)
 	if err != nil {
 		return nil, &FailEarly{Cause: err}
 	}
@@ -102,7 +100,7 @@ func (c *clientCredentialsHook) AfterError(ctx AfterErrorContext, res *http.Resp
 		return res, err
 	}
 
-	credentials, err := c.getCredentials(ctx.Context, ctx.SecuritySource)
+	credentials, err := c.getCredentials(ctx.HookContext, ctx.SecuritySource)
 	if err != nil {
 		return nil, &FailEarly{Cause: err}
 	}
@@ -119,7 +117,7 @@ func (c *clientCredentialsHook) AfterError(ctx AfterErrorContext, res *http.Resp
 	return res, err
 }
 
-func (c *clientCredentialsHook) doTokenRequest(ctx context.Context, credentials *credentials, scopes []string) (*session, error) {
+func (c *clientCredentialsHook) doTokenRequest(ctx HookContext, credentials *credentials, scopes []string) (*session, error) {
 	values := url.Values{}
 	values.Set("grant_type", "client_credentials")
 	values.Set("client_id", credentials.ClientID)
@@ -135,13 +133,13 @@ func (c *clientCredentialsHook) doTokenRequest(ctx context.Context, credentials 
 		return nil, fmt.Errorf("failed to parse token URL: %w", err)
 	}
 	if !u.IsAbs() {
-		tokenURL, err = url.JoinPath(c.baseURL, tokenURL)
+		tokenURL, err = url.JoinPath(ctx.BaseURL, tokenURL)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse token URL: %w", err)
 		}
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, tokenURL, bytes.NewBufferString(values.Encode()))
+	req, err := http.NewRequestWithContext(ctx.Context, http.MethodPost, tokenURL, bytes.NewBufferString(values.Encode()))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create token request: %w", err)
 	}
@@ -182,16 +180,20 @@ func (c *clientCredentialsHook) doTokenRequest(ctx context.Context, credentials 
 	}, nil
 }
 
-func (c *clientCredentialsHook) getCredentials(ctx context.Context, source func(ctx context.Context) (interface{}, error)) (*credentials, error) {
+func (c *clientCredentialsHook) getCredentials(ctx HookContext, source func(ctx context.Context) (any, error)) (*credentials, error) {
 	if source == nil {
 		return nil, nil
 	}
 
-	sec, err := source(ctx)
+	sec, err := source(ctx.Context)
 	if err != nil {
 		return nil, err
 	}
 
+	return c.getCredentialsGlobal(sec)
+}
+
+func (c *clientCredentialsHook) getCredentialsGlobal(sec any) (*credentials, error) {
 	security, ok := sec.(shared.Security)
 
 	if !ok {
@@ -238,7 +240,7 @@ func (c *clientCredentialsHook) getSession(ctx BeforeRequestContext, credentials
 	}
 
 	rawSession, err, _ := c.sessionsGroup.Do(sessionKey, func() (any, error) {
-		refreshedSession, err := c.doTokenRequest(ctx.Context, credentials, getScopes(ctx.OAuth2Scopes, cachedSession))
+		refreshedSession, err := c.doTokenRequest(ctx.HookContext, credentials, getScopes(ctx.OAuth2Scopes, cachedSession))
 
 		if err != nil {
 			return nil, fmt.Errorf("failed to get token: %w", err)

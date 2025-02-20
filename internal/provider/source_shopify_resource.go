@@ -157,7 +157,7 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2020-01-01"),
+						Default:     stringdefault.StaticString(`2020-01-01`),
 						Description: `The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"`,
 						Validators: []validator.String{
 							validators.IsValidDate(),

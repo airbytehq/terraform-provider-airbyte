@@ -3,16 +3,9 @@
 package shared
 
 type SourceTrackPmsUpdate struct {
-	CustomerDomain string  `json:"customer_domain"`
 	APIKey         string  `json:"api_key"`
 	APISecret      *string `json:"api_secret,omitempty"`
-}
-
-func (o *SourceTrackPmsUpdate) GetCustomerDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.CustomerDomain
+	CustomerDomain string  `json:"customer_domain"`
 }
 
 func (o *SourceTrackPmsUpdate) GetAPIKey() string {
@@ -27,4 +20,11 @@ func (o *SourceTrackPmsUpdate) GetAPISecret() *string {
 		return nil
 	}
 	return o.APISecret
+}
+
+func (o *SourceTrackPmsUpdate) GetCustomerDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerDomain
 }

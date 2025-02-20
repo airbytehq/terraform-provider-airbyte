@@ -125,7 +125,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 									"compression_codec": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("UNCOMPRESSED"),
+										Default:     stringdefault.StaticString(`UNCOMPRESSED`),
 										Description: `The compression algorithm used to compress data. Default: "UNCOMPRESSED"; must be one of ["UNCOMPRESSED", "GZIP"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -137,7 +137,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("JSONL"),
+										Default:     stringdefault.StaticString(`JSONL`),
 										Description: `Default: "JSONL"; must be "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("JSONL"),
@@ -156,7 +156,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 									"compression_codec": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("SNAPPY"),
+										Default:     stringdefault.StaticString(`SNAPPY`),
 										Description: `The compression algorithm used to compress data. Default: "SNAPPY"; must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -170,7 +170,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Parquet"),
+										Default:     stringdefault.StaticString(`Parquet`),
 										Description: `Default: "Parquet"; must be "Parquet"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Parquet"),
@@ -213,7 +213,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					"partitioning": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("NO PARTITIONING"),
+						Default:     stringdefault.StaticString(`NO PARTITIONING`),
 						Description: `Partition data by cursor fields when a cursor field is a date. Default: "NO PARTITIONING"; must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -230,7 +230,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					"region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(""),
+						Default:     stringdefault.StaticString(``),
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

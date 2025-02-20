@@ -28,13 +28,6 @@ func newOrganizations(sdkConfig sdkConfiguration) *Organizations {
 // ListOrganizationsForUser - List all organizations for a user
 // Lists users organizations.
 func (s *Organizations) ListOrganizationsForUser(ctx context.Context, opts ...operations.Option) (*operations.ListOrganizationsForUserResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listOrganizationsForUser",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -55,6 +48,14 @@ func (s *Organizations) ListOrganizationsForUser(ctx context.Context, opts ...op
 	opURL, err := url.JoinPath(baseURL, "/organizations")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listOrganizationsForUser",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

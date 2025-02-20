@@ -11,7 +11,7 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -20,7 +20,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	"regexp"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -64,17 +63,18 @@ func (r *SourceTimelyResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
 						Required:    true,
-						Description: `Timely account id`,
+						Description: `The Account ID for your Timely account`,
 					},
 					"bearer_token": schema.StringAttribute{
 						Required:    true,
-						Description: `Timely bearer token`,
+						Sensitive:   true,
+						Description: `The Bearer Token for your Timely account`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
-						Description: `start date`,
+						Description: `Earliest date from which you want to pull data from.`,
 						Validators: []validator.String{
-							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}$`), "must match pattern "+regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}$`).String()),
+							validators.IsRFC3339(),
 						},
 					},
 				},

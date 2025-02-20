@@ -73,13 +73,13 @@ func (r *SourceAlgoliaResource) Schema(ctx context.Context, req resource.SchemaR
 					"object_id": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("ecommerce-sample-data-9999996"),
+						Default:     stringdefault.StaticString(`ecommerce-sample-data-9999996`),
 						Description: `Object ID within index for search queries. Default: "ecommerce-sample-data-9999996"`,
 					},
 					"search_query": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("hitsPerPage=2&getRankingInfo=1"),
+						Default:     stringdefault.StaticString(`hitsPerPage=2&getRankingInfo=1`),
 						Description: `Search query to be used with indexes_query stream with format defined in ` + "`" + `https://www.algolia.com/doc/rest-api/search/#tag/Search/operation/searchSingleIndex` + "`" + `. Default: "hitsPerPage=2&getRankingInfo=1"`,
 					},
 					"start_date": schema.StringAttribute{

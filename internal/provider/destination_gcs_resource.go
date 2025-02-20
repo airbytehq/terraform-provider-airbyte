@@ -74,7 +74,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"credential_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("HMAC_KEY"),
+										Default:     stringdefault.StaticString(`HMAC_KEY`),
 										Description: `Default: "HMAC_KEY"; must be "HMAC_KEY"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("HMAC_KEY"),
@@ -110,7 +110,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("bzip2"),
+														Default:     stringdefault.StaticString(`bzip2`),
 														Description: `Default: "bzip2"; must be "bzip2"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("bzip2"),
@@ -133,7 +133,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("Deflate"),
+														Default:     stringdefault.StaticString(`Deflate`),
 														Description: `Default: "Deflate"; must be "Deflate"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("Deflate"),
@@ -165,7 +165,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("no compression"),
+														Default:     stringdefault.StaticString(`no compression`),
 														Description: `Default: "no compression"; must be "no compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -190,7 +190,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("snappy"),
+														Default:     stringdefault.StaticString(`snappy`),
 														Description: `Default: "snappy"; must be "snappy"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("snappy"),
@@ -213,7 +213,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("xz"),
+														Default:     stringdefault.StaticString(`xz`),
 														Description: `Default: "xz"; must be "xz"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("xz"),
@@ -245,7 +245,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"codec": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("zstandard"),
+														Default:     stringdefault.StaticString(`zstandard`),
 														Description: `Default: "zstandard"; must be "zstandard"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -285,7 +285,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Avro"),
+										Default:     stringdefault.StaticString(`Avro`),
 										Description: `Default: "Avro"; must be "Avro"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Avro"),
@@ -312,7 +312,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("GZIP"),
+														Default:     stringdefault.StaticString(`GZIP`),
 														Description: `Default: "GZIP"; must be "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("GZIP"),
@@ -331,7 +331,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("No Compression"),
+														Default:     stringdefault.StaticString(`No Compression`),
 														Description: `Default: "No Compression"; must be "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -352,7 +352,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("No flattening"),
+										Default:     stringdefault.StaticString(`No flattening`),
 										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -364,7 +364,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("CSV"),
+										Default:     stringdefault.StaticString(`CSV`),
 										Description: `Default: "CSV"; must be "CSV"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("CSV"),
@@ -391,7 +391,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("GZIP"),
+														Default:     stringdefault.StaticString(`GZIP`),
 														Description: `Default: "GZIP"; must be "GZIP"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf("GZIP"),
@@ -410,7 +410,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 													"compression_type": schema.StringAttribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     stringdefault.StaticString("No Compression"),
+														Default:     stringdefault.StaticString(`No Compression`),
 														Description: `Default: "No Compression"; must be "No Compression"`,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -431,7 +431,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("JSONL"),
+										Default:     stringdefault.StaticString(`JSONL`),
 										Description: `Default: "JSONL"; must be "JSONL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("JSONL"),
@@ -458,7 +458,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"compression_codec": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("UNCOMPRESSED"),
+										Default:     stringdefault.StaticString(`UNCOMPRESSED`),
 										Description: `The compression algorithm used to compress data pages. Default: "UNCOMPRESSED"; must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "LZO", "BROTLI", "LZ4", "ZSTD"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -487,7 +487,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 									"format_type": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Parquet"),
+										Default:     stringdefault.StaticString(`Parquet`),
 										Description: `Default: "Parquet"; must be "Parquet"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("Parquet"),
@@ -528,7 +528,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 					"gcs_bucket_region": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("us"),
+						Default:     stringdefault.StaticString(`us`),
 						Description: `Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>. Default: "us"; must be one of ["northamerica-northeast1", "northamerica-northeast2", "us-central1", "us-east1", "us-east4", "us-west1", "us-west2", "us-west3", "us-west4", "southamerica-east1", "southamerica-west1", "europe-central2", "europe-north1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "asia", "eu", "us", "asia1", "eur4", "nam4"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

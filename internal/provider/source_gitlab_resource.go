@@ -66,7 +66,7 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 					"api_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("gitlab.com"),
+						Default:     stringdefault.StaticString(`gitlab.com`),
 						Description: `Please enter your basic URL from GitLab instance. Default: "gitlab.com"`,
 					},
 					"credentials": schema.SingleNestedAttribute{

@@ -73,7 +73,7 @@ func (r *SourcePingdomResource) Schema(ctx context.Context, req resource.SchemaR
 					"resolution": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("hour"),
+						Default:     stringdefault.StaticString(`hour`),
 						Description: `Default: "hour"; must be one of ["hour", "day", "week"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

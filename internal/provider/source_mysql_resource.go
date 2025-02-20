@@ -133,7 +133,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"invalid_cdc_cursor_position_behavior": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("Fail sync"),
+										Default:     stringdefault.StaticString(`Fail sync`),
 										Description: `Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -145,7 +145,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"method": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("CDC"),
+										Default:     stringdefault.StaticString(`CDC`),
 										Description: `Default: "CDC"; must be "CDC"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("CDC"),
@@ -176,7 +176,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"method": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("STANDARD"),
+										Default:     stringdefault.StaticString(`STANDARD`),
 										Description: `Default: "STANDARD"; must be "STANDARD"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("STANDARD"),
@@ -209,7 +209,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"mode": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("preferred"),
+										Default:     stringdefault.StaticString(`preferred`),
 										Description: `Default: "preferred"; must be "preferred"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -240,7 +240,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"mode": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("required"),
+										Default:     stringdefault.StaticString(`required`),
 										Description: `Default: "required"; must be "required"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf("required"),
@@ -289,7 +289,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"mode": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("verify_ca"),
+										Default:     stringdefault.StaticString(`verify_ca`),
 										Description: `Default: "verify_ca"; must be "verify_ca"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -340,7 +340,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"mode": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("verify_identity"),
+										Default:     stringdefault.StaticString(`verify_identity`),
 										Description: `Default: "verify_identity"; must be "verify_identity"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -377,7 +377,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"tunnel_method": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("NO_TUNNEL"),
+										Default:     stringdefault.StaticString(`NO_TUNNEL`),
 										Description: `Default: "NO_TUNNEL"; must be "NO_TUNNEL"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -411,7 +411,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"tunnel_method": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("SSH_PASSWORD_AUTH"),
+										Default:     stringdefault.StaticString(`SSH_PASSWORD_AUTH`),
 										Description: `Default: "SSH_PASSWORD_AUTH"; must be "SSH_PASSWORD_AUTH"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -468,7 +468,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									"tunnel_method": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("SSH_KEY_AUTH"),
+										Default:     stringdefault.StaticString(`SSH_KEY_AUTH`),
 										Description: `Default: "SSH_KEY_AUTH"; must be "SSH_KEY_AUTH"`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

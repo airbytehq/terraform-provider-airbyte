@@ -70,7 +70,7 @@ func (r *SourceSparkpostResource) Schema(ctx context.Context, req resource.Schem
 					"api_prefix": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("api"),
+						Default:     stringdefault.StaticString(`api`),
 						Description: `Default: "api"; must be one of ["api", "api.eu"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

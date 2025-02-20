@@ -70,7 +70,7 @@ func (r *SourceAppfiguresResource) Schema(ctx context.Context, req resource.Sche
 					"group_by": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("product"),
+						Default:     stringdefault.StaticString(`product`),
 						Description: `Category term for grouping the search results. Default: "product"; must be one of ["network", "product", "country", "date"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -84,7 +84,7 @@ func (r *SourceAppfiguresResource) Schema(ctx context.Context, req resource.Sche
 					"search_store": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("apple"),
+						Default:     stringdefault.StaticString(`apple`),
 						Description: `The store which needs to be searched in streams. Default: "apple"`,
 					},
 					"start_date": schema.StringAttribute{

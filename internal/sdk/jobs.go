@@ -27,13 +27,6 @@ func newJobs(sdkConfig sdkConfiguration) *Jobs {
 
 // ListJobs - List Jobs by sync type
 func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest, opts ...operations.Option) (*operations.ListJobsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "listJobs",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -54,6 +47,14 @@ func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest,
 	opURL, err := url.JoinPath(baseURL, "/jobs")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "listJobs",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -158,13 +159,6 @@ func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest,
 
 // CreateJob - Trigger a sync or reset job of a connection
 func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest, opts ...operations.Option) (*operations.CreateJobResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "createJob",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -187,6 +181,13 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest, o
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createJob",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -295,13 +296,6 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest, o
 
 // GetJob - Get Job status and details
 func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest, opts ...operations.Option) (*operations.GetJobResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "getJob",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -322,6 +316,14 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest, opt
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/jobs/{jobId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getJob",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -424,13 +426,6 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest, opt
 
 // CancelJob - Cancel a running Job
 func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobRequest, opts ...operations.Option) (*operations.CancelJobResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "cancelJob",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionTimeout,
@@ -451,6 +446,14 @@ func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/jobs/{jobId}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "cancelJob",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

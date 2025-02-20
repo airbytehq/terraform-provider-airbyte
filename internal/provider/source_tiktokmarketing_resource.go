@@ -145,7 +145,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2016-09-01"),
+						Default:     stringdefault.StaticString(`2016-09-01`),
 						Description: `The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated. Default: "2016-09-01"`,
 						Validators: []validator.String{
 							validators.IsValidDate(),

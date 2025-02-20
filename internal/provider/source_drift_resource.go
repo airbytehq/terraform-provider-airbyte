@@ -115,7 +115,7 @@ func (r *SourceDriftResource) Schema(ctx context.Context, req resource.SchemaReq
 					"email": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("test@test.com"),
+						Default:     stringdefault.StaticString(`test@test.com`),
 						Description: `Email used as parameter for contacts stream. Default: "test@test.com"`,
 					},
 				},

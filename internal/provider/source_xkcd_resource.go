@@ -63,7 +63,7 @@ func (r *SourceXkcdResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"comic_number": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2960"),
+						Default:     stringdefault.StaticString(`2960`),
 						Description: `Specifies the comic number in which details are to be extracted, pagination will begin with that number to end of available comics. Default: "2960"`,
 					},
 				},

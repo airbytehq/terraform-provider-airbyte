@@ -14,7 +14,7 @@ type SourceKlaviyoUpdate struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.
 	DisableFetchingPredictiveAnalytics *bool `json:"disable_fetching_predictive_analytics,omitempty"`
-	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>.
+	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
 }
 

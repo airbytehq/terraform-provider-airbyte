@@ -68,7 +68,7 @@ func (r *SourceGetlagoResource) Schema(ctx context.Context, req resource.SchemaR
 					"api_url": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https://api.getlago.com/api/v1"),
+						Default:     stringdefault.StaticString(`https://api.getlago.com/api/v1`),
 						Description: `Your Lago API URL. Default: "https://api.getlago.com/api/v1"`,
 					},
 				},

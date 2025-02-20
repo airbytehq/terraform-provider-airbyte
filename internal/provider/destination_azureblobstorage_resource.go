@@ -81,7 +81,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("blob.core.windows.net"),
+						Default:     stringdefault.StaticString(`blob.core.windows.net`),
 						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"`,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
@@ -114,7 +114,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     stringdefault.StaticString("No flattening"),
+										Default:     stringdefault.StaticString(`No flattening`),
 										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(

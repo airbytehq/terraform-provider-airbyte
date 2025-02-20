@@ -68,7 +68,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 					"cache_type": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("hash"),
+						Default:     stringdefault.StaticString(`hash`),
 						Description: `Redis cache type to store data in. Default: "hash"; must be "hash"`,
 						Validators: []validator.String{
 							stringvalidator.OneOf("hash"),

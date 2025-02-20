@@ -5,5 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3NoCompression struct {
-	CompressionType types.String `tfsdk:"compression_type"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	CompressionType      types.String `tfsdk:"compression_type"`
 }

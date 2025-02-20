@@ -83,7 +83,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 											"column": schema.StringAttribute{
 												Computed:    true,
 												Optional:    true,
-												Default:     stringdefault.StaticString("deleted_at"),
+												Default:     stringdefault.StaticString(`deleted_at`),
 												Description: `Name of the "deleted at" column. Default: "deleted_at"`,
 											},
 										},
@@ -114,7 +114,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 					"domain": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("db.fauna.com"),
+						Default:     stringdefault.StaticString(`db.fauna.com`),
 						Description: `Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>. Default: "db.fauna.com"`,
 					},
 					"port": schema.Int64Attribute{
@@ -126,7 +126,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 					"scheme": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("https"),
+						Default:     stringdefault.StaticString(`https`),
 						Description: `URL scheme. Default: "https"`,
 					},
 					"secret": schema.StringAttribute{

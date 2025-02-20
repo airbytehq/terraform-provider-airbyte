@@ -78,7 +78,7 @@ func (r *SourceDatadogResource) Schema(ctx context.Context, req resource.SchemaR
 					"end_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2024-01-01T00:00:00Z"),
+						Default:     stringdefault.StaticString(`2024-01-01T00:00:00Z`),
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Data after this date will  not be replicated. An empty value will represent the current datetime for each  execution. This just applies to Incremental syncs. Default: "2024-01-01T00:00:00Z"`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$`), "must match pattern "+regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$`).String()),
@@ -128,7 +128,7 @@ func (r *SourceDatadogResource) Schema(ctx context.Context, req resource.SchemaR
 					"site": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("datadoghq.com"),
+						Default:     stringdefault.StaticString(`datadoghq.com`),
 						Description: `The site where Datadog data resides in. Default: "datadoghq.com"; must be one of ["datadoghq.com", "us3.datadoghq.com", "us5.datadoghq.com", "datadoghq.eu", "ddog-gov.com"]`,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -143,7 +143,7 @@ func (r *SourceDatadogResource) Schema(ctx context.Context, req resource.SchemaR
 					"start_date": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString("2023-12-01T00:00:00Z"),
+						Default:     stringdefault.StaticString(`2023-12-01T00:00:00Z`),
 						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs. Default: "2023-12-01T00:00:00Z"`,
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$`), "must match pattern "+regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$`).String()),
