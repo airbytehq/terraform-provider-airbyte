@@ -15,8 +15,10 @@ SourceVitally Resource
 ```terraform
 resource "airbyte_source_vitally" "my_source_vitally" {
   configuration = {
-    api_key = "...my_api_key..."
-    status  = "active"
+    basic_auth_header = "...my_basic_auth_header..."
+    domain            = "...my_domain..."
+    secret_token      = "...my_secret_token..."
+    status            = "active"
   }
   definition_id = "4ccbdee7-a61d-46e5-a8de-2826c945689b"
   name          = "...my_name..."
@@ -50,8 +52,13 @@ resource "airbyte_source_vitally" "my_source_vitally" {
 
 Required:
 
-- `api_key` (String, Sensitive) The API Token for a Vitally account.
+- `domain` (String) Provide only the domain part, like https://{your-domain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
+- `secret_token` (String) sk_live_secret_token
 - `status` (String) Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned. must be one of ["active", "churned", "activeOrChurned"]
+
+Optional:
+
+- `basic_auth_header` (String, Sensitive) Basic Auth Header
 
 ## Import
 

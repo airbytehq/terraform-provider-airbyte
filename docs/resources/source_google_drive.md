@@ -29,6 +29,10 @@ resource "airbyte_source_google_drive" "my_source_googledrive" {
       copy_raw_files = {
         preserve_directory_structure = false
       }
+      replicate_permissions_acl = {
+        domain                    = "...my_domain..."
+        include_identities_stream = true
+      }
       replicate_records = {
         # ...
       }
@@ -303,6 +307,7 @@ Optional:
 Optional:
 
 - `copy_raw_files` (Attributes) Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files. (see [below for nested schema](#nestedatt--configuration--delivery_method--copy_raw_files))
+- `replicate_permissions_acl` (Attributes) Sends one identity stream and one for more permissions (ACL) streams to the destination. This data can be used in downstream systems to recreate permission restrictions mirroring the original source. (see [below for nested schema](#nestedatt--configuration--delivery_method--replicate_permissions_acl))
 - `replicate_records` (Attributes) Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination. (see [below for nested schema](#nestedatt--configuration--delivery_method--replicate_records))
 
 <a id="nestedatt--configuration--delivery_method--copy_raw_files"></a>
@@ -311,6 +316,15 @@ Optional:
 Optional:
 
 - `preserve_directory_structure` (Boolean) If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled. Default: true
+
+
+<a id="nestedatt--configuration--delivery_method--replicate_permissions_acl"></a>
+### Nested Schema for `configuration.delivery_method.replicate_permissions_acl`
+
+Optional:
+
+- `domain` (String) The Google domain of the identities.
+- `include_identities_stream` (Boolean) This data can be used in downstream systems to recreate permission restrictions mirroring the original source. Default: true
 
 
 <a id="nestedatt--configuration--delivery_method--replicate_records"></a>

@@ -66,7 +66,8 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
         tunnel_user = "...my_tunnel_user..."
       }
     }
-    username = "...my_username..."
+    unconstrained_number = false
+    username             = "...my_username..."
   }
   definition_id = "6cc561e7-8b38-4621-919b-0687fe3682b7"
   name          = "...my_name..."
@@ -121,6 +122,7 @@ Optional:
   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
  See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `unconstrained_number` (Boolean) Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable). Default: false
 
 <a id="nestedatt--configuration--ssl_mode"></a>
 ### Nested Schema for `configuration.ssl_mode`

@@ -66,7 +66,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `start_date` (String) Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{"{{"}} "\n" {{"}}"}} {{"{{"}} response.errorDetails {{"}}"}}. Default: "2023-01-01T00:00:00Z"
+- `start_date` (String) Start date for getting metrics per time period. Must be atmost 12 months before the request date (UTC) and atleast 2 days prior to the request date (UTC). See https://bit.ly/linkedin-pages-date-rules {{ "\n" }} {{ response.errorDetails }}. Default: "2023-01-01T00:00:00Z"
 - `time_granularity_type` (String) Granularity of the statistics for metrics per time period. Must be either "DAY" or "MONTH". Default: "DAY"; must be one of ["DAY", "MONTH"]
 
 <a id="nestedatt--configuration--credentials"></a>

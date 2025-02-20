@@ -39,6 +39,7 @@ data "airbyte_connection" "my_connection" {
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `source_id` (String)
 - `status` (String)
+- `tags` (Attributes List) (see [below for nested schema](#nestedatt--tags))
 - `workspace_id` (String)
 
 <a id="nestedatt--configurations"></a>
@@ -163,3 +164,14 @@ Read-Only:
 - `basic_timing` (String)
 - `cron_expression` (String)
 - `schedule_type` (String)
+
+
+<a id="nestedatt--tags"></a>
+### Nested Schema for `tags`
+
+Read-Only:
+
+- `color` (String)
+- `name` (String)
+- `tag_id` (String)
+- `workspace_id` (String)

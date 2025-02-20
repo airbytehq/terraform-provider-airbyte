@@ -27,6 +27,7 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
         token_expiry_date = "2021-05-13T13:15:18.521Z"
       }
     }
+    is_report = false
     metadata_fields = [
       "row_expanded"
     ]
@@ -69,6 +70,7 @@ Required:
 
 Optional:
 
+- `is_report` (Boolean) If true, the source will treat the provided sheet_id as a report. If false, the source will treat the provided sheet_id as a sheet. Default: false
 - `metadata_fields` (List of String) A List of available columns which metadata can be pulled from.
 
 <a id="nestedatt--configuration--credentials"></a>

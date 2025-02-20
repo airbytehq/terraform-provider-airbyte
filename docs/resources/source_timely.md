@@ -17,7 +17,7 @@ resource "airbyte_source_timely" "my_source_timely" {
   configuration = {
     account_id   = "...my_account_id..."
     bearer_token = "...my_bearer_token..."
-    start_date   = "2022-05-06"
+    start_date   = "2021-07-25T17:34:15.578Z"
   }
   definition_id = "5fd14cb8-5430-409c-9514-2e1de03f03e6"
   name          = "...my_name..."
@@ -51,9 +51,9 @@ resource "airbyte_source_timely" "my_source_timely" {
 
 Required:
 
-- `account_id` (String) Timely account id
-- `bearer_token` (String) Timely bearer token
-- `start_date` (String) start date
+- `account_id` (String) The Account ID for your Timely account
+- `bearer_token` (String, Sensitive) The Bearer Token for your Timely account
+- `start_date` (String) Earliest date from which you want to pull data from.
 
 ## Import
 

@@ -76,7 +76,7 @@ Optional:
 Required:
 
 - `client_id` (String, Sensitive) The client ID of the Airtable developer application.
-- `client_secret` (String, Sensitive) The client secret the Airtable developer application.
+- `client_secret` (String, Sensitive) The client secret of the Airtable developer application.
 - `refresh_token` (String, Sensitive) The key to refresh the expired access token.
 
 Optional:

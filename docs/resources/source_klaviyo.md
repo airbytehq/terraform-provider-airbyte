@@ -57,7 +57,7 @@ Required:
 Optional:
 
 - `disable_fetching_predictive_analytics` (Boolean) Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.
-- `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>. Default: 10
+- `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>. Default: 10
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
 
 ## Import

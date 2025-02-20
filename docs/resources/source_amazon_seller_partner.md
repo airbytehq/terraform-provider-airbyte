@@ -16,6 +16,7 @@ SourceAmazonSellerPartner Resource
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
     account_type           = "Vendor"
+    app_id                 = "...my_app_id..."
     aws_environment        = "PRODUCTION"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
@@ -77,6 +78,7 @@ Required:
 Optional:
 
 - `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. Default: "Seller"; must be one of ["Seller", "Vendor"]
+- `app_id` (String, Sensitive) Your Amazon Application ID.
 - `aws_environment` (String) Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]
 - `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90
 - `region` (String) Select the AWS Region. Default: "US"; must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]

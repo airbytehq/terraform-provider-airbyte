@@ -86,6 +86,14 @@ resource "airbyte_connection" "my_connection" {
   }
   source_id = "b5b2b4a5-bba6-4c3f-b0ef-ab87b373f331"
   status    = "active"
+  tags = [
+    {
+      color        = "...my_color..."
+      name         = "...my_name..."
+      tag_id       = "bf69ef26-2003-4c6e-9dfa-5867d7dba86a"
+      workspace_id = "a46bf3e2-e63d-4e32-8959-37721daec43c"
+    }
+  ]
 }
 ```
 
@@ -105,9 +113,10 @@ resource "airbyte_connection" "my_connection" {
 - `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
 - `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source. Default: "ignore"; must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
-- `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
+- `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”). Default: ""
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
 - `status` (String) must be one of ["active", "inactive", "deprecated"]
+- `tags` (Attributes List) (see [below for nested schema](#nestedatt--tags))
 
 ### Read-Only
 
@@ -130,9 +139,9 @@ Optional:
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
 - `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String) Not Null
-- `primary_key` (Attributes List) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema. (see [below for nested schema](#nestedatt--configurations--streams--primary_key))
+- `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
 - `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
-- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
+- `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "incremental_append", "incremental_deduped_history"]
 
 <a id="nestedatt--configurations--streams--mappers"></a>
 ### Nested Schema for `configurations.streams.mappers`
@@ -215,10 +224,6 @@ Optional:
 
 
 
-<a id="nestedatt--configurations--streams--primary_key"></a>
-### Nested Schema for `configurations.streams.primary_key`
-
-
 <a id="nestedatt--configurations--streams--selected_fields"></a>
 ### Nested Schema for `configurations.streams.selected_fields`
 
@@ -240,6 +245,17 @@ Optional:
 Read-Only:
 
 - `basic_timing` (String)
+
+
+<a id="nestedatt--tags"></a>
+### Nested Schema for `tags`
+
+Optional:
+
+- `color` (String) Not Null
+- `name` (String) Not Null
+- `tag_id` (String) Not Null
+- `workspace_id` (String) Not Null
 
 ## Import
 
