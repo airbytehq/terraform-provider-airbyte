@@ -18,15 +18,15 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
-    limit       = 10
+    limit       = 39021
     period      = "5SEC"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  definition_id = "49e5b0b6-8d5f-4b4b-99e2-f7dc2833c76b"
-  name          = "Sammy Hauck"
+  definition_id = "bddfa872-3b12-4feb-a665-3aa5aa88bcb2"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "566b4ade-0498-4ec4-8fd8-ad9161a05c5e"
+  workspace_id  = "0929de6e-00e3-4d8c-81a1-849a2ab68cdb"
 }
 ```
 
@@ -46,6 +46,7 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -65,13 +66,10 @@ Optional:
 - `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
 from the start date to the current time, or when the count of result
 elements reaches its limit.
-- `environment` (String) The environment to use. Either sandbox or production.
-
-must be one of ["sandbox", "production"]; Default: "sandbox"
+- `environment` (String) The environment to use. Either sandbox or production. Default: "sandbox"; must be one of ["sandbox", "production"]
 - `limit` (Number) The maximum number of elements to return. If not supplied, the default
 is 100. For numbers larger than 100, each 100 items is counted as one
 request for pricing purposes. Maximum value is 100000.
-
 Default: 100
 
 ## Import

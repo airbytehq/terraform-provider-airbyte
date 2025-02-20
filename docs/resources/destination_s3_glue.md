@@ -16,15 +16,18 @@ DestinationS3Glue Resource
 resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
   configuration = {
     access_key_id     = "A012345678910EXAMPLE"
-    file_name_pattern = "{date:yyyy_MM}"
+    file_name_pattern = "{date}"
     format = {
       json_lines_newline_delimited_json = {
         compression = {
           gzip = {
             compression_type = "GZIP"
           }
+          no_compression = {
+            compression_type = "No Compression"
+          }
         }
-        flattening  = "Root level flattening"
+        flattening  = "No flattening"
         format_type = "JSONL"
       }
     }
@@ -32,14 +35,14 @@ resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
     glue_serialization_library = "org.openx.data.jsonserde.JsonSerDe"
     s3_bucket_name             = "airbyte_sync"
     s3_bucket_path             = "data_sync/test"
-    s3_bucket_region           = "us-west-1"
+    s3_bucket_region           = "us-gov-west-1"
     s3_endpoint                = "http://localhost:9000"
     s3_path_format             = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "c7b23d6b-848f-4403-86c0-4b193fb28918"
-  name          = "Melvin Lueilwitz"
-  workspace_id  = "26ed560c-d3f9-4e1f-9eaf-9a8e2157a856"
+  definition_id = "7a9c505b-1990-4b38-b243-1c254ff78c36"
+  name          = "...my_name..."
+  workspace_id  = "e7df4138-2176-42e6-aa11-ed72fe60b365"
 }
 ```
 
@@ -58,6 +61,7 @@ resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -75,8 +79,8 @@ Optional:
 
 - `access_key_id` (String, Sensitive) The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `glue_serialization_library` (String) The library that your query engine will use for reading and writing data in your lake. must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]; Default: "org.openx.data.jsonserde.JsonSerDe"
-- `s3_bucket_region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `glue_serialization_library` (String) The library that your query engine will use for reading and writing data in your lake. Default: "org.openx.data.jsonserde.JsonSerDe"; must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]
+- `s3_bucket_region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 - `s3_endpoint` (String) Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>. Default: ""
 - `s3_path_format` (String) Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 - `secret_access_key` (String, Sensitive) The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
@@ -94,31 +98,31 @@ Optional:
 Optional:
 
 - `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression))
-- `flattening` (String) Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. must be one of ["No flattening", "Root level flattening"]; Default: "Root level flattening"
-- `format_type` (String) must be one of ["JSONL"]; Default: "JSONL"
+- `flattening` (String) Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details. Default: "Root level flattening"; must be one of ["No flattening", "Root level flattening"]
+- `format_type` (String) Default: "JSONL"; must be "JSONL"
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type`
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression`
 
 Optional:
 
-- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip))
-- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression))
+- `gzip` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression--gzip))
+- `no_compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--json_lines_newline_delimited_json--compression--no_compression))
 
-<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--gzip"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.gzip`
-
-Optional:
-
-- `compression_type` (String) must be one of ["GZIP"]; Default: "GZIP"
-
-
-<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--format_type--no_compression"></a>
-### Nested Schema for `configuration.format.json_lines_newline_delimited_json.format_type.no_compression`
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression--gzip"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression.gzip`
 
 Optional:
 
-- `compression_type` (String) must be one of ["No Compression"]; Default: "No Compression"
+- `compression_type` (String) Default: "GZIP"; must be "GZIP"
+
+
+<a id="nestedatt--configuration--format--json_lines_newline_delimited_json--compression--no_compression"></a>
+### Nested Schema for `configuration.format.json_lines_newline_delimited_json.compression.no_compression`
+
+Optional:
+
+- `compression_type` (String) Default: "No Compression"; must be "No Compression"
 
 ## Import
 

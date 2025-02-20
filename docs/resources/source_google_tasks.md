@@ -17,12 +17,12 @@ resource "airbyte_source_google_tasks" "my_source_googletasks" {
   configuration = {
     api_key       = "...my_api_key..."
     records_limit = "...my_records_limit..."
-    start_date    = "2022-04-01T08:43:44.262Z"
+    start_date    = "2021-03-18T12:11:09.006Z"
   }
-  definition_id = "e49a8fc7-f8e2-4467-a645-cfb2449eef87"
-  name          = "Gail Waelchi"
+  definition_id = "21fe239c-92e2-4e22-ab2a-455f8c2a65ce"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "b875ea1f-a63f-46c0-bac1-403cfd915cc5"
+  workspace_id  = "cd436e48-7e2a-49d4-afb4-f7bb961e6024"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_google_tasks" "my_source_googletasks" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

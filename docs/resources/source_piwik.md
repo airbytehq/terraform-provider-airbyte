@@ -19,10 +19,10 @@ resource "airbyte_source_piwik" "my_source_piwik" {
     client_secret   = "...my_client_secret..."
     organization_id = "...my_organization_id..."
   }
-  definition_id = "cf2b6755-1109-40ec-ac18-f2017e88b7a8"
-  name          = "Tonya Gutkowski"
+  definition_id = "addbeea5-c67a-4e6e-b5b6-74ff4f3f0966"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "5e84efb6-a935-4326-9882-dc6ea377e2f3"
+  workspace_id  = "82fd1468-136a-41cf-b115-faefb31130c1"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_piwik" "my_source_piwik" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

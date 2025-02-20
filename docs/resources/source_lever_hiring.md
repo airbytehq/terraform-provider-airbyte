@@ -19,14 +19,19 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
       authenticate_via_lever_api_key = {
         api_key = "...my_api_key..."
       }
+      authenticate_via_lever_o_auth = {
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
-    environment = "Sandbox"
+    environment = "Production"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  definition_id = "79a85cb7-2465-4180-a161-9872363e09a2"
-  name          = "Homer Tremblay"
+  definition_id = "90c8cd0b-80ef-44d4-8b58-35b5b43df384"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d9d77025-755e-4699-9c57-652df199422b"
+  workspace_id  = "baf076c7-c500-4421-a19e-19b468f66cbd"
 }
 ```
 
@@ -46,6 +51,7 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -59,7 +65,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Lever Hiring. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `environment` (String) The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use. must be one of ["Production", "Sandbox"]; Default: "Sandbox"
+- `environment` (String) The environment in which you'd like to replicate data for Lever. This is used to determine which Lever API endpoint to use. Default: "Sandbox"; must be one of ["Production", "Sandbox"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

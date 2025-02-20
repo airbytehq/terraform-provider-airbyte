@@ -2,8 +2,8 @@ resource "airbyte_source_planhat" "my_source_planhat" {
   configuration = {
     api_token = "...my_api_token..."
   }
-  definition_id = "a6744848-ac2b-404b-aae9-e175304065f6"
-  name          = "Tara King"
+  definition_id = "1bc1fb31-9f57-4b2d-8bd9-afdb76d79e73"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "901f87c9-df1a-4f8f-9013-d5d0cf403b28"
+  workspace_id  = "d46ff259-de23-4993-8c72-82757a04e149"
 }

@@ -18,10 +18,10 @@ resource "airbyte_source_clazar" "my_source_clazar" {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
   }
-  definition_id = "be209caa-593e-4b80-8ec8-c0a1f11671a5"
-  name          = "Mercedes Abernathy"
+  definition_id = "e48f6e8b-9783-42a5-b2c9-bdf7fd97230c"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f4b5e4c1-9596-4433-a1d5-1484aac586d0"
+  workspace_id  = "cb625e21-58bc-4c4a-9b08-9ae0dc70a1f9"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_clazar" "my_source_clazar" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

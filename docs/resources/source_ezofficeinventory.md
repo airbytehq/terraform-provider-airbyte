@@ -16,13 +16,13 @@ SourceEzofficeinventory Resource
 resource "airbyte_source_ezofficeinventory" "my_source_ezofficeinventory" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2021-07-04T01:47:08.951Z"
+    start_date = "2022-05-08T21:19:54.642Z"
     subdomain  = "...my_subdomain..."
   }
-  definition_id = "68fdfc06-92b4-4fd6-b3f5-9a8d0acc9948"
-  name          = "Thomas Ankunding Jr."
+  definition_id = "6d074250-3a64-413a-bd66-a6849e0d10ee"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "59fac1d6-c9b0-4f0f-b5d9-42704e93ebb3"
+  workspace_id  = "e2ab9a6f-fac5-46cc-a1aa-b2c021ec4246"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_ezofficeinventory" "my_source_ezofficeinventory" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

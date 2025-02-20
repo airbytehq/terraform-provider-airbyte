@@ -22,10 +22,10 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     engine        = "...my_engine..."
     host          = "api.app.firebolt.io"
   }
-  definition_id = "cf1a4306-e082-4909-997b-fabbad3671a9"
-  name          = "Shaun Bosco"
+  definition_id = "4426f4ef-7b69-41d7-938f-7589844b7911"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c174fee4-1455-462d-a757-6235e52bb8ad"
+  workspace_id  = "ae5026b9-8a30-49cd-ba6f-94604c895f14"
 }
 ```
 
@@ -45,6 +45,7 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

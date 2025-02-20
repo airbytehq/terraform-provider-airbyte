@@ -21,15 +21,19 @@ resource "airbyte_source_asana" "my_source_asana" {
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
+      authenticate_with_personal_access_token = {
+        personal_access_token = "...my_personal_access_token..."
+      }
     }
+    num_workers = 1
     organization_export_ids = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
   }
-  definition_id = "92fd4888-7cb1-49c4-8ec8-b4573d66d007"
-  name          = "Derek Crist"
+  definition_id = "190f0a64-da8f-4fe0-96fe-8f093bde58b4"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "e4396e74-03ea-42d5-8959-a4fa50e807c8"
+  workspace_id  = "04d30e4f-141a-4d2b-bfba-3940b90ad598"
 }
 ```
 
@@ -49,6 +53,7 @@ resource "airbyte_source_asana" "my_source_asana" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -58,6 +63,7 @@ resource "airbyte_source_asana" "my_source_asana" {
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials))
+- `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Asana pricing plan. More info about the rate limit tiers can be found on Asana's API <a href="https://developers.asana.com/docs/rate-limits">docs</a>. Default: 10
 - `organization_export_ids` (List of String) Globally unique identifiers for the organization exports
 
 <a id="nestedatt--configuration--credentials"></a>

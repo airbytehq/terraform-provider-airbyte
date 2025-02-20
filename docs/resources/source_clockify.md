@@ -19,10 +19,10 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     api_url      = "...my_api_url..."
     workspace_id = "...my_workspace_id..."
   }
-  definition_id = "a5bbba82-d4c0-4a2c-af78-12475bca9a48"
-  name          = "Amber Osinski"
+  definition_id = "f9c93fdb-ee6e-46a3-848c-e8a9238f75c9"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0ddc3156-b2ff-4d5d-ac69-da5497add71f"
+  workspace_id  = "8009b55e-5316-40ab-953e-a4f6f7d982bb"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_clockify" "my_source_clockify" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

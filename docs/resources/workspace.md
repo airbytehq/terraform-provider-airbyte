@@ -14,8 +14,64 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name            = "Tara Wiza"
-  organization_id = "a0c5318a-3511-4952-a18f-333c5e795edb"
+  name = "...my_name..."
+  notifications = {
+    connection_update = {
+      email = {
+        enabled = false
+      }
+      webhook = {
+        enabled = false
+        url     = "...my_url..."
+      }
+    }
+    connection_update_action_required = {
+      email = {
+        enabled = true
+      }
+      webhook = {
+        enabled = true
+        url     = "...my_url..."
+      }
+    }
+    failure = {
+      email = {
+        enabled = false
+      }
+      webhook = {
+        enabled = false
+        url     = "...my_url..."
+      }
+    }
+    success = {
+      email = {
+        enabled = false
+      }
+      webhook = {
+        enabled = true
+        url     = "...my_url..."
+      }
+    }
+    sync_disabled = {
+      email = {
+        enabled = true
+      }
+      webhook = {
+        enabled = true
+        url     = "...my_url..."
+      }
+    }
+    sync_disabled_warning = {
+      email = {
+        enabled = false
+      }
+      webhook = {
+        enabled = false
+        url     = "...my_url..."
+      }
+    }
+  }
+  organization_id = "4d886138-b4b4-4da8-9dca-f4d28f8550f8"
 }
 ```
 
@@ -28,12 +84,179 @@ resource "airbyte_workspace" "my_workspace" {
 
 ### Optional
 
+- `notifications` (Attributes) Configures workspace notifications. (see [below for nested schema](#nestedatt--notifications))
 - `organization_id` (String) ID of organization to add workspace to. Requires replacement if changed.
 
 ### Read-Only
 
-- `data_residency` (String) must be one of ["auto", "us", "eu"]
+- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
 - `workspace_id` (String)
+
+<a id="nestedatt--notifications"></a>
+### Nested Schema for `notifications`
+
+Optional:
+
+- `connection_update` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--connection_update))
+- `connection_update_action_required` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--connection_update_action_required))
+- `failure` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--failure))
+- `success` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--success))
+- `sync_disabled` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled))
+- `sync_disabled_warning` (Attributes) Configures a notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled_warning))
+
+<a id="nestedatt--notifications--connection_update"></a>
+### Nested Schema for `notifications.connection_update`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--connection_update--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--connection_update--webhook))
+
+<a id="nestedatt--notifications--connection_update--email"></a>
+### Nested Schema for `notifications.connection_update.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--connection_update--webhook"></a>
+### Nested Schema for `notifications.connection_update.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
+
+
+
+<a id="nestedatt--notifications--connection_update_action_required"></a>
+### Nested Schema for `notifications.connection_update_action_required`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--connection_update_action_required--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--connection_update_action_required--webhook))
+
+<a id="nestedatt--notifications--connection_update_action_required--email"></a>
+### Nested Schema for `notifications.connection_update_action_required.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--connection_update_action_required--webhook"></a>
+### Nested Schema for `notifications.connection_update_action_required.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
+
+
+
+<a id="nestedatt--notifications--failure"></a>
+### Nested Schema for `notifications.failure`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--failure--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--failure--webhook))
+
+<a id="nestedatt--notifications--failure--email"></a>
+### Nested Schema for `notifications.failure.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--failure--webhook"></a>
+### Nested Schema for `notifications.failure.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
+
+
+
+<a id="nestedatt--notifications--success"></a>
+### Nested Schema for `notifications.success`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--success--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--success--webhook))
+
+<a id="nestedatt--notifications--success--email"></a>
+### Nested Schema for `notifications.success.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--success--webhook"></a>
+### Nested Schema for `notifications.success.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
+
+
+
+<a id="nestedatt--notifications--sync_disabled"></a>
+### Nested Schema for `notifications.sync_disabled`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled--webhook))
+
+<a id="nestedatt--notifications--sync_disabled--email"></a>
+### Nested Schema for `notifications.sync_disabled.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--sync_disabled--webhook"></a>
+### Nested Schema for `notifications.sync_disabled.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
+
+
+
+<a id="nestedatt--notifications--sync_disabled_warning"></a>
+### Nested Schema for `notifications.sync_disabled_warning`
+
+Optional:
+
+- `email` (Attributes) Configures an email notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled_warning--email))
+- `webhook` (Attributes) Configures a webhook notification. (see [below for nested schema](#nestedatt--notifications--sync_disabled_warning--webhook))
+
+<a id="nestedatt--notifications--sync_disabled_warning--email"></a>
+### Nested Schema for `notifications.sync_disabled_warning.email`
+
+Optional:
+
+- `enabled` (Boolean)
+
+
+<a id="nestedatt--notifications--sync_disabled_warning--webhook"></a>
+### Nested Schema for `notifications.sync_disabled_warning.webhook`
+
+Optional:
+
+- `enabled` (Boolean)
+- `url` (String)
 
 ## Import
 

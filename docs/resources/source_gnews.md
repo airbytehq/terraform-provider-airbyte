@@ -16,25 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "ua"
+    country  = "gr"
     end_date = "2022-08-21 16:27:09"
     in = [
-      "description",
+      "description"
     ]
-    language = "no"
+    language = "el"
     nullable = [
-      "content",
+      "content"
     ]
-    query               = "Apple OR Microsoft"
+    query               = "Microsoft Windows 10"
     sortby              = "publishedAt"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple AND NOT iPhone"
-    top_headlines_topic = "nation"
+    top_headlines_query = "Microsoft Windows 10"
+    top_headlines_topic = "health"
   }
-  definition_id = "5108cd8d-f8fd-4dac-ae82-61af8b9bb485"
-  name          = "Nadine Jenkins"
+  definition_id = "c6b2adaf-5531-41d5-90fd-e24b104a9d91"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "be1e785d-e7e3-427e-b787-5126eb569443"
+  workspace_id  = "a4cd7e01-eaeb-4a47-98ed-9dadb5de4147"
 }
 ```
 
@@ -54,6 +54,7 @@ resource "airbyte_source_gnews" "my_source_gnews" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -64,18 +65,24 @@ Required:
 
 - `api_key` (String, Sensitive) API Key
 - `query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
-  quotation marks are used to search for articles with the exact same keyword sequence. 
-  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-  search. By default the space character acts as an AND operator, it is possible to replace the space character 
-  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-  It is important to note that this operator has a higher precedence than the AND operator. For example the 
-  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching 
+  quotation marks are used to search for articles with the exact same keyword
+sequence. 
+  For example the query: "Apple iPhone" will return articles matching at
+least once this sequence of keywords. - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
+  search. By default the space character acts as an AND operator, it is
+possible to replace the space character 
+  by AND to obtain the same result. For example the query: Apple Microsoft
+is equivalent to Apple AND Microsoft - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
+  It is important to note that this operator has a higher precedence than
+the AND operator. For example the 
+  query: Apple OR Microsoft will return all articles matching the keyword
+Apple as well as all articles matching 
   the keyword Microsoft
 - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
+  specified keywords. To use it, you need to add NOT in front of each word
+or phrase surrounded by quotes.
+  For example the query: Apple NOT iPhone will return all articles matching
+the keyword Apple but not the keyword
   iPhone
 
 Optional:
@@ -86,23 +93,31 @@ Optional:
 - `language` (String) must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]
 - `nullable` (List of String) This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
 - `sortby` (String) This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
-  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
-  - relevance = sort by best match to keywords, the articles with the best match are returned first
+  - publishedAt = sort by publication date, the articles with the most recent
+publication date are returned first
+  - relevance = sort by best match to keywords, the articles with the best
+match are returned first
 must be one of ["publishedAt", "relevance"]
 - `start_date` (String) This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 - `top_headlines_query` (String) This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by 
-  quotation marks are used to search for articles with the exact same keyword sequence. 
-  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-  search. By default the space character acts as an AND operator, it is possible to replace the space character 
-  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-  It is important to note that this operator has a higher precedence than the AND operator. For example the 
-  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching 
+  quotation marks are used to search for articles with the exact same keyword
+sequence. 
+  For example the query: "Apple iPhone" will return articles matching at
+least once this sequence of keywords. - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
+  search. By default the space character acts as an AND operator, it is
+possible to replace the space character 
+  by AND to obtain the same result. For example the query: Apple Microsoft
+is equivalent to Apple AND Microsoft - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
+  It is important to note that this operator has a higher precedence than
+the AND operator. For example the 
+  query: Apple OR Microsoft will return all articles matching the keyword
+Apple as well as all articles matching 
   the keyword Microsoft
 - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
+  specified keywords. To use it, you need to add NOT in front of each word
+or phrase surrounded by quotes.
+  For example the query: Apple NOT iPhone will return all articles matching
+the keyword Apple but not the keyword
   iPhone
 - `top_headlines_topic` (String) This parameter allows you to change the category for the request. must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
 

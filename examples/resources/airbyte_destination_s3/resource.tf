@@ -4,12 +4,78 @@ resource "airbyte_destination_s3" "my_destination_s3" {
     file_name_pattern = "{date}"
     format = {
       avro_apache_avro = {
+        additional_properties = "{ \"see\": \"documentation\" }"
         compression_codec = {
           bzip2 = {
-            codec = "bzip2"
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "bzip2"
+          }
+          deflate = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "Deflate"
+            compression_level     = 3
+          }
+          no_compression = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "no compression"
+          }
+          snappy = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "snappy"
+          }
+          xz = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "xz"
+            compression_level     = 3
+          }
+          zstandard = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            codec                 = "zstandard"
+            compression_level     = 0
+            include_checksum      = false
           }
         }
         format_type = "Avro"
+      }
+      csv_comma_separated_values = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        compression = {
+          gzip = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "GZIP"
+          }
+          no_compression = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "No Compression"
+          }
+        }
+        flattening  = "No flattening"
+        format_type = "CSV"
+      }
+      json_lines_newline_delimited_json = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        compression = {
+          gzip = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "GZIP"
+          }
+          no_compression = {
+            additional_properties = "{ \"see\": \"documentation\" }"
+            compression_type      = "No Compression"
+          }
+        }
+        flattening  = "No flattening"
+        format_type = "JSONL"
+      }
+      parquet_columnar_storage = {
+        additional_properties   = "{ \"see\": \"documentation\" }"
+        block_size_mb           = 4
+        compression_codec       = "SNAPPY"
+        dictionary_encoding     = true
+        dictionary_page_size_kb = 4
+        format_type             = "Parquet"
+        max_padding_size_mb     = 3
+        page_size_kb            = 9
       }
     }
     role_arn          = "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId"
@@ -20,7 +86,7 @@ resource "airbyte_destination_s3" "my_destination_s3" {
     s3_path_format    = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  definition_id = "5852a459-de52-40ce-b420-a295e5c09962"
-  name          = "Allan Kihn IV"
-  workspace_id  = "7a098753-4412-4bc3-a17a-cbe2ad9f3186"
+  definition_id = "78e0a8ec-be25-40bf-b8ba-093bfe7a6f05"
+  name          = "...my_name..."
+  workspace_id  = "9842b6c1-e43f-4d6f-90dd-f293538933f0"
 }

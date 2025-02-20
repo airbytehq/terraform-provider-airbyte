@@ -16,15 +16,15 @@ DestinationTypesense Resource
 resource "airbyte_destination_typesense" "my_destination_typesense" {
   configuration = {
     api_key    = "...my_api_key..."
-    batch_size = 5
+    batch_size = 1
     host       = "...my_host..."
     path       = "...my_path..."
     port       = "...my_port..."
     protocol   = "...my_protocol..."
   }
-  definition_id = "860231ad-193a-4f49-9985-c92d33cae7ed"
-  name          = "Miss Micheal Bauch"
-  workspace_id  = "39e69c6f-21d6-4541-b3cc-cbbc51a3caa6"
+  definition_id = "09194d31-6259-4e62-bc00-bbff9003411f"
+  name          = "...my_name..."
+  workspace_id  = "4d5d1b2b-06f0-4b0b-9f55-26250b3c87d0"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -58,7 +59,7 @@ Optional:
 
 - `batch_size` (Number) How many documents should be imported together. Default 1000
 - `path` (String) Path of the Typesense instance. Default is none
-- `port` (String) Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443
+- `port` (String) Port of the Typesense instance. Ex: 8108, 80, 443. Default is 8108
 - `protocol` (String) Protocol of the Typesense instance. Ex: http or https. Default is https
 
 ## Import

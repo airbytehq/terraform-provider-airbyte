@@ -17,16 +17,21 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
   configuration = {
     access_token = "...my_access_token..."
     region = {
-      eu_based_account = {}
+      eu_based_account = {
+        # ...
+      }
+      global_account = {
+        # ...
+      }
     }
     survey_id = [
-      "{ \"see\": \"documentation\" }",
+      "{ \"see\": \"documentation\" }"
     ]
   }
-  definition_id = "47f127a6-aa10-4ba7-afbf-e0de8798ad00"
-  name          = "Micheal DuBuque"
+  definition_id = "48652e9c-9d9f-4b9a-bf9d-0a1aba720b52"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8a627c91-41ac-48dc-b207-c06da07742c2"
+  workspace_id  = "828bf4a5-ea2e-4e51-999c-c2b98bc413dd"
 }
 ```
 
@@ -46,6 +51,7 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

@@ -15,21 +15,24 @@ SourceGoogleSheets Resource
 ```terraform
 resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
-    batch_size = 6
+    batch_size = 10
     credentials = {
       authenticate_via_google_o_auth = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
+      service_account_key_authentication = {
+        service_account_info = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
+      }
     }
     names_conversion = false
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  definition_id = "bd413d75-c669-43a6-b92e-f16650e4c312"
-  name          = "Betsy Koss"
+  definition_id = "8010dc77-56bf-4220-982b-1460e03dad99"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "566ac796-fdac-41f4-8b8f-86701054c1db"
+  workspace_id  = "6266806c-1cd7-4250-b2c6-f4ef1504f265"
 }
 ```
 
@@ -49,6 +52,7 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -62,7 +66,7 @@ Required:
 
 Optional:
 
-- `batch_size` (Number) Default value is 200. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 200 would process rows 1-201, then 201-401 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value. Default value should cover most of the cases, but if a google sheet has over 100,000 records or more, consider increasing batch_size value. Default: 200
+- `batch_size` (Number) Default value is 1000000. An integer representing row batch size for each sent request to Google Sheets API. Row batch size means how many rows are processed from the google sheet, for example default value 1000000 would process rows 2-1000002, then 1000003-2000003 and so on. Based on <a href='https://developers.google.com/sheets/api/limits'>Google Sheets API limits documentation</a>, it is possible to send up to 300 requests per minute, but each individual request has to be processed under 180 seconds, otherwise the request returns a timeout error. In regards to this information, consider network speed and number of columns of the google sheet when deciding a batch_size value. Default: 1000000
 - `names_conversion` (Boolean) Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based. Default: false
 
 <a id="nestedatt--configuration--credentials"></a>

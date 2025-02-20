@@ -17,7 +17,13 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
     encryption = {
       native_network_encryption_nne = {
-        encryption_algorithm = "3DES168"
+        encryption_algorithm = "RC4_56"
+      }
+      tls_encrypted_verify_certificate = {
+        ssl_certificate = "...my_ssl_certificate..."
+      }
+      unencrypted = {
+        # ...
       }
     }
     host            = "...my_host..."
@@ -28,13 +34,27 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Dolores.Cummerata25"
+    username = "...my_username..."
   }
-  definition_id = "b7b603cc-8cd8-487e-b603-813ef7fc0d17"
-  name          = "Eloise Hilpert"
-  workspace_id  = "14549f12-4218-42d1-9ef4-e895c9212618"
+  definition_id = "28ddc2bd-35a7-4a51-966c-b9e88351add3"
+  name          = "...my_name..."
+  workspace_id  = "6900342e-4f38-4480-a5e0-1dce84f57ee6"
 }
 ```
 
@@ -53,6 +73,7 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -89,7 +110,7 @@ Optional:
 
 Optional:
 
-- `encryption_algorithm` (String) This parameter defines the database encryption algorithm. must be one of ["AES256", "RC4_56", "3DES168"]; Default: "AES256"
+- `encryption_algorithm` (String) This parameter defines the database encryption algorithm. Default: "AES256"; must be one of ["AES256", "RC4_56", "3DES168"]
 
 
 <a id="nestedatt--configuration--encryption--tls_encrypted_verify_certificate"></a>

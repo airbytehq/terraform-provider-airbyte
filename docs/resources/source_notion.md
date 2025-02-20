@@ -19,13 +19,18 @@ resource "airbyte_source_notion" "my_source_notion" {
       access_token = {
         token = "...my_token..."
       }
+      o_auth20 = {
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+      }
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }
-  definition_id = "3a45535f-ff5d-41d3-8f0c-ce5486a3a161"
-  name          = "Simon Hansen"
+  definition_id = "ed0b2ec5-73c4-48f7-a90a-05db3648111e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "64148acb-8b41-4d5b-b94a-01397d3dfd90"
+  workspace_id  = "a587cc09-e865-4a1d-86a5-7693ad0a9192"
 }
 ```
 
@@ -45,6 +50,7 @@ resource "airbyte_source_notion" "my_source_notion" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

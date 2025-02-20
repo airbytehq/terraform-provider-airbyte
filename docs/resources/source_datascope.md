@@ -18,10 +18,10 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     api_key    = "...my_api_key..."
     start_date = "dd/mm/YYYY HH:MM"
   }
-  definition_id = "e08fd2ca-f83f-4045-910a-7c570570b889"
-  name          = "Tara Medhurst"
+  definition_id = "200f9c0e-d455-4199-96c3-9b473f66c92f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4e6d7c2f-caa3-486d-a1d2-ddf0351c49c6"
+  workspace_id  = "2292273e-92fb-4a2a-9d00-148222335f72"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

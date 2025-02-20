@@ -28,8 +28,8 @@ data "airbyte_destination_pinecone" "my_destination_pinecone" {
 ### Read-Only
 
 - `configuration` (String) The values required to configure the destination. Parsed as JSON.
+- `created_at` (Number)
+- `definition_id` (String)
 - `destination_type` (String)
 - `name` (String)
 - `workspace_id` (String)
-
-
