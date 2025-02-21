@@ -16,15 +16,15 @@ SourceChameleon Resource
 resource "airbyte_source_chameleon" "my_source_chameleon" {
   configuration = {
     api_key    = "...my_api_key..."
-    end_date   = "2022-12-14T08:22:45.312Z"
-    filter     = "survey"
+    end_date   = "2022-10-06T08:02:50.190Z"
+    filter     = "launcher"
     limit      = "...my_limit..."
-    start_date = "2022-04-19T09:29:33.891Z"
+    start_date = "2020-01-18T12:12:48.535Z"
   }
-  definition_id = "dff3818d-be50-4fcb-b2a7-8173abb82e6a"
-  name          = "Diane Luettgen"
+  definition_id = "5cbe19ca-55b1-46e7-9f3a-468d4b26f900"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "9256d746-38d1-4409-8639-cf5dd4a0c05f"
+  workspace_id  = "a1dd99e9-8adf-428a-ac07-dc3083920806"
 }
 ```
 
@@ -44,6 +44,7 @@ resource "airbyte_source_chameleon" "my_source_chameleon" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -53,12 +54,12 @@ resource "airbyte_source_chameleon" "my_source_chameleon" {
 Required:
 
 - `api_key` (String, Sensitive)
-- `end_date` (String)
 - `start_date` (String)
 
 Optional:
 
-- `filter` (String) Filter for using in the `segments_experiences` stream. must be one of ["tour", "survey", "launcher"]; Default: "tour"
+- `end_date` (String) End date for incremental sync
+- `filter` (String) Filter for using in the `segments_experiences` stream. Default: "tour"; must be one of ["tour", "survey", "launcher"]
 - `limit` (String) Max records per page limit. Default: "50"
 
 ## Import

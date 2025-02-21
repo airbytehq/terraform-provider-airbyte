@@ -17,12 +17,12 @@ resource "airbyte_source_hibob" "my_source_hibob" {
   configuration = {
     is_sandbox = false
     password   = "...my_password..."
-    username   = "Richard_Jerde72"
+    username   = "...my_username..."
   }
-  definition_id = "8b49c82f-283f-4df1-b362-a3ef9cacc879"
-  name          = "Matt Kuhic"
+  definition_id = "37fef60a-82ec-4619-82fd-52b97f17ff64"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "01647dc7-c271-4c50-84a2-5a4f7e4eabe3"
+  workspace_id  = "fad87a38-16bf-4b23-be0b-8a294896c8f0"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_hibob" "my_source_hibob" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

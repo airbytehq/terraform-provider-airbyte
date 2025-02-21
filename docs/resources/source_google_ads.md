@@ -27,19 +27,19 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
       {
         query      = "SELECT segments.ad_destination_type, campaign.advertising_channel_sub_type FROM campaign WHERE campaign.status = 'PAUSED'"
         table_name = "...my_table_name..."
-      },
+      }
     ]
     customer_id = "6783948572,5839201945"
     customer_status_filter = [
-      "CANCELED",
+      "SUSPENDED"
     ]
     end_date   = "2017-01-30"
     start_date = "2017-01-25"
   }
-  definition_id = "97511d62-4796-4585-8950-01aad5e5f9cf"
-  name          = "Dr. Joseph Schumm"
+  definition_id = "340bf2e2-1dfb-458f-b22d-521448c56250"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d3acce90-aeed-4108-bb98-82d54ce598cc"
+  workspace_id  = "b2e3af36-07c6-4325-9aae-252084b9ca1b"
 }
 ```
 
@@ -59,6 +59,7 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

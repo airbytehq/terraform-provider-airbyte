@@ -19,10 +19,10 @@ resource "airbyte_source_recharge" "my_source_recharge" {
     start_date                = "2021-05-14T00:00:00Z"
     use_orders_deprecated_api = false
   }
-  definition_id = "2cdcae9f-85c7-4017-b805-26f8856cdf3f"
-  name          = "Pat Zemlak"
+  definition_id = "65c9c52e-82c6-4949-b562-e7636f196391"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1999214f-3ffa-448a-8adc-06400b7b58d1"
+  workspace_id  = "bcd1634a-8c70-4b63-a447-c6aa3630dfac"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_recharge" "my_source_recharge" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

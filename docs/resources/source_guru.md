@@ -17,14 +17,14 @@ resource "airbyte_source_guru" "my_source_guru" {
   configuration = {
     password           = "...my_password..."
     search_cards_query = "...my_search_cards_query..."
-    start_date         = "2022-12-16T14:49:37.143Z"
+    start_date         = "2020-10-28T17:53:49.365Z"
     team_id            = "...my_team_id..."
-    username           = "Elfrieda_Fay27"
+    username           = "...my_username..."
   }
-  definition_id = "c473e8c7-bd59-4151-b4a5-53fda41daf76"
-  name          = "Jeanette Trantow"
+  definition_id = "070fb085-f5b2-4691-9959-fade7aaabb84"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1c5fa52e-0c6c-40cc-93e7-6e9fdef541f0"
+  workspace_id  = "4e138eef-875d-42e0-8fef-3846ce9c0d75"
 }
 ```
 
@@ -44,6 +44,7 @@ resource "airbyte_source_guru" "my_source_guru" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

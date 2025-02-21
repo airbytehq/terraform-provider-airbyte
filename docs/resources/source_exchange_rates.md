@@ -20,10 +20,10 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
     ignore_weekends = true
     start_date      = "YYYY-MM-DD"
   }
-  definition_id = "3242ccd2-763a-40d3-8eb9-1c3df2593495"
-  name          = "Phyllis Smitham"
+  definition_id = "c49afc85-a53f-43b2-92dd-a787ae40e34f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "258f30a2-7183-4b00-ac70-45956c03ec7b"
+  workspace_id  = "93ca9905-1947-4829-aec9-6a2652d69c6a"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

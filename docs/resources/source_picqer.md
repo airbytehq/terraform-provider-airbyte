@@ -17,13 +17,13 @@ resource "airbyte_source_picqer" "my_source_picqer" {
   configuration = {
     organization_name = "...my_organization_name..."
     password          = "...my_password..."
-    start_date        = "2022-09-19T15:03:54.645Z"
-    username          = "Emie.Balistreri"
+    start_date        = "2022-04-01T06:59:07.291Z"
+    username          = "...my_username..."
   }
-  definition_id = "7bfd1cb4-db2a-4ae6-820a-c9c19db3e1c8"
-  name          = "Rodney Rowe"
+  definition_id = "d262dbef-dc7d-4fb3-aa9d-957d6d60fd39"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "acce5c37-529a-415c-b606-2a63f5716d2b"
+  workspace_id  = "015e53d9-d9fd-4cc8-b48d-77a211e84c79"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_picqer" "my_source_picqer" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

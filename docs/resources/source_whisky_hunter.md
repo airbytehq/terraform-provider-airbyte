@@ -14,11 +14,13 @@ SourceWhiskyHunter Resource
 
 ```terraform
 resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
-  configuration = {}
-  definition_id = "c51ff84c-3c0a-4b4b-ae1a-36821935d459"
-  name          = "Mr. Sergio Reichel"
+  configuration = {
+    # ...
+  }
+  definition_id = "356ef044-dc9e-48e1-b9c5-549170dabd2e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "efa65de9-044a-406f-9294-180ca35f3494"
+  workspace_id  = "cf45da40-f2db-4128-9e66-10704a98b249"
 }
 ```
 
@@ -38,6 +40,7 @@ resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

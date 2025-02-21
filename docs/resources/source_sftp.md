@@ -19,18 +19,21 @@ resource "airbyte_source_sftp" "my_source_sftp" {
       password_authentication = {
         auth_user_password = "...my_auth_user_password..."
       }
+      ssh_key_authentication = {
+        auth_ssh_key = "...my_auth_ssh_key..."
+      }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
-    file_types   = "csv"
+    file_types   = "csv,json"
     folder_path  = "/logs/2022"
-    host         = "192.0.2.1"
+    host         = "www.host.com"
     port         = 22
     user         = "...my_user..."
   }
-  definition_id = "df9bf84b-784e-4daa-b2f4-24ed308606f0"
-  name          = "Wendell Dare"
+  definition_id = "ef03926e-13cb-4929-aa6b-e7c8e1b0c80e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "2de7b1a9-3e59-415f-a584-4c8d7f9e67ba"
+  workspace_id  = "de2e80b4-0898-4bea-821b-cb0c33f06888"
 }
 ```
 
@@ -50,6 +53,7 @@ resource "airbyte_source_sftp" "my_source_sftp" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

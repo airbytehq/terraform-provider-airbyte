@@ -1,10 +1,10 @@
 resource "airbyte_source_spacex_api" "my_source_spacexapi" {
   configuration = {
-    id      = "5bd5b511-2966-4924-8de8-b867ddcc8cc1"
+    id      = "...my_id..."
     options = "...my_options..."
   }
-  definition_id = "e1eaa5cf-c4c8-40fc-904e-13748425fe8e"
-  name          = "Cesar Ondricka III"
+  definition_id = "ad46abe7-8358-4dc7-8a83-cf0202884976"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0ba9a257-9b42-44a0-9692-2966de033119"
+  workspace_id  = "0b4d74ca-4b40-45b7-97dd-c6933339e2ef"
 }

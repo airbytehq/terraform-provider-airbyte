@@ -16,7 +16,7 @@ DestinationRedshift Resource
 resource "airbyte_destination_redshift" "my_destination_redshift" {
   configuration = {
     database            = "...my_database..."
-    disable_type_dedupe = true
+    disable_type_dedupe = false
     drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
@@ -25,24 +25,38 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     raw_data_schema     = "...my_raw_data_schema..."
     schema              = "public"
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
     uploading_method = {
       awss3_staging = {
         access_key_id      = "...my_access_key_id..."
         file_name_pattern  = "{date}"
-        purge_staging_data = true
+        purge_staging_data = false
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "ap-south-1"
+        s3_bucket_region   = "eu-west-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Jacky18"
+    username = "...my_username..."
   }
-  definition_id = "295e6e54-dc30-4616-986b-73990fea69be"
-  name          = "Hubert Kub"
-  workspace_id  = "7cde8f8d-8392-4aab-95fb-458bad9ea767"
+  definition_id = "50bfb2e7-1ca1-4132-b623-8606f328175d"
+  name          = "...my_name..."
+  workspace_id  = "e25c2049-8986-4945-a3f6-604de181966d"
 }
 ```
 
@@ -61,6 +75,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -148,7 +163,7 @@ Optional:
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
 - `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details. Default: true
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
-- `s3_bucket_region` (String) The region of the S3 staging bucket. must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]; Default: ""
+- `s3_bucket_region` (String) The region of the S3 staging bucket. Default: ""; must be one of ["", "af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
 
 ## Import
 

@@ -21,13 +21,30 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
     schema          = "airbyte_td"
     ssl             = false
     ssl_mode = {
-      allow = {}
+      allow = {
+        # ...
+      }
+      disable = {
+        # ...
+      }
+      prefer = {
+        # ...
+      }
+      require = {
+        # ...
+      }
+      verify_ca = {
+        ssl_ca_certificate = "...my_ssl_ca_certificate..."
+      }
+      verify_full = {
+        ssl_ca_certificate = "...my_ssl_ca_certificate..."
+      }
     }
-    username = "Rocio.Gibson"
+    username = "...my_username..."
   }
-  definition_id = "3586b689-fdc1-43c2-92fc-fab73b9ba5d3"
-  name          = "Amber Hansen"
-  workspace_id  = "4ad28dce-71d7-4fd7-9366-4c8ab088c248"
+  definition_id = "d113370e-613a-4d8a-8685-e4d05d32dcea"
+  name          = "...my_name..."
+  workspace_id  = "a9f65ee8-669c-48fd-aadc-bf3b835fc521"
 }
 ```
 
@@ -46,6 +63,7 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 

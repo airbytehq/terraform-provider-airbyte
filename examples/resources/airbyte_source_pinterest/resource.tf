@@ -8,28 +8,28 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     custom_reports = [
       {
         attribution_types = [
-          "INDIVIDUAL",
+          "INDIVIDUAL"
         ]
-        click_window_days = "7"
+        click_window_days = 60
         columns = [
-          "OUTBOUND_CLICK_2",
+          "PIN_PROMOTION_ID"
         ]
         conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "0"
-        granularity            = "WEEK"
-        level                  = "PRODUCT_ITEM"
-        name                   = "Kristen Wisoky"
+        engagement_window_days = 30
+        granularity            = "MONTH"
+        level                  = "CAMPAIGN"
+        name                   = "...my_name..."
         start_date             = "2022-07-28"
-        view_window_days       = "30"
-      },
+        view_window_days       = 7
+      }
     ]
     start_date = "2022-07-28"
     status = [
-      "PAUSED",
+      "ACTIVE"
     ]
   }
-  definition_id = "1ac64878-76fc-4ad6-95bc-ace687b33710"
-  name          = "Alma Marks"
+  definition_id = "7540406c-2051-4504-8c28-ddff47d8716f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a7b02fd2-5c77-427b-b635-4281d3e7f0bc"
+  workspace_id  = "4d479a13-e183-4090-af9e-7a388174d4f2"
 }

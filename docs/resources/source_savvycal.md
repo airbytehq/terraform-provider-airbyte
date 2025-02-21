@@ -17,10 +17,10 @@ resource "airbyte_source_savvycal" "my_source_savvycal" {
   configuration = {
     api_key = "...my_api_key..."
   }
-  definition_id = "083ea280-df18-404a-a7b9-f3e581495129"
-  name          = "Marcia Schmidt"
+  definition_id = "70a0218e-2a08-4de1-b2b8-19d92b33bb91"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8696756f-e058-4810-a2b8-ad45dc078875"
+  workspace_id  = "ff906acd-556e-48b6-a29c-e8ac167fbc7e"
 }
 ```
 
@@ -40,6 +40,7 @@ resource "airbyte_source_savvycal" "my_source_savvycal" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

@@ -20,18 +20,23 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       api_password = {
         api_password = "...my_api_password..."
       }
+      o_auth20 = {
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+      }
     }
     fetch_transactions_user_id               = true
-    job_checkpoint_interval                  = 9
+    job_checkpoint_interval                  = 484517
     job_product_variants_include_pres_prices = true
-    job_termination_threshold                = 5
+    job_termination_threshold                = 5282
     shop                                     = "my-store"
-    start_date                               = "2022-08-09"
+    start_date                               = "2021-05-19"
   }
-  definition_id = "05259781-2242-414e-979a-97873ec6ec23"
-  name          = "Everett McGlynn"
+  definition_id = "1a8f2c45-b7ec-4db1-8680-d2e228b3d43e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "834bb7f2-56aa-42ee-997a-7ac93ce2101f"
+  workspace_id  = "de6ea042-7883-4cc3-9786-89e9d969aa09"
 }
 ```
 
@@ -51,6 +56,7 @@ resource "airbyte_source_shopify" "my_source_shopify" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -66,7 +72,7 @@ Optional:
 - `bulk_window_in_days` (Number) Defines what would be a date range per single BULK Job. Default: 30
 - `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 - `fetch_transactions_user_id` (Boolean) Defines which API type (REST/BULK) to use to fetch `Transactions` data. If you are a `Shopify Plus` user, leave the default value to speed up the fetch. Default: false
-- `job_checkpoint_interval` (Number) The threshold, after which the single BULK Job should be checkpointed. Default: 100000
+- `job_checkpoint_interval` (Number) The threshold, after which the single BULK Job should be checkpointed (min: 15k, max: 1M). Default: 100000
 - `job_product_variants_include_pres_prices` (Boolean) If enabled, the `Product Variants` stream attempts to include `Presentment prices` field (may affect the performance). Default: true
 - `job_termination_threshold` (Number) The max time in seconds, after which the single BULK Job should be `CANCELED` and retried. The bigger the value the longer the BULK Job is allowed to run. Default: 7200
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. Default: "2020-01-01"

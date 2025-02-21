@@ -15,24 +15,27 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = true
+    accept_terms = false
     authentication = {
       o_auth2_recommended = {
         client_id = "...my_client_id..."
         secret    = "...my_secret..."
+      }
+      personal_access_token = {
+        personal_access_token = "...my_personal_access_token..."
       }
     }
     database            = "...my_database..."
     hostname            = "abc-12345678-wxyz.cloud.databricks.com"
     http_path           = "sql/1.0/warehouses/0000-1111111-abcd90"
     port                = "443"
-    purge_staging_data  = true
+    purge_staging_data  = false
     raw_schema_override = "...my_raw_schema_override..."
     schema              = "default"
   }
-  definition_id = "bb5605d7-306c-4fa6-b60b-fc11e74f736d"
-  name          = "Molly Medhurst"
-  workspace_id  = "e98a4c04-9945-4edd-ae95-6416d119e802"
+  definition_id = "fb6a88f5-a304-46f5-ab8b-4280a6d91f99"
+  name          = "...my_name..."
+  workspace_id  = "2615758c-c904-459e-9fd6-c8a55cba9327"
 }
 ```
 
@@ -51,6 +54,7 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 

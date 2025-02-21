@@ -19,10 +19,10 @@ resource "airbyte_source_railz" "my_source_railz" {
     secret_key = "...my_secret_key..."
     start_date = "...my_start_date..."
   }
-  definition_id = "d48e30cc-cb1d-439d-9fc6-49b7a58a5636"
-  name          = "Anna Ziemann"
+  definition_id = "5ca01522-3f6e-4546-8798-96a612b566f5"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "38f32285-6cd8-48e7-a494-b9e5830e9efb"
+  workspace_id  = "e13b054a-bc61-4cd7-9484-e54f4ddcd9d0"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_railz" "my_source_railz" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

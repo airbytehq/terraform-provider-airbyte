@@ -18,9 +18,9 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
     credentials_json = "...my_credentials_json..."
     project_id       = "...my_project_id..."
   }
-  definition_id = "fb7ef5d3-7ea6-4e5c-bc1c-0786ea3ea494"
-  name          = "Mr. Ray Cummerata V"
-  workspace_id  = "7dcad1af-a414-45a8-aad6-44361fa9c013"
+  definition_id = "8a7f4b51-c84b-4fb3-b2d3-f23e10cb143f"
+  name          = "...my_name..."
+  workspace_id  = "9839a229-aa78-46ab-be29-301131283087"
 }
 ```
 
@@ -39,6 +39,7 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 

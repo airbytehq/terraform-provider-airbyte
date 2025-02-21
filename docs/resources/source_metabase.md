@@ -18,12 +18,12 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     instance_api_url = "https://localhost:3000/api/"
     password         = "...my_password..."
     session_token    = "...my_session_token..."
-    username         = "Dudley_Weber"
+    username         = "...my_username..."
   }
-  definition_id = "a5f867ba-5cf8-4db4-8a2c-c4047b120c3e"
-  name          = "Clark Bogan"
+  definition_id = "d43c9538-9f19-48fa-839b-519d7ddc6528"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8e983f33-bbc2-4f8e-b5b9-5ee5dd11c77a"
+  workspace_id  = "2a6ca9f4-7b13-4377-aec7-a4e44e8ebd23"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_metabase" "my_source_metabase" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

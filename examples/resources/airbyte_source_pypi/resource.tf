@@ -3,8 +3,8 @@ resource "airbyte_source_pypi" "my_source_pypi" {
     project_name = "sampleproject"
     version      = "1.2.0"
   }
-  definition_id = "e7db5a3e-446f-4c1e-8fa9-1f7ef5f462d7"
-  name          = "Wallace Fritsch"
+  definition_id = "7ceb28d8-b84d-4270-aabd-2f5c63c08cfa"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "1977a1b2-71a5-4b00-9f29-606a36dac995"
+  workspace_id  = "a2335868-409a-4949-842b-a879d4c95d01"
 }

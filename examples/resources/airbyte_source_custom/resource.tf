@@ -1,7 +1,7 @@
 resource "airbyte_source_custom" "my_source_custom" {
   configuration = { "user" : "charles" }
-  definition_id = "93eb1144-8c1c-4d3a-be5e-f85381e22d9f"
-  name          = "Henry Price Sr."
+  definition_id = "542dff28-ff35-4067-b75b-e0658aab8a8f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "24121e63-15be-4306-a4e8-3994413a7c75"
+  workspace_id  = "0dfd0bfe-6e77-4725-b2d3-cf8a98202e5e"
 }

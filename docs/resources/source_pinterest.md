@@ -23,30 +23,30 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     custom_reports = [
       {
         attribution_types = [
-          "INDIVIDUAL",
+          "INDIVIDUAL"
         ]
-        click_window_days = "7"
+        click_window_days = 60
         columns = [
-          "OUTBOUND_CLICK_2",
+          "PIN_PROMOTION_ID"
         ]
         conversion_report_time = "TIME_OF_CONVERSION"
-        engagement_window_days = "0"
-        granularity            = "WEEK"
-        level                  = "PRODUCT_ITEM"
-        name                   = "Kristen Wisoky"
+        engagement_window_days = 30
+        granularity            = "MONTH"
+        level                  = "CAMPAIGN"
+        name                   = "...my_name..."
         start_date             = "2022-07-28"
-        view_window_days       = "30"
-      },
+        view_window_days       = 7
+      }
     ]
     start_date = "2022-07-28"
     status = [
-      "PAUSED",
+      "ACTIVE"
     ]
   }
-  definition_id = "1ac64878-76fc-4ad6-95bc-ace687b33710"
-  name          = "Alma Marks"
+  definition_id = "7540406c-2051-4504-8c28-ddff47d8716f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "a7b02fd2-5c77-427b-b635-4281d3e7f0bc"
+  workspace_id  = "4d479a13-e183-4090-af9e-7a388174d4f2"
 }
 ```
 
@@ -66,6 +66,7 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -94,19 +95,19 @@ Required:
 
 Required:
 
-- `columns` (List of String) A list of chosen columns
 - `name` (String) The name value of report
 
 Optional:
 
 - `attribution_types` (List of String) List of types of attribution for the conversion report
-- `click_window_days` (Number) Number of days to use as the conversion attribution window for a pin click action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: 30
-- `conversion_report_time` (String) The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event.. must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]; Default: "TIME_OF_AD_ACTION"
-- `engagement_window_days` (Number) Number of days to use as the conversion attribution window for an engagement action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]
-- `granularity` (String) Chosen granularity for API. must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]; Default: "TOTAL"
-- `level` (String) Chosen level for API. must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]; Default: "ADVERTISER"
+- `click_window_days` (Number) Number of days to use as the conversion attribution window for a pin click action. Default: 30; must be one of ["0", "1", "7", "14", "30", "60"]
+- `columns` (List of String) A list of chosen columns
+- `conversion_report_time` (String) The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event.. Default: "TIME_OF_AD_ACTION"; must be one of ["TIME_OF_AD_ACTION", "TIME_OF_CONVERSION"]
+- `engagement_window_days` (Number) Number of days to use as the conversion attribution window for an engagement action. must be one of ["0", "1", "7", "14", "30", "60"]
+- `granularity` (String) Chosen granularity for API. Default: "TOTAL"; must be one of ["TOTAL", "DAY", "HOUR", "WEEK", "MONTH"]
+- `level` (String) Chosen level for API. Default: "ADVERTISER"; must be one of ["ADVERTISER", "ADVERTISER_TARGETING", "CAMPAIGN", "CAMPAIGN_TARGETING", "AD_GROUP", "AD_GROUP_TARGETING", "PIN_PROMOTION", "PIN_PROMOTION_TARGETING", "KEYWORD", "PRODUCT_GROUP", "PRODUCT_GROUP_TARGETING", "PRODUCT_ITEM"]
 - `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by report api (913 days from today).
-- `view_window_days` (Number) Number of days to use as the conversion attribution window for a view action. must be one of ["0", "1", "7", "14", "30", "60"]; Default: [30]
+- `view_window_days` (Number) Number of days to use as the conversion attribution window for a view action. must be one of ["0", "1", "7", "14", "30", "60"]
 
 ## Import
 

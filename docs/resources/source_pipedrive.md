@@ -16,12 +16,13 @@ SourcePipedrive Resource
 resource "airbyte_source_pipedrive" "my_source_pipedrive" {
   configuration = {
     api_token              = "...my_api_token..."
+    num_workers            = 20
     replication_start_date = "2017-01-25 00:00:00Z"
   }
-  definition_id = "649fe5b0-8c82-4dc4-8ca1-ab76639716f1"
-  name          = "Clayton Doyle PhD"
+  definition_id = "cd6a105b-fe90-4389-8c90-c65a961a65fa"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "f025a154-586c-47cd-bb55-8f87809d3d1f"
+  workspace_id  = "09d58107-79a7-4e46-8d32-f0e8063bd034"
 }
 ```
 
@@ -41,6 +42,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -51,6 +53,10 @@ Required:
 
 - `api_token` (String, Sensitive) The Pipedrive API Token.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
+
+Optional:
+
+- `num_workers` (Number) Number of concurrent workers to be used in the sync. This number should be set according to your Pipedrive subscription plan and its rate limits, which coule be found <a href="https://pipedrive.readme.io/docs/core-api-concepts-rate-limiting">here</a> on Pipedrive Rate limiting page. Please note that Pipedrive API rate limits are reset daily. If you experience rate limiting issues, please lower the number of workers according to your plan. Default: 10
 
 ## Import
 

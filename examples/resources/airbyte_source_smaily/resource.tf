@@ -4,8 +4,8 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_subdomain = "...my_api_subdomain..."
     api_username  = "...my_api_username..."
   }
-  definition_id = "d8a9d001-0028-4d11-8128-0d807cdd8eb8"
-  name          = "Ron Hermiston"
+  definition_id = "de7ce3b3-5961-453c-b801-171f643a6f4a"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "610938eb-2433-4624-98c5-c5aa0b5368b2"
+  workspace_id  = "9910a2cc-8a4e-4833-9f0d-e4ee3e07cabf"
 }

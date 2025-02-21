@@ -16,8 +16,8 @@ DestinationPostgres Resource
 resource "airbyte_destination_postgres" "my_destination_postgres" {
   configuration = {
     database            = "...my_database..."
-    disable_type_dedupe = false
-    drop_cascade        = true
+    disable_type_dedupe = true
+    drop_cascade        = false
     host                = "...my_host..."
     jdbc_url_params     = "...my_jdbc_url_params..."
     password            = "...my_password..."
@@ -26,16 +26,52 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
     schema              = "public"
     ssl                 = true
     ssl_mode = {
-      allow = {}
+      allow = {
+        # ...
+      }
+      disable = {
+        # ...
+      }
+      prefer = {
+        # ...
+      }
+      require = {
+        # ...
+      }
+      verify_ca = {
+        ca_certificate      = "...my_ca_certificate..."
+        client_key_password = "...my_client_key_password..."
+      }
+      verify_full = {
+        ca_certificate      = "...my_ca_certificate..."
+        client_certificate  = "...my_client_certificate..."
+        client_key          = "...my_client_key..."
+        client_key_password = "...my_client_key_password..."
+      }
     }
     tunnel_method = {
-      no_tunnel = {}
+      no_tunnel = {
+        # ...
+      }
+      password_authentication = {
+        tunnel_host          = "...my_tunnel_host..."
+        tunnel_port          = 22
+        tunnel_user          = "...my_tunnel_user..."
+        tunnel_user_password = "...my_tunnel_user_password..."
+      }
+      ssh_key_authentication = {
+        ssh_key     = "...my_ssh_key..."
+        tunnel_host = "...my_tunnel_host..."
+        tunnel_port = 22
+        tunnel_user = "...my_tunnel_user..."
+      }
     }
-    username = "Micaela.Kris"
+    unconstrained_number = false
+    username             = "...my_username..."
   }
-  definition_id = "62a6a13d-9b7f-4635-98ff-b042924faeae"
-  name          = "Lisa Bergnaum"
-  workspace_id  = "31937409-0efb-422d-b6fe-0864a856a041"
+  definition_id = "6cc561e7-8b38-4621-919b-0687fe3682b7"
+  name          = "...my_name..."
+  workspace_id  = "2b2d880a-23fd-4463-8627-0a837b28bb7e"
 }
 ```
 
@@ -54,6 +90,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
 
@@ -85,6 +122,7 @@ Optional:
   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
  See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `unconstrained_number` (Boolean) Create numeric columns as unconstrained DECIMAL instead of NUMBER(38, 9). This will allow increased precision in numeric values. (this is disabled by default for backwards compatibility, but is recommended to enable). Default: false
 
 <a id="nestedatt--configuration--ssl_mode"></a>
 ### Nested Schema for `configuration.ssl_mode`

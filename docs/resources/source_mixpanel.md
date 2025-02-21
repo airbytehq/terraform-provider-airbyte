@@ -15,24 +15,29 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 9
+    attribution_window = 10
     credentials = {
       project_secret = {
         api_secret = "...my_api_secret..."
       }
+      service_account = {
+        project_id = 10
+        secret     = "...my_secret..."
+        username   = "...my_username..."
+      }
     }
-    date_window_size             = 0
+    date_window_size             = 10
     end_date                     = "2021-11-16"
-    page_size                    = 4
+    page_size                    = 6
     project_timezone             = "US/Pacific"
-    region                       = "EU"
-    select_properties_by_default = false
+    region                       = "US"
+    select_properties_by_default = true
     start_date                   = "2021-11-16"
   }
-  definition_id = "5b91e126-100f-409e-b706-bb016ea0ac6b"
-  name          = "Alfonso Turcotte"
+  definition_id = "ec7b9d35-13cb-4117-b2ed-d8a6874a4325"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "40c173d4-d611-433d-9b2a-95937ced0062"
+  workspace_id  = "350068e1-f8f0-490a-ba81-d5400042882c"
 }
 ```
 
@@ -52,6 +57,7 @@ resource "airbyte_source_mixpanel" "my_source_mixpanel" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -69,7 +75,7 @@ Optional:
 - `end_date` (String) The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
 - `page_size` (Number) The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value. Default: 1000
 - `project_timezone` (String) Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>. Default: "US/Pacific"
-- `region` (String) The region of mixpanel domain instance either US or EU. must be one of ["US", "EU"]; Default: "US"
+- `region` (String) The region of mixpanel domain instance either US or EU. Default: "US"; must be one of ["US", "EU"]
 - `select_properties_by_default` (Boolean) Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored. Default: true
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 

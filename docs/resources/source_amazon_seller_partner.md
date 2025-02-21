@@ -15,13 +15,14 @@ SourceAmazonSellerPartner Resource
 ```terraform
 resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" {
   configuration = {
-    account_type           = "Seller"
-    aws_environment        = "SANDBOX"
+    account_type           = "Vendor"
+    app_id                 = "...my_app_id..."
+    aws_environment        = "PRODUCTION"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
-    period_in_days         = 1
+    period_in_days         = 10
     refresh_token          = "...my_refresh_token..."
-    region                 = "GB"
+    region                 = "TR"
     replication_end_date   = "2017-01-25T00:00:00Z"
     replication_start_date = "2017-01-25T00:00:00Z"
     report_options_list = [
@@ -30,18 +31,18 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
           {
             option_name  = "...my_option_name..."
             option_value = "...my_option_value..."
-          },
+          }
         ]
-        report_name = "GET_MERCHANT_LISTINGS_ALL_DATA"
+        report_name = "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL"
         stream_name = "...my_stream_name..."
-      },
+      }
     ]
     wait_to_avoid_fatal_errors = false
   }
-  definition_id = "6bcd5137-4519-445c-8336-0526ae8aa3c4"
-  name          = "Craig Lang"
+  definition_id = "d8c1cdd2-677c-4769-a67f-0d49c962b2c7"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "13b86681-05e1-4180-bb2a-875a1ca190e9"
+  workspace_id  = "7495ec12-91c5-4b14-ab51-6fd77e9fda23"
 }
 ```
 
@@ -61,6 +62,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -75,10 +77,11 @@ Required:
 
 Optional:
 
-- `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. must be one of ["Seller", "Vendor"]; Default: "Seller"
-- `aws_environment` (String) Select the AWS Environment. must be one of ["PRODUCTION", "SANDBOX"]; Default: "PRODUCTION"
+- `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. Default: "Seller"; must be one of ["Seller", "Vendor"]
+- `app_id` (String, Sensitive) Your Amazon Application ID.
+- `aws_environment` (String) Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]
 - `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90
-- `region` (String) Select the AWS Region. must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]; Default: "US"
+- `region` (String) Select the AWS Region. Default: "US"; must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If start date is not provided or older than 2 years ago from today, the date 2 years ago from today will be used.
 - `report_options_list` (Attributes List) Additional information passed to reports. This varies by report type. (see [below for nested schema](#nestedatt--configuration--report_options_list))
@@ -90,7 +93,7 @@ Optional:
 Required:
 
 - `options_list` (Attributes List) List of options (see [below for nested schema](#nestedatt--configuration--report_options_list--options_list))
-- `report_name` (String) must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA", "GET_VENDOR_REAL_TIME_INVENTORY_REPORT", "GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT", "GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT", "GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT", "GET_SALES_AND_TRAFFIC_REPORT", "GET_VENDOR_SALES_REPORT", "GET_VENDOR_INVENTORY_REPORT", "GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT", "GET_VENDOR_TRAFFIC_REPORT"]
+- `report_name` (String) must be one of ["GET_AFN_INVENTORY_DATA", "GET_AFN_INVENTORY_DATA_BY_COUNTRY", "GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL", "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_RETURNS_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_PROMOTION_DATA", "GET_FBA_FULFILLMENT_CUSTOMER_SHIPMENT_REPLACEMENT_DATA", "GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA", "GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA", "GET_FBA_INVENTORY_PLANNING_DATA", "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA", "GET_FBA_REIMBURSEMENTS_DATA", "GET_FBA_SNS_FORECAST_DATA", "GET_FBA_SNS_PERFORMANCE_DATA", "GET_FBA_STORAGE_FEE_CHARGES_DATA", "GET_FLAT_FILE_ACTIONABLE_ORDER_DATA_SHIPPING", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL", "GET_FLAT_FILE_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_FLAT_FILE_ARCHIVED_ORDERS_DATA_BY_ORDER_DATE", "GET_FLAT_FILE_OPEN_LISTINGS_DATA", "GET_FLAT_FILE_RETURNS_DATA_BY_RETURN_DATE", "GET_LEDGER_DETAIL_VIEW_DATA", "GET_LEDGER_SUMMARY_VIEW_DATA", "GET_MERCHANT_CANCELLED_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_ALL_DATA", "GET_MERCHANT_LISTINGS_DATA", "GET_MERCHANT_LISTINGS_DATA_BACK_COMPAT", "GET_MERCHANT_LISTINGS_INACTIVE_DATA", "GET_MERCHANTS_LISTINGS_FYP_REPORT", "GET_ORDER_REPORT_DATA_SHIPPING", "GET_RESTOCK_INVENTORY_RECOMMENDATIONS_REPORT", "GET_SELLER_FEEDBACK_DATA", "GET_STRANDED_INVENTORY_UI_DATA", "GET_V2_SETTLEMENT_REPORT_DATA_FLAT_FILE", "GET_XML_ALL_ORDERS_DATA_BY_ORDER_DATE_GENERAL", "GET_XML_BROWSE_TREE_DATA", "GET_VENDOR_REAL_TIME_INVENTORY_REPORT"]
 - `stream_name` (String)
 
 <a id="nestedatt--configuration--report_options_list--options_list"></a>

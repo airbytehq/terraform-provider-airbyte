@@ -3,8 +3,8 @@ resource "airbyte_source_aha" "my_source_aha" {
     api_key = "...my_api_key..."
     url     = "...my_url..."
   }
-  definition_id = "638bd648-d548-414a-beb9-3d4bbde9f2bb"
-  name          = "Kenneth Russel"
+  definition_id = "3f13fca3-3092-4888-a23e-ee767d0c5af3"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fe4ad282-938c-4452-b564-4517930ed8d4"
+  workspace_id  = "db816559-06ec-40f3-b18c-d0b3fc168203"
 }

@@ -28,8 +28,8 @@ data "airbyte_source_bing_ads" "my_source_bingads" {
 ### Read-Only
 
 - `configuration` (String) The values required to configure the source. Parsed as JSON.
+- `created_at` (Number)
+- `definition_id` (String)
 - `name` (String)
 - `source_type` (String)
 - `workspace_id` (String)
-
-

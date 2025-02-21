@@ -5,8 +5,8 @@ resource "airbyte_source_zoom" "my_source_zoom" {
     client_id              = "...my_client_id..."
     client_secret          = "...my_client_secret..."
   }
-  definition_id = "14db9a0e-6f1f-46fb-a229-4ac15ae0525b"
-  name          = "Johnnie Braun"
+  definition_id = "a9fb73c4-b1fb-4a36-9aa1-5885cf3ccb13"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8032522c-1981-45ba-94d9-03614afc86e6"
+  workspace_id  = "6eb5b976-337b-4ae9-8097-89298f1ccb4e"
 }

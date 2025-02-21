@@ -15,14 +15,14 @@ SourceMailgun Resource
 ```terraform
 resource "airbyte_source_mailgun" "my_source_mailgun" {
   configuration = {
-    domain_region = "EU"
+    domain_region = "US"
     private_key   = "...my_private_key..."
     start_date    = "2023-08-01T00:00:00Z"
   }
-  definition_id = "28c6eefe-59b7-42db-a240-7ce310da7633"
-  name          = "Samantha Becker"
+  definition_id = "bd853e05-630d-4e28-852c-3ff9e84d219d"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fec241f7-3646-4e1c-8795-83a59a825531"
+  workspace_id  = "a7f7be58-dede-4a51-8b06-e957318ad0a2"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -54,7 +55,7 @@ Required:
 
 Optional:
 
-- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'. must be one of ["US", "EU"]; Default: "US"
+- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'. Default: "US"; must be one of ["US", "EU"]
 - `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 ## Import

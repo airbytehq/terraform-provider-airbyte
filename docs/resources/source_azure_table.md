@@ -19,10 +19,10 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
     storage_account_name    = "...my_storage_account_name..."
     storage_endpoint_suffix = "core.windows.net"
   }
-  definition_id = "a321f431-fb3a-4ad0-b8a3-612fcb5a7fdd"
-  name          = "Warren Funk DDS"
+  definition_id = "aaa1627f-28b1-46dd-a422-879ec3291aac"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "39c22fe1-7df5-47ad-b107-25ff7f1a27e8"
+  workspace_id  = "7fae477e-8dc6-4668-84b6-27911d16e497"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

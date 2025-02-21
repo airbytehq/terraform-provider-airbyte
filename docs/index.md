@@ -3,12 +3,12 @@
 page_title: "airbyte Provider"
 subcategory: ""
 description: |-
-  airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
+  airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 ---
 
 # airbyte Provider
 
-airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
+airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 
 ## Example Usage
 
@@ -17,7 +17,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.13.0"
+      version = "0.14.1"
     }
   }
 }
@@ -37,4 +37,5 @@ provider "airbyte" {
 - `client_secret` (String, Sensitive)
 - `password` (String, Sensitive)
 - `server_url` (String) Server URL (defaults to https://api.airbyte.com/v1)
+- `token_url` (String, Sensitive)
 - `username` (String, Sensitive)

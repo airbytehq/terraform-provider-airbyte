@@ -18,12 +18,12 @@ resource "airbyte_source_appfigures" "my_source_appfigures" {
     api_key      = "...my_api_key..."
     group_by     = "country"
     search_store = "...my_search_store..."
-    start_date   = "2022-10-16T08:12:09.283Z"
+    start_date   = "2022-10-18T12:34:30.006Z"
   }
-  definition_id = "e10b1b39-4b84-4acd-b8db-6a4f7e23711b"
-  name          = "Tonya Anderson"
+  definition_id = "c43d4d64-3a95-44de-9802-e8b873b3c6d3"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "d38a1edc-b36c-4da3-951c-bc15623ec645"
+  workspace_id  = "c08bb69b-da4a-49e5-845f-5b8957d87d02"
 }
 ```
 
@@ -43,6 +43,7 @@ resource "airbyte_source_appfigures" "my_source_appfigures" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -56,7 +57,7 @@ Required:
 
 Optional:
 
-- `group_by` (String) Category term for grouping the search results. must be one of ["network", "product", "country", "date"]; Default: "product"
+- `group_by` (String) Category term for grouping the search results. Default: "product"; must be one of ["network", "product", "country", "date"]
 - `search_store` (String) The store which needs to be searched in streams. Default: "apple"
 
 ## Import

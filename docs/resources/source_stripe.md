@@ -16,17 +16,17 @@ SourceStripe Resource
 resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
     account_id           = "...my_account_id..."
-    call_rate_limit      = 100
+    call_rate_limit      = 25
     client_secret        = "...my_client_secret..."
-    lookback_window_days = 2
-    num_workers          = 2
-    slice_range          = 30
+    lookback_window_days = 4
+    num_workers          = 1
+    slice_range          = 1
     start_date           = "2017-01-25T00:00:00Z"
   }
-  definition_id = "08449978-c5f0-4c0b-b0c5-d08d732ef691"
-  name          = "Grady Block"
+  definition_id = "7281f9a2-e8d0-4a1c-9c43-ac663b447792"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6e65b76b-dc3f-49ea-a358-d5b4415ac58f"
+  workspace_id  = "94ac24f1-d3b4-46af-ace7-475d3264149a"
 }
 ```
 
@@ -46,6 +46,7 @@ resource "airbyte_source_stripe" "my_source_stripe" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

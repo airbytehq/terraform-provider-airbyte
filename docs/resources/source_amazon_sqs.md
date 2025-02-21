@@ -17,18 +17,18 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
   configuration = {
     access_key           = "xxxxxHRNxxx3TBxxxxxx"
     attributes_to_return = "attr1,attr2"
-    delete_messages      = false
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "ap-northeast-1"
+    region               = "ap-southeast-2"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
-    visibility_timeout   = 15
+    target               = "GetQueueAttributes"
+    visibility_timeout   = 20
   }
-  definition_id = "82a17eb0-af63-4def-a733-56f39bea5e20"
-  name          = "Dr. Salvador White"
+  definition_id = "838e1ff6-5ade-49bb-b0dc-2f1fb8c96dde"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "905c8543-b918-44ca-87dc-adad2938da57"
+  workspace_id  = "d064f44a-5875-4cf2-8a32-a321d2eb3460"
 }
 ```
 
@@ -48,6 +48,7 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -56,18 +57,18 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
 
 Required:
 
+- `access_key` (String, Sensitive) The Access Key ID of the AWS IAM Role to use for pulling messages
 - `queue_url` (String) URL of the SQS Queue
-- `region` (String) AWS Region of the SQS Queue. must be one of ["af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
+- `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages
 
 Optional:
 
-- `access_key` (String, Sensitive) The Access Key ID of the AWS IAM Role to use for pulling messages
-- `attributes_to_return` (String) Comma separated list of Mesage Attribute names to return
-- `delete_messages` (Boolean) If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. . Default: false
-- `max_batch_size` (Number) Max amount of messages to get in one batch (10 max)
-- `max_wait_time` (Number) Max amount of time in seconds to wait for messages in a single poll (20 max)
-- `secret_key` (String, Sensitive) The Secret Key of the AWS IAM Role to use for pulling messages
-- `visibility_timeout` (Number) Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
+- `attributes_to_return` (String) Comma separated list of Mesage Attribute names to return. Default: "All"
+- `max_batch_size` (Number) Max amount of messages to get in one batch (10 max). Default: 10
+- `max_wait_time` (Number) Max amount of time in seconds to wait for messages in a single poll (20 max). Default: 20
+- `region` (String) AWS Region of the SQS Queue. Default: "us-east-1"; must be one of ["af-south-1", "ap-east-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1", "ap-south-2", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-southeast-4", "ca-central-1", "ca-west-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-central-2", "eu-north-1", "eu-south-1", "eu-south-2", "eu-west-1", "eu-west-2", "eu-west-3", "il-central-1", "me-central-1", "me-south-1", "sa-east-1", "us-east-1", "us-east-2", "us-gov-east-1", "us-gov-west-1", "us-west-1", "us-west-2"]
+- `target` (String) Note - Different targets have different attribute enum requirements, please refer actions sections in https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/Welcome.html. Default: "ReceiveMessage"; must be one of ["GetQueueAttributes", "ReceiveMessage"]
+- `visibility_timeout` (Number) Modify the Visibility Timeout of the individual message from the Queue's default (seconds). Default: 20
 
 ## Import
 

@@ -1,13 +1,13 @@
 resource "airbyte_source_basecamp" "my_source_basecamp" {
   configuration = {
-    account_id             = 41.27
+    account_id             = 2.64
     client_id              = "...my_client_id..."
     client_refresh_token_2 = "...my_client_refresh_token_2..."
     client_secret          = "...my_client_secret..."
-    start_date             = "2021-08-09T14:43:07.351Z"
+    start_date             = "2022-08-26T03:34:30.047Z"
   }
-  definition_id = "2127f33f-8652-4b25-91b0-23ec1224a7ff"
-  name          = "Clarence Hodkiewicz"
+  definition_id = "78267fea-7309-46f2-92ea-b46b31fe0e8d"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "c187087d-37ac-499f-9785-1612305e0c1f"
+  workspace_id  = "d5754212-9126-4098-80cb-b5315a603e73"
 }

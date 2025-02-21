@@ -19,10 +19,10 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     api_key        = "a very long hex sequence"
     site_id        = "a relatively long hex sequence"
   }
-  definition_id = "64f6ff9e-8e9f-4b1f-942f-e101b4395357"
-  name          = "Geoffrey Rowe"
+  definition_id = "fed65f1e-a9f8-4831-9d33-c9335549d7af"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "4750edd3-b5b4-4d0f-887b-07cfdecccf7a"
+  workspace_id  = "c791adda-309d-4860-a7bc-7d82a7204cff"
 }
 ```
 
@@ -42,6 +42,7 @@ resource "airbyte_source_webflow" "my_source_webflow" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

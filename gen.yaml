@@ -1,22 +1,30 @@
 configVersion: 2.0.0
 generation:
   sdkClassName: SDK
+  maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
+  useClassNamesForArrayFields: true
   fixes:
-    nameResolutionDec2023: false
+    nameResolutionFeb2025: false
     parameterOrderingFeb2024: false
     requestResponseComponentNamesFeb2024: false
+    securityFeb2025: false
   auth:
     oAuth2ClientCredentialsEnabled: true
+    oAuth2PasswordEnabled: true
   telemetryEnabled: true
 terraform:
-  version: 0.13.0
+  version: 0.14.1
   additionalDataSources: []
   additionalDependencies: {}
+  additionalProviderAttributes:
+    httpHeaders: ""
   additionalResources: []
   allowUnknownFieldsInWeakUnions: false
   author: airbytehq
+  defaultErrorName: APIError
+  enableTypeDeduplication: false
   environmentVariables: []
   imports:
     option: openapi

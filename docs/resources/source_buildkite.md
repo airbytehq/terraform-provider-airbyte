@@ -16,12 +16,12 @@ SourceBuildkite Resource
 resource "airbyte_source_buildkite" "my_source_buildkite" {
   configuration = {
     api_key    = "...my_api_key..."
-    start_date = "2022-09-13T08:37:58.641Z"
+    start_date = "2021-11-28T09:54:39.864Z"
   }
-  definition_id = "4f66cbf0-e9a0-45e9-94ac-e41dc5b42f2a"
-  name          = "Beverly Leuschke"
+  definition_id = "e3de7d6b-4acb-4d3c-852a-12d4c39d315f"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "8647f2d4-2750-4604-ac1c-65661b2485a0"
+  workspace_id  = "0d002e60-aedb-4550-9465-4979fa56c6c7"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_buildkite" "my_source_buildkite" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

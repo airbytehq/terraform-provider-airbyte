@@ -15,13 +15,15 @@ SourceInstagram Resource
 ```terraform
 resource "airbyte_source_instagram" "my_source_instagram" {
   configuration = {
-    access_token = "...my_access_token..."
-    start_date   = "2017-01-25T00:00:00Z"
+    access_token  = "...my_access_token..."
+    client_id     = "...my_client_id..."
+    client_secret = "...my_client_secret..."
+    start_date    = "2017-01-25T00:00:00Z"
   }
-  definition_id = "c47d5036-1610-47c0-bf83-920634c9db1c"
-  name          = "Julia Huels V"
+  definition_id = "f2ba9b6a-282f-49c9-ad1c-418c8b8d173c"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "282f0b30-8e78-4729-bf50-24b690b2736f"
+  workspace_id  = "c12b19f2-4972-490b-ae38-c64d9c068d4d"
 }
 ```
 
@@ -41,6 +43,7 @@ resource "airbyte_source_instagram" "my_source_instagram" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -53,6 +56,8 @@ Required:
 
 Optional:
 
+- `client_id` (String, Sensitive) The Client ID for your Oauth application
+- `client_secret` (String, Sensitive) The Client Secret for your Oauth application
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. If left blank, the start date will be set to 2 years before the present date.
 
 ## Import

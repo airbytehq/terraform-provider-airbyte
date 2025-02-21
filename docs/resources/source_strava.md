@@ -21,10 +21,10 @@ resource "airbyte_source_strava" "my_source_strava" {
     refresh_token = "fc6243f283e51f6ca989aab298b17da125496f50"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  definition_id = "b2343891-f649-4697-8812-8b0429b50eba"
-  name          = "Angel Franey"
+  definition_id = "f7ea7cf5-ee69-4179-bac0-eb35d54c52b7"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "20deac9b-b7b4-45d9-a074-3b024bc119f8"
+  workspace_id  = "d28578f4-0042-47bf-9e5b-616910005a09"
 }
 ```
 
@@ -44,6 +44,7 @@ resource "airbyte_source_strava" "my_source_strava" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

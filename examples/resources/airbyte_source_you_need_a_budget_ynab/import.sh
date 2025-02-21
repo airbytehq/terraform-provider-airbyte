@@ -1,0 +1,1 @@
+terraform import airbyte_source_you_need_a_budget_ynab.my_airbyte_source_you_need_a_budget_ynab ""

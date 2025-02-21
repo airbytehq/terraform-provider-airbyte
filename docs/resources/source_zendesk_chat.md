@@ -19,14 +19,20 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
       access_token = {
         access_token = "...my_access_token..."
       }
+      o_auth20 = {
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     start_date = "2021-02-01T00:00:00Z"
-    subdomain  = "...my_subdomain..."
+    subdomain  = "myzendeskchat"
   }
-  definition_id = "a08ea6fb-1c9f-4ea1-b3f2-b7b846f1d4ea"
-  name          = "Cindy Glover PhD"
+  definition_id = "0e292d86-9483-43d3-8271-797f9030e946"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "7485ff0c-13c5-44df-81d9-04e542b79de7"
+  workspace_id  = "163f1f29-3c8c-43af-8d79-98eebba4d690"
 }
 ```
 
@@ -46,6 +52,7 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -59,7 +66,7 @@ Required:
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `subdomain` (String) Required if you access Zendesk Chat from a Zendesk Support subdomain. Default: ""
+- `subdomain` (String) The unique subdomain of your Zendesk account (without https://). <a href="https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain">See the Zendesk docs to find your subdomain</a>. Default: ""
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

@@ -15,16 +15,17 @@ SourceAmplitude Resource
 ```terraform
 resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
-    api_key            = "...my_api_key..."
-    data_region        = "Standard Server"
-    request_time_range = 3
-    secret_key         = "...my_secret_key..."
-    start_date         = "2021-01-25T00:00:00Z"
+    active_users_group_by_country = true
+    api_key                       = "...my_api_key..."
+    data_region                   = "Standard Server"
+    request_time_range            = 8259
+    secret_key                    = "...my_secret_key..."
+    start_date                    = "2021-01-25T00:00:00Z"
   }
-  definition_id = "880f00a3-0dde-4f9a-90fa-7f8f441b58df"
-  name          = "Lewis Heaney"
+  definition_id = "b1aed4fb-ea82-4954-b53a-577cd7c2a238"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "0bee1c5f-f223-4389-a042-261684e73ef6"
+  workspace_id  = "a45cdcfa-7473-46e2-9daa-761557fbd83d"
 }
 ```
 
@@ -44,6 +45,7 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -58,8 +60,9 @@ Required:
 
 Optional:
 
-- `data_region` (String) Amplitude data region server. must be one of ["Standard Server", "EU Residency Server"]; Default: "Standard Server"
-- `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours. Default: 24
+- `active_users_group_by_country` (Boolean) According to <a href="https://amplitude.com/docs/apis/analytics/dashboard-rest#query-parameters">Amplitude documentation</a>, grouping by `Country` is optional. If you face issues fetching the stream or checking the connection please set this field to `False`. Default: true
+- `data_region` (String) Amplitude data region server. Default: "Standard Server"; must be one of ["Standard Server", "EU Residency Server"]
+- `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too large of a time range in te request can cause a timeout error. In this case, please provide a shorter time interval in hours. Default: 24
 
 ## Import
 

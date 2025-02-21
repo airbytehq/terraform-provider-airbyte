@@ -1,11 +1,12 @@
 resource "airbyte_source_klaviyo" "my_source_klaviyo" {
   configuration = {
     api_key                               = "...my_api_key..."
-    disable_fetching_predictive_analytics = false
+    disable_fetching_predictive_analytics = true
+    num_workers                           = 1
     start_date                            = "2017-01-25T00:00:00Z"
   }
-  definition_id = "e4dc1f63-3abc-458a-942d-517fc88bc499"
-  name          = "Al Kling"
+  definition_id = "2b3afbaf-d4bc-4d4d-8b70-a755581e44c3"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "fedea337-d55b-4155-98db-92c72d541f53"
+  workspace_id  = "2b8b9017-7907-4706-8721-11272beb5dbf"
 }

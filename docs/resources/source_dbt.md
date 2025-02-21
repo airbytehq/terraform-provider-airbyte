@@ -18,10 +18,10 @@ resource "airbyte_source_dbt" "my_source_dbt" {
     account_id = "...my_account_id..."
     api_key_2  = "...my_api_key_2..."
   }
-  definition_id = "86900517-4142-45e4-938a-30ea56cdfa27"
-  name          = "Dominic Will"
+  definition_id = "8cb19d39-de09-4d50-8668-ce3741b5cd7e"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "25b4bae6-1112-4211-be87-b490ecc6bf75"
+  workspace_id  = "4d28cc1c-d8bf-44f5-a0f6-d6f45a406b08"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_dbt" "my_source_dbt" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

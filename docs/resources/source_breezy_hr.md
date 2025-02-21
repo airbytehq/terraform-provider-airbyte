@@ -18,10 +18,10 @@ resource "airbyte_source_breezy_hr" "my_source_breezyhr" {
     api_key    = "...my_api_key..."
     company_id = "...my_company_id..."
   }
-  definition_id = "00c8feba-7b45-4cfe-a08a-bdda328f6c37"
-  name          = "Alyssa Anderson"
+  definition_id = "4901bca7-7efd-446a-a277-6a50b8c44cb9"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "63420a6a-3ab4-4d44-b55b-910e5c999e89"
+  workspace_id  = "4ccf8980-c739-4d4f-8370-185f76684798"
 }
 ```
 
@@ -41,6 +41,7 @@ resource "airbyte_source_breezy_hr" "my_source_breezyhr" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

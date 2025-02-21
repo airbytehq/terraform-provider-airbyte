@@ -15,16 +15,16 @@ SourceBraintree Resource
 ```terraform
 resource "airbyte_source_braintree" "my_source_braintree" {
   configuration = {
-    environment = "Production"
+    environment = "sandbox"
     merchant_id = "...my_merchant_id..."
     private_key = "...my_private_key..."
     public_key  = "...my_public_key..."
     start_date  = "2020"
   }
-  definition_id = "a849cd51-7f0e-432c-ae30-2e6de92b3e43"
-  name          = "Daisy MacGyver"
+  definition_id = "45165108-38ff-4788-bf09-a5b89ef2a39b"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "6f9835e6-422d-415b-8286-21a877d2e625"
+  workspace_id  = "fa93a3e9-4221-4177-b3aa-d0efe31a255f"
 }
 ```
 
@@ -44,6 +44,7 @@ resource "airbyte_source_braintree" "my_source_braintree" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 

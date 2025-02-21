@@ -16,19 +16,20 @@ SourceJira Resource
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "<your-domain>.jira.com"
-    email                       = "Jeramie79@gmail.com"
-    enable_experimental_streams = true
+    domain                      = "<your-domain>.atlassian.net"
+    email                       = "...my_email..."
+    enable_experimental_streams = false
     lookback_window_minutes     = 60
+    num_workers                 = 1
     projects = [
-      "...",
+      "..."
     ]
     start_date = "2021-03-01T00:00:00Z"
   }
-  definition_id = "8014d1f2-6365-41b7-bf9f-e0e5e5f386d0"
-  name          = "Leland Herzog"
+  definition_id = "949473c3-da2c-444e-bfcd-8f8d84c88b15"
+  name          = "...my_name..."
   secret_id     = "...my_secret_id..."
-  workspace_id  = "3c6558d9-b03d-425b-ae3d-badc477cb62b"
+  workspace_id  = "126f780d-bef6-41d4-af4f-97391ac97b8d"
 }
 ```
 
@@ -48,6 +49,7 @@ resource "airbyte_source_jira" "my_source_jira" {
 
 ### Read-Only
 
+- `created_at` (Number)
 - `source_id` (String)
 - `source_type` (String)
 
@@ -64,6 +66,7 @@ Optional:
 
 - `enable_experimental_streams` (Boolean) Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info. Default: false
 - `lookback_window_minutes` (Number) When set to N, the connector will always refresh resources created within the past N minutes. By default, updated objects that are not newly created are not incrementally synced. Default: 0
+- `num_workers` (Number) The number of worker threads to use for the sync. Default: 3
 - `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 - `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
