@@ -3,6 +3,6 @@
 package types
 
 type DeletionMode struct {
-	Disabled *Disabled `tfsdk:"disabled" tfPlanOnly:"true"`
-	Enabled  *Enabled  `tfsdk:"enabled" tfPlanOnly:"true"`
+	Disabled *Disabled `queryParam:"inline" tfsdk:"disabled" tfPlanOnly:"true"`
+	Enabled  *Enabled  `queryParam:"inline" tfsdk:"enabled" tfPlanOnly:"true"`
 }

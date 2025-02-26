@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterToValue struct {
-	DoubleValue *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue `tfsdk:"double_value" tfPlanOnly:"true"`
-	Int64Value  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value  `tfsdk:"int64_value" tfPlanOnly:"true"`
+	DoubleValue *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue `queryParam:"inline" tfsdk:"double_value" tfPlanOnly:"true"`
+	Int64Value  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterInt64Value  `queryParam:"inline" tfsdk:"int64_value" tfPlanOnly:"true"`
 }

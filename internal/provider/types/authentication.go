@@ -3,6 +3,6 @@
 package types
 
 type Authentication struct {
-	OAuth20             *SourceAirtableOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
-	PersonalAccessToken *PersonalAccessToken   `tfsdk:"personal_access_token" tfPlanOnly:"true"`
+	OAuth20             *SourceAirtableOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
+	PersonalAccessToken *PersonalAccessToken   `queryParam:"inline" tfsdk:"personal_access_token" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceSlackAuthenticationMechanism struct {
-	APIToken            *SourceSlackAPIToken `tfsdk:"api_token" tfPlanOnly:"true"`
-	SignInViaSlackOAuth *SignInViaSlackOAuth `tfsdk:"sign_in_via_slack_o_auth" tfPlanOnly:"true"`
+	APIToken            *SourceSlackAPIToken `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	SignInViaSlackOAuth *SignInViaSlackOAuth `queryParam:"inline" tfsdk:"sign_in_via_slack_o_auth" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceSquareAuthentication struct {
-	APIKey              *SourceSquareAPIKey  `tfsdk:"api_key" tfPlanOnly:"true"`
-	OauthAuthentication *OauthAuthentication `tfsdk:"oauth_authentication" tfPlanOnly:"true"`
+	APIKey              *SourceSquareAPIKey  `queryParam:"inline" tfsdk:"api_key" tfPlanOnly:"true"`
+	OauthAuthentication *OauthAuthentication `queryParam:"inline" tfsdk:"oauth_authentication" tfPlanOnly:"true"`
 }

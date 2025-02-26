@@ -5,12 +5,10 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceCircleci struct {
-	APIKey       types.String `tfsdk:"api_key"`
-	JobID        types.String `tfsdk:"job_id"`
-	JobNumber    types.String `tfsdk:"job_number"`
-	OrgID        types.String `tfsdk:"org_id"`
-	ProjectID    types.String `tfsdk:"project_id"`
-	StartDate    types.String `tfsdk:"start_date"`
-	WorkflowID   types.String `tfsdk:"workflow_id"`
-	WorkflowName types.String `tfsdk:"workflow_name"`
+	APIKey     types.String   `tfsdk:"api_key"`
+	JobNumber  types.String   `tfsdk:"job_number"`
+	OrgID      types.String   `tfsdk:"org_id"`
+	ProjectID  types.String   `tfsdk:"project_id"`
+	StartDate  types.String   `tfsdk:"start_date"`
+	WorkflowID []types.String `tfsdk:"workflow_id"`
 }

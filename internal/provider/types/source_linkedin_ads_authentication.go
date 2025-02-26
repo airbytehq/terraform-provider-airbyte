@@ -3,6 +3,6 @@
 package types
 
 type SourceLinkedinAdsAuthentication struct {
-	AccessToken *SourceLinkedinAdsAccessToken `tfsdk:"access_token" tfPlanOnly:"true"`
-	OAuth20     *SourceLinkedinAdsOAuth20     `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	AccessToken *SourceLinkedinAdsAccessToken `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
+	OAuth20     *SourceLinkedinAdsOAuth20     `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

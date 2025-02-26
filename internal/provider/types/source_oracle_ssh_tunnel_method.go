@@ -3,7 +3,7 @@
 package types
 
 type SourceOracleSSHTunnelMethod struct {
-	NoTunnel               *SourceOracleNoTunnel               `tfsdk:"no_tunnel" tfPlanOnly:"true"`
-	PasswordAuthentication *SourceOraclePasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *SourceOracleSSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	NoTunnel               *SourceOracleNoTunnel               `queryParam:"inline" tfsdk:"no_tunnel" tfPlanOnly:"true"`
+	PasswordAuthentication *SourceOraclePasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *SourceOracleSSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

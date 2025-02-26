@@ -3,6 +3,6 @@
 package types
 
 type SourceSalesloftCredentials struct {
-	AuthenticateViaAPIKey *AuthenticateViaAPIKey `tfsdk:"authenticate_via_api_key" tfPlanOnly:"true"`
-	AuthenticateViaOAuth  *AuthenticateViaOAuth  `tfsdk:"authenticate_via_o_auth" tfPlanOnly:"true"`
+	AuthenticateViaAPIKey *AuthenticateViaAPIKey `queryParam:"inline" tfsdk:"authenticate_via_api_key" tfPlanOnly:"true"`
+	AuthenticateViaOAuth  *AuthenticateViaOAuth  `queryParam:"inline" tfsdk:"authenticate_via_o_auth" tfPlanOnly:"true"`
 }

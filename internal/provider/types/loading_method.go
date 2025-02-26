@@ -3,6 +3,6 @@
 package types
 
 type LoadingMethod struct {
-	BatchedStandardInserts *BatchedStandardInserts `tfsdk:"batched_standard_inserts" tfPlanOnly:"true"`
-	GCSStaging             *GCSStaging             `tfsdk:"gcs_staging" tfPlanOnly:"true"`
+	BatchedStandardInserts *BatchedStandardInserts `queryParam:"inline" tfsdk:"batched_standard_inserts" tfPlanOnly:"true"`
+	GCSStaging             *GCSStaging             `queryParam:"inline" tfsdk:"gcs_staging" tfPlanOnly:"true"`
 }

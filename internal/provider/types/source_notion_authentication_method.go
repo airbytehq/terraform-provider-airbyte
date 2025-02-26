@@ -3,6 +3,6 @@
 package types
 
 type SourceNotionAuthenticationMethod struct {
-	AccessToken *SourceNotionAccessToken `tfsdk:"access_token" tfPlanOnly:"true"`
-	OAuth20     *SourceNotionOAuth20     `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	AccessToken *SourceNotionAccessToken `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
+	OAuth20     *SourceNotionOAuth20     `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

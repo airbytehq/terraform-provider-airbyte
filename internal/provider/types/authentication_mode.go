@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationMode struct {
-	IAMRole *IAMRole `tfsdk:"iam_role" tfPlanOnly:"true"`
-	IAMUser *IAMUser `tfsdk:"iam_user" tfPlanOnly:"true"`
+	IAMRole *IAMRole `queryParam:"inline" tfsdk:"iam_role" tfPlanOnly:"true"`
+	IAMUser *IAMUser `queryParam:"inline" tfsdk:"iam_user" tfPlanOnly:"true"`
 }

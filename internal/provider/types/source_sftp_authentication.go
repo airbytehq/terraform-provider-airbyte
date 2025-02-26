@@ -3,6 +3,6 @@
 package types
 
 type SourceSftpAuthentication struct {
-	PasswordAuthentication *SourceSftpPasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *SourceSftpSSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	PasswordAuthentication *SourceSftpPasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *SourceSftpSSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

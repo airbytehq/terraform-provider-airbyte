@@ -3,6 +3,6 @@
 package types
 
 type SourceSftpBulkDeliveryMethod struct {
-	CopyRawFiles     *SourceSftpBulkCopyRawFiles     `tfsdk:"copy_raw_files" tfPlanOnly:"true"`
-	ReplicateRecords *SourceSftpBulkReplicateRecords `tfsdk:"replicate_records" tfPlanOnly:"true"`
+	CopyRawFiles     *SourceSftpBulkCopyRawFiles     `queryParam:"inline" tfsdk:"copy_raw_files" tfPlanOnly:"true"`
+	ReplicateRecords *SourceSftpBulkReplicateRecords `queryParam:"inline" tfsdk:"replicate_records" tfPlanOnly:"true"`
 }

@@ -11,14 +11,11 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -66,15 +63,6 @@ func (r *SourcePipedriveResource) Schema(ctx context.Context, req resource.Schem
 						Required:    true,
 						Sensitive:   true,
 						Description: `The Pipedrive API Token.`,
-					},
-					"num_workers": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(10),
-						Description: `Number of concurrent workers to be used in the sync. This number should be set according to your Pipedrive subscription plan and its rate limits, which coule be found <a href="https://pipedrive.readme.io/docs/core-api-concepts-rate-limiting">here</a> on Pipedrive Rate limiting page. Please note that Pipedrive API rate limits are reset daily. If you experience rate limiting issues, please lower the number of workers according to your plan. Default: 10`,
-						Validators: []validator.Int64{
-							int64validator.Between(1, 40),
-						},
 					},
 					"replication_start_date": schema.StringAttribute{
 						Required:    true,

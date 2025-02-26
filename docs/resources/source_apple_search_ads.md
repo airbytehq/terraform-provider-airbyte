@@ -15,11 +15,13 @@ SourceAppleSearchAds Resource
 ```terraform
 resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
   configuration = {
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
-    end_date      = "2021-01-01"
-    org_id        = 0
-    start_date    = "2020-01-01"
+    backoff_factor  = 10
+    client_id       = "...my_client_id..."
+    client_secret   = "...my_client_secret..."
+    end_date        = "2021-01-01"
+    lookback_window = 7
+    org_id          = 0
+    start_date      = "2020-01-01"
   }
   definition_id = "f6eb56d1-0915-427d-b110-58bf43673ee3"
   name          = "...my_name..."
@@ -60,7 +62,9 @@ Required:
 
 Optional:
 
+- `backoff_factor` (Number) This factor factor determines the delay increase factor between retryable failures. Valid values are integers between 1 and 20. Default: 5
 - `end_date` (String) Data is retrieved until that date (included)
+- `lookback_window` (Number) Apple Search Ads uses a 30-day attribution window. However, you may consider smaller values in order to shorten sync durations, at the cost of missing late data attributions. Default: 30
 
 ## Import
 

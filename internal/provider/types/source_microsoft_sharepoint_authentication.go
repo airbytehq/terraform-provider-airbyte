@@ -3,6 +3,6 @@
 package types
 
 type SourceMicrosoftSharepointAuthentication struct {
-	AuthenticateViaMicrosoftOAuth *SourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth `tfsdk:"authenticate_via_microsoft_o_auth" tfPlanOnly:"true"`
-	ServiceKeyAuthentication      *SourceMicrosoftSharepointServiceKeyAuthentication      `tfsdk:"service_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaMicrosoftOAuth *SourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth `queryParam:"inline" tfsdk:"authenticate_via_microsoft_o_auth" tfPlanOnly:"true"`
+	ServiceKeyAuthentication      *SourceMicrosoftSharepointServiceKeyAuthentication      `queryParam:"inline" tfsdk:"service_key_authentication" tfPlanOnly:"true"`
 }

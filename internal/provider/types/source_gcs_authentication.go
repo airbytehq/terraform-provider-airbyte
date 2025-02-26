@@ -3,6 +3,6 @@
 package types
 
 type SourceGcsAuthentication struct {
-	AuthenticateViaGoogleOAuth   *AuthenticateViaGoogleOAuth   `tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
-	ServiceAccountAuthentication *ServiceAccountAuthentication `tfsdk:"service_account_authentication" tfPlanOnly:"true"`
+	AuthenticateViaGoogleOAuth   *AuthenticateViaGoogleOAuth   `queryParam:"inline" tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
+	ServiceAccountAuthentication *ServiceAccountAuthentication `queryParam:"inline" tfsdk:"service_account_authentication" tfPlanOnly:"true"`
 }

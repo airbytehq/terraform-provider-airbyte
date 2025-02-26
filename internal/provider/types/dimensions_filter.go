@@ -3,8 +3,8 @@
 package types
 
 type DimensionsFilter struct {
-	AndGroup      *AndGroup                           `tfsdk:"and_group" tfPlanOnly:"true"`
-	Filter        *SourceGoogleAnalyticsDataAPIFilter `tfsdk:"filter" tfPlanOnly:"true"`
-	NotExpression *NotExpression                      `tfsdk:"not_expression" tfPlanOnly:"true"`
-	OrGroup       *OrGroup                            `tfsdk:"or_group" tfPlanOnly:"true"`
+	AndGroup      *AndGroup                           `queryParam:"inline" tfsdk:"and_group" tfPlanOnly:"true"`
+	Filter        *SourceGoogleAnalyticsDataAPIFilter `queryParam:"inline" tfsdk:"filter" tfPlanOnly:"true"`
+	NotExpression *NotExpression                      `queryParam:"inline" tfsdk:"not_expression" tfPlanOnly:"true"`
+	OrGroup       *OrGroup                            `queryParam:"inline" tfsdk:"or_group" tfPlanOnly:"true"`
 }

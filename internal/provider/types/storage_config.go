@@ -3,6 +3,6 @@
 package types
 
 type StorageConfig struct {
-	S3            *DestinationIcebergS3 `tfsdk:"s3" tfPlanOnly:"true"`
-	ServerManaged *ServerManaged        `tfsdk:"server_managed" tfPlanOnly:"true"`
+	S3            *DestinationIcebergS3 `queryParam:"inline" tfsdk:"s3" tfPlanOnly:"true"`
+	ServerManaged *ServerManaged        `queryParam:"inline" tfsdk:"server_managed" tfPlanOnly:"true"`
 }

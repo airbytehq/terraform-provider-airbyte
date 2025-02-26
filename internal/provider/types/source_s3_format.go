@@ -3,10 +3,10 @@
 package types
 
 type SourceS3Format struct {
-	AvroFormat                 *SourceS3AvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceS3CSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
-	ExcelFormat                *SourceS3ExcelFormat                `tfsdk:"excel_format" tfPlanOnly:"true"`
-	JsonlFormat                *SourceS3JsonlFormat                `tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat              *SourceS3ParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
-	UnstructuredDocumentFormat *SourceS3UnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
+	AvroFormat                 *SourceS3AvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *SourceS3CSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	ExcelFormat                *SourceS3ExcelFormat                `queryParam:"inline" tfsdk:"excel_format" tfPlanOnly:"true"`
+	JsonlFormat                *SourceS3JsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *SourceS3ParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *SourceS3UnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

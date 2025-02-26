@@ -3,10 +3,10 @@
 package types
 
 type DestinationYellowbrickSSLModes struct {
-	Allow      *DestinationYellowbrickAllow      `tfsdk:"allow" tfPlanOnly:"true"`
-	Disable    *DestinationYellowbrickDisable    `tfsdk:"disable" tfPlanOnly:"true"`
-	Prefer     *DestinationYellowbrickPrefer     `tfsdk:"prefer" tfPlanOnly:"true"`
-	Require    *DestinationYellowbrickRequire    `tfsdk:"require" tfPlanOnly:"true"`
-	VerifyCa   *DestinationYellowbrickVerifyCa   `tfsdk:"verify_ca" tfPlanOnly:"true"`
-	VerifyFull *DestinationYellowbrickVerifyFull `tfsdk:"verify_full" tfPlanOnly:"true"`
+	Allow      *DestinationYellowbrickAllow      `queryParam:"inline" tfsdk:"allow" tfPlanOnly:"true"`
+	Disable    *DestinationYellowbrickDisable    `queryParam:"inline" tfsdk:"disable" tfPlanOnly:"true"`
+	Prefer     *DestinationYellowbrickPrefer     `queryParam:"inline" tfsdk:"prefer" tfPlanOnly:"true"`
+	Require    *DestinationYellowbrickRequire    `queryParam:"inline" tfsdk:"require" tfPlanOnly:"true"`
+	VerifyCa   *DestinationYellowbrickVerifyCa   `queryParam:"inline" tfsdk:"verify_ca" tfPlanOnly:"true"`
+	VerifyFull *DestinationYellowbrickVerifyFull `queryParam:"inline" tfsdk:"verify_full" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceHubspotAuthentication struct {
-	OAuth      *SourceHubspotOAuth `tfsdk:"o_auth" tfPlanOnly:"true"`
-	PrivateApp *PrivateApp         `tfsdk:"private_app" tfPlanOnly:"true"`
+	OAuth      *SourceHubspotOAuth `queryParam:"inline" tfsdk:"o_auth" tfPlanOnly:"true"`
+	PrivateApp *PrivateApp         `queryParam:"inline" tfsdk:"private_app" tfPlanOnly:"true"`
 }

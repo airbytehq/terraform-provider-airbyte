@@ -3,6 +3,6 @@
 package types
 
 type OutputFormatWildcard struct {
-	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
-	ParquetColumnarStorage        *ParquetColumnarStorage        `tfsdk:"parquet_columnar_storage" tfPlanOnly:"true"`
+	JSONLinesNewlineDelimitedJSON *JSONLinesNewlineDelimitedJSON `queryParam:"inline" tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
+	ParquetColumnarStorage        *ParquetColumnarStorage        `queryParam:"inline" tfsdk:"parquet_columnar_storage" tfPlanOnly:"true"`
 }

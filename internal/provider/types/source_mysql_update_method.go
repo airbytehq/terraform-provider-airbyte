@@ -3,6 +3,6 @@
 package types
 
 type SourceMysqlUpdateMethod struct {
-	ReadChangesUsingChangeDataCaptureCDC *SourceMysqlReadChangesUsingChangeDataCaptureCDC `tfsdk:"read_changes_using_change_data_capture_cdc" tfPlanOnly:"true"`
-	ScanChangesWithUserDefinedCursor     *SourceMysqlScanChangesWithUserDefinedCursor     `tfsdk:"scan_changes_with_user_defined_cursor" tfPlanOnly:"true"`
+	ReadChangesUsingChangeDataCaptureCDC *SourceMysqlReadChangesUsingChangeDataCaptureCDC `queryParam:"inline" tfsdk:"read_changes_using_change_data_capture_cdc" tfPlanOnly:"true"`
+	ScanChangesWithUserDefinedCursor     *SourceMysqlScanChangesWithUserDefinedCursor     `queryParam:"inline" tfsdk:"scan_changes_with_user_defined_cursor" tfPlanOnly:"true"`
 }

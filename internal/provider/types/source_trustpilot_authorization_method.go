@@ -3,6 +3,6 @@
 package types
 
 type SourceTrustpilotAuthorizationMethod struct {
-	APIKey  *SourceTrustpilotAPIKey  `tfsdk:"api_key" tfPlanOnly:"true"`
-	OAuth20 *SourceTrustpilotOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	APIKey  *SourceTrustpilotAPIKey  `queryParam:"inline" tfsdk:"api_key" tfPlanOnly:"true"`
+	OAuth20 *SourceTrustpilotOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

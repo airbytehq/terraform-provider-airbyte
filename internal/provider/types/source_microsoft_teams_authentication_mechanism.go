@@ -3,6 +3,6 @@
 package types
 
 type SourceMicrosoftTeamsAuthenticationMechanism struct {
-	AuthenticateViaMicrosoft        *AuthenticateViaMicrosoft        `tfsdk:"authenticate_via_microsoft" tfPlanOnly:"true"`
-	AuthenticateViaMicrosoftOAuth20 *AuthenticateViaMicrosoftOAuth20 `tfsdk:"authenticate_via_microsoft_o_auth20" tfPlanOnly:"true"`
+	AuthenticateViaMicrosoft        *AuthenticateViaMicrosoft        `queryParam:"inline" tfsdk:"authenticate_via_microsoft" tfPlanOnly:"true"`
+	AuthenticateViaMicrosoftOAuth20 *AuthenticateViaMicrosoftOAuth20 `queryParam:"inline" tfsdk:"authenticate_via_microsoft_o_auth20" tfPlanOnly:"true"`
 }

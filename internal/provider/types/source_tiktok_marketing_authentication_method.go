@@ -3,6 +3,6 @@
 package types
 
 type SourceTiktokMarketingAuthenticationMethod struct {
-	OAuth20            *SourceTiktokMarketingOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
-	SandboxAccessToken *SandboxAccessToken           `tfsdk:"sandbox_access_token" tfPlanOnly:"true"`
+	OAuth20            *SourceTiktokMarketingOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
+	SandboxAccessToken *SandboxAccessToken           `queryParam:"inline" tfsdk:"sandbox_access_token" tfPlanOnly:"true"`
 }

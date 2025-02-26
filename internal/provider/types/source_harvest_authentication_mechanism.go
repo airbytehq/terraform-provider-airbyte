@@ -3,6 +3,6 @@
 package types
 
 type SourceHarvestAuthenticationMechanism struct {
-	AuthenticateViaHarvestOAuth         *AuthenticateViaHarvestOAuth                      `tfsdk:"authenticate_via_harvest_o_auth" tfPlanOnly:"true"`
-	AuthenticateWithPersonalAccessToken *SourceHarvestAuthenticateWithPersonalAccessToken `tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
+	AuthenticateViaHarvestOAuth         *AuthenticateViaHarvestOAuth                      `queryParam:"inline" tfsdk:"authenticate_via_harvest_o_auth" tfPlanOnly:"true"`
+	AuthenticateWithPersonalAccessToken *SourceHarvestAuthenticateWithPersonalAccessToken `queryParam:"inline" tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
 }

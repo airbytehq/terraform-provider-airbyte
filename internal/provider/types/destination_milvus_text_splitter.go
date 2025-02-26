@@ -3,7 +3,7 @@
 package types
 
 type DestinationMilvusTextSplitter struct {
-	ByMarkdownHeader      *DestinationMilvusByMarkdownHeader      `tfsdk:"by_markdown_header" tfPlanOnly:"true"`
-	ByProgrammingLanguage *DestinationMilvusByProgrammingLanguage `tfsdk:"by_programming_language" tfPlanOnly:"true"`
-	BySeparator           *DestinationMilvusBySeparator           `tfsdk:"by_separator" tfPlanOnly:"true"`
+	ByMarkdownHeader      *DestinationMilvusByMarkdownHeader      `queryParam:"inline" tfsdk:"by_markdown_header" tfPlanOnly:"true"`
+	ByProgrammingLanguage *DestinationMilvusByProgrammingLanguage `queryParam:"inline" tfsdk:"by_programming_language" tfPlanOnly:"true"`
+	BySeparator           *DestinationMilvusBySeparator           `queryParam:"inline" tfsdk:"by_separator" tfPlanOnly:"true"`
 }

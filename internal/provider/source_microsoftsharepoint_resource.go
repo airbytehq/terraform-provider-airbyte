@@ -139,6 +139,37 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 						},
 						Description: `Credentials for connecting to the One Drive API`,
 					},
+					"delivery_method": schema.SingleNestedAttribute{
+						Optional: true,
+						Attributes: map[string]schema.Attribute{
+							"copy_raw_files": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"preserve_directory_structure": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(true),
+										Description: `If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled. Default: true`,
+									},
+								},
+								Description: `Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("replicate_records"),
+									}...),
+								},
+							},
+							"replicate_records": schema.SingleNestedAttribute{
+								Optional:    true,
+								Description: `Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("copy_raw_files"),
+									}...),
+								},
+							},
+						},
+					},
 					"folder_path": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,

@@ -3,5 +3,5 @@
 package types
 
 type SourceGoogleDriveProcessing struct {
-	Local *SourceGoogleDriveLocal `tfsdk:"local" tfPlanOnly:"true"`
+	Local *SourceGoogleDriveLocal `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
 }

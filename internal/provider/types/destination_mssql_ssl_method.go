@@ -3,7 +3,7 @@
 package types
 
 type DestinationMssqlSSLMethod struct {
-	EncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate `tfsdk:"encrypted_trust_server_certificate" tfPlanOnly:"true"`
-	EncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate      `tfsdk:"encrypted_verify_certificate" tfPlanOnly:"true"`
-	Unencrypted                     *DestinationMssqlUnencrypted                     `tfsdk:"unencrypted" tfPlanOnly:"true"`
+	EncryptedTrustServerCertificate *DestinationMssqlEncryptedTrustServerCertificate `queryParam:"inline" tfsdk:"encrypted_trust_server_certificate" tfPlanOnly:"true"`
+	EncryptedVerifyCertificate      *DestinationMssqlEncryptedVerifyCertificate      `queryParam:"inline" tfsdk:"encrypted_verify_certificate" tfPlanOnly:"true"`
+	Unencrypted                     *DestinationMssqlUnencrypted                     `queryParam:"inline" tfsdk:"unencrypted" tfPlanOnly:"true"`
 }

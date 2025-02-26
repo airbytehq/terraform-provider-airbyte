@@ -3,8 +3,8 @@
 package types
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter struct {
-	BetweenFilter *SourceGoogleAnalyticsDataAPIBetweenFilter `tfsdk:"between_filter" tfPlanOnly:"true"`
-	InListFilter  *SourceGoogleAnalyticsDataAPIInListFilter  `tfsdk:"in_list_filter" tfPlanOnly:"true"`
-	NumericFilter *SourceGoogleAnalyticsDataAPINumericFilter `tfsdk:"numeric_filter" tfPlanOnly:"true"`
-	StringFilter  *SourceGoogleAnalyticsDataAPIStringFilter  `tfsdk:"string_filter" tfPlanOnly:"true"`
+	BetweenFilter *SourceGoogleAnalyticsDataAPIBetweenFilter `queryParam:"inline" tfsdk:"between_filter" tfPlanOnly:"true"`
+	InListFilter  *SourceGoogleAnalyticsDataAPIInListFilter  `queryParam:"inline" tfsdk:"in_list_filter" tfPlanOnly:"true"`
+	NumericFilter *SourceGoogleAnalyticsDataAPINumericFilter `queryParam:"inline" tfsdk:"numeric_filter" tfPlanOnly:"true"`
+	StringFilter  *SourceGoogleAnalyticsDataAPIStringFilter  `queryParam:"inline" tfsdk:"string_filter" tfPlanOnly:"true"`
 }

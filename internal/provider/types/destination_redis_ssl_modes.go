@@ -3,6 +3,6 @@
 package types
 
 type DestinationRedisSSLModes struct {
-	Disable    *DestinationRedisDisable    `tfsdk:"disable" tfPlanOnly:"true"`
-	VerifyFull *DestinationRedisVerifyFull `tfsdk:"verify_full" tfPlanOnly:"true"`
+	Disable    *DestinationRedisDisable    `queryParam:"inline" tfsdk:"disable" tfPlanOnly:"true"`
+	VerifyFull *DestinationRedisVerifyFull `queryParam:"inline" tfsdk:"verify_full" tfPlanOnly:"true"`
 }

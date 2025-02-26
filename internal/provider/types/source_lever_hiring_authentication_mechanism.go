@@ -3,6 +3,6 @@
 package types
 
 type SourceLeverHiringAuthenticationMechanism struct {
-	AuthenticateViaLeverAPIKey *AuthenticateViaLeverAPIKey `tfsdk:"authenticate_via_lever_api_key" tfPlanOnly:"true"`
-	AuthenticateViaLeverOAuth  *AuthenticateViaLeverOAuth  `tfsdk:"authenticate_via_lever_o_auth" tfPlanOnly:"true"`
+	AuthenticateViaLeverAPIKey *AuthenticateViaLeverAPIKey `queryParam:"inline" tfsdk:"authenticate_via_lever_api_key" tfPlanOnly:"true"`
+	AuthenticateViaLeverOAuth  *AuthenticateViaLeverOAuth  `queryParam:"inline" tfsdk:"authenticate_via_lever_o_auth" tfPlanOnly:"true"`
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -62,6 +63,12 @@ func (r *SourceAppleSearchAdsResource) Schema(ctx context.Context, req resource.
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
+					"backoff_factor": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(5),
+						Description: `This factor factor determines the delay increase factor between retryable failures. Valid values are integers between 1 and 20. Default: 5`,
+					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
 						Sensitive:   true,
@@ -78,6 +85,12 @@ func (r *SourceAppleSearchAdsResource) Schema(ctx context.Context, req resource.
 						Validators: []validator.String{
 							stringvalidator.RegexMatches(regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}$`), "must match pattern "+regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}$`).String()),
 						},
+					},
+					"lookback_window": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(30),
+						Description: `Apple Search Ads uses a 30-day attribution window. However, you may consider smaller values in order to shorten sync durations, at the cost of missing late data attributions. Default: 30`,
 					},
 					"org_id": schema.Int64Attribute{
 						Required:    true,

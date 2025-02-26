@@ -3,7 +3,7 @@
 package types
 
 type DestinationQdrantTextSplitter struct {
-	ByMarkdownHeader      *DestinationQdrantByMarkdownHeader      `tfsdk:"by_markdown_header" tfPlanOnly:"true"`
-	ByProgrammingLanguage *DestinationQdrantByProgrammingLanguage `tfsdk:"by_programming_language" tfPlanOnly:"true"`
-	BySeparator           *DestinationQdrantBySeparator           `tfsdk:"by_separator" tfPlanOnly:"true"`
+	ByMarkdownHeader      *DestinationQdrantByMarkdownHeader      `queryParam:"inline" tfsdk:"by_markdown_header" tfPlanOnly:"true"`
+	ByProgrammingLanguage *DestinationQdrantByProgrammingLanguage `queryParam:"inline" tfsdk:"by_programming_language" tfPlanOnly:"true"`
+	BySeparator           *DestinationQdrantBySeparator           `queryParam:"inline" tfsdk:"by_separator" tfPlanOnly:"true"`
 }

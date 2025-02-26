@@ -60,7 +60,7 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"streams": schema.ListNestedAttribute{
+					"streams": schema.SetNestedAttribute{
 						Computed: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -177,10 +177,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 								"name": schema.StringAttribute{
 									Computed: true,
 								},
-								"primary_key": schema.ListNestedAttribute{
+								"primary_key": schema.ListAttribute{
 									Computed: true,
-									NestedObject: schema.NestedAttributeObject{
-										Attributes: map[string]schema.Attribute{},
+									ElementType: types.ListType{
+										ElemType: types.StringType,
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},

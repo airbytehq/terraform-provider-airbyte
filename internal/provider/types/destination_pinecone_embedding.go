@@ -3,9 +3,9 @@
 package types
 
 type DestinationPineconeEmbedding struct {
-	AzureOpenAI      *DestinationPineconeAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *DestinationPineconeCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *DestinationPineconeFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *DestinationPineconeOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *DestinationPineconeOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *DestinationPineconeAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *DestinationPineconeCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *DestinationPineconeFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *DestinationPineconeOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *DestinationPineconeOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

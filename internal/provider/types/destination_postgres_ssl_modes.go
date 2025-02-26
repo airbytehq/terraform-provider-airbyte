@@ -3,10 +3,10 @@
 package types
 
 type DestinationPostgresSSLModes struct {
-	Allow      *DestinationPostgresAllow      `tfsdk:"allow" tfPlanOnly:"true"`
-	Disable    *DestinationPostgresDisable    `tfsdk:"disable" tfPlanOnly:"true"`
-	Prefer     *DestinationPostgresPrefer     `tfsdk:"prefer" tfPlanOnly:"true"`
-	Require    *DestinationPostgresRequire    `tfsdk:"require" tfPlanOnly:"true"`
-	VerifyCa   *DestinationPostgresVerifyCa   `tfsdk:"verify_ca" tfPlanOnly:"true"`
-	VerifyFull *DestinationPostgresVerifyFull `tfsdk:"verify_full" tfPlanOnly:"true"`
+	Allow      *DestinationPostgresAllow      `queryParam:"inline" tfsdk:"allow" tfPlanOnly:"true"`
+	Disable    *DestinationPostgresDisable    `queryParam:"inline" tfsdk:"disable" tfPlanOnly:"true"`
+	Prefer     *DestinationPostgresPrefer     `queryParam:"inline" tfsdk:"prefer" tfPlanOnly:"true"`
+	Require    *DestinationPostgresRequire    `queryParam:"inline" tfsdk:"require" tfPlanOnly:"true"`
+	VerifyCa   *DestinationPostgresVerifyCa   `queryParam:"inline" tfsdk:"verify_ca" tfPlanOnly:"true"`
+	VerifyFull *DestinationPostgresVerifyFull `queryParam:"inline" tfsdk:"verify_full" tfPlanOnly:"true"`
 }

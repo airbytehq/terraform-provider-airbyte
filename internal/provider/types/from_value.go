@@ -3,6 +3,6 @@
 package types
 
 type FromValue struct {
-	DoubleValue *SourceGoogleAnalyticsDataAPIDoubleValue `tfsdk:"double_value" tfPlanOnly:"true"`
-	Int64Value  *SourceGoogleAnalyticsDataAPIInt64Value  `tfsdk:"int64_value" tfPlanOnly:"true"`
+	DoubleValue *SourceGoogleAnalyticsDataAPIDoubleValue `queryParam:"inline" tfsdk:"double_value" tfPlanOnly:"true"`
+	Int64Value  *SourceGoogleAnalyticsDataAPIInt64Value  `queryParam:"inline" tfsdk:"int64_value" tfPlanOnly:"true"`
 }

@@ -38,12 +38,26 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsCreateRe
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	backoffFactor := new(int64)
+	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
+		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
+	} else {
+		backoffFactor = nil
+	}
 	configuration := shared.SourceAppleSearchAds{
-		OrgID:        orgID,
-		EndDate:      endDate,
-		ClientID:     clientID,
-		StartDate:    startDate,
-		ClientSecret: clientSecret,
+		OrgID:          orgID,
+		EndDate:        endDate,
+		ClientID:       clientID,
+		StartDate:      startDate,
+		ClientSecret:   clientSecret,
+		LookbackWindow: lookbackWindow,
+		BackoffFactor:  backoffFactor,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -97,12 +111,26 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsPutReque
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	backoffFactor := new(int64)
+	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
+		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
+	} else {
+		backoffFactor = nil
+	}
 	configuration := shared.SourceAppleSearchAdsUpdate{
-		OrgID:        orgID,
-		EndDate:      endDate,
-		ClientID:     clientID,
-		StartDate:    startDate,
-		ClientSecret: clientSecret,
+		OrgID:          orgID,
+		EndDate:        endDate,
+		ClientID:       clientID,
+		StartDate:      startDate,
+		ClientSecret:   clientSecret,
+		LookbackWindow: lookbackWindow,
+		BackoffFactor:  backoffFactor,
 	}
 	out := shared.SourceAppleSearchAdsPutRequest{
 		Name:          name,

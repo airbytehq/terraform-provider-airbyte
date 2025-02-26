@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleAnalyticsDataAPISchemasFromValue struct {
-	DoubleValue *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue `tfsdk:"double_value" tfPlanOnly:"true"`
-	Int64Value  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value  `tfsdk:"int64_value" tfPlanOnly:"true"`
+	DoubleValue *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue `queryParam:"inline" tfsdk:"double_value" tfPlanOnly:"true"`
+	Int64Value  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionInt64Value  `queryParam:"inline" tfsdk:"int64_value" tfPlanOnly:"true"`
 }

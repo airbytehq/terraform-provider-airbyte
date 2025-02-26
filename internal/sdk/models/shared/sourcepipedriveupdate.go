@@ -2,28 +2,11 @@
 
 package shared
 
-import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
-)
-
 type SourcePipedriveUpdate struct {
 	// The Pipedrive API Token.
 	APIToken string `json:"api_token"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
 	ReplicationStartDate string `json:"replication_start_date"`
-	// Number of concurrent workers to be used in the sync. This number should be set according to your Pipedrive subscription plan and its rate limits, which coule be found <a href="https://pipedrive.readme.io/docs/core-api-concepts-rate-limiting">here</a> on Pipedrive Rate limiting page. Please note that Pipedrive API rate limits are reset daily. If you experience rate limiting issues, please lower the number of workers according to your plan.
-	NumWorkers *int64 `default:"10" json:"num_workers"`
-}
-
-func (s SourcePipedriveUpdate) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourcePipedriveUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *SourcePipedriveUpdate) GetAPIToken() string {
@@ -38,11 +21,4 @@ func (o *SourcePipedriveUpdate) GetReplicationStartDate() string {
 		return ""
 	}
 	return o.ReplicationStartDate
-}
-
-func (o *SourcePipedriveUpdate) GetNumWorkers() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.NumWorkers
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceFacebookMarketingAuthentication struct {
-	AuthenticateViaFacebookMarketingOauth *AuthenticateViaFacebookMarketingOauth `tfsdk:"authenticate_via_facebook_marketing_oauth" tfPlanOnly:"true"`
-	ServiceAccountKeyAuthentication       *ServiceAccountKeyAuthentication       `tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaFacebookMarketingOauth *AuthenticateViaFacebookMarketingOauth `queryParam:"inline" tfsdk:"authenticate_via_facebook_marketing_oauth" tfPlanOnly:"true"`
+	ServiceAccountKeyAuthentication       *ServiceAccountKeyAuthentication       `queryParam:"inline" tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
 }

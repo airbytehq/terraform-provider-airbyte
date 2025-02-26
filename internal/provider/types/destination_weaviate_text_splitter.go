@@ -3,7 +3,7 @@
 package types
 
 type DestinationWeaviateTextSplitter struct {
-	ByMarkdownHeader      *DestinationWeaviateByMarkdownHeader      `tfsdk:"by_markdown_header" tfPlanOnly:"true"`
-	ByProgrammingLanguage *DestinationWeaviateByProgrammingLanguage `tfsdk:"by_programming_language" tfPlanOnly:"true"`
-	BySeparator           *DestinationWeaviateBySeparator           `tfsdk:"by_separator" tfPlanOnly:"true"`
+	ByMarkdownHeader      *DestinationWeaviateByMarkdownHeader      `queryParam:"inline" tfsdk:"by_markdown_header" tfPlanOnly:"true"`
+	ByProgrammingLanguage *DestinationWeaviateByProgrammingLanguage `queryParam:"inline" tfsdk:"by_programming_language" tfPlanOnly:"true"`
+	BySeparator           *DestinationWeaviateBySeparator           `queryParam:"inline" tfsdk:"by_separator" tfPlanOnly:"true"`
 }

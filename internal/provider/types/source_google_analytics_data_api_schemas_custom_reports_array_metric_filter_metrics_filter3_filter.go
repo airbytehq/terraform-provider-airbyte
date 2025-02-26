@@ -3,8 +3,8 @@
 package types
 
 type SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter struct {
-	BetweenFilter *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter `tfsdk:"between_filter" tfPlanOnly:"true"`
-	InListFilter  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter  `tfsdk:"in_list_filter" tfPlanOnly:"true"`
-	NumericFilter *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter `tfsdk:"numeric_filter" tfPlanOnly:"true"`
-	StringFilter  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter  `tfsdk:"string_filter" tfPlanOnly:"true"`
+	BetweenFilter *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3BetweenFilter `queryParam:"inline" tfsdk:"between_filter" tfPlanOnly:"true"`
+	InListFilter  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter  `queryParam:"inline" tfsdk:"in_list_filter" tfPlanOnly:"true"`
+	NumericFilter *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3NumericFilter `queryParam:"inline" tfsdk:"numeric_filter" tfPlanOnly:"true"`
+	StringFilter  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter  `queryParam:"inline" tfsdk:"string_filter" tfPlanOnly:"true"`
 }

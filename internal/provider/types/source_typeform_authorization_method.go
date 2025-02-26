@@ -3,6 +3,6 @@
 package types
 
 type SourceTypeformAuthorizationMethod struct {
-	OAuth20      *SourceTypeformOAuth20      `tfsdk:"o_auth20" tfPlanOnly:"true"`
-	PrivateToken *SourceTypeformPrivateToken `tfsdk:"private_token" tfPlanOnly:"true"`
+	OAuth20      *SourceTypeformOAuth20      `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
+	PrivateToken *SourceTypeformPrivateToken `queryParam:"inline" tfsdk:"private_token" tfPlanOnly:"true"`
 }

@@ -3,7 +3,7 @@
 package types
 
 type SSLMethod struct {
-	EncryptedTrustServerCertificate *EncryptedTrustServerCertificate `tfsdk:"encrypted_trust_server_certificate" tfPlanOnly:"true"`
-	EncryptedVerifyCertificate      *EncryptedVerifyCertificate      `tfsdk:"encrypted_verify_certificate" tfPlanOnly:"true"`
-	Unencrypted                     *Unencrypted                     `tfsdk:"unencrypted" tfPlanOnly:"true"`
+	EncryptedTrustServerCertificate *EncryptedTrustServerCertificate `queryParam:"inline" tfsdk:"encrypted_trust_server_certificate" tfPlanOnly:"true"`
+	EncryptedVerifyCertificate      *EncryptedVerifyCertificate      `queryParam:"inline" tfsdk:"encrypted_verify_certificate" tfPlanOnly:"true"`
+	Unencrypted                     *Unencrypted                     `queryParam:"inline" tfsdk:"unencrypted" tfPlanOnly:"true"`
 }

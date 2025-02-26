@@ -3,8 +3,8 @@
 package types
 
 type DestinationS3OutputFormat struct {
-	AvroApacheAvro                *DestinationS3AvroApacheAvro                `tfsdk:"avro_apache_avro" tfPlanOnly:"true"`
-	CSVCommaSeparatedValues       *DestinationS3CSVCommaSeparatedValues       `tfsdk:"csv_comma_separated_values" tfPlanOnly:"true"`
-	JSONLinesNewlineDelimitedJSON *DestinationS3JSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
-	ParquetColumnarStorage        *DestinationS3ParquetColumnarStorage        `tfsdk:"parquet_columnar_storage" tfPlanOnly:"true"`
+	AvroApacheAvro                *DestinationS3AvroApacheAvro                `queryParam:"inline" tfsdk:"avro_apache_avro" tfPlanOnly:"true"`
+	CSVCommaSeparatedValues       *DestinationS3CSVCommaSeparatedValues       `queryParam:"inline" tfsdk:"csv_comma_separated_values" tfPlanOnly:"true"`
+	JSONLinesNewlineDelimitedJSON *DestinationS3JSONLinesNewlineDelimitedJSON `queryParam:"inline" tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
+	ParquetColumnarStorage        *DestinationS3ParquetColumnarStorage        `queryParam:"inline" tfsdk:"parquet_columnar_storage" tfPlanOnly:"true"`
 }

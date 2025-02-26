@@ -3,7 +3,7 @@
 package types
 
 type DestinationYellowbrickSSHTunnelMethod struct {
-	NoTunnel               *DestinationYellowbrickNoTunnel               `tfsdk:"no_tunnel" tfPlanOnly:"true"`
-	PasswordAuthentication *DestinationYellowbrickPasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *DestinationYellowbrickSSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	NoTunnel               *DestinationYellowbrickNoTunnel               `queryParam:"inline" tfsdk:"no_tunnel" tfPlanOnly:"true"`
+	PasswordAuthentication *DestinationYellowbrickPasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *DestinationYellowbrickSSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

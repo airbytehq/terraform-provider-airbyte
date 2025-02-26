@@ -3,7 +3,7 @@
 package types
 
 type DestinationPineconeTextSplitter struct {
-	ByMarkdownHeader      *DestinationPineconeByMarkdownHeader      `tfsdk:"by_markdown_header" tfPlanOnly:"true"`
-	ByProgrammingLanguage *DestinationPineconeByProgrammingLanguage `tfsdk:"by_programming_language" tfPlanOnly:"true"`
-	BySeparator           *DestinationPineconeBySeparator           `tfsdk:"by_separator" tfPlanOnly:"true"`
+	ByMarkdownHeader      *DestinationPineconeByMarkdownHeader      `queryParam:"inline" tfsdk:"by_markdown_header" tfPlanOnly:"true"`
+	ByProgrammingLanguage *DestinationPineconeByProgrammingLanguage `queryParam:"inline" tfsdk:"by_programming_language" tfPlanOnly:"true"`
+	BySeparator           *DestinationPineconeBySeparator           `queryParam:"inline" tfsdk:"by_separator" tfPlanOnly:"true"`
 }

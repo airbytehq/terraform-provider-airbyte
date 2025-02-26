@@ -3,8 +3,8 @@
 package types
 
 type MapperConfiguration struct {
-	Encryption    *Encryption    `tfsdk:"encryption" tfPlanOnly:"true"`
-	FieldRenaming *FieldRenaming `tfsdk:"field_renaming" tfPlanOnly:"true"`
-	Hashing       *Hashing       `tfsdk:"hashing" tfPlanOnly:"true"`
-	RowFiltering  *RowFiltering  `tfsdk:"row_filtering" tfPlanOnly:"true"`
+	Encryption    *Encryption    `queryParam:"inline" tfsdk:"encryption" tfPlanOnly:"true"`
+	FieldRenaming *FieldRenaming `queryParam:"inline" tfsdk:"field_renaming" tfPlanOnly:"true"`
+	Hashing       *Hashing       `queryParam:"inline" tfsdk:"hashing" tfPlanOnly:"true"`
+	RowFiltering  *RowFiltering  `queryParam:"inline" tfsdk:"row_filtering" tfPlanOnly:"true"`
 }

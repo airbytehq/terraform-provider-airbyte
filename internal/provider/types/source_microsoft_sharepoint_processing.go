@@ -3,5 +3,5 @@
 package types
 
 type SourceMicrosoftSharepointProcessing struct {
-	Local *SourceMicrosoftSharepointLocal `tfsdk:"local" tfPlanOnly:"true"`
+	Local *SourceMicrosoftSharepointLocal `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
 }

@@ -3,7 +3,7 @@
 package types
 
 type DestinationPgvectorTextSplitter struct {
-	ByMarkdownHeader      *DestinationPgvectorByMarkdownHeader      `tfsdk:"by_markdown_header" tfPlanOnly:"true"`
-	ByProgrammingLanguage *DestinationPgvectorByProgrammingLanguage `tfsdk:"by_programming_language" tfPlanOnly:"true"`
-	BySeparator           *DestinationPgvectorBySeparator           `tfsdk:"by_separator" tfPlanOnly:"true"`
+	ByMarkdownHeader      *DestinationPgvectorByMarkdownHeader      `queryParam:"inline" tfsdk:"by_markdown_header" tfPlanOnly:"true"`
+	ByProgrammingLanguage *DestinationPgvectorByProgrammingLanguage `queryParam:"inline" tfsdk:"by_programming_language" tfPlanOnly:"true"`
+	BySeparator           *DestinationPgvectorBySeparator           `queryParam:"inline" tfsdk:"by_separator" tfPlanOnly:"true"`
 }

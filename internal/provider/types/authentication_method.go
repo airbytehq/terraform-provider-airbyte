@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationMethod struct {
-	OAuth2AccessToken             *OAuth2AccessToken             `tfsdk:"o_auth2_access_token" tfPlanOnly:"true"`
-	OAuth2ConfidentialApplication *OAuth2ConfidentialApplication `tfsdk:"o_auth2_confidential_application" tfPlanOnly:"true"`
+	OAuth2AccessToken             *OAuth2AccessToken             `queryParam:"inline" tfsdk:"o_auth2_access_token" tfPlanOnly:"true"`
+	OAuth2ConfidentialApplication *OAuth2ConfidentialApplication `queryParam:"inline" tfsdk:"o_auth2_confidential_application" tfPlanOnly:"true"`
 }

@@ -3,7 +3,7 @@
 package types
 
 type SourceMysqlSSHTunnelMethod struct {
-	NoTunnel               *SourceMysqlNoTunnel               `tfsdk:"no_tunnel" tfPlanOnly:"true"`
-	PasswordAuthentication *SourceMysqlPasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *SourceMysqlSSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	NoTunnel               *SourceMysqlNoTunnel               `queryParam:"inline" tfsdk:"no_tunnel" tfPlanOnly:"true"`
+	PasswordAuthentication *SourceMysqlPasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *SourceMysqlSSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

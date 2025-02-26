@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationWildcard struct {
-	ProjectSecret  *ProjectSecret  `tfsdk:"project_secret" tfPlanOnly:"true"`
-	ServiceAccount *ServiceAccount `tfsdk:"service_account" tfPlanOnly:"true"`
+	ProjectSecret  *ProjectSecret  `queryParam:"inline" tfsdk:"project_secret" tfPlanOnly:"true"`
+	ServiceAccount *ServiceAccount `queryParam:"inline" tfsdk:"service_account" tfPlanOnly:"true"`
 }

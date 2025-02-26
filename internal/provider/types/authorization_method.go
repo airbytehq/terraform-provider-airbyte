@@ -3,6 +3,6 @@
 package types
 
 type AuthorizationMethod struct {
-	CentralAPIRouter       *CentralAPIRouter       `tfsdk:"central_api_router" tfPlanOnly:"true"`
-	SingleStoreAccessToken *SingleStoreAccessToken `tfsdk:"single_store_access_token" tfPlanOnly:"true"`
+	CentralAPIRouter       *CentralAPIRouter       `queryParam:"inline" tfsdk:"central_api_router" tfPlanOnly:"true"`
+	SingleStoreAccessToken *SingleStoreAccessToken `queryParam:"inline" tfsdk:"single_store_access_token" tfPlanOnly:"true"`
 }

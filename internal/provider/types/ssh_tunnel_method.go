@@ -3,7 +3,7 @@
 package types
 
 type SSHTunnelMethod struct {
-	NoTunnel               *NoTunnel               `tfsdk:"no_tunnel" tfPlanOnly:"true"`
-	PasswordAuthentication *PasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *SSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	NoTunnel               *NoTunnel               `queryParam:"inline" tfsdk:"no_tunnel" tfPlanOnly:"true"`
+	PasswordAuthentication *PasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *SSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

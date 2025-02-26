@@ -1032,6 +1032,164 @@ func (o *SourceMicrosoftSharepointUpdateFileBasedStreamConfig) GetRecentNFilesTo
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
+type SourceMicrosoftSharepointUpdateSchemasDeliveryType string
+
+const (
+	SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer SourceMicrosoftSharepointUpdateSchemasDeliveryType = "use_file_transfer"
+)
+
+func (e SourceMicrosoftSharepointUpdateSchemasDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateSchemasDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_file_transfer":
+		*e = SourceMicrosoftSharepointUpdateSchemasDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateSchemasDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
+type SourceMicrosoftSharepointUpdateCopyRawFiles struct {
+	deliveryType *SourceMicrosoftSharepointUpdateSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
+	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
+	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
+}
+
+func (s SourceMicrosoftSharepointUpdateCopyRawFiles) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateCopyRawFiles) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetDeliveryType() *SourceMicrosoftSharepointUpdateSchemasDeliveryType {
+	return SourceMicrosoftSharepointUpdateSchemasDeliveryTypeUseFileTransfer.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointUpdateCopyRawFiles) GetPreserveDirectoryStructure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreserveDirectoryStructure
+}
+
+type SourceMicrosoftSharepointUpdateDeliveryType string
+
+const (
+	SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer SourceMicrosoftSharepointUpdateDeliveryType = "use_records_transfer"
+)
+
+func (e SourceMicrosoftSharepointUpdateDeliveryType) ToPointer() *SourceMicrosoftSharepointUpdateDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointUpdateDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_records_transfer":
+		*e = SourceMicrosoftSharepointUpdateDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointUpdateDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointUpdateReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
+type SourceMicrosoftSharepointUpdateReplicateRecords struct {
+	deliveryType *SourceMicrosoftSharepointUpdateDeliveryType `const:"use_records_transfer" json:"delivery_type"`
+}
+
+func (s SourceMicrosoftSharepointUpdateReplicateRecords) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointUpdateReplicateRecords) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointUpdateReplicateRecords) GetDeliveryType() *SourceMicrosoftSharepointUpdateDeliveryType {
+	return SourceMicrosoftSharepointUpdateDeliveryTypeUseRecordsTransfer.ToPointer()
+}
+
+type SourceMicrosoftSharepointUpdateDeliveryMethodType string
+
+const (
+	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Replicate Records"
+	SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles     SourceMicrosoftSharepointUpdateDeliveryMethodType = "source-microsoft-sharepoint-update_Copy Raw Files"
+)
+
+type SourceMicrosoftSharepointUpdateDeliveryMethod struct {
+	SourceMicrosoftSharepointUpdateReplicateRecords *SourceMicrosoftSharepointUpdateReplicateRecords `queryParam:"inline"`
+	SourceMicrosoftSharepointUpdateCopyRawFiles     *SourceMicrosoftSharepointUpdateCopyRawFiles     `queryParam:"inline"`
+
+	Type SourceMicrosoftSharepointUpdateDeliveryMethodType
+}
+
+func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateReplicateRecords(sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords) SourceMicrosoftSharepointUpdateDeliveryMethod {
+	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
+
+	return SourceMicrosoftSharepointUpdateDeliveryMethod{
+		SourceMicrosoftSharepointUpdateReplicateRecords: &sourceMicrosoftSharepointUpdateReplicateRecords,
+		Type: typ,
+	}
+}
+
+func CreateSourceMicrosoftSharepointUpdateDeliveryMethodSourceMicrosoftSharepointUpdateCopyRawFiles(sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles) SourceMicrosoftSharepointUpdateDeliveryMethod {
+	typ := SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
+
+	return SourceMicrosoftSharepointUpdateDeliveryMethod{
+		SourceMicrosoftSharepointUpdateCopyRawFiles: &sourceMicrosoftSharepointUpdateCopyRawFiles,
+		Type: typ,
+	}
+}
+
+func (u *SourceMicrosoftSharepointUpdateDeliveryMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceMicrosoftSharepointUpdateReplicateRecords SourceMicrosoftSharepointUpdateReplicateRecords = SourceMicrosoftSharepointUpdateReplicateRecords{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateReplicateRecords, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateReplicateRecords = &sourceMicrosoftSharepointUpdateReplicateRecords
+		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateReplicateRecords
+		return nil
+	}
+
+	var sourceMicrosoftSharepointUpdateCopyRawFiles SourceMicrosoftSharepointUpdateCopyRawFiles = SourceMicrosoftSharepointUpdateCopyRawFiles{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointUpdateCopyRawFiles, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointUpdateCopyRawFiles = &sourceMicrosoftSharepointUpdateCopyRawFiles
+		u.Type = SourceMicrosoftSharepointUpdateDeliveryMethodTypeSourceMicrosoftSharepointUpdateCopyRawFiles
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointUpdateDeliveryMethod", string(data))
+}
+
+func (u SourceMicrosoftSharepointUpdateDeliveryMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceMicrosoftSharepointUpdateReplicateRecords != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateReplicateRecords, "", true)
+	}
+
+	if u.SourceMicrosoftSharepointUpdateCopyRawFiles != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointUpdateCopyRawFiles, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointUpdateDeliveryMethod: all fields are null")
+}
+
 type SourceMicrosoftSharepointUpdateSchemasAuthType string
 
 const (
@@ -1292,7 +1450,8 @@ type SourceMicrosoftSharepointUpdate struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []SourceMicrosoftSharepointUpdateFileBasedStreamConfig `json:"streams"`
+	Streams        []SourceMicrosoftSharepointUpdateFileBasedStreamConfig `json:"streams"`
+	DeliveryMethod *SourceMicrosoftSharepointUpdateDeliveryMethod         `json:"delivery_method,omitempty"`
 	// Credentials for connecting to the One Drive API
 	Credentials SourceMicrosoftSharepointUpdateAuthentication `json:"credentials"`
 	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
@@ -1324,6 +1483,13 @@ func (o *SourceMicrosoftSharepointUpdate) GetStreams() []SourceMicrosoftSharepoi
 		return []SourceMicrosoftSharepointUpdateFileBasedStreamConfig{}
 	}
 	return o.Streams
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetDeliveryMethod() *SourceMicrosoftSharepointUpdateDeliveryMethod {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryMethod
 }
 
 func (o *SourceMicrosoftSharepointUpdate) GetCredentials() SourceMicrosoftSharepointUpdateAuthentication {

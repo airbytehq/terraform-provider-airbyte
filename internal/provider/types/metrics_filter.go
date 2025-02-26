@@ -3,8 +3,8 @@
 package types
 
 type MetricsFilter struct {
-	AndGroup      *SourceGoogleAnalyticsDataAPIAndGroup      `tfsdk:"and_group" tfPlanOnly:"true"`
-	Filter        *SourceGoogleAnalyticsDataAPISchemasFilter `tfsdk:"filter" tfPlanOnly:"true"`
-	NotExpression *SourceGoogleAnalyticsDataAPINotExpression `tfsdk:"not_expression" tfPlanOnly:"true"`
-	OrGroup       *SourceGoogleAnalyticsDataAPIOrGroup       `tfsdk:"or_group" tfPlanOnly:"true"`
+	AndGroup      *SourceGoogleAnalyticsDataAPIAndGroup      `queryParam:"inline" tfsdk:"and_group" tfPlanOnly:"true"`
+	Filter        *SourceGoogleAnalyticsDataAPISchemasFilter `queryParam:"inline" tfsdk:"filter" tfPlanOnly:"true"`
+	NotExpression *SourceGoogleAnalyticsDataAPINotExpression `queryParam:"inline" tfsdk:"not_expression" tfPlanOnly:"true"`
+	OrGroup       *SourceGoogleAnalyticsDataAPIOrGroup       `queryParam:"inline" tfsdk:"or_group" tfPlanOnly:"true"`
 }

@@ -43,9 +43,9 @@ resource "airbyte_connection" "my_connection" {
         ]
         name = "...my_name..."
         primary_key = [
-          {
+          [
             # ...
-          }
+          ]
         ]
         selected_fields = [
           {

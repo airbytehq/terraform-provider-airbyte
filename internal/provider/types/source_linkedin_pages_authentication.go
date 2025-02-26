@@ -3,6 +3,6 @@
 package types
 
 type SourceLinkedinPagesAuthentication struct {
-	AccessToken *SourceLinkedinPagesAccessToken `tfsdk:"access_token" tfPlanOnly:"true"`
-	OAuth20     *SourceLinkedinPagesOAuth20     `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	AccessToken *SourceLinkedinPagesAccessToken `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
+	OAuth20     *SourceLinkedinPagesOAuth20     `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

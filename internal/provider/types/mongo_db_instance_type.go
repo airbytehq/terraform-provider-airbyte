@@ -3,7 +3,7 @@
 package types
 
 type MongoDbInstanceType struct {
-	MongoDBAtlas              *MongoDBAtlas              `tfsdk:"mongo_db_atlas" tfPlanOnly:"true"`
-	ReplicaSet                *ReplicaSet                `tfsdk:"replica_set" tfPlanOnly:"true"`
-	StandaloneMongoDbInstance *StandaloneMongoDbInstance `tfsdk:"standalone_mongo_db_instance" tfPlanOnly:"true"`
+	MongoDBAtlas              *MongoDBAtlas              `queryParam:"inline" tfsdk:"mongo_db_atlas" tfPlanOnly:"true"`
+	ReplicaSet                *ReplicaSet                `queryParam:"inline" tfsdk:"replica_set" tfPlanOnly:"true"`
+	StandaloneMongoDbInstance *StandaloneMongoDbInstance `queryParam:"inline" tfsdk:"standalone_mongo_db_instance" tfPlanOnly:"true"`
 }

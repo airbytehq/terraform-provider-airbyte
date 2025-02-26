@@ -3,7 +3,7 @@
 package types
 
 type SourceSnowflakeAuthorizationMethod struct {
-	KeyPairAuthentication *KeyPairAuthentication  `tfsdk:"key_pair_authentication" tfPlanOnly:"true"`
-	OAuth20               *SourceSnowflakeOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
-	UsernameAndPassword   *UsernameAndPassword    `tfsdk:"username_and_password" tfPlanOnly:"true"`
+	KeyPairAuthentication *KeyPairAuthentication  `queryParam:"inline" tfsdk:"key_pair_authentication" tfPlanOnly:"true"`
+	OAuth20               *SourceSnowflakeOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
+	UsernameAndPassword   *UsernameAndPassword    `queryParam:"inline" tfsdk:"username_and_password" tfPlanOnly:"true"`
 }

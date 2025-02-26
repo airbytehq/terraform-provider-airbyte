@@ -3,10 +3,10 @@
 package types
 
 type CompressionCodec struct {
-	Bzip2         *Bzip2         `tfsdk:"bzip2" tfPlanOnly:"true"`
-	Deflate       *Deflate       `tfsdk:"deflate" tfPlanOnly:"true"`
-	NoCompression *NoCompression `tfsdk:"no_compression" tfPlanOnly:"true"`
-	Snappy        *Snappy        `tfsdk:"snappy" tfPlanOnly:"true"`
-	Xz            *Xz            `tfsdk:"xz" tfPlanOnly:"true"`
-	Zstandard     *Zstandard     `tfsdk:"zstandard" tfPlanOnly:"true"`
+	Bzip2         *Bzip2         `queryParam:"inline" tfsdk:"bzip2" tfPlanOnly:"true"`
+	Deflate       *Deflate       `queryParam:"inline" tfsdk:"deflate" tfPlanOnly:"true"`
+	NoCompression *NoCompression `queryParam:"inline" tfsdk:"no_compression" tfPlanOnly:"true"`
+	Snappy        *Snappy        `queryParam:"inline" tfsdk:"snappy" tfPlanOnly:"true"`
+	Xz            *Xz            `queryParam:"inline" tfsdk:"xz" tfPlanOnly:"true"`
+	Zstandard     *Zstandard     `queryParam:"inline" tfsdk:"zstandard" tfPlanOnly:"true"`
 }

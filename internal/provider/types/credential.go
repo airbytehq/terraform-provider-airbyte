@@ -3,5 +3,5 @@
 package types
 
 type Credential struct {
-	HMACKey *DestinationBigqueryHMACKey `tfsdk:"hmac_key" tfPlanOnly:"true"`
+	HMACKey *DestinationBigqueryHMACKey `queryParam:"inline" tfsdk:"hmac_key" tfPlanOnly:"true"`
 }

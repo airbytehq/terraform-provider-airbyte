@@ -292,6 +292,35 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 		})
 	}
+	var deliveryMethod *shared.SourceMicrosoftSharepointDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceMicrosoftSharepointReplicateRecords *shared.SourceMicrosoftSharepointReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceMicrosoftSharepointReplicateRecords = &shared.SourceMicrosoftSharepointReplicateRecords{}
+		}
+		if sourceMicrosoftSharepointReplicateRecords != nil {
+			deliveryMethod = &shared.SourceMicrosoftSharepointDeliveryMethod{
+				SourceMicrosoftSharepointReplicateRecords: sourceMicrosoftSharepointReplicateRecords,
+			}
+		}
+		var sourceMicrosoftSharepointCopyRawFiles *shared.SourceMicrosoftSharepointCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceMicrosoftSharepointCopyRawFiles = &shared.SourceMicrosoftSharepointCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceMicrosoftSharepointCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceMicrosoftSharepointDeliveryMethod{
+				SourceMicrosoftSharepointCopyRawFiles: sourceMicrosoftSharepointCopyRawFiles,
+			}
+		}
+	}
 	var credentials shared.SourceMicrosoftSharepointAuthentication
 	var sourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth *shared.SourceMicrosoftSharepointAuthenticateViaMicrosoftOAuth
 	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
@@ -361,11 +390,12 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 		folderPath = nil
 	}
 	configuration := shared.SourceMicrosoftSharepoint{
-		StartDate:   startDate,
-		Streams:     streams,
-		Credentials: credentials,
-		SearchScope: searchScope,
-		FolderPath:  folderPath,
+		StartDate:      startDate,
+		Streams:        streams,
+		DeliveryMethod: deliveryMethod,
+		Credentials:    credentials,
+		SearchScope:    searchScope,
+		FolderPath:     folderPath,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -672,6 +702,35 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 		})
 	}
+	var deliveryMethod *shared.SourceMicrosoftSharepointUpdateDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceMicrosoftSharepointUpdateReplicateRecords *shared.SourceMicrosoftSharepointUpdateReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceMicrosoftSharepointUpdateReplicateRecords = &shared.SourceMicrosoftSharepointUpdateReplicateRecords{}
+		}
+		if sourceMicrosoftSharepointUpdateReplicateRecords != nil {
+			deliveryMethod = &shared.SourceMicrosoftSharepointUpdateDeliveryMethod{
+				SourceMicrosoftSharepointUpdateReplicateRecords: sourceMicrosoftSharepointUpdateReplicateRecords,
+			}
+		}
+		var sourceMicrosoftSharepointUpdateCopyRawFiles *shared.SourceMicrosoftSharepointUpdateCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceMicrosoftSharepointUpdateCopyRawFiles = &shared.SourceMicrosoftSharepointUpdateCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceMicrosoftSharepointUpdateCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceMicrosoftSharepointUpdateDeliveryMethod{
+				SourceMicrosoftSharepointUpdateCopyRawFiles: sourceMicrosoftSharepointUpdateCopyRawFiles,
+			}
+		}
+	}
 	var credentials shared.SourceMicrosoftSharepointUpdateAuthentication
 	var sourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth *shared.SourceMicrosoftSharepointUpdateAuthenticateViaMicrosoftOAuth
 	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
@@ -741,11 +800,12 @@ func (r *SourceMicrosoftSharepointResourceModel) ToSharedSourceMicrosoftSharepoi
 		folderPath = nil
 	}
 	configuration := shared.SourceMicrosoftSharepointUpdate{
-		StartDate:   startDate,
-		Streams:     streams,
-		Credentials: credentials,
-		SearchScope: searchScope,
-		FolderPath:  folderPath,
+		StartDate:      startDate,
+		Streams:        streams,
+		DeliveryMethod: deliveryMethod,
+		Credentials:    credentials,
+		SearchScope:    searchScope,
+		FolderPath:     folderPath,
 	}
 	out := shared.SourceMicrosoftSharepointPutRequest{
 		Name:          name,

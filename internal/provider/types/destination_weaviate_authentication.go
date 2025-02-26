@@ -3,7 +3,7 @@
 package types
 
 type DestinationWeaviateAuthentication struct {
-	APIToken         *DestinationWeaviateAPIToken         `tfsdk:"api_token" tfPlanOnly:"true"`
-	NoAuthentication *NoAuthentication                    `tfsdk:"no_authentication" tfPlanOnly:"true"`
-	UsernamePassword *DestinationWeaviateUsernamePassword `tfsdk:"username_password" tfPlanOnly:"true"`
+	APIToken         *DestinationWeaviateAPIToken         `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	NoAuthentication *NoAuthentication                    `queryParam:"inline" tfsdk:"no_authentication" tfPlanOnly:"true"`
+	UsernamePassword *DestinationWeaviateUsernamePassword `queryParam:"inline" tfsdk:"username_password" tfPlanOnly:"true"`
 }

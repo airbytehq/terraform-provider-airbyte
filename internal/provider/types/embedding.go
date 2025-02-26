@@ -3,9 +3,9 @@
 package types
 
 type Embedding struct {
-	AzureOpenAI      *AzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *Cohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *Fake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *OpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *OpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *AzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *Cohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *Fake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *OpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *OpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

@@ -3,7 +3,7 @@
 package types
 
 type DestinationRedshiftSSHTunnelMethod struct {
-	NoTunnel               *DestinationRedshiftNoTunnel               `tfsdk:"no_tunnel" tfPlanOnly:"true"`
-	PasswordAuthentication *DestinationRedshiftPasswordAuthentication `tfsdk:"password_authentication" tfPlanOnly:"true"`
-	SSHKeyAuthentication   *DestinationRedshiftSSHKeyAuthentication   `tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
+	NoTunnel               *DestinationRedshiftNoTunnel               `queryParam:"inline" tfsdk:"no_tunnel" tfPlanOnly:"true"`
+	PasswordAuthentication *DestinationRedshiftPasswordAuthentication `queryParam:"inline" tfsdk:"password_authentication" tfPlanOnly:"true"`
+	SSHKeyAuthentication   *DestinationRedshiftSSHKeyAuthentication   `queryParam:"inline" tfsdk:"ssh_key_authentication" tfPlanOnly:"true"`
 }

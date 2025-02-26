@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleDirectoryGoogleCredentials struct {
-	ServiceAccountKey    *ServiceAccountKey    `tfsdk:"service_account_key" tfPlanOnly:"true"`
-	SignInViaGoogleOAuth *SignInViaGoogleOAuth `tfsdk:"sign_in_via_google_o_auth" tfPlanOnly:"true"`
+	ServiceAccountKey    *ServiceAccountKey    `queryParam:"inline" tfsdk:"service_account_key" tfPlanOnly:"true"`
+	SignInViaGoogleOAuth *SignInViaGoogleOAuth `queryParam:"inline" tfsdk:"sign_in_via_google_o_auth" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceGcsProcessing struct {
-	Local  *SourceGcsLocal `tfsdk:"local" tfPlanOnly:"true"`
-	ViaAPI *ViaAPI         `tfsdk:"via_api" tfPlanOnly:"true"`
+	Local  *SourceGcsLocal `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
+	ViaAPI *ViaAPI         `queryParam:"inline" tfsdk:"via_api" tfPlanOnly:"true"`
 }

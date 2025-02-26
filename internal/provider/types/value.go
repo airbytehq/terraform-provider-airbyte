@@ -3,6 +3,6 @@
 package types
 
 type Value struct {
-	DoubleValue *DoubleValue `tfsdk:"double_value" tfPlanOnly:"true"`
-	Int64Value  *Int64Value  `tfsdk:"int64_value" tfPlanOnly:"true"`
+	DoubleValue *DoubleValue `queryParam:"inline" tfsdk:"double_value" tfPlanOnly:"true"`
+	Int64Value  *Int64Value  `queryParam:"inline" tfsdk:"int64_value" tfPlanOnly:"true"`
 }

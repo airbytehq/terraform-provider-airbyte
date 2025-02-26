@@ -3,12 +3,12 @@
 package types
 
 type StorageProvider struct {
-	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage         `tfsdk:"az_blob_azure_blob_storage" tfPlanOnly:"true"`
-	GCSGoogleCloudStorage          *GCSGoogleCloudStorage          `tfsdk:"gcs_google_cloud_storage" tfPlanOnly:"true"`
-	HTTPSPublicWeb                 *HTTPSPublicWeb                 `tfsdk:"https_public_web" tfPlanOnly:"true"`
-	LocalFilesystemLimited         *LocalFilesystemLimited         `tfsdk:"local_filesystem_limited" tfPlanOnly:"true"`
-	S3AmazonWebServices            *S3AmazonWebServices            `tfsdk:"s3_amazon_web_services" tfPlanOnly:"true"`
-	SCPSecureCopyProtocol          *SCPSecureCopyProtocol          `tfsdk:"scp_secure_copy_protocol" tfPlanOnly:"true"`
-	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol `tfsdk:"sftp_secure_file_transfer_protocol" tfPlanOnly:"true"`
-	SSHSecureShell                 *SSHSecureShell                 `tfsdk:"ssh_secure_shell" tfPlanOnly:"true"`
+	AzBlobAzureBlobStorage         *AzBlobAzureBlobStorage         `queryParam:"inline" tfsdk:"az_blob_azure_blob_storage" tfPlanOnly:"true"`
+	GCSGoogleCloudStorage          *GCSGoogleCloudStorage          `queryParam:"inline" tfsdk:"gcs_google_cloud_storage" tfPlanOnly:"true"`
+	HTTPSPublicWeb                 *HTTPSPublicWeb                 `queryParam:"inline" tfsdk:"https_public_web" tfPlanOnly:"true"`
+	LocalFilesystemLimited         *LocalFilesystemLimited         `queryParam:"inline" tfsdk:"local_filesystem_limited" tfPlanOnly:"true"`
+	S3AmazonWebServices            *S3AmazonWebServices            `queryParam:"inline" tfsdk:"s3_amazon_web_services" tfPlanOnly:"true"`
+	SCPSecureCopyProtocol          *SCPSecureCopyProtocol          `queryParam:"inline" tfsdk:"scp_secure_copy_protocol" tfPlanOnly:"true"`
+	SFTPSecureFileTransferProtocol *SFTPSecureFileTransferProtocol `queryParam:"inline" tfsdk:"sftp_secure_file_transfer_protocol" tfPlanOnly:"true"`
+	SSHSecureShell                 *SSHSecureShell                 `queryParam:"inline" tfsdk:"ssh_secure_shell" tfPlanOnly:"true"`
 }

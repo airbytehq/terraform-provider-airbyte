@@ -3,7 +3,7 @@
 package types
 
 type DestinationMilvusAuthentication struct {
-	APIToken         *DestinationMilvusAPIToken         `tfsdk:"api_token" tfPlanOnly:"true"`
-	NoAuth           *NoAuth                            `tfsdk:"no_auth" tfPlanOnly:"true"`
-	UsernamePassword *DestinationMilvusUsernamePassword `tfsdk:"username_password" tfPlanOnly:"true"`
+	APIToken         *DestinationMilvusAPIToken         `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	NoAuth           *NoAuth                            `queryParam:"inline" tfsdk:"no_auth" tfPlanOnly:"true"`
+	UsernamePassword *DestinationMilvusUsernamePassword `queryParam:"inline" tfsdk:"username_password" tfPlanOnly:"true"`
 }

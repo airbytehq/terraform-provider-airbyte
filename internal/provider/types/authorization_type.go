@@ -3,6 +3,6 @@
 package types
 
 type AuthorizationType struct {
-	LoginPassword *LoginPassword          `tfsdk:"login_password" tfPlanOnly:"true"`
-	None          *DestinationMongodbNone `tfsdk:"none" tfPlanOnly:"true"`
+	LoginPassword *LoginPassword          `queryParam:"inline" tfsdk:"login_password" tfPlanOnly:"true"`
+	None          *DestinationMongodbNone `queryParam:"inline" tfsdk:"none" tfPlanOnly:"true"`
 }

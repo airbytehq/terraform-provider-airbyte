@@ -3,10 +3,10 @@
 package types
 
 type SSLModes struct {
-	Allow      *Allow                  `tfsdk:"allow" tfPlanOnly:"true"`
-	Disable    *Disable                `tfsdk:"disable" tfPlanOnly:"true"`
-	Prefer     *Prefer                 `tfsdk:"prefer" tfPlanOnly:"true"`
-	Require    *Require                `tfsdk:"require" tfPlanOnly:"true"`
-	VerifyCa   *SourcePostgresVerifyCa `tfsdk:"verify_ca" tfPlanOnly:"true"`
-	VerifyFull *VerifyFull             `tfsdk:"verify_full" tfPlanOnly:"true"`
+	Allow      *Allow                  `queryParam:"inline" tfsdk:"allow" tfPlanOnly:"true"`
+	Disable    *Disable                `queryParam:"inline" tfsdk:"disable" tfPlanOnly:"true"`
+	Prefer     *Prefer                 `queryParam:"inline" tfsdk:"prefer" tfPlanOnly:"true"`
+	Require    *Require                `queryParam:"inline" tfsdk:"require" tfPlanOnly:"true"`
+	VerifyCa   *SourcePostgresVerifyCa `queryParam:"inline" tfsdk:"verify_ca" tfPlanOnly:"true"`
+	VerifyFull *VerifyFull             `queryParam:"inline" tfsdk:"verify_full" tfPlanOnly:"true"`
 }

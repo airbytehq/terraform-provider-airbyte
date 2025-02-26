@@ -3,10 +3,10 @@
 package types
 
 type SourceMicrosoftSharepointFormat struct {
-	AvroFormat                 *SourceMicrosoftSharepointAvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceMicrosoftSharepointCSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
-	ExcelFormat                *SourceMicrosoftSharepointExcelFormat                `tfsdk:"excel_format" tfPlanOnly:"true"`
-	JsonlFormat                *SourceMicrosoftSharepointJsonlFormat                `tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat              *SourceMicrosoftSharepointParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
-	UnstructuredDocumentFormat *SourceMicrosoftSharepointUnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
+	AvroFormat                 *SourceMicrosoftSharepointAvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *SourceMicrosoftSharepointCSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	ExcelFormat                *SourceMicrosoftSharepointExcelFormat                `queryParam:"inline" tfsdk:"excel_format" tfPlanOnly:"true"`
+	JsonlFormat                *SourceMicrosoftSharepointJsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *SourceMicrosoftSharepointParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *SourceMicrosoftSharepointUnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

@@ -15,14 +15,14 @@ SourceCircleci Resource
 ```terraform
 resource "airbyte_source_circleci" "my_source_circleci" {
   configuration = {
-    api_key       = "...my_api_key..."
-    job_id        = "...my_job_id..."
-    job_number    = "...my_job_number..."
-    org_id        = "...my_org_id..."
-    project_id    = "...my_project_id..."
-    start_date    = "2021-12-24T02:44:42.906Z"
-    workflow_id   = "...my_workflow_id..."
-    workflow_name = "...my_workflow_name..."
+    api_key    = "...my_api_key..."
+    job_number = "...my_job_number..."
+    org_id     = "...my_org_id..."
+    project_id = "...my_project_id..."
+    start_date = "2021-12-24T02:44:42.906Z"
+    workflow_id = [
+      "{ \"see\": \"documentation\" }"
+    ]
   }
   definition_id = "53783c47-5321-4ea7-8d4a-f5c8e6914d08"
   name          = "...my_name..."
@@ -58,15 +58,13 @@ Required:
 
 - `api_key` (String, Sensitive)
 - `org_id` (String) The org ID found in `https://app.circleci.com/settings/organization/circleci/xxxxx/overview`
-- `project_id` (String) Project ID found in the project settings
+- `project_id` (String) Project ID found in the project settings, Visit `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY`
 - `start_date` (String)
 
 Optional:
 
-- `job_id` (String) Job ID for fetching information
-- `job_number` (String) Job Number of the workflow. Default: "2"
-- `workflow_id` (String) workflow ID of a project pipeline
-- `workflow_name` (String) Workflow name for fetching information. Default: "build-and-test"
+- `job_number` (String) Job Number of the workflow for `jobs` stream, Auto fetches from `workflow_jobs` stream, if not configured. Default: "2"
+- `workflow_id` (List of String) Workflow ID of a project pipeline, Could be seen in the URL of pipeline build, Example `https://app.circleci.com/pipelines/circleci/55555xxxxxx/7yyyyyyyyxxxxx/2/workflows/WORKFLOW_ID`
 
 ## Import
 

@@ -3,6 +3,6 @@
 package types
 
 type SourceSftpBulkAuthentication struct {
-	AuthenticateViaPassword   *AuthenticateViaPassword   `tfsdk:"authenticate_via_password" tfPlanOnly:"true"`
-	AuthenticateViaPrivateKey *AuthenticateViaPrivateKey `tfsdk:"authenticate_via_private_key" tfPlanOnly:"true"`
+	AuthenticateViaPassword   *AuthenticateViaPassword   `queryParam:"inline" tfsdk:"authenticate_via_password" tfPlanOnly:"true"`
+	AuthenticateViaPrivateKey *AuthenticateViaPrivateKey `queryParam:"inline" tfsdk:"authenticate_via_private_key" tfPlanOnly:"true"`
 }
