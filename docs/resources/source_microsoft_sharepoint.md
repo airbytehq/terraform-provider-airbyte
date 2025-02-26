@@ -29,6 +29,14 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
         user_principal_name = "...my_user_principal_name..."
       }
     }
+    delivery_method = {
+      copy_raw_files = {
+        preserve_directory_structure = false
+      }
+      replicate_records = {
+        # ...
+      }
+    }
     folder_path  = "...my_folder_path..."
     search_scope = "ALL"
     start_date   = "2021-01-01T00:00:00.000000Z"
@@ -140,6 +148,7 @@ Required:
 
 Optional:
 
+- `delivery_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--delivery_method))
 - `folder_path` (String) Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items. Default: "."
 - `search_scope` (String) Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both. Default: "ALL"; must be one of ["ACCESSIBLE_DRIVES", "SHARED_ITEMS", "ALL"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
@@ -297,6 +306,30 @@ Optional:
 
 <a id="nestedatt--configuration--streams--format--unstructured_document_format--processing--local"></a>
 ### Nested Schema for `configuration.streams.format.unstructured_document_format.processing.local`
+
+
+
+
+
+
+<a id="nestedatt--configuration--delivery_method"></a>
+### Nested Schema for `configuration.delivery_method`
+
+Optional:
+
+- `copy_raw_files` (Attributes) Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files. (see [below for nested schema](#nestedatt--configuration--delivery_method--copy_raw_files))
+- `replicate_records` (Attributes) Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination. (see [below for nested schema](#nestedatt--configuration--delivery_method--replicate_records))
+
+<a id="nestedatt--configuration--delivery_method--copy_raw_files"></a>
+### Nested Schema for `configuration.delivery_method.copy_raw_files`
+
+Optional:
+
+- `preserve_directory_structure` (Boolean) If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled. Default: true
+
+
+<a id="nestedatt--configuration--delivery_method--replicate_records"></a>
+### Nested Schema for `configuration.delivery_method.replicate_records`
 
 ## Import
 

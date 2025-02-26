@@ -58,9 +58,9 @@ resource "airbyte_connection" "my_connection" {
         ]
         name = "...my_name..."
         primary_key = [
-          {
+          [
             # ...
-          }
+          ]
         ]
         selected_fields = [
           {
@@ -129,7 +129,7 @@ resource "airbyte_connection" "my_connection" {
 
 Optional:
 
-- `streams` (Attributes List) (see [below for nested schema](#nestedatt--configurations--streams))
+- `streams` (Attributes Set) (see [below for nested schema](#nestedatt--configurations--streams))
 
 <a id="nestedatt--configurations--streams"></a>
 ### Nested Schema for `configurations.streams`
