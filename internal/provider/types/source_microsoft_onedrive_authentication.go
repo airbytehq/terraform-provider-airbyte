@@ -3,6 +3,6 @@
 package types
 
 type SourceMicrosoftOnedriveAuthentication struct {
-	AuthenticateViaMicrosoftOAuth *AuthenticateViaMicrosoftOAuth `tfsdk:"authenticate_via_microsoft_o_auth" tfPlanOnly:"true"`
-	ServiceKeyAuthentication      *ServiceKeyAuthentication      `tfsdk:"service_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaMicrosoftOAuth *AuthenticateViaMicrosoftOAuth `queryParam:"inline" tfsdk:"authenticate_via_microsoft_o_auth" tfPlanOnly:"true"`
+	ServiceKeyAuthentication      *ServiceKeyAuthentication      `queryParam:"inline" tfsdk:"service_key_authentication" tfPlanOnly:"true"`
 }

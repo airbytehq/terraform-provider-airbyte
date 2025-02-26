@@ -3,6 +3,6 @@
 package types
 
 type APIEndpoint struct {
-	Basic      *Basic      `tfsdk:"basic" tfPlanOnly:"true"`
-	Enterprise *Enterprise `tfsdk:"enterprise" tfPlanOnly:"true"`
+	Basic      *Basic      `queryParam:"inline" tfsdk:"basic" tfPlanOnly:"true"`
+	Enterprise *Enterprise `queryParam:"inline" tfsdk:"enterprise" tfPlanOnly:"true"`
 }

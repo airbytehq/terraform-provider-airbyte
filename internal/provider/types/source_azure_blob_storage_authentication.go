@@ -3,7 +3,7 @@
 package types
 
 type SourceAzureBlobStorageAuthentication struct {
-	AuthenticateViaClientCredentials *AuthenticateViaClientCredentials `tfsdk:"authenticate_via_client_credentials" tfPlanOnly:"true"`
-	AuthenticateViaOauth2            *AuthenticateViaOauth2            `tfsdk:"authenticate_via_oauth2" tfPlanOnly:"true"`
-	AuthenticateViaStorageAccountKey *AuthenticateViaStorageAccountKey `tfsdk:"authenticate_via_storage_account_key" tfPlanOnly:"true"`
+	AuthenticateViaClientCredentials *AuthenticateViaClientCredentials `queryParam:"inline" tfsdk:"authenticate_via_client_credentials" tfPlanOnly:"true"`
+	AuthenticateViaOauth2            *AuthenticateViaOauth2            `queryParam:"inline" tfsdk:"authenticate_via_oauth2" tfPlanOnly:"true"`
+	AuthenticateViaStorageAccountKey *AuthenticateViaStorageAccountKey `queryParam:"inline" tfsdk:"authenticate_via_storage_account_key" tfPlanOnly:"true"`
 }

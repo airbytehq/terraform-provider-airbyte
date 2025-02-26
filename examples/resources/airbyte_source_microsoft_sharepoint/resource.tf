@@ -14,6 +14,14 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
         user_principal_name = "...my_user_principal_name..."
       }
     }
+    delivery_method = {
+      copy_raw_files = {
+        preserve_directory_structure = false
+      }
+      replicate_records = {
+        # ...
+      }
+    }
     folder_path  = "...my_folder_path..."
     search_scope = "ALL"
     start_date   = "2021-01-01T00:00:00.000000Z"

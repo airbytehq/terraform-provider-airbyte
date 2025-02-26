@@ -3,6 +3,6 @@
 package types
 
 type BaseURL struct {
-	EUBasedAccount *EUBasedAccount `tfsdk:"eu_based_account" tfPlanOnly:"true"`
-	GlobalAccount  *GlobalAccount  `tfsdk:"global_account" tfPlanOnly:"true"`
+	EUBasedAccount *EUBasedAccount `queryParam:"inline" tfsdk:"eu_based_account" tfPlanOnly:"true"`
+	GlobalAccount  *GlobalAccount  `queryParam:"inline" tfsdk:"global_account" tfPlanOnly:"true"`
 }

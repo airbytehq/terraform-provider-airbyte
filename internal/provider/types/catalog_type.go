@@ -3,7 +3,7 @@
 package types
 
 type CatalogType struct {
-	GlueCatalog   *DestinationS3DataLakeGlueCatalog `tfsdk:"glue_catalog" tfPlanOnly:"true"`
-	NessieCatalog *NessieCatalog                    `tfsdk:"nessie_catalog" tfPlanOnly:"true"`
-	RestCatalog   *DestinationS3DataLakeRestCatalog `tfsdk:"rest_catalog" tfPlanOnly:"true"`
+	GlueCatalog   *DestinationS3DataLakeGlueCatalog `queryParam:"inline" tfsdk:"glue_catalog" tfPlanOnly:"true"`
+	NessieCatalog *NessieCatalog                    `queryParam:"inline" tfsdk:"nessie_catalog" tfPlanOnly:"true"`
+	RestCatalog   *DestinationS3DataLakeRestCatalog `queryParam:"inline" tfsdk:"rest_catalog" tfPlanOnly:"true"`
 }

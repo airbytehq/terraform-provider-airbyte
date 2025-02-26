@@ -3,5 +3,5 @@
 package types
 
 type UploadingMethod struct {
-	AWSS3Staging *AWSS3Staging `tfsdk:"awss3_staging" tfPlanOnly:"true"`
+	AWSS3Staging *AWSS3Staging `queryParam:"inline" tfsdk:"awss3_staging" tfPlanOnly:"true"`
 }

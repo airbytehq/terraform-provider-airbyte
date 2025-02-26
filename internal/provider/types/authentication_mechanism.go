@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationMechanism struct {
-	AuthenticateViaAsanaOauth           *AuthenticateViaAsanaOauth           `tfsdk:"authenticate_via_asana_oauth" tfPlanOnly:"true"`
-	AuthenticateWithPersonalAccessToken *AuthenticateWithPersonalAccessToken `tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
+	AuthenticateViaAsanaOauth           *AuthenticateViaAsanaOauth           `queryParam:"inline" tfsdk:"authenticate_via_asana_oauth" tfPlanOnly:"true"`
+	AuthenticateWithPersonalAccessToken *AuthenticateWithPersonalAccessToken `queryParam:"inline" tfsdk:"authenticate_with_personal_access_token" tfPlanOnly:"true"`
 }

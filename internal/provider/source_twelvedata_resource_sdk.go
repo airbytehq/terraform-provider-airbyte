@@ -41,9 +41,9 @@ func (r *SourceTwelveDataResourceModel) ToSharedSourceTwelveDataCreateRequest() 
 	} else {
 		symbol = nil
 	}
-	interval := new(shared.Interval)
+	interval := new(shared.SourceTwelveDataInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
-		*interval = shared.Interval(r.Configuration.Interval.ValueString())
+		*interval = shared.SourceTwelveDataInterval(r.Configuration.Interval.ValueString())
 	} else {
 		interval = nil
 	}

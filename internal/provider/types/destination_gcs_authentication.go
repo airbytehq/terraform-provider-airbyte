@@ -3,5 +3,5 @@
 package types
 
 type DestinationGcsAuthentication struct {
-	HMACKey *HMACKey `tfsdk:"hmac_key" tfPlanOnly:"true"`
+	HMACKey *HMACKey `queryParam:"inline" tfsdk:"hmac_key" tfPlanOnly:"true"`
 }

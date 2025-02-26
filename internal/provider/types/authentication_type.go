@@ -3,6 +3,6 @@
 package types
 
 type AuthenticationType struct {
-	OAuth                           *SourceGoogleSearchConsoleOAuth                           `tfsdk:"o_auth" tfPlanOnly:"true"`
-	ServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
+	OAuth                           *SourceGoogleSearchConsoleOAuth                           `queryParam:"inline" tfsdk:"o_auth" tfPlanOnly:"true"`
+	ServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `queryParam:"inline" tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
 }

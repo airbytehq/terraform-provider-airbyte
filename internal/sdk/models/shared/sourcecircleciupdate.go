@@ -12,15 +12,11 @@ type SourceCircleciUpdate struct {
 	// The org ID found in `https://app.circleci.com/settings/organization/circleci/xxxxx/overview`
 	OrgID     string    `json:"org_id"`
 	StartDate time.Time `json:"start_date"`
-	// Project ID found in the project settings
+	// Project ID found in the project settings, Visit `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY`
 	ProjectID string `json:"project_id"`
-	// Job ID for fetching information
-	JobID *string `json:"job_id,omitempty"`
-	// workflow ID of a project pipeline
-	WorkflowID *string `json:"workflow_id,omitempty"`
-	// Workflow name for fetching information
-	WorkflowName *string `default:"build-and-test" json:"workflow_name"`
-	// Job Number of the workflow
+	// Workflow ID of a project pipeline, Could be seen in the URL of pipeline build, Example `https://app.circleci.com/pipelines/circleci/55555xxxxxx/7yyyyyyyyxxxxx/2/workflows/WORKFLOW_ID`
+	WorkflowID []any `json:"workflow_id,omitempty"`
+	// Job Number of the workflow for `jobs` stream, Auto fetches from `workflow_jobs` stream, if not configured
 	JobNumber *string `default:"2" json:"job_number"`
 }
 
@@ -63,25 +59,11 @@ func (o *SourceCircleciUpdate) GetProjectID() string {
 	return o.ProjectID
 }
 
-func (o *SourceCircleciUpdate) GetJobID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JobID
-}
-
-func (o *SourceCircleciUpdate) GetWorkflowID() *string {
+func (o *SourceCircleciUpdate) GetWorkflowID() []any {
 	if o == nil {
 		return nil
 	}
 	return o.WorkflowID
-}
-
-func (o *SourceCircleciUpdate) GetWorkflowName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WorkflowName
 }
 
 func (o *SourceCircleciUpdate) GetJobNumber() *string {

@@ -3,9 +3,9 @@
 package types
 
 type DestinationQdrantEmbedding struct {
-	AzureOpenAI      *DestinationQdrantAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *DestinationQdrantCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *DestinationQdrantFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *DestinationQdrantOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *DestinationQdrantOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *DestinationQdrantAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *DestinationQdrantCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *DestinationQdrantFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *DestinationQdrantOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *DestinationQdrantOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

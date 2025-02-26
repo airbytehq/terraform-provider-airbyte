@@ -12,6 +12,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -66,15 +67,11 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 						Required:  true,
 						Sensitive: true,
 					},
-					"job_id": schema.StringAttribute{
-						Optional:    true,
-						Description: `Job ID for fetching information`,
-					},
 					"job_number": schema.StringAttribute{
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString(`2`),
-						Description: `Job Number of the workflow. Default: "2"`,
+						Description: `Job Number of the workflow for ` + "`" + `jobs` + "`" + ` stream, Auto fetches from ` + "`" + `workflow_jobs` + "`" + ` stream, if not configured. Default: "2"`,
 					},
 					"org_id": schema.StringAttribute{
 						Required:    true,
@@ -82,7 +79,7 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"project_id": schema.StringAttribute{
 						Required:    true,
-						Description: `Project ID found in the project settings`,
+						Description: `Project ID found in the project settings, Visit ` + "`" + `https://app.circleci.com/settings/project/circleci/ORG_SLUG/YYYYY` + "`" + ``,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -90,15 +87,13 @@ func (r *SourceCircleciResource) Schema(ctx context.Context, req resource.Schema
 							validators.IsRFC3339(),
 						},
 					},
-					"workflow_id": schema.StringAttribute{
+					"workflow_id": schema.ListAttribute{
 						Optional:    true,
-						Description: `workflow ID of a project pipeline`,
-					},
-					"workflow_name": schema.StringAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     stringdefault.StaticString(`build-and-test`),
-						Description: `Workflow name for fetching information. Default: "build-and-test"`,
+						ElementType: types.StringType,
+						Description: `Workflow ID of a project pipeline, Could be seen in the URL of pipeline build, Example ` + "`" + `https://app.circleci.com/pipelines/circleci/55555xxxxxx/7yyyyyyyyxxxxx/2/workflows/WORKFLOW_ID` + "`" + ``,
+						Validators: []validator.List{
+							listvalidator.ValueStringsAre(validators.IsValidJSON()),
+						},
 					},
 				},
 			},

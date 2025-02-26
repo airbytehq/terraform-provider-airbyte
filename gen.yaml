@@ -15,7 +15,7 @@ generation:
     oAuth2PasswordEnabled: true
   telemetryEnabled: true
 terraform:
-  version: 0.14.1
+  version: 0.15.0
   additionalDataSources: []
   additionalDependencies: {}
   additionalProviderAttributes:

@@ -3,9 +3,9 @@
 package types
 
 type SourceMicrosoftOnedriveFormat struct {
-	AvroFormat                 *SourceMicrosoftOnedriveAvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceMicrosoftOnedriveCSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
-	JsonlFormat                *SourceMicrosoftOnedriveJsonlFormat                `tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat              *SourceMicrosoftOnedriveParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
-	UnstructuredDocumentFormat *SourceMicrosoftOnedriveUnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
+	AvroFormat                 *SourceMicrosoftOnedriveAvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *SourceMicrosoftOnedriveCSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	JsonlFormat                *SourceMicrosoftOnedriveJsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *SourceMicrosoftOnedriveParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *SourceMicrosoftOnedriveUnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

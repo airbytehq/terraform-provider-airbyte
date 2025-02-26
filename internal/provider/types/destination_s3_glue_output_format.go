@@ -3,5 +3,5 @@
 package types
 
 type DestinationS3GlueOutputFormat struct {
-	JSONLinesNewlineDelimitedJSON *DestinationS3GlueJSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
+	JSONLinesNewlineDelimitedJSON *DestinationS3GlueJSONLinesNewlineDelimitedJSON `queryParam:"inline" tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
 }

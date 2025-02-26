@@ -3,10 +3,10 @@
 package types
 
 type DestinationS3CompressionCodec struct {
-	Bzip2         *DestinationS3Bzip2                      `tfsdk:"bzip2" tfPlanOnly:"true"`
-	Deflate       *DestinationS3Deflate                    `tfsdk:"deflate" tfPlanOnly:"true"`
-	NoCompression *DestinationS3SchemasFormatNoCompression `tfsdk:"no_compression" tfPlanOnly:"true"`
-	Snappy        *DestinationS3Snappy                     `tfsdk:"snappy" tfPlanOnly:"true"`
-	Xz            *DestinationS3Xz                         `tfsdk:"xz" tfPlanOnly:"true"`
-	Zstandard     *DestinationS3Zstandard                  `tfsdk:"zstandard" tfPlanOnly:"true"`
+	Bzip2         *DestinationS3Bzip2                      `queryParam:"inline" tfsdk:"bzip2" tfPlanOnly:"true"`
+	Deflate       *DestinationS3Deflate                    `queryParam:"inline" tfsdk:"deflate" tfPlanOnly:"true"`
+	NoCompression *DestinationS3SchemasFormatNoCompression `queryParam:"inline" tfsdk:"no_compression" tfPlanOnly:"true"`
+	Snappy        *DestinationS3Snappy                     `queryParam:"inline" tfsdk:"snappy" tfPlanOnly:"true"`
+	Xz            *DestinationS3Xz                         `queryParam:"inline" tfsdk:"xz" tfPlanOnly:"true"`
+	Zstandard     *DestinationS3Zstandard                  `queryParam:"inline" tfsdk:"zstandard" tfPlanOnly:"true"`
 }

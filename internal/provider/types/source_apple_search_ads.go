@@ -5,9 +5,11 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAppleSearchAds struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	EndDate      types.String `tfsdk:"end_date"`
-	OrgID        types.Int64  `tfsdk:"org_id"`
-	StartDate    types.String `tfsdk:"start_date"`
+	BackoffFactor  types.Int64  `tfsdk:"backoff_factor"`
+	ClientID       types.String `tfsdk:"client_id"`
+	ClientSecret   types.String `tfsdk:"client_secret"`
+	EndDate        types.String `tfsdk:"end_date"`
+	LookbackWindow types.Int64  `tfsdk:"lookback_window"`
+	OrgID          types.Int64  `tfsdk:"org_id"`
+	StartDate      types.String `tfsdk:"start_date"`
 }

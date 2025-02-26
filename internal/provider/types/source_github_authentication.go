@@ -3,6 +3,6 @@
 package types
 
 type SourceGithubAuthentication struct {
-	OAuth               *OAuth                           `tfsdk:"o_auth" tfPlanOnly:"true"`
-	PersonalAccessToken *SourceGithubPersonalAccessToken `tfsdk:"personal_access_token" tfPlanOnly:"true"`
+	OAuth               *OAuth                           `queryParam:"inline" tfsdk:"o_auth" tfPlanOnly:"true"`
+	PersonalAccessToken *SourceGithubPersonalAccessToken `queryParam:"inline" tfsdk:"personal_access_token" tfPlanOnly:"true"`
 }

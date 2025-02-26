@@ -3,6 +3,6 @@
 package types
 
 type SourceRetentlyAuthenticationMechanism struct {
-	AuthenticateViaRetentlyOAuth *AuthenticateViaRetentlyOAuth `tfsdk:"authenticate_via_retently_o_auth" tfPlanOnly:"true"`
-	AuthenticateWithAPIToken     *AuthenticateWithAPIToken     `tfsdk:"authenticate_with_api_token" tfPlanOnly:"true"`
+	AuthenticateViaRetentlyOAuth *AuthenticateViaRetentlyOAuth `queryParam:"inline" tfsdk:"authenticate_via_retently_o_auth" tfPlanOnly:"true"`
+	AuthenticateWithAPIToken     *AuthenticateWithAPIToken     `queryParam:"inline" tfsdk:"authenticate_with_api_token" tfPlanOnly:"true"`
 }

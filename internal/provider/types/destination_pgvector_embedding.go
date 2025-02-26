@@ -3,9 +3,9 @@
 package types
 
 type DestinationPgvectorEmbedding struct {
-	AzureOpenAI      *DestinationPgvectorAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *DestinationPgvectorCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *DestinationPgvectorFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *DestinationPgvectorOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *DestinationPgvectorOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *DestinationPgvectorAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *DestinationPgvectorCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *DestinationPgvectorFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *DestinationPgvectorOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *DestinationPgvectorOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

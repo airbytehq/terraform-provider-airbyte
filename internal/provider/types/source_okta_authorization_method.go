@@ -3,7 +3,7 @@
 package types
 
 type SourceOktaAuthorizationMethod struct {
-	APIToken              *SourceOktaAPIToken    `tfsdk:"api_token" tfPlanOnly:"true"`
-	OAuth20WithPrivateKey *OAuth20WithPrivateKey `tfsdk:"o_auth20_with_private_key" tfPlanOnly:"true"`
-	OAuth20               *SourceOktaOAuth20     `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	APIToken              *SourceOktaAPIToken    `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	OAuth20WithPrivateKey *OAuth20WithPrivateKey `queryParam:"inline" tfsdk:"o_auth20_with_private_key" tfPlanOnly:"true"`
+	OAuth20               *SourceOktaOAuth20     `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

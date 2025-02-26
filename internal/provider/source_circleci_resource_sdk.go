@@ -3,6 +3,7 @@
 package provider
 
 import (
+	"encoding/json"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
@@ -31,23 +32,11 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciCreateRequest() *sha
 	var projectID string
 	projectID = r.Configuration.ProjectID.ValueString()
 
-	jobID := new(string)
-	if !r.Configuration.JobID.IsUnknown() && !r.Configuration.JobID.IsNull() {
-		*jobID = r.Configuration.JobID.ValueString()
-	} else {
-		jobID = nil
-	}
-	workflowID := new(string)
-	if !r.Configuration.WorkflowID.IsUnknown() && !r.Configuration.WorkflowID.IsNull() {
-		*workflowID = r.Configuration.WorkflowID.ValueString()
-	} else {
-		workflowID = nil
-	}
-	workflowName := new(string)
-	if !r.Configuration.WorkflowName.IsUnknown() && !r.Configuration.WorkflowName.IsNull() {
-		*workflowName = r.Configuration.WorkflowName.ValueString()
-	} else {
-		workflowName = nil
+	var workflowID []interface{} = []interface{}{}
+	for _, workflowIDItem := range r.Configuration.WorkflowID {
+		var workflowIDTmp interface{}
+		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
+		workflowID = append(workflowID, workflowIDTmp)
 	}
 	jobNumber := new(string)
 	if !r.Configuration.JobNumber.IsUnknown() && !r.Configuration.JobNumber.IsNull() {
@@ -56,14 +45,12 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciCreateRequest() *sha
 		jobNumber = nil
 	}
 	configuration := shared.SourceCircleci{
-		APIKey:       apiKey,
-		OrgID:        orgID,
-		StartDate:    startDate,
-		ProjectID:    projectID,
-		JobID:        jobID,
-		WorkflowID:   workflowID,
-		WorkflowName: workflowName,
-		JobNumber:    jobNumber,
+		APIKey:     apiKey,
+		OrgID:      orgID,
+		StartDate:  startDate,
+		ProjectID:  projectID,
+		WorkflowID: workflowID,
+		JobNumber:  jobNumber,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -109,23 +96,11 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciPutRequest() *shared
 	var projectID string
 	projectID = r.Configuration.ProjectID.ValueString()
 
-	jobID := new(string)
-	if !r.Configuration.JobID.IsUnknown() && !r.Configuration.JobID.IsNull() {
-		*jobID = r.Configuration.JobID.ValueString()
-	} else {
-		jobID = nil
-	}
-	workflowID := new(string)
-	if !r.Configuration.WorkflowID.IsUnknown() && !r.Configuration.WorkflowID.IsNull() {
-		*workflowID = r.Configuration.WorkflowID.ValueString()
-	} else {
-		workflowID = nil
-	}
-	workflowName := new(string)
-	if !r.Configuration.WorkflowName.IsUnknown() && !r.Configuration.WorkflowName.IsNull() {
-		*workflowName = r.Configuration.WorkflowName.ValueString()
-	} else {
-		workflowName = nil
+	var workflowID []interface{} = []interface{}{}
+	for _, workflowIDItem := range r.Configuration.WorkflowID {
+		var workflowIDTmp interface{}
+		_ = json.Unmarshal([]byte(workflowIDItem.ValueString()), &workflowIDTmp)
+		workflowID = append(workflowID, workflowIDTmp)
 	}
 	jobNumber := new(string)
 	if !r.Configuration.JobNumber.IsUnknown() && !r.Configuration.JobNumber.IsNull() {
@@ -134,14 +109,12 @@ func (r *SourceCircleciResourceModel) ToSharedSourceCircleciPutRequest() *shared
 		jobNumber = nil
 	}
 	configuration := shared.SourceCircleciUpdate{
-		APIKey:       apiKey,
-		OrgID:        orgID,
-		StartDate:    startDate,
-		ProjectID:    projectID,
-		JobID:        jobID,
-		WorkflowID:   workflowID,
-		WorkflowName: workflowName,
-		JobNumber:    jobNumber,
+		APIKey:     apiKey,
+		OrgID:      orgID,
+		StartDate:  startDate,
+		ProjectID:  projectID,
+		WorkflowID: workflowID,
+		JobNumber:  jobNumber,
 	}
 	out := shared.SourceCircleciPutRequest{
 		Name:          name,

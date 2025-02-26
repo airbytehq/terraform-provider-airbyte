@@ -1032,6 +1032,164 @@ func (o *SourceMicrosoftSharepointFileBasedStreamConfig) GetRecentNFilesToReadFo
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
+type SourceMicrosoftSharepointSchemasDeliveryType string
+
+const (
+	SourceMicrosoftSharepointSchemasDeliveryTypeUseFileTransfer SourceMicrosoftSharepointSchemasDeliveryType = "use_file_transfer"
+)
+
+func (e SourceMicrosoftSharepointSchemasDeliveryType) ToPointer() *SourceMicrosoftSharepointSchemasDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointSchemasDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_file_transfer":
+		*e = SourceMicrosoftSharepointSchemasDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointSchemasDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointCopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
+type SourceMicrosoftSharepointCopyRawFiles struct {
+	deliveryType *SourceMicrosoftSharepointSchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
+	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
+	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
+}
+
+func (s SourceMicrosoftSharepointCopyRawFiles) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointCopyRawFiles) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointCopyRawFiles) GetDeliveryType() *SourceMicrosoftSharepointSchemasDeliveryType {
+	return SourceMicrosoftSharepointSchemasDeliveryTypeUseFileTransfer.ToPointer()
+}
+
+func (o *SourceMicrosoftSharepointCopyRawFiles) GetPreserveDirectoryStructure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreserveDirectoryStructure
+}
+
+type SourceMicrosoftSharepointDeliveryType string
+
+const (
+	SourceMicrosoftSharepointDeliveryTypeUseRecordsTransfer SourceMicrosoftSharepointDeliveryType = "use_records_transfer"
+)
+
+func (e SourceMicrosoftSharepointDeliveryType) ToPointer() *SourceMicrosoftSharepointDeliveryType {
+	return &e
+}
+func (e *SourceMicrosoftSharepointDeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_records_transfer":
+		*e = SourceMicrosoftSharepointDeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftSharepointDeliveryType: %v", v)
+	}
+}
+
+// SourceMicrosoftSharepointReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
+type SourceMicrosoftSharepointReplicateRecords struct {
+	deliveryType *SourceMicrosoftSharepointDeliveryType `const:"use_records_transfer" json:"delivery_type"`
+}
+
+func (s SourceMicrosoftSharepointReplicateRecords) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMicrosoftSharepointReplicateRecords) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceMicrosoftSharepointReplicateRecords) GetDeliveryType() *SourceMicrosoftSharepointDeliveryType {
+	return SourceMicrosoftSharepointDeliveryTypeUseRecordsTransfer.ToPointer()
+}
+
+type SourceMicrosoftSharepointDeliveryMethodType string
+
+const (
+	SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointReplicateRecords SourceMicrosoftSharepointDeliveryMethodType = "source-microsoft-sharepoint_Replicate Records"
+	SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointCopyRawFiles     SourceMicrosoftSharepointDeliveryMethodType = "source-microsoft-sharepoint_Copy Raw Files"
+)
+
+type SourceMicrosoftSharepointDeliveryMethod struct {
+	SourceMicrosoftSharepointReplicateRecords *SourceMicrosoftSharepointReplicateRecords `queryParam:"inline"`
+	SourceMicrosoftSharepointCopyRawFiles     *SourceMicrosoftSharepointCopyRawFiles     `queryParam:"inline"`
+
+	Type SourceMicrosoftSharepointDeliveryMethodType
+}
+
+func CreateSourceMicrosoftSharepointDeliveryMethodSourceMicrosoftSharepointReplicateRecords(sourceMicrosoftSharepointReplicateRecords SourceMicrosoftSharepointReplicateRecords) SourceMicrosoftSharepointDeliveryMethod {
+	typ := SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointReplicateRecords
+
+	return SourceMicrosoftSharepointDeliveryMethod{
+		SourceMicrosoftSharepointReplicateRecords: &sourceMicrosoftSharepointReplicateRecords,
+		Type: typ,
+	}
+}
+
+func CreateSourceMicrosoftSharepointDeliveryMethodSourceMicrosoftSharepointCopyRawFiles(sourceMicrosoftSharepointCopyRawFiles SourceMicrosoftSharepointCopyRawFiles) SourceMicrosoftSharepointDeliveryMethod {
+	typ := SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointCopyRawFiles
+
+	return SourceMicrosoftSharepointDeliveryMethod{
+		SourceMicrosoftSharepointCopyRawFiles: &sourceMicrosoftSharepointCopyRawFiles,
+		Type:                                  typ,
+	}
+}
+
+func (u *SourceMicrosoftSharepointDeliveryMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceMicrosoftSharepointReplicateRecords SourceMicrosoftSharepointReplicateRecords = SourceMicrosoftSharepointReplicateRecords{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointReplicateRecords, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointReplicateRecords = &sourceMicrosoftSharepointReplicateRecords
+		u.Type = SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointReplicateRecords
+		return nil
+	}
+
+	var sourceMicrosoftSharepointCopyRawFiles SourceMicrosoftSharepointCopyRawFiles = SourceMicrosoftSharepointCopyRawFiles{}
+	if err := utils.UnmarshalJSON(data, &sourceMicrosoftSharepointCopyRawFiles, "", true, true); err == nil {
+		u.SourceMicrosoftSharepointCopyRawFiles = &sourceMicrosoftSharepointCopyRawFiles
+		u.Type = SourceMicrosoftSharepointDeliveryMethodTypeSourceMicrosoftSharepointCopyRawFiles
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftSharepointDeliveryMethod", string(data))
+}
+
+func (u SourceMicrosoftSharepointDeliveryMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceMicrosoftSharepointReplicateRecords != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointReplicateRecords, "", true)
+	}
+
+	if u.SourceMicrosoftSharepointCopyRawFiles != nil {
+		return utils.MarshalJSON(u.SourceMicrosoftSharepointCopyRawFiles, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceMicrosoftSharepointDeliveryMethod: all fields are null")
+}
+
 type SourceMicrosoftSharepointSchemasAuthType string
 
 const (
@@ -1315,7 +1473,8 @@ type SourceMicrosoftSharepoint struct {
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []SourceMicrosoftSharepointFileBasedStreamConfig `json:"streams"`
+	Streams        []SourceMicrosoftSharepointFileBasedStreamConfig `json:"streams"`
+	DeliveryMethod *SourceMicrosoftSharepointDeliveryMethod         `json:"delivery_method,omitempty"`
 	// Credentials for connecting to the One Drive API
 	Credentials SourceMicrosoftSharepointAuthentication `json:"credentials"`
 	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
@@ -1348,6 +1507,13 @@ func (o *SourceMicrosoftSharepoint) GetStreams() []SourceMicrosoftSharepointFile
 		return []SourceMicrosoftSharepointFileBasedStreamConfig{}
 	}
 	return o.Streams
+}
+
+func (o *SourceMicrosoftSharepoint) GetDeliveryMethod() *SourceMicrosoftSharepointDeliveryMethod {
+	if o == nil {
+		return nil
+	}
+	return o.DeliveryMethod
 }
 
 func (o *SourceMicrosoftSharepoint) GetCredentials() SourceMicrosoftSharepointAuthentication {

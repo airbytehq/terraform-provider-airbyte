@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleDriveAuthentication struct {
-	AuthenticateViaGoogleOAuth      *SourceGoogleDriveAuthenticateViaGoogleOAuth      `tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
-	ServiceAccountKeyAuthentication *SourceGoogleDriveServiceAccountKeyAuthentication `tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaGoogleOAuth      *SourceGoogleDriveAuthenticateViaGoogleOAuth      `queryParam:"inline" tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
+	ServiceAccountKeyAuthentication *SourceGoogleDriveServiceAccountKeyAuthentication `queryParam:"inline" tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
 }

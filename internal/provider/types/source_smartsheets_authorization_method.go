@@ -3,6 +3,6 @@
 package types
 
 type SourceSmartsheetsAuthorizationMethod struct {
-	APIAccessToken *APIAccessToken           `tfsdk:"api_access_token" tfPlanOnly:"true"`
-	OAuth20        *SourceSmartsheetsOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	APIAccessToken *APIAccessToken           `queryParam:"inline" tfsdk:"api_access_token" tfPlanOnly:"true"`
+	OAuth20        *SourceSmartsheetsOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

@@ -6,9 +6,9 @@ import (
 	"context"
 	"fmt"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
-	custom_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_setplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/setplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
@@ -76,12 +76,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
-					"streams": schema.ListNestedAttribute{
+					"streams": schema.SetNestedAttribute{
 						Computed: true,
 						Optional: true,
-						PlanModifiers: []planmodifier.List{
-							custom_listplanmodifier.StreamConfigurationModifier(),
-							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+						PlanModifiers: []planmodifier.Set{
+							speakeasy_setplanmodifier.SuppressDiff(speakeasy_setplanmodifier.ExplicitSuppress),
 						},
 						NestedObject: schema.NestedAttributeObject{
 							Validators: []validator.Object{
@@ -471,7 +470,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									PlanModifiers: []planmodifier.List{
 										speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
 									},
-									ElementType: types.ListType {
+									ElementType: types.ListType{
 										ElemType: types.StringType,
 									},
 									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,

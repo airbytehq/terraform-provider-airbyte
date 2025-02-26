@@ -26,16 +26,9 @@ func (r *SourcePipedriveResourceModel) ToSharedSourcePipedriveCreateRequest() *s
 	var replicationStartDate string
 	replicationStartDate = r.Configuration.ReplicationStartDate.ValueString()
 
-	numWorkers := new(int64)
-	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
-		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
-	} else {
-		numWorkers = nil
-	}
 	configuration := shared.SourcePipedrive{
 		APIToken:             apiToken,
 		ReplicationStartDate: replicationStartDate,
-		NumWorkers:           numWorkers,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -77,16 +70,9 @@ func (r *SourcePipedriveResourceModel) ToSharedSourcePipedrivePutRequest() *shar
 	var replicationStartDate string
 	replicationStartDate = r.Configuration.ReplicationStartDate.ValueString()
 
-	numWorkers := new(int64)
-	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
-		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
-	} else {
-		numWorkers = nil
-	}
 	configuration := shared.SourcePipedriveUpdate{
 		APIToken:             apiToken,
 		ReplicationStartDate: replicationStartDate,
-		NumWorkers:           numWorkers,
 	}
 	out := shared.SourcePipedrivePutRequest{
 		Name:          name,

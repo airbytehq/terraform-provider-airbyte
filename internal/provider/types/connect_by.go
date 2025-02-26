@@ -3,6 +3,6 @@
 package types
 
 type ConnectBy struct {
-	ServiceName *ServiceName `tfsdk:"service_name" tfPlanOnly:"true"`
-	SystemIDSID *SystemIDSID `tfsdk:"system_idsid" tfPlanOnly:"true"`
+	ServiceName *ServiceName `queryParam:"inline" tfsdk:"service_name" tfPlanOnly:"true"`
+	SystemIDSID *SystemIDSID `queryParam:"inline" tfsdk:"system_idsid" tfPlanOnly:"true"`
 }

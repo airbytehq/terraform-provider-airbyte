@@ -3,7 +3,7 @@
 package types
 
 type LoggingConfiguration struct {
-	EveryNThEntry  *EveryNThEntry  `tfsdk:"every_n_th_entry" tfPlanOnly:"true"`
-	FirstNEntries  *FirstNEntries  `tfsdk:"first_n_entries" tfPlanOnly:"true"`
-	RandomSampling *RandomSampling `tfsdk:"random_sampling" tfPlanOnly:"true"`
+	EveryNThEntry  *EveryNThEntry  `queryParam:"inline" tfsdk:"every_n_th_entry" tfPlanOnly:"true"`
+	FirstNEntries  *FirstNEntries  `queryParam:"inline" tfsdk:"first_n_entries" tfPlanOnly:"true"`
+	RandomSampling *RandomSampling `queryParam:"inline" tfsdk:"random_sampling" tfPlanOnly:"true"`
 }

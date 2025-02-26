@@ -3,6 +3,6 @@
 package types
 
 type SourceS3DeliveryMethod struct {
-	CopyRawFiles     *SourceS3CopyRawFiles     `tfsdk:"copy_raw_files" tfPlanOnly:"true"`
-	ReplicateRecords *SourceS3ReplicateRecords `tfsdk:"replicate_records" tfPlanOnly:"true"`
+	CopyRawFiles     *SourceS3CopyRawFiles     `queryParam:"inline" tfsdk:"copy_raw_files" tfPlanOnly:"true"`
+	ReplicateRecords *SourceS3ReplicateRecords `queryParam:"inline" tfsdk:"replicate_records" tfPlanOnly:"true"`
 }

@@ -3,5 +3,5 @@
 package types
 
 type SourceS3Processing struct {
-	Local *SourceS3Local `tfsdk:"local" tfPlanOnly:"true"`
+	Local *SourceS3Local `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
 }

@@ -3,7 +3,7 @@
 package types
 
 type SourceOracleEncryption struct {
-	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE    `tfsdk:"native_network_encryption_nne" tfPlanOnly:"true"`
-	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `tfsdk:"tls_encrypted_verify_certificate" tfPlanOnly:"true"`
-	Unencrypted                   *SourceOracleUnencrypted       `tfsdk:"unencrypted" tfPlanOnly:"true"`
+	NativeNetworkEncryptionNNE    *NativeNetworkEncryptionNNE    `queryParam:"inline" tfsdk:"native_network_encryption_nne" tfPlanOnly:"true"`
+	TLSEncryptedVerifyCertificate *TLSEncryptedVerifyCertificate `queryParam:"inline" tfsdk:"tls_encrypted_verify_certificate" tfPlanOnly:"true"`
+	Unencrypted                   *SourceOracleUnencrypted       `queryParam:"inline" tfsdk:"unencrypted" tfPlanOnly:"true"`
 }

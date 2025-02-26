@@ -3,6 +3,6 @@
 package types
 
 type SourceZendeskSupportAuthentication struct {
-	APIToken *SourceZendeskSupportAPIToken `tfsdk:"api_token" tfPlanOnly:"true"`
-	OAuth20  *SourceZendeskSupportOAuth20  `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	APIToken *SourceZendeskSupportAPIToken `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	OAuth20  *SourceZendeskSupportOAuth20  `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

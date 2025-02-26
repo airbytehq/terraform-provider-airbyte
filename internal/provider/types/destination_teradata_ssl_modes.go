@@ -3,10 +3,10 @@
 package types
 
 type DestinationTeradataSSLModes struct {
-	Allow      *DestinationTeradataAllow      `tfsdk:"allow" tfPlanOnly:"true"`
-	Disable    *DestinationTeradataDisable    `tfsdk:"disable" tfPlanOnly:"true"`
-	Prefer     *DestinationTeradataPrefer     `tfsdk:"prefer" tfPlanOnly:"true"`
-	Require    *DestinationTeradataRequire    `tfsdk:"require" tfPlanOnly:"true"`
-	VerifyCa   *DestinationTeradataVerifyCa   `tfsdk:"verify_ca" tfPlanOnly:"true"`
-	VerifyFull *DestinationTeradataVerifyFull `tfsdk:"verify_full" tfPlanOnly:"true"`
+	Allow      *DestinationTeradataAllow      `queryParam:"inline" tfsdk:"allow" tfPlanOnly:"true"`
+	Disable    *DestinationTeradataDisable    `queryParam:"inline" tfsdk:"disable" tfPlanOnly:"true"`
+	Prefer     *DestinationTeradataPrefer     `queryParam:"inline" tfsdk:"prefer" tfPlanOnly:"true"`
+	Require    *DestinationTeradataRequire    `queryParam:"inline" tfsdk:"require" tfPlanOnly:"true"`
+	VerifyCa   *DestinationTeradataVerifyCa   `queryParam:"inline" tfsdk:"verify_ca" tfPlanOnly:"true"`
+	VerifyFull *DestinationTeradataVerifyFull `queryParam:"inline" tfsdk:"verify_full" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceSftpBulkProcessing struct {
-	Local  *SourceSftpBulkLocal  `tfsdk:"local" tfPlanOnly:"true"`
-	ViaAPI *SourceSftpBulkViaAPI `tfsdk:"via_api" tfPlanOnly:"true"`
+	Local  *SourceSftpBulkLocal  `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
+	ViaAPI *SourceSftpBulkViaAPI `queryParam:"inline" tfsdk:"via_api" tfPlanOnly:"true"`
 }

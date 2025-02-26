@@ -3,5 +3,5 @@
 package types
 
 type SourceRdStationMarketingAuthenticationType struct {
-	SignInViaRDStationOAuth *SignInViaRDStationOAuth `tfsdk:"sign_in_via_rd_station_o_auth" tfPlanOnly:"true"`
+	SignInViaRDStationOAuth *SignInViaRDStationOAuth `queryParam:"inline" tfsdk:"sign_in_via_rd_station_o_auth" tfPlanOnly:"true"`
 }

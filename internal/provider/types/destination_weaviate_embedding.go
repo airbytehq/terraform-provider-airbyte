@@ -3,11 +3,11 @@
 package types
 
 type DestinationWeaviateEmbedding struct {
-	AzureOpenAI         *DestinationWeaviateAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere              *DestinationWeaviateCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake                *DestinationWeaviateFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	FromField           *FromField                           `tfsdk:"from_field" tfPlanOnly:"true"`
-	NoExternalEmbedding *NoExternalEmbedding                 `tfsdk:"no_external_embedding" tfPlanOnly:"true"`
-	OpenAI              *DestinationWeaviateOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible    *DestinationWeaviateOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI         *DestinationWeaviateAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere              *DestinationWeaviateCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake                *DestinationWeaviateFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	FromField           *FromField                           `queryParam:"inline" tfsdk:"from_field" tfPlanOnly:"true"`
+	NoExternalEmbedding *NoExternalEmbedding                 `queryParam:"inline" tfsdk:"no_external_embedding" tfPlanOnly:"true"`
+	OpenAI              *DestinationWeaviateOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible    *DestinationWeaviateOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

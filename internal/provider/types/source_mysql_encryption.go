@@ -3,8 +3,8 @@
 package types
 
 type SourceMysqlEncryption struct {
-	Preferred      *Preferred      `tfsdk:"preferred" tfPlanOnly:"true"`
-	Required       *Required       `tfsdk:"required" tfPlanOnly:"true"`
-	VerifyCa       *VerifyCa       `tfsdk:"verify_ca" tfPlanOnly:"true"`
-	VerifyIdentity *VerifyIdentity `tfsdk:"verify_identity" tfPlanOnly:"true"`
+	Preferred      *Preferred      `queryParam:"inline" tfsdk:"preferred" tfPlanOnly:"true"`
+	Required       *Required       `queryParam:"inline" tfsdk:"required" tfPlanOnly:"true"`
+	VerifyCa       *VerifyCa       `queryParam:"inline" tfsdk:"verify_ca" tfPlanOnly:"true"`
+	VerifyIdentity *VerifyIdentity `queryParam:"inline" tfsdk:"verify_identity" tfPlanOnly:"true"`
 }

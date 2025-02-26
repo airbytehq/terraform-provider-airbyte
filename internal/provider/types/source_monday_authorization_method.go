@@ -3,6 +3,6 @@
 package types
 
 type SourceMondayAuthorizationMethod struct {
-	APIToken *APIToken            `tfsdk:"api_token" tfPlanOnly:"true"`
-	OAuth20  *SourceMondayOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	APIToken *APIToken            `queryParam:"inline" tfsdk:"api_token" tfPlanOnly:"true"`
+	OAuth20  *SourceMondayOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

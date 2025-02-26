@@ -3,5 +3,5 @@
 package types
 
 type SourceMicrosoftOnedriveProcessing struct {
-	Local *SourceMicrosoftOnedriveLocal `tfsdk:"local" tfPlanOnly:"true"`
+	Local *SourceMicrosoftOnedriveLocal `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
 }

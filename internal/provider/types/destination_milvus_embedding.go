@@ -3,9 +3,9 @@
 package types
 
 type DestinationMilvusEmbedding struct {
-	AzureOpenAI      *DestinationMilvusAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *DestinationMilvusCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *DestinationMilvusFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *DestinationMilvusOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *DestinationMilvusOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *DestinationMilvusAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *DestinationMilvusCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *DestinationMilvusFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *DestinationMilvusOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *DestinationMilvusOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

@@ -3,10 +3,10 @@
 package types
 
 type SourceGoogleDriveFormat struct {
-	AvroFormat                 *SourceGoogleDriveAvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceGoogleDriveCSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
-	ExcelFormat                *SourceGoogleDriveExcelFormat                `tfsdk:"excel_format" tfPlanOnly:"true"`
-	JsonlFormat                *SourceGoogleDriveJsonlFormat                `tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat              *SourceGoogleDriveParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
-	UnstructuredDocumentFormat *SourceGoogleDriveUnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
+	AvroFormat                 *SourceGoogleDriveAvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *SourceGoogleDriveCSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	ExcelFormat                *SourceGoogleDriveExcelFormat                `queryParam:"inline" tfsdk:"excel_format" tfPlanOnly:"true"`
+	JsonlFormat                *SourceGoogleDriveJsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *SourceGoogleDriveParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *SourceGoogleDriveUnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

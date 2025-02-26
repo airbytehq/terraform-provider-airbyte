@@ -3,6 +3,6 @@
 package types
 
 type DestinationFireboltLoadingMethod struct {
-	ExternalTableViaS3 *ExternalTableViaS3 `tfsdk:"external_table_via_s3" tfPlanOnly:"true"`
-	SQLInserts         *SQLInserts         `tfsdk:"sql_inserts" tfPlanOnly:"true"`
+	ExternalTableViaS3 *ExternalTableViaS3 `queryParam:"inline" tfsdk:"external_table_via_s3" tfPlanOnly:"true"`
+	SQLInserts         *SQLInserts         `queryParam:"inline" tfsdk:"sql_inserts" tfPlanOnly:"true"`
 }

@@ -3,8 +3,8 @@
 package types
 
 type TestDestination struct {
-	Failing   *Failing   `tfsdk:"failing" tfPlanOnly:"true"`
-	Logging   *Logging   `tfsdk:"logging" tfPlanOnly:"true"`
-	Silent    *Silent    `tfsdk:"silent" tfPlanOnly:"true"`
-	Throttled *Throttled `tfsdk:"throttled" tfPlanOnly:"true"`
+	Failing   *Failing   `queryParam:"inline" tfsdk:"failing" tfPlanOnly:"true"`
+	Logging   *Logging   `queryParam:"inline" tfsdk:"logging" tfPlanOnly:"true"`
+	Silent    *Silent    `queryParam:"inline" tfsdk:"silent" tfPlanOnly:"true"`
+	Throttled *Throttled `queryParam:"inline" tfsdk:"throttled" tfPlanOnly:"true"`
 }

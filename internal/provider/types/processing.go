@@ -3,5 +3,5 @@
 package types
 
 type Processing struct {
-	Local *Local `tfsdk:"local" tfPlanOnly:"true"`
+	Local *Local `queryParam:"inline" tfsdk:"local" tfPlanOnly:"true"`
 }

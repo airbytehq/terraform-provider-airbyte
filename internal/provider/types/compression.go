@@ -3,6 +3,6 @@
 package types
 
 type Compression struct {
-	Gzip          *Gzip                        `tfsdk:"gzip" tfPlanOnly:"true"`
-	NoCompression *DestinationGcsNoCompression `tfsdk:"no_compression" tfPlanOnly:"true"`
+	Gzip          *Gzip                        `queryParam:"inline" tfsdk:"gzip" tfPlanOnly:"true"`
+	NoCompression *DestinationGcsNoCompression `queryParam:"inline" tfsdk:"no_compression" tfPlanOnly:"true"`
 }

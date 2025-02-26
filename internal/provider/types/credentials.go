@@ -3,6 +3,6 @@
 package types
 
 type Credentials struct {
-	AuthenticateViaAccessKeys *AuthenticateViaAccessKeys `tfsdk:"authenticate_via_access_keys" tfPlanOnly:"true"`
-	RoleBasedAuthentication   *RoleBasedAuthentication   `tfsdk:"role_based_authentication" tfPlanOnly:"true"`
+	AuthenticateViaAccessKeys *AuthenticateViaAccessKeys `queryParam:"inline" tfsdk:"authenticate_via_access_keys" tfPlanOnly:"true"`
+	RoleBasedAuthentication   *RoleBasedAuthentication   `queryParam:"inline" tfsdk:"role_based_authentication" tfPlanOnly:"true"`
 }

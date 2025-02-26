@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleSheetsAuthentication struct {
-	AuthenticateViaGoogleOAuth      *SourceGoogleSheetsAuthenticateViaGoogleOAuth      `tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
-	ServiceAccountKeyAuthentication *SourceGoogleSheetsServiceAccountKeyAuthentication `tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaGoogleOAuth      *SourceGoogleSheetsAuthenticateViaGoogleOAuth      `queryParam:"inline" tfsdk:"authenticate_via_google_o_auth" tfPlanOnly:"true"`
+	ServiceAccountKeyAuthentication *SourceGoogleSheetsServiceAccountKeyAuthentication `queryParam:"inline" tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
 }

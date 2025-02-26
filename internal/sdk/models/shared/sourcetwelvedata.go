@@ -8,27 +8,27 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// Interval - Between two consecutive points in time series Supports: 1min, 5min, 15min, 30min, 45min, 1h, 2h, 4h, 1day, 1week, 1month
-type Interval string
+// SourceTwelveDataInterval - Between two consecutive points in time series Supports: 1min, 5min, 15min, 30min, 45min, 1h, 2h, 4h, 1day, 1week, 1month
+type SourceTwelveDataInterval string
 
 const (
-	IntervalOnemin       Interval = "1min"
-	IntervalFivemin      Interval = "5min"
-	IntervalFifteenmin   Interval = "15min"
-	IntervalThirtymin    Interval = "30min"
-	IntervalFortyFivemin Interval = "45min"
-	IntervalOneh         Interval = "1h"
-	IntervalTwoh         Interval = "2h"
-	IntervalFourh        Interval = "4h"
-	IntervalOneday       Interval = "1day"
-	IntervalOneweek      Interval = "1week"
-	IntervalOnemonth     Interval = "1month"
+	SourceTwelveDataIntervalOnemin       SourceTwelveDataInterval = "1min"
+	SourceTwelveDataIntervalFivemin      SourceTwelveDataInterval = "5min"
+	SourceTwelveDataIntervalFifteenmin   SourceTwelveDataInterval = "15min"
+	SourceTwelveDataIntervalThirtymin    SourceTwelveDataInterval = "30min"
+	SourceTwelveDataIntervalFortyFivemin SourceTwelveDataInterval = "45min"
+	SourceTwelveDataIntervalOneh         SourceTwelveDataInterval = "1h"
+	SourceTwelveDataIntervalTwoh         SourceTwelveDataInterval = "2h"
+	SourceTwelveDataIntervalFourh        SourceTwelveDataInterval = "4h"
+	SourceTwelveDataIntervalOneday       SourceTwelveDataInterval = "1day"
+	SourceTwelveDataIntervalOneweek      SourceTwelveDataInterval = "1week"
+	SourceTwelveDataIntervalOnemonth     SourceTwelveDataInterval = "1month"
 )
 
-func (e Interval) ToPointer() *Interval {
+func (e SourceTwelveDataInterval) ToPointer() *SourceTwelveDataInterval {
 	return &e
 }
-func (e *Interval) UnmarshalJSON(data []byte) error {
+func (e *SourceTwelveDataInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,10 +55,10 @@ func (e *Interval) UnmarshalJSON(data []byte) error {
 	case "1week":
 		fallthrough
 	case "1month":
-		*e = Interval(v)
+		*e = SourceTwelveDataInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Interval: %v", v)
+		return fmt.Errorf("invalid value for SourceTwelveDataInterval: %v", v)
 	}
 }
 
@@ -94,8 +94,8 @@ type SourceTwelveData struct {
 	// Ticker of the instrument
 	Symbol *string `json:"symbol,omitempty"`
 	// Between two consecutive points in time series Supports: 1min, 5min, 15min, 30min, 45min, 1h, 2h, 4h, 1day, 1week, 1month
-	Interval   *Interval  `default:"1day" json:"interval"`
-	sourceType TwelveData `const:"twelve-data" json:"sourceType"`
+	Interval   *SourceTwelveDataInterval `default:"1day" json:"interval"`
+	sourceType TwelveData                `const:"twelve-data" json:"sourceType"`
 }
 
 func (s SourceTwelveData) MarshalJSON() ([]byte, error) {
@@ -137,7 +137,7 @@ func (o *SourceTwelveData) GetSymbol() *string {
 	return o.Symbol
 }
 
-func (o *SourceTwelveData) GetInterval() *Interval {
+func (o *SourceTwelveData) GetInterval() *SourceTwelveDataInterval {
 	if o == nil {
 		return nil
 	}

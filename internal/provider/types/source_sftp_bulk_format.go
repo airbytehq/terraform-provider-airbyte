@@ -3,10 +3,10 @@
 package types
 
 type SourceSftpBulkFormat struct {
-	AvroFormat                 *SourceSftpBulkAvroFormat                 `tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                  *SourceSftpBulkCSVFormat                  `tfsdk:"csv_format" tfPlanOnly:"true"`
-	ExcelFormat                *SourceSftpBulkExcelFormat                `tfsdk:"excel_format" tfPlanOnly:"true"`
-	JsonlFormat                *SourceSftpBulkJsonlFormat                `tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat              *SourceSftpBulkParquetFormat              `tfsdk:"parquet_format" tfPlanOnly:"true"`
-	UnstructuredDocumentFormat *SourceSftpBulkUnstructuredDocumentFormat `tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
+	AvroFormat                 *SourceSftpBulkAvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *SourceSftpBulkCSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	ExcelFormat                *SourceSftpBulkExcelFormat                `queryParam:"inline" tfsdk:"excel_format" tfPlanOnly:"true"`
+	JsonlFormat                *SourceSftpBulkJsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *SourceSftpBulkParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *SourceSftpBulkUnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

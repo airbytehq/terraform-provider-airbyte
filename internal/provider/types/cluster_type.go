@@ -3,6 +3,6 @@
 package types
 
 type ClusterType struct {
-	MongoDBAtlasReplicaSet *MongoDBAtlasReplicaSet `tfsdk:"mongo_db_atlas_replica_set" tfPlanOnly:"true"`
-	SelfManagedReplicaSet  *SelfManagedReplicaSet  `tfsdk:"self_managed_replica_set" tfPlanOnly:"true"`
+	MongoDBAtlasReplicaSet *MongoDBAtlasReplicaSet `queryParam:"inline" tfsdk:"mongo_db_atlas_replica_set" tfPlanOnly:"true"`
+	SelfManagedReplicaSet  *SelfManagedReplicaSet  `queryParam:"inline" tfsdk:"self_managed_replica_set" tfPlanOnly:"true"`
 }

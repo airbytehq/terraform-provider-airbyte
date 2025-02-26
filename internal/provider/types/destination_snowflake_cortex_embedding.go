@@ -3,9 +3,9 @@
 package types
 
 type DestinationSnowflakeCortexEmbedding struct {
-	AzureOpenAI      *DestinationSnowflakeCortexAzureOpenAI      `tfsdk:"azure_open_ai" tfPlanOnly:"true"`
-	Cohere           *DestinationSnowflakeCortexCohere           `tfsdk:"cohere" tfPlanOnly:"true"`
-	Fake             *DestinationSnowflakeCortexFake             `tfsdk:"fake" tfPlanOnly:"true"`
-	OpenAI           *DestinationSnowflakeCortexOpenAI           `tfsdk:"open_ai" tfPlanOnly:"true"`
-	OpenAICompatible *DestinationSnowflakeCortexOpenAICompatible `tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
+	AzureOpenAI      *DestinationSnowflakeCortexAzureOpenAI      `queryParam:"inline" tfsdk:"azure_open_ai" tfPlanOnly:"true"`
+	Cohere           *DestinationSnowflakeCortexCohere           `queryParam:"inline" tfsdk:"cohere" tfPlanOnly:"true"`
+	Fake             *DestinationSnowflakeCortexFake             `queryParam:"inline" tfsdk:"fake" tfPlanOnly:"true"`
+	OpenAI           *DestinationSnowflakeCortexOpenAI           `queryParam:"inline" tfsdk:"open_ai" tfPlanOnly:"true"`
+	OpenAICompatible *DestinationSnowflakeCortexOpenAICompatible `queryParam:"inline" tfsdk:"open_ai_compatible" tfPlanOnly:"true"`
 }

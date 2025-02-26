@@ -3,6 +3,6 @@
 package types
 
 type OutputFormat struct {
-	CSVCommaSeparatedValues       *CSVCommaSeparatedValues                                  `tfsdk:"csv_comma_separated_values" tfPlanOnly:"true"`
-	JSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
+	CSVCommaSeparatedValues       *CSVCommaSeparatedValues                                  `queryParam:"inline" tfsdk:"csv_comma_separated_values" tfPlanOnly:"true"`
+	JSONLinesNewlineDelimitedJSON *DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON `queryParam:"inline" tfsdk:"json_lines_newline_delimited_json" tfPlanOnly:"true"`
 }

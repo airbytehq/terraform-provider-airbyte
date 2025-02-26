@@ -3,6 +3,6 @@
 package types
 
 type SourceGoogleAnalyticsDataAPICredentials struct {
-	AuthenticateViaGoogleOauth      *SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth      `tfsdk:"authenticate_via_google_oauth" tfPlanOnly:"true"`
-	ServiceAccountKeyAuthentication *SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication `tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
+	AuthenticateViaGoogleOauth      *SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth      `queryParam:"inline" tfsdk:"authenticate_via_google_oauth" tfPlanOnly:"true"`
+	ServiceAccountKeyAuthentication *SourceGoogleAnalyticsDataAPIServiceAccountKeyAuthentication `queryParam:"inline" tfsdk:"service_account_key_authentication" tfPlanOnly:"true"`
 }

@@ -3,6 +3,6 @@
 package types
 
 type SourceDriftAuthorizationMethod struct {
-	AccessToken *AccessToken        `tfsdk:"access_token" tfPlanOnly:"true"`
-	OAuth20     *SourceDriftOAuth20 `tfsdk:"o_auth20" tfPlanOnly:"true"`
+	AccessToken *AccessToken        `queryParam:"inline" tfsdk:"access_token" tfPlanOnly:"true"`
+	OAuth20     *SourceDriftOAuth20 `queryParam:"inline" tfsdk:"o_auth20" tfPlanOnly:"true"`
 }

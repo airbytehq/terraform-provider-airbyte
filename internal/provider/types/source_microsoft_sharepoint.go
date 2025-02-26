@@ -5,9 +5,10 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMicrosoftSharepoint struct {
-	Credentials SourceMicrosoftSharepointAuthentication          `tfsdk:"credentials"`
-	FolderPath  types.String                                     `tfsdk:"folder_path"`
-	SearchScope types.String                                     `tfsdk:"search_scope"`
-	StartDate   types.String                                     `tfsdk:"start_date"`
-	Streams     []SourceMicrosoftSharepointFileBasedStreamConfig `tfsdk:"streams"`
+	Credentials    SourceMicrosoftSharepointAuthentication          `tfsdk:"credentials"`
+	DeliveryMethod *SourceMicrosoftSharepointDeliveryMethod         `tfsdk:"delivery_method"`
+	FolderPath     types.String                                     `tfsdk:"folder_path"`
+	SearchScope    types.String                                     `tfsdk:"search_scope"`
+	StartDate      types.String                                     `tfsdk:"start_date"`
+	Streams        []SourceMicrosoftSharepointFileBasedStreamConfig `tfsdk:"streams"`
 }

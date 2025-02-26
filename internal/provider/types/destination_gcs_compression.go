@@ -3,6 +3,6 @@
 package types
 
 type DestinationGcsCompression struct {
-	Gzip          *DestinationGcsGZIP                 `tfsdk:"gzip" tfPlanOnly:"true"`
-	NoCompression *DestinationGcsSchemasNoCompression `tfsdk:"no_compression" tfPlanOnly:"true"`
+	Gzip          *DestinationGcsGZIP                 `queryParam:"inline" tfsdk:"gzip" tfPlanOnly:"true"`
+	NoCompression *DestinationGcsSchemasNoCompression `queryParam:"inline" tfsdk:"no_compression" tfPlanOnly:"true"`
 }

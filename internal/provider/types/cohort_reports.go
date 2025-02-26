@@ -3,6 +3,6 @@
 package types
 
 type CohortReports struct {
-	Disabled *SourceGoogleAnalyticsDataAPIDisabled                         `tfsdk:"disabled" tfPlanOnly:"true"`
-	Enabled  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled `tfsdk:"enabled" tfPlanOnly:"true"`
+	Disabled *SourceGoogleAnalyticsDataAPIDisabled                         `queryParam:"inline" tfsdk:"disabled" tfPlanOnly:"true"`
+	Enabled  *SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled `queryParam:"inline" tfsdk:"enabled" tfPlanOnly:"true"`
 }
