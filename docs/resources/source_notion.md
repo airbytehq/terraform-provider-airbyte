@@ -19,11 +19,6 @@ resource "airbyte_source_notion" "my_source_notion" {
       access_token = {
         token = "...my_token..."
       }
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-      }
     }
     start_date = "2020-11-16T00:00:00.000Z"
   }

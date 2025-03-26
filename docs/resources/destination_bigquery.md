@@ -24,17 +24,6 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
       batched_standard_inserts = {
         # ...
       }
-      gcs_staging = {
-        credential = {
-          hmac_key = {
-            hmac_key_access_id = "1234567890abcdefghij1234"
-            hmac_key_secret    = "1234567890abcdefghij1234567890ABCDEFGHIJ"
-          }
-        }
-        gcs_bucket_name          = "airbyte_sync"
-        gcs_bucket_path          = "data_sync/test"
-        keep_files_in_gcs_bucket = "Delete all tmp files from GCS"
-      }
     }
     project_id              = "...my_project_id..."
     raw_data_dataset        = "...my_raw_data_dataset..."

@@ -16,10 +16,6 @@ SourceGoogleDirectory Resource
 resource "airbyte_source_google_directory" "my_source_googledirectory" {
   configuration = {
     credentials = {
-      service_account_key = {
-        credentials_json = "...my_credentials_json..."
-        email            = "...my_email..."
-      }
       sign_in_via_google_o_auth = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."

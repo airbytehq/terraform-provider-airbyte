@@ -16,19 +16,10 @@ SourceOkta Resource
 resource "airbyte_source_okta" "my_source_okta" {
   configuration = {
     credentials = {
-      api_token = {
-        api_token = "...my_api_token..."
-      }
       o_auth20 = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
-      }
-      o_auth20_with_private_key = {
-        client_id   = "...my_client_id..."
-        key_id      = "...my_key_id..."
-        private_key = "...my_private_key..."
-        scope       = "...my_scope..."
       }
     }
     domain     = "...my_domain..."

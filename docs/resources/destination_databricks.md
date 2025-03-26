@@ -17,10 +17,6 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
     accept_terms = false
     authentication = {
-      o_auth2_recommended = {
-        client_id = "...my_client_id..."
-        secret    = "...my_secret..."
-      }
       personal_access_token = {
         personal_access_token = "...my_personal_access_token..."
       }

@@ -16,18 +16,11 @@ DestinationSnowflake Resource
 resource "airbyte_destination_snowflake" "my_destination_snowflake" {
   configuration = {
     credentials = {
-      key_pair_authentication = {
-        private_key          = "...my_private_key..."
-        private_key_password = "...my_private_key_password..."
-      }
       o_auth20 = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
-      }
-      username_and_password = {
-        password = "...my_password..."
       }
     }
     database              = "AIRBYTE_DATABASE"

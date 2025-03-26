@@ -16,13 +16,6 @@ DestinationElasticsearch Resource
 resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
   configuration = {
     authentication_method = {
-      api_key_secret = {
-        api_key_id     = "...my_api_key_id..."
-        api_key_secret = "...my_api_key_secret..."
-      }
-      none = {
-        # ...
-      }
       username_password = {
         password = "...my_password..."
         username = "...my_username..."
@@ -33,18 +26,6 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     tunnel_method = {
       no_tunnel = {
         # ...
-      }
-      password_authentication = {
-        tunnel_host          = "...my_tunnel_host..."
-        tunnel_port          = 22
-        tunnel_user          = "...my_tunnel_user..."
-        tunnel_user_password = "...my_tunnel_user_password..."
-      }
-      ssh_key_authentication = {
-        ssh_key     = "...my_ssh_key..."
-        tunnel_host = "...my_tunnel_host..."
-        tunnel_port = 22
-        tunnel_user = "...my_tunnel_user..."
       }
     }
     upsert = false

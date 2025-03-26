@@ -23,16 +23,10 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         client_secret = "...my_client_secret..."
         refresh_token = "...my_refresh_token..."
       }
-      service_account_key_authentication = {
-        credentials_json = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
-      }
     }
     custom_reports_array = [
       {
         cohort_spec = {
-          disabled = {
-            # ...
-          }
           enabled = {
             cohort_report_settings = {
               accumulate = true
@@ -55,99 +49,9 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
           }
         }
         dimension_filter = {
-          and_group = {
-            expressions = [
-              {
-                field_name = "...my_field_name..."
-                filter = {
-                  between_filter = {
-                    from_value = {
-                      double_value = {
-                        value = 6.4
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                    to_value = {
-                      double_value = {
-                        value = 2.05
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  in_list_filter = {
-                    case_sensitive = false
-                    values = [
-                      "..."
-                    ]
-                  }
-                  numeric_filter = {
-                    operation = [
-                      "EQUAL"
-                    ]
-                    value = {
-                      double_value = {
-                        value = 9.42
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  string_filter = {
-                    case_sensitive = true
-                    match_type = [
-                      "ENDS_WITH"
-                    ]
-                    value = "...my_value..."
-                  }
-                }
-              }
-            ]
-          }
           filter = {
             field_name = "...my_field_name..."
             filter = {
-              between_filter = {
-                from_value = {
-                  double_value = {
-                    value = 3.58
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-                to_value = {
-                  double_value = {
-                    value = 2.3
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-              }
-              in_list_filter = {
-                case_sensitive = false
-                values = [
-                  "..."
-                ]
-              }
-              numeric_filter = {
-                operation = [
-                  "LESS_THAN"
-                ]
-                value = {
-                  double_value = {
-                    value = 4.2
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-              }
               string_filter = {
                 case_sensitive = false
                 match_type = [
@@ -156,110 +60,6 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                 value = "...my_value..."
               }
             }
-          }
-          not_expression = {
-            expression = {
-              field_name = "...my_field_name..."
-              filter = {
-                between_filter = {
-                  from_value = {
-                    double_value = {
-                      value = 4.38
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                  to_value = {
-                    double_value = {
-                      value = 6.08
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                }
-                in_list_filter = {
-                  case_sensitive = false
-                  values = [
-                    "..."
-                  ]
-                }
-                numeric_filter = {
-                  operation = [
-                    "LESS_THAN_OR_EQUAL"
-                  ]
-                  value = {
-                    double_value = {
-                      value = 6.25
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                }
-                string_filter = {
-                  case_sensitive = true
-                  match_type = [
-                    "EXACT"
-                  ]
-                  value = "...my_value..."
-                }
-              }
-            }
-          }
-          or_group = {
-            expressions = [
-              {
-                field_name = "...my_field_name..."
-                filter = {
-                  between_filter = {
-                    from_value = {
-                      double_value = {
-                        value = 8.38
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                    to_value = {
-                      double_value = {
-                        value = 7.39
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  in_list_filter = {
-                    case_sensitive = true
-                    values = [
-                      "..."
-                    ]
-                  }
-                  numeric_filter = {
-                    operation = [
-                      "OPERATION_UNSPECIFIED"
-                    ]
-                    value = {
-                      double_value = {
-                        value = 4.14
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  string_filter = {
-                    case_sensitive = false
-                    match_type = [
-                      "PARTIAL_REGEXP"
-                    ]
-                    value = "...my_value..."
-                  }
-                }
-              }
-            ]
           }
         }
         dimensions = [
@@ -271,43 +71,6 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
               {
                 field_name = "...my_field_name..."
                 filter = {
-                  between_filter = {
-                    from_value = {
-                      double_value = {
-                        value = 4.29
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                    to_value = {
-                      double_value = {
-                        value = 7.92
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  in_list_filter = {
-                    case_sensitive = true
-                    values = [
-                      "..."
-                    ]
-                  }
-                  numeric_filter = {
-                    operation = [
-                      "OPERATION_UNSPECIFIED"
-                    ]
-                    value = {
-                      double_value = {
-                        value = 1.05
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
                   string_filter = {
                     case_sensitive = true
                     match_type = [
@@ -319,135 +82,11 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
               }
             ]
           }
-          filter = {
-            field_name = "...my_field_name..."
-            filter = {
-              between_filter = {
-                from_value = {
-                  double_value = {
-                    value = 0.83
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-                to_value = {
-                  double_value = {
-                    value = 8.31
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-              }
-              in_list_filter = {
-                case_sensitive = false
-                values = [
-                  "..."
-                ]
-              }
-              numeric_filter = {
-                operation = [
-                  "GREATER_THAN"
-                ]
-                value = {
-                  double_value = {
-                    value = 3.27
-                  }
-                  int64_value = {
-                    value = "...my_value..."
-                  }
-                }
-              }
-              string_filter = {
-                case_sensitive = false
-                match_type = [
-                  "FULL_REGEXP"
-                ]
-                value = "...my_value..."
-              }
-            }
-          }
-          not_expression = {
-            expression = {
-              field_name = "...my_field_name..."
-              filter = {
-                between_filter = {
-                  from_value = {
-                    double_value = {
-                      value = 3.56
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                  to_value = {
-                    double_value = {
-                      value = 4.97
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                }
-                in_list_filter = {
-                  case_sensitive = false
-                  values = [
-                    "..."
-                  ]
-                }
-                numeric_filter = {
-                  operation = [
-                    "GREATER_THAN"
-                  ]
-                  value = {
-                    double_value = {
-                      value = 2.44
-                    }
-                    int64_value = {
-                      value = "...my_value..."
-                    }
-                  }
-                }
-                string_filter = {
-                  case_sensitive = false
-                  match_type = [
-                    "MATCH_TYPE_UNSPECIFIED"
-                  ]
-                  value = "...my_value..."
-                }
-              }
-            }
-          }
           or_group = {
             expressions = [
               {
                 field_name = "...my_field_name..."
                 filter = {
-                  between_filter = {
-                    from_value = {
-                      double_value = {
-                        value = 0.81
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                    to_value = {
-                      double_value = {
-                        value = 7.24
-                      }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
-                    }
-                  }
-                  in_list_filter = {
-                    case_sensitive = false
-                    values = [
-                      "..."
-                    ]
-                  }
                   numeric_filter = {
                     operation = [
                       "GREATER_THAN_OR_EQUAL"
@@ -456,17 +95,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
                       double_value = {
                         value = 0.63
                       }
-                      int64_value = {
-                        value = "...my_value..."
-                      }
                     }
-                  }
-                  string_filter = {
-                    case_sensitive = false
-                    match_type = [
-                      "FULL_REGEXP"
-                    ]
-                    value = "...my_value..."
                   }
                 }
               }

@@ -20,11 +20,6 @@ resource "airbyte_source_github" "my_source_github" {
       "..."
     ]
     credentials = {
-      o_auth = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-      }
       personal_access_token = {
         personal_access_token = "...my_personal_access_token..."
       }

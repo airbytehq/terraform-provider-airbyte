@@ -31,57 +31,14 @@ resource "airbyte_source_mysql" "my_source_mysql" {
         method                               = "CDC"
         server_timezone                      = "...my_server_timezone..."
       }
-      scan_changes_with_user_defined_cursor = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        method                = "STANDARD"
-      }
     }
     ssl_mode = {
-      preferred = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        mode                  = "preferred"
-      }
-      required = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        mode                  = "required"
-      }
-      verify_ca = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        ca_certificate        = "...my_ca_certificate..."
-        client_certificate    = "...my_client_certificate..."
-        client_key            = "...my_client_key..."
-        client_key_password   = "...my_client_key_password..."
-        mode                  = "verify_ca"
-      }
-      verify_identity = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        ca_certificate        = "...my_ca_certificate..."
-        client_certificate    = "...my_client_certificate..."
-        client_key            = "...my_client_key..."
-        client_key_password   = "...my_client_key_password..."
-        mode                  = "verify_identity"
-      }
+      # ...
     }
     tunnel_method = {
       no_tunnel = {
         additional_properties = "{ \"see\": \"documentation\" }"
         tunnel_method         = "NO_TUNNEL"
-      }
-      password_authentication = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        tunnel_host           = "...my_tunnel_host..."
-        tunnel_method         = "SSH_PASSWORD_AUTH"
-        tunnel_port           = 52583
-        tunnel_user           = "...my_tunnel_user..."
-        tunnel_user_password  = "...my_tunnel_user_password..."
-      }
-      ssh_key_authentication = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        ssh_key               = "...my_ssh_key..."
-        tunnel_host           = "...my_tunnel_host..."
-        tunnel_method         = "SSH_KEY_AUTH"
-        tunnel_port           = 26205
-        tunnel_user           = "...my_tunnel_user..."
       }
     }
     username = "...my_username..."

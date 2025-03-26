@@ -29,11 +29,6 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
       access_token = {
         access_token = "...my_access_token..."
       }
-      o_auth20 = {
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
     }
     lookback_window = 3
     start_date      = "2021-05-17"

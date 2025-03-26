@@ -23,9 +23,6 @@ resource "airbyte_source_typeform" "my_source_typeform" {
         refresh_token     = "...my_refresh_token..."
         token_expiry_date = "2022-06-26T16:18:42.881Z"
       }
-      private_token = {
-        access_token = "...my_access_token..."
-      }
     }
     form_ids = [
       "..."

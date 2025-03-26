@@ -16,32 +16,9 @@ DestinationWeaviate Resource
 resource "airbyte_destination_weaviate" "my_destination_weaviate" {
   configuration = {
     embedding = {
-      azure_open_ai = {
-        api_base   = "https://your-resource-name.openai.azure.com"
-        deployment = "your-resource-name"
-        openai_key = "...my_openai_key..."
-      }
-      cohere = {
-        cohere_key = "...my_cohere_key..."
-      }
-      fake = {
-        # ...
-      }
       from_field = {
         dimensions = 1536
         field_name = "embedding"
-      }
-      no_external_embedding = {
-        # ...
-      }
-      open_ai = {
-        openai_key = "...my_openai_key..."
-      }
-      open_ai_compatible = {
-        api_key    = "...my_api_key..."
-        base_url   = "https://your-service-name.com"
-        dimensions = 1536
-        model_name = "text-embedding-ada-002"
       }
     }
     indexing = {
@@ -54,13 +31,6 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       auth = {
         api_token = {
           token = "...my_token..."
-        }
-        no_authentication = {
-          # ...
-        }
-        username_password = {
-          password = "...my_password..."
-          username = "...my_username..."
         }
       }
       batch_size         = 9
@@ -88,15 +58,6 @@ resource "airbyte_destination_weaviate" "my_destination_weaviate" {
       text_splitter = {
         by_markdown_header = {
           split_level = 4
-        }
-        by_programming_language = {
-          language = "html"
-        }
-        by_separator = {
-          keep_separator = true
-          separators = [
-            "..."
-          ]
         }
       }
     }

@@ -16,12 +16,6 @@ SourceGoogleSearchConsole Resource
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
     authorization = {
-      o_auth = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
       service_account_key_authentication = {
         email                = "...my_email..."
         service_account_info = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"

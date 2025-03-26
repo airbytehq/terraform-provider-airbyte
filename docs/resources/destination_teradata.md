@@ -21,24 +21,7 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
     schema          = "airbyte_td"
     ssl             = false
     ssl_mode = {
-      allow = {
-        # ...
-      }
-      disable = {
-        # ...
-      }
-      prefer = {
-        # ...
-      }
-      require = {
-        # ...
-      }
-      verify_ca = {
-        ssl_ca_certificate = "...my_ssl_ca_certificate..."
-      }
-      verify_full = {
-        ssl_ca_certificate = "...my_ssl_ca_certificate..."
-      }
+      # ...
     }
     username = "...my_username..."
   }

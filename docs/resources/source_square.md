@@ -16,9 +16,6 @@ SourceSquare Resource
 resource "airbyte_source_square" "my_source_square" {
   configuration = {
     credentials = {
-      api_key = {
-        api_key = "...my_api_key..."
-      }
       oauth_authentication = {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."

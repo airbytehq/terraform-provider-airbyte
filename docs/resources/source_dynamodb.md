@@ -16,11 +16,6 @@ SourceDynamodb Resource
 resource "airbyte_source_dynamodb" "my_source_dynamodb" {
   configuration = {
     credentials = {
-      authenticate_via_access_keys = {
-        access_key_id         = "A012345678910EXAMPLE"
-        additional_properties = "{ \"see\": \"documentation\" }"
-        secret_access_key     = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
-      }
       role_based_authentication = {
         additional_properties = "{ \"see\": \"documentation\" }"
       }

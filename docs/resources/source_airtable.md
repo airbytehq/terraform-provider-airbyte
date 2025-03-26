@@ -23,9 +23,6 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         refresh_token     = "...my_refresh_token..."
         token_expiry_date = "2022-01-14T11:50:58.504Z"
       }
-      personal_access_token = {
-        api_key = "key1234567890"
-      }
     }
   }
   definition_id = "fdd0b7d7-bc62-4e45-9809-2513b5f90d61"

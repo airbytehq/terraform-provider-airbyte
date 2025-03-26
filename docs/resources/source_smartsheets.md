@@ -16,9 +16,6 @@ SourceSmartsheets Resource
 resource "airbyte_source_smartsheets" "my_source_smartsheets" {
   configuration = {
     credentials = {
-      api_access_token = {
-        access_token = "...my_access_token..."
-      }
       o_auth20 = {
         access_token      = "...my_access_token..."
         client_id         = "...my_client_id..."

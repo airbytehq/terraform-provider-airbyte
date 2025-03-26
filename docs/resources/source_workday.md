@@ -16,13 +16,6 @@ SourceWorkday Resource
 resource "airbyte_source_workday" "my_source_workday" {
   configuration = {
     credentials = {
-      report_based_streams = {
-        password = "...my_password..."
-        report_ids = [
-          "{ \"see\": \"documentation\" }"
-        ]
-        username = "...my_username..."
-      }
       restapi_streams = {
         access_token = "...my_access_token..."
         start_date   = "2024-10-26T07:00:00.000Z"

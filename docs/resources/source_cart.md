@@ -16,11 +16,6 @@ SourceCart Resource
 resource "airbyte_source_cart" "my_source_cart" {
   configuration = {
     credentials = {
-      central_api_router = {
-        site_id     = "...my_site_id..."
-        user_name   = "...my_user_name..."
-        user_secret = "...my_user_secret..."
-      }
       single_store_access_token = {
         access_token = "...my_access_token..."
         store_name   = "...my_store_name..."

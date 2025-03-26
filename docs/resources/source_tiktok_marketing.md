@@ -23,10 +23,6 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         app_id        = "...my_app_id..."
         secret        = "...my_secret..."
       }
-      sandbox_access_token = {
-        access_token  = "...my_access_token..."
-        advertiser_id = "...my_advertiser_id..."
-      }
     }
     end_date        = "2022-11-01"
     include_deleted = true

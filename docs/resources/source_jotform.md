@@ -19,9 +19,6 @@ resource "airbyte_source_jotform" "my_source_jotform" {
       basic = {
         url_prefix = "HIPAA"
       }
-      enterprise = {
-        enterprise_url = "...my_enterprise_url..."
-      }
     }
     api_key    = "...my_api_key..."
     end_date   = "2022-06-27T20:19:13.324Z"

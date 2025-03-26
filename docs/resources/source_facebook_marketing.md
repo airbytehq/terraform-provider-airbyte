@@ -34,9 +34,6 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
         client_id     = "...my_client_id..."
         client_secret = "...my_client_secret..."
       }
-      service_account_key_authentication = {
-        access_token = "...my_access_token..."
-      }
     }
     custom_insights = [
       {

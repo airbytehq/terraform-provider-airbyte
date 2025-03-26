@@ -23,64 +23,11 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
       }
     }
     format = {
-      avro_apache_avro = {
-        compression_codec = {
-          bzip2 = {
-            codec = "bzip2"
-          }
-          deflate = {
-            codec             = "Deflate"
-            compression_level = 8
-          }
-          no_compression = {
-            codec = "no compression"
-          }
-          snappy = {
-            codec = "snappy"
-          }
-          xz = {
-            codec             = "xz"
-            compression_level = 7
-          }
-          zstandard = {
-            codec             = "zstandard"
-            compression_level = 22
-            include_checksum  = true
-          }
-        }
-        format_type = "Avro"
-      }
-      csv_comma_separated_values = {
-        compression = {
-          gzip = {
-            compression_type = "GZIP"
-          }
-          no_compression = {
-            compression_type = "No Compression"
-          }
-        }
-        flattening  = "Root level flattening"
-        format_type = "CSV"
-      }
       json_lines_newline_delimited_json = {
         compression = {
-          gzip = {
-            compression_type = "GZIP"
-          }
-          no_compression = {
-            compression_type = "No Compression"
-          }
+          # ...
         }
         format_type = "JSONL"
-      }
-      parquet_columnar_storage = {
-        block_size_mb           = 128
-        compression_codec       = "LZ4"
-        dictionary_encoding     = false
-        dictionary_page_size_kb = 1024
-        format_type             = "Parquet"
-        max_padding_size_mb     = 8
-        page_size_kb            = 1024
       }
     }
     gcs_bucket_name   = "airbyte_sync"

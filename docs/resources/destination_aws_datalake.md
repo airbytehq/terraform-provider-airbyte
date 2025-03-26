@@ -22,10 +22,6 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
       iam_role = {
         role_arn = "...my_role_arn..."
       }
-      iam_user = {
-        aws_access_key_id     = "...my_aws_access_key_id..."
-        aws_secret_access_key = "...my_aws_secret_access_key..."
-      }
     }
     format = {
       json_lines_newline_delimited_json = {
