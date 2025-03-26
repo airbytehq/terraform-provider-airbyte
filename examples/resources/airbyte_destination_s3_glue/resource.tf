@@ -5,12 +5,7 @@ resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
     format = {
       json_lines_newline_delimited_json = {
         compression = {
-          gzip = {
-            compression_type = "GZIP"
-          }
-          no_compression = {
-            compression_type = "No Compression"
-          }
+          # ...
         }
         flattening  = "No flattening"
         format_type = "JSONL"

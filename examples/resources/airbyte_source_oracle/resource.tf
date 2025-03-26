@@ -1,9 +1,6 @@
 resource "airbyte_source_oracle" "my_source_oracle" {
   configuration = {
     connection_data = {
-      service_name = {
-        service_name = "...my_service_name..."
-      }
       system_idsid = {
         sid = "...my_sid..."
       }
@@ -11,12 +8,6 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     encryption = {
       native_network_encryption_nne = {
         encryption_algorithm = "3DES168"
-      }
-      tls_encrypted_verify_certificate = {
-        ssl_certificate = "...my_ssl_certificate..."
-      }
-      unencrypted = {
-        # ...
       }
     }
     host            = "...my_host..."
@@ -29,18 +20,6 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     tunnel_method = {
       no_tunnel = {
         # ...
-      }
-      password_authentication = {
-        tunnel_host          = "...my_tunnel_host..."
-        tunnel_port          = 22
-        tunnel_user          = "...my_tunnel_user..."
-        tunnel_user_password = "...my_tunnel_user_password..."
-      }
-      ssh_key_authentication = {
-        ssh_key     = "...my_ssh_key..."
-        tunnel_host = "...my_tunnel_host..."
-        tunnel_port = 22
-        tunnel_user = "...my_tunnel_user..."
       }
     }
     username = "...my_username..."

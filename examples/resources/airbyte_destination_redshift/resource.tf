@@ -10,15 +10,6 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     raw_data_schema     = "...my_raw_data_schema..."
     schema              = "public"
     tunnel_method = {
-      no_tunnel = {
-        # ...
-      }
-      password_authentication = {
-        tunnel_host          = "...my_tunnel_host..."
-        tunnel_port          = 22
-        tunnel_user          = "...my_tunnel_user..."
-        tunnel_user_password = "...my_tunnel_user_password..."
-      }
       ssh_key_authentication = {
         ssh_key     = "...my_ssh_key..."
         tunnel_host = "...my_tunnel_host..."

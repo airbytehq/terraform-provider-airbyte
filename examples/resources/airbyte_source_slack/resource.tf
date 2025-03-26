@@ -4,9 +4,6 @@ resource "airbyte_source_slack" "my_source_slack" {
       "..."
     ]
     credentials = {
-      api_token = {
-        api_token = "...my_api_token..."
-      }
       sign_in_via_slack_o_auth = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."

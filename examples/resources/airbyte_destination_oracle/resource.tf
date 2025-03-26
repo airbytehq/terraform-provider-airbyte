@@ -1,14 +1,8 @@
 resource "airbyte_destination_oracle" "my_destination_oracle" {
   configuration = {
     encryption = {
-      native_network_encryption_nne = {
-        encryption_algorithm = "RC4_56"
-      }
       tls_encrypted_verify_certificate = {
         ssl_certificate = "...my_ssl_certificate..."
-      }
-      unencrypted = {
-        # ...
       }
     }
     host            = "...my_host..."
@@ -19,15 +13,6 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     schema          = "airbyte"
     sid             = "...my_sid..."
     tunnel_method = {
-      no_tunnel = {
-        # ...
-      }
-      password_authentication = {
-        tunnel_host          = "...my_tunnel_host..."
-        tunnel_port          = 22
-        tunnel_user          = "...my_tunnel_user..."
-        tunnel_user_password = "...my_tunnel_user_password..."
-      }
       ssh_key_authentication = {
         ssh_key     = "...my_ssh_key..."
         tunnel_host = "...my_tunnel_host..."

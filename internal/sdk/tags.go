@@ -54,7 +54,7 @@ func (s *Tags) ListTags(ctx context.Context, request operations.ListTagsRequest,
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listTags",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -189,7 +189,7 @@ func (s *Tags) CreateTag(ctx context.Context, request shared.TagCreateRequest, o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createTag",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -329,7 +329,7 @@ func (s *Tags) GetTag(ctx context.Context, request operations.GetTagRequest, opt
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getTag",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -460,7 +460,7 @@ func (s *Tags) DeleteTag(ctx context.Context, request operations.DeleteTagReques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteTag",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -571,7 +571,7 @@ func (s *Tags) UpdateTag(ctx context.Context, request operations.UpdateTagReques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "updateTag",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "TagPatchRequest", "json", `request:"mediaType=application/json"`)

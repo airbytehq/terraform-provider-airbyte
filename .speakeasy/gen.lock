@@ -3,17 +3,17 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: a050040233750fc8647176c582900e02
   docVersion: 1.0.0
-  speakeasyVersion: 1.505.1
-  generationVersion: 2.531.0
-  releaseVersion: 0.15.0
-  configChecksum: 25fa756d7c2c7c8dc7871b5aaaaa2468
+  speakeasyVersion: 1.524.0
+  generationVersion: 2.562.2
+  releaseVersion: 0.16.0
+  configChecksum: 9f139f9507e82b6db2774217b4d5fe03
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.2.1
-    core: 3.34.0
+    core: 3.36.1
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.10
     globalServerURLs: 2.82.1
@@ -22383,7 +22383,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "05d3a5df-8ea7-4ea4-823f-8925aafc7efc", "configuration": {"api_key": "<value>", "symbol": "TSCO.LON", "interval": "1min", "adjusted": false, "outputsize": "compact"}}
+        application/json: {"name": "<value>", "workspaceId": "05d3a5df-8ea7-4ea4-823f-8925aafc7efc", "configuration": {"api_key": "<value>", "symbol": "AAPL", "interval": "1min", "adjusted": false, "outputsize": "compact"}}
   deleteSourceAlphaVantage:
     speakeasy-default-delete-source-alpha-vantage:
       parameters:
@@ -22561,7 +22561,7 @@ examples:
   createSourceHellobaton:
     speakeasy-default-create-source-hellobaton:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "c32dc6b5-fd87-48d8-8278-fa8c095cddf6", "configuration": {"api_key": "<value>", "company": "facebook"}}
+        application/json: {"name": "<value>", "workspaceId": "c32dc6b5-fd87-48d8-8278-fa8c095cddf6", "configuration": {"api_key": "<value>", "company": "microsoft"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 594664}
@@ -22579,7 +22579,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "388a822a-8ef3-4079-9ae5-b549987809b3", "configuration": {"api_key": "<value>", "company": "facebook"}}
+        application/json: {"name": "<value>", "workspaceId": "388a822a-8ef3-4079-9ae5-b549987809b3", "configuration": {"api_key": "<value>", "company": "google"}}
   deleteSourceHellobaton:
     speakeasy-default-delete-source-hellobaton:
       parameters:
@@ -22629,7 +22629,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "4f97a8c0-1579-4440-8daa-6e80b9c4af84", "configuration": {"api_token": "<value>", "domain_id": "linkana.com", "start_date": 123131321}}
+        application/json: {"name": "<value>", "workspaceId": "4f97a8c0-1579-4440-8daa-6e80b9c4af84", "configuration": {"api_token": "<value>", "domain_id": "airbyte.com", "start_date": 123131321}}
   deleteSourceMailersend:
     speakeasy-default-delete-source-mailersend:
       parameters:
@@ -22711,7 +22711,7 @@ examples:
   createSourceRocketChat:
     speakeasy-default-create-source-rocket-chat:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "309772ea-f155-41a7-809e-362cc31dac66", "configuration": {"endpoint": "https://hey.yoursite.com", "token": "<value>", "user_id": "<id>"}}
+        application/json: {"name": "<value>", "workspaceId": "309772ea-f155-41a7-809e-362cc31dac66", "configuration": {"endpoint": "https://airbyte-connector-poc.rocket.chat", "token": "<value>", "user_id": "<id>"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 864619}
@@ -22784,7 +22784,7 @@ examples:
   createSourceTmdb:
     speakeasy-default-create-source-tmdb:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "778062b0-ba8c-468f-9c73-a1d261fef9fb", "configuration": {"api_key": "<value>", "language": "en-UK", "movie_id": "550", "query": "DC"}}
+        application/json: {"name": "<value>", "workspaceId": "778062b0-ba8c-468f-9c73-a1d261fef9fb", "configuration": {"api_key": "<value>", "language": "en-US", "movie_id": "550", "query": "DC"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 311636}
@@ -22802,7 +22802,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "ba247fb9-32f9-461b-8c2e-fef4b07af2fe", "configuration": {"api_key": "<value>", "language": "en-UK", "movie_id": "550", "query": "Marvel"}}
+        application/json: {"name": "<value>", "workspaceId": "ba247fb9-32f9-461b-8c2e-fef4b07af2fe", "configuration": {"api_key": "<value>", "language": "en-UK", "movie_id": "560", "query": "Marvel"}}
   deleteSourceTmdb:
     speakeasy-default-delete-source-tmdb:
       parameters:
@@ -22861,7 +22861,7 @@ examples:
   createSourceWorkday:
     speakeasy-default-create-source-workday:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "58c08d97-14c2-495e-8d63-cb443c1da424", "configuration": {"tenant_id": "<id>", "host": "nutritious-reasoning.biz", "credentials": {"username": "Alexanne.Lockman", "password": "5voVkydEA5dVAZJ", "report_ids": ["for JSON url https://hostname/ccx/service/customreport2/tenant/report/id?format=json Report ID is report/id."]}}}
+        application/json: {"name": "<value>", "workspaceId": "58c08d97-14c2-495e-8d63-cb443c1da424", "configuration": {"tenant_id": "<id>", "host": "nutritious-reasoning.biz", "credentials": {"username": "Jovan_Bayer", "password": "LiAynG3hc4lr94V", "report_ids": ["for JSON url https://hostname/ccx/service/customreport2/tenant/report/id?format=json Report ID is report/id."]}}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 191129}

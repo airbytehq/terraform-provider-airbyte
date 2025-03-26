@@ -4,11 +4,6 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
       api_key = {
         apikey = "...my_apikey..."
       }
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-      }
     }
     start_date = "2020-01-01T00:00:00.000Z"
   }

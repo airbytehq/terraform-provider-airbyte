@@ -53,7 +53,7 @@ func (s *Streams) GetStreamProperties(ctx context.Context, request operations.Ge
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getStreamProperties",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 

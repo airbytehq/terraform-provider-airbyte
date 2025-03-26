@@ -2,9 +2,6 @@ resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
     attribution_window = 10
     credentials = {
-      project_secret = {
-        api_secret = "...my_api_secret..."
-      }
       service_account = {
         project_id = 10
         secret     = "...my_secret..."

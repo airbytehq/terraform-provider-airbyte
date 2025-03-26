@@ -1,9 +1,6 @@
 resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
   configuration = {
     credentials = {
-      access_token = {
-        access_token = "...my_access_token..."
-      }
       username_password = {
         password = "...my_password..."
         username = "...my_username..."

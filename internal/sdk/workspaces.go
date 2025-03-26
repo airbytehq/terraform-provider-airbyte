@@ -53,7 +53,7 @@ func (s *Workspaces) ListWorkspaces(ctx context.Context, request operations.List
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listWorkspaces",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -187,7 +187,7 @@ func (s *Workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createWorkspace",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -324,7 +324,7 @@ func (s *Workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getWorkspace",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -454,7 +454,7 @@ func (s *Workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "updateWorkspace",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceUpdateRequest", "json", `request:"mediaType=application/json"`)
@@ -591,7 +591,7 @@ func (s *Workspaces) DeleteWorkspace(ctx context.Context, request operations.Del
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteWorkspace",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -703,7 +703,7 @@ func (s *Workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createOrUpdateWorkspaceOAuthCredentials",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "WorkspaceOAuthCredentialsRequest", "json", `request:"mediaType=application/json"`)

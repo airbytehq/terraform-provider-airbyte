@@ -4,12 +4,6 @@ resource "airbyte_source_drift" "my_source_drift" {
       access_token = {
         access_token = "...my_access_token..."
       }
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
     }
     email = "...my_email..."
   }

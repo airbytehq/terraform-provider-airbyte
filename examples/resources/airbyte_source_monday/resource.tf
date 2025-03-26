@@ -4,12 +4,6 @@ resource "airbyte_source_monday" "my_source_monday" {
       api_token = {
         api_token = "...my_api_token..."
       }
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        subdomain     = "...my_subdomain..."
-      }
     }
   }
   definition_id = "cb22d725-edac-48cf-960b-7a9061de3d71"
