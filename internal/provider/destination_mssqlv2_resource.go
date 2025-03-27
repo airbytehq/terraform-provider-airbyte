@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
@@ -18,6 +19,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -41,13 +43,14 @@ type DestinationMssqlV2Resource struct {
 
 // DestinationMssqlV2ResourceModel describes the resource data model.
 type DestinationMssqlV2ResourceModel struct {
-	Configuration   tfTypes.DestinationMssqlV2 `tfsdk:"configuration"`
-	CreatedAt       types.Int64                `tfsdk:"created_at"`
-	DefinitionID    types.String               `tfsdk:"definition_id"`
-	DestinationID   types.String               `tfsdk:"destination_id"`
-	DestinationType types.String               `tfsdk:"destination_type"`
-	Name            types.String               `tfsdk:"name"`
-	WorkspaceID     types.String               `tfsdk:"workspace_id"`
+	Configuration      tfTypes.DestinationMssqlV2          `tfsdk:"configuration"`
+	CreatedAt          types.Int64                         `tfsdk:"created_at"`
+	DefinitionID       types.String                        `tfsdk:"definition_id"`
+	DestinationID      types.String                        `tfsdk:"destination_id"`
+	DestinationType    types.String                        `tfsdk:"destination_type"`
+	Name               types.String                        `tfsdk:"name"`
+	ResourceAllocation *tfTypes.ScopedResourceRequirements `tfsdk:"resource_allocation"`
+	WorkspaceID        types.String                        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMssqlV2Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -75,6 +78,89 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 					"jdbc_url_params": schema.StringAttribute{
 						Optional:    true,
 						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
+					},
+					"load_type": schema.SingleNestedAttribute{
+						Required: true,
+						Attributes: map[string]schema.Attribute{
+							"bulk_load": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"azure_blob_storage_account_name": schema.StringAttribute{
+										Required:    true,
+										Description: `The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts`,
+									},
+									"azure_blob_storage_container_name": schema.StringAttribute{
+										Required:    true,
+										Description: `The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers`,
+									},
+									"bulk_load_data_source": schema.StringAttribute{
+										Required:    true,
+										Description: `Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql`,
+									},
+									"bulk_load_validate_values_pre_load": schema.BoolAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     booldefault.StaticBool(false),
+										Description: `When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance. Default: false`,
+									},
+									"load_type": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`BULK`),
+										Description: `Default: "BULK"; must be "BULK"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf("BULK"),
+										},
+									},
+									"shared_access_signature": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview`,
+									},
+								},
+								Description: `Configuration details for using the BULK loading mechanism.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("insert_load"),
+									}...),
+								},
+							},
+							"insert_load": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"load_type": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`INSERT`),
+										Description: `Default: "INSERT"; must be "INSERT"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf("INSERT"),
+										},
+									},
+								},
+								Description: `Configuration details for using the INSERT loading mechanism.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("bulk_load"),
+									}...),
+								},
+							},
+						},
+						Description: `Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration.`,
 					},
 					"password": schema.StringAttribute{
 						Optional:    true,
@@ -242,6 +328,136 @@ func (r *DestinationMssqlV2Resource) Schema(ctx context.Context, req resource.Sc
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
+			},
+			"resource_allocation": schema.SingleNestedAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
+				Attributes: map[string]schema.Attribute{
+					"default": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Attributes: map[string]schema.Attribute{
+							"cpu_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"cpu_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"ephemeral_storage_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"ephemeral_storage_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"memory_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"memory_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+						},
+						Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+					},
+					"job_specific": schema.ListNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+						},
+						NestedObject: schema.NestedAttributeObject{
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
+							Attributes: map[string]schema.Attribute{
+								"job_type": schema.StringAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
+									Description: `enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"get_spec",
+											"check_connection",
+											"discover_schema",
+											"sync",
+											"reset_connection",
+											"connection_updater",
+											"replicate",
+										),
+									},
+								},
+								"resource_requirements": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Attributes: map[string]schema.Attribute{
+										"cpu_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"cpu_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"ephemeral_storage_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"ephemeral_storage_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"memory_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"memory_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+									},
+									Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+								},
+							},
+						},
+					},
+				},
+				Description: `actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

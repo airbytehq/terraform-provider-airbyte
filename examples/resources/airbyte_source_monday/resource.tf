@@ -1,5 +1,8 @@
 resource "airbyte_source_monday" "my_source_monday" {
   configuration = {
+    board_ids = [
+      9
+    ]
     credentials = {
       api_token = {
         api_token = "...my_api_token..."

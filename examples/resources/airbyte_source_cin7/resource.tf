@@ -1,7 +1,8 @@
 resource "airbyte_source_cin7" "my_source_cin7" {
   configuration = {
-    accountid = "...my_accountid..."
-    api_key   = "...my_api_key..."
+    accountid  = "...my_accountid..."
+    api_key    = "...my_api_key..."
+    start_date = "2022-02-16T06:36:23.436Z"
   }
   definition_id = "51200595-41b5-43e9-aa42-79bb9acade16"
   name          = "...my_name..."

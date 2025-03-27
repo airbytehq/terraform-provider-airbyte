@@ -32,14 +32,14 @@ func (e *Sentry) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSentry struct {
-	// Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
-	AuthToken string `json:"auth_token"`
-	// Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
-	Hostname *string `default:"sentry.io" json:"hostname"`
-	// The slug of the organization the groups belong to.
-	Organization string `json:"organization"`
 	// The name (slug) of the Project you want to sync.
 	Project string `json:"project"`
+	// Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.
+	Hostname *string `default:"sentry.io" json:"hostname"`
+	// Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
+	AuthToken string `json:"auth_token"`
+	// The slug of the organization the groups belong to.
+	Organization string `json:"organization"`
 	// Fields to retrieve when fetching discover events
 	DiscoverFields []any  `json:"discover_fields,omitempty"`
 	sourceType     Sentry `const:"sentry" json:"sourceType"`
@@ -56,11 +56,11 @@ func (s *SourceSentry) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSentry) GetAuthToken() string {
+func (o *SourceSentry) GetProject() string {
 	if o == nil {
 		return ""
 	}
-	return o.AuthToken
+	return o.Project
 }
 
 func (o *SourceSentry) GetHostname() *string {
@@ -70,18 +70,18 @@ func (o *SourceSentry) GetHostname() *string {
 	return o.Hostname
 }
 
+func (o *SourceSentry) GetAuthToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AuthToken
+}
+
 func (o *SourceSentry) GetOrganization() string {
 	if o == nil {
 		return ""
 	}
 	return o.Organization
-}
-
-func (o *SourceSentry) GetProject() string {
-	if o == nil {
-		return ""
-	}
-	return o.Project
 }
 
 func (o *SourceSentry) GetDiscoverFields() []any {

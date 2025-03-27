@@ -1,5 +1,6 @@
 resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
   configuration = {
+    conversion_count = "conversion_time"
     credentials = {
       username_password = {
         password = "...my_password..."

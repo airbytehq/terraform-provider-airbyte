@@ -2,13 +2,30 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
   configuration = {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
+<<<<<<< Updated upstream
     password        = "...my_password..."
     schema          = "airbyte_td"
     ssl             = false
     ssl_mode = {
       # ...
+=======
+    logmech = {
+      ldap = {
+        password = "...my_password..."
+        username = "...my_username..."
+      }
+      td2 = {
+        password = "...my_password..."
+        username = "...my_username..."
+      }
+>>>>>>> Stashed changes
     }
-    username = "...my_username..."
+    query_band = "...my_query_band..."
+    schema     = "airbyte_td"
+    ssl        = false
+    ssl_mode = {
+      # ...
+    }
   }
   definition_id = "d113370e-613a-4d8a-8685-e4d05d32dcea"
   name          = "...my_name..."

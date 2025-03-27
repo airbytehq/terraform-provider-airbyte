@@ -119,7 +119,7 @@ type SourceDatadogUpdate struct {
 	// The site where Datadog data resides in.
 	Site *SourceDatadogUpdateSite `default:"datadoghq.com" json:"site"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Data after this date will  not be replicated. An empty value will represent the current datetime for each  execution. This just applies to Incremental syncs.
-	EndDate *string `default:"2024-01-01T00:00:00Z" json:"end_date"`
+	EndDate *string `json:"end_date,omitempty"`
 	// Maximum number of records to collect per request.
 	MaxRecordsPerRequest *int64 `default:"5000" json:"max_records_per_request"`
 	// List of queries to be run and used as inputs.

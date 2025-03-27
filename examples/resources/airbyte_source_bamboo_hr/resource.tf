@@ -3,6 +3,7 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     api_key                               = "...my_api_key..."
     custom_reports_fields                 = "...my_custom_reports_fields..."
     custom_reports_include_default_fields = false
+    employee_fields                       = "...my_employee_fields..."
     start_date                            = "2020-10-30T09:40:26.318Z"
     subdomain                             = "...my_subdomain..."
   }

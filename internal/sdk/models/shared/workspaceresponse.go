@@ -2,28 +2,13 @@
 
 package shared
 
-import (
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
-)
-
 // WorkspaceResponse - Provides details of a single workspace.
 type WorkspaceResponse struct {
-	WorkspaceID   string         `json:"workspaceId"`
-	Name          string         `json:"name"`
-	DataResidency *GeographyEnum `default:"auto" json:"dataResidency"`
+	WorkspaceID   string `json:"workspaceId"`
+	Name          string `json:"name"`
+	DataResidency string `json:"dataResidency"`
 	// Configures workspace notifications.
 	Notifications NotificationsConfig `json:"notifications"`
-}
-
-func (w WorkspaceResponse) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(w, "", false)
-}
-
-func (w *WorkspaceResponse) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *WorkspaceResponse) GetWorkspaceID() string {
@@ -40,9 +25,9 @@ func (o *WorkspaceResponse) GetName() string {
 	return o.Name
 }
 
-func (o *WorkspaceResponse) GetDataResidency() *GeographyEnum {
+func (o *WorkspaceResponse) GetDataResidency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DataResidency
 }

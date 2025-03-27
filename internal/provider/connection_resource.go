@@ -539,17 +539,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"data_residency": schema.StringAttribute{
 				Computed: true,
 				Optional: true,
-				Default:  stringdefault.StaticString(`auto`),
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				Description: `Default: "auto"; must be one of ["auto", "us", "eu"]`,
-				Validators: []validator.String{
-					stringvalidator.OneOf(
-						"auto",
-						"us",
-						"eu",
-					),
 				},
 			},
 			"destination_id": schema.StringAttribute{

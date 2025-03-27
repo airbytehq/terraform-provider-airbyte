@@ -205,8 +205,8 @@ func (u SourceZendeskChatUpdateAuthorizationMethod) MarshalJSON() ([]byte, error
 type SourceZendeskChatUpdate struct {
 	// The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate time.Time `json:"start_date"`
-	// The unique subdomain of your Zendesk account (without https://). <a href="https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain">See the Zendesk docs to find your subdomain</a>
-	Subdomain   *string                                     `default:"" json:"subdomain"`
+	// The unique subdomain of your Zendesk account (without https://). <a href=\"https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain\">See the Zendesk docs to find your subdomain</a>.
+	Subdomain   string                                      `json:"subdomain"`
 	Credentials *SourceZendeskChatUpdateAuthorizationMethod `json:"credentials,omitempty"`
 }
 
@@ -228,9 +228,9 @@ func (o *SourceZendeskChatUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceZendeskChatUpdate) GetSubdomain() *string {
+func (o *SourceZendeskChatUpdate) GetSubdomain() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Subdomain
 }

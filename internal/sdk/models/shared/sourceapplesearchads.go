@@ -8,6 +8,33 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// TimeZone - The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC.
+type TimeZone string
+
+const (
+	TimeZoneOrtz TimeZone = "ORTZ"
+	TimeZoneUtc  TimeZone = "UTC"
+)
+
+func (e TimeZone) ToPointer() *TimeZone {
+	return &e
+}
+func (e *TimeZone) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ORTZ":
+		fallthrough
+	case "UTC":
+		*e = TimeZone(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TimeZone: %v", v)
+	}
+}
+
 type AppleSearchAds string
 
 const (
@@ -45,8 +72,10 @@ type SourceAppleSearchAds struct {
 	// Apple Search Ads uses a 30-day attribution window. However, you may consider smaller values in order to shorten sync durations, at the cost of missing late data attributions.
 	LookbackWindow *int64 `default:"30" json:"lookback_window"`
 	// This factor factor determines the delay increase factor between retryable failures. Valid values are integers between 1 and 20.
-	BackoffFactor *int64         `default:"5" json:"backoff_factor"`
-	sourceType    AppleSearchAds `const:"apple-search-ads" json:"sourceType"`
+	BackoffFactor *int64 `default:"5" json:"backoff_factor"`
+	// The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC.
+	Timezone   *TimeZone      `default:"UTC" json:"timezone"`
+	sourceType AppleSearchAds `const:"apple-search-ads" json:"sourceType"`
 }
 
 func (s SourceAppleSearchAds) MarshalJSON() ([]byte, error) {
@@ -107,6 +136,13 @@ func (o *SourceAppleSearchAds) GetBackoffFactor() *int64 {
 		return nil
 	}
 	return o.BackoffFactor
+}
+
+func (o *SourceAppleSearchAds) GetTimezone() *TimeZone {
+	if o == nil {
+		return nil
+	}
+	return o.Timezone
 }
 
 func (o *SourceAppleSearchAds) GetSourceType() AppleSearchAds {

@@ -12,6 +12,8 @@ type DestinationResponse struct {
 	// The values required to configure the destination.
 	Configuration any   `json:"configuration"`
 	CreatedAt     int64 `json:"createdAt"`
+	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
+	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
 func (o *DestinationResponse) GetDestinationID() string {
@@ -61,4 +63,11 @@ func (o *DestinationResponse) GetCreatedAt() int64 {
 		return 0
 	}
 	return o.CreatedAt
+}
+
+func (o *DestinationResponse) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceAllocation
 }

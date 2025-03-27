@@ -15,6 +15,7 @@ resource "airbyte_source_microsoft_sharepoint" "my_source_microsoftsharepoint" {
     }
     folder_path  = "...my_folder_path..."
     search_scope = "ALL"
+    site_url     = "...my_site_url..."
     start_date   = "2021-01-01T00:00:00.000000Z"
     streams = [
       {

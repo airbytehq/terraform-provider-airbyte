@@ -1,5 +1,6 @@
 resource "airbyte_source_pinterest" "my_source_pinterest" {
   configuration = {
+    account_id = "1234567890"
     credentials = {
       client_id     = "...my_client_id..."
       client_secret = "...my_client_secret..."

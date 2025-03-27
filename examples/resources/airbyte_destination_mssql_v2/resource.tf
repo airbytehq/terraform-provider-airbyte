@@ -3,9 +3,15 @@ resource "airbyte_destination_mssql_v2" "my_destination_mssqlv2" {
     database        = "...my_database..."
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 1433
-    schema          = "public"
+    load_type = {
+      insert_load = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        load_type             = "INSERT"
+      }
+    }
+    password = "...my_password..."
+    port     = 1433
+    schema   = "public"
     ssl_method = {
       # ...
     }

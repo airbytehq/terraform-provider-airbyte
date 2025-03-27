@@ -226,7 +226,9 @@ func (e *Monday) UnmarshalJSON(data []byte) error {
 
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
-	sourceType  Monday                           `const:"monday" json:"sourceType"`
+	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
+	BoardIds   []int64 `json:"board_ids,omitempty"`
+	sourceType Monday  `const:"monday" json:"sourceType"`
 }
 
 func (s SourceMonday) MarshalJSON() ([]byte, error) {
@@ -245,6 +247,13 @@ func (o *SourceMonday) GetCredentials() *SourceMondayAuthorizationMethod {
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceMonday) GetBoardIds() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BoardIds
 }
 
 func (o *SourceMonday) GetSourceType() Monday {

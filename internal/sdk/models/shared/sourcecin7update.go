@@ -2,11 +2,36 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
+)
+
 type SourceCin7Update struct {
-	// The ID associated with your account.
-	Accountid string `json:"accountid"`
 	// The API key associated with your account.
 	APIKey string `json:"api_key"`
+	// The ID associated with your account.
+	Accountid string `json:"accountid"`
+	// 1970-01-01T00:00:00Z
+	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceCin7Update) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceCin7Update) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceCin7Update) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceCin7Update) GetAccountid() string {
@@ -16,9 +41,9 @@ func (o *SourceCin7Update) GetAccountid() string {
 	return o.Accountid
 }
 
-func (o *SourceCin7Update) GetAPIKey() string {
+func (o *SourceCin7Update) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.APIKey
+	return o.StartDate
 }

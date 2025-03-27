@@ -10,11 +10,7 @@ import (
 
 func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
 	if resp != nil {
-		if resp.DataResidency != nil {
-			r.DataResidency = types.StringValue(string(*resp.DataResidency))
-		} else {
-			r.DataResidency = types.StringNull()
-		}
+		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.Name = types.StringValue(resp.Name)
 		if resp.Notifications.ConnectionUpdate == nil {
 			r.Notifications.ConnectionUpdate = nil

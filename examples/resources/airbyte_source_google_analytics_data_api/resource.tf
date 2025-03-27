@@ -93,6 +93,7 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
         name = "...my_name..."
       }
     ]
+    date_ranges_end_date   = "2021-01-31"
     date_ranges_start_date = "2021-01-01"
     keep_empty_rows        = false
     lookback_window        = 2

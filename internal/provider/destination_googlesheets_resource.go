@@ -6,16 +6,20 @@ import (
 	"context"
 	"fmt"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,13 +39,14 @@ type DestinationGoogleSheetsResource struct {
 
 // DestinationGoogleSheetsResourceModel describes the resource data model.
 type DestinationGoogleSheetsResourceModel struct {
-	Configuration   tfTypes.DestinationGoogleSheets `tfsdk:"configuration"`
-	CreatedAt       types.Int64                     `tfsdk:"created_at"`
-	DefinitionID    types.String                    `tfsdk:"definition_id"`
-	DestinationID   types.String                    `tfsdk:"destination_id"`
-	DestinationType types.String                    `tfsdk:"destination_type"`
-	Name            types.String                    `tfsdk:"name"`
-	WorkspaceID     types.String                    `tfsdk:"workspace_id"`
+	Configuration      tfTypes.DestinationGoogleSheets     `tfsdk:"configuration"`
+	CreatedAt          types.Int64                         `tfsdk:"created_at"`
+	DefinitionID       types.String                        `tfsdk:"definition_id"`
+	DestinationID      types.String                        `tfsdk:"destination_id"`
+	DestinationType    types.String                        `tfsdk:"destination_type"`
+	Name               types.String                        `tfsdk:"name"`
+	ResourceAllocation *tfTypes.ScopedResourceRequirements `tfsdk:"resource_allocation"`
+	WorkspaceID        types.String                        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationGoogleSheetsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -61,23 +66,48 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"client_id": schema.StringAttribute{
-								Required:    true,
-								Sensitive:   true,
-								Description: `The Client ID of your Google Sheets developer application.`,
+							"authenticate_via_google_o_auth": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The Client ID of your Google Sheets developer application.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The Client Secret of your Google Sheets developer application.`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The token for obtaining new access token.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("service_account_key_authentication"),
+									}...),
+								},
 							},
-							"client_secret": schema.StringAttribute{
-								Required:    true,
-								Sensitive:   true,
-								Description: `The Client Secret of your Google Sheets developer application.`,
-							},
-							"refresh_token": schema.StringAttribute{
-								Required:    true,
-								Sensitive:   true,
-								Description: `The token for obtaining new access token.`,
+							"service_account_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"service_account_info": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.`,
+									},
+								},
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("authenticate_via_google_o_auth"),
+									}...),
+								},
 							},
 						},
-						Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
+						Description: `Authentication method to access Google Sheets`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required:    true,
@@ -118,6 +148,136 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
 				},
 				Description: `Name of the destination e.g. dev-mysql-instance.`,
+			},
+			"resource_allocation": schema.SingleNestedAttribute{
+				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+				},
+				Attributes: map[string]schema.Attribute{
+					"default": schema.SingleNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+						},
+						Attributes: map[string]schema.Attribute{
+							"cpu_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"cpu_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"ephemeral_storage_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"ephemeral_storage_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"memory_limit": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+							"memory_request": schema.StringAttribute{
+								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+								},
+							},
+						},
+						Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+					},
+					"job_specific": schema.ListNestedAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.SuppressDiff(speakeasy_listplanmodifier.ExplicitSuppress),
+						},
+						NestedObject: schema.NestedAttributeObject{
+							PlanModifiers: []planmodifier.Object{
+								speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+							},
+							Attributes: map[string]schema.Attribute{
+								"job_type": schema.StringAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
+									Description: `enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]`,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"get_spec",
+											"check_connection",
+											"discover_schema",
+											"sync",
+											"reset_connection",
+											"connection_updater",
+											"replicate",
+										),
+									},
+								},
+								"resource_requirements": schema.SingleNestedAttribute{
+									Computed: true,
+									PlanModifiers: []planmodifier.Object{
+										speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
+									},
+									Attributes: map[string]schema.Attribute{
+										"cpu_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"cpu_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"ephemeral_storage_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"ephemeral_storage_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"memory_limit": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+										"memory_request": schema.StringAttribute{
+											Computed: true,
+											PlanModifiers: []planmodifier.String{
+												speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+											},
+										},
+									},
+									Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+								},
+							},
+						},
+					},
+				},
+				Description: `actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

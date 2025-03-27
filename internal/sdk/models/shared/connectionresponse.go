@@ -16,7 +16,7 @@ type ConnectionResponse struct {
 	Status        ConnectionStatusEnum `json:"status"`
 	// schedule for when the the connection should run, per the schedule type
 	Schedule      ConnectionScheduleResponse `json:"schedule"`
-	DataResidency *GeographyEnum             `default:"auto" json:"dataResidency"`
+	DataResidency string                     `json:"dataResidency"`
 	// Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 	NonBreakingSchemaUpdatesBehavior *NonBreakingSchemaUpdatesBehaviorEnum `default:"ignore" json:"nonBreakingSchemaUpdatesBehavior"`
 	// Define the location where the data will be stored in the destination
@@ -89,9 +89,9 @@ func (o *ConnectionResponse) GetSchedule() ConnectionScheduleResponse {
 	return o.Schedule
 }
 
-func (o *ConnectionResponse) GetDataResidency() *GeographyEnum {
+func (o *ConnectionResponse) GetDataResidency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DataResidency
 }

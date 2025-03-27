@@ -40,9 +40,11 @@ type SourceBambooHr struct {
 	// Comma-separated list of fields to include in custom reports.
 	CustomReportsFields *string `json:"custom_reports_fields,omitempty"`
 	// If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
-	CustomReportsIncludeDefaultFields *bool      `default:"true" json:"custom_reports_include_default_fields"`
-	StartDate                         *time.Time `json:"start_date,omitempty"`
-	sourceType                        BambooHr   `const:"bamboo-hr" json:"sourceType"`
+	CustomReportsIncludeDefaultFields *bool `default:"true" json:"custom_reports_include_default_fields"`
+	// Comma-separated list of fields to include for employees.
+	EmployeeFields *string    `default:"firstName,lastName" json:"employee_fields"`
+	StartDate      *time.Time `json:"start_date,omitempty"`
+	sourceType     BambooHr   `const:"bamboo-hr" json:"sourceType"`
 }
 
 func (s SourceBambooHr) MarshalJSON() ([]byte, error) {
@@ -82,6 +84,13 @@ func (o *SourceBambooHr) GetCustomReportsIncludeDefaultFields() *bool {
 		return nil
 	}
 	return o.CustomReportsIncludeDefaultFields
+}
+
+func (o *SourceBambooHr) GetEmployeeFields() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmployeeFields
 }
 
 func (o *SourceBambooHr) GetStartDate() *time.Time {

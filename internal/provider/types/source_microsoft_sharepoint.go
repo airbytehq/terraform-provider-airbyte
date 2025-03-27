@@ -9,6 +9,7 @@ type SourceMicrosoftSharepoint struct {
 	DeliveryMethod *SourceMicrosoftSharepointDeliveryMethod         `tfsdk:"delivery_method"`
 	FolderPath     types.String                                     `tfsdk:"folder_path"`
 	SearchScope    types.String                                     `tfsdk:"search_scope"`
+	SiteURL        types.String                                     `tfsdk:"site_url"`
 	StartDate      types.String                                     `tfsdk:"start_date"`
 	Streams        []SourceMicrosoftSharepointFileBasedStreamConfig `tfsdk:"streams"`
 }

@@ -203,6 +203,8 @@ func (u SourceMondayUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
 
 type SourceMondayUpdate struct {
 	Credentials *SourceMondayUpdateAuthorizationMethod `json:"credentials,omitempty"`
+	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
+	BoardIds []int64 `json:"board_ids,omitempty"`
 }
 
 func (o *SourceMondayUpdate) GetCredentials() *SourceMondayUpdateAuthorizationMethod {
@@ -210,4 +212,11 @@ func (o *SourceMondayUpdate) GetCredentials() *SourceMondayUpdateAuthorizationMe
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceMondayUpdate) GetBoardIds() []int64 {
+	if o == nil {
+		return nil
+	}
+	return o.BoardIds
 }

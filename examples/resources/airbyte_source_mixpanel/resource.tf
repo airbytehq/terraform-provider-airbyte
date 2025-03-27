@@ -10,6 +10,7 @@ resource "airbyte_source_mixpanel" "my_source_mixpanel" {
     }
     date_window_size             = 10
     end_date                     = "2021-11-16"
+    export_lookback_window       = 9
     page_size                    = 6
     project_timezone             = "US/Pacific"
     region                       = "US"

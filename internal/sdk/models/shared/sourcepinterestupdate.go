@@ -841,6 +841,8 @@ type SourcePinterestUpdate struct {
 	Credentials *SourcePinterestUpdateOAuth20 `json:"credentials,omitempty"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomReports []SourcePinterestUpdateReportConfig `json:"custom_reports,omitempty"`
+	// The Pinterest account ID you want to fetch data for. This ID must be provided to filter the data for a specific account.
+	AccountID *string `json:"account_id,omitempty"`
 }
 
 func (s SourcePinterestUpdate) MarshalJSON() ([]byte, error) {
@@ -880,4 +882,11 @@ func (o *SourcePinterestUpdate) GetCustomReports() []SourcePinterestUpdateReport
 		return nil
 	}
 	return o.CustomReports
+}
+
+func (o *SourcePinterestUpdate) GetAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccountID
 }

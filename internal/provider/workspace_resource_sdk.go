@@ -267,11 +267,7 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest() *shared.Worksp
 
 func (r *WorkspaceResourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
 	if resp != nil {
-		if resp.DataResidency != nil {
-			r.DataResidency = types.StringValue(string(*resp.DataResidency))
-		} else {
-			r.DataResidency = types.StringNull()
-		}
+		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.Name = types.StringValue(resp.Name)
 		if r.Notifications == nil {
 			r.Notifications = &tfTypes.NotificationsConfig{}

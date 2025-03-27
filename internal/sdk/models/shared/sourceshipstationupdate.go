@@ -2,9 +2,33 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
+)
+
 type SourceShipstationUpdate struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
+	Password  *string   `json:"password,omitempty"`
+	Username  string    `json:"username"`
+	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceShipstationUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceShipstationUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceShipstationUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
 }
 
 func (o *SourceShipstationUpdate) GetUsername() string {
@@ -14,9 +38,9 @@ func (o *SourceShipstationUpdate) GetUsername() string {
 	return o.Username
 }
 
-func (o *SourceShipstationUpdate) GetPassword() *string {
+func (o *SourceShipstationUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.Password
+	return o.StartDate
 }

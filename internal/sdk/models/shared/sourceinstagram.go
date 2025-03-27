@@ -40,8 +40,10 @@ type SourceInstagram struct {
 	// The Client ID for your Oauth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret for your Oauth application
-	ClientSecret *string   `json:"client_secret,omitempty"`
-	sourceType   Instagram `const:"instagram" json:"sourceType"`
+	ClientSecret *string `json:"client_secret,omitempty"`
+	// The number of worker threads to use for the sync.
+	NumWorkers *int64    `default:"15" json:"num_workers"`
+	sourceType Instagram `const:"instagram" json:"sourceType"`
 }
 
 func (s SourceInstagram) MarshalJSON() ([]byte, error) {
@@ -81,6 +83,13 @@ func (o *SourceInstagram) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceInstagram) GetNumWorkers() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorkers
 }
 
 func (o *SourceInstagram) GetSourceType() Instagram {

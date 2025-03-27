@@ -34,7 +34,7 @@ resource "airbyte_connection" "my_connection" {
       }
     ]
   }
-  data_residency                       = "eu"
+  data_residency                       = "...my_data_residency..."
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
   namespace_definition                 = "custom_format"

@@ -7,6 +7,7 @@ resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
     lookback_window = 7
     org_id          = 0
     start_date      = "2020-01-01"
+    timezone        = "UTC"
   }
   definition_id = "f6eb56d1-0915-427d-b110-58bf43673ee3"
   name          = "...my_name..."

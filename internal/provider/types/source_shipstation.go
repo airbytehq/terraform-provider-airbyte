@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceShipstation struct {
-	Password types.String `tfsdk:"password"`
-	Username types.String `tfsdk:"username"`
+	Password  types.String `tfsdk:"password"`
+	StartDate types.String `tfsdk:"start_date"`
+	Username  types.String `tfsdk:"username"`
 }

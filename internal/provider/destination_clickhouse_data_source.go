@@ -5,6 +5,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -28,13 +29,14 @@ type DestinationClickhouseDataSource struct {
 
 // DestinationClickhouseDataSourceModel describes the data model.
 type DestinationClickhouseDataSourceModel struct {
-	Configuration   types.String `tfsdk:"configuration"`
-	CreatedAt       types.Int64  `tfsdk:"created_at"`
-	DefinitionID    types.String `tfsdk:"definition_id"`
-	DestinationID   types.String `tfsdk:"destination_id"`
-	DestinationType types.String `tfsdk:"destination_type"`
-	Name            types.String `tfsdk:"name"`
-	WorkspaceID     types.String `tfsdk:"workspace_id"`
+	Configuration      types.String                        `tfsdk:"configuration"`
+	CreatedAt          types.Int64                         `tfsdk:"created_at"`
+	DefinitionID       types.String                        `tfsdk:"definition_id"`
+	DestinationID      types.String                        `tfsdk:"destination_id"`
+	DestinationType    types.String                        `tfsdk:"destination_type"`
+	Name               types.String                        `tfsdk:"name"`
+	ResourceAllocation *tfTypes.ScopedResourceRequirements `tfsdk:"resource_allocation"`
+	WorkspaceID        types.String                        `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -66,6 +68,71 @@ func (r *DestinationClickhouseDataSource) Schema(ctx context.Context, req dataso
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
+			},
+			"resource_allocation": schema.SingleNestedAttribute{
+				Computed: true,
+				Attributes: map[string]schema.Attribute{
+					"default": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"cpu_limit": schema.StringAttribute{
+								Computed: true,
+							},
+							"cpu_request": schema.StringAttribute{
+								Computed: true,
+							},
+							"ephemeral_storage_limit": schema.StringAttribute{
+								Computed: true,
+							},
+							"ephemeral_storage_request": schema.StringAttribute{
+								Computed: true,
+							},
+							"memory_limit": schema.StringAttribute{
+								Computed: true,
+							},
+							"memory_request": schema.StringAttribute{
+								Computed: true,
+							},
+						},
+						Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+					},
+					"job_specific": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"job_type": schema.StringAttribute{
+									Computed:    true,
+									Description: `enum that describes the different types of jobs that the platform runs.`,
+								},
+								"resource_requirements": schema.SingleNestedAttribute{
+									Computed: true,
+									Attributes: map[string]schema.Attribute{
+										"cpu_limit": schema.StringAttribute{
+											Computed: true,
+										},
+										"cpu_request": schema.StringAttribute{
+											Computed: true,
+										},
+										"ephemeral_storage_limit": schema.StringAttribute{
+											Computed: true,
+										},
+										"ephemeral_storage_request": schema.StringAttribute{
+											Computed: true,
+										},
+										"memory_limit": schema.StringAttribute{
+											Computed: true,
+										},
+										"memory_request": schema.StringAttribute{
+											Computed: true,
+										},
+									},
+									Description: `optional resource requirements to run workers (blank for unbounded allocations)`,
+								},
+							},
+						},
+					},
+				},
+				Description: `actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

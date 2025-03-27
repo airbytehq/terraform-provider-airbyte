@@ -1480,7 +1480,9 @@ type SourceMicrosoftSharepoint struct {
 	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
 	SearchScope *SourceMicrosoftSharepointSearchScope `default:"ALL" json:"search_scope"`
 	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
-	FolderPath *string             `default:"." json:"folder_path"`
+	FolderPath *string `default:"." json:"folder_path"`
+	// Url of SharePoint site to search for files. Leave empty to search in the main site.
+	SiteURL    *string             `default:"" json:"site_url"`
 	sourceType MicrosoftSharepoint `const:"microsoft-sharepoint" json:"sourceType"`
 }
 
@@ -1535,6 +1537,13 @@ func (o *SourceMicrosoftSharepoint) GetFolderPath() *string {
 		return nil
 	}
 	return o.FolderPath
+}
+
+func (o *SourceMicrosoftSharepoint) GetSiteURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SiteURL
 }
 
 func (o *SourceMicrosoftSharepoint) GetSourceType() MicrosoftSharepoint {
