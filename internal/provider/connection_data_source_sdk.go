@@ -110,11 +110,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 		}
 		r.ConnectionID = types.StringValue(resp.ConnectionID)
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		if resp.DataResidency != nil {
-			r.DataResidency = types.StringValue(string(*resp.DataResidency))
-		} else {
-			r.DataResidency = types.StringNull()
-		}
+		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.Name = types.StringValue(resp.Name)
 		if resp.NamespaceDefinition != nil {

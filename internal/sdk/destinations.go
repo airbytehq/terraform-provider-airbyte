@@ -53,7 +53,7 @@ func (s *Destinations) ListDestinations(ctx context.Context, request operations.
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listDestinations",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -188,7 +188,7 @@ func (s *Destinations) CreateDestination(ctx context.Context, request *shared.De
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestination",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -327,7 +327,7 @@ func (s *Destinations) GetDestination(ctx context.Context, request operations.Ge
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestination",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -457,7 +457,7 @@ func (s *Destinations) DeleteDestination(ctx context.Context, request operations
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestination",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -567,7 +567,7 @@ func (s *Destinations) PatchDestination(ctx context.Context, request operations.
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "patchDestination",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPatchRequest", "json", `request:"mediaType=application/json"`)
@@ -704,7 +704,7 @@ func (s *Destinations) PutDestination(ctx context.Context, request operations.Pu
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestination",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPutRequest", "json", `request:"mediaType=application/json"`)
@@ -842,7 +842,7 @@ func (s *Destinations) CreateDestinationAstra(ctx context.Context, request *shar
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationAstra",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -979,7 +979,7 @@ func (s *Destinations) GetDestinationAstra(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationAstra",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -1109,7 +1109,7 @@ func (s *Destinations) PutDestinationAstra(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationAstra",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAstraPutRequest", "json", `request:"mediaType=application/json"`)
@@ -1226,7 +1226,7 @@ func (s *Destinations) DeleteDestinationAstra(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationAstra",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -1337,7 +1337,7 @@ func (s *Destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -1474,7 +1474,7 @@ func (s *Destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -1604,7 +1604,7 @@ func (s *Destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAwsDatalakePutRequest", "json", `request:"mediaType=application/json"`)
@@ -1721,7 +1721,7 @@ func (s *Destinations) DeleteDestinationAwsDatalake(ctx context.Context, request
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationAwsDatalake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -1832,7 +1832,7 @@ func (s *Destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -1969,7 +1969,7 @@ func (s *Destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -2099,7 +2099,7 @@ func (s *Destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationAzureBlobStoragePutRequest", "json", `request:"mediaType=application/json"`)
@@ -2216,7 +2216,7 @@ func (s *Destinations) DeleteDestinationAzureBlobStorage(ctx context.Context, re
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationAzureBlobStorage",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -2327,7 +2327,7 @@ func (s *Destinations) CreateDestinationBigquery(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationBigquery",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -2464,7 +2464,7 @@ func (s *Destinations) GetDestinationBigquery(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationBigquery",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -2594,7 +2594,7 @@ func (s *Destinations) PutDestinationBigquery(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationBigquery",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationBigqueryPutRequest", "json", `request:"mediaType=application/json"`)
@@ -2711,7 +2711,7 @@ func (s *Destinations) DeleteDestinationBigquery(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationBigquery",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -2822,7 +2822,7 @@ func (s *Destinations) CreateDestinationClickhouse(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationClickhouse",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -2959,7 +2959,7 @@ func (s *Destinations) GetDestinationClickhouse(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationClickhouse",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -3089,7 +3089,7 @@ func (s *Destinations) PutDestinationClickhouse(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationClickhouse",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationClickhousePutRequest", "json", `request:"mediaType=application/json"`)
@@ -3206,7 +3206,7 @@ func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationClickhouse",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -3288,6 +3288,501 @@ func (s *Destinations) DeleteDestinationClickhouse(ctx context.Context, request 
 
 }
 
+// CreateDestinationCobra - Create a destination
+// Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
+func (s *Destinations) CreateDestinationCobra(ctx context.Context, request *shared.DestinationCobraCreateRequest, opts ...operations.Option) (*operations.CreateDestinationCobraResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := url.JoinPath(baseURL, "/destinations")
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationCobra",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	if reqContentType != "" {
+		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.CreateDestinationCobraResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// GetDestinationCobra - Get Destination details
+func (s *Destinations) GetDestinationCobra(ctx context.Context, request operations.GetDestinationCobraRequest, opts ...operations.Option) (*operations.GetDestinationCobraResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationCobra",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.GetDestinationCobraResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// PutDestinationCobra - Update a Destination fully
+func (s *Destinations) PutDestinationCobra(ctx context.Context, request operations.PutDestinationCobraRequest, opts ...operations.Option) (*operations.PutDestinationCobraResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationCobra",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationCobraPutRequest", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	if reqContentType != "" {
+		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.PutDestinationCobraResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// DeleteDestinationCobra - Delete a Destination
+func (s *Destinations) DeleteDestinationCobra(ctx context.Context, request operations.DeleteDestinationCobraRequest, opts ...operations.Option) (*operations.DeleteDestinationCobraResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationCobra",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.DeleteDestinationCobraResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
 // CreateDestinationConvex - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *shared.DestinationConvexCreateRequest, opts ...operations.Option) (*operations.CreateDestinationConvexResponse, error) {
@@ -3317,7 +3812,7 @@ func (s *Destinations) CreateDestinationConvex(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationConvex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -3454,7 +3949,7 @@ func (s *Destinations) GetDestinationConvex(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationConvex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -3584,7 +4079,7 @@ func (s *Destinations) PutDestinationConvex(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationConvex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationConvexPutRequest", "json", `request:"mediaType=application/json"`)
@@ -3701,7 +4196,7 @@ func (s *Destinations) DeleteDestinationConvex(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationConvex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -3812,7 +4307,7 @@ func (s *Destinations) CreateDestinationDatabricks(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationDatabricks",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -3949,7 +4444,7 @@ func (s *Destinations) GetDestinationDatabricks(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationDatabricks",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -4079,7 +4574,7 @@ func (s *Destinations) PutDestinationDatabricks(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationDatabricks",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDatabricksPutRequest", "json", `request:"mediaType=application/json"`)
@@ -4196,7 +4691,7 @@ func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationDatabricks",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -4278,6 +4773,501 @@ func (s *Destinations) DeleteDestinationDatabricks(ctx context.Context, request 
 
 }
 
+// CreateDestinationDeepset - Create a destination
+// Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
+func (s *Destinations) CreateDestinationDeepset(ctx context.Context, request *shared.DestinationDeepsetCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDeepsetResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := url.JoinPath(baseURL, "/destinations")
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "createDestinationDeepset",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "POST", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	if reqContentType != "" {
+		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.CreateDestinationDeepsetResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 400:
+		fallthrough
+	case httpRes.StatusCode == 403:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// GetDestinationDeepset - Get Destination details
+func (s *Destinations) GetDestinationDeepset(ctx context.Context, request operations.GetDestinationDeepsetRequest, opts ...operations.Option) (*operations.GetDestinationDeepsetResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "getDestinationDeepset",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.GetDestinationDeepsetResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+
+			var out shared.DestinationResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			res.DestinationResponse = &out
+		default:
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+			return nil, errors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// PutDestinationDeepset - Update a Destination fully
+func (s *Destinations) PutDestinationDeepset(ctx context.Context, request operations.PutDestinationDeepsetRequest, opts ...operations.Option) (*operations.PutDestinationDeepsetResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "putDestinationDeepset",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDeepsetPutRequest", "json", `request:"mediaType=application/json"`)
+	if err != nil {
+		return nil, err
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", opURL, bodyReader)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+	if reqContentType != "" {
+		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.PutDestinationDeepsetResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
+// DeleteDestinationDeepset - Delete a Destination
+func (s *Destinations) DeleteDestinationDeepset(ctx context.Context, request operations.DeleteDestinationDeepsetRequest, opts ...operations.Option) (*operations.DeleteDestinationDeepsetResponse, error) {
+	o := operations.Options{}
+	supportedOptions := []string{
+		operations.SupportedOptionTimeout,
+	}
+
+	for _, opt := range opts {
+		if err := opt(&o, supportedOptions...); err != nil {
+			return nil, fmt.Errorf("error applying option: %w", err)
+		}
+	}
+
+	var baseURL string
+	if o.ServerURL == nil {
+		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	} else {
+		baseURL = *o.ServerURL
+	}
+	opURL, err := utils.GenerateURL(ctx, baseURL, "/destinations/{destinationId}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "deleteDestinationDeepset",
+		OAuth2Scopes:   nil,
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
+	timeout := o.Timeout
+	if timeout == nil {
+		timeout = s.sdkConfiguration.Timeout
+	}
+
+	if timeout != nil {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, *timeout)
+		defer cancel()
+	}
+
+	req, err := http.NewRequestWithContext(ctx, "DELETE", opURL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
+	}
+
+	for k, v := range o.SetHeaders {
+		req.Header.Set(k, v)
+	}
+
+	req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := s.sdkConfiguration.Client.Do(req)
+	if err != nil || httpRes == nil {
+		if err != nil {
+			err = fmt.Errorf("error sending request: %w", err)
+		} else {
+			err = fmt.Errorf("error sending request: no response")
+		}
+
+		_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+		return nil, err
+	} else if utils.MatchStatusCodes([]string{}, httpRes.StatusCode) {
+		_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+		if err != nil {
+			return nil, err
+		} else if _httpRes != nil {
+			httpRes = _httpRes
+		}
+	} else {
+		httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	res := &operations.DeleteDestinationDeepsetResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: httpRes.Header.Get("Content-Type"),
+		RawResponse: httpRes,
+	}
+
+	switch {
+	case httpRes.StatusCode == 403:
+		fallthrough
+	case httpRes.StatusCode == 404:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
+	default:
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
+	}
+
+	return res, nil
+
+}
+
 // CreateDestinationDevNull - Create a destination
 // Creates a destination given a name, workspace id, and a json blob containing the configuration for the destination.
 func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *shared.DestinationDevNullCreateRequest, opts ...operations.Option) (*operations.CreateDestinationDevNullResponse, error) {
@@ -4307,7 +5297,7 @@ func (s *Destinations) CreateDestinationDevNull(ctx context.Context, request *sh
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationDevNull",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -4444,7 +5434,7 @@ func (s *Destinations) GetDestinationDevNull(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationDevNull",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -4574,7 +5564,7 @@ func (s *Destinations) PutDestinationDevNull(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationDevNull",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDevNullPutRequest", "json", `request:"mediaType=application/json"`)
@@ -4691,7 +5681,7 @@ func (s *Destinations) DeleteDestinationDevNull(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationDevNull",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -4802,7 +5792,7 @@ func (s *Destinations) CreateDestinationDuckdb(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationDuckdb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -4939,7 +5929,7 @@ func (s *Destinations) GetDestinationDuckdb(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationDuckdb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -5069,7 +6059,7 @@ func (s *Destinations) PutDestinationDuckdb(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationDuckdb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDuckdbPutRequest", "json", `request:"mediaType=application/json"`)
@@ -5186,7 +6176,7 @@ func (s *Destinations) DeleteDestinationDuckdb(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationDuckdb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -5297,7 +6287,7 @@ func (s *Destinations) CreateDestinationDynamodb(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationDynamodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -5434,7 +6424,7 @@ func (s *Destinations) GetDestinationDynamodb(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationDynamodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -5564,7 +6554,7 @@ func (s *Destinations) PutDestinationDynamodb(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationDynamodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationDynamodbPutRequest", "json", `request:"mediaType=application/json"`)
@@ -5681,7 +6671,7 @@ func (s *Destinations) DeleteDestinationDynamodb(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationDynamodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -5792,7 +6782,7 @@ func (s *Destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -5929,7 +6919,7 @@ func (s *Destinations) GetDestinationElasticsearch(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -6059,7 +7049,7 @@ func (s *Destinations) PutDestinationElasticsearch(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationElasticsearchPutRequest", "json", `request:"mediaType=application/json"`)
@@ -6176,7 +7166,7 @@ func (s *Destinations) DeleteDestinationElasticsearch(ctx context.Context, reque
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationElasticsearch",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -6287,7 +7277,7 @@ func (s *Destinations) CreateDestinationFirebolt(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationFirebolt",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -6424,7 +7414,7 @@ func (s *Destinations) GetDestinationFirebolt(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationFirebolt",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -6554,7 +7544,7 @@ func (s *Destinations) PutDestinationFirebolt(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationFirebolt",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationFireboltPutRequest", "json", `request:"mediaType=application/json"`)
@@ -6671,7 +7661,7 @@ func (s *Destinations) DeleteDestinationFirebolt(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationFirebolt",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -6782,7 +7772,7 @@ func (s *Destinations) CreateDestinationFirestore(ctx context.Context, request *
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationFirestore",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -6919,7 +7909,7 @@ func (s *Destinations) GetDestinationFirestore(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationFirestore",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -7049,7 +8039,7 @@ func (s *Destinations) PutDestinationFirestore(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationFirestore",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationFirestorePutRequest", "json", `request:"mediaType=application/json"`)
@@ -7166,7 +8156,7 @@ func (s *Destinations) DeleteDestinationFirestore(ctx context.Context, request o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationFirestore",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -7277,7 +8267,7 @@ func (s *Destinations) CreateDestinationGcs(ctx context.Context, request *shared
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationGcs",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -7414,7 +8404,7 @@ func (s *Destinations) GetDestinationGcs(ctx context.Context, request operations
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationGcs",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -7544,7 +8534,7 @@ func (s *Destinations) PutDestinationGcs(ctx context.Context, request operations
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationGcs",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationGcsPutRequest", "json", `request:"mediaType=application/json"`)
@@ -7661,7 +8651,7 @@ func (s *Destinations) DeleteDestinationGcs(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationGcs",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -7772,7 +8762,7 @@ func (s *Destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -7909,7 +8899,7 @@ func (s *Destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -8039,7 +9029,7 @@ func (s *Destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationGoogleSheetsPutRequest", "json", `request:"mediaType=application/json"`)
@@ -8156,7 +9146,7 @@ func (s *Destinations) DeleteDestinationGoogleSheets(ctx context.Context, reques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationGoogleSheets",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -8267,7 +9257,7 @@ func (s *Destinations) CreateDestinationIceberg(ctx context.Context, request *sh
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationIceberg",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -8404,7 +9394,7 @@ func (s *Destinations) GetDestinationIceberg(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationIceberg",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -8534,7 +9524,7 @@ func (s *Destinations) PutDestinationIceberg(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationIceberg",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationIcebergPutRequest", "json", `request:"mediaType=application/json"`)
@@ -8651,7 +9641,7 @@ func (s *Destinations) DeleteDestinationIceberg(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationIceberg",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -8762,7 +9752,7 @@ func (s *Destinations) CreateDestinationMilvus(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMilvus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -8899,7 +9889,7 @@ func (s *Destinations) GetDestinationMilvus(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMilvus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -9029,7 +10019,7 @@ func (s *Destinations) PutDestinationMilvus(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMilvus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMilvusPutRequest", "json", `request:"mediaType=application/json"`)
@@ -9146,7 +10136,7 @@ func (s *Destinations) DeleteDestinationMilvus(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMilvus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -9257,7 +10247,7 @@ func (s *Destinations) CreateDestinationMongodb(ctx context.Context, request *sh
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMongodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -9394,7 +10384,7 @@ func (s *Destinations) GetDestinationMongodb(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMongodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -9524,7 +10514,7 @@ func (s *Destinations) PutDestinationMongodb(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMongodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMongodbPutRequest", "json", `request:"mediaType=application/json"`)
@@ -9641,7 +10631,7 @@ func (s *Destinations) DeleteDestinationMongodb(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMongodb",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -9752,7 +10742,7 @@ func (s *Destinations) CreateDestinationMotherduck(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMotherduck",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -9889,7 +10879,7 @@ func (s *Destinations) GetDestinationMotherduck(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMotherduck",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -10019,7 +11009,7 @@ func (s *Destinations) PutDestinationMotherduck(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMotherduck",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMotherduckPutRequest", "json", `request:"mediaType=application/json"`)
@@ -10136,7 +11126,7 @@ func (s *Destinations) DeleteDestinationMotherduck(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMotherduck",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -10247,7 +11237,7 @@ func (s *Destinations) CreateDestinationMssql(ctx context.Context, request *shar
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMssql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -10384,7 +11374,7 @@ func (s *Destinations) GetDestinationMssql(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMssql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -10514,7 +11504,7 @@ func (s *Destinations) PutDestinationMssql(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMssql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMssqlPutRequest", "json", `request:"mediaType=application/json"`)
@@ -10631,7 +11621,7 @@ func (s *Destinations) DeleteDestinationMssql(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMssql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -10742,7 +11732,7 @@ func (s *Destinations) CreateDestinationMssqlV2(ctx context.Context, request *sh
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -10879,7 +11869,7 @@ func (s *Destinations) GetDestinationMssqlV2(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -11009,7 +11999,7 @@ func (s *Destinations) PutDestinationMssqlV2(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMssqlV2PutRequest", "json", `request:"mediaType=application/json"`)
@@ -11126,7 +12116,7 @@ func (s *Destinations) DeleteDestinationMssqlV2(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMssqlV2",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -11237,7 +12227,7 @@ func (s *Destinations) CreateDestinationMysql(ctx context.Context, request *shar
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationMysql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -11374,7 +12364,7 @@ func (s *Destinations) GetDestinationMysql(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationMysql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -11504,7 +12494,7 @@ func (s *Destinations) PutDestinationMysql(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationMysql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationMysqlPutRequest", "json", `request:"mediaType=application/json"`)
@@ -11621,7 +12611,7 @@ func (s *Destinations) DeleteDestinationMysql(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationMysql",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -11732,7 +12722,7 @@ func (s *Destinations) CreateDestinationOracle(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationOracle",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -11869,7 +12859,7 @@ func (s *Destinations) GetDestinationOracle(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationOracle",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -11999,7 +12989,7 @@ func (s *Destinations) PutDestinationOracle(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationOracle",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationOraclePutRequest", "json", `request:"mediaType=application/json"`)
@@ -12116,7 +13106,7 @@ func (s *Destinations) DeleteDestinationOracle(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationOracle",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -12227,7 +13217,7 @@ func (s *Destinations) CreateDestinationPgvector(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationPgvector",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -12364,7 +13354,7 @@ func (s *Destinations) GetDestinationPgvector(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationPgvector",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -12494,7 +13484,7 @@ func (s *Destinations) PutDestinationPgvector(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationPgvector",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPgvectorPutRequest", "json", `request:"mediaType=application/json"`)
@@ -12611,7 +13601,7 @@ func (s *Destinations) DeleteDestinationPgvector(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationPgvector",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -12722,7 +13712,7 @@ func (s *Destinations) CreateDestinationPinecone(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationPinecone",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -12859,7 +13849,7 @@ func (s *Destinations) GetDestinationPinecone(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationPinecone",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -12989,7 +13979,7 @@ func (s *Destinations) PutDestinationPinecone(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationPinecone",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPineconePutRequest", "json", `request:"mediaType=application/json"`)
@@ -13106,7 +14096,7 @@ func (s *Destinations) DeleteDestinationPinecone(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationPinecone",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -13217,7 +14207,7 @@ func (s *Destinations) CreateDestinationPostgres(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationPostgres",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -13354,7 +14344,7 @@ func (s *Destinations) GetDestinationPostgres(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationPostgres",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -13484,7 +14474,7 @@ func (s *Destinations) PutDestinationPostgres(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationPostgres",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPostgresPutRequest", "json", `request:"mediaType=application/json"`)
@@ -13601,7 +14591,7 @@ func (s *Destinations) DeleteDestinationPostgres(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationPostgres",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -13712,7 +14702,7 @@ func (s *Destinations) CreateDestinationPubsub(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationPubsub",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -13849,7 +14839,7 @@ func (s *Destinations) GetDestinationPubsub(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationPubsub",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -13979,7 +14969,7 @@ func (s *Destinations) PutDestinationPubsub(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationPubsub",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationPubsubPutRequest", "json", `request:"mediaType=application/json"`)
@@ -14096,7 +15086,7 @@ func (s *Destinations) DeleteDestinationPubsub(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationPubsub",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -14207,7 +15197,7 @@ func (s *Destinations) CreateDestinationQdrant(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationQdrant",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -14344,7 +15334,7 @@ func (s *Destinations) GetDestinationQdrant(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationQdrant",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -14474,7 +15464,7 @@ func (s *Destinations) PutDestinationQdrant(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationQdrant",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationQdrantPutRequest", "json", `request:"mediaType=application/json"`)
@@ -14591,7 +15581,7 @@ func (s *Destinations) DeleteDestinationQdrant(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationQdrant",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -14702,7 +15692,7 @@ func (s *Destinations) CreateDestinationRedis(ctx context.Context, request *shar
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationRedis",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -14839,7 +15829,7 @@ func (s *Destinations) GetDestinationRedis(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationRedis",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -14969,7 +15959,7 @@ func (s *Destinations) PutDestinationRedis(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationRedis",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationRedisPutRequest", "json", `request:"mediaType=application/json"`)
@@ -15086,7 +16076,7 @@ func (s *Destinations) DeleteDestinationRedis(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationRedis",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -15197,7 +16187,7 @@ func (s *Destinations) CreateDestinationRedshift(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationRedshift",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -15334,7 +16324,7 @@ func (s *Destinations) GetDestinationRedshift(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationRedshift",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -15464,7 +16454,7 @@ func (s *Destinations) PutDestinationRedshift(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationRedshift",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationRedshiftPutRequest", "json", `request:"mediaType=application/json"`)
@@ -15581,7 +16571,7 @@ func (s *Destinations) DeleteDestinationRedshift(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationRedshift",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -15692,7 +16682,7 @@ func (s *Destinations) CreateDestinationS3(ctx context.Context, request *shared.
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationS3",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -15829,7 +16819,7 @@ func (s *Destinations) GetDestinationS3(ctx context.Context, request operations.
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationS3",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -15959,7 +16949,7 @@ func (s *Destinations) PutDestinationS3(ctx context.Context, request operations.
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationS3",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3PutRequest", "json", `request:"mediaType=application/json"`)
@@ -16076,7 +17066,7 @@ func (s *Destinations) DeleteDestinationS3(ctx context.Context, request operatio
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationS3",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -16187,7 +17177,7 @@ func (s *Destinations) CreateDestinationS3DataLake(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -16324,7 +17314,7 @@ func (s *Destinations) GetDestinationS3DataLake(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -16454,7 +17444,7 @@ func (s *Destinations) PutDestinationS3DataLake(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3DataLakePutRequest", "json", `request:"mediaType=application/json"`)
@@ -16571,7 +17561,7 @@ func (s *Destinations) DeleteDestinationS3DataLake(ctx context.Context, request 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationS3DataLake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -16682,7 +17672,7 @@ func (s *Destinations) CreateDestinationS3Glue(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationS3Glue",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -16819,7 +17809,7 @@ func (s *Destinations) GetDestinationS3Glue(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationS3Glue",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -16949,7 +17939,7 @@ func (s *Destinations) PutDestinationS3Glue(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationS3Glue",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationS3GluePutRequest", "json", `request:"mediaType=application/json"`)
@@ -17066,7 +18056,7 @@ func (s *Destinations) DeleteDestinationS3Glue(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationS3Glue",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -17177,7 +18167,7 @@ func (s *Destinations) CreateDestinationSftpJSON(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationSftpJson",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -17314,7 +18304,7 @@ func (s *Destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationSftpJson",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -17444,7 +18434,7 @@ func (s *Destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationSftpJson",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSftpJSONPutRequest", "json", `request:"mediaType=application/json"`)
@@ -17561,7 +18551,7 @@ func (s *Destinations) DeleteDestinationSftpJSON(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationSftpJson",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -17672,7 +18662,7 @@ func (s *Destinations) CreateDestinationSnowflake(ctx context.Context, request *
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationSnowflake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -17809,7 +18799,7 @@ func (s *Destinations) GetDestinationSnowflake(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationSnowflake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -17939,7 +18929,7 @@ func (s *Destinations) PutDestinationSnowflake(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationSnowflake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSnowflakePutRequest", "json", `request:"mediaType=application/json"`)
@@ -18056,7 +19046,7 @@ func (s *Destinations) DeleteDestinationSnowflake(ctx context.Context, request o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationSnowflake",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -18167,7 +19157,7 @@ func (s *Destinations) CreateDestinationSnowflakeCortex(ctx context.Context, req
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -18304,7 +19294,7 @@ func (s *Destinations) GetDestinationSnowflakeCortex(ctx context.Context, reques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -18434,7 +19424,7 @@ func (s *Destinations) PutDestinationSnowflakeCortex(ctx context.Context, reques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationSnowflakeCortexPutRequest", "json", `request:"mediaType=application/json"`)
@@ -18551,7 +19541,7 @@ func (s *Destinations) DeleteDestinationSnowflakeCortex(ctx context.Context, req
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationSnowflakeCortex",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -18662,7 +19652,7 @@ func (s *Destinations) CreateDestinationTeradata(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationTeradata",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -18799,7 +19789,7 @@ func (s *Destinations) GetDestinationTeradata(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationTeradata",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -18929,7 +19919,7 @@ func (s *Destinations) PutDestinationTeradata(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationTeradata",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTeradataPutRequest", "json", `request:"mediaType=application/json"`)
@@ -19046,7 +20036,7 @@ func (s *Destinations) DeleteDestinationTeradata(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationTeradata",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -19157,7 +20147,7 @@ func (s *Destinations) CreateDestinationTimeplus(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationTimeplus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -19294,7 +20284,7 @@ func (s *Destinations) GetDestinationTimeplus(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationTimeplus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -19424,7 +20414,7 @@ func (s *Destinations) PutDestinationTimeplus(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationTimeplus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTimeplusPutRequest", "json", `request:"mediaType=application/json"`)
@@ -19541,7 +20531,7 @@ func (s *Destinations) DeleteDestinationTimeplus(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationTimeplus",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -19652,7 +20642,7 @@ func (s *Destinations) CreateDestinationTypesense(ctx context.Context, request *
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationTypesense",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -19789,7 +20779,7 @@ func (s *Destinations) GetDestinationTypesense(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationTypesense",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -19919,7 +20909,7 @@ func (s *Destinations) PutDestinationTypesense(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationTypesense",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationTypesensePutRequest", "json", `request:"mediaType=application/json"`)
@@ -20036,7 +21026,7 @@ func (s *Destinations) DeleteDestinationTypesense(ctx context.Context, request o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationTypesense",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -20147,7 +21137,7 @@ func (s *Destinations) CreateDestinationVectara(ctx context.Context, request *sh
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationVectara",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -20284,7 +21274,7 @@ func (s *Destinations) GetDestinationVectara(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationVectara",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -20414,7 +21404,7 @@ func (s *Destinations) PutDestinationVectara(ctx context.Context, request operat
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationVectara",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationVectaraPutRequest", "json", `request:"mediaType=application/json"`)
@@ -20531,7 +21521,7 @@ func (s *Destinations) DeleteDestinationVectara(ctx context.Context, request ope
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationVectara",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -20642,7 +21632,7 @@ func (s *Destinations) CreateDestinationWeaviate(ctx context.Context, request *s
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationWeaviate",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -20779,7 +21769,7 @@ func (s *Destinations) GetDestinationWeaviate(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationWeaviate",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -20909,7 +21899,7 @@ func (s *Destinations) PutDestinationWeaviate(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationWeaviate",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationWeaviatePutRequest", "json", `request:"mediaType=application/json"`)
@@ -21026,7 +22016,7 @@ func (s *Destinations) DeleteDestinationWeaviate(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationWeaviate",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -21137,7 +22127,7 @@ func (s *Destinations) CreateDestinationYellowbrick(ctx context.Context, request
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -21274,7 +22264,7 @@ func (s *Destinations) GetDestinationYellowbrick(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -21404,7 +22394,7 @@ func (s *Destinations) PutDestinationYellowbrick(ctx context.Context, request op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationYellowbrickPutRequest", "json", `request:"mediaType=application/json"`)
@@ -21521,7 +22511,7 @@ func (s *Destinations) DeleteDestinationYellowbrick(ctx context.Context, request
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationYellowbrick",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -21632,7 +22622,7 @@ func (s *Destinations) CreateDestinationCustom(ctx context.Context, request *sha
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createDestinationCustom",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -21769,7 +22759,7 @@ func (s *Destinations) GetDestinationCustom(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getDestinationCustom",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -21899,7 +22889,7 @@ func (s *Destinations) PutDestinationCustom(ctx context.Context, request operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "putDestinationCustom",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DestinationCustomPutRequest", "json", `request:"mediaType=application/json"`)
@@ -22016,7 +23006,7 @@ func (s *Destinations) DeleteDestinationCustom(ctx context.Context, request oper
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteDestinationCustom",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 

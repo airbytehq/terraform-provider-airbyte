@@ -3,6 +3,8 @@
 package provider
 
 import (
+	"encoding/json"
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -23,12 +25,9 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 	var host string
 	host = r.Configuration.Host.ValueString()
 
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
 	var database string
 	database = r.Configuration.Database.ValueString()
 
@@ -38,8 +37,8 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 	} else {
 		schema = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var user string
+	user = r.Configuration.User.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -53,118 +52,160 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 	} else {
 		jdbcURLParams = nil
 	}
-	var sslMethod *shared.DestinationMssqlSSLMethod
-	if r.Configuration.SslMethod != nil {
-		var destinationMssqlUnencrypted *shared.DestinationMssqlUnencrypted
-		if r.Configuration.SslMethod.Unencrypted != nil {
-			destinationMssqlUnencrypted = &shared.DestinationMssqlUnencrypted{}
+	var sslMethod shared.DestinationMssqlSSLMethod
+	var destinationMssqlUnencrypted *shared.DestinationMssqlUnencrypted
+	if r.Configuration.SslMethod.Unencrypted != nil {
+		name1 := new(shared.Name)
+		if !r.Configuration.SslMethod.Unencrypted.Name.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.Name.IsNull() {
+			*name1 = shared.Name(r.Configuration.SslMethod.Unencrypted.Name.ValueString())
+		} else {
+			name1 = nil
 		}
-		if destinationMssqlUnencrypted != nil {
-			sslMethod = &shared.DestinationMssqlSSLMethod{
-				DestinationMssqlUnencrypted: destinationMssqlUnencrypted,
-			}
+		var additionalProperties interface{}
+		if !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties)
 		}
-		var destinationMssqlEncryptedTrustServerCertificate *shared.DestinationMssqlEncryptedTrustServerCertificate
-		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
-			destinationMssqlEncryptedTrustServerCertificate = &shared.DestinationMssqlEncryptedTrustServerCertificate{}
-		}
-		if destinationMssqlEncryptedTrustServerCertificate != nil {
-			sslMethod = &shared.DestinationMssqlSSLMethod{
-				DestinationMssqlEncryptedTrustServerCertificate: destinationMssqlEncryptedTrustServerCertificate,
-			}
-		}
-		var destinationMssqlEncryptedVerifyCertificate *shared.DestinationMssqlEncryptedVerifyCertificate
-		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
-			hostNameInCertificate := new(string)
-			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-			} else {
-				hostNameInCertificate = nil
-			}
-			destinationMssqlEncryptedVerifyCertificate = &shared.DestinationMssqlEncryptedVerifyCertificate{
-				HostNameInCertificate: hostNameInCertificate,
-			}
-		}
-		if destinationMssqlEncryptedVerifyCertificate != nil {
-			sslMethod = &shared.DestinationMssqlSSLMethod{
-				DestinationMssqlEncryptedVerifyCertificate: destinationMssqlEncryptedVerifyCertificate,
-			}
+		destinationMssqlUnencrypted = &shared.DestinationMssqlUnencrypted{
+			Name:                 name1,
+			AdditionalProperties: additionalProperties,
 		}
 	}
-	rawDataSchema := new(string)
-	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
-		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
-	} else {
-		rawDataSchema = nil
+	if destinationMssqlUnencrypted != nil {
+		sslMethod = shared.DestinationMssqlSSLMethod{
+			DestinationMssqlUnencrypted: destinationMssqlUnencrypted,
+		}
 	}
-	var tunnelMethod *shared.DestinationMssqlSSHTunnelMethod
-	if r.Configuration.TunnelMethod != nil {
-		var destinationMssqlNoTunnel *shared.DestinationMssqlNoTunnel
-		if r.Configuration.TunnelMethod.NoTunnel != nil {
-			destinationMssqlNoTunnel = &shared.DestinationMssqlNoTunnel{}
+	var destinationMssqlEncryptedTrustServerCertificate *shared.DestinationMssqlEncryptedTrustServerCertificate
+	if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
+		name2 := new(shared.DestinationMssqlName)
+		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.IsNull() {
+			*name2 = shared.DestinationMssqlName(r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.ValueString())
+		} else {
+			name2 = nil
 		}
-		if destinationMssqlNoTunnel != nil {
-			tunnelMethod = &shared.DestinationMssqlSSHTunnelMethod{
-				DestinationMssqlNoTunnel: destinationMssqlNoTunnel,
-			}
+		var additionalProperties1 interface{}
+		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
-		var destinationMssqlSSHKeyAuthentication *shared.DestinationMssqlSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
-			var tunnelHost string
-			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
-			tunnelPort := new(int64)
-			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
-				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
-			} else {
-				tunnelPort = nil
-			}
-			var tunnelUser string
-			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
-
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-			destinationMssqlSSHKeyAuthentication = &shared.DestinationMssqlSSHKeyAuthentication{
-				TunnelHost: tunnelHost,
-				TunnelPort: tunnelPort,
-				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
-			}
+		destinationMssqlEncryptedTrustServerCertificate = &shared.DestinationMssqlEncryptedTrustServerCertificate{
+			Name:                 name2,
+			AdditionalProperties: additionalProperties1,
 		}
-		if destinationMssqlSSHKeyAuthentication != nil {
-			tunnelMethod = &shared.DestinationMssqlSSHTunnelMethod{
-				DestinationMssqlSSHKeyAuthentication: destinationMssqlSSHKeyAuthentication,
-			}
+	}
+	if destinationMssqlEncryptedTrustServerCertificate != nil {
+		sslMethod = shared.DestinationMssqlSSLMethod{
+			DestinationMssqlEncryptedTrustServerCertificate: destinationMssqlEncryptedTrustServerCertificate,
 		}
-		var destinationMssqlPasswordAuthentication *shared.DestinationMssqlPasswordAuthentication
-		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
-			var tunnelHost1 string
-			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
-			tunnelPort1 := new(int64)
-			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
-				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
-			} else {
-				tunnelPort1 = nil
-			}
-			var tunnelUser1 string
-			tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
-
-			var tunnelUserPassword string
-			tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
-
-			destinationMssqlPasswordAuthentication = &shared.DestinationMssqlPasswordAuthentication{
-				TunnelHost:         tunnelHost1,
-				TunnelPort:         tunnelPort1,
-				TunnelUser:         tunnelUser1,
-				TunnelUserPassword: tunnelUserPassword,
-			}
+	}
+	var destinationMssqlEncryptedVerifyCertificate *shared.DestinationMssqlEncryptedVerifyCertificate
+	if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+		name3 := new(shared.DestinationMssqlSchemasName)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsNull() {
+			*name3 = shared.DestinationMssqlSchemasName(r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.ValueString())
+		} else {
+			name3 = nil
 		}
-		if destinationMssqlPasswordAuthentication != nil {
-			tunnelMethod = &shared.DestinationMssqlSSHTunnelMethod{
-				DestinationMssqlPasswordAuthentication: destinationMssqlPasswordAuthentication,
-			}
+		trustStoreName := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.IsNull() {
+			*trustStoreName = r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.ValueString()
+		} else {
+			trustStoreName = nil
+		}
+		trustStorePassword := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.IsNull() {
+			*trustStorePassword = r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.ValueString()
+		} else {
+			trustStorePassword = nil
+		}
+		hostNameInCertificate := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+		} else {
+			hostNameInCertificate = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		destinationMssqlEncryptedVerifyCertificate = &shared.DestinationMssqlEncryptedVerifyCertificate{
+			Name:                  name3,
+			TrustStoreName:        trustStoreName,
+			TrustStorePassword:    trustStorePassword,
+			HostNameInCertificate: hostNameInCertificate,
+			AdditionalProperties:  additionalProperties2,
+		}
+	}
+	if destinationMssqlEncryptedVerifyCertificate != nil {
+		sslMethod = shared.DestinationMssqlSSLMethod{
+			DestinationMssqlEncryptedVerifyCertificate: destinationMssqlEncryptedVerifyCertificate,
+		}
+	}
+	var loadType shared.LoadType
+	var insertLoad *shared.InsertLoad
+	if r.Configuration.LoadType.InsertLoad != nil {
+		loadType1 := new(shared.DestinationMssqlSchemasLoadType)
+		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
+			*loadType1 = shared.DestinationMssqlSchemasLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
+		} else {
+			loadType1 = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		insertLoad = &shared.InsertLoad{
+			LoadType:             loadType1,
+			AdditionalProperties: additionalProperties3,
+		}
+	}
+	if insertLoad != nil {
+		loadType = shared.LoadType{
+			InsertLoad: insertLoad,
+		}
+	}
+	var bulkLoad *shared.BulkLoad
+	if r.Configuration.LoadType.BulkLoad != nil {
+		loadType2 := new(shared.DestinationMssqlLoadType)
+		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
+			*loadType2 = shared.DestinationMssqlLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
+		} else {
+			loadType2 = nil
+		}
+		var azureBlobStorageAccountName string
+		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+
+		var azureBlobStorageContainerName string
+		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
+
+		var sharedAccessSignature string
+		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+
+		var bulkLoadDataSource string
+		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
+
+		bulkLoadValidateValuesPreLoad := new(bool)
+		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
+			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
+		} else {
+			bulkLoadValidateValuesPreLoad = nil
+		}
+		var additionalProperties4 interface{}
+		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties4)
+		}
+		bulkLoad = &shared.BulkLoad{
+			LoadType:                      loadType2,
+			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+			AzureBlobStorageContainerName: azureBlobStorageContainerName,
+			SharedAccessSignature:         sharedAccessSignature,
+			BulkLoadDataSource:            bulkLoadDataSource,
+			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
+			AdditionalProperties:          additionalProperties4,
+		}
+	}
+	if bulkLoad != nil {
+		loadType = shared.LoadType{
+			BulkLoad: bulkLoad,
 		}
 	}
 	configuration := shared.DestinationMssql{
@@ -172,12 +213,11 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 		Port:          port,
 		Database:      database,
 		Schema:        schema,
-		Username:      username,
+		User:          user,
 		Password:      password,
 		JdbcURLParams: jdbcURLParams,
 		SslMethod:     sslMethod,
-		RawDataSchema: rawDataSchema,
-		TunnelMethod:  tunnelMethod,
+		LoadType:      loadType,
 	}
 	out := shared.DestinationMssqlCreateRequest{
 		Name:          name,
@@ -195,6 +235,42 @@ func (r *DestinationMssqlResourceModel) RefreshFromSharedDestinationResponse(res
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.DestinationType = types.StringValue(resp.DestinationType)
 		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+				}
+			}
+		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 }
@@ -209,12 +285,9 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 	var host string
 	host = r.Configuration.Host.ValueString()
 
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
+	var port int64
+	port = r.Configuration.Port.ValueInt64()
+
 	var database string
 	database = r.Configuration.Database.ValueString()
 
@@ -224,8 +297,8 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 	} else {
 		schema = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var user string
+	user = r.Configuration.User.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -239,118 +312,160 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 	} else {
 		jdbcURLParams = nil
 	}
-	var sslMethod *shared.DestinationMssqlUpdateSSLMethod
-	if r.Configuration.SslMethod != nil {
-		var destinationMssqlUpdateUnencrypted *shared.DestinationMssqlUpdateUnencrypted
-		if r.Configuration.SslMethod.Unencrypted != nil {
-			destinationMssqlUpdateUnencrypted = &shared.DestinationMssqlUpdateUnencrypted{}
+	var sslMethod shared.DestinationMssqlUpdateSSLMethod
+	var destinationMssqlUpdateUnencrypted *shared.DestinationMssqlUpdateUnencrypted
+	if r.Configuration.SslMethod.Unencrypted != nil {
+		name1 := new(shared.DestinationMssqlUpdateName)
+		if !r.Configuration.SslMethod.Unencrypted.Name.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.Name.IsNull() {
+			*name1 = shared.DestinationMssqlUpdateName(r.Configuration.SslMethod.Unencrypted.Name.ValueString())
+		} else {
+			name1 = nil
 		}
-		if destinationMssqlUpdateUnencrypted != nil {
-			sslMethod = &shared.DestinationMssqlUpdateSSLMethod{
-				DestinationMssqlUpdateUnencrypted: destinationMssqlUpdateUnencrypted,
-			}
+		var additionalProperties interface{}
+		if !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.Unencrypted.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.Unencrypted.AdditionalProperties.ValueString()), &additionalProperties)
 		}
-		var destinationMssqlUpdateEncryptedTrustServerCertificate *shared.DestinationMssqlUpdateEncryptedTrustServerCertificate
-		if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
-			destinationMssqlUpdateEncryptedTrustServerCertificate = &shared.DestinationMssqlUpdateEncryptedTrustServerCertificate{}
-		}
-		if destinationMssqlUpdateEncryptedTrustServerCertificate != nil {
-			sslMethod = &shared.DestinationMssqlUpdateSSLMethod{
-				DestinationMssqlUpdateEncryptedTrustServerCertificate: destinationMssqlUpdateEncryptedTrustServerCertificate,
-			}
-		}
-		var destinationMssqlUpdateEncryptedVerifyCertificate *shared.DestinationMssqlUpdateEncryptedVerifyCertificate
-		if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
-			hostNameInCertificate := new(string)
-			if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-				*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-			} else {
-				hostNameInCertificate = nil
-			}
-			destinationMssqlUpdateEncryptedVerifyCertificate = &shared.DestinationMssqlUpdateEncryptedVerifyCertificate{
-				HostNameInCertificate: hostNameInCertificate,
-			}
-		}
-		if destinationMssqlUpdateEncryptedVerifyCertificate != nil {
-			sslMethod = &shared.DestinationMssqlUpdateSSLMethod{
-				DestinationMssqlUpdateEncryptedVerifyCertificate: destinationMssqlUpdateEncryptedVerifyCertificate,
-			}
+		destinationMssqlUpdateUnencrypted = &shared.DestinationMssqlUpdateUnencrypted{
+			Name:                 name1,
+			AdditionalProperties: additionalProperties,
 		}
 	}
-	rawDataSchema := new(string)
-	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
-		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
-	} else {
-		rawDataSchema = nil
+	if destinationMssqlUpdateUnencrypted != nil {
+		sslMethod = shared.DestinationMssqlUpdateSSLMethod{
+			DestinationMssqlUpdateUnencrypted: destinationMssqlUpdateUnencrypted,
+		}
 	}
-	var tunnelMethod *shared.DestinationMssqlUpdateSSHTunnelMethod
-	if r.Configuration.TunnelMethod != nil {
-		var destinationMssqlUpdateNoTunnel *shared.DestinationMssqlUpdateNoTunnel
-		if r.Configuration.TunnelMethod.NoTunnel != nil {
-			destinationMssqlUpdateNoTunnel = &shared.DestinationMssqlUpdateNoTunnel{}
+	var destinationMssqlUpdateEncryptedTrustServerCertificate *shared.DestinationMssqlUpdateEncryptedTrustServerCertificate
+	if r.Configuration.SslMethod.EncryptedTrustServerCertificate != nil {
+		name2 := new(shared.DestinationMssqlUpdateSchemasName)
+		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.IsNull() {
+			*name2 = shared.DestinationMssqlUpdateSchemasName(r.Configuration.SslMethod.EncryptedTrustServerCertificate.Name.ValueString())
+		} else {
+			name2 = nil
 		}
-		if destinationMssqlUpdateNoTunnel != nil {
-			tunnelMethod = &shared.DestinationMssqlUpdateSSHTunnelMethod{
-				DestinationMssqlUpdateNoTunnel: destinationMssqlUpdateNoTunnel,
-			}
+		var additionalProperties1 interface{}
+		if !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedTrustServerCertificate.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
-		var destinationMssqlUpdateSSHKeyAuthentication *shared.DestinationMssqlUpdateSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
-			var tunnelHost string
-			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
-			tunnelPort := new(int64)
-			if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
-				*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
-			} else {
-				tunnelPort = nil
-			}
-			var tunnelUser string
-			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
-
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-			destinationMssqlUpdateSSHKeyAuthentication = &shared.DestinationMssqlUpdateSSHKeyAuthentication{
-				TunnelHost: tunnelHost,
-				TunnelPort: tunnelPort,
-				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
-			}
+		destinationMssqlUpdateEncryptedTrustServerCertificate = &shared.DestinationMssqlUpdateEncryptedTrustServerCertificate{
+			Name:                 name2,
+			AdditionalProperties: additionalProperties1,
 		}
-		if destinationMssqlUpdateSSHKeyAuthentication != nil {
-			tunnelMethod = &shared.DestinationMssqlUpdateSSHTunnelMethod{
-				DestinationMssqlUpdateSSHKeyAuthentication: destinationMssqlUpdateSSHKeyAuthentication,
-			}
+	}
+	if destinationMssqlUpdateEncryptedTrustServerCertificate != nil {
+		sslMethod = shared.DestinationMssqlUpdateSSLMethod{
+			DestinationMssqlUpdateEncryptedTrustServerCertificate: destinationMssqlUpdateEncryptedTrustServerCertificate,
 		}
-		var destinationMssqlUpdatePasswordAuthentication *shared.DestinationMssqlUpdatePasswordAuthentication
-		if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
-			var tunnelHost1 string
-			tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
-			tunnelPort1 := new(int64)
-			if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
-				*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
-			} else {
-				tunnelPort1 = nil
-			}
-			var tunnelUser1 string
-			tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
-
-			var tunnelUserPassword string
-			tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
-
-			destinationMssqlUpdatePasswordAuthentication = &shared.DestinationMssqlUpdatePasswordAuthentication{
-				TunnelHost:         tunnelHost1,
-				TunnelPort:         tunnelPort1,
-				TunnelUser:         tunnelUser1,
-				TunnelUserPassword: tunnelUserPassword,
-			}
+	}
+	var destinationMssqlUpdateEncryptedVerifyCertificate *shared.DestinationMssqlUpdateEncryptedVerifyCertificate
+	if r.Configuration.SslMethod.EncryptedVerifyCertificate != nil {
+		name3 := new(shared.DestinationMssqlUpdateSchemasSslMethodName)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.IsNull() {
+			*name3 = shared.DestinationMssqlUpdateSchemasSslMethodName(r.Configuration.SslMethod.EncryptedVerifyCertificate.Name.ValueString())
+		} else {
+			name3 = nil
 		}
-		if destinationMssqlUpdatePasswordAuthentication != nil {
-			tunnelMethod = &shared.DestinationMssqlUpdateSSHTunnelMethod{
-				DestinationMssqlUpdatePasswordAuthentication: destinationMssqlUpdatePasswordAuthentication,
-			}
+		trustStoreName := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.IsNull() {
+			*trustStoreName = r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStoreName.ValueString()
+		} else {
+			trustStoreName = nil
+		}
+		trustStorePassword := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.IsNull() {
+			*trustStorePassword = r.Configuration.SslMethod.EncryptedVerifyCertificate.TrustStorePassword.ValueString()
+		} else {
+			trustStorePassword = nil
+		}
+		hostNameInCertificate := new(string)
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+			*hostNameInCertificate = r.Configuration.SslMethod.EncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+		} else {
+			hostNameInCertificate = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsUnknown() && !r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMethod.EncryptedVerifyCertificate.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		destinationMssqlUpdateEncryptedVerifyCertificate = &shared.DestinationMssqlUpdateEncryptedVerifyCertificate{
+			Name:                  name3,
+			TrustStoreName:        trustStoreName,
+			TrustStorePassword:    trustStorePassword,
+			HostNameInCertificate: hostNameInCertificate,
+			AdditionalProperties:  additionalProperties2,
+		}
+	}
+	if destinationMssqlUpdateEncryptedVerifyCertificate != nil {
+		sslMethod = shared.DestinationMssqlUpdateSSLMethod{
+			DestinationMssqlUpdateEncryptedVerifyCertificate: destinationMssqlUpdateEncryptedVerifyCertificate,
+		}
+	}
+	var loadType shared.DestinationMssqlUpdateLoadType
+	var destinationMssqlUpdateInsertLoad *shared.DestinationMssqlUpdateInsertLoad
+	if r.Configuration.LoadType.InsertLoad != nil {
+		loadType1 := new(shared.DestinationMssqlUpdateSchemasLoadTypeLoadType)
+		if !r.Configuration.LoadType.InsertLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.InsertLoad.LoadType.IsNull() {
+			*loadType1 = shared.DestinationMssqlUpdateSchemasLoadTypeLoadType(r.Configuration.LoadType.InsertLoad.LoadType.ValueString())
+		} else {
+			loadType1 = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.InsertLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.InsertLoad.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		destinationMssqlUpdateInsertLoad = &shared.DestinationMssqlUpdateInsertLoad{
+			LoadType:             loadType1,
+			AdditionalProperties: additionalProperties3,
+		}
+	}
+	if destinationMssqlUpdateInsertLoad != nil {
+		loadType = shared.DestinationMssqlUpdateLoadType{
+			DestinationMssqlUpdateInsertLoad: destinationMssqlUpdateInsertLoad,
+		}
+	}
+	var destinationMssqlUpdateBulkLoad *shared.DestinationMssqlUpdateBulkLoad
+	if r.Configuration.LoadType.BulkLoad != nil {
+		loadType2 := new(shared.DestinationMssqlUpdateSchemasLoadType)
+		if !r.Configuration.LoadType.BulkLoad.LoadType.IsUnknown() && !r.Configuration.LoadType.BulkLoad.LoadType.IsNull() {
+			*loadType2 = shared.DestinationMssqlUpdateSchemasLoadType(r.Configuration.LoadType.BulkLoad.LoadType.ValueString())
+		} else {
+			loadType2 = nil
+		}
+		var azureBlobStorageAccountName string
+		azureBlobStorageAccountName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountName.ValueString()
+
+		var azureBlobStorageContainerName string
+		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
+
+		var sharedAccessSignature string
+		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+
+		var bulkLoadDataSource string
+		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
+
+		bulkLoadValidateValuesPreLoad := new(bool)
+		if !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsUnknown() && !r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.IsNull() {
+			*bulkLoadValidateValuesPreLoad = r.Configuration.LoadType.BulkLoad.BulkLoadValidateValuesPreLoad.ValueBool()
+		} else {
+			bulkLoadValidateValuesPreLoad = nil
+		}
+		var additionalProperties4 interface{}
+		if !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.LoadType.BulkLoad.AdditionalProperties.ValueString()), &additionalProperties4)
+		}
+		destinationMssqlUpdateBulkLoad = &shared.DestinationMssqlUpdateBulkLoad{
+			LoadType:                      loadType2,
+			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
+			AzureBlobStorageContainerName: azureBlobStorageContainerName,
+			SharedAccessSignature:         sharedAccessSignature,
+			BulkLoadDataSource:            bulkLoadDataSource,
+			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
+			AdditionalProperties:          additionalProperties4,
+		}
+	}
+	if destinationMssqlUpdateBulkLoad != nil {
+		loadType = shared.DestinationMssqlUpdateLoadType{
+			DestinationMssqlUpdateBulkLoad: destinationMssqlUpdateBulkLoad,
 		}
 	}
 	configuration := shared.DestinationMssqlUpdate{
@@ -358,12 +473,11 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 		Port:          port,
 		Database:      database,
 		Schema:        schema,
-		Username:      username,
+		User:          user,
 		Password:      password,
 		JdbcURLParams: jdbcURLParams,
 		SslMethod:     sslMethod,
-		RawDataSchema: rawDataSchema,
-		TunnelMethod:  tunnelMethod,
+		LoadType:      loadType,
 	}
 	out := shared.DestinationMssqlPutRequest{
 		Name:          name,

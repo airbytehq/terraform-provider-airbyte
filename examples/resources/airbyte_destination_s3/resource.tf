@@ -10,11 +10,6 @@ resource "airbyte_destination_s3" "my_destination_s3" {
             additional_properties = "{ \"see\": \"documentation\" }"
             codec                 = "bzip2"
           }
-          deflate = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "Deflate"
-            compression_level     = 3
-          }
           no_compression = {
             additional_properties = "{ \"see\": \"documentation\" }"
             codec                 = "no compression"
@@ -23,59 +18,8 @@ resource "airbyte_destination_s3" "my_destination_s3" {
             additional_properties = "{ \"see\": \"documentation\" }"
             codec                 = "snappy"
           }
-          xz = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "xz"
-            compression_level     = 3
-          }
-          zstandard = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            codec                 = "zstandard"
-            compression_level     = 0
-            include_checksum      = false
-          }
         }
         format_type = "Avro"
-      }
-      csv_comma_separated_values = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        compression = {
-          gzip = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            compression_type      = "GZIP"
-          }
-          no_compression = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            compression_type      = "No Compression"
-          }
-        }
-        flattening  = "No flattening"
-        format_type = "CSV"
-      }
-      json_lines_newline_delimited_json = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        compression = {
-          gzip = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            compression_type      = "GZIP"
-          }
-          no_compression = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            compression_type      = "No Compression"
-          }
-        }
-        flattening  = "No flattening"
-        format_type = "JSONL"
-      }
-      parquet_columnar_storage = {
-        additional_properties   = "{ \"see\": \"documentation\" }"
-        block_size_mb           = 4
-        compression_codec       = "SNAPPY"
-        dictionary_encoding     = true
-        dictionary_page_size_kb = 4
-        format_type             = "Parquet"
-        max_padding_size_mb     = 3
-        page_size_kb            = 9
       }
     }
     role_arn          = "arn:aws:iam::123456789:role/ExternalIdIsYourWorkspaceId"

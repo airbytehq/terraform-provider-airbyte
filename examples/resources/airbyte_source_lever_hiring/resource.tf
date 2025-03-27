@@ -4,11 +4,6 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
       authenticate_via_lever_api_key = {
         api_key = "...my_api_key..."
       }
-      authenticate_via_lever_o_auth = {
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
     }
     environment = "Production"
     start_date  = "2021-03-01T00:00:00Z"

@@ -16,10 +16,6 @@ DestinationMongodb Resource
 resource "airbyte_destination_mongodb" "my_destination_mongodb" {
   configuration = {
     auth_type = {
-      login_password = {
-        password = "...my_password..."
-        username = "...my_username..."
-      }
       none = {
         # ...
       }
@@ -30,33 +26,13 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
         cluster_url = "...my_cluster_url..."
         instance    = "atlas"
       }
-      replica_set = {
-        instance         = "replica"
-        replica_set      = "...my_replica_set..."
-        server_addresses = "host1:27017,host2:27017,host3:27017"
-      }
-      standalone_mongo_db_instance = {
-        host     = "...my_host..."
-        instance = "standalone"
-        port     = 27017
-        tls      = false
-      }
     }
     tunnel_method = {
-      no_tunnel = {
-        # ...
-      }
       password_authentication = {
         tunnel_host          = "...my_tunnel_host..."
         tunnel_port          = 22
         tunnel_user          = "...my_tunnel_user..."
         tunnel_user_password = "...my_tunnel_user_password..."
-      }
-      ssh_key_authentication = {
-        ssh_key     = "...my_ssh_key..."
-        tunnel_host = "...my_tunnel_host..."
-        tunnel_port = 22
-        tunnel_user = "...my_tunnel_user..."
       }
     }
   }
@@ -84,6 +60,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
@@ -208,6 +185,50 @@ Required:
 Optional:
 
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
+
+
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

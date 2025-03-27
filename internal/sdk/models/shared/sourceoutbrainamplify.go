@@ -244,6 +244,33 @@ func (e *GranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// DefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type DefinitionOfConversionCountInReports string
+
+const (
+	DefinitionOfConversionCountInReportsClickViewTime  DefinitionOfConversionCountInReports = "click/view_time"
+	DefinitionOfConversionCountInReportsConversionTime DefinitionOfConversionCountInReports = "conversion_time"
+)
+
+func (e DefinitionOfConversionCountInReports) ToPointer() *DefinitionOfConversionCountInReports {
+	return &e
+}
+func (e *DefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "click/view_time":
+		fallthrough
+	case "conversion_time":
+		*e = DefinitionOfConversionCountInReports(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DefinitionOfConversionCountInReports: %v", v)
+	}
+}
+
 type OutbrainAmplify string
 
 const (
@@ -277,8 +304,10 @@ type SourceOutbrainAmplify struct {
 	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 	// Date in the format YYYY-MM-DD.
-	EndDate    *string         `json:"end_date,omitempty"`
-	sourceType OutbrainAmplify `const:"outbrain-amplify" json:"sourceType"`
+	EndDate *string `json:"end_date,omitempty"`
+	// The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+	ConversionCount *DefinitionOfConversionCountInReports `json:"conversion_count,omitempty"`
+	sourceType      OutbrainAmplify                       `const:"outbrain-amplify" json:"sourceType"`
 }
 
 func (s SourceOutbrainAmplify) MarshalJSON() ([]byte, error) {
@@ -325,6 +354,13 @@ func (o *SourceOutbrainAmplify) GetEndDate() *string {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceOutbrainAmplify) GetConversionCount() *DefinitionOfConversionCountInReports {
+	if o == nil {
+		return nil
+	}
+	return o.ConversionCount
 }
 
 func (o *SourceOutbrainAmplify) GetSourceType() OutbrainAmplify {

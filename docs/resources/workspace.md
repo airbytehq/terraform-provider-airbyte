@@ -89,7 +89,7 @@ resource "airbyte_workspace" "my_workspace" {
 
 ### Read-Only
 
-- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
+- `data_residency` (String)
 - `workspace_id` (String)
 
 <a id="nestedatt--notifications"></a>

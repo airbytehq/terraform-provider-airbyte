@@ -17,30 +17,30 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
   configuration = {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
+<<<<<<< Updated upstream
     password        = "...my_password..."
     schema          = "airbyte_td"
     ssl             = false
     ssl_mode = {
-      allow = {
-        # ...
+      # ...
+=======
+    logmech = {
+      ldap = {
+        password = "...my_password..."
+        username = "...my_username..."
       }
-      disable = {
-        # ...
+      td2 = {
+        password = "...my_password..."
+        username = "...my_username..."
       }
-      prefer = {
-        # ...
-      }
-      require = {
-        # ...
-      }
-      verify_ca = {
-        ssl_ca_certificate = "...my_ssl_ca_certificate..."
-      }
-      verify_full = {
-        ssl_ca_certificate = "...my_ssl_ca_certificate..."
-      }
+>>>>>>> Stashed changes
     }
-    username = "...my_username..."
+    query_band = "...my_query_band..."
+    schema     = "airbyte_td"
+    ssl        = false
+    ssl_mode = {
+      # ...
+    }
   }
   definition_id = "d113370e-613a-4d8a-8685-e4d05d32dcea"
   name          = "...my_name..."
@@ -66,6 +66,7 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
@@ -73,14 +74,14 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
 Required:
 
 - `host` (String) Hostname of the database.
-- `username` (String) Username to use to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String, Sensitive) Password associated with the username.
+- `logmech` (Attributes) (see [below for nested schema](#nestedatt--configuration--logmech))
+- `query_band` (String) Defines the custom session query band using name-value pairs. For example, 'org=Finance;report=Fin123;'
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "airbyte_td"
-- `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the connection modes. Default: false
+- `ssl` (Boolean) Encrypt data using SSL. When activating SSL, please select one of the SSL modes. Default: false
 - `ssl_mode` (Attributes) SSL connection modes. 
  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
  <b>allow</b> - Chose this mode to enable encryption only when required by the destination database
@@ -89,6 +90,33 @@ Optional:
   <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the destination database server has a valid SSL certificate
   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the destination database server
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLMODE"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
+
+<a id="nestedatt--configuration--logmech"></a>
+### Nested Schema for `configuration.logmech`
+
+Optional:
+
+- `ldap` (Attributes) (see [below for nested schema](#nestedatt--configuration--logmech--ldap))
+- `td2` (Attributes) (see [below for nested schema](#nestedatt--configuration--logmech--td2))
+
+<a id="nestedatt--configuration--logmech--ldap"></a>
+### Nested Schema for `configuration.logmech.ldap`
+
+Required:
+
+- `password` (String, Sensitive) Enter the password associated with the username.
+- `username` (String) Username to use to access the database.
+
+
+<a id="nestedatt--configuration--logmech--td2"></a>
+### Nested Schema for `configuration.logmech.td2`
+
+Required:
+
+- `password` (String, Sensitive) Enter the password associated with the username.
+- `username` (String) Username to use to access the database.
+
+
 
 <a id="nestedatt--configuration--ssl_mode"></a>
 ### Nested Schema for `configuration.ssl_mode`
@@ -134,6 +162,50 @@ Required:
 
 - `ssl_ca_certificate` (String, Sensitive) Specifies the file name of a PEM file that contains Certificate Authority (CA) certificates for use with SSLMODE=verify-full.
  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLCA"> in the docs</a>.
+
+
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

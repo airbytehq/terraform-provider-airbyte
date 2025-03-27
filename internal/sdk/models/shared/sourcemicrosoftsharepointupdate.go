@@ -1458,6 +1458,8 @@ type SourceMicrosoftSharepointUpdate struct {
 	SearchScope *SourceMicrosoftSharepointUpdateSearchScope `default:"ALL" json:"search_scope"`
 	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
 	FolderPath *string `default:"." json:"folder_path"`
+	// Url of SharePoint site to search for files. Leave empty to search in the main site.
+	SiteURL *string `default:"" json:"site_url"`
 }
 
 func (s SourceMicrosoftSharepointUpdate) MarshalJSON() ([]byte, error) {
@@ -1511,4 +1513,11 @@ func (o *SourceMicrosoftSharepointUpdate) GetFolderPath() *string {
 		return nil
 	}
 	return o.FolderPath
+}
+
+func (o *SourceMicrosoftSharepointUpdate) GetSiteURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SiteURL
 }

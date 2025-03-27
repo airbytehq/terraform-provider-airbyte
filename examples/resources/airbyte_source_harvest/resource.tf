@@ -8,10 +8,6 @@ resource "airbyte_source_harvest" "my_source_harvest" {
         client_secret         = "...my_client_secret..."
         refresh_token         = "...my_refresh_token..."
       }
-      authenticate_with_personal_access_token = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        api_token             = "...my_api_token..."
-      }
     }
     replication_start_date = "2017-01-25T00:00:00Z"
   }

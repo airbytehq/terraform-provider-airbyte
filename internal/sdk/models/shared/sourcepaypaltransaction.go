@@ -39,12 +39,12 @@ type SourcePaypalTransaction struct {
 	ClientSecret string `json:"client_secret"`
 	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
-	// Determines whether to use the sandbox or production environment.
-	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// Start Date parameter for the list dispute endpoint in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This Start Date must be in range within 180 days before present time, and requires ONLY 3 miliseconds(mandatory). If you don't use this option, it defaults to a start date set 180 days in the past.
 	DisputeStartDate *time.Time `json:"dispute_start_date,omitempty"`
 	// End Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This can be help you select specific range of time, mainly for test purposes  or data integrity tests. When this is not used, now_utc() is used by the streams. This does not apply to Disputes and Product streams.
 	EndDate *time.Time `json:"end_date,omitempty"`
+	// Determines whether to use the sandbox or production environment.
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The key to refresh the expired access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 	// The number of days per request. Must be a number between 1 and 31.
@@ -84,13 +84,6 @@ func (o *SourcePaypalTransaction) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourcePaypalTransaction) GetIsSandbox() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsSandbox
-}
-
 func (o *SourcePaypalTransaction) GetDisputeStartDate() *time.Time {
 	if o == nil {
 		return nil
@@ -103,6 +96,13 @@ func (o *SourcePaypalTransaction) GetEndDate() *time.Time {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourcePaypalTransaction) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
 }
 
 func (o *SourcePaypalTransaction) GetRefreshToken() *string {

@@ -53,7 +53,7 @@ func (s *Jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest,
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listJobs",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -185,7 +185,7 @@ func (s *Jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest, o
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createJob",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -322,7 +322,7 @@ func (s *Jobs) GetJob(ctx context.Context, request operations.GetJobRequest, opt
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getJob",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -452,7 +452,7 @@ func (s *Jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "cancelJob",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 

@@ -3,6 +3,7 @@
 package provider
 
 import (
+	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -23,14 +24,44 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 	var host string
 	host = r.Configuration.Host.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var logmech *shared.AuthorizationMechanism
+	if r.Configuration.Logmech != nil {
+		var td2 *shared.Td2
+		if r.Configuration.Logmech.Td2 != nil {
+			var username string
+			username = r.Configuration.Logmech.Td2.Username.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
+			var password string
+			password = r.Configuration.Logmech.Td2.Password.ValueString()
+
+			td2 = &shared.Td2{
+				Username: username,
+				Password: password,
+			}
+		}
+		if td2 != nil {
+			logmech = &shared.AuthorizationMechanism{
+				Td2: td2,
+			}
+		}
+		var ldap *shared.Ldap
+		if r.Configuration.Logmech.Ldap != nil {
+			var username1 string
+			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
+
+			var password1 string
+			password1 = r.Configuration.Logmech.Ldap.Password.ValueString()
+
+			ldap = &shared.Ldap{
+				Username: username1,
+				Password: password1,
+			}
+		}
+		if ldap != nil {
+			logmech = &shared.AuthorizationMechanism{
+				Ldap: ldap,
+			}
+		}
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -117,14 +148,20 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataCreateRequ
 	} else {
 		jdbcURLParams = nil
 	}
+	queryBand := new(string)
+	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
+		*queryBand = r.Configuration.QueryBand.ValueString()
+	} else {
+		queryBand = nil
+	}
 	configuration := shared.DestinationTeradata{
 		Host:          host,
-		Username:      username,
-		Password:      password,
+		Logmech:       logmech,
 		Schema:        schema,
 		Ssl:           ssl,
 		SslMode:       sslMode,
 		JdbcURLParams: jdbcURLParams,
+		QueryBand:     queryBand,
 	}
 	out := shared.DestinationTeradataCreateRequest{
 		Name:          name,
@@ -142,6 +179,42 @@ func (r *DestinationTeradataResourceModel) RefreshFromSharedDestinationResponse(
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.DestinationType = types.StringValue(resp.DestinationType)
 		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+				}
+			}
+		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
 }
@@ -156,14 +229,44 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 	var host string
 	host = r.Configuration.Host.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var logmech *shared.DestinationTeradataUpdateAuthorizationMechanism
+	if r.Configuration.Logmech != nil {
+		var destinationTeradataUpdateTd2 *shared.DestinationTeradataUpdateTd2
+		if r.Configuration.Logmech.Td2 != nil {
+			var username string
+			username = r.Configuration.Logmech.Td2.Username.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
+			var password string
+			password = r.Configuration.Logmech.Td2.Password.ValueString()
+
+			destinationTeradataUpdateTd2 = &shared.DestinationTeradataUpdateTd2{
+				Username: username,
+				Password: password,
+			}
+		}
+		if destinationTeradataUpdateTd2 != nil {
+			logmech = &shared.DestinationTeradataUpdateAuthorizationMechanism{
+				DestinationTeradataUpdateTd2: destinationTeradataUpdateTd2,
+			}
+		}
+		var destinationTeradataUpdateLDAP *shared.DestinationTeradataUpdateLDAP
+		if r.Configuration.Logmech.Ldap != nil {
+			var username1 string
+			username1 = r.Configuration.Logmech.Ldap.Username.ValueString()
+
+			var password1 string
+			password1 = r.Configuration.Logmech.Ldap.Password.ValueString()
+
+			destinationTeradataUpdateLDAP = &shared.DestinationTeradataUpdateLDAP{
+				Username: username1,
+				Password: password1,
+			}
+		}
+		if destinationTeradataUpdateLDAP != nil {
+			logmech = &shared.DestinationTeradataUpdateAuthorizationMechanism{
+				DestinationTeradataUpdateLDAP: destinationTeradataUpdateLDAP,
+			}
+		}
 	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
@@ -250,14 +353,20 @@ func (r *DestinationTeradataResourceModel) ToSharedDestinationTeradataPutRequest
 	} else {
 		jdbcURLParams = nil
 	}
+	queryBand := new(string)
+	if !r.Configuration.QueryBand.IsUnknown() && !r.Configuration.QueryBand.IsNull() {
+		*queryBand = r.Configuration.QueryBand.ValueString()
+	} else {
+		queryBand = nil
+	}
 	configuration := shared.DestinationTeradataUpdate{
 		Host:          host,
-		Username:      username,
-		Password:      password,
+		Logmech:       logmech,
 		Schema:        schema,
 		Ssl:           ssl,
 		SslMode:       sslMode,
 		JdbcURLParams: jdbcURLParams,
+		QueryBand:     queryBand,
 	}
 	out := shared.DestinationTeradataPutRequest{
 		Name:          name,

@@ -24,33 +24,9 @@ resource "airbyte_connection" "my_connection" {
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
             mapper_configuration = {
-              encryption = {
-                aes = {
-                  algorithm         = "AES"
-                  field_name_suffix = "...my_field_name_suffix..."
-                  key               = "...my_key..."
-                  mode              = "CBC"
-                  padding           = "PKCS5Padding"
-                  target_field      = "...my_target_field..."
-                }
-                rsa = {
-                  algorithm         = "RSA"
-                  field_name_suffix = "...my_field_name_suffix..."
-                  public_key        = "...my_public_key..."
-                  target_field      = "...my_target_field..."
-                }
-              }
               field_renaming = {
                 new_field_name      = "...my_new_field_name..."
                 original_field_name = "...my_original_field_name..."
-              }
-              hashing = {
-                field_name_suffix = "...my_field_name_suffix..."
-                method            = "SHA-512"
-                target_field      = "...my_target_field..."
-              }
-              row_filtering = {
-                conditions = "{ \"see\": \"documentation\" }"
               }
             }
             type = "field-renaming"
@@ -73,7 +49,7 @@ resource "airbyte_connection" "my_connection" {
       }
     ]
   }
-  data_residency                       = "eu"
+  data_residency                       = "...my_data_residency..."
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
   namespace_definition                 = "custom_format"
@@ -108,7 +84,7 @@ resource "airbyte_connection" "my_connection" {
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
+- `data_residency` (String)
 - `name` (String) Optional name of the connection
 - `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.

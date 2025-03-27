@@ -262,8 +262,10 @@ type SourceMixpanel struct {
 	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer)
 	DateWindowSize *int64 `default:"30" json:"date_window_size"`
 	// The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value.
-	PageSize   *int64   `default:"1000" json:"page_size"`
-	sourceType Mixpanel `const:"mixpanel" json:"sourceType"`
+	PageSize *int64 `default:"1000" json:"page_size"`
+	// The number of seconds to look back from the last synced timestamp during incremental syncs of the Export stream. This ensures no data is missed due to delays in event recording. Default is 0 seconds. Must be a non-negative integer.
+	ExportLookbackWindow *int64   `default:"0" json:"export_lookback_window"`
+	sourceType           Mixpanel `const:"mixpanel" json:"sourceType"`
 }
 
 func (s SourceMixpanel) MarshalJSON() ([]byte, error) {
@@ -338,6 +340,13 @@ func (o *SourceMixpanel) GetPageSize() *int64 {
 		return nil
 	}
 	return o.PageSize
+}
+
+func (o *SourceMixpanel) GetExportLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExportLookbackWindow
 }
 
 func (o *SourceMixpanel) GetSourceType() Mixpanel {

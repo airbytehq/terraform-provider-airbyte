@@ -8696,6 +8696,8 @@ type SourceGoogleAnalyticsDataAPI struct {
 	PropertyIds []string `json:"property_ids"`
 	// The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 	DateRangesStartDate *types.Date `json:"date_ranges_start_date,omitempty"`
+	// The end date from which to replicate report data in the format YYYY-MM-DD. Data generated after this date will not be included in the report. Not applied to custom Cohort reports. When no date is provided or the date is in the future, the date from today is used.
+	DateRangesEndDate *types.Date `json:"date_ranges_end_date,omitempty"`
 	// You can add your Custom Analytics report by creating one.
 	CustomReportsArray []SourceGoogleAnalyticsDataAPICustomReportConfig `json:"custom_reports_array,omitempty"`
 	// The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
@@ -8739,6 +8741,13 @@ func (o *SourceGoogleAnalyticsDataAPI) GetDateRangesStartDate() *types.Date {
 		return nil
 	}
 	return o.DateRangesStartDate
+}
+
+func (o *SourceGoogleAnalyticsDataAPI) GetDateRangesEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.DateRangesEndDate
 }
 
 func (o *SourceGoogleAnalyticsDataAPI) GetCustomReportsArray() []SourceGoogleAnalyticsDataAPICustomReportConfig {

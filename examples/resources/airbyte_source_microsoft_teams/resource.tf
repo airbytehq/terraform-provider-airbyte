@@ -6,12 +6,6 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
         client_secret = "...my_client_secret..."
         tenant_id     = "...my_tenant_id..."
       }
-      authenticate_via_microsoft_o_auth20 = {
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-        tenant_id     = "...my_tenant_id..."
-      }
     }
     period = "D7"
   }

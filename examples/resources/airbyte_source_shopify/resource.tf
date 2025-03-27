@@ -5,11 +5,6 @@ resource "airbyte_source_shopify" "my_source_shopify" {
       api_password = {
         api_password = "...my_api_password..."
       }
-      o_auth20 = {
-        access_token  = "...my_access_token..."
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-      }
     }
     fetch_transactions_user_id               = true
     job_checkpoint_interval                  = 484517

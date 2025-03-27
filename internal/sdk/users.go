@@ -54,7 +54,7 @@ func (s *Users) ListUsersWithinAnOrganization(ctx context.Context, request opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listUsersWithinAnOrganization",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 

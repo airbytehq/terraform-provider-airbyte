@@ -3,39 +3,36 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     database        = "...my_database..."
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 1433
-    raw_data_schema = "...my_raw_data_schema..."
-    schema          = "public"
+    load_type = {
+      insert_load = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        load_type             = "INSERT"
+      }
+    }
+    password = "...my_password..."
+    port     = 1433
+    schema   = "public"
     ssl_method = {
-      encrypted_trust_server_certificate = {
-        # ...
-      }
       encrypted_verify_certificate = {
+        additional_properties    = "{ \"see\": \"documentation\" }"
         host_name_in_certificate = "...my_host_name_in_certificate..."
-      }
-      unencrypted = {
-        # ...
+<<<<<<< Updated upstream
       }
     }
     tunnel_method = {
       no_tunnel = {
         # ...
       }
-      password_authentication = {
-        tunnel_host          = "...my_tunnel_host..."
-        tunnel_port          = 22
-        tunnel_user          = "...my_tunnel_user..."
-        tunnel_user_password = "...my_tunnel_user_password..."
-      }
-      ssh_key_authentication = {
-        ssh_key     = "...my_ssh_key..."
-        tunnel_host = "...my_tunnel_host..."
-        tunnel_port = 22
-        tunnel_user = "...my_tunnel_user..."
-      }
     }
     username = "...my_username..."
+=======
+        name                     = "encrypted_verify_certificate"
+        trust_store_name         = "...my_trust_store_name..."
+        trust_store_password     = "...my_trust_store_password..."
+      }
+    }
+    user = "...my_user..."
+>>>>>>> Stashed changes
   }
   definition_id = "a282fec3-7b94-4274-9620-860fbc85f5d6"
   name          = "...my_name..."

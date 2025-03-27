@@ -4,9 +4,6 @@ resource "airbyte_source_sftp" "my_source_sftp" {
       password_authentication = {
         auth_user_password = "...my_auth_user_password..."
       }
-      ssh_key_authentication = {
-        auth_ssh_key = "...my_auth_ssh_key..."
-      }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_types   = "csv,json"

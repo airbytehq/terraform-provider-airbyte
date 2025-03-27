@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePinterest struct {
+	AccountID     types.String   `tfsdk:"account_id"`
 	Credentials   *OAuth20       `tfsdk:"credentials"`
 	CustomReports []ReportConfig `tfsdk:"custom_reports"`
 	StartDate     types.String   `tfsdk:"start_date"`

@@ -9,6 +9,7 @@ type SourceMixpanel struct {
 	Credentials               AuthenticationWildcard `tfsdk:"credentials"`
 	DateWindowSize            types.Int64            `tfsdk:"date_window_size"`
 	EndDate                   types.String           `tfsdk:"end_date"`
+	ExportLookbackWindow      types.Int64            `tfsdk:"export_lookback_window"`
 	PageSize                  types.Int64            `tfsdk:"page_size"`
 	ProjectTimezone           types.String           `tfsdk:"project_timezone"`
 	Region                    types.String           `tfsdk:"region"`

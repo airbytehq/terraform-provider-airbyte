@@ -5,5 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationMssqlEncryptedVerifyCertificate struct {
+	AdditionalProperties  types.String `tfsdk:"additional_properties"`
 	HostNameInCertificate types.String `tfsdk:"host_name_in_certificate"`
+	Name                  types.String `tfsdk:"name"`
+	TrustStoreName        types.String `tfsdk:"trust_store_name"`
+	TrustStorePassword    types.String `tfsdk:"trust_store_password"`
 }

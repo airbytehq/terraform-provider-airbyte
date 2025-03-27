@@ -13,9 +13,6 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
         s3_bucket      = "...my_s3_bucket..."
         s3_region      = "us-east-1"
       }
-      sql_inserts = {
-        # ...
-      }
     }
   }
   definition_id = "cb044c1f-5609-4f2c-a0f3-7f7fd2ae8ba8"

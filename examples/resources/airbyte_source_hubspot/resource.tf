@@ -1,11 +1,6 @@
 resource "airbyte_source_hubspot" "my_source_hubspot" {
   configuration = {
     credentials = {
-      o_auth = {
-        client_id     = "123456789000"
-        client_secret = "secret"
-        refresh_token = "refresh_token"
-      }
       private_app = {
         access_token = "...my_access_token..."
       }

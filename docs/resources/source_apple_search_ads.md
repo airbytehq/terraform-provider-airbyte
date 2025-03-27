@@ -22,6 +22,7 @@ resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
     lookback_window = 7
     org_id          = 0
     start_date      = "2020-01-01"
+    timezone        = "UTC"
   }
   definition_id = "f6eb56d1-0915-427d-b110-58bf43673ee3"
   name          = "...my_name..."
@@ -47,6 +48,7 @@ resource "airbyte_source_apple_search_ads" "my_source_applesearchads" {
 ### Read-Only
 
 - `created_at` (Number)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 - `source_id` (String)
 - `source_type` (String)
 
@@ -65,6 +67,49 @@ Optional:
 - `backoff_factor` (Number) This factor factor determines the delay increase factor between retryable failures. Valid values are integers between 1 and 20. Default: 5
 - `end_date` (String) Data is retrieved until that date (included)
 - `lookback_window` (Number) Apple Search Ads uses a 30-day attribution window. However, you may consider smaller values in order to shorten sync durations, at the cost of missing late data attributions. Default: 30
+- `timezone` (String) The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC. Default: "UTC"; must be one of ["ORTZ", "UTC"]
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

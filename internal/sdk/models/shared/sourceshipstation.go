@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
 )
 
 type Shipstation string
@@ -32,8 +33,9 @@ func (e *Shipstation) UnmarshalJSON(data []byte) error {
 }
 
 type SourceShipstation struct {
-	Username   string      `json:"username"`
 	Password   *string     `json:"password,omitempty"`
+	Username   string      `json:"username"`
+	StartDate  time.Time   `json:"start_date"`
 	sourceType Shipstation `const:"shipstation" json:"sourceType"`
 }
 
@@ -48,6 +50,13 @@ func (s *SourceShipstation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceShipstation) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
 func (o *SourceShipstation) GetUsername() string {
 	if o == nil {
 		return ""
@@ -55,11 +64,11 @@ func (o *SourceShipstation) GetUsername() string {
 	return o.Username
 }
 
-func (o *SourceShipstation) GetPassword() *string {
+func (o *SourceShipstation) GetStartDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.Password
+	return o.StartDate
 }
 
 func (o *SourceShipstation) GetSourceType() Shipstation {

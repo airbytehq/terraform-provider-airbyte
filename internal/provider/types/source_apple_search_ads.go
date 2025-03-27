@@ -12,4 +12,5 @@ type SourceAppleSearchAds struct {
 	LookbackWindow types.Int64  `tfsdk:"lookback_window"`
 	OrgID          types.Int64  `tfsdk:"org_id"`
 	StartDate      types.String `tfsdk:"start_date"`
+	Timezone       types.String `tfsdk:"timezone"`
 }

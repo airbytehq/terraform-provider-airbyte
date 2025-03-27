@@ -2,9 +2,6 @@ resource "airbyte_source_auth0" "my_source_auth0" {
   configuration = {
     base_url = "https://dev-yourOrg.us.auth0.com/"
     credentials = {
-      o_auth2_access_token = {
-        access_token = "...my_access_token..."
-      }
       o_auth2_confidential_application = {
         audience      = "https://dev-yourOrg.us.auth0.com/api/v2/"
         client_id     = "Client_ID"

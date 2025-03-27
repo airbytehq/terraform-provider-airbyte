@@ -4,7 +4,7 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     client_secret = "...my_client_secret..."
     redirect_uri  = "...my_redirect_uri..."
     refresh_token = "...my_refresh_token..."
-    start_date    = "2020-11-16T00:00:00Z"
+    start_date    = "2020-11-16T00:00:00.000Z"
   }
   definition_id = "41648eec-a1c3-45f3-ba36-fe8c53db7a98"
   name          = "...my_name..."

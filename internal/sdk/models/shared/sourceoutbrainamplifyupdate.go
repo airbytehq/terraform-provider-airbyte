@@ -244,6 +244,33 @@ func (e *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion) UnmarshalJS
 	}
 }
 
+// SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports string
+
+const (
+	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsClickViewTime  SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "click/view_time"
+	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsConversionTime SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "conversion_time"
+)
+
+func (e SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) ToPointer() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
+	return &e
+}
+func (e *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "click/view_time":
+		fallthrough
+	case "conversion_time":
+		*e = SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports: %v", v)
+	}
+}
+
 type SourceOutbrainAmplifyUpdate struct {
 	// Credentials for making authenticated requests requires either username/password or access_token.
 	Credentials SourceOutbrainAmplifyUpdateAuthenticationMethod `json:"credentials"`
@@ -255,6 +282,8 @@ type SourceOutbrainAmplifyUpdate struct {
 	StartDate string `json:"start_date"`
 	// Date in the format YYYY-MM-DD.
 	EndDate *string `json:"end_date,omitempty"`
+	// The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+	ConversionCount *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports `json:"conversion_count,omitempty"`
 }
 
 func (o *SourceOutbrainAmplifyUpdate) GetCredentials() SourceOutbrainAmplifyUpdateAuthenticationMethod {
@@ -290,4 +319,11 @@ func (o *SourceOutbrainAmplifyUpdate) GetEndDate() *string {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetConversionCount() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
+	if o == nil {
+		return nil
+	}
+	return o.ConversionCount
 }

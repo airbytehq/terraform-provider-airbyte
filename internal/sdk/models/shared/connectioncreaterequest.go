@@ -15,7 +15,7 @@ type ConnectionCreateRequest struct {
 	Configurations *StreamConfigurations `json:"configurations,omitempty"`
 	// schedule for when the the connection should run, per the schedule type
 	Schedule      *AirbyteAPIConnectionSchedule `json:"schedule,omitempty"`
-	DataResidency *GeographyEnum                `default:"auto" json:"dataResidency"`
+	DataResidency *string                       `json:"dataResidency,omitempty"`
 	// Define the location where the data will be stored in the destination
 	NamespaceDefinition *NamespaceDefinitionEnum `default:"destination" json:"namespaceDefinition"`
 	// Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
@@ -74,7 +74,7 @@ func (o *ConnectionCreateRequest) GetSchedule() *AirbyteAPIConnectionSchedule {
 	return o.Schedule
 }
 
-func (o *ConnectionCreateRequest) GetDataResidency() *GeographyEnum {
+func (o *ConnectionCreateRequest) GetDataResidency() *string {
 	if o == nil {
 		return nil
 	}

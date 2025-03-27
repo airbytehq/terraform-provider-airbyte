@@ -7,10 +7,6 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_output_buffer_size   = 5
     azure_blob_storage_spill_size           = 500
     format = {
-      csv_comma_separated_values = {
-        file_extension = false
-        flattening     = "Root level flattening"
-      }
       json_lines_newline_delimited_json = {
         file_extension = false
       }

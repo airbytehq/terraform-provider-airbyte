@@ -2,11 +2,6 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
   configuration = {
     batch_size = 10
     credentials = {
-      authenticate_via_google_o_auth = {
-        client_id     = "...my_client_id..."
-        client_secret = "...my_client_secret..."
-        refresh_token = "...my_refresh_token..."
-      }
       service_account_key_authentication = {
         service_account_info = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
       }

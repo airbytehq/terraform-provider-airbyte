@@ -7,9 +7,9 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type DestinationTeradata struct {
 	Host          types.String                 `tfsdk:"host"`
 	JdbcURLParams types.String                 `tfsdk:"jdbc_url_params"`
-	Password      types.String                 `tfsdk:"password"`
+	Logmech       *AuthorizationMechanism      `tfsdk:"logmech"`
+	QueryBand     types.String                 `tfsdk:"query_band"`
 	Schema        types.String                 `tfsdk:"schema"`
 	Ssl           types.Bool                   `tfsdk:"ssl"`
 	SslMode       *DestinationTeradataSSLModes `tfsdk:"ssl_mode"`
-	Username      types.String                 `tfsdk:"username"`
 }

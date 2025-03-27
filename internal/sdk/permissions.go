@@ -53,7 +53,7 @@ func (s *Permissions) GetPermission(ctx context.Context, request operations.GetP
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getPermission",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -185,7 +185,7 @@ func (s *Permissions) UpdatePermission(ctx context.Context, request operations.U
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "updatePermission",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PermissionUpdateRequest", "json", `request:"mediaType=application/json"`)
@@ -326,7 +326,7 @@ func (s *Permissions) DeletePermission(ctx context.Context, request operations.D
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deletePermission",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -438,7 +438,7 @@ func (s *Permissions) ListPermissions(ctx context.Context, request operations.Li
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listPermissions",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -572,7 +572,7 @@ func (s *Permissions) CreatePermission(ctx context.Context, request shared.Permi
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createPermission",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)

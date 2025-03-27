@@ -1,10 +1,6 @@
 resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
   configuration = {
     credentials = {
-      api_token = {
-        api_token = "...my_api_token..."
-        email     = "...my_email..."
-      }
       o_auth20 = {
         access_token  = "...my_access_token..."
         client_id     = "...my_client_id..."

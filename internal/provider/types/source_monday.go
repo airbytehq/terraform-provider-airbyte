@@ -2,6 +2,9 @@
 
 package types
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type SourceMonday struct {
+	BoardIds    []types.Int64                    `tfsdk:"board_ids"`
 	Credentials *SourceMondayAuthorizationMethod `tfsdk:"credentials"`
 }

@@ -8,6 +8,7 @@ type DestinationMssqlV2 struct {
 	Database      types.String                `tfsdk:"database"`
 	Host          types.String                `tfsdk:"host"`
 	JdbcURLParams types.String                `tfsdk:"jdbc_url_params"`
+	LoadType      DestinationMssqlV2LoadType  `tfsdk:"load_type"`
 	Password      types.String                `tfsdk:"password"`
 	Port          types.Int64                 `tfsdk:"port"`
 	Schema        types.String                `tfsdk:"schema"`

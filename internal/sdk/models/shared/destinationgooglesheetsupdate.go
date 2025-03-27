@@ -2,8 +2,89 @@
 
 package shared
 
-// DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth - Google API Credentials for connecting to Google Sheets and Google Drive APIs
-type DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth struct {
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+)
+
+type DestinationGoogleSheetsUpdateSchemasAuthType string
+
+const (
+	DestinationGoogleSheetsUpdateSchemasAuthTypeService DestinationGoogleSheetsUpdateSchemasAuthType = "service"
+)
+
+func (e DestinationGoogleSheetsUpdateSchemasAuthType) ToPointer() *DestinationGoogleSheetsUpdateSchemasAuthType {
+	return &e
+}
+func (e *DestinationGoogleSheetsUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "service":
+		*e = DestinationGoogleSheetsUpdateSchemasAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGoogleSheetsUpdateSchemasAuthType: %v", v)
+	}
+}
+
+type DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication struct {
+	authType *DestinationGoogleSheetsUpdateSchemasAuthType `const:"service" json:"auth_type"`
+	// Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.
+	ServiceAccountInfo string `json:"service_account_info"`
+}
+
+func (d DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication) GetAuthType() *DestinationGoogleSheetsUpdateSchemasAuthType {
+	return DestinationGoogleSheetsUpdateSchemasAuthTypeService.ToPointer()
+}
+
+func (o *DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication) GetServiceAccountInfo() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccountInfo
+}
+
+type DestinationGoogleSheetsUpdateAuthType string
+
+const (
+	DestinationGoogleSheetsUpdateAuthTypeOauth20 DestinationGoogleSheetsUpdateAuthType = "oauth2.0"
+)
+
+func (e DestinationGoogleSheetsUpdateAuthType) ToPointer() *DestinationGoogleSheetsUpdateAuthType {
+	return &e
+}
+func (e *DestinationGoogleSheetsUpdateAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "oauth2.0":
+		*e = DestinationGoogleSheetsUpdateAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationGoogleSheetsUpdateAuthType: %v", v)
+	}
+}
+
+type DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth struct {
+	authType *DestinationGoogleSheetsUpdateAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your Google Sheets developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Sheets developer application.
@@ -12,32 +93,111 @@ type DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetClientID() string {
+func (d DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) GetAuthType() *DestinationGoogleSheetsUpdateAuthType {
+	return DestinationGoogleSheetsUpdateAuthTypeOauth20.ToPointer()
+}
+
+func (o *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
 }
 
-func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetClientSecret() string {
+func (o *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
 }
 
-func (o *DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth) GetRefreshToken() string {
+func (o *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) GetRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.RefreshToken
 }
 
+type DestinationGoogleSheetsUpdateAuthenticationType string
+
+const (
+	DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth      DestinationGoogleSheetsUpdateAuthenticationType = "destination-google-sheets-update_Authenticate via Google (OAuth)"
+	DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateServiceAccountKeyAuthentication DestinationGoogleSheetsUpdateAuthenticationType = "destination-google-sheets-update_Service Account Key Authentication"
+)
+
+// DestinationGoogleSheetsUpdateAuthentication - Authentication method to access Google Sheets
+type DestinationGoogleSheetsUpdateAuthentication struct {
+	DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth      *DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth      `queryParam:"inline"`
+	DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication *DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication `queryParam:"inline"`
+
+	Type DestinationGoogleSheetsUpdateAuthenticationType
+}
+
+func CreateDestinationGoogleSheetsUpdateAuthenticationDestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth(destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth) DestinationGoogleSheetsUpdateAuthentication {
+	typ := DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth
+
+	return DestinationGoogleSheetsUpdateAuthentication{
+		DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth: &destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth,
+		Type: typ,
+	}
+}
+
+func CreateDestinationGoogleSheetsUpdateAuthenticationDestinationGoogleSheetsUpdateServiceAccountKeyAuthentication(destinationGoogleSheetsUpdateServiceAccountKeyAuthentication DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication) DestinationGoogleSheetsUpdateAuthentication {
+	typ := DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateServiceAccountKeyAuthentication
+
+	return DestinationGoogleSheetsUpdateAuthentication{
+		DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication: &destinationGoogleSheetsUpdateServiceAccountKeyAuthentication,
+		Type: typ,
+	}
+}
+
+func (u *DestinationGoogleSheetsUpdateAuthentication) UnmarshalJSON(data []byte) error {
+
+	var destinationGoogleSheetsUpdateServiceAccountKeyAuthentication DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication = DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &destinationGoogleSheetsUpdateServiceAccountKeyAuthentication, "", true, true); err == nil {
+		u.DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication = &destinationGoogleSheetsUpdateServiceAccountKeyAuthentication
+		u.Type = DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateServiceAccountKeyAuthentication
+		return nil
+	}
+
+	var destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth = DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth{}
+	if err := utils.UnmarshalJSON(data, &destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth, "", true, true); err == nil {
+		u.DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth = &destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth
+		u.Type = DestinationGoogleSheetsUpdateAuthenticationTypeDestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationGoogleSheetsUpdateAuthentication", string(data))
+}
+
+func (u DestinationGoogleSheetsUpdateAuthentication) MarshalJSON() ([]byte, error) {
+	if u.DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth != nil {
+		return utils.MarshalJSON(u.DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth, "", true)
+	}
+
+	if u.DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication != nil {
+		return utils.MarshalJSON(u.DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationGoogleSheetsUpdateAuthentication: all fields are null")
+}
+
 type DestinationGoogleSheetsUpdate struct {
 	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 	SpreadsheetID string `json:"spreadsheet_id"`
-	// Google API Credentials for connecting to Google Sheets and Google Drive APIs
-	Credentials DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth `json:"credentials"`
+	// Authentication method to access Google Sheets
+	Credentials DestinationGoogleSheetsUpdateAuthentication `json:"credentials"`
 }
 
 func (o *DestinationGoogleSheetsUpdate) GetSpreadsheetID() string {
@@ -47,9 +207,9 @@ func (o *DestinationGoogleSheetsUpdate) GetSpreadsheetID() string {
 	return o.SpreadsheetID
 }
 
-func (o *DestinationGoogleSheetsUpdate) GetCredentials() DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth {
+func (o *DestinationGoogleSheetsUpdate) GetCredentials() DestinationGoogleSheetsUpdateAuthentication {
 	if o == nil {
-		return DestinationGoogleSheetsUpdateAuthenticationViaGoogleOAuth{}
+		return DestinationGoogleSheetsUpdateAuthentication{}
 	}
 	return o.Credentials
 }

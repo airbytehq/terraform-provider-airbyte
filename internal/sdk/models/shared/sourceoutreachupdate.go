@@ -2,6 +2,11 @@
 
 package shared
 
+import (
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
+	"time"
+)
+
 type SourceOutreachUpdate struct {
 	// The Client ID of your Outreach developer application.
 	ClientID string `json:"client_id"`
@@ -11,8 +16,19 @@ type SourceOutreachUpdate struct {
 	RefreshToken string `json:"refresh_token"`
 	// A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
 	RedirectURI string `json:"redirect_uri"`
-	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate string `json:"start_date"`
+	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00.000Z. All data generated after this date will be replicated.
+	StartDate time.Time `json:"start_date"`
+}
+
+func (s SourceOutreachUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOutreachUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceOutreachUpdate) GetClientID() string {
@@ -43,9 +59,9 @@ func (o *SourceOutreachUpdate) GetRedirectURI() string {
 	return o.RedirectURI
 }
 
-func (o *SourceOutreachUpdate) GetStartDate() string {
+func (o *SourceOutreachUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
 	return o.StartDate
 }

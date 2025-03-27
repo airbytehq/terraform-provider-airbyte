@@ -5,6 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationGoogleSheets struct {
-	Credentials   AuthenticationViaGoogleOAuth `tfsdk:"credentials"`
-	SpreadsheetID types.String                 `tfsdk:"spreadsheet_id"`
+	Credentials   DestinationGoogleSheetsAuthentication `tfsdk:"credentials"`
+	SpreadsheetID types.String                          `tfsdk:"spreadsheet_id"`
 }

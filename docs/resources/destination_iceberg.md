@@ -24,26 +24,6 @@ resource "airbyte_destination_iceberg" "my_destination_iceberg" {
         catalog_type = "Hadoop"
         database     = "default"
       }
-      hive_catalog_use_apache_hive_meta_store = {
-        catalog_type    = "Hive"
-        database        = "default"
-        hive_thrift_uri = "host:port"
-      }
-      jdbc_catalog_use_relational_database = {
-        catalog_schema = "public"
-        catalog_type   = "Jdbc"
-        database       = "public"
-        jdbc_url       = "jdbc:postgresql://{host}:{port}/{database}"
-        password       = "...my_password..."
-        ssl            = true
-        username       = "...my_username..."
-      }
-      rest_catalog = {
-        catalog_type    = "Rest"
-        rest_credential = "username:password"
-        rest_token      = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-        rest_uri        = "http://localhost:12345"
-      }
     }
     format_config = {
       auto_compact                   = true
@@ -52,15 +32,6 @@ resource "airbyte_destination_iceberg" "my_destination_iceberg" {
       format                         = "Parquet"
     }
     storage_config = {
-      s3 = {
-        access_key_id        = "A012345678910EXAMPLE"
-        s3_bucket_region     = "...my_s3_bucket_region..."
-        s3_endpoint          = "http://localhost:9000"
-        s3_path_style_access = true
-        s3_warehouse_uri     = "s3a://my-bucket/path/to/warehouse"
-        secret_access_key    = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
-        storage_type         = "S3"
-      }
       server_managed = {
         managed_warehouse_name = "...my_managed_warehouse_name..."
         storage_type           = "MANAGED"
@@ -91,6 +62,7 @@ resource "airbyte_destination_iceberg" "my_destination_iceberg" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
@@ -218,6 +190,50 @@ Required:
 Optional:
 
 - `storage_type` (String) Default: "MANAGED"; must be "MANAGED"
+
+
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

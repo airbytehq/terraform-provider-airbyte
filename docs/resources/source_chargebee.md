@@ -45,6 +45,7 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 ### Read-Only
 
 - `created_at` (Number)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 - `source_id` (String)
 - `source_type` (String)
 
@@ -61,6 +62,48 @@ Optional:
 
 - `num_workers` (Number) The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://support.chargebee.com/support/solutions/articles/243576-what-are-the-chargebee-api-limits-">docs</a>. Default: 3
 - `product_catalog` (String) Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0. Default: "2.0"; must be one of ["1.0", "2.0"]
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

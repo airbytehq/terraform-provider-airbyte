@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceOutbrainAmplify struct {
+	ConversionCount      types.String                              `tfsdk:"conversion_count"`
 	Credentials          SourceOutbrainAmplifyAuthenticationMethod `tfsdk:"credentials"`
 	EndDate              types.String                              `tfsdk:"end_date"`
 	GeoLocationBreakdown types.String                              `tfsdk:"geo_location_breakdown"`

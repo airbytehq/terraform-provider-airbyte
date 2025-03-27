@@ -211,9 +211,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionCreateRequest() *shared.Conn
 			CronExpression: cronExpression,
 		}
 	}
-	dataResidency := new(shared.GeographyEnum)
+	dataResidency := new(string)
 	if !r.DataResidency.IsUnknown() && !r.DataResidency.IsNull() {
-		*dataResidency = shared.GeographyEnum(r.DataResidency.ValueString())
+		*dataResidency = r.DataResidency.ValueString()
 	} else {
 		dataResidency = nil
 	}
@@ -389,11 +389,7 @@ func (r *ConnectionResourceModel) RefreshFromSharedConnectionResponse(resp *shar
 		}
 		r.ConnectionID = types.StringValue(resp.ConnectionID)
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		if resp.DataResidency != nil {
-			r.DataResidency = types.StringValue(string(*resp.DataResidency))
-		} else {
-			r.DataResidency = types.StringNull()
-		}
+		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.Name = types.StringValue(resp.Name)
 		if resp.NamespaceDefinition != nil {
@@ -635,9 +631,9 @@ func (r *ConnectionResourceModel) ToSharedConnectionPatchRequest() *shared.Conne
 			CronExpression: cronExpression,
 		}
 	}
-	dataResidency := new(shared.GeographyEnumNoDefault)
+	dataResidency := new(string)
 	if !r.DataResidency.IsUnknown() && !r.DataResidency.IsNull() {
-		*dataResidency = shared.GeographyEnumNoDefault(r.DataResidency.ValueString())
+		*dataResidency = r.DataResidency.ValueString()
 	} else {
 		dataResidency = nil
 	}

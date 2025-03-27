@@ -9,6 +9,189 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type DestinationTeradataSchemasAuthType string
+
+const (
+	DestinationTeradataSchemasAuthTypeLdap DestinationTeradataSchemasAuthType = "LDAP"
+)
+
+func (e DestinationTeradataSchemasAuthType) ToPointer() *DestinationTeradataSchemasAuthType {
+	return &e
+}
+func (e *DestinationTeradataSchemasAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LDAP":
+		*e = DestinationTeradataSchemasAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationTeradataSchemasAuthType: %v", v)
+	}
+}
+
+type Ldap struct {
+	authType *DestinationTeradataSchemasAuthType `const:"LDAP" json:"auth_type"`
+	// Username to use to access the database.
+	Username string `json:"username"`
+	// Enter the password associated with the username.
+	Password string `json:"password"`
+}
+
+func (l Ldap) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(l, "", false)
+}
+
+func (l *Ldap) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &l, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Ldap) GetAuthType() *DestinationTeradataSchemasAuthType {
+	return DestinationTeradataSchemasAuthTypeLdap.ToPointer()
+}
+
+func (o *Ldap) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *Ldap) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+type DestinationTeradataAuthType string
+
+const (
+	DestinationTeradataAuthTypeTd2 DestinationTeradataAuthType = "TD2"
+)
+
+func (e DestinationTeradataAuthType) ToPointer() *DestinationTeradataAuthType {
+	return &e
+}
+func (e *DestinationTeradataAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "TD2":
+		*e = DestinationTeradataAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationTeradataAuthType: %v", v)
+	}
+}
+
+type Td2 struct {
+	authType *DestinationTeradataAuthType `const:"TD2" json:"auth_type"`
+	// Username to use to access the database.
+	Username string `json:"username"`
+	// Enter the password associated with the username.
+	Password string `json:"password"`
+}
+
+func (t Td2) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *Td2) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *Td2) GetAuthType() *DestinationTeradataAuthType {
+	return DestinationTeradataAuthTypeTd2.ToPointer()
+}
+
+func (o *Td2) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *Td2) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+type AuthorizationMechanismType string
+
+const (
+	AuthorizationMechanismTypeTd2  AuthorizationMechanismType = "TD2"
+	AuthorizationMechanismTypeLdap AuthorizationMechanismType = "LDAP"
+)
+
+type AuthorizationMechanism struct {
+	Td2  *Td2  `queryParam:"inline"`
+	Ldap *Ldap `queryParam:"inline"`
+
+	Type AuthorizationMechanismType
+}
+
+func CreateAuthorizationMechanismTd2(td2 Td2) AuthorizationMechanism {
+	typ := AuthorizationMechanismTypeTd2
+
+	return AuthorizationMechanism{
+		Td2:  &td2,
+		Type: typ,
+	}
+}
+
+func CreateAuthorizationMechanismLdap(ldap Ldap) AuthorizationMechanism {
+	typ := AuthorizationMechanismTypeLdap
+
+	return AuthorizationMechanism{
+		Ldap: &ldap,
+		Type: typ,
+	}
+}
+
+func (u *AuthorizationMechanism) UnmarshalJSON(data []byte) error {
+
+	var td2 Td2 = Td2{}
+	if err := utils.UnmarshalJSON(data, &td2, "", true, true); err == nil {
+		u.Td2 = &td2
+		u.Type = AuthorizationMechanismTypeTd2
+		return nil
+	}
+
+	var ldap Ldap = Ldap{}
+	if err := utils.UnmarshalJSON(data, &ldap, "", true, true); err == nil {
+		u.Ldap = &ldap
+		u.Type = AuthorizationMechanismTypeLdap
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthorizationMechanism", string(data))
+}
+
+func (u AuthorizationMechanism) MarshalJSON() ([]byte, error) {
+	if u.Td2 != nil {
+		return utils.MarshalJSON(u.Td2, "", true)
+	}
+
+	if u.Ldap != nil {
+		return utils.MarshalJSON(u.Ldap, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type AuthorizationMechanism: all fields are null")
+}
+
 type DestinationTeradataSchemasSSLModeSSLModes6Mode string
 
 const (
@@ -472,14 +655,11 @@ func (e *Teradata) UnmarshalJSON(data []byte) error {
 
 type DestinationTeradata struct {
 	// Hostname of the database.
-	Host string `json:"host"`
-	// Username to use to access the database.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password *string `json:"password,omitempty"`
+	Host    string                  `json:"host"`
+	Logmech *AuthorizationMechanism `json:"logmech,omitempty"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 	Schema *string `default:"airbyte_td" json:"schema"`
-	// Encrypt data using SSL. When activating SSL, please select one of the connection modes.
+	// Encrypt data using SSL. When activating SSL, please select one of the SSL modes.
 	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
 	//  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
@@ -491,7 +671,9 @@ type DestinationTeradata struct {
 	//  See more information - <a href="https://teradata-docs.s3.amazonaws.com/doc/connectivity/jdbc/reference/current/jdbcug_chapter_2.html#URL_SSLMODE"> in the docs</a>.
 	SslMode *DestinationTeradataSSLModes `json:"ssl_mode,omitempty"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams   *string  `json:"jdbc_url_params,omitempty"`
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Defines the custom session query band using name-value pairs. For example, 'org=Finance;report=Fin123;'
+	QueryBand       *string  `json:"query_band,omitempty"`
 	destinationType Teradata `const:"teradata" json:"destinationType"`
 }
 
@@ -513,18 +695,11 @@ func (o *DestinationTeradata) GetHost() string {
 	return o.Host
 }
 
-func (o *DestinationTeradata) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationTeradata) GetPassword() *string {
+func (o *DestinationTeradata) GetLogmech() *AuthorizationMechanism {
 	if o == nil {
 		return nil
 	}
-	return o.Password
+	return o.Logmech
 }
 
 func (o *DestinationTeradata) GetSchema() *string {
@@ -553,6 +728,13 @@ func (o *DestinationTeradata) GetJdbcURLParams() *string {
 		return nil
 	}
 	return o.JdbcURLParams
+}
+
+func (o *DestinationTeradata) GetQueryBand() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryBand
 }
 
 func (o *DestinationTeradata) GetDestinationType() Teradata {

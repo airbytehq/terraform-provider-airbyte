@@ -1,15 +1,6 @@
 resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
   configuration = {
     database_config = {
-      mongo_db_atlas_replica_set = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        auth_source           = "admin"
-        connection_string     = "mongodb+srv://cluster0.abcd1.mongodb.net/"
-        database              = "...my_database..."
-        password              = "...my_password..."
-        schema_enforced       = true
-        username              = "...my_username..."
-      }
       self_managed_replica_set = {
         additional_properties = "{ \"see\": \"documentation\" }"
         auth_source           = "admin"

@@ -3,8 +3,37 @@
 package shared
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
+
+// SourceAppleSearchAdsUpdateTimeZone - The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC.
+type SourceAppleSearchAdsUpdateTimeZone string
+
+const (
+	SourceAppleSearchAdsUpdateTimeZoneOrtz SourceAppleSearchAdsUpdateTimeZone = "ORTZ"
+	SourceAppleSearchAdsUpdateTimeZoneUtc  SourceAppleSearchAdsUpdateTimeZone = "UTC"
+)
+
+func (e SourceAppleSearchAdsUpdateTimeZone) ToPointer() *SourceAppleSearchAdsUpdateTimeZone {
+	return &e
+}
+func (e *SourceAppleSearchAdsUpdateTimeZone) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ORTZ":
+		fallthrough
+	case "UTC":
+		*e = SourceAppleSearchAdsUpdateTimeZone(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAppleSearchAdsUpdateTimeZone: %v", v)
+	}
+}
 
 type SourceAppleSearchAdsUpdate struct {
 	// The identifier of the organization that owns the campaign. Your Org Id is the same as your account in the Apple Search Ads UI.
@@ -21,6 +50,8 @@ type SourceAppleSearchAdsUpdate struct {
 	LookbackWindow *int64 `default:"30" json:"lookback_window"`
 	// This factor factor determines the delay increase factor between retryable failures. Valid values are integers between 1 and 20.
 	BackoffFactor *int64 `default:"5" json:"backoff_factor"`
+	// The timezone for the reporting data. Use 'ORTZ' for Organization Time Zone or 'UTC' for Coordinated Universal Time. Default is UTC.
+	Timezone *SourceAppleSearchAdsUpdateTimeZone `default:"UTC" json:"timezone"`
 }
 
 func (s SourceAppleSearchAdsUpdate) MarshalJSON() ([]byte, error) {
@@ -81,4 +112,11 @@ func (o *SourceAppleSearchAdsUpdate) GetBackoffFactor() *int64 {
 		return nil
 	}
 	return o.BackoffFactor
+}
+
+func (o *SourceAppleSearchAdsUpdate) GetTimezone() *SourceAppleSearchAdsUpdateTimeZone {
+	if o == nil {
+		return nil
+	}
+	return o.Timezone
 }

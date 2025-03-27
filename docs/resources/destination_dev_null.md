@@ -16,43 +16,9 @@ DestinationDevNull Resource
 resource "airbyte_destination_dev_null" "my_destination_devnull" {
   configuration = {
     test_destination = {
-      failing = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        num_messages          = 6
-        test_destination_type = "FAILING"
-      }
-      logging = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        logging_config = {
-          every_n_th_entry = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            logging_type          = "EveryNth"
-            max_entry_count       = 100
-            nth_entry_to_log      = 3
-          }
-          first_n_entries = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            logging_type          = "FirstN"
-            max_entry_count       = 100
-          }
-          random_sampling = {
-            additional_properties = "{ \"see\": \"documentation\" }"
-            logging_type          = "RandomSampling"
-            max_entry_count       = 100
-            sampling_ratio        = 0.001
-            seed                  = 1900
-          }
-        }
-        test_destination_type = "LOGGING"
-      }
       silent = {
         additional_properties = "{ \"see\": \"documentation\" }"
         test_destination_type = "SILENT"
-      }
-      throttled = {
-        additional_properties = "{ \"see\": \"documentation\" }"
-        millis_per_record     = 2
-        test_destination_type = "THROTTLED"
       }
     }
   }
@@ -80,6 +46,7 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
@@ -190,6 +157,50 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `test_destination_type` (String) Default: "THROTTLED"; must be "THROTTLED"
+
+
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

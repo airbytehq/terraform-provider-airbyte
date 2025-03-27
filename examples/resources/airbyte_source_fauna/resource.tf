@@ -2,9 +2,6 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        disabled = {
-          # ...
-        }
         enabled = {
           column = "...my_column..."
         }

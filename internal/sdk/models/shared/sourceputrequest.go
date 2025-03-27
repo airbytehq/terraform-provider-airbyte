@@ -6,6 +6,8 @@ type SourcePutRequest struct {
 	Name string `json:"name"`
 	// The values required to configure the source.
 	Configuration any `json:"configuration"`
+	// actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level.
+	ResourceAllocation *ScopedResourceRequirements `json:"resourceAllocation,omitempty"`
 }
 
 func (o *SourcePutRequest) GetName() string {
@@ -20,4 +22,11 @@ func (o *SourcePutRequest) GetConfiguration() any {
 		return nil
 	}
 	return o.Configuration
+}
+
+func (o *SourcePutRequest) GetResourceAllocation() *ScopedResourceRequirements {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceAllocation
 }

@@ -13,8 +13,8 @@ import (
 type ProductCatalog string
 
 const (
-	ProductCatalogOne0 ProductCatalog = "1.0"
-	ProductCatalogTwo0 ProductCatalog = "2.0"
+	ProductCatalogOneDot0 ProductCatalog = "1.0"
+	ProductCatalogTwoDot0 ProductCatalog = "2.0"
 )
 
 func (e ProductCatalog) ToPointer() *ProductCatalog {

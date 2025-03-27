@@ -4,9 +4,6 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
       "..."
     ]
     credentials = {
-      api_key = {
-        client_id = "...my_client_id..."
-      }
       o_auth20 = {
         access_token      = "...my_access_token..."
         client_id         = "...my_client_id..."

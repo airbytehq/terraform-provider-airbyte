@@ -13,8 +13,8 @@ import (
 type SourceChargebeeUpdateProductCatalog string
 
 const (
-	SourceChargebeeUpdateProductCatalogOne0 SourceChargebeeUpdateProductCatalog = "1.0"
-	SourceChargebeeUpdateProductCatalogTwo0 SourceChargebeeUpdateProductCatalog = "2.0"
+	SourceChargebeeUpdateProductCatalogOneDot0 SourceChargebeeUpdateProductCatalog = "1.0"
+	SourceChargebeeUpdateProductCatalogTwoDot0 SourceChargebeeUpdateProductCatalog = "2.0"
 )
 
 func (e SourceChargebeeUpdateProductCatalog) ToPointer() *SourceChargebeeUpdateProductCatalog {
