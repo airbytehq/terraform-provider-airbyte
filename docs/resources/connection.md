@@ -49,7 +49,7 @@ resource "airbyte_connection" "my_connection" {
       }
     ]
   }
-  data_residency                       = "eu"
+  data_residency                       = "...my_data_residency..."
   destination_id                       = "5725b342-2d43-4e6c-90a4-e500c954e591"
   name                                 = "...my_name..."
   namespace_definition                 = "custom_format"
@@ -84,7 +84,7 @@ resource "airbyte_connection" "my_connection" {
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String) Default: "auto"; must be one of ["auto", "us", "eu"]
+- `data_residency` (String)
 - `name` (String) Optional name of the connection
 - `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.

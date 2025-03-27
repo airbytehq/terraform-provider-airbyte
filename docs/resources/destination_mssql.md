@@ -18,13 +18,20 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     database        = "...my_database..."
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
-    port            = 1433
-    raw_data_schema = "...my_raw_data_schema..."
-    schema          = "public"
+    load_type = {
+      insert_load = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        load_type             = "INSERT"
+      }
+    }
+    password = "...my_password..."
+    port     = 1433
+    schema   = "public"
     ssl_method = {
       encrypted_verify_certificate = {
+        additional_properties    = "{ \"see\": \"documentation\" }"
         host_name_in_certificate = "...my_host_name_in_certificate..."
+<<<<<<< Updated upstream
       }
     }
     tunnel_method = {
@@ -33,6 +40,14 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
       }
     }
     username = "...my_username..."
+=======
+        name                     = "encrypted_verify_certificate"
+        trust_store_name         = "...my_trust_store_name..."
+        trust_store_password     = "...my_trust_store_password..."
+      }
+    }
+    user = "...my_user..."
+>>>>>>> Stashed changes
   }
   definition_id = "a282fec3-7b94-4274-9620-860fbc85f5d6"
   name          = "...my_name..."
@@ -58,6 +73,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
@@ -66,17 +82,51 @@ Required:
 
 - `database` (String) The name of the MSSQL database.
 - `host` (String) The host name of the MSSQL database.
-- `username` (String) The username which is used to access the database.
+- `load_type` (Attributes) Specifies the type of load mechanism (e.g., BULK, INSERT) and its associated configuration. (see [below for nested schema](#nestedatt--configuration--load_type))
+- `port` (Number) The port of the MSSQL database.
+- `ssl_method` (Attributes) The encryption method which is used to communicate with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
+- `user` (String) The username which is used to access the database.
 
 Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with this username.
-- `port` (Number) The port of the MSSQL database. Default: 1433
-- `raw_data_schema` (String) The schema to write raw tables into (default: airbyte_internal)
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public". Default: "public"
-- `ssl_method` (Attributes) The encryption method which is used to communicate with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
-- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+
+<a id="nestedatt--configuration--load_type"></a>
+### Nested Schema for `configuration.load_type`
+
+Optional:
+
+- `bulk_load` (Attributes) Configuration details for using the BULK loading mechanism. (see [below for nested schema](#nestedatt--configuration--load_type--bulk_load))
+- `insert_load` (Attributes) Configuration details for using the INSERT loading mechanism. (see [below for nested schema](#nestedatt--configuration--load_type--insert_load))
+
+<a id="nestedatt--configuration--load_type--bulk_load"></a>
+### Nested Schema for `configuration.load_type.bulk_load`
+
+Required:
+
+- `azure_blob_storage_account_name` (String) The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts
+- `azure_blob_storage_container_name` (String) The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
+- `bulk_load_data_source` (String) Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `bulk_load_validate_values_pre_load` (Boolean) When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance. Default: false
+- `load_type` (String) Default: "BULK"; must be "BULK"
+
+
+<a id="nestedatt--configuration--load_type--insert_load"></a>
+### Nested Schema for `configuration.load_type.insert_load`
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `load_type` (String) Default: "INSERT"; must be "INSERT"
+
+
 
 <a id="nestedatt--configuration--ssl_method"></a>
 ### Nested Schema for `configuration.ssl_method`
@@ -90,59 +140,75 @@ Optional:
 <a id="nestedatt--configuration--ssl_method--encrypted_trust_server_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.encrypted_trust_server_certificate`
 
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `name` (String) Default: "encrypted_trust_server_certificate"; must be "encrypted_trust_server_certificate"
+
 
 <a id="nestedatt--configuration--ssl_method--encrypted_verify_certificate"></a>
 ### Nested Schema for `configuration.ssl_method.encrypted_verify_certificate`
 
 Optional:
 
+- `additional_properties` (String) Parsed as JSON.
 - `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
+- `name` (String) Default: "encrypted_verify_certificate"; must be "encrypted_verify_certificate"
+- `trust_store_name` (String) Specifies the name of the trust store.
+- `trust_store_password` (String, Sensitive) Specifies the password of the trust store.
 
 
 <a id="nestedatt--configuration--ssl_method--unencrypted"></a>
 ### Nested Schema for `configuration.ssl_method.unencrypted`
 
-
-
-<a id="nestedatt--configuration--tunnel_method"></a>
-### Nested Schema for `configuration.tunnel_method`
-
 Optional:
 
-- `no_tunnel` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--no_tunnel))
-- `password_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--password_authentication))
-- `ssh_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method--ssh_key_authentication))
-
-<a id="nestedatt--configuration--tunnel_method--no_tunnel"></a>
-### Nested Schema for `configuration.tunnel_method.no_tunnel`
+- `additional_properties` (String) Parsed as JSON.
+- `name` (String) Default: "unencrypted"; must be "unencrypted"
 
 
-<a id="nestedatt--configuration--tunnel_method--password_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.password_authentication`
-
-Required:
-
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_user` (String) OS-level username for logging into the jump server host
-- `tunnel_user_password` (String, Sensitive) OS-level password for logging into the jump server host
-
-Optional:
-
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
 
 
-<a id="nestedatt--configuration--tunnel_method--ssh_key_authentication"></a>
-### Nested Schema for `configuration.tunnel_method.ssh_key_authentication`
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
 
-Required:
+Read-Only:
 
-- `ssh_key` (String, Sensitive) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_user` (String) OS-level username for logging into the jump server host.
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
 
-Optional:
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
 
-- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections. Default: 22
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 

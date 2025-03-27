@@ -16,9 +16,11 @@ DestinationGoogleSheets Resource
 resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
   configuration = {
     credentials = {
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      authenticate_via_google_o_auth = {
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
@@ -46,23 +48,84 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 - `created_at` (Number)
 - `destination_id` (String)
 - `destination_type` (String)
+- `resource_allocation` (Attributes) actor or actor definition specific resource requirements. if default is set, these are the requirements that should be set for ALL jobs run for this actor definition. it is overriden by the job type specific configurations. if not set, the platform will use defaults. these values will be overriden by configuration at the connection level. (see [below for nested schema](#nestedatt--resource_allocation))
 
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
 Required:
 
-- `credentials` (Attributes) Google API Credentials for connecting to Google Sheets and Google Drive APIs (see [below for nested schema](#nestedatt--configuration--credentials))
+- `credentials` (Attributes) Authentication method to access Google Sheets (see [below for nested schema](#nestedatt--configuration--credentials))
 - `spreadsheet_id` (String) The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
+
+Optional:
+
+- `authenticate_via_google_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--authenticate_via_google_o_auth))
+- `service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--service_account_key_authentication))
+
+<a id="nestedatt--configuration--credentials--authenticate_via_google_o_auth"></a>
+### Nested Schema for `configuration.credentials.authenticate_via_google_o_auth`
 
 Required:
 
 - `client_id` (String, Sensitive) The Client ID of your Google Sheets developer application.
 - `client_secret` (String, Sensitive) The Client Secret of your Google Sheets developer application.
 - `refresh_token` (String, Sensitive) The token for obtaining new access token.
+
+
+<a id="nestedatt--configuration--credentials--service_account_key_authentication"></a>
+### Nested Schema for `configuration.credentials.service_account_key_authentication`
+
+Required:
+
+- `service_account_info` (String, Sensitive) Enter your service account key in JSON format. See the <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#service-account'>docs</a> for more information on how to generate this key.
+
+
+
+
+<a id="nestedatt--resource_allocation"></a>
+### Nested Schema for `resource_allocation`
+
+Read-Only:
+
+- `default` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--default))
+- `job_specific` (Attributes List) (see [below for nested schema](#nestedatt--resource_allocation--job_specific))
+
+<a id="nestedatt--resource_allocation--default"></a>
+### Nested Schema for `resource_allocation.default`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
+
+
+<a id="nestedatt--resource_allocation--job_specific"></a>
+### Nested Schema for `resource_allocation.job_specific`
+
+Read-Only:
+
+- `job_type` (String) enum that describes the different types of jobs that the platform runs. must be one of ["get_spec", "check_connection", "discover_schema", "sync", "reset_connection", "connection_updater", "replicate"]
+- `resource_requirements` (Attributes) optional resource requirements to run workers (blank for unbounded allocations) (see [below for nested schema](#nestedatt--resource_allocation--job_specific--resource_requirements))
+
+<a id="nestedatt--resource_allocation--job_specific--resource_requirements"></a>
+### Nested Schema for `resource_allocation.job_specific.resource_requirements`
+
+Read-Only:
+
+- `cpu_limit` (String)
+- `cpu_request` (String)
+- `ephemeral_storage_limit` (String)
+- `ephemeral_storage_request` (String)
+- `memory_limit` (String)
+- `memory_request` (String)
 
 ## Import
 
