@@ -54,7 +54,7 @@ func (s *Organizations) ListOrganizationsForUser(ctx context.Context, opts ...op
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listOrganizationsForUser",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
