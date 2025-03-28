@@ -51,7 +51,7 @@ func (s *Health) GetHealthCheck(ctx context.Context, opts ...operations.Option) 
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getHealthCheck",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: nil,
 	}
 

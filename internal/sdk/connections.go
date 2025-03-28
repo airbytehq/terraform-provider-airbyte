@@ -53,7 +53,7 @@ func (s *Connections) CreateConnection(ctx context.Context, request shared.Conne
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "createConnection",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -190,7 +190,7 @@ func (s *Connections) ListConnections(ctx context.Context, request operations.Li
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "listConnections",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -324,7 +324,7 @@ func (s *Connections) GetConnection(ctx context.Context, request operations.GetC
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "getConnection",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 
@@ -454,7 +454,7 @@ func (s *Connections) PatchConnection(ctx context.Context, request operations.Pa
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "patchConnection",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "ConnectionPatchRequest", "json", `request:"mediaType=application/json"`)
@@ -591,7 +591,7 @@ func (s *Connections) DeleteConnection(ctx context.Context, request operations.D
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "deleteConnection",
-		OAuth2Scopes:   nil,
+		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
 

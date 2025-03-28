@@ -3,10 +3,10 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: d5acbc7281a94e7b0e8aa18fee3abd71
   docVersion: 1.0.0
-  speakeasyVersion: 1.524.0
-  generationVersion: 2.562.2
-  releaseVersion: 0.16.0
-  configChecksum: 9f139f9507e82b6db2774217b4d5fe03
+  speakeasyVersion: 1.525.2
+  generationVersion: 2.562.3
+  releaseVersion: 0.16.2
+  configChecksum: db0ff5f5b0e03791c46aa6d06dcf028f
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -23250,7 +23250,7 @@ examples:
   createSourcePagerduty:
     speakeasy-default-create-source-pagerduty:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "0cbd8d78-3e8d-4a5b-baae-de3715ebb5a5", "configuration": {"cutoff_days": 90, "default_severity": "Sev2", "exclude_services": ["service-1"], "incident_log_entries_overview": true, "max_retries": 5, "page_size": 25, "token": "<value>"}}
+        application/json: {"name": "<value>", "workspaceId": "0cbd8d78-3e8d-4a5b-baae-de3715ebb5a5", "configuration": {"cutoff_days": 90, "default_severity": "Sev1", "exclude_services": ["service-2"], "incident_log_entries_overview": true, "max_retries": 5, "page_size": 25, "token": "<value>"}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 678911}
@@ -23268,7 +23268,7 @@ examples:
         path:
           sourceId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "3fab38c7-99fb-4071-b378-eb7c9a688873", "configuration": {"cutoff_days": 90, "default_severity": "Sev5", "exclude_services": ["service-2"], "incident_log_entries_overview": true, "max_retries": 5, "page_size": 25, "token": "<value>"}}
+        application/json: {"name": "<value>", "workspaceId": "3fab38c7-99fb-4071-b378-eb7c9a688873", "configuration": {"cutoff_days": 90, "default_severity": "Sev2", "exclude_services": ["service-2"], "incident_log_entries_overview": true, "max_retries": 5, "page_size": 25, "token": "<value>"}}
   deleteSourcePagerduty:
     speakeasy-default-delete-source-pagerduty:
       parameters:
