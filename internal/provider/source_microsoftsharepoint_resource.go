@@ -195,7 +195,7 @@ func (r *SourceMicrosoftSharepointResource) Schema(ctx context.Context, req reso
 						Computed:    true,
 						Optional:    true,
 						Default:     stringdefault.StaticString(``),
-						Description: `Url of SharePoint site to search for files. Leave empty to search in the main site. Default: ""`,
+						Description: `Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites. Default: ""`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

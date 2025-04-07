@@ -205,6 +205,19 @@ type SourceMondayUpdate struct {
 	Credentials *SourceMondayUpdateAuthorizationMethod `json:"credentials,omitempty"`
 	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
 	BoardIds []int64 `json:"board_ids,omitempty"`
+	// The number of worker threads to use for the sync.
+	NumWorkers *int64 `default:"4" json:"num_workers"`
+}
+
+func (s SourceMondayUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceMondayUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SourceMondayUpdate) GetCredentials() *SourceMondayUpdateAuthorizationMethod {
@@ -219,4 +232,11 @@ func (o *SourceMondayUpdate) GetBoardIds() []int64 {
 		return nil
 	}
 	return o.BoardIds
+}
+
+func (o *SourceMondayUpdate) GetNumWorkers() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorkers
 }

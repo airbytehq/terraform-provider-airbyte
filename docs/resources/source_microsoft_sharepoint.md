@@ -91,7 +91,7 @@ Optional:
 - `delivery_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--delivery_method))
 - `folder_path` (String) Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items. Default: "."
 - `search_scope` (String) Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' for all SharePoint drives the user can access, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both. Default: "ALL"; must be one of ["ACCESSIBLE_DRIVES", "SHARED_ITEMS", "ALL"]
-- `site_url` (String) Url of SharePoint site to search for files. Leave empty to search in the main site. Default: ""
+- `site_url` (String) Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites. Default: ""
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>

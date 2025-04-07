@@ -9,6 +9,8 @@ import (
 
 type GetSourceRequest struct {
 	SourceID string `pathParam:"style=simple,explode=false,name=sourceId"`
+	// Rather than return *** for secret properties include the secret coordinate information
+	IncludeSecretCoordinates *bool `queryParam:"style=form,explode=true,name=includeSecretCoordinates"`
 }
 
 func (o *GetSourceRequest) GetSourceID() string {
@@ -16,6 +18,13 @@ func (o *GetSourceRequest) GetSourceID() string {
 		return ""
 	}
 	return o.SourceID
+}
+
+func (o *GetSourceRequest) GetIncludeSecretCoordinates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeSecretCoordinates
 }
 
 type GetSourceResponse struct {

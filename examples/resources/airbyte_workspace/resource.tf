@@ -57,4 +57,5 @@ resource "airbyte_workspace" "my_workspace" {
     }
   }
   organization_id = "4d886138-b4b4-4da8-9dca-f4d28f8550f8"
+  region_id       = "cbd99489-c363-45e8-9d04-2de8d03ae703"
 }

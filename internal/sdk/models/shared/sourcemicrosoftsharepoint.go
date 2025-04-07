@@ -1481,7 +1481,7 @@ type SourceMicrosoftSharepoint struct {
 	SearchScope *SourceMicrosoftSharepointSearchScope `default:"ALL" json:"search_scope"`
 	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
 	FolderPath *string `default:"." json:"folder_path"`
-	// Url of SharePoint site to search for files. Leave empty to search in the main site.
+	// Url of SharePoint site to search for files. Leave empty to search in the main site. Use 'https://<tenant_name>.sharepoint.com/sites/' to iterate over all sites.
 	SiteURL    *string             `default:"" json:"site_url"`
 	sourceType MicrosoftSharepoint `const:"microsoft-sharepoint" json:"sourceType"`
 }

@@ -155,8 +155,8 @@ func (e *DestinationS3DataLakeSchemasCatalogType) UnmarshalJSON(data []byte) err
 	}
 }
 
-// DestinationS3DataLakeRestCatalog - Configuration details for connecting to a REST catalog.
-type DestinationS3DataLakeRestCatalog struct {
+// RestCatalog - Configuration details for connecting to a REST catalog.
+type RestCatalog struct {
 	CatalogType *DestinationS3DataLakeSchemasCatalogType `default:"REST" json:"catalog_type"`
 	// The base URL of the Rest server used to connect to the Rest catalog.
 	ServerURI string `json:"server_uri"`
@@ -167,39 +167,39 @@ type DestinationS3DataLakeRestCatalog struct {
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
-func (d DestinationS3DataLakeRestCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (r RestCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
 }
 
-func (d *DestinationS3DataLakeRestCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+func (r *RestCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DestinationS3DataLakeRestCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogType {
+func (o *RestCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogType {
 	if o == nil {
 		return nil
 	}
 	return o.CatalogType
 }
 
-func (o *DestinationS3DataLakeRestCatalog) GetServerURI() string {
+func (o *RestCatalog) GetServerURI() string {
 	if o == nil {
 		return ""
 	}
 	return o.ServerURI
 }
 
-func (o *DestinationS3DataLakeRestCatalog) GetNamespace() string {
+func (o *RestCatalog) GetNamespace() string {
 	if o == nil {
 		return ""
 	}
 	return o.Namespace
 }
 
-func (o *DestinationS3DataLakeRestCatalog) GetAdditionalProperties() any {
+func (o *RestCatalog) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
@@ -229,8 +229,8 @@ func (e *DestinationS3DataLakeCatalogType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3DataLakeGlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
-type DestinationS3DataLakeGlueCatalog struct {
+// GlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
+type GlueCatalog struct {
 	CatalogType *DestinationS3DataLakeCatalogType `default:"GLUE" json:"catalog_type"`
 	// The AWS Account ID associated with the Glue service used by the Iceberg catalog.
 	GlueID string `json:"glue_id"`
@@ -241,46 +241,46 @@ type DestinationS3DataLakeGlueCatalog struct {
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
-func (d DestinationS3DataLakeGlueCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (g GlueCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
 }
 
-func (d *DestinationS3DataLakeGlueCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+func (g *GlueCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DestinationS3DataLakeGlueCatalog) GetCatalogType() *DestinationS3DataLakeCatalogType {
+func (o *GlueCatalog) GetCatalogType() *DestinationS3DataLakeCatalogType {
 	if o == nil {
 		return nil
 	}
 	return o.CatalogType
 }
 
-func (o *DestinationS3DataLakeGlueCatalog) GetGlueID() string {
+func (o *GlueCatalog) GetGlueID() string {
 	if o == nil {
 		return ""
 	}
 	return o.GlueID
 }
 
-func (o *DestinationS3DataLakeGlueCatalog) GetRoleArn() *string {
+func (o *GlueCatalog) GetRoleArn() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RoleArn
 }
 
-func (o *DestinationS3DataLakeGlueCatalog) GetDatabaseName() string {
+func (o *GlueCatalog) GetDatabaseName() string {
 	if o == nil {
 		return ""
 	}
 	return o.DatabaseName
 }
 
-func (o *DestinationS3DataLakeGlueCatalog) GetAdditionalProperties() any {
+func (o *GlueCatalog) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
@@ -373,16 +373,16 @@ func (o *NessieCatalog) GetAdditionalProperties() any {
 type CatalogTypeType string
 
 const (
-	CatalogTypeTypeNessieCatalog                    CatalogTypeType = "Nessie Catalog"
-	CatalogTypeTypeDestinationS3DataLakeGlueCatalog CatalogTypeType = "destination-s3-data-lake_Glue Catalog"
-	CatalogTypeTypeDestinationS3DataLakeRestCatalog CatalogTypeType = "destination-s3-data-lake_Rest Catalog"
+	CatalogTypeTypeNessieCatalog CatalogTypeType = "Nessie Catalog"
+	CatalogTypeTypeGlueCatalog   CatalogTypeType = "Glue Catalog"
+	CatalogTypeTypeRestCatalog   CatalogTypeType = "Rest Catalog"
 )
 
 // CatalogType - Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
 type CatalogType struct {
-	NessieCatalog                    *NessieCatalog                    `queryParam:"inline"`
-	DestinationS3DataLakeGlueCatalog *DestinationS3DataLakeGlueCatalog `queryParam:"inline"`
-	DestinationS3DataLakeRestCatalog *DestinationS3DataLakeRestCatalog `queryParam:"inline"`
+	NessieCatalog *NessieCatalog `queryParam:"inline"`
+	GlueCatalog   *GlueCatalog   `queryParam:"inline"`
+	RestCatalog   *RestCatalog   `queryParam:"inline"`
 
 	Type CatalogTypeType
 }
@@ -396,30 +396,30 @@ func CreateCatalogTypeNessieCatalog(nessieCatalog NessieCatalog) CatalogType {
 	}
 }
 
-func CreateCatalogTypeDestinationS3DataLakeGlueCatalog(destinationS3DataLakeGlueCatalog DestinationS3DataLakeGlueCatalog) CatalogType {
-	typ := CatalogTypeTypeDestinationS3DataLakeGlueCatalog
+func CreateCatalogTypeGlueCatalog(glueCatalog GlueCatalog) CatalogType {
+	typ := CatalogTypeTypeGlueCatalog
 
 	return CatalogType{
-		DestinationS3DataLakeGlueCatalog: &destinationS3DataLakeGlueCatalog,
-		Type:                             typ,
+		GlueCatalog: &glueCatalog,
+		Type:        typ,
 	}
 }
 
-func CreateCatalogTypeDestinationS3DataLakeRestCatalog(destinationS3DataLakeRestCatalog DestinationS3DataLakeRestCatalog) CatalogType {
-	typ := CatalogTypeTypeDestinationS3DataLakeRestCatalog
+func CreateCatalogTypeRestCatalog(restCatalog RestCatalog) CatalogType {
+	typ := CatalogTypeTypeRestCatalog
 
 	return CatalogType{
-		DestinationS3DataLakeRestCatalog: &destinationS3DataLakeRestCatalog,
-		Type:                             typ,
+		RestCatalog: &restCatalog,
+		Type:        typ,
 	}
 }
 
 func (u *CatalogType) UnmarshalJSON(data []byte) error {
 
-	var destinationS3DataLakeRestCatalog DestinationS3DataLakeRestCatalog = DestinationS3DataLakeRestCatalog{}
-	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeRestCatalog, "", true, true); err == nil {
-		u.DestinationS3DataLakeRestCatalog = &destinationS3DataLakeRestCatalog
-		u.Type = CatalogTypeTypeDestinationS3DataLakeRestCatalog
+	var restCatalog RestCatalog = RestCatalog{}
+	if err := utils.UnmarshalJSON(data, &restCatalog, "", true, true); err == nil {
+		u.RestCatalog = &restCatalog
+		u.Type = CatalogTypeTypeRestCatalog
 		return nil
 	}
 
@@ -430,10 +430,10 @@ func (u *CatalogType) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var destinationS3DataLakeGlueCatalog DestinationS3DataLakeGlueCatalog = DestinationS3DataLakeGlueCatalog{}
-	if err := utils.UnmarshalJSON(data, &destinationS3DataLakeGlueCatalog, "", true, true); err == nil {
-		u.DestinationS3DataLakeGlueCatalog = &destinationS3DataLakeGlueCatalog
-		u.Type = CatalogTypeTypeDestinationS3DataLakeGlueCatalog
+	var glueCatalog GlueCatalog = GlueCatalog{}
+	if err := utils.UnmarshalJSON(data, &glueCatalog, "", true, true); err == nil {
+		u.GlueCatalog = &glueCatalog
+		u.Type = CatalogTypeTypeGlueCatalog
 		return nil
 	}
 
@@ -445,12 +445,12 @@ func (u CatalogType) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.NessieCatalog, "", true)
 	}
 
-	if u.DestinationS3DataLakeGlueCatalog != nil {
-		return utils.MarshalJSON(u.DestinationS3DataLakeGlueCatalog, "", true)
+	if u.GlueCatalog != nil {
+		return utils.MarshalJSON(u.GlueCatalog, "", true)
 	}
 
-	if u.DestinationS3DataLakeRestCatalog != nil {
-		return utils.MarshalJSON(u.DestinationS3DataLakeRestCatalog, "", true)
+	if u.RestCatalog != nil {
+		return utils.MarshalJSON(u.RestCatalog, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CatalogType: all fields are null")

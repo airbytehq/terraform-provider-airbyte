@@ -7,6 +7,7 @@ type WorkspaceUpdateRequest struct {
 	Name *string `json:"name,omitempty"`
 	// Configures workspace notifications.
 	Notifications *NotificationsConfig `json:"notifications,omitempty"`
+	RegionID      *string              `json:"regionId,omitempty"`
 }
 
 func (o *WorkspaceUpdateRequest) GetName() *string {
@@ -21,4 +22,11 @@ func (o *WorkspaceUpdateRequest) GetNotifications() *NotificationsConfig {
 		return nil
 	}
 	return o.Notifications
+}
+
+func (o *WorkspaceUpdateRequest) GetRegionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RegionID
 }

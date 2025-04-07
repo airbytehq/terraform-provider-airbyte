@@ -39,6 +39,7 @@ type WorkspaceResourceModel struct {
 	Name           types.String                 `tfsdk:"name"`
 	Notifications  *tfTypes.NotificationsConfig `tfsdk:"notifications"`
 	OrganizationID types.String                 `tfsdk:"organization_id"`
+	RegionID       types.String                 `tfsdk:"region_id"`
 	WorkspaceID    types.String                 `tfsdk:"workspace_id"`
 }
 
@@ -386,6 +387,9 @@ func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 				Description: `ID of organization to add workspace to. Requires replacement if changed.`,
 			},
+			"region_id": schema.StringAttribute{
+				Optional: true,
+			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
@@ -587,6 +591,34 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var workspaceId1 string
+	workspaceId1 = data.WorkspaceID.ValueString()
+
+	request1 := operations.GetWorkspaceRequest{
+		WorkspaceID: workspaceId1,
+	}
+	res1, err := r.client.Workspaces.GetWorkspace(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.WorkspaceResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedWorkspaceResponse(res1.WorkspaceResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

@@ -5,6 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type GlueCatalog struct {
-	CatalogType types.String `tfsdk:"catalog_type"`
-	Database    types.String `tfsdk:"database"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	CatalogType          types.String `tfsdk:"catalog_type"`
+	DatabaseName         types.String `tfsdk:"database_name"`
+	GlueID               types.String `tfsdk:"glue_id"`
+	RoleArn              types.String `tfsdk:"role_arn"`
 }

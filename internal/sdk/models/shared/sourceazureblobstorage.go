@@ -181,8 +181,8 @@ func (u Processing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Processing: all fields are null")
 }
 
-// DocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type DocumentFileTypeFormatExperimental struct {
+// UnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type UnstructuredDocumentFormat struct {
 	filetype *SourceAzureBlobStorageSchemasStreamsFormatFiletype `const:"unstructured" json:"filetype"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
@@ -192,36 +192,36 @@ type DocumentFileTypeFormatExperimental struct {
 	Processing *Processing `json:"processing,omitempty"`
 }
 
-func (d DocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
+func (u UnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
 }
 
-func (d *DocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+func (u *UnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DocumentFileTypeFormatExperimental) GetFiletype() *SourceAzureBlobStorageSchemasStreamsFormatFiletype {
+func (o *UnstructuredDocumentFormat) GetFiletype() *SourceAzureBlobStorageSchemasStreamsFormatFiletype {
 	return SourceAzureBlobStorageSchemasStreamsFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *DocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *UnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *DocumentFileTypeFormatExperimental) GetStrategy() *ParsingStrategy {
+func (o *UnstructuredDocumentFormat) GetStrategy() *ParsingStrategy {
 	if o == nil {
 		return nil
 	}
 	return o.Strategy
 }
 
-func (o *DocumentFileTypeFormatExperimental) GetProcessing() *Processing {
+func (o *UnstructuredDocumentFormat) GetProcessing() *Processing {
 	if o == nil {
 		return nil
 	}
@@ -755,20 +755,20 @@ func (o *AvroFormat) GetDoubleAsString() *bool {
 type FormatUnionType string
 
 const (
-	FormatUnionTypeAvroFormat                         FormatUnionType = "Avro Format"
-	FormatUnionTypeCSVFormat                          FormatUnionType = "CSV Format"
-	FormatUnionTypeJsonlFormat                        FormatUnionType = "Jsonl Format"
-	FormatUnionTypeParquetFormat                      FormatUnionType = "Parquet Format"
-	FormatUnionTypeDocumentFileTypeFormatExperimental FormatUnionType = "Document File Type Format (Experimental)"
+	FormatUnionTypeAvroFormat                 FormatUnionType = "Avro Format"
+	FormatUnionTypeCSVFormat                  FormatUnionType = "CSV Format"
+	FormatUnionTypeJsonlFormat                FormatUnionType = "Jsonl Format"
+	FormatUnionTypeParquetFormat              FormatUnionType = "Parquet Format"
+	FormatUnionTypeUnstructuredDocumentFormat FormatUnionType = "Unstructured Document Format"
 )
 
 // Format - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type Format struct {
-	AvroFormat                         *AvroFormat                         `queryParam:"inline"`
-	CSVFormat                          *CSVFormat                          `queryParam:"inline"`
-	JsonlFormat                        *JsonlFormat                        `queryParam:"inline"`
-	ParquetFormat                      *ParquetFormat                      `queryParam:"inline"`
-	DocumentFileTypeFormatExperimental *DocumentFileTypeFormatExperimental `queryParam:"inline"`
+	AvroFormat                 *AvroFormat                 `queryParam:"inline"`
+	CSVFormat                  *CSVFormat                  `queryParam:"inline"`
+	JsonlFormat                *JsonlFormat                `queryParam:"inline"`
+	ParquetFormat              *ParquetFormat              `queryParam:"inline"`
+	UnstructuredDocumentFormat *UnstructuredDocumentFormat `queryParam:"inline"`
 
 	Type FormatUnionType
 }
@@ -809,12 +809,12 @@ func CreateFormatParquetFormat(parquetFormat ParquetFormat) Format {
 	}
 }
 
-func CreateFormatDocumentFileTypeFormatExperimental(documentFileTypeFormatExperimental DocumentFileTypeFormatExperimental) Format {
-	typ := FormatUnionTypeDocumentFileTypeFormatExperimental
+func CreateFormatUnstructuredDocumentFormat(unstructuredDocumentFormat UnstructuredDocumentFormat) Format {
+	typ := FormatUnionTypeUnstructuredDocumentFormat
 
 	return Format{
-		DocumentFileTypeFormatExperimental: &documentFileTypeFormatExperimental,
-		Type:                               typ,
+		UnstructuredDocumentFormat: &unstructuredDocumentFormat,
+		Type:                       typ,
 	}
 }
 
@@ -841,10 +841,10 @@ func (u *Format) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var documentFileTypeFormatExperimental DocumentFileTypeFormatExperimental = DocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &documentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.DocumentFileTypeFormatExperimental = &documentFileTypeFormatExperimental
-		u.Type = FormatUnionTypeDocumentFileTypeFormatExperimental
+	var unstructuredDocumentFormat UnstructuredDocumentFormat = UnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &unstructuredDocumentFormat, "", true, true); err == nil {
+		u.UnstructuredDocumentFormat = &unstructuredDocumentFormat
+		u.Type = FormatUnionTypeUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -875,8 +875,8 @@ func (u Format) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ParquetFormat, "", true)
 	}
 
-	if u.DocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.DocumentFileTypeFormatExperimental, "", true)
+	if u.UnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.UnstructuredDocumentFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Format: all fields are null")
@@ -897,6 +897,8 @@ type FileBasedStreamConfig struct {
 	Format Format `json:"format"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 }
 
 func (f FileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -957,6 +959,13 @@ func (o *FileBasedStreamConfig) GetSchemaless() *bool {
 		return nil
 	}
 	return o.Schemaless
+}
+
+func (o *FileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
 type SourceAzureBlobStorageSchemasCredentialsAuthType string

@@ -91,7 +91,7 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 			NessieCatalog: nessieCatalog,
 		}
 	}
-	var destinationS3DataLakeGlueCatalog *shared.DestinationS3DataLakeGlueCatalog
+	var glueCatalog *shared.GlueCatalog
 	if r.Configuration.CatalogType.GlueCatalog != nil {
 		catalogType2 := new(shared.DestinationS3DataLakeCatalogType)
 		if !r.Configuration.CatalogType.GlueCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.GlueCatalog.CatalogType.IsNull() {
@@ -115,7 +115,7 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		if !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.GlueCatalog.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
-		destinationS3DataLakeGlueCatalog = &shared.DestinationS3DataLakeGlueCatalog{
+		glueCatalog = &shared.GlueCatalog{
 			CatalogType:          catalogType2,
 			GlueID:               glueID,
 			RoleArn:              roleArn,
@@ -123,12 +123,12 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 			AdditionalProperties: additionalProperties1,
 		}
 	}
-	if destinationS3DataLakeGlueCatalog != nil {
+	if glueCatalog != nil {
 		catalogType = shared.CatalogType{
-			DestinationS3DataLakeGlueCatalog: destinationS3DataLakeGlueCatalog,
+			GlueCatalog: glueCatalog,
 		}
 	}
-	var destinationS3DataLakeRestCatalog *shared.DestinationS3DataLakeRestCatalog
+	var restCatalog *shared.RestCatalog
 	if r.Configuration.CatalogType.RestCatalog != nil {
 		catalogType3 := new(shared.DestinationS3DataLakeSchemasCatalogType)
 		if !r.Configuration.CatalogType.RestCatalog.CatalogType.IsUnknown() && !r.Configuration.CatalogType.RestCatalog.CatalogType.IsNull() {
@@ -146,16 +146,16 @@ func (r *DestinationS3DataLakeResourceModel) ToSharedDestinationS3DataLakeCreate
 		if !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsUnknown() && !r.Configuration.CatalogType.RestCatalog.AdditionalProperties.IsNull() {
 			_ = json.Unmarshal([]byte(r.Configuration.CatalogType.RestCatalog.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
-		destinationS3DataLakeRestCatalog = &shared.DestinationS3DataLakeRestCatalog{
+		restCatalog = &shared.RestCatalog{
 			CatalogType:          catalogType3,
 			ServerURI:            serverUri1,
 			Namespace:            namespace1,
 			AdditionalProperties: additionalProperties2,
 		}
 	}
-	if destinationS3DataLakeRestCatalog != nil {
+	if restCatalog != nil {
 		catalogType = shared.CatalogType{
-			DestinationS3DataLakeRestCatalog: destinationS3DataLakeRestCatalog,
+			RestCatalog: restCatalog,
 		}
 	}
 	configuration := shared.DestinationS3DataLake{

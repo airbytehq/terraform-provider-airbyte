@@ -257,10 +257,17 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest() *shared.Worksp
 			SyncDisabledWarning:            syncDisabledWarning,
 		}
 	}
+	regionID := new(string)
+	if !r.RegionID.IsUnknown() && !r.RegionID.IsNull() {
+		*regionID = r.RegionID.ValueString()
+	} else {
+		regionID = nil
+	}
 	out := shared.WorkspaceCreateRequest{
 		Name:           name,
 		OrganizationID: organizationID,
 		Notifications:  notifications,
+		RegionID:       regionID,
 	}
 	return &out
 }
@@ -630,9 +637,16 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest() *shared.Worksp
 			SyncDisabledWarning:            syncDisabledWarning,
 		}
 	}
+	regionID := new(string)
+	if !r.RegionID.IsUnknown() && !r.RegionID.IsNull() {
+		*regionID = r.RegionID.ValueString()
+	} else {
+		regionID = nil
+	}
 	out := shared.WorkspaceUpdateRequest{
 		Name:          name,
 		Notifications: notifications,
+		RegionID:      regionID,
 	}
 	return &out
 }

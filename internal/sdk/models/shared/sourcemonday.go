@@ -227,8 +227,10 @@ func (e *Monday) UnmarshalJSON(data []byte) error {
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
 	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
-	BoardIds   []int64 `json:"board_ids,omitempty"`
-	sourceType Monday  `const:"monday" json:"sourceType"`
+	BoardIds []int64 `json:"board_ids,omitempty"`
+	// The number of worker threads to use for the sync.
+	NumWorkers *int64 `default:"4" json:"num_workers"`
+	sourceType Monday `const:"monday" json:"sourceType"`
 }
 
 func (s SourceMonday) MarshalJSON() ([]byte, error) {
@@ -254,6 +256,13 @@ func (o *SourceMonday) GetBoardIds() []int64 {
 		return nil
 	}
 	return o.BoardIds
+}
+
+func (o *SourceMonday) GetNumWorkers() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorkers
 }
 
 func (o *SourceMonday) GetSourceType() Monday {

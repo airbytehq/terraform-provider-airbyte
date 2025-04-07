@@ -4,9 +4,9 @@ package types
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type RESTCatalog struct {
-	CatalogType    types.String `tfsdk:"catalog_type"`
-	RestCredential types.String `tfsdk:"rest_credential"`
-	RestToken      types.String `tfsdk:"rest_token"`
-	RestURI        types.String `tfsdk:"rest_uri"`
+type RestCatalog struct {
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	CatalogType          types.String `tfsdk:"catalog_type"`
+	Namespace            types.String `tfsdk:"namespace"`
+	ServerURI            types.String `tfsdk:"server_uri"`
 }

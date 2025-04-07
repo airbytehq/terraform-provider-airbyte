@@ -224,7 +224,7 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 				SourceGcsParquetFormat: sourceGcsParquetFormat,
 			}
 		}
-		var unstructuredDocumentFormat *shared.UnstructuredDocumentFormat
+		var sourceGcsUnstructuredDocumentFormat *shared.SourceGcsUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			skipUnprocessableFiles := new(bool)
 			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
@@ -288,15 +288,15 @@ func (r *SourceGcsResourceModel) ToSharedSourceGcsCreateRequest() *shared.Source
 					}
 				}
 			}
-			unstructuredDocumentFormat = &shared.UnstructuredDocumentFormat{
+			sourceGcsUnstructuredDocumentFormat = &shared.SourceGcsUnstructuredDocumentFormat{
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 				Processing:             processing,
 			}
 		}
-		if unstructuredDocumentFormat != nil {
+		if sourceGcsUnstructuredDocumentFormat != nil {
 			format = shared.SourceGcsFormat{
-				UnstructuredDocumentFormat: unstructuredDocumentFormat,
+				SourceGcsUnstructuredDocumentFormat: sourceGcsUnstructuredDocumentFormat,
 			}
 		}
 		var excelFormat *shared.ExcelFormat

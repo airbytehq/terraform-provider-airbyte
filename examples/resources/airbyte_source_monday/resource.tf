@@ -8,6 +8,7 @@ resource "airbyte_source_monday" "my_source_monday" {
         api_token = "...my_api_token..."
       }
     }
+    num_workers = 1
   }
   definition_id = "cb22d725-edac-48cf-960b-7a9061de3d71"
   name          = "...my_name..."

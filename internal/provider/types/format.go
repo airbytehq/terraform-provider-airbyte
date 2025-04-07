@@ -3,9 +3,9 @@
 package types
 
 type Format struct {
-	AvroFormat                         *AvroFormat                         `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
-	CSVFormat                          *CSVFormat                          `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
-	DocumentFileTypeFormatExperimental *DocumentFileTypeFormatExperimental `queryParam:"inline" tfsdk:"document_file_type_format_experimental" tfPlanOnly:"true"`
-	JsonlFormat                        *JsonlFormat                        `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
-	ParquetFormat                      *ParquetFormat                      `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	AvroFormat                 *AvroFormat                 `queryParam:"inline" tfsdk:"avro_format" tfPlanOnly:"true"`
+	CSVFormat                  *CSVFormat                  `queryParam:"inline" tfsdk:"csv_format" tfPlanOnly:"true"`
+	JsonlFormat                *JsonlFormat                `queryParam:"inline" tfsdk:"jsonl_format" tfPlanOnly:"true"`
+	ParquetFormat              *ParquetFormat              `queryParam:"inline" tfsdk:"parquet_format" tfPlanOnly:"true"`
+	UnstructuredDocumentFormat *UnstructuredDocumentFormat `queryParam:"inline" tfsdk:"unstructured_document_format" tfPlanOnly:"true"`
 }

@@ -336,8 +336,8 @@ func (u SourceGcsProcessing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceGcsProcessing: all fields are null")
 }
 
-// UnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type UnstructuredDocumentFormat struct {
+// SourceGcsUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceGcsUnstructuredDocumentFormat struct {
 	filetype *SourceGcsSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
@@ -347,36 +347,36 @@ type UnstructuredDocumentFormat struct {
 	Processing *SourceGcsProcessing `json:"processing,omitempty"`
 }
 
-func (u UnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(u, "", false)
+func (s SourceGcsUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (u *UnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+func (s *SourceGcsUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UnstructuredDocumentFormat) GetFiletype() *SourceGcsSchemasStreamsFormatFormatFiletype {
+func (o *SourceGcsUnstructuredDocumentFormat) GetFiletype() *SourceGcsSchemasStreamsFormatFormatFiletype {
 	return SourceGcsSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *UnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
+func (o *SourceGcsUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *UnstructuredDocumentFormat) GetStrategy() *SourceGcsParsingStrategy {
+func (o *SourceGcsUnstructuredDocumentFormat) GetStrategy() *SourceGcsParsingStrategy {
 	if o == nil {
 		return nil
 	}
 	return o.Strategy
 }
 
-func (o *UnstructuredDocumentFormat) GetProcessing() *SourceGcsProcessing {
+func (o *SourceGcsUnstructuredDocumentFormat) GetProcessing() *SourceGcsProcessing {
 	if o == nil {
 		return nil
 	}
@@ -910,22 +910,22 @@ func (o *SourceGcsAvroFormat) GetDoubleAsString() *bool {
 type SourceGcsFormatType string
 
 const (
-	SourceGcsFormatTypeSourceGcsAvroFormat        SourceGcsFormatType = "source-gcs_Avro Format"
-	SourceGcsFormatTypeSourceGcsCSVFormat         SourceGcsFormatType = "source-gcs_CSV Format"
-	SourceGcsFormatTypeSourceGcsJsonlFormat       SourceGcsFormatType = "source-gcs_Jsonl Format"
-	SourceGcsFormatTypeSourceGcsParquetFormat     SourceGcsFormatType = "source-gcs_Parquet Format"
-	SourceGcsFormatTypeUnstructuredDocumentFormat SourceGcsFormatType = "Unstructured Document Format"
-	SourceGcsFormatTypeExcelFormat                SourceGcsFormatType = "Excel Format"
+	SourceGcsFormatTypeSourceGcsAvroFormat                 SourceGcsFormatType = "source-gcs_Avro Format"
+	SourceGcsFormatTypeSourceGcsCSVFormat                  SourceGcsFormatType = "source-gcs_CSV Format"
+	SourceGcsFormatTypeSourceGcsJsonlFormat                SourceGcsFormatType = "source-gcs_Jsonl Format"
+	SourceGcsFormatTypeSourceGcsParquetFormat              SourceGcsFormatType = "source-gcs_Parquet Format"
+	SourceGcsFormatTypeSourceGcsUnstructuredDocumentFormat SourceGcsFormatType = "source-gcs_Unstructured Document Format"
+	SourceGcsFormatTypeExcelFormat                         SourceGcsFormatType = "Excel Format"
 )
 
 // SourceGcsFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceGcsFormat struct {
-	SourceGcsAvroFormat        *SourceGcsAvroFormat        `queryParam:"inline"`
-	SourceGcsCSVFormat         *SourceGcsCSVFormat         `queryParam:"inline"`
-	SourceGcsJsonlFormat       *SourceGcsJsonlFormat       `queryParam:"inline"`
-	SourceGcsParquetFormat     *SourceGcsParquetFormat     `queryParam:"inline"`
-	UnstructuredDocumentFormat *UnstructuredDocumentFormat `queryParam:"inline"`
-	ExcelFormat                *ExcelFormat                `queryParam:"inline"`
+	SourceGcsAvroFormat                 *SourceGcsAvroFormat                 `queryParam:"inline"`
+	SourceGcsCSVFormat                  *SourceGcsCSVFormat                  `queryParam:"inline"`
+	SourceGcsJsonlFormat                *SourceGcsJsonlFormat                `queryParam:"inline"`
+	SourceGcsParquetFormat              *SourceGcsParquetFormat              `queryParam:"inline"`
+	SourceGcsUnstructuredDocumentFormat *SourceGcsUnstructuredDocumentFormat `queryParam:"inline"`
+	ExcelFormat                         *ExcelFormat                         `queryParam:"inline"`
 
 	Type SourceGcsFormatType
 }
@@ -966,12 +966,12 @@ func CreateSourceGcsFormatSourceGcsParquetFormat(sourceGcsParquetFormat SourceGc
 	}
 }
 
-func CreateSourceGcsFormatUnstructuredDocumentFormat(unstructuredDocumentFormat UnstructuredDocumentFormat) SourceGcsFormat {
-	typ := SourceGcsFormatTypeUnstructuredDocumentFormat
+func CreateSourceGcsFormatSourceGcsUnstructuredDocumentFormat(sourceGcsUnstructuredDocumentFormat SourceGcsUnstructuredDocumentFormat) SourceGcsFormat {
+	typ := SourceGcsFormatTypeSourceGcsUnstructuredDocumentFormat
 
 	return SourceGcsFormat{
-		UnstructuredDocumentFormat: &unstructuredDocumentFormat,
-		Type:                       typ,
+		SourceGcsUnstructuredDocumentFormat: &sourceGcsUnstructuredDocumentFormat,
+		Type:                                typ,
 	}
 }
 
@@ -1014,10 +1014,10 @@ func (u *SourceGcsFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var unstructuredDocumentFormat UnstructuredDocumentFormat = UnstructuredDocumentFormat{}
-	if err := utils.UnmarshalJSON(data, &unstructuredDocumentFormat, "", true, true); err == nil {
-		u.UnstructuredDocumentFormat = &unstructuredDocumentFormat
-		u.Type = SourceGcsFormatTypeUnstructuredDocumentFormat
+	var sourceGcsUnstructuredDocumentFormat SourceGcsUnstructuredDocumentFormat = SourceGcsUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceGcsUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceGcsUnstructuredDocumentFormat = &sourceGcsUnstructuredDocumentFormat
+		u.Type = SourceGcsFormatTypeSourceGcsUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -1048,8 +1048,8 @@ func (u SourceGcsFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGcsParquetFormat, "", true)
 	}
 
-	if u.UnstructuredDocumentFormat != nil {
-		return utils.MarshalJSON(u.UnstructuredDocumentFormat, "", true)
+	if u.SourceGcsUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceGcsUnstructuredDocumentFormat, "", true)
 	}
 
 	if u.ExcelFormat != nil {
