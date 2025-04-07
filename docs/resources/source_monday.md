@@ -23,6 +23,7 @@ resource "airbyte_source_monday" "my_source_monday" {
         api_token = "...my_api_token..."
       }
     }
+    num_workers = 1
   }
   definition_id = "cb22d725-edac-48cf-960b-7a9061de3d71"
   name          = "...my_name..."
@@ -59,6 +60,7 @@ Optional:
 
 - `board_ids` (List of Number) The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `num_workers` (Number) The number of worker threads to use for the sync. Default: 4
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

@@ -44,10 +44,11 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         globs = [
           "..."
         ]
-        input_schema      = "...my_input_schema..."
-        name              = "...my_name..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        input_schema                                = "...my_input_schema..."
+        name                                        = "...my_name..."
+        recent_n_files_to_read_for_schema_discovery = 2
+        schemaless                                  = true
+        validation_policy                           = "Wait for Discover"
       }
     ]
   }

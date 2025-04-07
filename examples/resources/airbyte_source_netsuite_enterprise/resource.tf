@@ -1,6 +1,13 @@
 resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
   configuration = {
-    account_id                         = "...my_account_id..."
+    account_id = "...my_account_id..."
+    authentication_method = {
+      password_authentication = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        authentication_method = "password_authentication"
+        password              = "...my_password..."
+      }
+    }
     check_privileges                   = true
     checkpoint_target_interval_seconds = 0
     concurrency                        = 0
@@ -12,7 +19,6 @@ resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
     port            = 23532
     role_id         = "...my_role_id..."
     tunnel_method = {

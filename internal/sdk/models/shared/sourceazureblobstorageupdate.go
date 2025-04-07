@@ -181,8 +181,8 @@ func (u SourceAzureBlobStorageUpdateProcessing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceAzureBlobStorageUpdateProcessing: all fields are null")
 }
 
-// SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
-type SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental struct {
+// SourceAzureBlobStorageUpdateUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
+type SourceAzureBlobStorageUpdateUnstructuredDocumentFormat struct {
 	filetype *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
@@ -192,36 +192,36 @@ type SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental struct {
 	Processing *SourceAzureBlobStorageUpdateProcessing `json:"processing,omitempty"`
 }
 
-func (s SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) MarshalJSON() ([]byte, error) {
+func (s SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) UnmarshalJSON(data []byte) error {
+func (s *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
+func (o *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) GetFiletype() *SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletype {
 	return SourceAzureBlobStorageUpdateSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
-func (o *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) GetSkipUnprocessableFiles() *bool {
+func (o *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SkipUnprocessableFiles
 }
 
-func (o *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) GetStrategy() *SourceAzureBlobStorageUpdateParsingStrategy {
+func (o *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) GetStrategy() *SourceAzureBlobStorageUpdateParsingStrategy {
 	if o == nil {
 		return nil
 	}
 	return o.Strategy
 }
 
-func (o *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) GetProcessing() *SourceAzureBlobStorageUpdateProcessing {
+func (o *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) GetProcessing() *SourceAzureBlobStorageUpdateProcessing {
 	if o == nil {
 		return nil
 	}
@@ -755,20 +755,20 @@ func (o *SourceAzureBlobStorageUpdateAvroFormat) GetDoubleAsString() *bool {
 type SourceAzureBlobStorageUpdateFormatType string
 
 const (
-	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateAvroFormat                         SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Avro Format"
-	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateCSVFormat                          SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_CSV Format"
-	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateJsonlFormat                        SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Jsonl Format"
-	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateParquetFormat                      SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Parquet Format"
-	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Document File Type Format (Experimental)"
+	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateAvroFormat                 SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Avro Format"
+	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateCSVFormat                  SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_CSV Format"
+	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateJsonlFormat                SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Jsonl Format"
+	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateParquetFormat              SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Parquet Format"
+	SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateUnstructuredDocumentFormat SourceAzureBlobStorageUpdateFormatType = "source-azure-blob-storage-update_Unstructured Document Format"
 )
 
 // SourceAzureBlobStorageUpdateFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 type SourceAzureBlobStorageUpdateFormat struct {
-	SourceAzureBlobStorageUpdateAvroFormat                         *SourceAzureBlobStorageUpdateAvroFormat                         `queryParam:"inline"`
-	SourceAzureBlobStorageUpdateCSVFormat                          *SourceAzureBlobStorageUpdateCSVFormat                          `queryParam:"inline"`
-	SourceAzureBlobStorageUpdateJsonlFormat                        *SourceAzureBlobStorageUpdateJsonlFormat                        `queryParam:"inline"`
-	SourceAzureBlobStorageUpdateParquetFormat                      *SourceAzureBlobStorageUpdateParquetFormat                      `queryParam:"inline"`
-	SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental *SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental `queryParam:"inline"`
+	SourceAzureBlobStorageUpdateAvroFormat                 *SourceAzureBlobStorageUpdateAvroFormat                 `queryParam:"inline"`
+	SourceAzureBlobStorageUpdateCSVFormat                  *SourceAzureBlobStorageUpdateCSVFormat                  `queryParam:"inline"`
+	SourceAzureBlobStorageUpdateJsonlFormat                *SourceAzureBlobStorageUpdateJsonlFormat                `queryParam:"inline"`
+	SourceAzureBlobStorageUpdateParquetFormat              *SourceAzureBlobStorageUpdateParquetFormat              `queryParam:"inline"`
+	SourceAzureBlobStorageUpdateUnstructuredDocumentFormat *SourceAzureBlobStorageUpdateUnstructuredDocumentFormat `queryParam:"inline"`
 
 	Type SourceAzureBlobStorageUpdateFormatType
 }
@@ -809,11 +809,11 @@ func CreateSourceAzureBlobStorageUpdateFormatSourceAzureBlobStorageUpdateParquet
 	}
 }
 
-func CreateSourceAzureBlobStorageUpdateFormatSourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental(sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental) SourceAzureBlobStorageUpdateFormat {
-	typ := SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental
+func CreateSourceAzureBlobStorageUpdateFormatSourceAzureBlobStorageUpdateUnstructuredDocumentFormat(sourceAzureBlobStorageUpdateUnstructuredDocumentFormat SourceAzureBlobStorageUpdateUnstructuredDocumentFormat) SourceAzureBlobStorageUpdateFormat {
+	typ := SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateUnstructuredDocumentFormat
 
 	return SourceAzureBlobStorageUpdateFormat{
-		SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental: &sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental,
+		SourceAzureBlobStorageUpdateUnstructuredDocumentFormat: &sourceAzureBlobStorageUpdateUnstructuredDocumentFormat,
 		Type: typ,
 	}
 }
@@ -841,10 +841,10 @@ func (u *SourceAzureBlobStorageUpdateFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental = SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental{}
-	if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental, "", true, true); err == nil {
-		u.SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental = &sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental
-		u.Type = SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental
+	var sourceAzureBlobStorageUpdateUnstructuredDocumentFormat SourceAzureBlobStorageUpdateUnstructuredDocumentFormat = SourceAzureBlobStorageUpdateUnstructuredDocumentFormat{}
+	if err := utils.UnmarshalJSON(data, &sourceAzureBlobStorageUpdateUnstructuredDocumentFormat, "", true, true); err == nil {
+		u.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat = &sourceAzureBlobStorageUpdateUnstructuredDocumentFormat
+		u.Type = SourceAzureBlobStorageUpdateFormatTypeSourceAzureBlobStorageUpdateUnstructuredDocumentFormat
 		return nil
 	}
 
@@ -875,8 +875,8 @@ func (u SourceAzureBlobStorageUpdateFormat) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceAzureBlobStorageUpdateParquetFormat, "", true)
 	}
 
-	if u.SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental != nil {
-		return utils.MarshalJSON(u.SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental, "", true)
+	if u.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat != nil {
+		return utils.MarshalJSON(u.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceAzureBlobStorageUpdateFormat: all fields are null")
@@ -897,6 +897,8 @@ type SourceAzureBlobStorageUpdateFileBasedStreamConfig struct {
 	Format SourceAzureBlobStorageUpdateFormat `json:"format"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
+	// The number of resent files which will be used to discover the schema for this stream.
+	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
 }
 
 func (s SourceAzureBlobStorageUpdateFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -957,6 +959,13 @@ func (o *SourceAzureBlobStorageUpdateFileBasedStreamConfig) GetSchemaless() *boo
 		return nil
 	}
 	return o.Schemaless
+}
+
+func (o *SourceAzureBlobStorageUpdateFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
 type SourceAzureBlobStorageUpdateSchemasCredentialsAuthType string

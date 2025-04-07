@@ -59,10 +59,11 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
         globs = [
           "..."
         ]
-        input_schema      = "...my_input_schema..."
-        name              = "...my_name..."
-        schemaless        = true
-        validation_policy = "Wait for Discover"
+        input_schema                                = "...my_input_schema..."
+        name                                        = "...my_name..."
+        recent_n_files_to_read_for_schema_discovery = 2
+        schemaless                                  = true
+        validation_policy                           = "Wait for Discover"
       }
     ]
   }
@@ -162,6 +163,7 @@ Optional:
 - `days_to_sync_if_history_is_full` (Number) When the state history of the file store is full, syncs will only read files that were last modified in the provided day range. Default: 3
 - `globs` (List of String) The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
 - `input_schema` (String) The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+- `recent_n_files_to_read_for_schema_discovery` (Number) The number of resent files which will be used to discover the schema for this stream.
 - `schemaless` (Boolean) When enabled, syncs will not validate or structure records against the stream's schema. Default: false
 - `validation_policy` (String) The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema. Default: "Emit Record"; must be one of ["Emit Record", "Skip Record", "Wait for Discover"]
 
@@ -172,9 +174,9 @@ Optional:
 
 - `avro_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--avro_format))
 - `csv_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--csv_format))
-- `document_file_type_format_experimental` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental))
 - `jsonl_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--jsonl_format))
 - `parquet_format` (Attributes) (see [below for nested schema](#nestedatt--configuration--streams--format--parquet_format))
+- `unstructured_document_format` (Attributes) Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format))
 
 <a id="nestedatt--configuration--streams--format--avro_format"></a>
 ### Nested Schema for `configuration.streams.format.avro_format`
@@ -230,28 +232,6 @@ Required:
 
 
 
-<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental"></a>
-### Nested Schema for `configuration.streams.format.document_file_type_format_experimental`
-
-Optional:
-
-- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental--processing))
-- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
-- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. Default: "auto"; must be one of ["auto", "fast", "ocr_only", "hi_res"]
-
-<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental--processing"></a>
-### Nested Schema for `configuration.streams.format.document_file_type_format_experimental.processing`
-
-Optional:
-
-- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--document_file_type_format_experimental--processing--local))
-
-<a id="nestedatt--configuration--streams--format--document_file_type_format_experimental--processing--local"></a>
-### Nested Schema for `configuration.streams.format.document_file_type_format_experimental.processing.local`
-
-
-
-
 <a id="nestedatt--configuration--streams--format--jsonl_format"></a>
 ### Nested Schema for `configuration.streams.format.jsonl_format`
 
@@ -262,6 +242,28 @@ Optional:
 Optional:
 
 - `decimal_as_float` (Boolean) Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended. Default: false
+
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format`
+
+Optional:
+
+- `processing` (Attributes) Processing configuration (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing))
+- `skip_unprocessable_files` (Boolean) If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync. Default: true
+- `strategy` (String) The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf. Default: "auto"; must be one of ["auto", "fast", "ocr_only", "hi_res"]
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing`
+
+Optional:
+
+- `local` (Attributes) Process files locally, supporting `fast` and `ocr` modes. This is the default option. (see [below for nested schema](#nestedatt--configuration--streams--format--unstructured_document_format--processing--local))
+
+<a id="nestedatt--configuration--streams--format--unstructured_document_format--processing--local"></a>
+### Nested Schema for `configuration.streams.format.unstructured_document_format.processing.local`
+
+
 
 
 

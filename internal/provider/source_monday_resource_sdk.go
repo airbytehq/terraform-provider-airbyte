@@ -71,9 +71,16 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayCreateRequest() *shared.
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueInt64())
 	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	configuration := shared.SourceMonday{
 		Credentials: credentials,
 		BoardIds:    boardIds,
+		NumWorkers:  numWorkers,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -195,9 +202,16 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayPutRequest() *shared.Sou
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueInt64())
 	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	configuration := shared.SourceMondayUpdate{
 		Credentials: credentials,
 		BoardIds:    boardIds,
+		NumWorkers:  numWorkers,
 	}
 	out := shared.SourceMondayPutRequest{
 		Name:          name,

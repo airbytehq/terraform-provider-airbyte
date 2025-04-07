@@ -9,6 +9,8 @@ import (
 
 type GetDestinationRequest struct {
 	DestinationID string `pathParam:"style=simple,explode=false,name=destinationId"`
+	// Rather than return *** for secret properties include the secret coordinate information
+	IncludeSecretCoordinates *bool `queryParam:"style=form,explode=true,name=includeSecretCoordinates"`
 }
 
 func (o *GetDestinationRequest) GetDestinationID() string {
@@ -16,6 +18,13 @@ func (o *GetDestinationRequest) GetDestinationID() string {
 		return ""
 	}
 	return o.DestinationID
+}
+
+func (o *GetDestinationRequest) GetIncludeSecretCoordinates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeSecretCoordinates
 }
 
 type GetDestinationResponse struct {

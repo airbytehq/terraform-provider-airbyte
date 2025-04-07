@@ -73,6 +73,93 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 						Required:    true,
 						Description: `The username which is used to access the database.`,
 					},
+					"authentication_method": schema.SingleNestedAttribute{
+						Required: true,
+						Attributes: map[string]schema.Attribute{
+							"password_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"authentication_method": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`password_authentication`),
+										Description: `Default: "password_authentication"; must be "password_authentication"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"password_authentication",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The password associated with the username.`,
+									},
+								},
+								Description: `Authenticate using a password.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("token_based_authentication"),
+									}...),
+								},
+							},
+							"token_based_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"authentication_method": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`token_based_authentication`),
+										Description: `Default: "token_based_authentication"; must be "token_based_authentication"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"token_based_authentication",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Description: `The consumer key used for token-based authentication. This is generated in NetSuite when creating an integration record.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.`,
+									},
+									"token_id": schema.StringAttribute{
+										Required:    true,
+										Description: `The token ID used for token-based authentication. This is generated in NetSuite when creating a token-based role.`,
+									},
+									"token_secret": schema.StringAttribute{
+										Required:    true,
+										Sensitive:   true,
+										Description: `The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.`,
+									},
+								},
+								Description: `Authenticate using a token-based authentication method. This requires a consumer key and secret, as well as a token ID and secret.`,
+								Validators: []validator.Object{
+									objectvalidator.ConflictsWith(path.Expressions{
+										path.MatchRelative().AtParent().AtName("password_authentication"),
+									}...),
+								},
+							},
+						},
+						Description: `Configure how to authenticate to Netsuite. Options include username/password or token-based authentication.`,
+					},
 					"check_privileges": schema.BoolAttribute{
 						Computed:    true,
 						Optional:    true,
@@ -128,11 +215,6 @@ func (r *SourceNetsuiteEnterpriseResource) Schema(ctx context.Context, req resou
 					"jdbc_url_params": schema.StringAttribute{
 						Optional:    true,
 						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
-					},
-					"password": schema.StringAttribute{
-						Optional:    true,
-						Sensitive:   true,
-						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
 						Computed:    true,

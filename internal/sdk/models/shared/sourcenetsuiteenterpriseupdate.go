@@ -9,6 +9,223 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod string
+
+const (
+	SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodTokenBasedAuthentication SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod = "token_based_authentication"
+)
+
+func (e SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod) ToPointer() *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod {
+	return &e
+}
+func (e *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "token_based_authentication":
+		*e = SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod: %v", v)
+	}
+}
+
+// SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication - Authenticate using a token-based authentication method. This requires a consumer key and secret, as well as a token ID and secret.
+type SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication struct {
+	AuthenticationMethod *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod `default:"token_based_authentication" json:"authentication_method"`
+	// The consumer key used for token-based authentication. This is generated in NetSuite when creating an integration record.
+	ClientID string `json:"client_id"`
+	// The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.
+	ClientSecret string `json:"client_secret"`
+	// The token ID used for token-based authentication. This is generated in NetSuite when creating a token-based role.
+	TokenID string `json:"token_id"`
+	// The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.
+	TokenSecret          string `json:"token_secret"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetAuthenticationMethod() *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.AuthenticationMethod
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetTokenID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenID
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetTokenSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.TokenSecret
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod string
+
+const (
+	SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethodPasswordAuthentication SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod = "password_authentication"
+)
+
+func (e SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod) ToPointer() *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod {
+	return &e
+}
+func (e *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "password_authentication":
+		*e = SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod: %v", v)
+	}
+}
+
+// SourceNetsuiteEnterpriseUpdatePasswordAuthentication - Authenticate using a password.
+type SourceNetsuiteEnterpriseUpdatePasswordAuthentication struct {
+	AuthenticationMethod *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod `default:"password_authentication" json:"authentication_method"`
+	// The password associated with the username.
+	Password             string `json:"password"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceNetsuiteEnterpriseUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetAuthenticationMethod() *SourceNetsuiteEnterpriseUpdateSchemasAuthenticationMethodAuthenticationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.AuthenticationMethod
+}
+
+func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceNetsuiteEnterpriseUpdateAuthenticationMethodType string
+
+const (
+	SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication   SourceNetsuiteEnterpriseUpdateAuthenticationMethodType = "source-netsuite-enterprise-update_Password Authentication"
+	SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdateTokenBasedAuthentication SourceNetsuiteEnterpriseUpdateAuthenticationMethodType = "source-netsuite-enterprise-update_Token Based Authentication"
+)
+
+// SourceNetsuiteEnterpriseUpdateAuthenticationMethod - Configure how to authenticate to Netsuite. Options include username/password or token-based authentication.
+type SourceNetsuiteEnterpriseUpdateAuthenticationMethod struct {
+	SourceNetsuiteEnterpriseUpdatePasswordAuthentication   *SourceNetsuiteEnterpriseUpdatePasswordAuthentication   `queryParam:"inline"`
+	SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication *SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication `queryParam:"inline"`
+
+	Type SourceNetsuiteEnterpriseUpdateAuthenticationMethodType
+}
+
+func CreateSourceNetsuiteEnterpriseUpdateAuthenticationMethodSourceNetsuiteEnterpriseUpdatePasswordAuthentication(sourceNetsuiteEnterpriseUpdatePasswordAuthentication SourceNetsuiteEnterpriseUpdatePasswordAuthentication) SourceNetsuiteEnterpriseUpdateAuthenticationMethod {
+	typ := SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication
+
+	return SourceNetsuiteEnterpriseUpdateAuthenticationMethod{
+		SourceNetsuiteEnterpriseUpdatePasswordAuthentication: &sourceNetsuiteEnterpriseUpdatePasswordAuthentication,
+		Type: typ,
+	}
+}
+
+func CreateSourceNetsuiteEnterpriseUpdateAuthenticationMethodSourceNetsuiteEnterpriseUpdateTokenBasedAuthentication(sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication) SourceNetsuiteEnterpriseUpdateAuthenticationMethod {
+	typ := SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdateTokenBasedAuthentication
+
+	return SourceNetsuiteEnterpriseUpdateAuthenticationMethod{
+		SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication: &sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication,
+		Type: typ,
+	}
+}
+
+func (u *SourceNetsuiteEnterpriseUpdateAuthenticationMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceNetsuiteEnterpriseUpdatePasswordAuthentication SourceNetsuiteEnterpriseUpdatePasswordAuthentication = SourceNetsuiteEnterpriseUpdatePasswordAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdatePasswordAuthentication, "", true, true); err == nil {
+		u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication = &sourceNetsuiteEnterpriseUpdatePasswordAuthentication
+		u.Type = SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication
+		return nil
+	}
+
+	var sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication = SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication, "", true, true); err == nil {
+		u.SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication = &sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication
+		u.Type = SourceNetsuiteEnterpriseUpdateAuthenticationMethodTypeSourceNetsuiteEnterpriseUpdateTokenBasedAuthentication
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceNetsuiteEnterpriseUpdateAuthenticationMethod", string(data))
+}
+
+func (u SourceNetsuiteEnterpriseUpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication, "", true)
+	}
+
+	if u.SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication != nil {
+		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateAuthenticationMethod: all fields are null")
+}
+
 type SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
@@ -32,8 +249,8 @@ func (e *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod) Unmarsha
 	}
 }
 
-// SourceNetsuiteEnterpriseUpdatePasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
-type SourceNetsuiteEnterpriseUpdatePasswordAuthentication struct {
+// SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
+type SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication struct {
 	TunnelMethod *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
@@ -46,53 +263,53 @@ type SourceNetsuiteEnterpriseUpdatePasswordAuthentication struct {
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
-func (s SourceNetsuiteEnterpriseUpdatePasswordAuthentication) MarshalJSON() ([]byte, error) {
+func (s SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(s, "", false)
 }
 
-func (s *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) UnmarshalJSON(data []byte) error {
+func (s *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetTunnelHost() string {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetTunnelPort() *int64 {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelPort() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelPort
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetTunnelUser() string {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelUser() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelUser
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetTunnelUserPassword() string {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelUserPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelUserPassword
 }
 
-func (o *SourceNetsuiteEnterpriseUpdatePasswordAuthentication) GetAdditionalProperties() any {
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
@@ -246,16 +463,16 @@ func (o *SourceNetsuiteEnterpriseUpdateNoTunnel) GetAdditionalProperties() any {
 type SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType string
 
 const (
-	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateNoTunnel               SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_No Tunnel"
-	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateSSHKeyAuthentication   SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_SSH Key Authentication"
-	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_Password Authentication"
+	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateNoTunnel                      SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_No Tunnel"
+	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateSSHKeyAuthentication          SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_SSH Key Authentication"
+	SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType = "source-netsuite-enterprise-update_Schemas_Password Authentication"
 )
 
 // SourceNetsuiteEnterpriseUpdateSSHTunnelMethod - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceNetsuiteEnterpriseUpdateSSHTunnelMethod struct {
-	SourceNetsuiteEnterpriseUpdateNoTunnel               *SourceNetsuiteEnterpriseUpdateNoTunnel               `queryParam:"inline"`
-	SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication   *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication   `queryParam:"inline"`
-	SourceNetsuiteEnterpriseUpdatePasswordAuthentication *SourceNetsuiteEnterpriseUpdatePasswordAuthentication `queryParam:"inline"`
+	SourceNetsuiteEnterpriseUpdateNoTunnel                      *SourceNetsuiteEnterpriseUpdateNoTunnel                      `queryParam:"inline"`
+	SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication          *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication          `queryParam:"inline"`
+	SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication `queryParam:"inline"`
 
 	Type SourceNetsuiteEnterpriseUpdateSSHTunnelMethodType
 }
@@ -278,11 +495,11 @@ func CreateSourceNetsuiteEnterpriseUpdateSSHTunnelMethodSourceNetsuiteEnterprise
 	}
 }
 
-func CreateSourceNetsuiteEnterpriseUpdateSSHTunnelMethodSourceNetsuiteEnterpriseUpdatePasswordAuthentication(sourceNetsuiteEnterpriseUpdatePasswordAuthentication SourceNetsuiteEnterpriseUpdatePasswordAuthentication) SourceNetsuiteEnterpriseUpdateSSHTunnelMethod {
-	typ := SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication
+func CreateSourceNetsuiteEnterpriseUpdateSSHTunnelMethodSourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication(sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) SourceNetsuiteEnterpriseUpdateSSHTunnelMethod {
+	typ := SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication
 
 	return SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
-		SourceNetsuiteEnterpriseUpdatePasswordAuthentication: &sourceNetsuiteEnterpriseUpdatePasswordAuthentication,
+		SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication: &sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication,
 		Type: typ,
 	}
 }
@@ -303,10 +520,10 @@ func (u *SourceNetsuiteEnterpriseUpdateSSHTunnelMethod) UnmarshalJSON(data []byt
 		return nil
 	}
 
-	var sourceNetsuiteEnterpriseUpdatePasswordAuthentication SourceNetsuiteEnterpriseUpdatePasswordAuthentication = SourceNetsuiteEnterpriseUpdatePasswordAuthentication{}
-	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdatePasswordAuthentication, "", true, true); err == nil {
-		u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication = &sourceNetsuiteEnterpriseUpdatePasswordAuthentication
-		u.Type = SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdatePasswordAuthentication
+	var sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication = SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication{}
+	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication, "", true, true); err == nil {
+		u.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication = &sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication
+		u.Type = SourceNetsuiteEnterpriseUpdateSSHTunnelMethodTypeSourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication
 		return nil
 	}
 
@@ -322,8 +539,8 @@ func (u SourceNetsuiteEnterpriseUpdateSSHTunnelMethod) MarshalJSON() ([]byte, er
 		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication, "", true)
 	}
 
-	if u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication != nil {
-		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdatePasswordAuthentication, "", true)
+	if u.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication != nil {
+		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateSSHTunnelMethod: all fields are null")
@@ -432,8 +649,8 @@ type SourceNetsuiteEnterpriseUpdate struct {
 	Port *int64 `default:"1708" json:"port"`
 	// The username which is used to access the database.
 	Username string `json:"username"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
+	// Configure how to authenticate to Netsuite. Options include username/password or token-based authentication.
+	AuthenticationMethod SourceNetsuiteEnterpriseUpdateAuthenticationMethod `json:"authentication_method"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
@@ -484,11 +701,11 @@ func (o *SourceNetsuiteEnterpriseUpdate) GetUsername() string {
 	return o.Username
 }
 
-func (o *SourceNetsuiteEnterpriseUpdate) GetPassword() *string {
+func (o *SourceNetsuiteEnterpriseUpdate) GetAuthenticationMethod() SourceNetsuiteEnterpriseUpdateAuthenticationMethod {
 	if o == nil {
-		return nil
+		return SourceNetsuiteEnterpriseUpdateAuthenticationMethod{}
 	}
-	return o.Password
+	return o.AuthenticationMethod
 }
 
 func (o *SourceNetsuiteEnterpriseUpdate) GetJdbcURLParams() *string {

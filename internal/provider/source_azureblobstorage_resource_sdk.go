@@ -224,24 +224,24 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 				ParquetFormat: parquetFormat,
 			}
 		}
-		var documentFileTypeFormatExperimental *shared.DocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var unstructuredDocumentFormat *shared.UnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.ParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.ParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
 			var processing *shared.Processing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var local *shared.Local
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					local = &shared.Local{}
 				}
 				if local != nil {
@@ -250,15 +250,15 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 					}
 				}
 			}
-			documentFileTypeFormatExperimental = &shared.DocumentFileTypeFormatExperimental{
+			unstructuredDocumentFormat = &shared.UnstructuredDocumentFormat{
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 				Processing:             processing,
 			}
 		}
-		if documentFileTypeFormatExperimental != nil {
+		if unstructuredDocumentFormat != nil {
 			format = shared.Format{
-				DocumentFileTypeFormatExperimental: documentFileTypeFormatExperimental,
+				UnstructuredDocumentFormat: unstructuredDocumentFormat,
 			}
 		}
 		schemaless := new(bool)
@@ -267,14 +267,21 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 		} else {
 			schemaless = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		streams = append(streams, shared.FileBasedStreamConfig{
-			Name:                      name1,
-			Globs:                     globs,
-			ValidationPolicy:          validationPolicy,
-			InputSchema:               inputSchema,
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format,
-			Schemaless:                schemaless,
+			Name:                                 name1,
+			Globs:                                globs,
+			ValidationPolicy:                     validationPolicy,
+			InputSchema:                          inputSchema,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Schemaless:                           schemaless,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 		})
 	}
 	var credentials shared.SourceAzureBlobStorageAuthentication
@@ -632,24 +639,24 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 				SourceAzureBlobStorageUpdateParquetFormat: sourceAzureBlobStorageUpdateParquetFormat,
 			}
 		}
-		var sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental *shared.SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental
-		if streamsItem.Format.DocumentFileTypeFormatExperimental != nil {
+		var sourceAzureBlobStorageUpdateUnstructuredDocumentFormat *shared.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
 			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.DocumentFileTypeFormatExperimental.SkipUnprocessableFiles.ValueBool()
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
 			} else {
 				skipUnprocessableFiles = nil
 			}
 			strategy := new(shared.SourceAzureBlobStorageUpdateParsingStrategy)
-			if !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsUnknown() && !streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.IsNull() {
-				*strategy = shared.SourceAzureBlobStorageUpdateParsingStrategy(streamsItem.Format.DocumentFileTypeFormatExperimental.Strategy.ValueString())
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceAzureBlobStorageUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
 			} else {
 				strategy = nil
 			}
 			var processing *shared.SourceAzureBlobStorageUpdateProcessing
-			if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing != nil {
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceAzureBlobStorageUpdateLocal *shared.SourceAzureBlobStorageUpdateLocal
-				if streamsItem.Format.DocumentFileTypeFormatExperimental.Processing.Local != nil {
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
 					sourceAzureBlobStorageUpdateLocal = &shared.SourceAzureBlobStorageUpdateLocal{}
 				}
 				if sourceAzureBlobStorageUpdateLocal != nil {
@@ -658,15 +665,15 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 					}
 				}
 			}
-			sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental = &shared.SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental{
+			sourceAzureBlobStorageUpdateUnstructuredDocumentFormat = &shared.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat{
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
 				Processing:             processing,
 			}
 		}
-		if sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental != nil {
+		if sourceAzureBlobStorageUpdateUnstructuredDocumentFormat != nil {
 			format = shared.SourceAzureBlobStorageUpdateFormat{
-				SourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental: sourceAzureBlobStorageUpdateDocumentFileTypeFormatExperimental,
+				SourceAzureBlobStorageUpdateUnstructuredDocumentFormat: sourceAzureBlobStorageUpdateUnstructuredDocumentFormat,
 			}
 		}
 		schemaless := new(bool)
@@ -675,14 +682,21 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 		} else {
 			schemaless = nil
 		}
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
 		streams = append(streams, shared.SourceAzureBlobStorageUpdateFileBasedStreamConfig{
-			Name:                      name1,
-			Globs:                     globs,
-			ValidationPolicy:          validationPolicy,
-			InputSchema:               inputSchema,
-			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
-			Format:                    format,
-			Schemaless:                schemaless,
+			Name:                                 name1,
+			Globs:                                globs,
+			ValidationPolicy:                     validationPolicy,
+			InputSchema:                          inputSchema,
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Schemaless:                           schemaless,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
 		})
 	}
 	var credentials shared.SourceAzureBlobStorageUpdateAuthentication

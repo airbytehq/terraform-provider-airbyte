@@ -15,7 +15,14 @@ SourceNetsuiteEnterprise Resource
 ```terraform
 resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
   configuration = {
-    account_id                         = "...my_account_id..."
+    account_id = "...my_account_id..."
+    authentication_method = {
+      password_authentication = {
+        additional_properties = "{ \"see\": \"documentation\" }"
+        authentication_method = "password_authentication"
+        password              = "...my_password..."
+      }
+    }
     check_privileges                   = true
     checkpoint_target_interval_seconds = 0
     concurrency                        = 0
@@ -27,7 +34,6 @@ resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
-    password        = "...my_password..."
     port            = 23532
     role_id         = "...my_role_id..."
     tunnel_method = {
@@ -76,6 +82,7 @@ resource "airbyte_source_netsuite_enterprise" "my_source_netsuiteenterprise" {
 Required:
 
 - `account_id` (String) The username which is used to access the database.
+- `authentication_method` (Attributes) Configure how to authenticate to Netsuite. Options include username/password or token-based authentication. (see [below for nested schema](#nestedatt--configuration--authentication_method))
 - `cursor` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--cursor))
 - `host` (String) Hostname of the database.
 - `role_id` (String) The username which is used to access the database.
@@ -88,8 +95,45 @@ Optional:
 - `checkpoint_target_interval_seconds` (Number) How often (in seconds) a stream should checkpoint, when possible. Default: 300
 - `concurrency` (Number) Maximum number of concurrent queries to the database. Default: 1
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-- `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database. Default: 1708
+
+<a id="nestedatt--configuration--authentication_method"></a>
+### Nested Schema for `configuration.authentication_method`
+
+Optional:
+
+- `password_authentication` (Attributes) Authenticate using a password. (see [below for nested schema](#nestedatt--configuration--authentication_method--password_authentication))
+- `token_based_authentication` (Attributes) Authenticate using a token-based authentication method. This requires a consumer key and secret, as well as a token ID and secret. (see [below for nested schema](#nestedatt--configuration--authentication_method--token_based_authentication))
+
+<a id="nestedatt--configuration--authentication_method--password_authentication"></a>
+### Nested Schema for `configuration.authentication_method.password_authentication`
+
+Required:
+
+- `password` (String, Sensitive) The password associated with the username.
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `authentication_method` (String) Default: "password_authentication"; must be "password_authentication"
+
+
+<a id="nestedatt--configuration--authentication_method--token_based_authentication"></a>
+### Nested Schema for `configuration.authentication_method.token_based_authentication`
+
+Required:
+
+- `client_id` (String) The consumer key used for token-based authentication. This is generated in NetSuite when creating an integration record.
+- `client_secret` (String, Sensitive) The consumer secret used for token-based authentication. This is generated in NetSuite when creating an integration record.
+- `token_id` (String) The token ID used for token-based authentication. This is generated in NetSuite when creating a token-based role.
+- `token_secret` (String, Sensitive) The token secret used for token-based authentication. This is generated in NetSuite when creating a token-based role.Ensure to keep this value secure.
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `authentication_method` (String) Default: "token_based_authentication"; must be "token_based_authentication"
+
+
 
 <a id="nestedatt--configuration--cursor"></a>
 ### Nested Schema for `configuration.cursor`

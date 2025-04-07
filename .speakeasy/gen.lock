@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: d5acbc7281a94e7b0e8aa18fee3abd71
+  docChecksum: cc1413ccf7e5c55a8d8a85435e8e5376
   docVersion: 1.0.0
   speakeasyVersion: 1.525.2
   generationVersion: 2.562.3
-  releaseVersion: 0.16.2
-  configChecksum: db0ff5f5b0e03791c46aa6d06dcf028f
+  releaseVersion: 0.16.3
+  configChecksum: 9c291497d724408cc2b89ebc5fdc0507
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -46,7 +46,6 @@ generatedFiles:
   - examples/data-sources/airbyte_destination_firestore/data-source.tf
   - examples/data-sources/airbyte_destination_gcs/data-source.tf
   - examples/data-sources/airbyte_destination_google_sheets/data-source.tf
-  - examples/data-sources/airbyte_destination_iceberg/data-source.tf
   - examples/data-sources/airbyte_destination_milvus/data-source.tf
   - examples/data-sources/airbyte_destination_mongodb/data-source.tf
   - examples/data-sources/airbyte_destination_motherduck/data-source.tf
@@ -63,7 +62,6 @@ generatedFiles:
   - examples/data-sources/airbyte_destination_redshift/data-source.tf
   - examples/data-sources/airbyte_destination_s3/data-source.tf
   - examples/data-sources/airbyte_destination_s3_data_lake/data-source.tf
-  - examples/data-sources/airbyte_destination_s3_glue/data-source.tf
   - examples/data-sources/airbyte_destination_sftp_json/data-source.tf
   - examples/data-sources/airbyte_destination_snowflake/data-source.tf
   - examples/data-sources/airbyte_destination_snowflake_cortex/data-source.tf
@@ -83,6 +81,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_airtable/data-source.tf
   - examples/data-sources/airbyte_source_akeneo/data-source.tf
   - examples/data-sources/airbyte_source_algolia/data-source.tf
+  - examples/data-sources/airbyte_source_alpaca_broker_api/data-source.tf
   - examples/data-sources/airbyte_source_alpha_vantage/data-source.tf
   - examples/data-sources/airbyte_source_amazon_ads/data-source.tf
   - examples/data-sources/airbyte_source_amazon_seller_partner/data-source.tf
@@ -109,6 +108,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_bing_ads/data-source.tf
   - examples/data-sources/airbyte_source_bitly/data-source.tf
   - examples/data-sources/airbyte_source_blogger/data-source.tf
+  - examples/data-sources/airbyte_source_boldsign/data-source.tf
   - examples/data-sources/airbyte_source_box/data-source.tf
   - examples/data-sources/airbyte_source_braintree/data-source.tf
   - examples/data-sources/airbyte_source_braze/data-source.tf
@@ -140,6 +140,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_cin7/data-source.tf
   - examples/data-sources/airbyte_source_circa/data-source.tf
   - examples/data-sources/airbyte_source_circleci/data-source.tf
+  - examples/data-sources/airbyte_source_cisco_meraki/data-source.tf
   - examples/data-sources/airbyte_source_clarif_ai/data-source.tf
   - examples/data-sources/airbyte_source_clazar/data-source.tf
   - examples/data-sources/airbyte_source_clickhouse/data-source.tf
@@ -170,16 +171,20 @@ generatedFiles:
   - examples/data-sources/airbyte_source_dbt/data-source.tf
   - examples/data-sources/airbyte_source_delighted/data-source.tf
   - examples/data-sources/airbyte_source_deputy/data-source.tf
+  - examples/data-sources/airbyte_source_ding_connect/data-source.tf
   - examples/data-sources/airbyte_source_dixa/data-source.tf
   - examples/data-sources/airbyte_source_dockerhub/data-source.tf
+  - examples/data-sources/airbyte_source_docuseal/data-source.tf
   - examples/data-sources/airbyte_source_dremio/data-source.tf
   - examples/data-sources/airbyte_source_drift/data-source.tf
   - examples/data-sources/airbyte_source_drip/data-source.tf
   - examples/data-sources/airbyte_source_dropbox_sign/data-source.tf
+  - examples/data-sources/airbyte_source_dwolla/data-source.tf
   - examples/data-sources/airbyte_source_dynamodb/data-source.tf
   - examples/data-sources/airbyte_source_e_conomic/data-source.tf
   - examples/data-sources/airbyte_source_easypost/data-source.tf
   - examples/data-sources/airbyte_source_easypromos/data-source.tf
+  - examples/data-sources/airbyte_source_ebay_finance/data-source.tf
   - examples/data-sources/airbyte_source_elasticemail/data-source.tf
   - examples/data-sources/airbyte_source_emailoctopus/data-source.tf
   - examples/data-sources/airbyte_source_employment_hero/data-source.tf
@@ -232,6 +237,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_gnews/data-source.tf
   - examples/data-sources/airbyte_source_gocardless/data-source.tf
   - examples/data-sources/airbyte_source_goldcast/data-source.tf
+  - examples/data-sources/airbyte_source_gologin/data-source.tf
   - examples/data-sources/airbyte_source_gong/data-source.tf
   - examples/data-sources/airbyte_source_google_ads/data-source.tf
   - examples/data-sources/airbyte_source_google_analytics_data_api/data-source.tf
@@ -337,11 +343,13 @@ generatedFiles:
   - examples/data-sources/airbyte_source_n8n/data-source.tf
   - examples/data-sources/airbyte_source_nasa/data-source.tf
   - examples/data-sources/airbyte_source_navan/data-source.tf
+  - examples/data-sources/airbyte_source_nebius_ai/data-source.tf
   - examples/data-sources/airbyte_source_netsuite/data-source.tf
   - examples/data-sources/airbyte_source_netsuite_enterprise/data-source.tf
   - examples/data-sources/airbyte_source_news_api/data-source.tf
   - examples/data-sources/airbyte_source_newsdata/data-source.tf
   - examples/data-sources/airbyte_source_newsdata_io/data-source.tf
+  - examples/data-sources/airbyte_source_ninjaone_rmm/data-source.tf
   - examples/data-sources/airbyte_source_nocrm/data-source.tf
   - examples/data-sources/airbyte_source_northpass_lms/data-source.tf
   - examples/data-sources/airbyte_source_notion/data-source.tf
@@ -368,11 +376,13 @@ generatedFiles:
   - examples/data-sources/airbyte_source_outreach/data-source.tf
   - examples/data-sources/airbyte_source_oveit/data-source.tf
   - examples/data-sources/airbyte_source_pabbly_subscriptions_billing/data-source.tf
+  - examples/data-sources/airbyte_source_paddle/data-source.tf
   - examples/data-sources/airbyte_source_pagerduty/data-source.tf
   - examples/data-sources/airbyte_source_pandadoc/data-source.tf
   - examples/data-sources/airbyte_source_paperform/data-source.tf
   - examples/data-sources/airbyte_source_papersign/data-source.tf
   - examples/data-sources/airbyte_source_pardot/data-source.tf
+  - examples/data-sources/airbyte_source_partnerize/data-source.tf
   - examples/data-sources/airbyte_source_partnerstack/data-source.tf
   - examples/data-sources/airbyte_source_payfit/data-source.tf
   - examples/data-sources/airbyte_source_paypal_transaction/data-source.tf
@@ -382,6 +392,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_persistiq/data-source.tf
   - examples/data-sources/airbyte_source_persona/data-source.tf
   - examples/data-sources/airbyte_source_pexels_api/data-source.tf
+  - examples/data-sources/airbyte_source_phyllo/data-source.tf
   - examples/data-sources/airbyte_source_picqer/data-source.tf
   - examples/data-sources/airbyte_source_pingdom/data-source.tf
   - examples/data-sources/airbyte_source_pinterest/data-source.tf
@@ -395,6 +406,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_pocket/data-source.tf
   - examples/data-sources/airbyte_source_pokeapi/data-source.tf
   - examples/data-sources/airbyte_source_polygon_stock_api/data-source.tf
+  - examples/data-sources/airbyte_source_poplar/data-source.tf
   - examples/data-sources/airbyte_source_postgres/data-source.tf
   - examples/data-sources/airbyte_source_posthog/data-source.tf
   - examples/data-sources/airbyte_source_postmarkapp/data-source.tf
@@ -458,7 +470,9 @@ generatedFiles:
   - examples/data-sources/airbyte_source_shopify/data-source.tf
   - examples/data-sources/airbyte_source_shortcut/data-source.tf
   - examples/data-sources/airbyte_source_shortio/data-source.tf
+  - examples/data-sources/airbyte_source_shutterstock/data-source.tf
   - examples/data-sources/airbyte_source_sigma_computing/data-source.tf
+  - examples/data-sources/airbyte_source_signnow/data-source.tf
   - examples/data-sources/airbyte_source_simfin/data-source.tf
   - examples/data-sources/airbyte_source_simplecast/data-source.tf
   - examples/data-sources/airbyte_source_simplesat/data-source.tf
@@ -548,9 +562,11 @@ generatedFiles:
   - examples/data-sources/airbyte_source_yotpo/data-source.tf
   - examples/data-sources/airbyte_source_you_need_a_budget_ynab/data-source.tf
   - examples/data-sources/airbyte_source_younium/data-source.tf
+  - examples/data-sources/airbyte_source_yousign/data-source.tf
   - examples/data-sources/airbyte_source_youtube_analytics/data-source.tf
   - examples/data-sources/airbyte_source_youtube_data/data-source.tf
   - examples/data-sources/airbyte_source_zapier_supported_storage/data-source.tf
+  - examples/data-sources/airbyte_source_zapsign/data-source.tf
   - examples/data-sources/airbyte_source_zendesk_chat/data-source.tf
   - examples/data-sources/airbyte_source_zendesk_sunshine/data-source.tf
   - examples/data-sources/airbyte_source_zendesk_support/data-source.tf
@@ -609,8 +625,6 @@ generatedFiles:
   - examples/resources/airbyte_destination_gcs/resource.tf
   - examples/resources/airbyte_destination_google_sheets/import.sh
   - examples/resources/airbyte_destination_google_sheets/resource.tf
-  - examples/resources/airbyte_destination_iceberg/import.sh
-  - examples/resources/airbyte_destination_iceberg/resource.tf
   - examples/resources/airbyte_destination_milvus/import.sh
   - examples/resources/airbyte_destination_milvus/resource.tf
   - examples/resources/airbyte_destination_mongodb/import.sh
@@ -643,8 +657,6 @@ generatedFiles:
   - examples/resources/airbyte_destination_s3/resource.tf
   - examples/resources/airbyte_destination_s3_data_lake/import.sh
   - examples/resources/airbyte_destination_s3_data_lake/resource.tf
-  - examples/resources/airbyte_destination_s3_glue/import.sh
-  - examples/resources/airbyte_destination_s3_glue/resource.tf
   - examples/resources/airbyte_destination_sftp_json/import.sh
   - examples/resources/airbyte_destination_sftp_json/resource.tf
   - examples/resources/airbyte_destination_snowflake/import.sh
@@ -683,6 +695,8 @@ generatedFiles:
   - examples/resources/airbyte_source_akeneo/resource.tf
   - examples/resources/airbyte_source_algolia/import.sh
   - examples/resources/airbyte_source_algolia/resource.tf
+  - examples/resources/airbyte_source_alpaca_broker_api/import.sh
+  - examples/resources/airbyte_source_alpaca_broker_api/resource.tf
   - examples/resources/airbyte_source_alpha_vantage/import.sh
   - examples/resources/airbyte_source_alpha_vantage/resource.tf
   - examples/resources/airbyte_source_amazon_ads/import.sh
@@ -735,6 +749,8 @@ generatedFiles:
   - examples/resources/airbyte_source_bitly/resource.tf
   - examples/resources/airbyte_source_blogger/import.sh
   - examples/resources/airbyte_source_blogger/resource.tf
+  - examples/resources/airbyte_source_boldsign/import.sh
+  - examples/resources/airbyte_source_boldsign/resource.tf
   - examples/resources/airbyte_source_box/import.sh
   - examples/resources/airbyte_source_box/resource.tf
   - examples/resources/airbyte_source_braintree/import.sh
@@ -797,6 +813,8 @@ generatedFiles:
   - examples/resources/airbyte_source_circa/resource.tf
   - examples/resources/airbyte_source_circleci/import.sh
   - examples/resources/airbyte_source_circleci/resource.tf
+  - examples/resources/airbyte_source_cisco_meraki/import.sh
+  - examples/resources/airbyte_source_cisco_meraki/resource.tf
   - examples/resources/airbyte_source_clarif_ai/import.sh
   - examples/resources/airbyte_source_clarif_ai/resource.tf
   - examples/resources/airbyte_source_clazar/import.sh
@@ -857,10 +875,14 @@ generatedFiles:
   - examples/resources/airbyte_source_delighted/resource.tf
   - examples/resources/airbyte_source_deputy/import.sh
   - examples/resources/airbyte_source_deputy/resource.tf
+  - examples/resources/airbyte_source_ding_connect/import.sh
+  - examples/resources/airbyte_source_ding_connect/resource.tf
   - examples/resources/airbyte_source_dixa/import.sh
   - examples/resources/airbyte_source_dixa/resource.tf
   - examples/resources/airbyte_source_dockerhub/import.sh
   - examples/resources/airbyte_source_dockerhub/resource.tf
+  - examples/resources/airbyte_source_docuseal/import.sh
+  - examples/resources/airbyte_source_docuseal/resource.tf
   - examples/resources/airbyte_source_dremio/import.sh
   - examples/resources/airbyte_source_dremio/resource.tf
   - examples/resources/airbyte_source_drift/import.sh
@@ -869,6 +891,8 @@ generatedFiles:
   - examples/resources/airbyte_source_drip/resource.tf
   - examples/resources/airbyte_source_dropbox_sign/import.sh
   - examples/resources/airbyte_source_dropbox_sign/resource.tf
+  - examples/resources/airbyte_source_dwolla/import.sh
+  - examples/resources/airbyte_source_dwolla/resource.tf
   - examples/resources/airbyte_source_dynamodb/import.sh
   - examples/resources/airbyte_source_dynamodb/resource.tf
   - examples/resources/airbyte_source_e_conomic/import.sh
@@ -877,6 +901,8 @@ generatedFiles:
   - examples/resources/airbyte_source_easypost/resource.tf
   - examples/resources/airbyte_source_easypromos/import.sh
   - examples/resources/airbyte_source_easypromos/resource.tf
+  - examples/resources/airbyte_source_ebay_finance/import.sh
+  - examples/resources/airbyte_source_ebay_finance/resource.tf
   - examples/resources/airbyte_source_elasticemail/import.sh
   - examples/resources/airbyte_source_elasticemail/resource.tf
   - examples/resources/airbyte_source_emailoctopus/import.sh
@@ -981,6 +1007,8 @@ generatedFiles:
   - examples/resources/airbyte_source_gocardless/resource.tf
   - examples/resources/airbyte_source_goldcast/import.sh
   - examples/resources/airbyte_source_goldcast/resource.tf
+  - examples/resources/airbyte_source_gologin/import.sh
+  - examples/resources/airbyte_source_gologin/resource.tf
   - examples/resources/airbyte_source_gong/import.sh
   - examples/resources/airbyte_source_gong/resource.tf
   - examples/resources/airbyte_source_google_ads/import.sh
@@ -1191,6 +1219,8 @@ generatedFiles:
   - examples/resources/airbyte_source_nasa/resource.tf
   - examples/resources/airbyte_source_navan/import.sh
   - examples/resources/airbyte_source_navan/resource.tf
+  - examples/resources/airbyte_source_nebius_ai/import.sh
+  - examples/resources/airbyte_source_nebius_ai/resource.tf
   - examples/resources/airbyte_source_netsuite/import.sh
   - examples/resources/airbyte_source_netsuite/resource.tf
   - examples/resources/airbyte_source_netsuite_enterprise/import.sh
@@ -1201,6 +1231,8 @@ generatedFiles:
   - examples/resources/airbyte_source_newsdata/resource.tf
   - examples/resources/airbyte_source_newsdata_io/import.sh
   - examples/resources/airbyte_source_newsdata_io/resource.tf
+  - examples/resources/airbyte_source_ninjaone_rmm/import.sh
+  - examples/resources/airbyte_source_ninjaone_rmm/resource.tf
   - examples/resources/airbyte_source_nocrm/import.sh
   - examples/resources/airbyte_source_nocrm/resource.tf
   - examples/resources/airbyte_source_northpass_lms/import.sh
@@ -1253,6 +1285,8 @@ generatedFiles:
   - examples/resources/airbyte_source_oveit/resource.tf
   - examples/resources/airbyte_source_pabbly_subscriptions_billing/import.sh
   - examples/resources/airbyte_source_pabbly_subscriptions_billing/resource.tf
+  - examples/resources/airbyte_source_paddle/import.sh
+  - examples/resources/airbyte_source_paddle/resource.tf
   - examples/resources/airbyte_source_pagerduty/import.sh
   - examples/resources/airbyte_source_pagerduty/resource.tf
   - examples/resources/airbyte_source_pandadoc/import.sh
@@ -1263,6 +1297,8 @@ generatedFiles:
   - examples/resources/airbyte_source_papersign/resource.tf
   - examples/resources/airbyte_source_pardot/import.sh
   - examples/resources/airbyte_source_pardot/resource.tf
+  - examples/resources/airbyte_source_partnerize/import.sh
+  - examples/resources/airbyte_source_partnerize/resource.tf
   - examples/resources/airbyte_source_partnerstack/import.sh
   - examples/resources/airbyte_source_partnerstack/resource.tf
   - examples/resources/airbyte_source_payfit/import.sh
@@ -1281,6 +1317,8 @@ generatedFiles:
   - examples/resources/airbyte_source_persona/resource.tf
   - examples/resources/airbyte_source_pexels_api/import.sh
   - examples/resources/airbyte_source_pexels_api/resource.tf
+  - examples/resources/airbyte_source_phyllo/import.sh
+  - examples/resources/airbyte_source_phyllo/resource.tf
   - examples/resources/airbyte_source_picqer/import.sh
   - examples/resources/airbyte_source_picqer/resource.tf
   - examples/resources/airbyte_source_pingdom/import.sh
@@ -1307,6 +1345,8 @@ generatedFiles:
   - examples/resources/airbyte_source_pokeapi/resource.tf
   - examples/resources/airbyte_source_polygon_stock_api/import.sh
   - examples/resources/airbyte_source_polygon_stock_api/resource.tf
+  - examples/resources/airbyte_source_poplar/import.sh
+  - examples/resources/airbyte_source_poplar/resource.tf
   - examples/resources/airbyte_source_postgres/import.sh
   - examples/resources/airbyte_source_postgres/resource.tf
   - examples/resources/airbyte_source_posthog/import.sh
@@ -1433,8 +1473,12 @@ generatedFiles:
   - examples/resources/airbyte_source_shortcut/resource.tf
   - examples/resources/airbyte_source_shortio/import.sh
   - examples/resources/airbyte_source_shortio/resource.tf
+  - examples/resources/airbyte_source_shutterstock/import.sh
+  - examples/resources/airbyte_source_shutterstock/resource.tf
   - examples/resources/airbyte_source_sigma_computing/import.sh
   - examples/resources/airbyte_source_sigma_computing/resource.tf
+  - examples/resources/airbyte_source_signnow/import.sh
+  - examples/resources/airbyte_source_signnow/resource.tf
   - examples/resources/airbyte_source_simfin/import.sh
   - examples/resources/airbyte_source_simfin/resource.tf
   - examples/resources/airbyte_source_simplecast/import.sh
@@ -1613,12 +1657,16 @@ generatedFiles:
   - examples/resources/airbyte_source_you_need_a_budget_ynab/resource.tf
   - examples/resources/airbyte_source_younium/import.sh
   - examples/resources/airbyte_source_younium/resource.tf
+  - examples/resources/airbyte_source_yousign/import.sh
+  - examples/resources/airbyte_source_yousign/resource.tf
   - examples/resources/airbyte_source_youtube_analytics/import.sh
   - examples/resources/airbyte_source_youtube_analytics/resource.tf
   - examples/resources/airbyte_source_youtube_data/import.sh
   - examples/resources/airbyte_source_youtube_data/resource.tf
   - examples/resources/airbyte_source_zapier_supported_storage/import.sh
   - examples/resources/airbyte_source_zapier_supported_storage/resource.tf
+  - examples/resources/airbyte_source_zapsign/import.sh
+  - examples/resources/airbyte_source_zapsign/resource.tf
   - examples/resources/airbyte_source_zendesk_chat/import.sh
   - examples/resources/airbyte_source_zendesk_chat/resource.tf
   - examples/resources/airbyte_source_zendesk_sunshine/import.sh
@@ -1747,10 +1795,6 @@ generatedFiles:
   - internal/provider/destination_googlesheets_data_source_sdk.go
   - internal/provider/destination_googlesheets_resource.go
   - internal/provider/destination_googlesheets_resource_sdk.go
-  - internal/provider/destination_iceberg_data_source.go
-  - internal/provider/destination_iceberg_data_source_sdk.go
-  - internal/provider/destination_iceberg_resource.go
-  - internal/provider/destination_iceberg_resource_sdk.go
   - internal/provider/destination_milvus_data_source.go
   - internal/provider/destination_milvus_data_source_sdk.go
   - internal/provider/destination_milvus_resource.go
@@ -1815,10 +1859,6 @@ generatedFiles:
   - internal/provider/destination_s3datalake_data_source_sdk.go
   - internal/provider/destination_s3datalake_resource.go
   - internal/provider/destination_s3datalake_resource_sdk.go
-  - internal/provider/destination_s3glue_data_source.go
-  - internal/provider/destination_s3glue_data_source_sdk.go
-  - internal/provider/destination_s3glue_resource.go
-  - internal/provider/destination_s3glue_resource_sdk.go
   - internal/provider/destination_sftpjson_data_source.go
   - internal/provider/destination_sftpjson_data_source_sdk.go
   - internal/provider/destination_sftpjson_resource.go
@@ -1910,6 +1950,10 @@ generatedFiles:
   - internal/provider/source_algolia_data_source_sdk.go
   - internal/provider/source_algolia_resource.go
   - internal/provider/source_algolia_resource_sdk.go
+  - internal/provider/source_alpacabrokerapi_data_source.go
+  - internal/provider/source_alpacabrokerapi_data_source_sdk.go
+  - internal/provider/source_alpacabrokerapi_resource.go
+  - internal/provider/source_alpacabrokerapi_resource_sdk.go
   - internal/provider/source_alphavantage_data_source.go
   - internal/provider/source_alphavantage_data_source_sdk.go
   - internal/provider/source_alphavantage_resource.go
@@ -2014,6 +2058,10 @@ generatedFiles:
   - internal/provider/source_blogger_data_source_sdk.go
   - internal/provider/source_blogger_resource.go
   - internal/provider/source_blogger_resource_sdk.go
+  - internal/provider/source_boldsign_data_source.go
+  - internal/provider/source_boldsign_data_source_sdk.go
+  - internal/provider/source_boldsign_resource.go
+  - internal/provider/source_boldsign_resource_sdk.go
   - internal/provider/source_box_data_source.go
   - internal/provider/source_box_data_source_sdk.go
   - internal/provider/source_box_resource.go
@@ -2138,6 +2186,10 @@ generatedFiles:
   - internal/provider/source_circleci_data_source_sdk.go
   - internal/provider/source_circleci_resource.go
   - internal/provider/source_circleci_resource_sdk.go
+  - internal/provider/source_ciscomeraki_data_source.go
+  - internal/provider/source_ciscomeraki_data_source_sdk.go
+  - internal/provider/source_ciscomeraki_resource.go
+  - internal/provider/source_ciscomeraki_resource_sdk.go
   - internal/provider/source_clarifai_data_source.go
   - internal/provider/source_clarifai_data_source_sdk.go
   - internal/provider/source_clarifai_resource.go
@@ -2258,6 +2310,10 @@ generatedFiles:
   - internal/provider/source_deputy_data_source_sdk.go
   - internal/provider/source_deputy_resource.go
   - internal/provider/source_deputy_resource_sdk.go
+  - internal/provider/source_dingconnect_data_source.go
+  - internal/provider/source_dingconnect_data_source_sdk.go
+  - internal/provider/source_dingconnect_resource.go
+  - internal/provider/source_dingconnect_resource_sdk.go
   - internal/provider/source_dixa_data_source.go
   - internal/provider/source_dixa_data_source_sdk.go
   - internal/provider/source_dixa_resource.go
@@ -2266,6 +2322,10 @@ generatedFiles:
   - internal/provider/source_dockerhub_data_source_sdk.go
   - internal/provider/source_dockerhub_resource.go
   - internal/provider/source_dockerhub_resource_sdk.go
+  - internal/provider/source_docuseal_data_source.go
+  - internal/provider/source_docuseal_data_source_sdk.go
+  - internal/provider/source_docuseal_resource.go
+  - internal/provider/source_docuseal_resource_sdk.go
   - internal/provider/source_dremio_data_source.go
   - internal/provider/source_dremio_data_source_sdk.go
   - internal/provider/source_dremio_resource.go
@@ -2282,6 +2342,10 @@ generatedFiles:
   - internal/provider/source_dropboxsign_data_source_sdk.go
   - internal/provider/source_dropboxsign_resource.go
   - internal/provider/source_dropboxsign_resource_sdk.go
+  - internal/provider/source_dwolla_data_source.go
+  - internal/provider/source_dwolla_data_source_sdk.go
+  - internal/provider/source_dwolla_resource.go
+  - internal/provider/source_dwolla_resource_sdk.go
   - internal/provider/source_dynamodb_data_source.go
   - internal/provider/source_dynamodb_data_source_sdk.go
   - internal/provider/source_dynamodb_resource.go
@@ -2294,6 +2358,10 @@ generatedFiles:
   - internal/provider/source_easypromos_data_source_sdk.go
   - internal/provider/source_easypromos_resource.go
   - internal/provider/source_easypromos_resource_sdk.go
+  - internal/provider/source_ebayfinance_data_source.go
+  - internal/provider/source_ebayfinance_data_source_sdk.go
+  - internal/provider/source_ebayfinance_resource.go
+  - internal/provider/source_ebayfinance_resource_sdk.go
   - internal/provider/source_economic_data_source.go
   - internal/provider/source_economic_data_source_sdk.go
   - internal/provider/source_economic_resource.go
@@ -2506,6 +2574,10 @@ generatedFiles:
   - internal/provider/source_goldcast_data_source_sdk.go
   - internal/provider/source_goldcast_resource.go
   - internal/provider/source_goldcast_resource_sdk.go
+  - internal/provider/source_gologin_data_source.go
+  - internal/provider/source_gologin_data_source_sdk.go
+  - internal/provider/source_gologin_resource.go
+  - internal/provider/source_gologin_resource_sdk.go
   - internal/provider/source_gong_data_source.go
   - internal/provider/source_gong_data_source_sdk.go
   - internal/provider/source_gong_resource.go
@@ -2926,6 +2998,10 @@ generatedFiles:
   - internal/provider/source_navan_data_source_sdk.go
   - internal/provider/source_navan_resource.go
   - internal/provider/source_navan_resource_sdk.go
+  - internal/provider/source_nebiusai_data_source.go
+  - internal/provider/source_nebiusai_data_source_sdk.go
+  - internal/provider/source_nebiusai_resource.go
+  - internal/provider/source_nebiusai_resource_sdk.go
   - internal/provider/source_netsuite_data_source.go
   - internal/provider/source_netsuite_data_source_sdk.go
   - internal/provider/source_netsuite_resource.go
@@ -2946,6 +3022,10 @@ generatedFiles:
   - internal/provider/source_newsdataio_data_source_sdk.go
   - internal/provider/source_newsdataio_resource.go
   - internal/provider/source_newsdataio_resource_sdk.go
+  - internal/provider/source_ninjaonermm_data_source.go
+  - internal/provider/source_ninjaonermm_data_source_sdk.go
+  - internal/provider/source_ninjaonermm_resource.go
+  - internal/provider/source_ninjaonermm_resource_sdk.go
   - internal/provider/source_nocrm_data_source.go
   - internal/provider/source_nocrm_data_source_sdk.go
   - internal/provider/source_nocrm_resource.go
@@ -3050,6 +3130,10 @@ generatedFiles:
   - internal/provider/source_pabblysubscriptionsbilling_data_source_sdk.go
   - internal/provider/source_pabblysubscriptionsbilling_resource.go
   - internal/provider/source_pabblysubscriptionsbilling_resource_sdk.go
+  - internal/provider/source_paddle_data_source.go
+  - internal/provider/source_paddle_data_source_sdk.go
+  - internal/provider/source_paddle_resource.go
+  - internal/provider/source_paddle_resource_sdk.go
   - internal/provider/source_pagerduty_data_source.go
   - internal/provider/source_pagerduty_data_source_sdk.go
   - internal/provider/source_pagerduty_resource.go
@@ -3070,6 +3154,10 @@ generatedFiles:
   - internal/provider/source_pardot_data_source_sdk.go
   - internal/provider/source_pardot_resource.go
   - internal/provider/source_pardot_resource_sdk.go
+  - internal/provider/source_partnerize_data_source.go
+  - internal/provider/source_partnerize_data_source_sdk.go
+  - internal/provider/source_partnerize_resource.go
+  - internal/provider/source_partnerize_resource_sdk.go
   - internal/provider/source_partnerstack_data_source.go
   - internal/provider/source_partnerstack_data_source_sdk.go
   - internal/provider/source_partnerstack_resource.go
@@ -3106,6 +3194,10 @@ generatedFiles:
   - internal/provider/source_pexelsapi_data_source_sdk.go
   - internal/provider/source_pexelsapi_resource.go
   - internal/provider/source_pexelsapi_resource_sdk.go
+  - internal/provider/source_phyllo_data_source.go
+  - internal/provider/source_phyllo_data_source_sdk.go
+  - internal/provider/source_phyllo_resource.go
+  - internal/provider/source_phyllo_resource_sdk.go
   - internal/provider/source_picqer_data_source.go
   - internal/provider/source_picqer_data_source_sdk.go
   - internal/provider/source_picqer_resource.go
@@ -3158,6 +3250,10 @@ generatedFiles:
   - internal/provider/source_polygonstockapi_data_source_sdk.go
   - internal/provider/source_polygonstockapi_resource.go
   - internal/provider/source_polygonstockapi_resource_sdk.go
+  - internal/provider/source_poplar_data_source.go
+  - internal/provider/source_poplar_data_source_sdk.go
+  - internal/provider/source_poplar_resource.go
+  - internal/provider/source_poplar_resource_sdk.go
   - internal/provider/source_postgres_data_source.go
   - internal/provider/source_postgres_data_source_sdk.go
   - internal/provider/source_postgres_resource.go
@@ -3410,10 +3506,18 @@ generatedFiles:
   - internal/provider/source_shortio_data_source_sdk.go
   - internal/provider/source_shortio_resource.go
   - internal/provider/source_shortio_resource_sdk.go
+  - internal/provider/source_shutterstock_data_source.go
+  - internal/provider/source_shutterstock_data_source_sdk.go
+  - internal/provider/source_shutterstock_resource.go
+  - internal/provider/source_shutterstock_resource_sdk.go
   - internal/provider/source_sigmacomputing_data_source.go
   - internal/provider/source_sigmacomputing_data_source_sdk.go
   - internal/provider/source_sigmacomputing_resource.go
   - internal/provider/source_sigmacomputing_resource_sdk.go
+  - internal/provider/source_signnow_data_source.go
+  - internal/provider/source_signnow_data_source_sdk.go
+  - internal/provider/source_signnow_resource.go
+  - internal/provider/source_signnow_resource_sdk.go
   - internal/provider/source_simfin_data_source.go
   - internal/provider/source_simfin_data_source_sdk.go
   - internal/provider/source_simfin_resource.go
@@ -3770,6 +3874,10 @@ generatedFiles:
   - internal/provider/source_younium_data_source_sdk.go
   - internal/provider/source_younium_resource.go
   - internal/provider/source_younium_resource_sdk.go
+  - internal/provider/source_yousign_data_source.go
+  - internal/provider/source_yousign_data_source_sdk.go
+  - internal/provider/source_yousign_resource.go
+  - internal/provider/source_yousign_resource_sdk.go
   - internal/provider/source_youtubeanalytics_data_source.go
   - internal/provider/source_youtubeanalytics_data_source_sdk.go
   - internal/provider/source_youtubeanalytics_resource.go
@@ -3782,6 +3890,10 @@ generatedFiles:
   - internal/provider/source_zapiersupportedstorage_data_source_sdk.go
   - internal/provider/source_zapiersupportedstorage_resource.go
   - internal/provider/source_zapiersupportedstorage_resource_sdk.go
+  - internal/provider/source_zapsign_data_source.go
+  - internal/provider/source_zapsign_data_source_sdk.go
+  - internal/provider/source_zapsign_resource.go
+  - internal/provider/source_zapsign_resource_sdk.go
   - internal/provider/source_zendeskchat_data_source.go
   - internal/provider/source_zendeskchat_data_source_sdk.go
   - internal/provider/source_zendeskchat_resource.go
@@ -3984,9 +4096,6 @@ generatedFiles:
   - internal/provider/types/destination_google_sheets_authenticate_via_google_o_auth.go
   - internal/provider/types/destination_google_sheets_authentication.go
   - internal/provider/types/destination_google_sheets_service_account_key_authentication.go
-  - internal/provider/types/destination_iceberg.go
-  - internal/provider/types/destination_iceberg_file_format.go
-  - internal/provider/types/destination_iceberg_s3.go
   - internal/provider/types/destination_milvus.go
   - internal/provider/types/destination_milvus_api_token.go
   - internal/provider/types/destination_milvus_authentication.go
@@ -4115,15 +4224,7 @@ generatedFiles:
   - internal/provider/types/destination_s3_compression_codec.go
   - internal/provider/types/destination_s3_csv_comma_separated_values.go
   - internal/provider/types/destination_s3_data_lake.go
-  - internal/provider/types/destination_s3_data_lake_glue_catalog.go
-  - internal/provider/types/destination_s3_data_lake_rest_catalog.go
   - internal/provider/types/destination_s3_deflate.go
-  - internal/provider/types/destination_s3_glue.go
-  - internal/provider/types/destination_s3_glue_compression.go
-  - internal/provider/types/destination_s3_glue_gzip.go
-  - internal/provider/types/destination_s3_glue_json_lines_newline_delimited_json.go
-  - internal/provider/types/destination_s3_glue_no_compression.go
-  - internal/provider/types/destination_s3_glue_output_format.go
   - internal/provider/types/destination_s3_gzip.go
   - internal/provider/types/destination_s3_json_lines_newline_delimited_json.go
   - internal/provider/types/destination_s3_no_compression.go
@@ -4200,7 +4301,6 @@ generatedFiles:
   - internal/provider/types/dimensions_filter.go
   - internal/provider/types/disable.go
   - internal/provider/types/disabled.go
-  - internal/provider/types/document_file_type_format_experimental.go
   - internal/provider/types/double_value.go
   - internal/provider/types/email_notification_config.go
   - internal/provider/types/embedding.go
@@ -4233,21 +4333,17 @@ generatedFiles:
   - internal/provider/types/glue_catalog.go
   - internal/provider/types/google_credentials.go
   - internal/provider/types/gzip.go
-  - internal/provider/types/hadoop_catalog_use_hierarchical_file_systems_as_same_as_storage_config.go
   - internal/provider/types/hashing.go
   - internal/provider/types/header.go
-  - internal/provider/types/hive_catalog_use_apache_hive_meta_store.go
   - internal/provider/types/hmac_key.go
   - internal/provider/types/https_public_web.go
   - internal/provider/types/iam_role.go
   - internal/provider/types/iam_user.go
-  - internal/provider/types/iceberg_catalog_config.go
   - internal/provider/types/in_list_filter.go
   - internal/provider/types/indexing.go
   - internal/provider/types/insert_load.go
   - internal/provider/types/insight_config.go
   - internal/provider/types/int64_value.go
-  - internal/provider/types/jdbc_catalog_use_relational_database.go
   - internal/provider/types/job_type_resource_limit.go
   - internal/provider/types/json_lines_newline_delimited_json.go
   - internal/provider/types/jsonl_format.go
@@ -4327,7 +4423,6 @@ generatedFiles:
   - internal/provider/types/scp_secure_copy_protocol.go
   - internal/provider/types/selected_field_info.go
   - internal/provider/types/self_managed_replica_set.go
-  - internal/provider/types/server_managed.go
   - internal/provider/types/service_account.go
   - internal/provider/types/service_account_authentication.go
   - internal/provider/types/service_account_key.go
@@ -4353,6 +4448,7 @@ generatedFiles:
   - internal/provider/types/source_airtable_o_auth20.go
   - internal/provider/types/source_akeneo.go
   - internal/provider/types/source_algolia.go
+  - internal/provider/types/source_alpaca_broker_api.go
   - internal/provider/types/source_alpha_vantage.go
   - internal/provider/types/source_amazon_ads.go
   - internal/provider/types/source_amazon_seller_partner.go
@@ -4380,6 +4476,7 @@ generatedFiles:
   - internal/provider/types/source_bing_ads.go
   - internal/provider/types/source_bitly.go
   - internal/provider/types/source_blogger.go
+  - internal/provider/types/source_boldsign.go
   - internal/provider/types/source_box.go
   - internal/provider/types/source_braintree.go
   - internal/provider/types/source_braze.go
@@ -4411,6 +4508,7 @@ generatedFiles:
   - internal/provider/types/source_cin7.go
   - internal/provider/types/source_circa.go
   - internal/provider/types/source_circleci.go
+  - internal/provider/types/source_cisco_meraki.go
   - internal/provider/types/source_clarif_ai.go
   - internal/provider/types/source_clazar.go
   - internal/provider/types/source_clickhouse.go
@@ -4440,18 +4538,22 @@ generatedFiles:
   - internal/provider/types/source_dbt.go
   - internal/provider/types/source_delighted.go
   - internal/provider/types/source_deputy.go
+  - internal/provider/types/source_ding_connect.go
   - internal/provider/types/source_dixa.go
   - internal/provider/types/source_dockerhub.go
+  - internal/provider/types/source_docuseal.go
   - internal/provider/types/source_dremio.go
   - internal/provider/types/source_drift.go
   - internal/provider/types/source_drift_authorization_method.go
   - internal/provider/types/source_drift_o_auth20.go
   - internal/provider/types/source_drip.go
   - internal/provider/types/source_dropbox_sign.go
+  - internal/provider/types/source_dwolla.go
   - internal/provider/types/source_dynamodb.go
   - internal/provider/types/source_e_conomic.go
   - internal/provider/types/source_easypost.go
   - internal/provider/types/source_easypromos.go
+  - internal/provider/types/source_ebay_finance.go
   - internal/provider/types/source_elasticemail.go
   - internal/provider/types/source_emailoctopus.go
   - internal/provider/types/source_employment_hero.go
@@ -4507,6 +4609,7 @@ generatedFiles:
   - internal/provider/types/source_gcs_local.go
   - internal/provider/types/source_gcs_parquet_format.go
   - internal/provider/types/source_gcs_processing.go
+  - internal/provider/types/source_gcs_unstructured_document_format.go
   - internal/provider/types/source_gcs_user_provided.go
   - internal/provider/types/source_getgist.go
   - internal/provider/types/source_getlago.go
@@ -4522,6 +4625,7 @@ generatedFiles:
   - internal/provider/types/source_gnews.go
   - internal/provider/types/source_gocardless.go
   - internal/provider/types/source_goldcast.go
+  - internal/provider/types/source_gologin.go
   - internal/provider/types/source_gong.go
   - internal/provider/types/source_google_ads.go
   - internal/provider/types/source_google_analytics_data_api.go
@@ -4832,17 +4936,21 @@ generatedFiles:
   - internal/provider/types/source_n8n.go
   - internal/provider/types/source_nasa.go
   - internal/provider/types/source_navan.go
+  - internal/provider/types/source_nebius_ai.go
   - internal/provider/types/source_netsuite.go
   - internal/provider/types/source_netsuite_enterprise.go
+  - internal/provider/types/source_netsuite_enterprise_authentication_method.go
   - internal/provider/types/source_netsuite_enterprise_no_tunnel.go
   - internal/provider/types/source_netsuite_enterprise_password_authentication.go
   - internal/provider/types/source_netsuite_enterprise_scan_changes_with_user_defined_cursor.go
+  - internal/provider/types/source_netsuite_enterprise_schemas_password_authentication.go
   - internal/provider/types/source_netsuite_enterprise_ssh_key_authentication.go
   - internal/provider/types/source_netsuite_enterprise_ssh_tunnel_method.go
   - internal/provider/types/source_netsuite_enterprise_update_method.go
   - internal/provider/types/source_news_api.go
   - internal/provider/types/source_newsdata.go
   - internal/provider/types/source_newsdata_io.go
+  - internal/provider/types/source_ninjaone_rmm.go
   - internal/provider/types/source_nocrm.go
   - internal/provider/types/source_northpass_lms.go
   - internal/provider/types/source_notion.go
@@ -4897,11 +5005,13 @@ generatedFiles:
   - internal/provider/types/source_outreach.go
   - internal/provider/types/source_oveit.go
   - internal/provider/types/source_pabbly_subscriptions_billing.go
+  - internal/provider/types/source_paddle.go
   - internal/provider/types/source_pagerduty.go
   - internal/provider/types/source_pandadoc.go
   - internal/provider/types/source_paperform.go
   - internal/provider/types/source_papersign.go
   - internal/provider/types/source_pardot.go
+  - internal/provider/types/source_partnerize.go
   - internal/provider/types/source_partnerstack.go
   - internal/provider/types/source_payfit.go
   - internal/provider/types/source_paypal_transaction.go
@@ -4911,6 +5021,7 @@ generatedFiles:
   - internal/provider/types/source_persistiq.go
   - internal/provider/types/source_persona.go
   - internal/provider/types/source_pexels_api.go
+  - internal/provider/types/source_phyllo.go
   - internal/provider/types/source_picqer.go
   - internal/provider/types/source_pingdom.go
   - internal/provider/types/source_pinterest.go
@@ -4924,6 +5035,7 @@ generatedFiles:
   - internal/provider/types/source_pocket.go
   - internal/provider/types/source_pokeapi.go
   - internal/provider/types/source_polygon_stock_api.go
+  - internal/provider/types/source_poplar.go
   - internal/provider/types/source_postgres.go
   - internal/provider/types/source_postgres_no_tunnel.go
   - internal/provider/types/source_postgres_password_authentication.go
@@ -5049,7 +5161,9 @@ generatedFiles:
   - internal/provider/types/source_shopify_o_auth20.go
   - internal/provider/types/source_shortcut.go
   - internal/provider/types/source_shortio.go
+  - internal/provider/types/source_shutterstock.go
   - internal/provider/types/source_sigma_computing.go
+  - internal/provider/types/source_signnow.go
   - internal/provider/types/source_simfin.go
   - internal/provider/types/source_simplecast.go
   - internal/provider/types/source_simplesat.go
@@ -5156,9 +5270,11 @@ generatedFiles:
   - internal/provider/types/source_yotpo.go
   - internal/provider/types/source_you_need_a_budget_ynab.go
   - internal/provider/types/source_younium.go
+  - internal/provider/types/source_yousign.go
   - internal/provider/types/source_youtube_analytics.go
   - internal/provider/types/source_youtube_data.go
   - internal/provider/types/source_zapier_supported_storage.go
+  - internal/provider/types/source_zapsign.go
   - internal/provider/types/source_zendesk_chat.go
   - internal/provider/types/source_zendesk_chat_access_token.go
   - internal/provider/types/source_zendesk_chat_authorization_method.go
@@ -5196,7 +5312,6 @@ generatedFiles:
   - internal/provider/types/ssl_method.go
   - internal/provider/types/ssl_modes.go
   - internal/provider/types/standalone_mongo_db_instance.go
-  - internal/provider/types/storage_config.go
   - internal/provider/types/storage_provider.go
   - internal/provider/types/stream_configuration.go
   - internal/provider/types/stream_configurations.go
@@ -5212,6 +5327,7 @@ generatedFiles:
   - internal/provider/types/throttled.go
   - internal/provider/types/tls_encrypted_verify_certificate.go
   - internal/provider/types/to_value.go
+  - internal/provider/types/token_based_authentication.go
   - internal/provider/types/unencrypted.go
   - internal/provider/types/unstructured_document_format.go
   - internal/provider/types/update_method.go
@@ -5272,7 +5388,6 @@ generatedFiles:
   - internal/sdk/models/operations/createdestinationfirestore.go
   - internal/sdk/models/operations/createdestinationgcs.go
   - internal/sdk/models/operations/createdestinationgooglesheets.go
-  - internal/sdk/models/operations/createdestinationiceberg.go
   - internal/sdk/models/operations/createdestinationmilvus.go
   - internal/sdk/models/operations/createdestinationmongodb.go
   - internal/sdk/models/operations/createdestinationmotherduck.go
@@ -5289,7 +5404,6 @@ generatedFiles:
   - internal/sdk/models/operations/createdestinationredshift.go
   - internal/sdk/models/operations/createdestinations3.go
   - internal/sdk/models/operations/createdestinations3datalake.go
-  - internal/sdk/models/operations/createdestinations3glue.go
   - internal/sdk/models/operations/createdestinationsftpjson.go
   - internal/sdk/models/operations/createdestinationsnowflake.go
   - internal/sdk/models/operations/createdestinationsnowflakecortex.go
@@ -5312,6 +5426,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceairtable.go
   - internal/sdk/models/operations/createsourceakeneo.go
   - internal/sdk/models/operations/createsourcealgolia.go
+  - internal/sdk/models/operations/createsourcealpacabrokerapi.go
   - internal/sdk/models/operations/createsourcealphavantage.go
   - internal/sdk/models/operations/createsourceamazonads.go
   - internal/sdk/models/operations/createsourceamazonsellerpartner.go
@@ -5338,6 +5453,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcebingads.go
   - internal/sdk/models/operations/createsourcebitly.go
   - internal/sdk/models/operations/createsourceblogger.go
+  - internal/sdk/models/operations/createsourceboldsign.go
   - internal/sdk/models/operations/createsourcebox.go
   - internal/sdk/models/operations/createsourcebraintree.go
   - internal/sdk/models/operations/createsourcebraze.go
@@ -5369,6 +5485,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcecin7.go
   - internal/sdk/models/operations/createsourcecirca.go
   - internal/sdk/models/operations/createsourcecircleci.go
+  - internal/sdk/models/operations/createsourceciscomeraki.go
   - internal/sdk/models/operations/createsourceclarifai.go
   - internal/sdk/models/operations/createsourceclazar.go
   - internal/sdk/models/operations/createsourceclickhouse.go
@@ -5399,15 +5516,19 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcedbt.go
   - internal/sdk/models/operations/createsourcedelighted.go
   - internal/sdk/models/operations/createsourcedeputy.go
+  - internal/sdk/models/operations/createsourcedingconnect.go
   - internal/sdk/models/operations/createsourcedixa.go
   - internal/sdk/models/operations/createsourcedockerhub.go
+  - internal/sdk/models/operations/createsourcedocuseal.go
   - internal/sdk/models/operations/createsourcedremio.go
   - internal/sdk/models/operations/createsourcedrift.go
   - internal/sdk/models/operations/createsourcedrip.go
   - internal/sdk/models/operations/createsourcedropboxsign.go
+  - internal/sdk/models/operations/createsourcedwolla.go
   - internal/sdk/models/operations/createsourcedynamodb.go
   - internal/sdk/models/operations/createsourceeasypost.go
   - internal/sdk/models/operations/createsourceeasypromos.go
+  - internal/sdk/models/operations/createsourceebayfinance.go
   - internal/sdk/models/operations/createsourceeconomic.go
   - internal/sdk/models/operations/createsourceelasticemail.go
   - internal/sdk/models/operations/createsourceemailoctopus.go
@@ -5461,6 +5582,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcegnews.go
   - internal/sdk/models/operations/createsourcegocardless.go
   - internal/sdk/models/operations/createsourcegoldcast.go
+  - internal/sdk/models/operations/createsourcegologin.go
   - internal/sdk/models/operations/createsourcegong.go
   - internal/sdk/models/operations/createsourcegoogleads.go
   - internal/sdk/models/operations/createsourcegoogleanalyticsdataapi.go
@@ -5566,11 +5688,13 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcen8n.go
   - internal/sdk/models/operations/createsourcenasa.go
   - internal/sdk/models/operations/createsourcenavan.go
+  - internal/sdk/models/operations/createsourcenebiusai.go
   - internal/sdk/models/operations/createsourcenetsuite.go
   - internal/sdk/models/operations/createsourcenetsuiteenterprise.go
   - internal/sdk/models/operations/createsourcenewsapi.go
   - internal/sdk/models/operations/createsourcenewsdata.go
   - internal/sdk/models/operations/createsourcenewsdataio.go
+  - internal/sdk/models/operations/createsourceninjaonermm.go
   - internal/sdk/models/operations/createsourcenocrm.go
   - internal/sdk/models/operations/createsourcenorthpasslms.go
   - internal/sdk/models/operations/createsourcenotion.go
@@ -5597,11 +5721,13 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceoutreach.go
   - internal/sdk/models/operations/createsourceoveit.go
   - internal/sdk/models/operations/createsourcepabblysubscriptionsbilling.go
+  - internal/sdk/models/operations/createsourcepaddle.go
   - internal/sdk/models/operations/createsourcepagerduty.go
   - internal/sdk/models/operations/createsourcepandadoc.go
   - internal/sdk/models/operations/createsourcepaperform.go
   - internal/sdk/models/operations/createsourcepapersign.go
   - internal/sdk/models/operations/createsourcepardot.go
+  - internal/sdk/models/operations/createsourcepartnerize.go
   - internal/sdk/models/operations/createsourcepartnerstack.go
   - internal/sdk/models/operations/createsourcepayfit.go
   - internal/sdk/models/operations/createsourcepaypaltransaction.go
@@ -5611,6 +5737,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcepersistiq.go
   - internal/sdk/models/operations/createsourcepersona.go
   - internal/sdk/models/operations/createsourcepexelsapi.go
+  - internal/sdk/models/operations/createsourcephyllo.go
   - internal/sdk/models/operations/createsourcepicqer.go
   - internal/sdk/models/operations/createsourcepingdom.go
   - internal/sdk/models/operations/createsourcepinterest.go
@@ -5624,6 +5751,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcepocket.go
   - internal/sdk/models/operations/createsourcepokeapi.go
   - internal/sdk/models/operations/createsourcepolygonstockapi.go
+  - internal/sdk/models/operations/createsourcepoplar.go
   - internal/sdk/models/operations/createsourcepostgres.go
   - internal/sdk/models/operations/createsourceposthog.go
   - internal/sdk/models/operations/createsourcepostmarkapp.go
@@ -5687,7 +5815,9 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceshopify.go
   - internal/sdk/models/operations/createsourceshortcut.go
   - internal/sdk/models/operations/createsourceshortio.go
+  - internal/sdk/models/operations/createsourceshutterstock.go
   - internal/sdk/models/operations/createsourcesigmacomputing.go
+  - internal/sdk/models/operations/createsourcesignnow.go
   - internal/sdk/models/operations/createsourcesimfin.go
   - internal/sdk/models/operations/createsourcesimplecast.go
   - internal/sdk/models/operations/createsourcesimplesat.go
@@ -5777,9 +5907,11 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceyotpo.go
   - internal/sdk/models/operations/createsourceyouneedabudgetynab.go
   - internal/sdk/models/operations/createsourceyounium.go
+  - internal/sdk/models/operations/createsourceyousign.go
   - internal/sdk/models/operations/createsourceyoutubeanalytics.go
   - internal/sdk/models/operations/createsourceyoutubedata.go
   - internal/sdk/models/operations/createsourcezapiersupportedstorage.go
+  - internal/sdk/models/operations/createsourcezapsign.go
   - internal/sdk/models/operations/createsourcezendeskchat.go
   - internal/sdk/models/operations/createsourcezendesksunshine.go
   - internal/sdk/models/operations/createsourcezendesksupport.go
@@ -5820,7 +5952,6 @@ generatedFiles:
   - internal/sdk/models/operations/deletedestinationfirestore.go
   - internal/sdk/models/operations/deletedestinationgcs.go
   - internal/sdk/models/operations/deletedestinationgooglesheets.go
-  - internal/sdk/models/operations/deletedestinationiceberg.go
   - internal/sdk/models/operations/deletedestinationmilvus.go
   - internal/sdk/models/operations/deletedestinationmongodb.go
   - internal/sdk/models/operations/deletedestinationmotherduck.go
@@ -5837,7 +5968,6 @@ generatedFiles:
   - internal/sdk/models/operations/deletedestinationredshift.go
   - internal/sdk/models/operations/deletedestinations3.go
   - internal/sdk/models/operations/deletedestinations3datalake.go
-  - internal/sdk/models/operations/deletedestinations3glue.go
   - internal/sdk/models/operations/deletedestinationsftpjson.go
   - internal/sdk/models/operations/deletedestinationsnowflake.go
   - internal/sdk/models/operations/deletedestinationsnowflakecortex.go
@@ -5858,6 +5988,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceairtable.go
   - internal/sdk/models/operations/deletesourceakeneo.go
   - internal/sdk/models/operations/deletesourcealgolia.go
+  - internal/sdk/models/operations/deletesourcealpacabrokerapi.go
   - internal/sdk/models/operations/deletesourcealphavantage.go
   - internal/sdk/models/operations/deletesourceamazonads.go
   - internal/sdk/models/operations/deletesourceamazonsellerpartner.go
@@ -5884,6 +6015,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcebingads.go
   - internal/sdk/models/operations/deletesourcebitly.go
   - internal/sdk/models/operations/deletesourceblogger.go
+  - internal/sdk/models/operations/deletesourceboldsign.go
   - internal/sdk/models/operations/deletesourcebox.go
   - internal/sdk/models/operations/deletesourcebraintree.go
   - internal/sdk/models/operations/deletesourcebraze.go
@@ -5915,6 +6047,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcecin7.go
   - internal/sdk/models/operations/deletesourcecirca.go
   - internal/sdk/models/operations/deletesourcecircleci.go
+  - internal/sdk/models/operations/deletesourceciscomeraki.go
   - internal/sdk/models/operations/deletesourceclarifai.go
   - internal/sdk/models/operations/deletesourceclazar.go
   - internal/sdk/models/operations/deletesourceclickhouse.go
@@ -5945,15 +6078,19 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcedbt.go
   - internal/sdk/models/operations/deletesourcedelighted.go
   - internal/sdk/models/operations/deletesourcedeputy.go
+  - internal/sdk/models/operations/deletesourcedingconnect.go
   - internal/sdk/models/operations/deletesourcedixa.go
   - internal/sdk/models/operations/deletesourcedockerhub.go
+  - internal/sdk/models/operations/deletesourcedocuseal.go
   - internal/sdk/models/operations/deletesourcedremio.go
   - internal/sdk/models/operations/deletesourcedrift.go
   - internal/sdk/models/operations/deletesourcedrip.go
   - internal/sdk/models/operations/deletesourcedropboxsign.go
+  - internal/sdk/models/operations/deletesourcedwolla.go
   - internal/sdk/models/operations/deletesourcedynamodb.go
   - internal/sdk/models/operations/deletesourceeasypost.go
   - internal/sdk/models/operations/deletesourceeasypromos.go
+  - internal/sdk/models/operations/deletesourceebayfinance.go
   - internal/sdk/models/operations/deletesourceeconomic.go
   - internal/sdk/models/operations/deletesourceelasticemail.go
   - internal/sdk/models/operations/deletesourceemailoctopus.go
@@ -6007,6 +6144,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcegnews.go
   - internal/sdk/models/operations/deletesourcegocardless.go
   - internal/sdk/models/operations/deletesourcegoldcast.go
+  - internal/sdk/models/operations/deletesourcegologin.go
   - internal/sdk/models/operations/deletesourcegong.go
   - internal/sdk/models/operations/deletesourcegoogleads.go
   - internal/sdk/models/operations/deletesourcegoogleanalyticsdataapi.go
@@ -6112,11 +6250,13 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcen8n.go
   - internal/sdk/models/operations/deletesourcenasa.go
   - internal/sdk/models/operations/deletesourcenavan.go
+  - internal/sdk/models/operations/deletesourcenebiusai.go
   - internal/sdk/models/operations/deletesourcenetsuite.go
   - internal/sdk/models/operations/deletesourcenetsuiteenterprise.go
   - internal/sdk/models/operations/deletesourcenewsapi.go
   - internal/sdk/models/operations/deletesourcenewsdata.go
   - internal/sdk/models/operations/deletesourcenewsdataio.go
+  - internal/sdk/models/operations/deletesourceninjaonermm.go
   - internal/sdk/models/operations/deletesourcenocrm.go
   - internal/sdk/models/operations/deletesourcenorthpasslms.go
   - internal/sdk/models/operations/deletesourcenotion.go
@@ -6143,11 +6283,13 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceoutreach.go
   - internal/sdk/models/operations/deletesourceoveit.go
   - internal/sdk/models/operations/deletesourcepabblysubscriptionsbilling.go
+  - internal/sdk/models/operations/deletesourcepaddle.go
   - internal/sdk/models/operations/deletesourcepagerduty.go
   - internal/sdk/models/operations/deletesourcepandadoc.go
   - internal/sdk/models/operations/deletesourcepaperform.go
   - internal/sdk/models/operations/deletesourcepapersign.go
   - internal/sdk/models/operations/deletesourcepardot.go
+  - internal/sdk/models/operations/deletesourcepartnerize.go
   - internal/sdk/models/operations/deletesourcepartnerstack.go
   - internal/sdk/models/operations/deletesourcepayfit.go
   - internal/sdk/models/operations/deletesourcepaypaltransaction.go
@@ -6157,6 +6299,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcepersistiq.go
   - internal/sdk/models/operations/deletesourcepersona.go
   - internal/sdk/models/operations/deletesourcepexelsapi.go
+  - internal/sdk/models/operations/deletesourcephyllo.go
   - internal/sdk/models/operations/deletesourcepicqer.go
   - internal/sdk/models/operations/deletesourcepingdom.go
   - internal/sdk/models/operations/deletesourcepinterest.go
@@ -6170,6 +6313,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcepocket.go
   - internal/sdk/models/operations/deletesourcepokeapi.go
   - internal/sdk/models/operations/deletesourcepolygonstockapi.go
+  - internal/sdk/models/operations/deletesourcepoplar.go
   - internal/sdk/models/operations/deletesourcepostgres.go
   - internal/sdk/models/operations/deletesourceposthog.go
   - internal/sdk/models/operations/deletesourcepostmarkapp.go
@@ -6233,7 +6377,9 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceshopify.go
   - internal/sdk/models/operations/deletesourceshortcut.go
   - internal/sdk/models/operations/deletesourceshortio.go
+  - internal/sdk/models/operations/deletesourceshutterstock.go
   - internal/sdk/models/operations/deletesourcesigmacomputing.go
+  - internal/sdk/models/operations/deletesourcesignnow.go
   - internal/sdk/models/operations/deletesourcesimfin.go
   - internal/sdk/models/operations/deletesourcesimplecast.go
   - internal/sdk/models/operations/deletesourcesimplesat.go
@@ -6323,9 +6469,11 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceyotpo.go
   - internal/sdk/models/operations/deletesourceyouneedabudgetynab.go
   - internal/sdk/models/operations/deletesourceyounium.go
+  - internal/sdk/models/operations/deletesourceyousign.go
   - internal/sdk/models/operations/deletesourceyoutubeanalytics.go
   - internal/sdk/models/operations/deletesourceyoutubedata.go
   - internal/sdk/models/operations/deletesourcezapiersupportedstorage.go
+  - internal/sdk/models/operations/deletesourcezapsign.go
   - internal/sdk/models/operations/deletesourcezendeskchat.go
   - internal/sdk/models/operations/deletesourcezendesksunshine.go
   - internal/sdk/models/operations/deletesourcezendesksupport.go
@@ -6366,7 +6514,6 @@ generatedFiles:
   - internal/sdk/models/operations/getdestinationfirestore.go
   - internal/sdk/models/operations/getdestinationgcs.go
   - internal/sdk/models/operations/getdestinationgooglesheets.go
-  - internal/sdk/models/operations/getdestinationiceberg.go
   - internal/sdk/models/operations/getdestinationmilvus.go
   - internal/sdk/models/operations/getdestinationmongodb.go
   - internal/sdk/models/operations/getdestinationmotherduck.go
@@ -6383,7 +6530,6 @@ generatedFiles:
   - internal/sdk/models/operations/getdestinationredshift.go
   - internal/sdk/models/operations/getdestinations3.go
   - internal/sdk/models/operations/getdestinations3datalake.go
-  - internal/sdk/models/operations/getdestinations3glue.go
   - internal/sdk/models/operations/getdestinationsftpjson.go
   - internal/sdk/models/operations/getdestinationsnowflake.go
   - internal/sdk/models/operations/getdestinationsnowflakecortex.go
@@ -6406,6 +6552,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceairtable.go
   - internal/sdk/models/operations/getsourceakeneo.go
   - internal/sdk/models/operations/getsourcealgolia.go
+  - internal/sdk/models/operations/getsourcealpacabrokerapi.go
   - internal/sdk/models/operations/getsourcealphavantage.go
   - internal/sdk/models/operations/getsourceamazonads.go
   - internal/sdk/models/operations/getsourceamazonsellerpartner.go
@@ -6432,6 +6579,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcebingads.go
   - internal/sdk/models/operations/getsourcebitly.go
   - internal/sdk/models/operations/getsourceblogger.go
+  - internal/sdk/models/operations/getsourceboldsign.go
   - internal/sdk/models/operations/getsourcebox.go
   - internal/sdk/models/operations/getsourcebraintree.go
   - internal/sdk/models/operations/getsourcebraze.go
@@ -6463,6 +6611,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcecin7.go
   - internal/sdk/models/operations/getsourcecirca.go
   - internal/sdk/models/operations/getsourcecircleci.go
+  - internal/sdk/models/operations/getsourceciscomeraki.go
   - internal/sdk/models/operations/getsourceclarifai.go
   - internal/sdk/models/operations/getsourceclazar.go
   - internal/sdk/models/operations/getsourceclickhouse.go
@@ -6493,15 +6642,19 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcedbt.go
   - internal/sdk/models/operations/getsourcedelighted.go
   - internal/sdk/models/operations/getsourcedeputy.go
+  - internal/sdk/models/operations/getsourcedingconnect.go
   - internal/sdk/models/operations/getsourcedixa.go
   - internal/sdk/models/operations/getsourcedockerhub.go
+  - internal/sdk/models/operations/getsourcedocuseal.go
   - internal/sdk/models/operations/getsourcedremio.go
   - internal/sdk/models/operations/getsourcedrift.go
   - internal/sdk/models/operations/getsourcedrip.go
   - internal/sdk/models/operations/getsourcedropboxsign.go
+  - internal/sdk/models/operations/getsourcedwolla.go
   - internal/sdk/models/operations/getsourcedynamodb.go
   - internal/sdk/models/operations/getsourceeasypost.go
   - internal/sdk/models/operations/getsourceeasypromos.go
+  - internal/sdk/models/operations/getsourceebayfinance.go
   - internal/sdk/models/operations/getsourceeconomic.go
   - internal/sdk/models/operations/getsourceelasticemail.go
   - internal/sdk/models/operations/getsourceemailoctopus.go
@@ -6555,6 +6708,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcegnews.go
   - internal/sdk/models/operations/getsourcegocardless.go
   - internal/sdk/models/operations/getsourcegoldcast.go
+  - internal/sdk/models/operations/getsourcegologin.go
   - internal/sdk/models/operations/getsourcegong.go
   - internal/sdk/models/operations/getsourcegoogleads.go
   - internal/sdk/models/operations/getsourcegoogleanalyticsdataapi.go
@@ -6660,11 +6814,13 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcen8n.go
   - internal/sdk/models/operations/getsourcenasa.go
   - internal/sdk/models/operations/getsourcenavan.go
+  - internal/sdk/models/operations/getsourcenebiusai.go
   - internal/sdk/models/operations/getsourcenetsuite.go
   - internal/sdk/models/operations/getsourcenetsuiteenterprise.go
   - internal/sdk/models/operations/getsourcenewsapi.go
   - internal/sdk/models/operations/getsourcenewsdata.go
   - internal/sdk/models/operations/getsourcenewsdataio.go
+  - internal/sdk/models/operations/getsourceninjaonermm.go
   - internal/sdk/models/operations/getsourcenocrm.go
   - internal/sdk/models/operations/getsourcenorthpasslms.go
   - internal/sdk/models/operations/getsourcenotion.go
@@ -6691,11 +6847,13 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceoutreach.go
   - internal/sdk/models/operations/getsourceoveit.go
   - internal/sdk/models/operations/getsourcepabblysubscriptionsbilling.go
+  - internal/sdk/models/operations/getsourcepaddle.go
   - internal/sdk/models/operations/getsourcepagerduty.go
   - internal/sdk/models/operations/getsourcepandadoc.go
   - internal/sdk/models/operations/getsourcepaperform.go
   - internal/sdk/models/operations/getsourcepapersign.go
   - internal/sdk/models/operations/getsourcepardot.go
+  - internal/sdk/models/operations/getsourcepartnerize.go
   - internal/sdk/models/operations/getsourcepartnerstack.go
   - internal/sdk/models/operations/getsourcepayfit.go
   - internal/sdk/models/operations/getsourcepaypaltransaction.go
@@ -6705,6 +6863,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcepersistiq.go
   - internal/sdk/models/operations/getsourcepersona.go
   - internal/sdk/models/operations/getsourcepexelsapi.go
+  - internal/sdk/models/operations/getsourcephyllo.go
   - internal/sdk/models/operations/getsourcepicqer.go
   - internal/sdk/models/operations/getsourcepingdom.go
   - internal/sdk/models/operations/getsourcepinterest.go
@@ -6718,6 +6877,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcepocket.go
   - internal/sdk/models/operations/getsourcepokeapi.go
   - internal/sdk/models/operations/getsourcepolygonstockapi.go
+  - internal/sdk/models/operations/getsourcepoplar.go
   - internal/sdk/models/operations/getsourcepostgres.go
   - internal/sdk/models/operations/getsourceposthog.go
   - internal/sdk/models/operations/getsourcepostmarkapp.go
@@ -6781,7 +6941,9 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceshopify.go
   - internal/sdk/models/operations/getsourceshortcut.go
   - internal/sdk/models/operations/getsourceshortio.go
+  - internal/sdk/models/operations/getsourceshutterstock.go
   - internal/sdk/models/operations/getsourcesigmacomputing.go
+  - internal/sdk/models/operations/getsourcesignnow.go
   - internal/sdk/models/operations/getsourcesimfin.go
   - internal/sdk/models/operations/getsourcesimplecast.go
   - internal/sdk/models/operations/getsourcesimplesat.go
@@ -6871,9 +7033,11 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceyotpo.go
   - internal/sdk/models/operations/getsourceyouneedabudgetynab.go
   - internal/sdk/models/operations/getsourceyounium.go
+  - internal/sdk/models/operations/getsourceyousign.go
   - internal/sdk/models/operations/getsourceyoutubeanalytics.go
   - internal/sdk/models/operations/getsourceyoutubedata.go
   - internal/sdk/models/operations/getsourcezapiersupportedstorage.go
+  - internal/sdk/models/operations/getsourcezapsign.go
   - internal/sdk/models/operations/getsourcezendeskchat.go
   - internal/sdk/models/operations/getsourcezendesksunshine.go
   - internal/sdk/models/operations/getsourcezendesksupport.go
@@ -6928,7 +7092,6 @@ generatedFiles:
   - internal/sdk/models/operations/putdestinationfirestore.go
   - internal/sdk/models/operations/putdestinationgcs.go
   - internal/sdk/models/operations/putdestinationgooglesheets.go
-  - internal/sdk/models/operations/putdestinationiceberg.go
   - internal/sdk/models/operations/putdestinationmilvus.go
   - internal/sdk/models/operations/putdestinationmongodb.go
   - internal/sdk/models/operations/putdestinationmotherduck.go
@@ -6945,7 +7108,6 @@ generatedFiles:
   - internal/sdk/models/operations/putdestinationredshift.go
   - internal/sdk/models/operations/putdestinations3.go
   - internal/sdk/models/operations/putdestinations3datalake.go
-  - internal/sdk/models/operations/putdestinations3glue.go
   - internal/sdk/models/operations/putdestinationsftpjson.go
   - internal/sdk/models/operations/putdestinationsnowflake.go
   - internal/sdk/models/operations/putdestinationsnowflakecortex.go
@@ -6965,6 +7127,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceairtable.go
   - internal/sdk/models/operations/putsourceakeneo.go
   - internal/sdk/models/operations/putsourcealgolia.go
+  - internal/sdk/models/operations/putsourcealpacabrokerapi.go
   - internal/sdk/models/operations/putsourcealphavantage.go
   - internal/sdk/models/operations/putsourceamazonads.go
   - internal/sdk/models/operations/putsourceamazonsellerpartner.go
@@ -6991,6 +7154,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcebingads.go
   - internal/sdk/models/operations/putsourcebitly.go
   - internal/sdk/models/operations/putsourceblogger.go
+  - internal/sdk/models/operations/putsourceboldsign.go
   - internal/sdk/models/operations/putsourcebox.go
   - internal/sdk/models/operations/putsourcebraintree.go
   - internal/sdk/models/operations/putsourcebraze.go
@@ -7022,6 +7186,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcecin7.go
   - internal/sdk/models/operations/putsourcecirca.go
   - internal/sdk/models/operations/putsourcecircleci.go
+  - internal/sdk/models/operations/putsourceciscomeraki.go
   - internal/sdk/models/operations/putsourceclarifai.go
   - internal/sdk/models/operations/putsourceclazar.go
   - internal/sdk/models/operations/putsourceclickhouse.go
@@ -7052,15 +7217,19 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcedbt.go
   - internal/sdk/models/operations/putsourcedelighted.go
   - internal/sdk/models/operations/putsourcedeputy.go
+  - internal/sdk/models/operations/putsourcedingconnect.go
   - internal/sdk/models/operations/putsourcedixa.go
   - internal/sdk/models/operations/putsourcedockerhub.go
+  - internal/sdk/models/operations/putsourcedocuseal.go
   - internal/sdk/models/operations/putsourcedremio.go
   - internal/sdk/models/operations/putsourcedrift.go
   - internal/sdk/models/operations/putsourcedrip.go
   - internal/sdk/models/operations/putsourcedropboxsign.go
+  - internal/sdk/models/operations/putsourcedwolla.go
   - internal/sdk/models/operations/putsourcedynamodb.go
   - internal/sdk/models/operations/putsourceeasypost.go
   - internal/sdk/models/operations/putsourceeasypromos.go
+  - internal/sdk/models/operations/putsourceebayfinance.go
   - internal/sdk/models/operations/putsourceeconomic.go
   - internal/sdk/models/operations/putsourceelasticemail.go
   - internal/sdk/models/operations/putsourceemailoctopus.go
@@ -7114,6 +7283,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcegnews.go
   - internal/sdk/models/operations/putsourcegocardless.go
   - internal/sdk/models/operations/putsourcegoldcast.go
+  - internal/sdk/models/operations/putsourcegologin.go
   - internal/sdk/models/operations/putsourcegong.go
   - internal/sdk/models/operations/putsourcegoogleads.go
   - internal/sdk/models/operations/putsourcegoogleanalyticsdataapi.go
@@ -7219,11 +7389,13 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcen8n.go
   - internal/sdk/models/operations/putsourcenasa.go
   - internal/sdk/models/operations/putsourcenavan.go
+  - internal/sdk/models/operations/putsourcenebiusai.go
   - internal/sdk/models/operations/putsourcenetsuite.go
   - internal/sdk/models/operations/putsourcenetsuiteenterprise.go
   - internal/sdk/models/operations/putsourcenewsapi.go
   - internal/sdk/models/operations/putsourcenewsdata.go
   - internal/sdk/models/operations/putsourcenewsdataio.go
+  - internal/sdk/models/operations/putsourceninjaonermm.go
   - internal/sdk/models/operations/putsourcenocrm.go
   - internal/sdk/models/operations/putsourcenorthpasslms.go
   - internal/sdk/models/operations/putsourcenotion.go
@@ -7250,11 +7422,13 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceoutreach.go
   - internal/sdk/models/operations/putsourceoveit.go
   - internal/sdk/models/operations/putsourcepabblysubscriptionsbilling.go
+  - internal/sdk/models/operations/putsourcepaddle.go
   - internal/sdk/models/operations/putsourcepagerduty.go
   - internal/sdk/models/operations/putsourcepandadoc.go
   - internal/sdk/models/operations/putsourcepaperform.go
   - internal/sdk/models/operations/putsourcepapersign.go
   - internal/sdk/models/operations/putsourcepardot.go
+  - internal/sdk/models/operations/putsourcepartnerize.go
   - internal/sdk/models/operations/putsourcepartnerstack.go
   - internal/sdk/models/operations/putsourcepayfit.go
   - internal/sdk/models/operations/putsourcepaypaltransaction.go
@@ -7264,6 +7438,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcepersistiq.go
   - internal/sdk/models/operations/putsourcepersona.go
   - internal/sdk/models/operations/putsourcepexelsapi.go
+  - internal/sdk/models/operations/putsourcephyllo.go
   - internal/sdk/models/operations/putsourcepicqer.go
   - internal/sdk/models/operations/putsourcepingdom.go
   - internal/sdk/models/operations/putsourcepinterest.go
@@ -7277,6 +7452,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcepocket.go
   - internal/sdk/models/operations/putsourcepokeapi.go
   - internal/sdk/models/operations/putsourcepolygonstockapi.go
+  - internal/sdk/models/operations/putsourcepoplar.go
   - internal/sdk/models/operations/putsourcepostgres.go
   - internal/sdk/models/operations/putsourceposthog.go
   - internal/sdk/models/operations/putsourcepostmarkapp.go
@@ -7340,7 +7516,9 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceshopify.go
   - internal/sdk/models/operations/putsourceshortcut.go
   - internal/sdk/models/operations/putsourceshortio.go
+  - internal/sdk/models/operations/putsourceshutterstock.go
   - internal/sdk/models/operations/putsourcesigmacomputing.go
+  - internal/sdk/models/operations/putsourcesignnow.go
   - internal/sdk/models/operations/putsourcesimfin.go
   - internal/sdk/models/operations/putsourcesimplecast.go
   - internal/sdk/models/operations/putsourcesimplesat.go
@@ -7430,9 +7608,11 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceyotpo.go
   - internal/sdk/models/operations/putsourceyouneedabudgetynab.go
   - internal/sdk/models/operations/putsourceyounium.go
+  - internal/sdk/models/operations/putsourceyousign.go
   - internal/sdk/models/operations/putsourceyoutubeanalytics.go
   - internal/sdk/models/operations/putsourceyoutubedata.go
   - internal/sdk/models/operations/putsourcezapiersupportedstorage.go
+  - internal/sdk/models/operations/putsourcezapsign.go
   - internal/sdk/models/operations/putsourcezendeskchat.go
   - internal/sdk/models/operations/putsourcezendesksunshine.go
   - internal/sdk/models/operations/putsourcezendesksupport.go
@@ -7535,10 +7715,6 @@ generatedFiles:
   - internal/sdk/models/shared/destinationgooglesheetscreaterequest.go
   - internal/sdk/models/shared/destinationgooglesheetsputrequest.go
   - internal/sdk/models/shared/destinationgooglesheetsupdate.go
-  - internal/sdk/models/shared/destinationiceberg.go
-  - internal/sdk/models/shared/destinationicebergcreaterequest.go
-  - internal/sdk/models/shared/destinationicebergputrequest.go
-  - internal/sdk/models/shared/destinationicebergupdate.go
   - internal/sdk/models/shared/destinationmilvus.go
   - internal/sdk/models/shared/destinationmilvuscreaterequest.go
   - internal/sdk/models/shared/destinationmilvusputrequest.go
@@ -7604,10 +7780,6 @@ generatedFiles:
   - internal/sdk/models/shared/destinations3datalakecreaterequest.go
   - internal/sdk/models/shared/destinations3datalakeputrequest.go
   - internal/sdk/models/shared/destinations3datalakeupdate.go
-  - internal/sdk/models/shared/destinations3glue.go
-  - internal/sdk/models/shared/destinations3gluecreaterequest.go
-  - internal/sdk/models/shared/destinations3glueputrequest.go
-  - internal/sdk/models/shared/destinations3glueupdate.go
   - internal/sdk/models/shared/destinations3putrequest.go
   - internal/sdk/models/shared/destinations3update.go
   - internal/sdk/models/shared/destinationsftpjson.go
@@ -7719,6 +7891,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcealgoliacreaterequest.go
   - internal/sdk/models/shared/sourcealgoliaputrequest.go
   - internal/sdk/models/shared/sourcealgoliaupdate.go
+  - internal/sdk/models/shared/sourcealpacabrokerapi.go
+  - internal/sdk/models/shared/sourcealpacabrokerapicreaterequest.go
+  - internal/sdk/models/shared/sourcealpacabrokerapiputrequest.go
+  - internal/sdk/models/shared/sourcealpacabrokerapiupdate.go
   - internal/sdk/models/shared/sourcealphavantage.go
   - internal/sdk/models/shared/sourcealphavantagecreaterequest.go
   - internal/sdk/models/shared/sourcealphavantageputrequest.go
@@ -7823,6 +7999,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcebloggercreaterequest.go
   - internal/sdk/models/shared/sourcebloggerputrequest.go
   - internal/sdk/models/shared/sourcebloggerupdate.go
+  - internal/sdk/models/shared/sourceboldsign.go
+  - internal/sdk/models/shared/sourceboldsigncreaterequest.go
+  - internal/sdk/models/shared/sourceboldsignputrequest.go
+  - internal/sdk/models/shared/sourceboldsignupdate.go
   - internal/sdk/models/shared/sourcebox.go
   - internal/sdk/models/shared/sourceboxcreaterequest.go
   - internal/sdk/models/shared/sourceboxputrequest.go
@@ -7947,6 +8127,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcecirclecicreaterequest.go
   - internal/sdk/models/shared/sourcecircleciputrequest.go
   - internal/sdk/models/shared/sourcecircleciupdate.go
+  - internal/sdk/models/shared/sourceciscomeraki.go
+  - internal/sdk/models/shared/sourceciscomerakicreaterequest.go
+  - internal/sdk/models/shared/sourceciscomerakiputrequest.go
+  - internal/sdk/models/shared/sourceciscomerakiupdate.go
   - internal/sdk/models/shared/sourceclarifai.go
   - internal/sdk/models/shared/sourceclarifaicreaterequest.go
   - internal/sdk/models/shared/sourceclarifaiputrequest.go
@@ -8066,6 +8250,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcedeputycreaterequest.go
   - internal/sdk/models/shared/sourcedeputyputrequest.go
   - internal/sdk/models/shared/sourcedeputyupdate.go
+  - internal/sdk/models/shared/sourcedingconnect.go
+  - internal/sdk/models/shared/sourcedingconnectcreaterequest.go
+  - internal/sdk/models/shared/sourcedingconnectputrequest.go
+  - internal/sdk/models/shared/sourcedingconnectupdate.go
   - internal/sdk/models/shared/sourcedixa.go
   - internal/sdk/models/shared/sourcedixacreaterequest.go
   - internal/sdk/models/shared/sourcedixaputrequest.go
@@ -8074,6 +8262,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcedockerhubcreaterequest.go
   - internal/sdk/models/shared/sourcedockerhubputrequest.go
   - internal/sdk/models/shared/sourcedockerhubupdate.go
+  - internal/sdk/models/shared/sourcedocuseal.go
+  - internal/sdk/models/shared/sourcedocusealcreaterequest.go
+  - internal/sdk/models/shared/sourcedocusealputrequest.go
+  - internal/sdk/models/shared/sourcedocusealupdate.go
   - internal/sdk/models/shared/sourcedremio.go
   - internal/sdk/models/shared/sourcedremiocreaterequest.go
   - internal/sdk/models/shared/sourcedremioputrequest.go
@@ -8090,6 +8282,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcedropboxsigncreaterequest.go
   - internal/sdk/models/shared/sourcedropboxsignputrequest.go
   - internal/sdk/models/shared/sourcedropboxsignupdate.go
+  - internal/sdk/models/shared/sourcedwolla.go
+  - internal/sdk/models/shared/sourcedwollacreaterequest.go
+  - internal/sdk/models/shared/sourcedwollaputrequest.go
+  - internal/sdk/models/shared/sourcedwollaupdate.go
   - internal/sdk/models/shared/sourcedynamodb.go
   - internal/sdk/models/shared/sourcedynamodbcreaterequest.go
   - internal/sdk/models/shared/sourcedynamodbputrequest.go
@@ -8102,6 +8298,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourceeasypromoscreaterequest.go
   - internal/sdk/models/shared/sourceeasypromosputrequest.go
   - internal/sdk/models/shared/sourceeasypromosupdate.go
+  - internal/sdk/models/shared/sourceebayfinance.go
+  - internal/sdk/models/shared/sourceebayfinancecreaterequest.go
+  - internal/sdk/models/shared/sourceebayfinanceputrequest.go
+  - internal/sdk/models/shared/sourceebayfinanceupdate.go
   - internal/sdk/models/shared/sourceeconomic.go
   - internal/sdk/models/shared/sourceeconomiccreaterequest.go
   - internal/sdk/models/shared/sourceeconomicputrequest.go
@@ -8314,6 +8514,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcegoldcastcreaterequest.go
   - internal/sdk/models/shared/sourcegoldcastputrequest.go
   - internal/sdk/models/shared/sourcegoldcastupdate.go
+  - internal/sdk/models/shared/sourcegologin.go
+  - internal/sdk/models/shared/sourcegologincreaterequest.go
+  - internal/sdk/models/shared/sourcegologinputrequest.go
+  - internal/sdk/models/shared/sourcegologinupdate.go
   - internal/sdk/models/shared/sourcegong.go
   - internal/sdk/models/shared/sourcegongcreaterequest.go
   - internal/sdk/models/shared/sourcegongputrequest.go
@@ -8734,6 +8938,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcenavancreaterequest.go
   - internal/sdk/models/shared/sourcenavanputrequest.go
   - internal/sdk/models/shared/sourcenavanupdate.go
+  - internal/sdk/models/shared/sourcenebiusai.go
+  - internal/sdk/models/shared/sourcenebiusaicreaterequest.go
+  - internal/sdk/models/shared/sourcenebiusaiputrequest.go
+  - internal/sdk/models/shared/sourcenebiusaiupdate.go
   - internal/sdk/models/shared/sourcenetsuite.go
   - internal/sdk/models/shared/sourcenetsuitecreaterequest.go
   - internal/sdk/models/shared/sourcenetsuiteenterprise.go
@@ -8754,6 +8962,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcenewsdataioupdate.go
   - internal/sdk/models/shared/sourcenewsdataputrequest.go
   - internal/sdk/models/shared/sourcenewsdataupdate.go
+  - internal/sdk/models/shared/sourceninjaonermm.go
+  - internal/sdk/models/shared/sourceninjaonermmcreaterequest.go
+  - internal/sdk/models/shared/sourceninjaonermmputrequest.go
+  - internal/sdk/models/shared/sourceninjaonermmupdate.go
   - internal/sdk/models/shared/sourcenocrm.go
   - internal/sdk/models/shared/sourcenocrmcreaterequest.go
   - internal/sdk/models/shared/sourcenocrmputrequest.go
@@ -8858,6 +9070,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepabblysubscriptionsbillingcreaterequest.go
   - internal/sdk/models/shared/sourcepabblysubscriptionsbillingputrequest.go
   - internal/sdk/models/shared/sourcepabblysubscriptionsbillingupdate.go
+  - internal/sdk/models/shared/sourcepaddle.go
+  - internal/sdk/models/shared/sourcepaddlecreaterequest.go
+  - internal/sdk/models/shared/sourcepaddleputrequest.go
+  - internal/sdk/models/shared/sourcepaddleupdate.go
   - internal/sdk/models/shared/sourcepagerduty.go
   - internal/sdk/models/shared/sourcepagerdutycreaterequest.go
   - internal/sdk/models/shared/sourcepagerdutyputrequest.go
@@ -8878,6 +9094,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepardotcreaterequest.go
   - internal/sdk/models/shared/sourcepardotputrequest.go
   - internal/sdk/models/shared/sourcepardotupdate.go
+  - internal/sdk/models/shared/sourcepartnerize.go
+  - internal/sdk/models/shared/sourcepartnerizecreaterequest.go
+  - internal/sdk/models/shared/sourcepartnerizeputrequest.go
+  - internal/sdk/models/shared/sourcepartnerizeupdate.go
   - internal/sdk/models/shared/sourcepartnerstack.go
   - internal/sdk/models/shared/sourcepartnerstackcreaterequest.go
   - internal/sdk/models/shared/sourcepartnerstackputrequest.go
@@ -8915,6 +9135,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepexelsapicreaterequest.go
   - internal/sdk/models/shared/sourcepexelsapiputrequest.go
   - internal/sdk/models/shared/sourcepexelsapiupdate.go
+  - internal/sdk/models/shared/sourcephyllo.go
+  - internal/sdk/models/shared/sourcephyllocreaterequest.go
+  - internal/sdk/models/shared/sourcephylloputrequest.go
+  - internal/sdk/models/shared/sourcephylloupdate.go
   - internal/sdk/models/shared/sourcepicqer.go
   - internal/sdk/models/shared/sourcepicqercreaterequest.go
   - internal/sdk/models/shared/sourcepicqerputrequest.go
@@ -8967,6 +9191,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcepolygonstockapicreaterequest.go
   - internal/sdk/models/shared/sourcepolygonstockapiputrequest.go
   - internal/sdk/models/shared/sourcepolygonstockapiupdate.go
+  - internal/sdk/models/shared/sourcepoplar.go
+  - internal/sdk/models/shared/sourcepoplarcreaterequest.go
+  - internal/sdk/models/shared/sourcepoplarputrequest.go
+  - internal/sdk/models/shared/sourcepoplarupdate.go
   - internal/sdk/models/shared/sourcepostgres.go
   - internal/sdk/models/shared/sourcepostgrescreaterequest.go
   - internal/sdk/models/shared/sourcepostgresputrequest.go
@@ -9221,10 +9449,18 @@ generatedFiles:
   - internal/sdk/models/shared/sourceshortiocreaterequest.go
   - internal/sdk/models/shared/sourceshortioputrequest.go
   - internal/sdk/models/shared/sourceshortioupdate.go
+  - internal/sdk/models/shared/sourceshutterstock.go
+  - internal/sdk/models/shared/sourceshutterstockcreaterequest.go
+  - internal/sdk/models/shared/sourceshutterstockputrequest.go
+  - internal/sdk/models/shared/sourceshutterstockupdate.go
   - internal/sdk/models/shared/sourcesigmacomputing.go
   - internal/sdk/models/shared/sourcesigmacomputingcreaterequest.go
   - internal/sdk/models/shared/sourcesigmacomputingputrequest.go
   - internal/sdk/models/shared/sourcesigmacomputingupdate.go
+  - internal/sdk/models/shared/sourcesignnow.go
+  - internal/sdk/models/shared/sourcesignnowcreaterequest.go
+  - internal/sdk/models/shared/sourcesignnowputrequest.go
+  - internal/sdk/models/shared/sourcesignnowupdate.go
   - internal/sdk/models/shared/sourcesimfin.go
   - internal/sdk/models/shared/sourcesimfincreaterequest.go
   - internal/sdk/models/shared/sourcesimfinputrequest.go
@@ -9582,6 +9818,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourceyouniumcreaterequest.go
   - internal/sdk/models/shared/sourceyouniumputrequest.go
   - internal/sdk/models/shared/sourceyouniumupdate.go
+  - internal/sdk/models/shared/sourceyousign.go
+  - internal/sdk/models/shared/sourceyousigncreaterequest.go
+  - internal/sdk/models/shared/sourceyousignputrequest.go
+  - internal/sdk/models/shared/sourceyousignupdate.go
   - internal/sdk/models/shared/sourceyoutubeanalytics.go
   - internal/sdk/models/shared/sourceyoutubeanalyticscreaterequest.go
   - internal/sdk/models/shared/sourceyoutubeanalyticsputrequest.go
@@ -9594,6 +9834,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcezapiersupportedstoragecreaterequest.go
   - internal/sdk/models/shared/sourcezapiersupportedstorageputrequest.go
   - internal/sdk/models/shared/sourcezapiersupportedstorageupdate.go
+  - internal/sdk/models/shared/sourcezapsign.go
+  - internal/sdk/models/shared/sourcezapsigncreaterequest.go
+  - internal/sdk/models/shared/sourcezapsignputrequest.go
+  - internal/sdk/models/shared/sourcezapsignupdate.go
   - internal/sdk/models/shared/sourcezendeskchat.go
   - internal/sdk/models/shared/sourcezendeskchatcreaterequest.go
   - internal/sdk/models/shared/sourcezendeskchatputrequest.go
@@ -9802,6 +10046,7 @@ examples:
       parameters:
         path:
           sourceId: "<value>"
+        query: {}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "running", "sourceType": "postgres", "definitionId": "<value>", "workspaceId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "configuration": {"user": "charles"}, "createdAt": 378515}
@@ -15640,6 +15885,8 @@ examples:
           sourceId: "<value>"
   createSourceMonday:
     speakeasy-default-create-source-monday:
+      requestBody:
+        application/json: {"name": "<value>", "workspaceId": "aeae4c90-dfe2-4f2e-baf1-b3a056091dcd", "configuration": {"num_workers": 3}}
       responses:
         "200":
           application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 632988}
@@ -15656,6 +15903,8 @@ examples:
       parameters:
         path:
           sourceId: "<value>"
+      requestBody:
+        application/json: {"name": "<value>", "workspaceId": "96f0d33f-b8ac-42ee-84f0-43d8b91d6c61", "configuration": {"num_workers": 3}}
   deleteSourceMonday:
     speakeasy-default-delete-source-monday:
       parameters:
@@ -21174,6 +21423,7 @@ examples:
       parameters:
         path:
           destinationId: "<value>"
+        query: {}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "My Destination", "destinationType": "<value>", "definitionId": "<value>", "workspaceId": "744cc0ed-7f05-4949-9e60-2a814f90c035", "configuration": {"conversion_window_days": 14, "customer_id": "1234567890", "start_date": 1672531200000, "end_date": 1704067200000}, "createdAt": 525417}
@@ -23393,5 +23643,419 @@ examples:
       parameters:
         path:
           destinationId: "<value>"
+  createSourceAlpacaBrokerApi:
+    speakeasy-default-create-source-alpaca-broker-api:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 563395}
+  getSourceAlpacaBrokerApi:
+    speakeasy-default-get-source-alpaca-broker-api:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 5822}
+  putSourceAlpacaBrokerApi:
+    speakeasy-default-put-source-alpaca-broker-api:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceAlpacaBrokerApi:
+    speakeasy-default-delete-source-alpaca-broker-api:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceBoldsign:
+    speakeasy-default-create-source-boldsign:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 28122}
+  getSourceBoldsign:
+    speakeasy-default-get-source-boldsign:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 127365}
+  putSourceBoldsign:
+    speakeasy-default-put-source-boldsign:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceBoldsign:
+    speakeasy-default-delete-source-boldsign:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceCiscoMeraki:
+    speakeasy-default-create-source-cisco-meraki:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 736593}
+  getSourceCiscoMeraki:
+    speakeasy-default-get-source-cisco-meraki:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 680795}
+  putSourceCiscoMeraki:
+    speakeasy-default-put-source-cisco-meraki:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceCiscoMeraki:
+    speakeasy-default-delete-source-cisco-meraki:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceDingConnect:
+    speakeasy-default-create-source-ding-connect:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 315398}
+  getSourceDingConnect:
+    speakeasy-default-get-source-ding-connect:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 422443}
+  putSourceDingConnect:
+    speakeasy-default-put-source-ding-connect:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceDingConnect:
+    speakeasy-default-delete-source-ding-connect:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceDocuseal:
+    speakeasy-default-create-source-docuseal:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 168176}
+  getSourceDocuseal:
+    speakeasy-default-get-source-docuseal:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 118172}
+  putSourceDocuseal:
+    speakeasy-default-put-source-docuseal:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceDocuseal:
+    speakeasy-default-delete-source-docuseal:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceDwolla:
+    speakeasy-default-create-source-dwolla:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 799116}
+  getSourceDwolla:
+    speakeasy-default-get-source-dwolla:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 95541}
+  putSourceDwolla:
+    speakeasy-default-put-source-dwolla:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceDwolla:
+    speakeasy-default-delete-source-dwolla:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceEbayFinance:
+    speakeasy-default-create-source-ebay-finance:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 177636}
+  getSourceEbayFinance:
+    speakeasy-default-get-source-ebay-finance:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 4969}
+  putSourceEbayFinance:
+    speakeasy-default-put-source-ebay-finance:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceEbayFinance:
+    speakeasy-default-delete-source-ebay-finance:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceGologin:
+    speakeasy-default-create-source-gologin:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 845426}
+  getSourceGologin:
+    speakeasy-default-get-source-gologin:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 32056}
+  putSourceGologin:
+    speakeasy-default-put-source-gologin:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceGologin:
+    speakeasy-default-delete-source-gologin:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceNebiusAi:
+    speakeasy-default-create-source-nebius-ai:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 669599}
+  getSourceNebiusAi:
+    speakeasy-default-get-source-nebius-ai:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 684723}
+  putSourceNebiusAi:
+    speakeasy-default-put-source-nebius-ai:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceNebiusAi:
+    speakeasy-default-delete-source-nebius-ai:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceNinjaoneRmm:
+    speakeasy-default-create-source-ninjaone-rmm:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 957386}
+  getSourceNinjaoneRmm:
+    speakeasy-default-get-source-ninjaone-rmm:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 88070}
+  putSourceNinjaoneRmm:
+    speakeasy-default-put-source-ninjaone-rmm:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceNinjaoneRmm:
+    speakeasy-default-delete-source-ninjaone-rmm:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourcePaddle:
+    speakeasy-default-create-source-paddle:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 895076}
+  getSourcePaddle:
+    speakeasy-default-get-source-paddle:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 731502}
+  putSourcePaddle:
+    speakeasy-default-put-source-paddle:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourcePaddle:
+    speakeasy-default-delete-source-paddle:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourcePartnerize:
+    speakeasy-default-create-source-partnerize:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 591371}
+  getSourcePartnerize:
+    speakeasy-default-get-source-partnerize:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 862504}
+  putSourcePartnerize:
+    speakeasy-default-put-source-partnerize:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourcePartnerize:
+    speakeasy-default-delete-source-partnerize:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourcePhyllo:
+    speakeasy-default-create-source-phyllo:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 413351}
+  getSourcePhyllo:
+    speakeasy-default-get-source-phyllo:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 184315}
+  putSourcePhyllo:
+    speakeasy-default-put-source-phyllo:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourcePhyllo:
+    speakeasy-default-delete-source-phyllo:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourcePoplar:
+    speakeasy-default-create-source-poplar:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 848380}
+  getSourcePoplar:
+    speakeasy-default-get-source-poplar:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 986524}
+  putSourcePoplar:
+    speakeasy-default-put-source-poplar:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourcePoplar:
+    speakeasy-default-delete-source-poplar:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceShutterstock:
+    speakeasy-default-create-source-shutterstock:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 464798}
+  getSourceShutterstock:
+    speakeasy-default-get-source-shutterstock:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 808670}
+  putSourceShutterstock:
+    speakeasy-default-put-source-shutterstock:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceShutterstock:
+    speakeasy-default-delete-source-shutterstock:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceSignnow:
+    speakeasy-default-create-source-signnow:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 681551}
+  getSourceSignnow:
+    speakeasy-default-get-source-signnow:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 683930}
+  putSourceSignnow:
+    speakeasy-default-put-source-signnow:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceSignnow:
+    speakeasy-default-delete-source-signnow:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceYousign:
+    speakeasy-default-create-source-yousign:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 263112}
+  getSourceYousign:
+    speakeasy-default-get-source-yousign:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 476776}
+  putSourceYousign:
+    speakeasy-default-put-source-yousign:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceYousign:
+    speakeasy-default-delete-source-yousign:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceZapsign:
+    speakeasy-default-create-source-zapsign:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 72296}
+  getSourceZapsign:
+    speakeasy-default-get-source-zapsign:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 346613}
+  putSourceZapsign:
+    speakeasy-default-put-source-zapsign:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceZapsign:
+    speakeasy-default-delete-source-zapsign:
+      parameters:
+        path:
+          sourceId: "<value>"
 examplesVersion: 1.0.0
 generatedTests: {}

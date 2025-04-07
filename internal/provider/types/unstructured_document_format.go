@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type UnstructuredDocumentFormat struct {
-	Processing             *SourceGcsProcessing `tfsdk:"processing"`
-	SkipUnprocessableFiles types.Bool           `tfsdk:"skip_unprocessable_files"`
-	Strategy               types.String         `tfsdk:"strategy"`
+	Processing             *Processing  `tfsdk:"processing"`
+	SkipUnprocessableFiles types.Bool   `tfsdk:"skip_unprocessable_files"`
+	Strategy               types.String `tfsdk:"strategy"`
 }
