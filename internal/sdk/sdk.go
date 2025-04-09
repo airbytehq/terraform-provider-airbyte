@@ -70,17 +70,20 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // SDK - airbyte-api: Programmatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
-	Health        *Health
-	Jobs          *Jobs
-	Sources       *Sources
-	Destinations  *Destinations
-	Connections   *Connections
-	Streams       *Streams
-	Workspaces    *Workspaces
-	Permissions   *Permissions
-	Organizations *Organizations
-	Users         *Users
-	Tags          *Tags
+	Health                       *Health
+	Jobs                         *Jobs
+	DeclarativeSourceDefinitions *DeclarativeSourceDefinitions
+	SourceDefinitions            *SourceDefinitions
+	DestinationDefinitions       *DestinationDefinitions
+	Sources                      *Sources
+	Destinations                 *Destinations
+	Connections                  *Connections
+	Streams                      *Streams
+	Workspaces                   *Workspaces
+	Permissions                  *Permissions
+	Organizations                *Organizations
+	Users                        *Users
+	Tags                         *Tags
 
 	sdkConfiguration sdkConfiguration
 }
@@ -158,9 +161,9 @@ func New(opts ...SDKOption) *SDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.16.3",
+			SDKVersion:        "0.16.4",
 			GenVersion:        "2.562.3",
-			UserAgent:         "speakeasy-sdk/terraform 0.16.3 2.562.3 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
+			UserAgent:         "speakeasy-sdk/terraform 0.16.4 2.562.3 1.0.0 github.com/airbytehq/terraform-provider-airbyte/internal/sdk",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -183,6 +186,12 @@ func New(opts ...SDKOption) *SDK {
 	sdk.Health = newHealth(sdk.sdkConfiguration)
 
 	sdk.Jobs = newJobs(sdk.sdkConfiguration)
+
+	sdk.DeclarativeSourceDefinitions = newDeclarativeSourceDefinitions(sdk.sdkConfiguration)
+
+	sdk.SourceDefinitions = newSourceDefinitions(sdk.sdkConfiguration)
+
+	sdk.DestinationDefinitions = newDestinationDefinitions(sdk.sdkConfiguration)
 
 	sdk.Sources = newSources(sdk.sdkConfiguration)
 

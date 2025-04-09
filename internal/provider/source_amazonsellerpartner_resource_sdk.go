@@ -104,6 +104,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		waitToAvoidFatalErrors = nil
 	}
+	financialEventsStep := new(shared.FinancialEventsStepSizeInDays)
+	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
+		*financialEventsStep = shared.FinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
+	} else {
+		financialEventsStep = nil
+	}
 	configuration := shared.SourceAmazonSellerPartner{
 		AwsEnvironment:         awsEnvironment,
 		Region:                 region,
@@ -117,6 +123,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		PeriodInDays:           periodInDays,
 		ReportOptionsList:      reportOptionsList,
 		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
+		FinancialEventsStep:    financialEventsStep,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -270,6 +277,12 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		waitToAvoidFatalErrors = nil
 	}
+	financialEventsStep := new(shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays)
+	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
+		*financialEventsStep = shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
+	} else {
+		financialEventsStep = nil
+	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
 		AwsEnvironment:         awsEnvironment,
 		Region:                 region,
@@ -283,6 +296,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 		PeriodInDays:           periodInDays,
 		ReportOptionsList:      reportOptionsList,
 		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
+		FinancialEventsStep:    financialEventsStep,
 	}
 	out := shared.SourceAmazonSellerPartnerPutRequest{
 		Name:          name,

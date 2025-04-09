@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
-	"time"
 )
 
 type Cin7 string
@@ -33,13 +32,11 @@ func (e *Cin7) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCin7 struct {
-	// The API key associated with your account.
-	APIKey string `json:"api_key"`
 	// The ID associated with your account.
 	Accountid string `json:"accountid"`
-	// 1970-01-01T00:00:00Z
-	StartDate  time.Time `json:"start_date"`
-	sourceType Cin7      `const:"cin7" json:"sourceType"`
+	// The API key associated with your account.
+	APIKey     string `json:"api_key"`
+	sourceType Cin7   `const:"cin7" json:"sourceType"`
 }
 
 func (s SourceCin7) MarshalJSON() ([]byte, error) {
@@ -53,13 +50,6 @@ func (s *SourceCin7) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCin7) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceCin7) GetAccountid() string {
 	if o == nil {
 		return ""
@@ -67,11 +57,11 @@ func (o *SourceCin7) GetAccountid() string {
 	return o.Accountid
 }
 
-func (o *SourceCin7) GetStartDate() time.Time {
+func (o *SourceCin7) GetAPIKey() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.StartDate
+	return o.APIKey
 }
 
 func (o *SourceCin7) GetSourceType() Cin7 {

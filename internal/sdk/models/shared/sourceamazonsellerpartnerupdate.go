@@ -351,6 +351,53 @@ func (o *SourceAmazonSellerPartnerUpdateReportOptions) GetOptionsList() []Source
 	return o.OptionsList
 }
 
+// SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays - The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
+//
+// - **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
+// - **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.
+//
+// Select a step size that matches your data volume to optimize syncing speed and API performance.
+type SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays string
+
+const (
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysOne                 SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "1"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysSeven               SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "7"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysFourteen            SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "14"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysThirty              SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "30"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysSixty               SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "60"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysNinety              SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "90"
+	SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDaysOneHundredAndEighty SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays = "180"
+)
+
+func (e SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays) ToPointer() *SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays {
+	return &e
+}
+func (e *SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "1":
+		fallthrough
+	case "7":
+		fallthrough
+	case "14":
+		fallthrough
+	case "30":
+		fallthrough
+	case "60":
+		fallthrough
+	case "90":
+		fallthrough
+	case "180":
+		*e = SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays: %v", v)
+	}
+}
+
 type SourceAmazonSellerPartnerUpdate struct {
 	authType *SourceAmazonSellerPartnerUpdateAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Select the AWS Environment.
@@ -377,6 +424,13 @@ type SourceAmazonSellerPartnerUpdate struct {
 	ReportOptionsList []SourceAmazonSellerPartnerUpdateReportOptions `json:"report_options_list,omitempty"`
 	// For report based streams with known amount of requests per time period, this option will use waiting time between requests to avoid fatal statuses in reports. See <a href="https://docs.airbyte.com/integrations/sources/amazon-seller-partner#limitations--troubleshooting" target="_blank">Troubleshooting</a> section for more details
 	WaitToAvoidFatalErrors *bool `default:"false" json:"wait_to_avoid_fatal_errors"`
+	// The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
+	//
+	// - **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
+	// - **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.
+	//
+	// Select a step size that matches your data volume to optimize syncing speed and API performance.
+	FinancialEventsStep *SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays `default:"180" json:"financial_events_step"`
 }
 
 func (s SourceAmazonSellerPartnerUpdate) MarshalJSON() ([]byte, error) {
@@ -476,4 +530,11 @@ func (o *SourceAmazonSellerPartnerUpdate) GetWaitToAvoidFatalErrors() *bool {
 		return nil
 	}
 	return o.WaitToAvoidFatalErrors
+}
+
+func (o *SourceAmazonSellerPartnerUpdate) GetFinancialEventsStep() *SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays {
+	if o == nil {
+		return nil
+	}
+	return o.FinancialEventsStep
 }

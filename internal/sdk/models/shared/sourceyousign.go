@@ -9,18 +9,18 @@ import (
 	"time"
 )
 
-// Subdomain - The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
-type Subdomain string
+// SourceYousignSubdomain - The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
+type SourceYousignSubdomain string
 
 const (
-	SubdomainAPISandbox Subdomain = "api-sandbox"
-	SubdomainAPI        Subdomain = "api"
+	SourceYousignSubdomainAPISandbox SourceYousignSubdomain = "api-sandbox"
+	SourceYousignSubdomainAPI        SourceYousignSubdomain = "api"
 )
 
-func (e Subdomain) ToPointer() *Subdomain {
+func (e SourceYousignSubdomain) ToPointer() *SourceYousignSubdomain {
 	return &e
 }
-func (e *Subdomain) UnmarshalJSON(data []byte) error {
+func (e *SourceYousignSubdomain) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,10 +29,10 @@ func (e *Subdomain) UnmarshalJSON(data []byte) error {
 	case "api-sandbox":
 		fallthrough
 	case "api":
-		*e = Subdomain(v)
+		*e = SourceYousignSubdomain(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Subdomain: %v", v)
+		return fmt.Errorf("invalid value for SourceYousignSubdomain: %v", v)
 	}
 }
 
@@ -63,7 +63,7 @@ type SourceYousign struct {
 	// API key or access token
 	APIKey string `json:"api_key"`
 	// The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
-	Subdomain *Subdomain `default:"api" json:"subdomain"`
+	Subdomain *SourceYousignSubdomain `default:"api" json:"subdomain"`
 	// Limit for each response objects
 	Limit      *string   `default:"10" json:"limit"`
 	StartDate  time.Time `json:"start_date"`
@@ -88,7 +88,7 @@ func (o *SourceYousign) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceYousign) GetSubdomain() *Subdomain {
+func (o *SourceYousign) GetSubdomain() *SourceYousignSubdomain {
 	if o == nil {
 		return nil
 	}

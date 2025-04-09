@@ -7,5 +7,4 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceCin7 struct {
 	Accountid types.String `tfsdk:"accountid"`
 	APIKey    types.String `tfsdk:"api_key"`
-	StartDate types.String `tfsdk:"start_date"`
 }

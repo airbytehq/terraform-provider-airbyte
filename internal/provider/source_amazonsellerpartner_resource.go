@@ -97,6 +97,29 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 							),
 						},
 					},
+					"financial_events_step": schema.StringAttribute{
+						Computed: true,
+						Optional: true,
+						Default:  stringdefault.StaticString(`180`),
+						MarkdownDescription: `The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.` + "\n" +
+							`` + "\n" +
+							`- **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.` + "\n" +
+							`- **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.` + "\n" +
+							`` + "\n" +
+							`Select a step size that matches your data volume to optimize syncing speed and API performance.` + "\n" +
+							`Default: "180"; must be one of ["1", "7", "14", "30", "60", "90", "180"]`,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"1",
+								"7",
+								"14",
+								"30",
+								"60",
+								"90",
+								"180",
+							),
+						},
+					},
 					"lwa_app_id": schema.StringAttribute{
 						Required:    true,
 						Sensitive:   true,

@@ -12,7 +12,6 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -72,13 +71,6 @@ func (r *SourceCin7Resource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required:    true,
 						Sensitive:   true,
 						Description: `The API key associated with your account.`,
-					},
-					"start_date": schema.StringAttribute{
-						Required:    true,
-						Description: `1970-01-01T00:00:00Z`,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
 					},
 				},
 			},

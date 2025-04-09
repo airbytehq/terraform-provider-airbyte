@@ -15,9 +15,8 @@ SourceCin7 Resource
 ```terraform
 resource "airbyte_source_cin7" "my_source_cin7" {
   configuration = {
-    accountid  = "...my_accountid..."
-    api_key    = "...my_api_key..."
-    start_date = "2022-02-16T06:36:23.436Z"
+    accountid = "...my_accountid..."
+    api_key   = "...my_api_key..."
   }
   definition_id = "51200595-41b5-43e9-aa42-79bb9acade16"
   name          = "...my_name..."
@@ -54,7 +53,6 @@ Required:
 
 - `accountid` (String) The ID associated with your account.
 - `api_key` (String, Sensitive) The API key associated with your account.
-- `start_date` (String) 1970-01-01T00:00:00Z
 
 
 <a id="nestedatt--resource_allocation"></a>
