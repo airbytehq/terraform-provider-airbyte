@@ -3,6 +3,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     account_type           = "Vendor"
     app_id                 = "...my_app_id..."
     aws_environment        = "PRODUCTION"
+    financial_events_step  = "1"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
     period_in_days         = 10

@@ -6,7 +6,6 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"time"
 )
 
 func (r *SourceCin7ResourceModel) ToSharedSourceCin7CreateRequest() *shared.SourceCin7CreateRequest {
@@ -22,17 +21,15 @@ func (r *SourceCin7ResourceModel) ToSharedSourceCin7CreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountid string
 	accountid = r.Configuration.Accountid.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceCin7{
-		APIKey:    apiKey,
 		Accountid: accountid,
-		StartDate: startDate,
+		APIKey:    apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,17 +101,15 @@ func (r *SourceCin7ResourceModel) ToSharedSourceCin7PutRequest() *shared.SourceC
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountid string
 	accountid = r.Configuration.Accountid.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceCin7Update{
-		APIKey:    apiKey,
 		Accountid: accountid,
-		StartDate: startDate,
+		APIKey:    apiKey,
 	}
 	out := shared.SourceCin7PutRequest{
 		Name:          name,

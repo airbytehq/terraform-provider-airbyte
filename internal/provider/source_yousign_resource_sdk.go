@@ -25,9 +25,9 @@ func (r *SourceYousignResourceModel) ToSharedSourceYousignCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	subdomain := new(shared.Subdomain)
+	subdomain := new(shared.SourceYousignSubdomain)
 	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
-		*subdomain = shared.Subdomain(r.Configuration.Subdomain.ValueString())
+		*subdomain = shared.SourceYousignSubdomain(r.Configuration.Subdomain.ValueString())
 	} else {
 		subdomain = nil
 	}

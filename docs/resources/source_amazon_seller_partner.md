@@ -18,6 +18,7 @@ resource "airbyte_source_amazon_seller_partner" "my_source_amazonsellerpartner" 
     account_type           = "Vendor"
     app_id                 = "...my_app_id..."
     aws_environment        = "PRODUCTION"
+    financial_events_step  = "1"
     lwa_app_id             = "...my_lwa_app_id..."
     lwa_client_secret      = "...my_lwa_client_secret..."
     period_in_days         = 10
@@ -81,6 +82,13 @@ Optional:
 - `account_type` (String) Type of the Account you're going to authorize the Airbyte application by. Default: "Seller"; must be one of ["Seller", "Vendor"]
 - `app_id` (String, Sensitive) Your Amazon Application ID.
 - `aws_environment` (String) Select the AWS Environment. Default: "PRODUCTION"; must be one of ["PRODUCTION", "SANDBOX"]
+- `financial_events_step` (String) The time window size (in days) for fetching financial events data in chunks. Options are 1 day, 7 days, 14 days, 30 days, 60 days, and 190 days, based on API limitations.
+
+- **Smaller step sizes (e.g., 1 day)** are better for large data volumes. They fetch smaller chunks per request, reducing the risk of timeouts or overwhelming the API, though more requests may slow syncing and increase the chance of hitting rate limits.
+- **Larger step sizes (e.g., 14 days)** are better for smaller data volumes. They fetch more data per request, speeding up syncing and reducing the number of API calls, which minimizes strain on rate limits.
+
+Select a step size that matches your data volume to optimize syncing speed and API performance.
+Default: "180"; must be one of ["1", "7", "14", "30", "60", "90", "180"]
 - `period_in_days` (Number) For syncs spanning a large date range, this option is used to request data in a smaller fixed window to improve sync reliability. This time window can be configured granularly by day. Default: 90
 - `region` (String) Select the AWS Region. Default: "US"; must be one of ["AE", "AU", "BE", "BR", "CA", "DE", "EG", "ES", "FR", "GB", "IN", "IT", "JP", "MX", "NL", "PL", "SA", "SE", "SG", "TR", "UK", "US"]
 - `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.

@@ -8,6 +8,7 @@ type SourceAmazonSellerPartner struct {
 	AccountType            types.String    `tfsdk:"account_type"`
 	AppID                  types.String    `tfsdk:"app_id"`
 	AwsEnvironment         types.String    `tfsdk:"aws_environment"`
+	FinancialEventsStep    types.String    `tfsdk:"financial_events_step"`
 	LwaAppID               types.String    `tfsdk:"lwa_app_id"`
 	LwaClientSecret        types.String    `tfsdk:"lwa_client_secret"`
 	PeriodInDays           types.Int64     `tfsdk:"period_in_days"`
