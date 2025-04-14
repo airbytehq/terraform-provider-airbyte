@@ -25,14 +25,21 @@ func (r *SourceAirbyteResourceModel) ToSharedSourceAirbyteCreateRequest() *share
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	host := new(string)
+	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
+		*host = r.Configuration.Host.ValueString()
+	} else {
+		host = nil
+	}
 	configuration := shared.SourceAirbyte{
 		ClientID:     clientID,
-		StartDate:    startDate,
 		ClientSecret: clientSecret,
+		StartDate:    startDate,
+		Host:         host,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,14 +114,21 @@ func (r *SourceAirbyteResourceModel) ToSharedSourceAirbytePutRequest() *shared.S
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	host := new(string)
+	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
+		*host = r.Configuration.Host.ValueString()
+	} else {
+		host = nil
+	}
 	configuration := shared.SourceAirbyteUpdate{
 		ClientID:     clientID,
-		StartDate:    startDate,
 		ClientSecret: clientSecret,
+		StartDate:    startDate,
+		Host:         host,
 	}
 	out := shared.SourceAirbytePutRequest{
 		Name:          name,

@@ -12,13 +12,12 @@ import (
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -68,32 +67,21 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 				},
 				Attributes: map[string]schema.Attribute{
 					"azure_blob_storage_account_key": schema.StringAttribute{
-						Required:    true,
+						Optional:    true,
 						Sensitive:   true,
-						Description: `The Azure blob storage account key.`,
+						Description: `The Azure blob storage account key. If you set this value, you must not set the Shared Access Signature.`,
 					},
 					"azure_blob_storage_account_name": schema.StringAttribute{
 						Required:    true,
-						Description: `The account's name of the Azure Blob Storage.`,
+						Description: `The name of the Azure Blob Storage Account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#storage-accounts">here</a>.`,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						Optional:    true,
-						Description: `The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp`,
+						Required:    true,
+						Description: `The name of the Azure Blob Storage Container. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#containers">here</a>.`,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-						Computed:    true,
 						Optional:    true,
-						Default:     stringdefault.StaticString(`blob.core.windows.net`),
-						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"`,
-					},
-					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     int64default.StaticInt64(5),
-						Description: `The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure. Default: 5`,
-						Validators: []validator.Int64{
-							int64validator.Between(1, 2047),
-						},
+						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
 						Computed:    true,
@@ -107,22 +95,32 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 							"csv_comma_separated_values": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"file_extension": schema.BoolAttribute{
-										Computed:    true,
+									"additional_properties": schema.StringAttribute{
 										Optional:    true,
-										Default:     booldefault.StaticBool(false),
-										Description: `Add file extensions to the output file. Default: false`,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
 									},
 									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
 										Default:     stringdefault.StaticString(`No flattening`),
-										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]`,
+										Description: `Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]`,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
 												"Root level flattening",
 											),
+										},
+									},
+									"format_type": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`CSV`),
+										Description: `Default: "CSV"; must be "CSV"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf("CSV"),
 										},
 									},
 								},
@@ -135,11 +133,33 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 							"json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"file_extension": schema.BoolAttribute{
+									"additional_properties": schema.StringAttribute{
+										Optional:    true,
+										Description: `Parsed as JSON.`,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+									},
+									"flattening": schema.StringAttribute{
 										Computed:    true,
 										Optional:    true,
-										Default:     booldefault.StaticBool(false),
-										Description: `Add file extensions to the output file. Default: false`,
+										Default:     stringdefault.StaticString(`No flattening`),
+										Description: `Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]`,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
+									},
+									"format_type": schema.StringAttribute{
+										Computed:    true,
+										Optional:    true,
+										Default:     stringdefault.StaticString(`JSONL`),
+										Description: `Default: "JSONL"; must be "JSONL"`,
+										Validators: []validator.String{
+											stringvalidator.OneOf("JSONL"),
+										},
 									},
 								},
 								Validators: []validator.Object{
@@ -149,7 +169,12 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								},
 							},
 						},
-						Description: `Output data format`,
+						Description: `Format of the data output.`,
+					},
+					"shared_access_signature": schema.StringAttribute{
+						Optional:    true,
+						Sensitive:   true,
+						Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the account key.`,
 					},
 				},
 			},

@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type BulkLoad struct {
 	AdditionalProperties          types.String `tfsdk:"additional_properties"`
+	AzureBlobStorageAccountKey    types.String `tfsdk:"azure_blob_storage_account_key"`
 	AzureBlobStorageAccountName   types.String `tfsdk:"azure_blob_storage_account_name"`
 	AzureBlobStorageContainerName types.String `tfsdk:"azure_blob_storage_container_name"`
 	BulkLoadDataSource            types.String `tfsdk:"bulk_load_data_source"`

@@ -5,7 +5,6 @@ package provider
 import (
 	"context"
 	"fmt"
-	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -29,11 +28,11 @@ type DeclarativeSourceDefinitionDataSource struct {
 
 // DeclarativeSourceDefinitionDataSourceModel describes the data model.
 type DeclarativeSourceDefinitionDataSourceModel struct {
-	ID          types.String                `tfsdk:"id"`
-	Manifest    tfTypes.DeclarativeManifest `tfsdk:"manifest"`
-	Name        types.String                `tfsdk:"name"`
-	Version     types.Int64                 `tfsdk:"version"`
-	WorkspaceID types.String                `tfsdk:"workspace_id"`
+	ID          types.String `tfsdk:"id"`
+	Manifest    types.String `tfsdk:"manifest"`
+	Name        types.String `tfsdk:"name"`
+	Version     types.Int64  `tfsdk:"version"`
+	WorkspaceID types.String `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -50,9 +49,9 @@ func (r *DeclarativeSourceDefinitionDataSource) Schema(ctx context.Context, req 
 			"id": schema.StringAttribute{
 				Computed: true,
 			},
-			"manifest": schema.SingleNestedAttribute{
+			"manifest": schema.StringAttribute{
 				Computed:    true,
-				Description: `Low code CDK manifest JSON object`,
+				Description: `Low code CDK manifest JSON object. Parsed as JSON.`,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,

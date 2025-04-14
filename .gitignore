@@ -1,4 +1,5 @@
 .terraform
+terraform-provider-airbyte
 .terraform*
 *.tfstate*
 .DS_Store

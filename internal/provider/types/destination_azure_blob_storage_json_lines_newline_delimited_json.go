@@ -5,5 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON struct {
-	FileExtension types.Bool `tfsdk:"file_extension"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	Flattening           types.String `tfsdk:"flattening"`
+	FormatType           types.String `tfsdk:"format_type"`
 }

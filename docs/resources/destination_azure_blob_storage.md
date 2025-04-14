@@ -16,16 +16,14 @@ DestinationAzureBlobStorage Resource
 resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstorage" {
   configuration = {
     azure_blob_storage_account_key          = "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd=="
-    azure_blob_storage_account_name         = "airbyte5storage"
-    azure_blob_storage_container_name       = "airbytetescontainername"
-    azure_blob_storage_endpoint_domain_name = "blob.core.windows.net"
-    azure_blob_storage_output_buffer_size   = 5
-    azure_blob_storage_spill_size           = 500
+    azure_blob_storage_account_name         = "mystorageaccount"
+    azure_blob_storage_container_name       = "mycontainer"
+    azure_blob_storage_endpoint_domain_name = "...my_azure_blob_storage_endpoint_domain_name..."
+    azure_blob_storage_spill_size           = 3
     format = {
-      json_lines_newline_delimited_json = {
-        file_extension = false
-      }
+      # ...
     }
+    shared_access_signature = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
   definition_id = "0b662a17-77d2-477f-ba0e-7117eb18de2e"
   name          = "...my_name..."
@@ -58,16 +56,16 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
 
 Required:
 
-- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key.
-- `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
-- `format` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format))
+- `azure_blob_storage_account_name` (String) The name of the Azure Blob Storage Account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#storage-accounts">here</a>.
+- `azure_blob_storage_container_name` (String) The name of the Azure Blob Storage Container. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#containers">here</a>.
+- `format` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format))
 
 Optional:
 
-- `azure_blob_storage_container_name` (String) The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp
-- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example. Default: "blob.core.windows.net"
-- `azure_blob_storage_output_buffer_size` (Number) The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure. Default: 5
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key. If you set this value, you must not set the Shared Access Signature.
+- `azure_blob_storage_endpoint_domain_name` (String) This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
 - `azure_blob_storage_spill_size` (Number) The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable. Default: 500
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the account key.
 
 <a id="nestedatt--configuration--format"></a>
 ### Nested Schema for `configuration.format`
@@ -82,8 +80,9 @@ Optional:
 
 Optional:
 
-- `file_extension` (Boolean) Add file extensions to the output file. Default: false
-- `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details. Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]
+- `additional_properties` (String) Parsed as JSON.
+- `flattening` (String) Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]
+- `format_type` (String) Default: "CSV"; must be "CSV"
 
 
 <a id="nestedatt--configuration--format--json_lines_newline_delimited_json"></a>
@@ -91,7 +90,9 @@ Optional:
 
 Optional:
 
-- `file_extension` (Boolean) Add file extensions to the output file. Default: false
+- `additional_properties` (String) Parsed as JSON.
+- `flattening` (String) Default: "No flattening"; must be one of ["No flattening", "Root level flattening"]
+- `format_type` (String) Default: "JSONL"; must be "JSONL"
 
 
 

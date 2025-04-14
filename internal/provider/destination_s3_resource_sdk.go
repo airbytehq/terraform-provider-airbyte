@@ -61,9 +61,9 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 		} else {
 			formatType = nil
 		}
-		flattening := new(shared.Flattening)
+		flattening := new(shared.DestinationS3Flattening)
 		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.Flattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+			*flattening = shared.DestinationS3Flattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
@@ -138,9 +138,9 @@ func (r *DestinationS3ResourceModel) ToSharedDestinationS3CreateRequest() *share
 		} else {
 			formatType1 = nil
 		}
-		flattening1 := new(shared.DestinationS3Flattening)
+		flattening1 := new(shared.DestinationS3SchemasFlattening)
 		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsNull() {
-			*flattening1 = shared.DestinationS3Flattening(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.ValueString())
+			*flattening1 = shared.DestinationS3SchemasFlattening(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.ValueString())
 		} else {
 			flattening1 = nil
 		}

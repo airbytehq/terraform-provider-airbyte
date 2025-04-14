@@ -3,6 +3,7 @@
 package provider
 
 import (
+	"encoding/json"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -11,7 +12,8 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSour
 	var name string
 	name = r.Name.ValueString()
 
-	manifest := shared.DeclarativeManifest{}
+	var manifest interface{}
+	_ = json.Unmarshal([]byte(r.Manifest.ValueString()), &manifest)
 	out := shared.CreateDeclarativeSourceDefinitionRequest{
 		Name:     name,
 		Manifest: manifest,
@@ -22,6 +24,8 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSour
 func (r *DeclarativeSourceDefinitionResourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(resp *shared.DeclarativeSourceDefinitionResponse) {
 	if resp != nil {
 		r.ID = types.StringValue(resp.ID)
+		manifestResult, _ := json.Marshal(resp.Manifest)
+		r.Manifest = types.StringValue(string(manifestResult))
 		r.Name = types.StringValue(resp.Name)
 		r.Version = types.Int64Value(resp.Version)
 	}
@@ -34,7 +38,8 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedUpdateDeclarativeSour
 	} else {
 		version = nil
 	}
-	manifest := shared.DeclarativeManifest{}
+	var manifest interface{}
+	_ = json.Unmarshal([]byte(r.Manifest.ValueString()), &manifest)
 	out := shared.UpdateDeclarativeSourceDefinitionRequest{
 		Version:  version,
 		Manifest: manifest,

@@ -84,7 +84,7 @@ resource "airbyte_connection" "my_connection" {
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String)
+- `data_residency` (String, Deprecated)
 - `name` (String) Optional name of the connection
 - `namespace_definition` (String) Define the location where the data will be stored in the destination. Default: "destination"; must be one of ["source", "destination", "custom_format"]
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.

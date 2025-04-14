@@ -5,7 +5,7 @@ package shared
 type UpdateDeclarativeSourceDefinitionRequest struct {
 	Version *int64 `json:"version,omitempty"`
 	// Low code CDK manifest JSON object
-	Manifest DeclarativeManifest `json:"manifest"`
+	Manifest any `json:"manifest"`
 }
 
 func (o *UpdateDeclarativeSourceDefinitionRequest) GetVersion() *int64 {
@@ -15,9 +15,9 @@ func (o *UpdateDeclarativeSourceDefinitionRequest) GetVersion() *int64 {
 	return o.Version
 }
 
-func (o *UpdateDeclarativeSourceDefinitionRequest) GetManifest() DeclarativeManifest {
+func (o *UpdateDeclarativeSourceDefinitionRequest) GetManifest() any {
 	if o == nil {
-		return DeclarativeManifest{}
+		return nil
 	}
 	return o.Manifest
 }

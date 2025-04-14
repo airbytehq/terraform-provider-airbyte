@@ -6,8 +6,8 @@ type DeclarativeSourceDefinitionResponse struct {
 	ID   string `json:"id"`
 	Name string `json:"name"`
 	// Low code CDK manifest JSON object
-	Manifest DeclarativeManifest `json:"manifest"`
-	Version  int64               `json:"version"`
+	Manifest any   `json:"manifest"`
+	Version  int64 `json:"version"`
 }
 
 func (o *DeclarativeSourceDefinitionResponse) GetID() string {
@@ -24,9 +24,9 @@ func (o *DeclarativeSourceDefinitionResponse) GetName() string {
 	return o.Name
 }
 
-func (o *DeclarativeSourceDefinitionResponse) GetManifest() DeclarativeManifest {
+func (o *DeclarativeSourceDefinitionResponse) GetManifest() any {
 	if o == nil {
-		return DeclarativeManifest{}
+		return nil
 	}
 	return o.Manifest
 }

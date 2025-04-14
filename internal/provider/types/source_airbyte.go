@@ -7,5 +7,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceAirbyte struct {
 	ClientID     types.String `tfsdk:"client_id"`
 	ClientSecret types.String `tfsdk:"client_secret"`
+	Host         types.String `tfsdk:"host"`
 	StartDate    types.String `tfsdk:"start_date"`
 }

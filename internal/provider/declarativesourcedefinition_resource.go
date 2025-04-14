@@ -8,14 +8,15 @@ import (
 	"encoding/json"
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
-	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
@@ -35,11 +36,11 @@ type DeclarativeSourceDefinitionResource struct {
 
 // DeclarativeSourceDefinitionResourceModel describes the resource data model.
 type DeclarativeSourceDefinitionResourceModel struct {
-	ID          types.String                `tfsdk:"id"`
-	Manifest    tfTypes.DeclarativeManifest `tfsdk:"manifest"`
-	Name        types.String                `tfsdk:"name"`
-	Version     types.Int64                 `tfsdk:"version"`
-	WorkspaceID types.String                `tfsdk:"workspace_id"`
+	ID          types.String `tfsdk:"id"`
+	Manifest    types.String `tfsdk:"manifest"`
+	Name        types.String `tfsdk:"name"`
+	Version     types.Int64  `tfsdk:"version"`
+	WorkspaceID types.String `tfsdk:"workspace_id"`
 }
 
 func (r *DeclarativeSourceDefinitionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,9 +54,12 @@ func (r *DeclarativeSourceDefinitionResource) Schema(ctx context.Context, req re
 			"id": schema.StringAttribute{
 				Computed: true,
 			},
-			"manifest": schema.SingleNestedAttribute{
+			"manifest": schema.StringAttribute{
 				Required:    true,
-				Description: `Low code CDK manifest JSON object`,
+				Description: `Low code CDK manifest JSON object. Parsed as JSON.`,
+				Validators: []validator.String{
+					validators.IsValidJSON(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

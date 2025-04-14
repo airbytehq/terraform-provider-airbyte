@@ -28,9 +28,6 @@ data "airbyte_declarative_source_definition" "my_declarativesourcedefinition" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `manifest` (Attributes) Low code CDK manifest JSON object (see [below for nested schema](#nestedatt--manifest))
+- `manifest` (String) Low code CDK manifest JSON object. Parsed as JSON.
 - `name` (String)
 - `version` (Number)
-
-<a id="nestedatt--manifest"></a>
-### Nested Schema for `manifest`

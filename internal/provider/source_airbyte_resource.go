@@ -71,6 +71,10 @@ func (r *SourceAirbyteResource) Schema(ctx context.Context, req resource.SchemaR
 						Required:  true,
 						Sensitive: true,
 					},
+					"host": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Host URL of your Self-Managed Deployment (e.x. airbtye.mydomain.com)`,
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
