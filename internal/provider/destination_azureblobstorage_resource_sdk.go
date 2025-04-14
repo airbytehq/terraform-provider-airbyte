@@ -3,6 +3,7 @@
 package provider
 
 import (
+	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -27,23 +28,23 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	} else {
 		azureBlobStorageEndpointDomainName = nil
 	}
-	azureBlobStorageContainerName := new(string)
-	if !r.Configuration.AzureBlobStorageContainerName.IsUnknown() && !r.Configuration.AzureBlobStorageContainerName.IsNull() {
-		*azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
-	} else {
-		azureBlobStorageContainerName = nil
-	}
 	var azureBlobStorageAccountName string
 	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
 
-	var azureBlobStorageAccountKey string
-	azureBlobStorageAccountKey = r.Configuration.AzureBlobStorageAccountKey.ValueString()
+	var azureBlobStorageContainerName string
+	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
 
-	azureBlobStorageOutputBufferSize := new(int64)
-	if !r.Configuration.AzureBlobStorageOutputBufferSize.IsUnknown() && !r.Configuration.AzureBlobStorageOutputBufferSize.IsNull() {
-		*azureBlobStorageOutputBufferSize = r.Configuration.AzureBlobStorageOutputBufferSize.ValueInt64()
+	sharedAccessSignature := new(string)
+	if !r.Configuration.SharedAccessSignature.IsUnknown() && !r.Configuration.SharedAccessSignature.IsNull() {
+		*sharedAccessSignature = r.Configuration.SharedAccessSignature.ValueString()
 	} else {
-		azureBlobStorageOutputBufferSize = nil
+		sharedAccessSignature = nil
+	}
+	azureBlobStorageAccountKey := new(string)
+	if !r.Configuration.AzureBlobStorageAccountKey.IsUnknown() && !r.Configuration.AzureBlobStorageAccountKey.IsNull() {
+		*azureBlobStorageAccountKey = r.Configuration.AzureBlobStorageAccountKey.ValueString()
+	} else {
+		azureBlobStorageAccountKey = nil
 	}
 	azureBlobStorageSpillSize := new(int64)
 	if !r.Configuration.AzureBlobStorageSpillSize.IsUnknown() && !r.Configuration.AzureBlobStorageSpillSize.IsNull() {
@@ -54,21 +55,26 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	var format shared.OutputFormat
 	var csvCommaSeparatedValues *shared.CSVCommaSeparatedValues
 	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
-		flattening := new(shared.NormalizationFlattening)
+		formatType := new(shared.FormatType)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType = shared.FormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
+		flattening := new(shared.Flattening)
 		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.NormalizationFlattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+			*flattening = shared.Flattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
-		fileExtension := new(bool)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.IsNull() {
-			*fileExtension = r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.ValueBool()
-		} else {
-			fileExtension = nil
+		var additionalProperties interface{}
+		if !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		csvCommaSeparatedValues = &shared.CSVCommaSeparatedValues{
-			Flattening:    flattening,
-			FileExtension: fileExtension,
+			FormatType:           formatType,
+			Flattening:           flattening,
+			AdditionalProperties: additionalProperties,
 		}
 	}
 	if csvCommaSeparatedValues != nil {
@@ -78,14 +84,26 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	}
 	var destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-		fileExtension1 := new(bool)
-		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.IsNull() {
-			*fileExtension1 = r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.ValueBool()
+		formatType1 := new(shared.DestinationAzureBlobStorageFormatType)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType1 = shared.DestinationAzureBlobStorageFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		} else {
-			fileExtension1 = nil
+			formatType1 = nil
+		}
+		flattening1 := new(shared.DestinationAzureBlobStorageFlattening)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsNull() {
+			*flattening1 = shared.DestinationAzureBlobStorageFlattening(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.ValueString())
+		} else {
+			flattening1 = nil
+		}
+		var additionalProperties1 interface{}
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageJSONLinesNewlineDelimitedJSON{
-			FileExtension: fileExtension1,
+			FormatType:           formatType1,
+			Flattening:           flattening1,
+			AdditionalProperties: additionalProperties1,
 		}
 	}
 	if destinationAzureBlobStorageJSONLinesNewlineDelimitedJSON != nil {
@@ -95,10 +113,10 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	}
 	configuration := shared.DestinationAzureBlobStorage{
 		AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
-		AzureBlobStorageContainerName:      azureBlobStorageContainerName,
 		AzureBlobStorageAccountName:        azureBlobStorageAccountName,
+		AzureBlobStorageContainerName:      azureBlobStorageContainerName,
+		SharedAccessSignature:              sharedAccessSignature,
 		AzureBlobStorageAccountKey:         azureBlobStorageAccountKey,
-		AzureBlobStorageOutputBufferSize:   azureBlobStorageOutputBufferSize,
 		AzureBlobStorageSpillSize:          azureBlobStorageSpillSize,
 		Format:                             format,
 	}
@@ -171,23 +189,23 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	} else {
 		azureBlobStorageEndpointDomainName = nil
 	}
-	azureBlobStorageContainerName := new(string)
-	if !r.Configuration.AzureBlobStorageContainerName.IsUnknown() && !r.Configuration.AzureBlobStorageContainerName.IsNull() {
-		*azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
-	} else {
-		azureBlobStorageContainerName = nil
-	}
 	var azureBlobStorageAccountName string
 	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
 
-	var azureBlobStorageAccountKey string
-	azureBlobStorageAccountKey = r.Configuration.AzureBlobStorageAccountKey.ValueString()
+	var azureBlobStorageContainerName string
+	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
 
-	azureBlobStorageOutputBufferSize := new(int64)
-	if !r.Configuration.AzureBlobStorageOutputBufferSize.IsUnknown() && !r.Configuration.AzureBlobStorageOutputBufferSize.IsNull() {
-		*azureBlobStorageOutputBufferSize = r.Configuration.AzureBlobStorageOutputBufferSize.ValueInt64()
+	sharedAccessSignature := new(string)
+	if !r.Configuration.SharedAccessSignature.IsUnknown() && !r.Configuration.SharedAccessSignature.IsNull() {
+		*sharedAccessSignature = r.Configuration.SharedAccessSignature.ValueString()
 	} else {
-		azureBlobStorageOutputBufferSize = nil
+		sharedAccessSignature = nil
+	}
+	azureBlobStorageAccountKey := new(string)
+	if !r.Configuration.AzureBlobStorageAccountKey.IsUnknown() && !r.Configuration.AzureBlobStorageAccountKey.IsNull() {
+		*azureBlobStorageAccountKey = r.Configuration.AzureBlobStorageAccountKey.ValueString()
+	} else {
+		azureBlobStorageAccountKey = nil
 	}
 	azureBlobStorageSpillSize := new(int64)
 	if !r.Configuration.AzureBlobStorageSpillSize.IsUnknown() && !r.Configuration.AzureBlobStorageSpillSize.IsNull() {
@@ -198,21 +216,26 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	var format shared.DestinationAzureBlobStorageUpdateOutputFormat
 	var destinationAzureBlobStorageUpdateCSVCommaSeparatedValues *shared.DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues
 	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
-		flattening := new(shared.DestinationAzureBlobStorageUpdateNormalizationFlattening)
+		formatType := new(shared.DestinationAzureBlobStorageUpdateFormatType)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType = shared.DestinationAzureBlobStorageUpdateFormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
+		flattening := new(shared.DestinationAzureBlobStorageUpdateFlattening)
 		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.DestinationAzureBlobStorageUpdateNormalizationFlattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+			*flattening = shared.DestinationAzureBlobStorageUpdateFlattening(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
-		fileExtension := new(bool)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.IsNull() {
-			*fileExtension = r.Configuration.Format.CSVCommaSeparatedValues.FileExtension.ValueBool()
-		} else {
-			fileExtension = nil
+		var additionalProperties interface{}
+		if !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.CSVCommaSeparatedValues.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		destinationAzureBlobStorageUpdateCSVCommaSeparatedValues = &shared.DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues{
-			Flattening:    flattening,
-			FileExtension: fileExtension,
+			FormatType:           formatType,
+			Flattening:           flattening,
+			AdditionalProperties: additionalProperties,
 		}
 	}
 	if destinationAzureBlobStorageUpdateCSVCommaSeparatedValues != nil {
@@ -222,14 +245,26 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	}
 	var destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-		fileExtension1 := new(bool)
-		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.IsNull() {
-			*fileExtension1 = r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FileExtension.ValueBool()
+		formatType1 := new(shared.DestinationAzureBlobStorageUpdateSchemasFormatType)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType1 = shared.DestinationAzureBlobStorageUpdateSchemasFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		} else {
-			fileExtension1 = nil
+			formatType1 = nil
+		}
+		flattening1 := new(shared.DestinationAzureBlobStorageUpdateSchemasFlattening)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.IsNull() {
+			*flattening1 = shared.DestinationAzureBlobStorageUpdateSchemasFlattening(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Flattening.ValueString())
+		} else {
+			flattening1 = nil
+		}
+		var additionalProperties1 interface{}
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON{
-			FileExtension: fileExtension1,
+			FormatType:           formatType1,
+			Flattening:           flattening1,
+			AdditionalProperties: additionalProperties1,
 		}
 	}
 	if destinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON != nil {
@@ -239,10 +274,10 @@ func (r *DestinationAzureBlobStorageResourceModel) ToSharedDestinationAzureBlobS
 	}
 	configuration := shared.DestinationAzureBlobStorageUpdate{
 		AzureBlobStorageEndpointDomainName: azureBlobStorageEndpointDomainName,
-		AzureBlobStorageContainerName:      azureBlobStorageContainerName,
 		AzureBlobStorageAccountName:        azureBlobStorageAccountName,
+		AzureBlobStorageContainerName:      azureBlobStorageContainerName,
+		SharedAccessSignature:              sharedAccessSignature,
 		AzureBlobStorageAccountKey:         azureBlobStorageAccountKey,
-		AzureBlobStorageOutputBufferSize:   azureBlobStorageOutputBufferSize,
 		AzureBlobStorageSpillSize:          azureBlobStorageSpillSize,
 		Format:                             format,
 	}

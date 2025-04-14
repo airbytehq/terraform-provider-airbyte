@@ -5,7 +5,7 @@ package shared
 type CreateDeclarativeSourceDefinitionRequest struct {
 	Name string `json:"name"`
 	// Low code CDK manifest JSON object
-	Manifest DeclarativeManifest `json:"manifest"`
+	Manifest any `json:"manifest"`
 }
 
 func (o *CreateDeclarativeSourceDefinitionRequest) GetName() string {
@@ -15,9 +15,9 @@ func (o *CreateDeclarativeSourceDefinitionRequest) GetName() string {
 	return o.Name
 }
 
-func (o *CreateDeclarativeSourceDefinitionRequest) GetManifest() DeclarativeManifest {
+func (o *CreateDeclarativeSourceDefinitionRequest) GetManifest() any {
 	if o == nil {
-		return DeclarativeManifest{}
+		return nil
 	}
 	return o.Manifest
 }

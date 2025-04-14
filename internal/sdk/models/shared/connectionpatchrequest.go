@@ -12,8 +12,9 @@ type ConnectionPatchRequest struct {
 	// A list of configured stream options for a connection.
 	Configurations *StreamConfigurations `json:"configurations,omitempty"`
 	// schedule for when the the connection should run, per the schedule type
-	Schedule      *AirbyteAPIConnectionSchedule `json:"schedule,omitempty"`
-	DataResidency *string                       `json:"dataResidency,omitempty"`
+	Schedule *AirbyteAPIConnectionSchedule `json:"schedule,omitempty"`
+	// Deprecated: We no longer support modifying dataResidency on Community and Enterprise connections. This will be supported on Cloud until May 31, at which time all connections will use the dataResidency of their associated workspace..
+	DataResidency *string `json:"dataResidency,omitempty"`
 	// Define the location where the data will be stored in the destination
 	NamespaceDefinition *NamespaceDefinitionEnumNoDefault `json:"namespaceDefinition,omitempty"`
 	// Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.

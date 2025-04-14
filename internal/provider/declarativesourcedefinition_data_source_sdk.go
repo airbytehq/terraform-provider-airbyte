@@ -3,6 +3,7 @@
 package provider
 
 import (
+	"encoding/json"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -10,6 +11,8 @@ import (
 func (r *DeclarativeSourceDefinitionDataSourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(resp *shared.DeclarativeSourceDefinitionResponse) {
 	if resp != nil {
 		r.ID = types.StringValue(resp.ID)
+		manifestResult, _ := json.Marshal(resp.Manifest)
+		r.Manifest = types.StringValue(string(manifestResult))
 		r.Name = types.StringValue(resp.Name)
 		r.Version = types.Int64Value(resp.Version)
 	}

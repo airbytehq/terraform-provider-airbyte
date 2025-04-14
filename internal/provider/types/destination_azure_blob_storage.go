@@ -9,7 +9,7 @@ type DestinationAzureBlobStorage struct {
 	AzureBlobStorageAccountName        types.String `tfsdk:"azure_blob_storage_account_name"`
 	AzureBlobStorageContainerName      types.String `tfsdk:"azure_blob_storage_container_name"`
 	AzureBlobStorageEndpointDomainName types.String `tfsdk:"azure_blob_storage_endpoint_domain_name"`
-	AzureBlobStorageOutputBufferSize   types.Int64  `tfsdk:"azure_blob_storage_output_buffer_size"`
 	AzureBlobStorageSpillSize          types.Int64  `tfsdk:"azure_blob_storage_spill_size"`
 	Format                             OutputFormat `tfsdk:"format"`
+	SharedAccessSignature              types.String `tfsdk:"shared_access_signature"`
 }

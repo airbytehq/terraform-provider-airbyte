@@ -41,7 +41,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.16.4"
+      version = "0.17.0"
     }
   }
 }
@@ -170,7 +170,9 @@ provider_installation {
 * [airbyte_source_apptivo](docs/resources/source_apptivo.md)
 * [airbyte_source_asana](docs/resources/source_asana.md)
 * [airbyte_source_ashby](docs/resources/source_ashby.md)
+* [airbyte_source_assemblyai](docs/resources/source_assemblyai.md)
 * [airbyte_source_auth0](docs/resources/source_auth0.md)
+* [airbyte_source_aviationstack](docs/resources/source_aviationstack.md)
 * [airbyte_source_aws_cloudtrail](docs/resources/source_aws_cloudtrail.md)
 * [airbyte_source_azure_blob_storage](docs/resources/source_azure_blob_storage.md)
 * [airbyte_source_azure_table](docs/resources/source_azure_table.md)
@@ -350,6 +352,7 @@ provider_installation {
 * [airbyte_source_humanitix](docs/resources/source_humanitix.md)
 * [airbyte_source_huntr](docs/resources/source_huntr.md)
 * [airbyte_source_illumina_basespace](docs/resources/source_illumina_basespace.md)
+* [airbyte_source_imagga](docs/resources/source_imagga.md)
 * [airbyte_source_incident_io](docs/resources/source_incident_io.md)
 * [airbyte_source_inflowinventory](docs/resources/source_inflowinventory.md)
 * [airbyte_source_insightful](docs/resources/source_insightful.md)
@@ -496,6 +499,7 @@ provider_installation {
 * [airbyte_source_prestashop](docs/resources/source_prestashop.md)
 * [airbyte_source_pretix](docs/resources/source_pretix.md)
 * [airbyte_source_primetric](docs/resources/source_primetric.md)
+* [airbyte_source_printify](docs/resources/source_printify.md)
 * [airbyte_source_productboard](docs/resources/source_productboard.md)
 * [airbyte_source_productive](docs/resources/source_productive.md)
 * [airbyte_source_pypi](docs/resources/source_pypi.md)
@@ -587,6 +591,7 @@ provider_installation {
 * [airbyte_source_svix](docs/resources/source_svix.md)
 * [airbyte_source_systeme](docs/resources/source_systeme.md)
 * [airbyte_source_taboola](docs/resources/source_taboola.md)
+* [airbyte_source_tavus](docs/resources/source_tavus.md)
 * [airbyte_source_teamtailor](docs/resources/source_teamtailor.md)
 * [airbyte_source_teamwork](docs/resources/source_teamwork.md)
 * [airbyte_source_tempo](docs/resources/source_tempo.md)
@@ -626,6 +631,7 @@ provider_installation {
 * [airbyte_source_vwo](docs/resources/source_vwo.md)
 * [airbyte_source_waiteraid](docs/resources/source_waiteraid.md)
 * [airbyte_source_wasabi_stats_api](docs/resources/source_wasabi_stats_api.md)
+* [airbyte_source_watchmode](docs/resources/source_watchmode.md)
 * [airbyte_source_weatherstack](docs/resources/source_weatherstack.md)
 * [airbyte_source_webflow](docs/resources/source_webflow.md)
 * [airbyte_source_web_scrapper](docs/resources/source_web_scrapper.md)
@@ -745,7 +751,9 @@ provider_installation {
 * [airbyte_source_apptivo](docs/data-sources/source_apptivo.md)
 * [airbyte_source_asana](docs/data-sources/source_asana.md)
 * [airbyte_source_ashby](docs/data-sources/source_ashby.md)
+* [airbyte_source_assemblyai](docs/data-sources/source_assemblyai.md)
 * [airbyte_source_auth0](docs/data-sources/source_auth0.md)
+* [airbyte_source_aviationstack](docs/data-sources/source_aviationstack.md)
 * [airbyte_source_aws_cloudtrail](docs/data-sources/source_aws_cloudtrail.md)
 * [airbyte_source_azure_blob_storage](docs/data-sources/source_azure_blob_storage.md)
 * [airbyte_source_azure_table](docs/data-sources/source_azure_table.md)
@@ -925,6 +933,7 @@ provider_installation {
 * [airbyte_source_humanitix](docs/data-sources/source_humanitix.md)
 * [airbyte_source_huntr](docs/data-sources/source_huntr.md)
 * [airbyte_source_illumina_basespace](docs/data-sources/source_illumina_basespace.md)
+* [airbyte_source_imagga](docs/data-sources/source_imagga.md)
 * [airbyte_source_incident_io](docs/data-sources/source_incident_io.md)
 * [airbyte_source_inflowinventory](docs/data-sources/source_inflowinventory.md)
 * [airbyte_source_insightful](docs/data-sources/source_insightful.md)
@@ -1071,6 +1080,7 @@ provider_installation {
 * [airbyte_source_prestashop](docs/data-sources/source_prestashop.md)
 * [airbyte_source_pretix](docs/data-sources/source_pretix.md)
 * [airbyte_source_primetric](docs/data-sources/source_primetric.md)
+* [airbyte_source_printify](docs/data-sources/source_printify.md)
 * [airbyte_source_productboard](docs/data-sources/source_productboard.md)
 * [airbyte_source_productive](docs/data-sources/source_productive.md)
 * [airbyte_source_pypi](docs/data-sources/source_pypi.md)
@@ -1162,6 +1172,7 @@ provider_installation {
 * [airbyte_source_svix](docs/data-sources/source_svix.md)
 * [airbyte_source_systeme](docs/data-sources/source_systeme.md)
 * [airbyte_source_taboola](docs/data-sources/source_taboola.md)
+* [airbyte_source_tavus](docs/data-sources/source_tavus.md)
 * [airbyte_source_teamtailor](docs/data-sources/source_teamtailor.md)
 * [airbyte_source_teamwork](docs/data-sources/source_teamwork.md)
 * [airbyte_source_tempo](docs/data-sources/source_tempo.md)
@@ -1201,6 +1212,7 @@ provider_installation {
 * [airbyte_source_vwo](docs/data-sources/source_vwo.md)
 * [airbyte_source_waiteraid](docs/data-sources/source_waiteraid.md)
 * [airbyte_source_wasabi_stats_api](docs/data-sources/source_wasabi_stats_api.md)
+* [airbyte_source_watchmode](docs/data-sources/source_watchmode.md)
 * [airbyte_source_weatherstack](docs/data-sources/source_weatherstack.md)
 * [airbyte_source_webflow](docs/data-sources/source_webflow.md)
 * [airbyte_source_web_scrapper](docs/data-sources/source_web_scrapper.md)

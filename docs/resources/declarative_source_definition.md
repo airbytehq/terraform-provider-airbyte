@@ -14,9 +14,7 @@ DeclarativeSourceDefinition Resource
 
 ```terraform
 resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition" {
-  manifest = {
-    # ...
-  }
+  manifest     = "{ \"see\": \"documentation\" }"
   name         = "...my_name..."
   workspace_id = "e5279006-d3bf-4277-ada7-423cb18aaece"
 }
@@ -27,7 +25,7 @@ resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition
 
 ### Required
 
-- `manifest` (Attributes) Low code CDK manifest JSON object (see [below for nested schema](#nestedatt--manifest))
+- `manifest` (String) Low code CDK manifest JSON object. Parsed as JSON.
 - `name` (String) Requires replacement if changed.
 - `workspace_id` (String)
 
@@ -35,9 +33,6 @@ resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition
 
 - `id` (String) The ID of this resource.
 - `version` (Number)
-
-<a id="nestedatt--manifest"></a>
-### Nested Schema for `manifest`
 
 ## Import
 

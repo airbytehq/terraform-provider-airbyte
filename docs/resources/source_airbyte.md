@@ -17,6 +17,7 @@ resource "airbyte_source_airbyte" "my_source_airbyte" {
   configuration = {
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
+    host          = "...my_host..."
     start_date    = "2022-12-29T07:07:00.688Z"
   }
   definition_id = "6fa8ac99-ed55-45de-a619-5d351af078c3"
@@ -55,6 +56,10 @@ Required:
 - `client_id` (String)
 - `client_secret` (String, Sensitive)
 - `start_date` (String)
+
+Optional:
+
+- `host` (String) The Host URL of your Self-Managed Deployment (e.x. airbtye.mydomain.com)
 
 
 <a id="nestedatt--resource_allocation"></a>

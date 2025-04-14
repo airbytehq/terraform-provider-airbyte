@@ -177,9 +177,18 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 		var azureBlobStorageContainerName string
 		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
 
-		var sharedAccessSignature string
-		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
-
+		sharedAccessSignature := new(string)
+		if !r.Configuration.LoadType.BulkLoad.SharedAccessSignature.IsUnknown() && !r.Configuration.LoadType.BulkLoad.SharedAccessSignature.IsNull() {
+			*sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+		} else {
+			sharedAccessSignature = nil
+		}
+		azureBlobStorageAccountKey := new(string)
+		if !r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.IsNull() {
+			*azureBlobStorageAccountKey = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.ValueString()
+		} else {
+			azureBlobStorageAccountKey = nil
+		}
 		var bulkLoadDataSource string
 		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
 
@@ -198,6 +207,7 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlCreateRequest() 
 			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
 			AzureBlobStorageContainerName: azureBlobStorageContainerName,
 			SharedAccessSignature:         sharedAccessSignature,
+			AzureBlobStorageAccountKey:    azureBlobStorageAccountKey,
 			BulkLoadDataSource:            bulkLoadDataSource,
 			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
 			AdditionalProperties:          additionalProperties4,
@@ -437,9 +447,18 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 		var azureBlobStorageContainerName string
 		azureBlobStorageContainerName = r.Configuration.LoadType.BulkLoad.AzureBlobStorageContainerName.ValueString()
 
-		var sharedAccessSignature string
-		sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
-
+		sharedAccessSignature := new(string)
+		if !r.Configuration.LoadType.BulkLoad.SharedAccessSignature.IsUnknown() && !r.Configuration.LoadType.BulkLoad.SharedAccessSignature.IsNull() {
+			*sharedAccessSignature = r.Configuration.LoadType.BulkLoad.SharedAccessSignature.ValueString()
+		} else {
+			sharedAccessSignature = nil
+		}
+		azureBlobStorageAccountKey := new(string)
+		if !r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.IsUnknown() && !r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.IsNull() {
+			*azureBlobStorageAccountKey = r.Configuration.LoadType.BulkLoad.AzureBlobStorageAccountKey.ValueString()
+		} else {
+			azureBlobStorageAccountKey = nil
+		}
 		var bulkLoadDataSource string
 		bulkLoadDataSource = r.Configuration.LoadType.BulkLoad.BulkLoadDataSource.ValueString()
 
@@ -458,6 +477,7 @@ func (r *DestinationMssqlResourceModel) ToSharedDestinationMssqlPutRequest() *sh
 			AzureBlobStorageAccountName:   azureBlobStorageAccountName,
 			AzureBlobStorageContainerName: azureBlobStorageContainerName,
 			SharedAccessSignature:         sharedAccessSignature,
+			AzureBlobStorageAccountKey:    azureBlobStorageAccountKey,
 			BulkLoadDataSource:            bulkLoadDataSource,
 			BulkLoadValidateValuesPreLoad: bulkLoadValidateValuesPreLoad,
 			AdditionalProperties:          additionalProperties4,

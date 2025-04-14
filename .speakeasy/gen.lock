@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
-  docChecksum: 436d07090d0ab81d7a1a828a90055d3b
+  docChecksum: 2116b00fabd62f61f8ae37f9e8d98623
   docVersion: 1.0.0
   speakeasyVersion: 1.525.2
   generationVersion: 2.562.3
-  releaseVersion: 0.16.4
-  configChecksum: dc5e988662b52413d7a0084321a143c4
+  releaseVersion: 0.17.0
+  configChecksum: ea62603901dd46dc8dbc5fa1b2708334
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
@@ -14,6 +14,7 @@ features:
     additionalProperties: 0.1.2
     constsAndDefaults: 0.2.1
     core: 3.36.1
+    deprecations: 2.82.0
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.10
     globalServerURLs: 2.82.1
@@ -98,7 +99,9 @@ generatedFiles:
   - examples/data-sources/airbyte_source_apptivo/data-source.tf
   - examples/data-sources/airbyte_source_asana/data-source.tf
   - examples/data-sources/airbyte_source_ashby/data-source.tf
+  - examples/data-sources/airbyte_source_assemblyai/data-source.tf
   - examples/data-sources/airbyte_source_auth0/data-source.tf
+  - examples/data-sources/airbyte_source_aviationstack/data-source.tf
   - examples/data-sources/airbyte_source_aws_cloudtrail/data-source.tf
   - examples/data-sources/airbyte_source_azure_blob_storage/data-source.tf
   - examples/data-sources/airbyte_source_azure_table/data-source.tf
@@ -279,6 +282,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_humanitix/data-source.tf
   - examples/data-sources/airbyte_source_huntr/data-source.tf
   - examples/data-sources/airbyte_source_illumina_basespace/data-source.tf
+  - examples/data-sources/airbyte_source_imagga/data-source.tf
   - examples/data-sources/airbyte_source_incident_io/data-source.tf
   - examples/data-sources/airbyte_source_inflowinventory/data-source.tf
   - examples/data-sources/airbyte_source_insightful/data-source.tf
@@ -425,6 +429,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_prestashop/data-source.tf
   - examples/data-sources/airbyte_source_pretix/data-source.tf
   - examples/data-sources/airbyte_source_primetric/data-source.tf
+  - examples/data-sources/airbyte_source_printify/data-source.tf
   - examples/data-sources/airbyte_source_productboard/data-source.tf
   - examples/data-sources/airbyte_source_productive/data-source.tf
   - examples/data-sources/airbyte_source_pypi/data-source.tf
@@ -516,6 +521,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_svix/data-source.tf
   - examples/data-sources/airbyte_source_systeme/data-source.tf
   - examples/data-sources/airbyte_source_taboola/data-source.tf
+  - examples/data-sources/airbyte_source_tavus/data-source.tf
   - examples/data-sources/airbyte_source_teamtailor/data-source.tf
   - examples/data-sources/airbyte_source_teamwork/data-source.tf
   - examples/data-sources/airbyte_source_tempo/data-source.tf
@@ -555,6 +561,7 @@ generatedFiles:
   - examples/data-sources/airbyte_source_vwo/data-source.tf
   - examples/data-sources/airbyte_source_waiteraid/data-source.tf
   - examples/data-sources/airbyte_source_wasabi_stats_api/data-source.tf
+  - examples/data-sources/airbyte_source_watchmode/data-source.tf
   - examples/data-sources/airbyte_source_weatherstack/data-source.tf
   - examples/data-sources/airbyte_source_web_scrapper/data-source.tf
   - examples/data-sources/airbyte_source_webflow/data-source.tf
@@ -743,8 +750,12 @@ generatedFiles:
   - examples/resources/airbyte_source_asana/resource.tf
   - examples/resources/airbyte_source_ashby/import.sh
   - examples/resources/airbyte_source_ashby/resource.tf
+  - examples/resources/airbyte_source_assemblyai/import.sh
+  - examples/resources/airbyte_source_assemblyai/resource.tf
   - examples/resources/airbyte_source_auth0/import.sh
   - examples/resources/airbyte_source_auth0/resource.tf
+  - examples/resources/airbyte_source_aviationstack/import.sh
+  - examples/resources/airbyte_source_aviationstack/resource.tf
   - examples/resources/airbyte_source_aws_cloudtrail/import.sh
   - examples/resources/airbyte_source_aws_cloudtrail/resource.tf
   - examples/resources/airbyte_source_azure_blob_storage/import.sh
@@ -1105,6 +1116,8 @@ generatedFiles:
   - examples/resources/airbyte_source_huntr/resource.tf
   - examples/resources/airbyte_source_illumina_basespace/import.sh
   - examples/resources/airbyte_source_illumina_basespace/resource.tf
+  - examples/resources/airbyte_source_imagga/import.sh
+  - examples/resources/airbyte_source_imagga/resource.tf
   - examples/resources/airbyte_source_incident_io/import.sh
   - examples/resources/airbyte_source_incident_io/resource.tf
   - examples/resources/airbyte_source_inflowinventory/import.sh
@@ -1397,6 +1410,8 @@ generatedFiles:
   - examples/resources/airbyte_source_pretix/resource.tf
   - examples/resources/airbyte_source_primetric/import.sh
   - examples/resources/airbyte_source_primetric/resource.tf
+  - examples/resources/airbyte_source_printify/import.sh
+  - examples/resources/airbyte_source_printify/resource.tf
   - examples/resources/airbyte_source_productboard/import.sh
   - examples/resources/airbyte_source_productboard/resource.tf
   - examples/resources/airbyte_source_productive/import.sh
@@ -1579,6 +1594,8 @@ generatedFiles:
   - examples/resources/airbyte_source_systeme/resource.tf
   - examples/resources/airbyte_source_taboola/import.sh
   - examples/resources/airbyte_source_taboola/resource.tf
+  - examples/resources/airbyte_source_tavus/import.sh
+  - examples/resources/airbyte_source_tavus/resource.tf
   - examples/resources/airbyte_source_teamtailor/import.sh
   - examples/resources/airbyte_source_teamtailor/resource.tf
   - examples/resources/airbyte_source_teamwork/import.sh
@@ -1657,6 +1674,8 @@ generatedFiles:
   - examples/resources/airbyte_source_waiteraid/resource.tf
   - examples/resources/airbyte_source_wasabi_stats_api/import.sh
   - examples/resources/airbyte_source_wasabi_stats_api/resource.tf
+  - examples/resources/airbyte_source_watchmode/import.sh
+  - examples/resources/airbyte_source_watchmode/resource.tf
   - examples/resources/airbyte_source_weatherstack/import.sh
   - examples/resources/airbyte_source_weatherstack/resource.tf
   - examples/resources/airbyte_source_web_scrapper/import.sh
@@ -2060,10 +2079,18 @@ generatedFiles:
   - internal/provider/source_ashby_data_source_sdk.go
   - internal/provider/source_ashby_resource.go
   - internal/provider/source_ashby_resource_sdk.go
+  - internal/provider/source_assemblyai_data_source.go
+  - internal/provider/source_assemblyai_data_source_sdk.go
+  - internal/provider/source_assemblyai_resource.go
+  - internal/provider/source_assemblyai_resource_sdk.go
   - internal/provider/source_auth0_data_source.go
   - internal/provider/source_auth0_data_source_sdk.go
   - internal/provider/source_auth0_resource.go
   - internal/provider/source_auth0_resource_sdk.go
+  - internal/provider/source_aviationstack_data_source.go
+  - internal/provider/source_aviationstack_data_source_sdk.go
+  - internal/provider/source_aviationstack_resource.go
+  - internal/provider/source_aviationstack_resource_sdk.go
   - internal/provider/source_awscloudtrail_data_source.go
   - internal/provider/source_awscloudtrail_data_source_sdk.go
   - internal/provider/source_awscloudtrail_resource.go
@@ -2780,6 +2807,10 @@ generatedFiles:
   - internal/provider/source_illuminabasespace_data_source_sdk.go
   - internal/provider/source_illuminabasespace_resource.go
   - internal/provider/source_illuminabasespace_resource_sdk.go
+  - internal/provider/source_imagga_data_source.go
+  - internal/provider/source_imagga_data_source_sdk.go
+  - internal/provider/source_imagga_resource.go
+  - internal/provider/source_imagga_resource_sdk.go
   - internal/provider/source_incidentio_data_source.go
   - internal/provider/source_incidentio_data_source_sdk.go
   - internal/provider/source_incidentio_resource.go
@@ -3364,6 +3395,10 @@ generatedFiles:
   - internal/provider/source_primetric_data_source_sdk.go
   - internal/provider/source_primetric_resource.go
   - internal/provider/source_primetric_resource_sdk.go
+  - internal/provider/source_printify_data_source.go
+  - internal/provider/source_printify_data_source_sdk.go
+  - internal/provider/source_printify_resource.go
+  - internal/provider/source_printify_resource_sdk.go
   - internal/provider/source_productboard_data_source.go
   - internal/provider/source_productboard_data_source_sdk.go
   - internal/provider/source_productboard_resource.go
@@ -3728,6 +3763,10 @@ generatedFiles:
   - internal/provider/source_taboola_data_source_sdk.go
   - internal/provider/source_taboola_resource.go
   - internal/provider/source_taboola_resource_sdk.go
+  - internal/provider/source_tavus_data_source.go
+  - internal/provider/source_tavus_data_source_sdk.go
+  - internal/provider/source_tavus_resource.go
+  - internal/provider/source_tavus_resource_sdk.go
   - internal/provider/source_teamtailor_data_source.go
   - internal/provider/source_teamtailor_data_source_sdk.go
   - internal/provider/source_teamtailor_resource.go
@@ -3884,6 +3923,10 @@ generatedFiles:
   - internal/provider/source_wasabistatsapi_data_source_sdk.go
   - internal/provider/source_wasabistatsapi_resource.go
   - internal/provider/source_wasabistatsapi_resource_sdk.go
+  - internal/provider/source_watchmode_data_source.go
+  - internal/provider/source_watchmode_data_source_sdk.go
+  - internal/provider/source_watchmode_resource.go
+  - internal/provider/source_watchmode_resource_sdk.go
   - internal/provider/source_weatherstack_data_source.go
   - internal/provider/source_weatherstack_data_source_sdk.go
   - internal/provider/source_weatherstack_resource.go
@@ -4147,7 +4190,6 @@ generatedFiles:
   - internal/provider/types/custom_queries_array.go
   - internal/provider/types/custom_report_config.go
   - internal/provider/types/date_range.go
-  - internal/provider/types/declarative_manifest.go
   - internal/provider/types/deflate.go
   - internal/provider/types/deletion_mode.go
   - internal/provider/types/delivery_method.go
@@ -4562,7 +4604,9 @@ generatedFiles:
   - internal/provider/types/source_apptivo.go
   - internal/provider/types/source_asana.go
   - internal/provider/types/source_ashby.go
+  - internal/provider/types/source_assemblyai.go
   - internal/provider/types/source_auth0.go
+  - internal/provider/types/source_aviationstack.go
   - internal/provider/types/source_aws_cloudtrail.go
   - internal/provider/types/source_azure_blob_storage.go
   - internal/provider/types/source_azure_blob_storage_authentication.go
@@ -4910,6 +4954,7 @@ generatedFiles:
   - internal/provider/types/source_humanitix.go
   - internal/provider/types/source_huntr.go
   - internal/provider/types/source_illumina_basespace.go
+  - internal/provider/types/source_imagga.go
   - internal/provider/types/source_incident_io.go
   - internal/provider/types/source_inflowinventory.go
   - internal/provider/types/source_insightful.go
@@ -5157,6 +5202,7 @@ generatedFiles:
   - internal/provider/types/source_prestashop.go
   - internal/provider/types/source_pretix.go
   - internal/provider/types/source_primetric.go
+  - internal/provider/types/source_printify.go
   - internal/provider/types/source_productboard.go
   - internal/provider/types/source_productive.go
   - internal/provider/types/source_pypi.go
@@ -5311,6 +5357,7 @@ generatedFiles:
   - internal/provider/types/source_svix.go
   - internal/provider/types/source_systeme.go
   - internal/provider/types/source_taboola.go
+  - internal/provider/types/source_tavus.go
   - internal/provider/types/source_teamtailor.go
   - internal/provider/types/source_teamwork.go
   - internal/provider/types/source_tempo.go
@@ -5358,6 +5405,7 @@ generatedFiles:
   - internal/provider/types/source_vwo.go
   - internal/provider/types/source_waiteraid.go
   - internal/provider/types/source_wasabi_stats_api.go
+  - internal/provider/types/source_watchmode.go
   - internal/provider/types/source_weatherstack.go
   - internal/provider/types/source_web_scrapper.go
   - internal/provider/types/source_webflow.go
@@ -5555,7 +5603,9 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceapptivo.go
   - internal/sdk/models/operations/createsourceasana.go
   - internal/sdk/models/operations/createsourceashby.go
+  - internal/sdk/models/operations/createsourceassemblyai.go
   - internal/sdk/models/operations/createsourceauth0.go
+  - internal/sdk/models/operations/createsourceaviationstack.go
   - internal/sdk/models/operations/createsourceawscloudtrail.go
   - internal/sdk/models/operations/createsourceazureblobstorage.go
   - internal/sdk/models/operations/createsourceazuretable.go
@@ -5736,6 +5786,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcehumanitix.go
   - internal/sdk/models/operations/createsourcehuntr.go
   - internal/sdk/models/operations/createsourceilluminabasespace.go
+  - internal/sdk/models/operations/createsourceimagga.go
   - internal/sdk/models/operations/createsourceincidentio.go
   - internal/sdk/models/operations/createsourceinflowinventory.go
   - internal/sdk/models/operations/createsourceinsightful.go
@@ -5882,6 +5933,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourceprestashop.go
   - internal/sdk/models/operations/createsourcepretix.go
   - internal/sdk/models/operations/createsourceprimetric.go
+  - internal/sdk/models/operations/createsourceprintify.go
   - internal/sdk/models/operations/createsourceproductboard.go
   - internal/sdk/models/operations/createsourceproductive.go
   - internal/sdk/models/operations/createsourcepypi.go
@@ -5973,6 +6025,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcesvix.go
   - internal/sdk/models/operations/createsourcesysteme.go
   - internal/sdk/models/operations/createsourcetaboola.go
+  - internal/sdk/models/operations/createsourcetavus.go
   - internal/sdk/models/operations/createsourceteamtailor.go
   - internal/sdk/models/operations/createsourceteamwork.go
   - internal/sdk/models/operations/createsourcetempo.go
@@ -6012,6 +6065,7 @@ generatedFiles:
   - internal/sdk/models/operations/createsourcevwo.go
   - internal/sdk/models/operations/createsourcewaiteraid.go
   - internal/sdk/models/operations/createsourcewasabistatsapi.go
+  - internal/sdk/models/operations/createsourcewatchmode.go
   - internal/sdk/models/operations/createsourceweatherstack.go
   - internal/sdk/models/operations/createsourcewebflow.go
   - internal/sdk/models/operations/createsourcewebscrapper.go
@@ -6131,7 +6185,9 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceapptivo.go
   - internal/sdk/models/operations/deletesourceasana.go
   - internal/sdk/models/operations/deletesourceashby.go
+  - internal/sdk/models/operations/deletesourceassemblyai.go
   - internal/sdk/models/operations/deletesourceauth0.go
+  - internal/sdk/models/operations/deletesourceaviationstack.go
   - internal/sdk/models/operations/deletesourceawscloudtrail.go
   - internal/sdk/models/operations/deletesourceazureblobstorage.go
   - internal/sdk/models/operations/deletesourceazuretable.go
@@ -6312,6 +6368,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcehumanitix.go
   - internal/sdk/models/operations/deletesourcehuntr.go
   - internal/sdk/models/operations/deletesourceilluminabasespace.go
+  - internal/sdk/models/operations/deletesourceimagga.go
   - internal/sdk/models/operations/deletesourceincidentio.go
   - internal/sdk/models/operations/deletesourceinflowinventory.go
   - internal/sdk/models/operations/deletesourceinsightful.go
@@ -6458,6 +6515,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourceprestashop.go
   - internal/sdk/models/operations/deletesourcepretix.go
   - internal/sdk/models/operations/deletesourceprimetric.go
+  - internal/sdk/models/operations/deletesourceprintify.go
   - internal/sdk/models/operations/deletesourceproductboard.go
   - internal/sdk/models/operations/deletesourceproductive.go
   - internal/sdk/models/operations/deletesourcepypi.go
@@ -6549,6 +6607,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcesvix.go
   - internal/sdk/models/operations/deletesourcesysteme.go
   - internal/sdk/models/operations/deletesourcetaboola.go
+  - internal/sdk/models/operations/deletesourcetavus.go
   - internal/sdk/models/operations/deletesourceteamtailor.go
   - internal/sdk/models/operations/deletesourceteamwork.go
   - internal/sdk/models/operations/deletesourcetempo.go
@@ -6588,6 +6647,7 @@ generatedFiles:
   - internal/sdk/models/operations/deletesourcevwo.go
   - internal/sdk/models/operations/deletesourcewaiteraid.go
   - internal/sdk/models/operations/deletesourcewasabistatsapi.go
+  - internal/sdk/models/operations/deletesourcewatchmode.go
   - internal/sdk/models/operations/deletesourceweatherstack.go
   - internal/sdk/models/operations/deletesourcewebflow.go
   - internal/sdk/models/operations/deletesourcewebscrapper.go
@@ -6709,7 +6769,9 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceapptivo.go
   - internal/sdk/models/operations/getsourceasana.go
   - internal/sdk/models/operations/getsourceashby.go
+  - internal/sdk/models/operations/getsourceassemblyai.go
   - internal/sdk/models/operations/getsourceauth0.go
+  - internal/sdk/models/operations/getsourceaviationstack.go
   - internal/sdk/models/operations/getsourceawscloudtrail.go
   - internal/sdk/models/operations/getsourceazureblobstorage.go
   - internal/sdk/models/operations/getsourceazuretable.go
@@ -6890,6 +6952,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcehumanitix.go
   - internal/sdk/models/operations/getsourcehuntr.go
   - internal/sdk/models/operations/getsourceilluminabasespace.go
+  - internal/sdk/models/operations/getsourceimagga.go
   - internal/sdk/models/operations/getsourceincidentio.go
   - internal/sdk/models/operations/getsourceinflowinventory.go
   - internal/sdk/models/operations/getsourceinsightful.go
@@ -7036,6 +7099,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourceprestashop.go
   - internal/sdk/models/operations/getsourcepretix.go
   - internal/sdk/models/operations/getsourceprimetric.go
+  - internal/sdk/models/operations/getsourceprintify.go
   - internal/sdk/models/operations/getsourceproductboard.go
   - internal/sdk/models/operations/getsourceproductive.go
   - internal/sdk/models/operations/getsourcepypi.go
@@ -7127,6 +7191,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcesvix.go
   - internal/sdk/models/operations/getsourcesysteme.go
   - internal/sdk/models/operations/getsourcetaboola.go
+  - internal/sdk/models/operations/getsourcetavus.go
   - internal/sdk/models/operations/getsourceteamtailor.go
   - internal/sdk/models/operations/getsourceteamwork.go
   - internal/sdk/models/operations/getsourcetempo.go
@@ -7166,6 +7231,7 @@ generatedFiles:
   - internal/sdk/models/operations/getsourcevwo.go
   - internal/sdk/models/operations/getsourcewaiteraid.go
   - internal/sdk/models/operations/getsourcewasabistatsapi.go
+  - internal/sdk/models/operations/getsourcewatchmode.go
   - internal/sdk/models/operations/getsourceweatherstack.go
   - internal/sdk/models/operations/getsourcewebflow.go
   - internal/sdk/models/operations/getsourcewebscrapper.go
@@ -7299,7 +7365,9 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceapptivo.go
   - internal/sdk/models/operations/putsourceasana.go
   - internal/sdk/models/operations/putsourceashby.go
+  - internal/sdk/models/operations/putsourceassemblyai.go
   - internal/sdk/models/operations/putsourceauth0.go
+  - internal/sdk/models/operations/putsourceaviationstack.go
   - internal/sdk/models/operations/putsourceawscloudtrail.go
   - internal/sdk/models/operations/putsourceazureblobstorage.go
   - internal/sdk/models/operations/putsourceazuretable.go
@@ -7479,6 +7547,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcehumanitix.go
   - internal/sdk/models/operations/putsourcehuntr.go
   - internal/sdk/models/operations/putsourceilluminabasespace.go
+  - internal/sdk/models/operations/putsourceimagga.go
   - internal/sdk/models/operations/putsourceincidentio.go
   - internal/sdk/models/operations/putsourceinflowinventory.go
   - internal/sdk/models/operations/putsourceinsightful.go
@@ -7625,6 +7694,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourceprestashop.go
   - internal/sdk/models/operations/putsourcepretix.go
   - internal/sdk/models/operations/putsourceprimetric.go
+  - internal/sdk/models/operations/putsourceprintify.go
   - internal/sdk/models/operations/putsourceproductboard.go
   - internal/sdk/models/operations/putsourceproductive.go
   - internal/sdk/models/operations/putsourcepypi.go
@@ -7716,6 +7786,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcesvix.go
   - internal/sdk/models/operations/putsourcesysteme.go
   - internal/sdk/models/operations/putsourcetaboola.go
+  - internal/sdk/models/operations/putsourcetavus.go
   - internal/sdk/models/operations/putsourceteamtailor.go
   - internal/sdk/models/operations/putsourceteamwork.go
   - internal/sdk/models/operations/putsourcetempo.go
@@ -7755,6 +7826,7 @@ generatedFiles:
   - internal/sdk/models/operations/putsourcevwo.go
   - internal/sdk/models/operations/putsourcewaiteraid.go
   - internal/sdk/models/operations/putsourcewasabistatsapi.go
+  - internal/sdk/models/operations/putsourcewatchmode.go
   - internal/sdk/models/operations/putsourceweatherstack.go
   - internal/sdk/models/operations/putsourcewebflow.go
   - internal/sdk/models/operations/putsourcewebscrapper.go
@@ -7817,7 +7889,6 @@ generatedFiles:
   - internal/sdk/models/shared/connectionsyncmodeenum.go
   - internal/sdk/models/shared/createdeclarativesourcedefinitionrequest.go
   - internal/sdk/models/shared/createdefinitionrequest.go
-  - internal/sdk/models/shared/declarativemanifest.go
   - internal/sdk/models/shared/declarativesourcedefinitionresponse.go
   - internal/sdk/models/shared/declarativesourcedefinitionsresponse.go
   - internal/sdk/models/shared/definitionresponse.go
@@ -8129,10 +8200,18 @@ generatedFiles:
   - internal/sdk/models/shared/sourceashbycreaterequest.go
   - internal/sdk/models/shared/sourceashbyputrequest.go
   - internal/sdk/models/shared/sourceashbyupdate.go
+  - internal/sdk/models/shared/sourceassemblyai.go
+  - internal/sdk/models/shared/sourceassemblyaicreaterequest.go
+  - internal/sdk/models/shared/sourceassemblyaiputrequest.go
+  - internal/sdk/models/shared/sourceassemblyaiupdate.go
   - internal/sdk/models/shared/sourceauth0.go
   - internal/sdk/models/shared/sourceauth0createrequest.go
   - internal/sdk/models/shared/sourceauth0putrequest.go
   - internal/sdk/models/shared/sourceauth0update.go
+  - internal/sdk/models/shared/sourceaviationstack.go
+  - internal/sdk/models/shared/sourceaviationstackcreaterequest.go
+  - internal/sdk/models/shared/sourceaviationstackputrequest.go
+  - internal/sdk/models/shared/sourceaviationstackupdate.go
   - internal/sdk/models/shared/sourceawscloudtrail.go
   - internal/sdk/models/shared/sourceawscloudtrailcreaterequest.go
   - internal/sdk/models/shared/sourceawscloudtrailputrequest.go
@@ -8848,6 +8927,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourceilluminabasespacecreaterequest.go
   - internal/sdk/models/shared/sourceilluminabasespaceputrequest.go
   - internal/sdk/models/shared/sourceilluminabasespaceupdate.go
+  - internal/sdk/models/shared/sourceimagga.go
+  - internal/sdk/models/shared/sourceimaggacreaterequest.go
+  - internal/sdk/models/shared/sourceimaggaputrequest.go
+  - internal/sdk/models/shared/sourceimaggaupdate.go
   - internal/sdk/models/shared/sourceincidentio.go
   - internal/sdk/models/shared/sourceincidentiocreaterequest.go
   - internal/sdk/models/shared/sourceincidentioputrequest.go
@@ -9433,6 +9516,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourceprimetriccreaterequest.go
   - internal/sdk/models/shared/sourceprimetricputrequest.go
   - internal/sdk/models/shared/sourceprimetricupdate.go
+  - internal/sdk/models/shared/sourceprintify.go
+  - internal/sdk/models/shared/sourceprintifycreaterequest.go
+  - internal/sdk/models/shared/sourceprintifyputrequest.go
+  - internal/sdk/models/shared/sourceprintifyupdate.go
   - internal/sdk/models/shared/sourceproductboard.go
   - internal/sdk/models/shared/sourceproductboardcreaterequest.go
   - internal/sdk/models/shared/sourceproductboardputrequest.go
@@ -9800,6 +9887,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcetaboolacreaterequest.go
   - internal/sdk/models/shared/sourcetaboolaputrequest.go
   - internal/sdk/models/shared/sourcetaboolaupdate.go
+  - internal/sdk/models/shared/sourcetavus.go
+  - internal/sdk/models/shared/sourcetavuscreaterequest.go
+  - internal/sdk/models/shared/sourcetavusputrequest.go
+  - internal/sdk/models/shared/sourcetavusupdate.go
   - internal/sdk/models/shared/sourceteamtailor.go
   - internal/sdk/models/shared/sourceteamtailorcreaterequest.go
   - internal/sdk/models/shared/sourceteamtailorputrequest.go
@@ -9956,6 +10047,10 @@ generatedFiles:
   - internal/sdk/models/shared/sourcewasabistatsapicreaterequest.go
   - internal/sdk/models/shared/sourcewasabistatsapiputrequest.go
   - internal/sdk/models/shared/sourcewasabistatsapiupdate.go
+  - internal/sdk/models/shared/sourcewatchmode.go
+  - internal/sdk/models/shared/sourcewatchmodecreaterequest.go
+  - internal/sdk/models/shared/sourcewatchmodeputrequest.go
+  - internal/sdk/models/shared/sourcewatchmodeupdate.go
   - internal/sdk/models/shared/sourceweatherstack.go
   - internal/sdk/models/shared/sourceweatherstackcreaterequest.go
   - internal/sdk/models/shared/sourceweatherstackputrequest.go
@@ -21752,7 +21847,7 @@ examples:
   createDestinationAzureBlobStorage:
     speakeasy-default-create-destination-azure-blob-storage:
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "dc46159d-d5ea-46c0-94a1-00f8d95a4cda", "configuration": {"azure_blob_storage_endpoint_domain_name": "blob.core.windows.net", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_account_key": "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd==", "azure_blob_storage_output_buffer_size": 5, "azure_blob_storage_spill_size": 500, "format": {"file_extension": false}}}
+        application/json: {"name": "<value>", "workspaceId": "dc46159d-d5ea-46c0-94a1-00f8d95a4cda", "configuration": {"azure_blob_storage_endpoint_domain_name": "blob.core.windows.net", "azure_blob_storage_account_name": "mystorageaccount", "azure_blob_storage_container_name": "mycontainer", "shared_access_signature": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "azure_blob_storage_account_key": "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd==", "azure_blob_storage_spill_size": 500, "format": {"format_type": "CSV", "flattening": "No flattening", "file_extension": false}}}
       responses:
         "200":
           application/json: {"destinationId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "destinationType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 937397}
@@ -21770,7 +21865,7 @@ examples:
         path:
           destinationId: "<value>"
       requestBody:
-        application/json: {"name": "<value>", "workspaceId": "1ed2fc1b-9c31-4d38-aefd-bf810e9b845e", "configuration": {"azure_blob_storage_endpoint_domain_name": "blob.core.windows.net", "azure_blob_storage_container_name": "airbytetescontainername", "azure_blob_storage_account_name": "airbyte5storage", "azure_blob_storage_account_key": "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd==", "azure_blob_storage_output_buffer_size": 5, "azure_blob_storage_spill_size": 500, "format": {"flattening": "No flattening", "file_extension": false}}}
+        application/json: {"name": "<value>", "workspaceId": "1ed2fc1b-9c31-4d38-aefd-bf810e9b845e", "configuration": {"azure_blob_storage_endpoint_domain_name": "blob.core.windows.net", "azure_blob_storage_account_name": "mystorageaccount", "azure_blob_storage_container_name": "mycontainer", "shared_access_signature": "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY", "azure_blob_storage_account_key": "Z8ZkZpteggFx394vm+PJHnGTvdRncaYS+JhLKdj789YNmD+iyGTnG+PV+POiuYNhBg/ACS+LKjd%4FG3FHGN12Nd==", "azure_blob_storage_spill_size": 500, "format": {"format_type": "CSV", "flattening": "No flattening", "file_extension": false}}}
   deleteDestinationAzureBlobStorage:
     speakeasy-default-delete-destination-azure-blob-storage:
       parameters:
@@ -24673,6 +24768,144 @@ examples:
           sourceId: "<value>"
   deleteSourceSvix:
     speakeasy-default-delete-source-svix:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceAssemblyai:
+    speakeasy-default-create-source-assemblyai:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 508930}
+  getSourceAssemblyai:
+    speakeasy-default-get-source-assemblyai:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 431376}
+  putSourceAssemblyai:
+    speakeasy-default-put-source-assemblyai:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceAssemblyai:
+    speakeasy-default-delete-source-assemblyai:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceAviationstack:
+    speakeasy-default-create-source-aviationstack:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 320905}
+  getSourceAviationstack:
+    speakeasy-default-get-source-aviationstack:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 917628}
+  putSourceAviationstack:
+    speakeasy-default-put-source-aviationstack:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceAviationstack:
+    speakeasy-default-delete-source-aviationstack:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceImagga:
+    speakeasy-default-create-source-imagga:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 570766}
+  getSourceImagga:
+    speakeasy-default-get-source-imagga:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 280895}
+  putSourceImagga:
+    speakeasy-default-put-source-imagga:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceImagga:
+    speakeasy-default-delete-source-imagga:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourcePrintify:
+    speakeasy-default-create-source-printify:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 792235}
+  getSourcePrintify:
+    speakeasy-default-get-source-printify:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 876758}
+  putSourcePrintify:
+    speakeasy-default-put-source-printify:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourcePrintify:
+    speakeasy-default-delete-source-printify:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceTavus:
+    speakeasy-default-create-source-tavus:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 146328}
+  getSourceTavus:
+    speakeasy-default-get-source-tavus:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 356366}
+  putSourceTavus:
+    speakeasy-default-put-source-tavus:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceTavus:
+    speakeasy-default-delete-source-tavus:
+      parameters:
+        path:
+          sourceId: "<value>"
+  createSourceWatchmode:
+    speakeasy-default-create-source-watchmode:
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 672969}
+  getSourceWatchmode:
+    speakeasy-default-get-source-watchmode:
+      parameters:
+        path:
+          sourceId: "<value>"
+      responses:
+        "200":
+          application/json: {"sourceId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team Postgres", "sourceType": "postgres", "definitionId": "321d9b60-11d1-44cb-8c92-c246d53bf98e", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e", "configuration": {"user": "charles"}, "createdAt": 445218}
+  putSourceWatchmode:
+    speakeasy-default-put-source-watchmode:
+      parameters:
+        path:
+          sourceId: "<value>"
+  deleteSourceWatchmode:
+    speakeasy-default-delete-source-watchmode:
       parameters:
         path:
           sourceId: "<value>"

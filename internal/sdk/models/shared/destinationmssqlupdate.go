@@ -314,8 +314,10 @@ type DestinationMssqlUpdateBulkLoad struct {
 	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
 	// The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
-	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
-	SharedAccessSignature string `json:"shared_access_signature"`
+	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key
+	SharedAccessSignature *string `json:"shared_access_signature,omitempty"`
+	// The Azure blob storage account key. Mutually exclusive with a Shared Access Signature
+	AzureBlobStorageAccountKey *string `json:"azure_blob_storage_account_key,omitempty"`
 	// Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
 	BulkLoadDataSource string `json:"bulk_load_data_source"`
 	// When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance.
@@ -355,11 +357,18 @@ func (o *DestinationMssqlUpdateBulkLoad) GetAzureBlobStorageContainerName() stri
 	return o.AzureBlobStorageContainerName
 }
 
-func (o *DestinationMssqlUpdateBulkLoad) GetSharedAccessSignature() string {
+func (o *DestinationMssqlUpdateBulkLoad) GetSharedAccessSignature() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.SharedAccessSignature
+}
+
+func (o *DestinationMssqlUpdateBulkLoad) GetAzureBlobStorageAccountKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AzureBlobStorageAccountKey
 }
 
 func (o *DestinationMssqlUpdateBulkLoad) GetBulkLoadDataSource() string {

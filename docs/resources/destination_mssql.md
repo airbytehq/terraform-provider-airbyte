@@ -98,13 +98,14 @@ Required:
 - `azure_blob_storage_account_name` (String) The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts
 - `azure_blob_storage_container_name` (String) The name of the Azure Blob Storage container. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#containers
 - `bulk_load_data_source` (String) Specifies the external data source name configured in MSSQL, which references the Azure Blob container. See: https://learn.microsoft.com/sql/t-sql/statements/bulk-insert-transact-sql
-- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
+- `azure_blob_storage_account_key` (String, Sensitive) The Azure blob storage account key. Mutually exclusive with a Shared Access Signature
 - `bulk_load_validate_values_pre_load` (Boolean) When enabled, Airbyte will validate all values before loading them into the destination table. This provides stronger data integrity guarantees but may significantly impact performance. Default: false
 - `load_type` (String) Default: "BULK"; must be "BULK"
+- `shared_access_signature` (String, Sensitive) A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key
 
 
 <a id="nestedatt--configuration--load_type--insert_load"></a>

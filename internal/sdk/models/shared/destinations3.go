@@ -868,17 +868,17 @@ func (e *DestinationS3SchemasFormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationS3Flattening string
+type DestinationS3SchemasFlattening string
 
 const (
-	DestinationS3FlatteningNoFlattening        DestinationS3Flattening = "No flattening"
-	DestinationS3FlatteningRootLevelFlattening DestinationS3Flattening = "Root level flattening"
+	DestinationS3SchemasFlatteningNoFlattening        DestinationS3SchemasFlattening = "No flattening"
+	DestinationS3SchemasFlatteningRootLevelFlattening DestinationS3SchemasFlattening = "Root level flattening"
 )
 
-func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
+func (e DestinationS3SchemasFlattening) ToPointer() *DestinationS3SchemasFlattening {
 	return &e
 }
-func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3SchemasFlattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -887,10 +887,10 @@ func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3Flattening(v)
+		*e = DestinationS3SchemasFlattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3Flattening: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3SchemasFlattening: %v", v)
 	}
 }
 
@@ -1066,7 +1066,7 @@ func (u DestinationS3SchemasCompression) MarshalJSON() ([]byte, error) {
 
 type DestinationS3JSONLinesNewlineDelimitedJSON struct {
 	FormatType *DestinationS3SchemasFormatType `default:"JSONL" json:"format_type"`
-	Flattening *DestinationS3Flattening        `default:"No flattening" json:"flattening"`
+	Flattening *DestinationS3SchemasFlattening `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression          *DestinationS3SchemasCompression `json:"compression,omitempty"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
@@ -1090,7 +1090,7 @@ func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFormatType() *Destinatio
 	return o.FormatType
 }
 
-func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationS3Flattening {
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationS3SchemasFlattening {
 	if o == nil {
 		return nil
 	}
@@ -1134,17 +1134,17 @@ func (e *DestinationS3FormatType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type Flattening string
+type DestinationS3Flattening string
 
 const (
-	FlatteningNoFlattening        Flattening = "No flattening"
-	FlatteningRootLevelFlattening Flattening = "Root level flattening"
+	DestinationS3FlatteningNoFlattening        DestinationS3Flattening = "No flattening"
+	DestinationS3FlatteningRootLevelFlattening DestinationS3Flattening = "Root level flattening"
 )
 
-func (e Flattening) ToPointer() *Flattening {
+func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
 	return &e
 }
-func (e *Flattening) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1153,10 +1153,10 @@ func (e *Flattening) UnmarshalJSON(data []byte) error {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = Flattening(v)
+		*e = DestinationS3Flattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Flattening: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3Flattening: %v", v)
 	}
 }
 
@@ -1332,7 +1332,7 @@ func (u DestinationS3Compression) MarshalJSON() ([]byte, error) {
 
 type DestinationS3CSVCommaSeparatedValues struct {
 	FormatType *DestinationS3FormatType `default:"CSV" json:"format_type"`
-	Flattening *Flattening              `default:"No flattening" json:"flattening"`
+	Flattening *DestinationS3Flattening `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression          *DestinationS3Compression `json:"compression,omitempty"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
@@ -1356,7 +1356,7 @@ func (o *DestinationS3CSVCommaSeparatedValues) GetFormatType() *DestinationS3For
 	return o.FormatType
 }
 
-func (o *DestinationS3CSVCommaSeparatedValues) GetFlattening() *Flattening {
+func (o *DestinationS3CSVCommaSeparatedValues) GetFlattening() *DestinationS3Flattening {
 	if o == nil {
 		return nil
 	}

@@ -92,6 +92,11 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 											validators.IsValidJSON(),
 										},
 									},
+									"azure_blob_storage_account_key": schema.StringAttribute{
+										Optional:    true,
+										Sensitive:   true,
+										Description: `The Azure blob storage account key. Mutually exclusive with a Shared Access Signature`,
+									},
 									"azure_blob_storage_account_name": schema.StringAttribute{
 										Required:    true,
 										Description: `The name of the Azure Blob Storage account. See: https://learn.microsoft.com/azure/storage/blobs/storage-blobs-introduction#storage-accounts`,
@@ -120,9 +125,9 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"shared_access_signature": schema.StringAttribute{
-										Required:    true,
+										Optional:    true,
 										Sensitive:   true,
-										Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview`,
+										Description: `A shared access signature (SAS) provides secure delegated access to resources in your storage account. See: https://learn.microsoft.com/azure/storage/common/storage-sas-overview.Mutually exclusive with an account key`,
 									},
 								},
 								Description: `Configuration details for using the BULK loading mechanism.`,
