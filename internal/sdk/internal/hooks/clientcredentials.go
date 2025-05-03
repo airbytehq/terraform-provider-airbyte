@@ -118,13 +118,14 @@ func (c *clientCredentialsHook) AfterError(ctx AfterErrorContext, res *http.Resp
 }
 
 func (c *clientCredentialsHook) doTokenRequest(ctx HookContext, credentials *credentials, scopes []string) (*session, error) {
-	values := url.Values{}
-	values.Set("grant_type", "client_credentials")
-	values.Set("client_id", credentials.ClientID)
-	values.Set("client_secret", credentials.ClientSecret)
+	payload := map[string]string{
+		"grant_type":    "client_credentials",
+		"client_id":     credentials.ClientID,
+		"client_secret": credentials.ClientSecret,
+	}
 
 	if len(scopes) > 0 {
-		values.Set("scope", strings.Join(scopes, " "))
+		payload["scope"] = strings.Join(scopes, " ")
 	}
 
 	tokenURL := credentials.TokenURL
@@ -139,12 +140,14 @@ func (c *clientCredentialsHook) doTokenRequest(ctx HookContext, credentials *cre
 		}
 	}
 
-	req, err := http.NewRequestWithContext(ctx.Context, http.MethodPost, tokenURL, bytes.NewBufferString(values.Encode()))
+	jsonPayload, _ := json.Marshal(payload)
+
+	req, err := http.NewRequestWithContext(ctx.Context, http.MethodPost, tokenURL, bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create token request: %w", err)
 	}
 
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/json")
 
 	res, err := c.client.Do(req)
 	if err != nil {
