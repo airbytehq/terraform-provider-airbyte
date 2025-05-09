@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -291,7 +290,12 @@ func (r *SourceXkcdResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := data.ToSharedSourceXkcdCreateRequest()
+	request, requestDiags := data.ToSharedSourceXkcdCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Sources.CreateSourceXkcd(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -312,15 +316,24 @@ func (r *SourceXkcdResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
 
-	request1 := operations.GetSourceXkcdRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceXkcd(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetSourceXkcdRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceXkcd(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -340,8 +353,17 @@ func (r *SourceXkcdResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -365,13 +387,13 @@ func (r *SourceXkcdResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsGetSourceXkcdRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetSourceXkcdRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.GetSourceXkcd(ctx, request)
+	res, err := r.client.Sources.GetSourceXkcd(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -395,7 +417,11 @@ func (r *SourceXkcdResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -415,15 +441,13 @@ func (r *SourceXkcdResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsPutSourceXkcdRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	sourceXkcdPutRequest := data.ToSharedSourceXkcdPutRequest()
-	request := operations.PutSourceXkcdRequest{
-		SourceID:             sourceID,
-		SourceXkcdPutRequest: sourceXkcdPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.PutSourceXkcd(ctx, request)
+	res, err := r.client.Sources.PutSourceXkcd(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -439,14 +463,19 @@ func (r *SourceXkcdResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceId1 string
-	sourceId1 = data.SourceID.ValueString()
 
-	request1 := operations.GetSourceXkcdRequest{
-		SourceID: sourceId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceXkcd(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetSourceXkcdRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceXkcd(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -466,8 +495,17 @@ func (r *SourceXkcdResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -491,13 +529,13 @@ func (r *SourceXkcdResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteSourceXkcdRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteSourceXkcdRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.DeleteSourceXkcd(ctx, request)
+	res, err := r.client.Sources.DeleteSourceXkcd(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

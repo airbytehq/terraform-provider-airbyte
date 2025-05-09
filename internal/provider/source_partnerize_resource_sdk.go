@@ -3,12 +3,17 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizeCreateRequest() *shared.SourcePartnerizeCreateRequest {
+func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizeCreateRequest(ctx context.Context) (*shared.SourcePartnerizeCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -44,10 +49,88 @@ func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizeCreateRequest() 
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourcePartnerizeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizePutRequest(ctx context.Context) (*shared.SourcePartnerizePutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var userAPIKey string
+	userAPIKey = r.Configuration.UserAPIKey.ValueString()
+
+	var applicationKey string
+	applicationKey = r.Configuration.ApplicationKey.ValueString()
+
+	configuration := shared.SourcePartnerizeUpdate{
+		UserAPIKey:     userAPIKey,
+		ApplicationKey: applicationKey,
+	}
+	out := shared.SourcePartnerizePutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePartnerizeResourceModel) ToOperationsPutSourcePartnerizeRequest(ctx context.Context) (*operations.PutSourcePartnerizeRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourcePartnerizePutRequest, sourcePartnerizePutRequestDiags := r.ToSharedSourcePartnerizePutRequest(ctx)
+	diags.Append(sourcePartnerizePutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourcePartnerizeRequest{
+		SourceID:                   sourceID,
+		SourcePartnerizePutRequest: sourcePartnerizePutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePartnerizeResourceModel) ToOperationsGetSourcePartnerizeRequest(ctx context.Context) (*operations.GetSourcePartnerizeRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourcePartnerizeRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePartnerizeResourceModel) ToOperationsDeleteSourcePartnerizeRequest(ctx context.Context) (*operations.DeleteSourcePartnerizeRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourcePartnerizeRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePartnerizeResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -72,19 +155,19 @@ func (r *SourcePartnerizeResourceModel) RefreshFromSharedSourceResponse(resp *sh
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -92,29 +175,6 @@ func (r *SourcePartnerizeResourceModel) RefreshFromSharedSourceResponse(resp *sh
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizePutRequest() *shared.SourcePartnerizePutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var userAPIKey string
-	userAPIKey = r.Configuration.UserAPIKey.ValueString()
-
-	var applicationKey string
-	applicationKey = r.Configuration.ApplicationKey.ValueString()
-
-	configuration := shared.SourcePartnerizeUpdate{
-		UserAPIKey:     userAPIKey,
-		ApplicationKey: applicationKey,
-	}
-	out := shared.SourcePartnerizePutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

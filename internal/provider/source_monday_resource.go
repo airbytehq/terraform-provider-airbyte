@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -353,7 +352,12 @@ func (r *SourceMondayResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request := data.ToSharedSourceMondayCreateRequest()
+	request, requestDiags := data.ToSharedSourceMondayCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Sources.CreateSourceMonday(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -374,15 +378,24 @@ func (r *SourceMondayResource) Create(ctx context.Context, req resource.CreateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
 
-	request1 := operations.GetSourceMondayRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceMonday(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetSourceMondayRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceMonday(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -402,8 +415,17 @@ func (r *SourceMondayResource) Create(ctx context.Context, req resource.CreateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -427,13 +449,13 @@ func (r *SourceMondayResource) Read(ctx context.Context, req resource.ReadReques
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsGetSourceMondayRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetSourceMondayRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.GetSourceMonday(ctx, request)
+	res, err := r.client.Sources.GetSourceMonday(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -457,7 +479,11 @@ func (r *SourceMondayResource) Read(ctx context.Context, req resource.ReadReques
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -477,15 +503,13 @@ func (r *SourceMondayResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsPutSourceMondayRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	sourceMondayPutRequest := data.ToSharedSourceMondayPutRequest()
-	request := operations.PutSourceMondayRequest{
-		SourceID:               sourceID,
-		SourceMondayPutRequest: sourceMondayPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.PutSourceMonday(ctx, request)
+	res, err := r.client.Sources.PutSourceMonday(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -501,14 +525,19 @@ func (r *SourceMondayResource) Update(ctx context.Context, req resource.UpdateRe
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceId1 string
-	sourceId1 = data.SourceID.ValueString()
 
-	request1 := operations.GetSourceMondayRequest{
-		SourceID: sourceId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceMonday(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetSourceMondayRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceMonday(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -528,8 +557,17 @@ func (r *SourceMondayResource) Update(ctx context.Context, req resource.UpdateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -553,13 +591,13 @@ func (r *SourceMondayResource) Delete(ctx context.Context, req resource.DeleteRe
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteSourceMondayRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteSourceMondayRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.DeleteSourceMonday(ctx, request)
+	res, err := r.client.Sources.DeleteSourceMonday(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

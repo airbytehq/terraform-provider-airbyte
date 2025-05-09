@@ -8,7 +8,7 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     format = {
       # ...
     }
-    shared_access_signature = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
+    shared_access_signature = "sv=2021-08-06&st=2025-04-11T00%3A00%3A00Z&se=2025-04-12T00%3A00%3A00Z&sr=b&sp=rw&sig=abcdefghijklmnopqrstuvwxyz1234567890%2Fabcdefg%3D"
   }
   definition_id = "0b662a17-77d2-477f-ba0e-7117eb18de2e"
   name          = "...my_name..."

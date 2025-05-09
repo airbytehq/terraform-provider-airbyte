@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceMailersend struct {
-	APIToken  types.String `tfsdk:"api_token"`
-	DomainID  types.String `tfsdk:"domain_id"`
-	StartDate types.Number `tfsdk:"start_date"`
+	APIToken  types.String  `tfsdk:"api_token"`
+	DomainID  types.String  `tfsdk:"domain_id"`
+	StartDate types.Float64 `tfsdk:"start_date"`
 }

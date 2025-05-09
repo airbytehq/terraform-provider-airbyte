@@ -3,13 +3,18 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
-func (r *SourcePandadocResourceModel) ToSharedSourcePandadocCreateRequest() *shared.SourcePandadocCreateRequest {
+func (r *SourcePandadocResourceModel) ToSharedSourcePandadocCreateRequest(ctx context.Context) (*shared.SourcePandadocCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -43,10 +48,86 @@ func (r *SourcePandadocResourceModel) ToSharedSourcePandadocCreateRequest() *sha
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourcePandadocResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourcePandadocResourceModel) ToSharedSourcePandadocPutRequest(ctx context.Context) (*shared.SourcePandadocPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourcePandadocUpdate{
+		APIKey:    apiKey,
+		StartDate: startDate,
+	}
+	out := shared.SourcePandadocPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePandadocResourceModel) ToOperationsPutSourcePandadocRequest(ctx context.Context) (*operations.PutSourcePandadocRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourcePandadocPutRequest, sourcePandadocPutRequestDiags := r.ToSharedSourcePandadocPutRequest(ctx)
+	diags.Append(sourcePandadocPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourcePandadocRequest{
+		SourceID:                 sourceID,
+		SourcePandadocPutRequest: sourcePandadocPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePandadocResourceModel) ToOperationsGetSourcePandadocRequest(ctx context.Context) (*operations.GetSourcePandadocRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourcePandadocRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePandadocResourceModel) ToOperationsDeleteSourcePandadocRequest(ctx context.Context) (*operations.DeleteSourcePandadocRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourcePandadocRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourcePandadocResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -71,19 +152,19 @@ func (r *SourcePandadocResourceModel) RefreshFromSharedSourceResponse(resp *shar
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -91,27 +172,6 @@ func (r *SourcePandadocResourceModel) RefreshFromSharedSourceResponse(resp *shar
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourcePandadocResourceModel) ToSharedSourcePandadocPutRequest() *shared.SourcePandadocPutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	configuration := shared.SourcePandadocUpdate{
-		APIKey:    apiKey,
-		StartDate: startDate,
-	}
-	out := shared.SourcePandadocPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

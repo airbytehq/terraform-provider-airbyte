@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
@@ -250,7 +249,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -281,7 +280,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -350,7 +349,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -439,7 +438,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -470,7 +469,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -539,7 +538,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -628,7 +627,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -659,7 +658,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -728,7 +727,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -820,7 +819,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -851,7 +850,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -920,7 +919,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1027,7 +1026,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1058,7 +1057,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1127,7 +1126,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1216,7 +1215,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -1247,7 +1246,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -1316,7 +1315,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																		"double_value": schema.SingleNestedAttribute{
 																			Optional: true,
 																			Attributes: map[string]schema.Attribute{
-																				"value": schema.NumberAttribute{
+																				"value": schema.Float64Attribute{
 																					Required: true,
 																				},
 																			},
@@ -1405,7 +1404,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -1436,7 +1435,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -1505,7 +1504,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																				"double_value": schema.SingleNestedAttribute{
 																					Optional: true,
 																					Attributes: map[string]schema.Attribute{
-																						"value": schema.NumberAttribute{
+																						"value": schema.Float64Attribute{
 																							Required: true,
 																						},
 																					},
@@ -1597,7 +1596,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1628,7 +1627,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -1697,7 +1696,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 																					"double_value": schema.SingleNestedAttribute{
 																						Optional: true,
 																						Attributes: map[string]schema.Attribute{
-																							"value": schema.NumberAttribute{
+																							"value": schema.Float64Attribute{
 																								Required: true,
 																							},
 																						},
@@ -2054,7 +2053,12 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		return
 	}
 
-	request := data.ToSharedSourceGoogleAnalyticsDataAPICreateRequest()
+	request, requestDiags := data.ToSharedSourceGoogleAnalyticsDataAPICreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Sources.CreateSourceGoogleAnalyticsDataAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -2075,15 +2079,24 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
 
-	request1 := operations.GetSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetSourceGoogleAnalyticsDataAPIRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -2103,8 +2116,17 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Create(ctx context.Context, req r
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -2128,13 +2150,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Read(ctx context.Context, req res
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsGetSourceGoogleAnalyticsDataAPIRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, request)
+	res, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -2158,7 +2180,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Read(ctx context.Context, req res
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -2178,15 +2204,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Update(ctx context.Context, req r
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsPutSourceGoogleAnalyticsDataAPIRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	sourceGoogleAnalyticsDataAPIPutRequest := data.ToSharedSourceGoogleAnalyticsDataAPIPutRequest()
-	request := operations.PutSourceGoogleAnalyticsDataAPIRequest{
-		SourceID:                               sourceID,
-		SourceGoogleAnalyticsDataAPIPutRequest: sourceGoogleAnalyticsDataAPIPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.PutSourceGoogleAnalyticsDataAPI(ctx, request)
+	res, err := r.client.Sources.PutSourceGoogleAnalyticsDataAPI(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -2202,14 +2226,19 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Update(ctx context.Context, req r
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceId1 string
-	sourceId1 = data.SourceID.ValueString()
 
-	request1 := operations.GetSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetSourceGoogleAnalyticsDataAPIRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceGoogleAnalyticsDataAPI(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -2229,8 +2258,17 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Update(ctx context.Context, req r
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -2254,13 +2292,13 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Delete(ctx context.Context, req r
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteSourceGoogleAnalyticsDataAPIRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.DeleteSourceGoogleAnalyticsDataAPI(ctx, request)
+	res, err := r.client.Sources.DeleteSourceGoogleAnalyticsDataAPI(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

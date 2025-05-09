@@ -3,13 +3,18 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
-func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnectorCreateRequest() *shared.SourceFreeAgentConnectorCreateRequest {
+func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnectorCreateRequest(ctx context.Context) (*shared.SourceFreeAgentConnectorCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -39,7 +44,7 @@ func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnector
 	}
 	payrollYear := new(float64)
 	if !r.Configuration.PayrollYear.IsUnknown() && !r.Configuration.PayrollYear.IsNull() {
-		*payrollYear, _ = r.Configuration.PayrollYear.ValueBigFloat().Float64()
+		*payrollYear = r.Configuration.PayrollYear.ValueFloat64()
 	} else {
 		payrollYear = nil
 	}
@@ -63,10 +68,106 @@ func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnector
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourceFreeAgentConnectorResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnectorPutRequest(ctx context.Context) (*shared.SourceFreeAgentConnectorPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	var clientRefreshToken2 string
+	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
+
+	updatedSince := new(time.Time)
+	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
+		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
+	} else {
+		updatedSince = nil
+	}
+	payrollYear := new(float64)
+	if !r.Configuration.PayrollYear.IsUnknown() && !r.Configuration.PayrollYear.IsNull() {
+		*payrollYear = r.Configuration.PayrollYear.ValueFloat64()
+	} else {
+		payrollYear = nil
+	}
+	configuration := shared.SourceFreeAgentConnectorUpdate{
+		ClientID:            clientID,
+		ClientSecret:        clientSecret,
+		ClientRefreshToken2: clientRefreshToken2,
+		UpdatedSince:        updatedSince,
+		PayrollYear:         payrollYear,
+	}
+	out := shared.SourceFreeAgentConnectorPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceFreeAgentConnectorResourceModel) ToOperationsPutSourceFreeAgentConnectorRequest(ctx context.Context) (*operations.PutSourceFreeAgentConnectorRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourceFreeAgentConnectorPutRequest, sourceFreeAgentConnectorPutRequestDiags := r.ToSharedSourceFreeAgentConnectorPutRequest(ctx)
+	diags.Append(sourceFreeAgentConnectorPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourceFreeAgentConnectorRequest{
+		SourceID:                           sourceID,
+		SourceFreeAgentConnectorPutRequest: sourceFreeAgentConnectorPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceFreeAgentConnectorResourceModel) ToOperationsGetSourceFreeAgentConnectorRequest(ctx context.Context) (*operations.GetSourceFreeAgentConnectorRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourceFreeAgentConnectorRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceFreeAgentConnectorResourceModel) ToOperationsDeleteSourceFreeAgentConnectorRequest(ctx context.Context) (*operations.DeleteSourceFreeAgentConnectorRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceFreeAgentConnectorRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceFreeAgentConnectorResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -91,19 +192,19 @@ func (r *SourceFreeAgentConnectorResourceModel) RefreshFromSharedSourceResponse(
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -111,47 +212,6 @@ func (r *SourceFreeAgentConnectorResourceModel) RefreshFromSharedSourceResponse(
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnectorPutRequest() *shared.SourceFreeAgentConnectorPutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var clientRefreshToken2 string
-	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
-
-	updatedSince := new(time.Time)
-	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
-		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
-	} else {
-		updatedSince = nil
-	}
-	payrollYear := new(float64)
-	if !r.Configuration.PayrollYear.IsUnknown() && !r.Configuration.PayrollYear.IsNull() {
-		*payrollYear, _ = r.Configuration.PayrollYear.ValueBigFloat().Float64()
-	} else {
-		payrollYear = nil
-	}
-	configuration := shared.SourceFreeAgentConnectorUpdate{
-		ClientID:            clientID,
-		ClientSecret:        clientSecret,
-		ClientRefreshToken2: clientRefreshToken2,
-		UpdatedSince:        updatedSince,
-		PayrollYear:         payrollYear,
-	}
-	out := shared.SourceFreeAgentConnectorPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

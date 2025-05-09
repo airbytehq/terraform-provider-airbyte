@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -304,7 +303,12 @@ func (r *DestinationSftpJSONResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	request := data.ToSharedDestinationSftpJSONCreateRequest()
+	request, requestDiags := data.ToSharedDestinationSftpJSONCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Destinations.CreateDestinationSftpJSON(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -325,15 +329,24 @@ func (r *DestinationSftpJSONResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
-	request1 := operations.GetDestinationSftpJSONRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationSftpJSON(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetDestinationSftpJSONRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationSftpJSON(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -353,8 +366,17 @@ func (r *DestinationSftpJSONResource) Create(ctx context.Context, req resource.C
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -378,13 +400,13 @@ func (r *DestinationSftpJSONResource) Read(ctx context.Context, req resource.Rea
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsGetDestinationSftpJSONRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetDestinationSftpJSONRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.GetDestinationSftpJSON(ctx, request)
+	res, err := r.client.Destinations.GetDestinationSftpJSON(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -408,7 +430,11 @@ func (r *DestinationSftpJSONResource) Read(ctx context.Context, req resource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -428,15 +454,13 @@ func (r *DestinationSftpJSONResource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsPutDestinationSftpJSONRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	destinationSftpJSONPutRequest := data.ToSharedDestinationSftpJSONPutRequest()
-	request := operations.PutDestinationSftpJSONRequest{
-		DestinationID:                 destinationID,
-		DestinationSftpJSONPutRequest: destinationSftpJSONPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.PutDestinationSftpJSON(ctx, request)
+	res, err := r.client.Destinations.PutDestinationSftpJSON(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -452,14 +476,19 @@ func (r *DestinationSftpJSONResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationId1 string
-	destinationId1 = data.DestinationID.ValueString()
 
-	request1 := operations.GetDestinationSftpJSONRequest{
-		DestinationID: destinationId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationSftpJSON(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetDestinationSftpJSONRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationSftpJSON(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -479,8 +508,17 @@ func (r *DestinationSftpJSONResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -504,13 +542,13 @@ func (r *DestinationSftpJSONResource) Delete(ctx context.Context, req resource.D
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteDestinationSftpJSONRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteDestinationSftpJSONRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.DeleteDestinationSftpJSON(ctx, request)
+	res, err := r.client.Destinations.DeleteDestinationSftpJSON(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

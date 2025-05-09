@@ -3,13 +3,18 @@
 package provider
 
 import (
+	"context"
 	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateRequest() *shared.DestinationDevNullCreateRequest {
+func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateRequest(ctx context.Context) (*shared.DestinationDevNullCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -42,7 +47,7 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 			}
 			maxEntryCount := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.IsNull() {
-				*maxEntryCount, _ = r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount = r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount = nil
 			}
@@ -74,7 +79,7 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 
 			maxEntryCount1 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsNull() {
-				*maxEntryCount1, _ = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount1 = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount1 = nil
 			}
@@ -104,19 +109,19 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 			}
 			samplingRatio := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsNull() {
-				*samplingRatio, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueBigFloat().Float64()
+				*samplingRatio = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueFloat64()
 			} else {
 				samplingRatio = nil
 			}
 			seed := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.IsNull() {
-				*seed, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.ValueBigFloat().Float64()
+				*seed = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.ValueFloat64()
 			} else {
 				seed = nil
 			}
 			maxEntryCount2 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
-				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount2 = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount2 = nil
 			}
@@ -235,57 +240,13 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullCreateReques
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *DestinationDevNullResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
-	if resp != nil {
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DefinitionID = types.StringValue(resp.DefinitionID)
-		r.DestinationID = types.StringValue(resp.DestinationID)
-		r.DestinationType = types.StringValue(resp.DestinationType)
-		r.Name = types.StringValue(resp.Name)
-		if resp.ResourceAllocation == nil {
-			r.ResourceAllocation = nil
-		} else {
-			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
-			if resp.ResourceAllocation.Default == nil {
-				r.ResourceAllocation.Default = nil
-			} else {
-				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
-				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
-				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
-				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
-				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
-				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
-				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
-			}
-			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
-			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
-				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
-			}
-			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
-				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
-				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
-				}
-			}
-		}
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-}
+func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest(ctx context.Context) (*shared.DestinationDevNullPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
 
-func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest() *shared.DestinationDevNullPutRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -312,7 +273,7 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 			}
 			maxEntryCount := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.IsNull() {
-				*maxEntryCount, _ = r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount = r.Configuration.TestDestination.Logging.LoggingConfig.FirstNEntries.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount = nil
 			}
@@ -344,7 +305,7 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 
 			maxEntryCount1 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.IsNull() {
-				*maxEntryCount1, _ = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount1 = r.Configuration.TestDestination.Logging.LoggingConfig.EveryNThEntry.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount1 = nil
 			}
@@ -374,19 +335,19 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 			}
 			samplingRatio := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.IsNull() {
-				*samplingRatio, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueBigFloat().Float64()
+				*samplingRatio = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.SamplingRatio.ValueFloat64()
 			} else {
 				samplingRatio = nil
 			}
 			seed := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.IsNull() {
-				*seed, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.ValueBigFloat().Float64()
+				*seed = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.Seed.ValueFloat64()
 			} else {
 				seed = nil
 			}
 			maxEntryCount2 := new(float64)
 			if !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsUnknown() && !r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.IsNull() {
-				*maxEntryCount2, _ = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueBigFloat().Float64()
+				*maxEntryCount2 = r.Configuration.TestDestination.Logging.LoggingConfig.RandomSampling.MaxEntryCount.ValueFloat64()
 			} else {
 				maxEntryCount2 = nil
 			}
@@ -504,5 +465,104 @@ func (r *DestinationDevNullResourceModel) ToSharedDestinationDevNullPutRequest()
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-	return &out
+
+	return &out, diags
+}
+
+func (r *DestinationDevNullResourceModel) ToOperationsPutDestinationDevNullRequest(ctx context.Context) (*operations.PutDestinationDevNullRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var destinationID string
+	destinationID = r.DestinationID.ValueString()
+
+	destinationDevNullPutRequest, destinationDevNullPutRequestDiags := r.ToSharedDestinationDevNullPutRequest(ctx)
+	diags.Append(destinationDevNullPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutDestinationDevNullRequest{
+		DestinationID:                destinationID,
+		DestinationDevNullPutRequest: destinationDevNullPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *DestinationDevNullResourceModel) ToOperationsGetDestinationDevNullRequest(ctx context.Context) (*operations.GetDestinationDevNullRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var destinationID string
+	destinationID = r.DestinationID.ValueString()
+
+	out := operations.GetDestinationDevNullRequest{
+		DestinationID: destinationID,
+	}
+
+	return &out, diags
+}
+
+func (r *DestinationDevNullResourceModel) ToOperationsDeleteDestinationDevNullRequest(ctx context.Context) (*operations.DeleteDestinationDevNullRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var destinationID string
+	destinationID = r.DestinationID.ValueString()
+
+	out := operations.DeleteDestinationDevNullRequest{
+		DestinationID: destinationID,
+	}
+
+	return &out, diags
+}
+
+func (r *DestinationDevNullResourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	if resp != nil {
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+				}
+			}
+		}
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+
+	return diags
 }

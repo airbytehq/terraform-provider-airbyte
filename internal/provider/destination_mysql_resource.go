@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -407,7 +406,12 @@ func (r *DestinationMysqlResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request := data.ToSharedDestinationMysqlCreateRequest()
+	request, requestDiags := data.ToSharedDestinationMysqlCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Destinations.CreateDestinationMysql(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -428,15 +432,24 @@ func (r *DestinationMysqlResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
-	request1 := operations.GetDestinationMysqlRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationMysql(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetDestinationMysqlRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationMysql(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -456,8 +469,17 @@ func (r *DestinationMysqlResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -481,13 +503,13 @@ func (r *DestinationMysqlResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsGetDestinationMysqlRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetDestinationMysqlRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.GetDestinationMysql(ctx, request)
+	res, err := r.client.Destinations.GetDestinationMysql(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -511,7 +533,11 @@ func (r *DestinationMysqlResource) Read(ctx context.Context, req resource.ReadRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -531,15 +557,13 @@ func (r *DestinationMysqlResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsPutDestinationMysqlRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	destinationMysqlPutRequest := data.ToSharedDestinationMysqlPutRequest()
-	request := operations.PutDestinationMysqlRequest{
-		DestinationID:              destinationID,
-		DestinationMysqlPutRequest: destinationMysqlPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.PutDestinationMysql(ctx, request)
+	res, err := r.client.Destinations.PutDestinationMysql(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -555,14 +579,19 @@ func (r *DestinationMysqlResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationId1 string
-	destinationId1 = data.DestinationID.ValueString()
 
-	request1 := operations.GetDestinationMysqlRequest{
-		DestinationID: destinationId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationMysql(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetDestinationMysqlRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationMysql(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -582,8 +611,17 @@ func (r *DestinationMysqlResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -607,13 +645,13 @@ func (r *DestinationMysqlResource) Delete(ctx context.Context, req resource.Dele
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteDestinationMysqlRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteDestinationMysqlRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.DeleteDestinationMysql(ctx, request)
+	res, err := r.client.Destinations.DeleteDestinationMysql(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

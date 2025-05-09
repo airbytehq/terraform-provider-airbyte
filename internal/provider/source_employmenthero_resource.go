@@ -11,7 +11,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -306,7 +305,12 @@ func (r *SourceEmploymentHeroResource) Create(ctx context.Context, req resource.
 		return
 	}
 
-	request := data.ToSharedSourceEmploymentHeroCreateRequest()
+	request, requestDiags := data.ToSharedSourceEmploymentHeroCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Sources.CreateSourceEmploymentHero(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -327,15 +331,24 @@ func (r *SourceEmploymentHeroResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
 
-	request1 := operations.GetSourceEmploymentHeroRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceEmploymentHero(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetSourceEmploymentHeroRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceEmploymentHero(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -355,8 +368,17 @@ func (r *SourceEmploymentHeroResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -380,13 +402,13 @@ func (r *SourceEmploymentHeroResource) Read(ctx context.Context, req resource.Re
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsGetSourceEmploymentHeroRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetSourceEmploymentHeroRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.GetSourceEmploymentHero(ctx, request)
+	res, err := r.client.Sources.GetSourceEmploymentHero(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -410,7 +432,11 @@ func (r *SourceEmploymentHeroResource) Read(ctx context.Context, req resource.Re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -430,15 +456,13 @@ func (r *SourceEmploymentHeroResource) Update(ctx context.Context, req resource.
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsPutSourceEmploymentHeroRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	sourceEmploymentHeroPutRequest := data.ToSharedSourceEmploymentHeroPutRequest()
-	request := operations.PutSourceEmploymentHeroRequest{
-		SourceID:                       sourceID,
-		SourceEmploymentHeroPutRequest: sourceEmploymentHeroPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.PutSourceEmploymentHero(ctx, request)
+	res, err := r.client.Sources.PutSourceEmploymentHero(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -454,14 +478,19 @@ func (r *SourceEmploymentHeroResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var sourceId1 string
-	sourceId1 = data.SourceID.ValueString()
 
-	request1 := operations.GetSourceEmploymentHeroRequest{
-		SourceID: sourceId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Sources.GetSourceEmploymentHero(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetSourceEmploymentHeroRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Sources.GetSourceEmploymentHero(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -481,8 +510,17 @@ func (r *SourceEmploymentHeroResource) Update(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -506,13 +544,13 @@ func (r *SourceEmploymentHeroResource) Delete(ctx context.Context, req resource.
 		return
 	}
 
-	var sourceID string
-	sourceID = data.SourceID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteSourceEmploymentHeroRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteSourceEmploymentHeroRequest{
-		SourceID: sourceID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Sources.DeleteSourceEmploymentHero(ctx, request)
+	res, err := r.client.Sources.DeleteSourceEmploymentHero(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

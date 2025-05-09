@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -105,13 +104,13 @@ func (r *PermissionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	var permissionID string
-	permissionID = data.PermissionID.ValueString()
+	request, requestDiags := data.ToOperationsGetPermissionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetPermissionRequest{
-		PermissionID: permissionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Permissions.GetPermission(ctx, request)
+	res, err := r.client.Permissions.GetPermission(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -135,7 +134,11 @@ func (r *PermissionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedPermissionResponse(ctx, res.PermissionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

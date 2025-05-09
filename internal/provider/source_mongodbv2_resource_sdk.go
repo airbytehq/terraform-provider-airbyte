@@ -3,13 +3,18 @@
 package provider
 
 import (
+	"context"
 	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *shared.SourceMongodbV2CreateRequest {
+func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest(ctx context.Context) (*shared.SourceMongodbV2CreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -137,6 +142,12 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 	} else {
 		discoverSampleSize = nil
 	}
+	discoverTimeoutSeconds := new(int64)
+	if !r.Configuration.DiscoverTimeoutSeconds.IsUnknown() && !r.Configuration.DiscoverTimeoutSeconds.IsNull() {
+		*discoverTimeoutSeconds = r.Configuration.DiscoverTimeoutSeconds.ValueInt64()
+	} else {
+		discoverTimeoutSeconds = nil
+	}
 	invalidCdcCursorPositionBehavior := new(shared.InvalidCDCPositionBehaviorAdvanced)
 	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
 		*invalidCdcCursorPositionBehavior = shared.InvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
@@ -160,6 +171,7 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 		InitialWaitingSeconds:            initialWaitingSeconds,
 		QueueSize:                        queueSize,
 		DiscoverSampleSize:               discoverSampleSize,
+		DiscoverTimeoutSeconds:           discoverTimeoutSeconds,
 		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 		UpdateCaptureMode:                updateCaptureMode,
 		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
@@ -177,57 +189,13 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2CreateRequest() *s
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourceMongodbV2ResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
-	if resp != nil {
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DefinitionID = types.StringValue(resp.DefinitionID)
-		r.Name = types.StringValue(resp.Name)
-		if resp.ResourceAllocation == nil {
-			r.ResourceAllocation = nil
-		} else {
-			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
-			if resp.ResourceAllocation.Default == nil {
-				r.ResourceAllocation.Default = nil
-			} else {
-				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
-				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
-				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
-				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
-				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
-				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
-				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
-			}
-			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
-			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
-				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
-			}
-			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
-				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
-				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
-				}
-			}
-		}
-		r.SourceID = types.StringValue(resp.SourceID)
-		r.SourceType = types.StringValue(resp.SourceType)
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-}
+func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest(ctx context.Context) (*shared.SourceMongodbV2PutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
 
-func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shared.SourceMongodbV2PutRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -349,6 +317,12 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 	} else {
 		discoverSampleSize = nil
 	}
+	discoverTimeoutSeconds := new(int64)
+	if !r.Configuration.DiscoverTimeoutSeconds.IsUnknown() && !r.Configuration.DiscoverTimeoutSeconds.IsNull() {
+		*discoverTimeoutSeconds = r.Configuration.DiscoverTimeoutSeconds.ValueInt64()
+	} else {
+		discoverTimeoutSeconds = nil
+	}
 	invalidCdcCursorPositionBehavior := new(shared.SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced)
 	if !r.Configuration.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.InvalidCdcCursorPositionBehavior.IsNull() {
 		*invalidCdcCursorPositionBehavior = shared.SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.InvalidCdcCursorPositionBehavior.ValueString())
@@ -372,6 +346,7 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 		InitialWaitingSeconds:            initialWaitingSeconds,
 		QueueSize:                        queueSize,
 		DiscoverSampleSize:               discoverSampleSize,
+		DiscoverTimeoutSeconds:           discoverTimeoutSeconds,
 		InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
 		UpdateCaptureMode:                updateCaptureMode,
 		InitialLoadTimeoutHours:          initialLoadTimeoutHours,
@@ -381,5 +356,104 @@ func (r *SourceMongodbV2ResourceModel) ToSharedSourceMongodbV2PutRequest() *shar
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-	return &out
+
+	return &out, diags
+}
+
+func (r *SourceMongodbV2ResourceModel) ToOperationsPutSourceMongodbV2Request(ctx context.Context) (*operations.PutSourceMongodbV2Request, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourceMongodbV2PutRequest, sourceMongodbV2PutRequestDiags := r.ToSharedSourceMongodbV2PutRequest(ctx)
+	diags.Append(sourceMongodbV2PutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourceMongodbV2Request{
+		SourceID:                  sourceID,
+		SourceMongodbV2PutRequest: sourceMongodbV2PutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceMongodbV2ResourceModel) ToOperationsGetSourceMongodbV2Request(ctx context.Context) (*operations.GetSourceMongodbV2Request, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourceMongodbV2Request{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceMongodbV2ResourceModel) ToOperationsDeleteSourceMongodbV2Request(ctx context.Context) (*operations.DeleteSourceMongodbV2Request, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceMongodbV2Request{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceMongodbV2ResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	if resp != nil {
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+				}
+			}
+		}
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+
+	return diags
 }

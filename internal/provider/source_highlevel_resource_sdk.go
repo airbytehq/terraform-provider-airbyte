@@ -3,13 +3,18 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
-func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelCreateRequest() *shared.SourceHighLevelCreateRequest {
+func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelCreateRequest(ctx context.Context) (*shared.SourceHighLevelCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -47,10 +52,90 @@ func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelCreateRequest() *s
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourceHighLevelResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelPutRequest(ctx context.Context) (*shared.SourceHighLevelPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var locationID string
+	locationID = r.Configuration.LocationID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceHighLevelUpdate{
+		LocationID: locationID,
+		APIKey:     apiKey,
+		StartDate:  startDate,
+	}
+	out := shared.SourceHighLevelPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceHighLevelResourceModel) ToOperationsPutSourceHighLevelRequest(ctx context.Context) (*operations.PutSourceHighLevelRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourceHighLevelPutRequest, sourceHighLevelPutRequestDiags := r.ToSharedSourceHighLevelPutRequest(ctx)
+	diags.Append(sourceHighLevelPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourceHighLevelRequest{
+		SourceID:                  sourceID,
+		SourceHighLevelPutRequest: sourceHighLevelPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceHighLevelResourceModel) ToOperationsGetSourceHighLevelRequest(ctx context.Context) (*operations.GetSourceHighLevelRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourceHighLevelRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceHighLevelResourceModel) ToOperationsDeleteSourceHighLevelRequest(ctx context.Context) (*operations.DeleteSourceHighLevelRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceHighLevelRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceHighLevelResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -75,19 +160,19 @@ func (r *SourceHighLevelResourceModel) RefreshFromSharedSourceResponse(resp *sha
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -95,31 +180,6 @@ func (r *SourceHighLevelResourceModel) RefreshFromSharedSourceResponse(resp *sha
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelPutRequest() *shared.SourceHighLevelPutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var locationID string
-	locationID = r.Configuration.LocationID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	configuration := shared.SourceHighLevelUpdate{
-		LocationID: locationID,
-		APIKey:     apiKey,
-		StartDate:  startDate,
-	}
-	out := shared.SourceHighLevelPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

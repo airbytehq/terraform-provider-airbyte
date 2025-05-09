@@ -532,7 +532,7 @@ const (
 	SourceMysqlEncryptionTypeVerifyIdentity SourceMysqlEncryptionType = "verify_identity"
 )
 
-// SourceMysqlEncryption - The encryption method with is used when communicating with the database.
+// SourceMysqlEncryption - The encryption method which is used when communicating with the database.
 type SourceMysqlEncryption struct {
 	Preferred      *Preferred      `queryParam:"inline"`
 	Required       *Required       `queryParam:"inline"`
@@ -995,7 +995,7 @@ type SourceMysql struct {
 	Concurrency *int64 `default:"1" json:"concurrency"`
 	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
 	CheckPrivileges *bool `default:"true" json:"check_privileges"`
-	// The encryption method with is used when communicating with the database.
+	// The encryption method which is used when communicating with the database.
 	SslMode *SourceMysqlEncryption `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceMysqlSSHTunnelMethod `json:"tunnel_method,omitempty"`

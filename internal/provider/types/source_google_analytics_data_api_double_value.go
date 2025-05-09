@@ -5,5 +5,5 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleAnalyticsDataAPIDoubleValue struct {
-	Value types.Number `tfsdk:"value"`
+	Value types.Float64 `tfsdk:"value"`
 }

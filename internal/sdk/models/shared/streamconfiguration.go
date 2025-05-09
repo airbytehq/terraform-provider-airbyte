@@ -4,12 +4,16 @@ package shared
 
 // StreamConfiguration - Configurations for a single stream.
 type StreamConfiguration struct {
-	Name     string                  `json:"name"`
-	SyncMode *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
+	Name string `json:"name"`
+	// Namespace of the stream.
+	Namespace *string                 `json:"namespace,omitempty"`
+	SyncMode  *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
 	// Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
 	CursorField []string `json:"cursorField,omitempty"`
 	// Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
 	PrimaryKey [][]string `json:"primaryKey,omitempty"`
+	// Whether to move raw files from the source to the destination during the sync.
+	IncludeFiles *bool `json:"includeFiles,omitempty"`
 	// Paths to the fields that will be included in the configured catalog.
 	SelectedFields []SelectedFieldInfo `json:"selectedFields,omitempty"`
 	// Mappers that should be applied to the stream before writing to the destination.
@@ -21,6 +25,13 @@ func (o *StreamConfiguration) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *StreamConfiguration) GetNamespace() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Namespace
 }
 
 func (o *StreamConfiguration) GetSyncMode() *ConnectionSyncModeEnum {
@@ -42,6 +53,13 @@ func (o *StreamConfiguration) GetPrimaryKey() [][]string {
 		return nil
 	}
 	return o.PrimaryKey
+}
+
+func (o *StreamConfiguration) GetIncludeFiles() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeFiles
 }
 
 func (o *StreamConfiguration) GetSelectedFields() []SelectedFieldInfo {

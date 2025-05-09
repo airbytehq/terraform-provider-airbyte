@@ -7,7 +7,6 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -179,13 +178,13 @@ func (r *DestinationCobraDataSource) Read(ctx context.Context, req datasource.Re
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsGetDestinationCobraRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetDestinationCobraRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.GetDestinationCobra(ctx, request)
+	res, err := r.client.Destinations.GetDestinationCobra(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -209,7 +208,11 @@ func (r *DestinationCobraDataSource) Read(ctx context.Context, req datasource.Re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -5,5 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceConvertkit struct {
-	APISecret types.String `tfsdk:"api_secret"`
+	Credentials AuthenticationType `tfsdk:"credentials"`
+	StartDate   types.String       `tfsdk:"start_date"`
 }

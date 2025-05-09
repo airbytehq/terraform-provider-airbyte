@@ -29,6 +29,7 @@ const (
 	DatasetLocationEuropeCentral1         DatasetLocation = "europe-central1"
 	DatasetLocationEuropeCentral2         DatasetLocation = "europe-central2"
 	DatasetLocationEuropeNorth1           DatasetLocation = "europe-north1"
+	DatasetLocationEuropeNorth2           DatasetLocation = "europe-north2"
 	DatasetLocationEuropeSouthwest1       DatasetLocation = "europe-southwest1"
 	DatasetLocationEuropeWest1            DatasetLocation = "europe-west1"
 	DatasetLocationEuropeWest2            DatasetLocation = "europe-west2"
@@ -99,6 +100,8 @@ func (e *DatasetLocation) UnmarshalJSON(data []byte) error {
 	case "europe-central2":
 		fallthrough
 	case "europe-north1":
+		fallthrough
+	case "europe-north2":
 		fallthrough
 	case "europe-southwest1":
 		fallthrough

@@ -3,12 +3,30 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
+func (r *WorkspaceDataSourceModel) ToOperationsGetWorkspaceRequest(ctx context.Context) (*operations.GetWorkspaceRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	out := operations.GetWorkspaceRequest{
+		WorkspaceID: workspaceID,
+	}
+
+	return &out, diags
+}
+
+func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(ctx context.Context, resp *shared.WorkspaceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.Name = types.StringValue(resp.Name)
@@ -122,4 +140,6 @@ func (r *WorkspaceDataSourceModel) RefreshFromSharedWorkspaceResponse(resp *shar
 		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+
+	return diags
 }

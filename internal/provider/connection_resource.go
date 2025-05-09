@@ -5,6 +5,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	speakeasy_boolplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/boolplanmodifier"
 	speakeasy_int64planmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/int64planmodifier"
 	speakeasy_listplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/listplanmodifier"
 	speakeasy_objectplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/objectplanmodifier"
@@ -12,7 +13,6 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	speakeasy_objectvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/objectvalidators"
 	speakeasy_stringvalidators "github.com/airbytehq/terraform-provider-airbyte/internal/validators/stringvalidators"
@@ -98,6 +98,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
+								},
+								"include_files": schema.BoolAttribute{
+									Computed: true,
+									Optional: true,
+									PlanModifiers: []planmodifier.Bool{
+										speakeasy_boolplanmodifier.SuppressDiff(speakeasy_boolplanmodifier.ExplicitSuppress),
+									},
+									Description: `Whether to move raw files from the source to the destination during the sync.`,
 								},
 								"mappers": schema.ListNestedAttribute{
 									Computed: true,
@@ -464,6 +472,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 										speakeasy_stringvalidators.NotNull(),
 									},
 								},
+								"namespace": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
+									Description: `Namespace of the stream.`,
+								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
 									Optional: true,
@@ -780,8 +796,13 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToSharedConnectionCreateRequest()
-	res, err := r.client.Connections.CreateConnection(ctx, request)
+	request, requestDiags := data.ToSharedConnectionCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res, err := r.client.Connections.CreateConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -801,8 +822,17 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -826,13 +856,13 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsGetConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.GetConnection(ctx, request)
+	res, err := r.client.Connections.GetConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -856,7 +886,11 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -876,15 +910,13 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsPatchConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	connectionPatchRequest := *data.ToSharedConnectionPatchRequest()
-	request := operations.PatchConnectionRequest{
-		ConnectionID:           connectionID,
-		ConnectionPatchRequest: connectionPatchRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.PatchConnection(ctx, request)
+	res, err := r.client.Connections.PatchConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -904,8 +936,17 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -929,13 +970,13 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.DeleteConnection(ctx, request)
+	res, err := r.client.Connections.DeleteConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

@@ -3,12 +3,18 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
-func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() *shared.SourceConvertkitCreateRequest {
+func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest(ctx context.Context) (*shared.SourceConvertkitCreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -21,11 +27,69 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiSecret string
-	apiSecret = r.Configuration.APISecret.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var credentials shared.AuthenticationType
+	var sourceConvertkitOAuth20 *shared.SourceConvertkitOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
+		expiresAt := new(time.Time)
+		if !r.Configuration.Credentials.OAuth20.ExpiresAt.IsUnknown() && !r.Configuration.Credentials.OAuth20.ExpiresAt.IsNull() {
+			*expiresAt, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.ExpiresAt.ValueString())
+		} else {
+			expiresAt = nil
+		}
+		accessToken := new(string)
+		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+
+		sourceConvertkitOAuth20 = &shared.SourceConvertkitOAuth20{
+			ClientID:     clientID,
+			ExpiresAt:    expiresAt,
+			AccessToken:  accessToken,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourceConvertkitOAuth20 != nil {
+		credentials = shared.AuthenticationType{
+			SourceConvertkitOAuth20: sourceConvertkitOAuth20,
+		}
+	}
+	var apiKey *shared.APIKey
+	if r.Configuration.Credentials.APIKey != nil {
+		apiKey1 := new(string)
+		if !r.Configuration.Credentials.APIKey.APIKey.IsUnknown() && !r.Configuration.Credentials.APIKey.APIKey.IsNull() {
+			*apiKey1 = r.Configuration.Credentials.APIKey.APIKey.ValueString()
+		} else {
+			apiKey1 = nil
+		}
+		apiKey = &shared.APIKey{
+			APIKey: apiKey1,
+		}
+	}
+	if apiKey != nil {
+		credentials = shared.AuthenticationType{
+			APIKey: apiKey,
+		}
+	}
 	configuration := shared.SourceConvertkit{
-		APISecret: apiSecret,
+		StartDate:   startDate,
+		Credentials: credentials,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -40,10 +104,142 @@ func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitCreateRequest() 
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourceConvertkitResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitPutRequest(ctx context.Context) (*shared.SourceConvertkitPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var credentials shared.SourceConvertkitUpdateAuthenticationType
+	var sourceConvertkitUpdateOAuth20 *shared.SourceConvertkitUpdateOAuth20
+	if r.Configuration.Credentials.OAuth20 != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
+
+		expiresAt := new(time.Time)
+		if !r.Configuration.Credentials.OAuth20.ExpiresAt.IsUnknown() && !r.Configuration.Credentials.OAuth20.ExpiresAt.IsNull() {
+			*expiresAt, _ = time.Parse(time.RFC3339Nano, r.Configuration.Credentials.OAuth20.ExpiresAt.ValueString())
+		} else {
+			expiresAt = nil
+		}
+		accessToken := new(string)
+		if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
+
+		sourceConvertkitUpdateOAuth20 = &shared.SourceConvertkitUpdateOAuth20{
+			ClientID:     clientID,
+			ExpiresAt:    expiresAt,
+			AccessToken:  accessToken,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourceConvertkitUpdateOAuth20 != nil {
+		credentials = shared.SourceConvertkitUpdateAuthenticationType{
+			SourceConvertkitUpdateOAuth20: sourceConvertkitUpdateOAuth20,
+		}
+	}
+	var sourceConvertkitUpdateAPIKey *shared.SourceConvertkitUpdateAPIKey
+	if r.Configuration.Credentials.APIKey != nil {
+		apiKey := new(string)
+		if !r.Configuration.Credentials.APIKey.APIKey.IsUnknown() && !r.Configuration.Credentials.APIKey.APIKey.IsNull() {
+			*apiKey = r.Configuration.Credentials.APIKey.APIKey.ValueString()
+		} else {
+			apiKey = nil
+		}
+		sourceConvertkitUpdateAPIKey = &shared.SourceConvertkitUpdateAPIKey{
+			APIKey: apiKey,
+		}
+	}
+	if sourceConvertkitUpdateAPIKey != nil {
+		credentials = shared.SourceConvertkitUpdateAuthenticationType{
+			SourceConvertkitUpdateAPIKey: sourceConvertkitUpdateAPIKey,
+		}
+	}
+	configuration := shared.SourceConvertkitUpdate{
+		StartDate:   startDate,
+		Credentials: credentials,
+	}
+	out := shared.SourceConvertkitPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceConvertkitResourceModel) ToOperationsPutSourceConvertkitRequest(ctx context.Context) (*operations.PutSourceConvertkitRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourceConvertkitPutRequest, sourceConvertkitPutRequestDiags := r.ToSharedSourceConvertkitPutRequest(ctx)
+	diags.Append(sourceConvertkitPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourceConvertkitRequest{
+		SourceID:                   sourceID,
+		SourceConvertkitPutRequest: sourceConvertkitPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceConvertkitResourceModel) ToOperationsGetSourceConvertkitRequest(ctx context.Context) (*operations.GetSourceConvertkitRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourceConvertkitRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceConvertkitResourceModel) ToOperationsDeleteSourceConvertkitRequest(ctx context.Context) (*operations.DeleteSourceConvertkitRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceConvertkitRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceConvertkitResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -68,19 +264,19 @@ func (r *SourceConvertkitResourceModel) RefreshFromSharedSourceResponse(resp *sh
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -88,25 +284,6 @@ func (r *SourceConvertkitResourceModel) RefreshFromSharedSourceResponse(resp *sh
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourceConvertkitResourceModel) ToSharedSourceConvertkitPutRequest() *shared.SourceConvertkitPutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var apiSecret string
-	apiSecret = r.Configuration.APISecret.ValueString()
-
-	configuration := shared.SourceConvertkitUpdate{
-		APISecret: apiSecret,
-	}
-	out := shared.SourceConvertkitPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

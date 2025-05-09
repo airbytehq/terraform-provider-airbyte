@@ -5,9 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZohoAnalyticsMetadataAPI struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	DataCenter   types.String `tfsdk:"data_center"`
-	OrgID        types.Number `tfsdk:"org_id"`
-	RefreshToken types.String `tfsdk:"refresh_token"`
+	ClientID     types.String  `tfsdk:"client_id"`
+	ClientSecret types.String  `tfsdk:"client_secret"`
+	DataCenter   types.String  `tfsdk:"data_center"`
+	OrgID        types.Float64 `tfsdk:"org_id"`
+	RefreshToken types.String  `tfsdk:"refresh_token"`
 }

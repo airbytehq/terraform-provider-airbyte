@@ -7,7 +7,6 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -68,6 +67,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 									Computed:    true,
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
+								},
+								"include_files": schema.BoolAttribute{
+									Computed:    true,
+									Description: `Whether to move raw files from the source to the destination during the sync.`,
 								},
 								"mappers": schema.ListNestedAttribute{
 									Computed: true,
@@ -176,6 +179,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 								},
 								"name": schema.StringAttribute{
 									Computed: true,
+								},
+								"namespace": schema.StringAttribute{
+									Computed:    true,
+									Description: `Namespace of the stream.`,
 								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
@@ -319,13 +326,13 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	var connectionID string
-	connectionID = data.ConnectionID.ValueString()
+	request, requestDiags := data.ToOperationsGetConnectionRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Connections.GetConnection(ctx, request)
+	res, err := r.client.Connections.GetConnection(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -349,7 +356,11 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -148,58 +148,58 @@ func (o *SourceGoogleSearchConsoleOAuth) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-type AuthenticationTypeType string
+type SourceGoogleSearchConsoleAuthenticationTypeType string
 
 const (
-	AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth                           AuthenticationTypeType = "source-google-search-console_OAuth"
-	AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication AuthenticationTypeType = "source-google-search-console_Service Account Key Authentication"
+	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth                           SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_OAuth"
+	SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleAuthenticationTypeType = "source-google-search-console_Service Account Key Authentication"
 )
 
-type AuthenticationType struct {
+type SourceGoogleSearchConsoleAuthenticationType struct {
 	SourceGoogleSearchConsoleOAuth                           *SourceGoogleSearchConsoleOAuth                           `queryParam:"inline"`
 	SourceGoogleSearchConsoleServiceAccountKeyAuthentication *SourceGoogleSearchConsoleServiceAccountKeyAuthentication `queryParam:"inline"`
 
-	Type AuthenticationTypeType
+	Type SourceGoogleSearchConsoleAuthenticationTypeType
 }
 
-func CreateAuthenticationTypeSourceGoogleSearchConsoleOAuth(sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth) AuthenticationType {
-	typ := AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
+func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleOAuth(sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth) SourceGoogleSearchConsoleAuthenticationType {
+	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
 
-	return AuthenticationType{
+	return SourceGoogleSearchConsoleAuthenticationType{
 		SourceGoogleSearchConsoleOAuth: &sourceGoogleSearchConsoleOAuth,
 		Type:                           typ,
 	}
 }
 
-func CreateAuthenticationTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication(sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) AuthenticationType {
-	typ := AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
+func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication(sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication) SourceGoogleSearchConsoleAuthenticationType {
+	typ := SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
 
-	return AuthenticationType{
+	return SourceGoogleSearchConsoleAuthenticationType{
 		SourceGoogleSearchConsoleServiceAccountKeyAuthentication: &sourceGoogleSearchConsoleServiceAccountKeyAuthentication,
 		Type: typ,
 	}
 }
 
-func (u *AuthenticationType) UnmarshalJSON(data []byte) error {
+func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte) error {
 
 	var sourceGoogleSearchConsoleServiceAccountKeyAuthentication SourceGoogleSearchConsoleServiceAccountKeyAuthentication = SourceGoogleSearchConsoleServiceAccountKeyAuthentication{}
 	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true, true); err == nil {
 		u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication = &sourceGoogleSearchConsoleServiceAccountKeyAuthentication
-		u.Type = AuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
+		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleServiceAccountKeyAuthentication
 		return nil
 	}
 
 	var sourceGoogleSearchConsoleOAuth SourceGoogleSearchConsoleOAuth = SourceGoogleSearchConsoleOAuth{}
 	if err := utils.UnmarshalJSON(data, &sourceGoogleSearchConsoleOAuth, "", true, true); err == nil {
 		u.SourceGoogleSearchConsoleOAuth = &sourceGoogleSearchConsoleOAuth
-		u.Type = AuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
+		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleOAuth
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AuthenticationType", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGoogleSearchConsoleAuthenticationType", string(data))
 }
 
-func (u AuthenticationType) MarshalJSON() ([]byte, error) {
+func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
 	if u.SourceGoogleSearchConsoleOAuth != nil {
 		return utils.MarshalJSON(u.SourceGoogleSearchConsoleOAuth, "", true)
 	}
@@ -208,7 +208,7 @@ func (u AuthenticationType) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SourceGoogleSearchConsoleServiceAccountKeyAuthentication, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type AuthenticationType: all fields are null")
+	return nil, errors.New("could not marshal union type SourceGoogleSearchConsoleAuthenticationType: all fields are null")
 }
 
 // SourceGoogleSearchConsoleValidEnums - An enumeration of dimensions.
@@ -324,8 +324,8 @@ type SourceGoogleSearchConsole struct {
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
 	// UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
-	EndDate       *types.Date        `json:"end_date,omitempty"`
-	Authorization AuthenticationType `json:"authorization"`
+	EndDate       *types.Date                                 `json:"end_date,omitempty"`
+	Authorization SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
 	// You can add your Custom Analytics report by creating one.
 	CustomReportsArray []SourceGoogleSearchConsoleCustomReportConfig `json:"custom_reports_array,omitempty"`
 	// If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
@@ -365,9 +365,9 @@ func (o *SourceGoogleSearchConsole) GetEndDate() *types.Date {
 	return o.EndDate
 }
 
-func (o *SourceGoogleSearchConsole) GetAuthorization() AuthenticationType {
+func (o *SourceGoogleSearchConsole) GetAuthorization() SourceGoogleSearchConsoleAuthenticationType {
 	if o == nil {
-		return AuthenticationType{}
+		return SourceGoogleSearchConsoleAuthenticationType{}
 	}
 	return o.Authorization
 }
