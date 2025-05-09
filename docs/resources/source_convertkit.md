@@ -15,7 +15,12 @@ SourceConvertkit Resource
 ```terraform
 resource "airbyte_source_convertkit" "my_source_convertkit" {
   configuration = {
-    api_secret = "...my_api_secret..."
+    credentials = {
+      api_key = {
+        api_key = "...my_api_key..."
+      }
+    }
+    start_date = "2022-04-08T08:41:42.142Z"
   }
   definition_id = "49884a66-f571-4d5d-b133-9542868ade4d"
   name          = "...my_name..."
@@ -50,7 +55,43 @@ resource "airbyte_source_convertkit" "my_source_convertkit" {
 
 Required:
 
-- `api_secret` (String, Sensitive) API Secret
+- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+
+Optional:
+
+- `start_date` (String) Default: "2013-01-01T00:00:00Z"
+
+<a id="nestedatt--configuration--credentials"></a>
+### Nested Schema for `configuration.credentials`
+
+Optional:
+
+- `api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--api_key))
+- `o_auth20` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--o_auth20))
+
+<a id="nestedatt--configuration--credentials--api_key"></a>
+### Nested Schema for `configuration.credentials.api_key`
+
+Optional:
+
+- `api_key` (String, Sensitive) Kit/ConvertKit API Key. Default: "{{ config.get('credentials',{}).get('api_key') or config.get('api_secret') }}"
+
+
+<a id="nestedatt--configuration--credentials--o_auth20"></a>
+### Nested Schema for `configuration.credentials.o_auth20`
+
+Required:
+
+- `client_id` (String, Sensitive) The client ID of your OAuth application.
+- `client_secret` (String, Sensitive) The client secret of your OAuth application.
+- `refresh_token` (String, Sensitive) A current, non-expired refresh token genereted using the provided client ID and secret.
+
+Optional:
+
+- `access_token` (String, Sensitive) An access token generated using the provided client information and refresh token.
+- `expires_at` (String) The time at which the current access token is set to expire
+
+
 
 
 <a id="nestedatt--resource_allocation"></a>

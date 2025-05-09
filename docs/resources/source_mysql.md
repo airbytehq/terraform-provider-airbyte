@@ -89,7 +89,7 @@ Optional:
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String, Sensitive) The password associated with the username.
 - `port` (Number) Port of the database. Default: 3306
-- `ssl_mode` (Attributes) The encryption method with is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
+- `ssl_mode` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--replication_method"></a>
