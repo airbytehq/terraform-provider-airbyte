@@ -41,7 +41,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.17.0"
+      version = "0.18.0"
     }
   }
 }
@@ -173,6 +173,7 @@ provider_installation {
 * [airbyte_source_assemblyai](docs/resources/source_assemblyai.md)
 * [airbyte_source_auth0](docs/resources/source_auth0.md)
 * [airbyte_source_aviationstack](docs/resources/source_aviationstack.md)
+* [airbyte_source_awin_advertiser](docs/resources/source_awin_advertiser.md)
 * [airbyte_source_aws_cloudtrail](docs/resources/source_aws_cloudtrail.md)
 * [airbyte_source_azure_blob_storage](docs/resources/source_azure_blob_storage.md)
 * [airbyte_source_azure_table](docs/resources/source_azure_table.md)
@@ -274,6 +275,7 @@ provider_installation {
 * [airbyte_source_exchange_rates](docs/resources/source_exchange_rates.md)
 * [airbyte_source_ezofficeinventory](docs/resources/source_ezofficeinventory.md)
 * [airbyte_source_facebook_marketing](docs/resources/source_facebook_marketing.md)
+* [airbyte_source_facebook_pages](docs/resources/source_facebook_pages.md)
 * [airbyte_source_factorial](docs/resources/source_factorial.md)
 * [airbyte_source_faker](docs/resources/source_faker.md)
 * [airbyte_source_fastbill](docs/resources/source_fastbill.md)
@@ -386,6 +388,7 @@ provider_installation {
 * [airbyte_source_less_annoying_crm](docs/resources/source_less_annoying_crm.md)
 * [airbyte_source_lever_hiring](docs/resources/source_lever_hiring.md)
 * [airbyte_source_lightspeed_retail](docs/resources/source_lightspeed_retail.md)
+* [airbyte_source_linear](docs/resources/source_linear.md)
 * [airbyte_source_linkedin_ads](docs/resources/source_linkedin_ads.md)
 * [airbyte_source_linkedin_pages](docs/resources/source_linkedin_pages.md)
 * [airbyte_source_linnworks](docs/resources/source_linnworks.md)
@@ -453,6 +456,7 @@ provider_installation {
 * [airbyte_source_openweather](docs/resources/source_openweather.md)
 * [airbyte_source_opinion_stage](docs/resources/source_opinion_stage.md)
 * [airbyte_source_opsgenie](docs/resources/source_opsgenie.md)
+* [airbyte_source_opuswatch](docs/resources/source_opuswatch.md)
 * [airbyte_source_oracle](docs/resources/source_oracle.md)
 * [airbyte_source_oracle_enterprise](docs/resources/source_oracle_enterprise.md)
 * [airbyte_source_orb](docs/resources/source_orb.md)
@@ -551,6 +555,7 @@ provider_installation {
 * [airbyte_source_service_now](docs/resources/source_service_now.md)
 * [airbyte_source_sftp](docs/resources/source_sftp.md)
 * [airbyte_source_sftp_bulk](docs/resources/source_sftp_bulk.md)
+* [airbyte_source_sharepoint_enterprise](docs/resources/source_sharepoint_enterprise.md)
 * [airbyte_source_sharetribe](docs/resources/source_sharetribe.md)
 * [airbyte_source_shippo](docs/resources/source_shippo.md)
 * [airbyte_source_shipstation](docs/resources/source_shipstation.md)
@@ -754,6 +759,7 @@ provider_installation {
 * [airbyte_source_assemblyai](docs/data-sources/source_assemblyai.md)
 * [airbyte_source_auth0](docs/data-sources/source_auth0.md)
 * [airbyte_source_aviationstack](docs/data-sources/source_aviationstack.md)
+* [airbyte_source_awin_advertiser](docs/data-sources/source_awin_advertiser.md)
 * [airbyte_source_aws_cloudtrail](docs/data-sources/source_aws_cloudtrail.md)
 * [airbyte_source_azure_blob_storage](docs/data-sources/source_azure_blob_storage.md)
 * [airbyte_source_azure_table](docs/data-sources/source_azure_table.md)
@@ -855,6 +861,7 @@ provider_installation {
 * [airbyte_source_exchange_rates](docs/data-sources/source_exchange_rates.md)
 * [airbyte_source_ezofficeinventory](docs/data-sources/source_ezofficeinventory.md)
 * [airbyte_source_facebook_marketing](docs/data-sources/source_facebook_marketing.md)
+* [airbyte_source_facebook_pages](docs/data-sources/source_facebook_pages.md)
 * [airbyte_source_factorial](docs/data-sources/source_factorial.md)
 * [airbyte_source_faker](docs/data-sources/source_faker.md)
 * [airbyte_source_fastbill](docs/data-sources/source_fastbill.md)
@@ -967,6 +974,7 @@ provider_installation {
 * [airbyte_source_less_annoying_crm](docs/data-sources/source_less_annoying_crm.md)
 * [airbyte_source_lever_hiring](docs/data-sources/source_lever_hiring.md)
 * [airbyte_source_lightspeed_retail](docs/data-sources/source_lightspeed_retail.md)
+* [airbyte_source_linear](docs/data-sources/source_linear.md)
 * [airbyte_source_linkedin_ads](docs/data-sources/source_linkedin_ads.md)
 * [airbyte_source_linkedin_pages](docs/data-sources/source_linkedin_pages.md)
 * [airbyte_source_linnworks](docs/data-sources/source_linnworks.md)
@@ -1034,6 +1042,7 @@ provider_installation {
 * [airbyte_source_openweather](docs/data-sources/source_openweather.md)
 * [airbyte_source_opinion_stage](docs/data-sources/source_opinion_stage.md)
 * [airbyte_source_opsgenie](docs/data-sources/source_opsgenie.md)
+* [airbyte_source_opuswatch](docs/data-sources/source_opuswatch.md)
 * [airbyte_source_oracle](docs/data-sources/source_oracle.md)
 * [airbyte_source_oracle_enterprise](docs/data-sources/source_oracle_enterprise.md)
 * [airbyte_source_orb](docs/data-sources/source_orb.md)
@@ -1132,6 +1141,7 @@ provider_installation {
 * [airbyte_source_service_now](docs/data-sources/source_service_now.md)
 * [airbyte_source_sftp](docs/data-sources/source_sftp.md)
 * [airbyte_source_sftp_bulk](docs/data-sources/source_sftp_bulk.md)
+* [airbyte_source_sharepoint_enterprise](docs/data-sources/source_sharepoint_enterprise.md)
 * [airbyte_source_sharetribe](docs/data-sources/source_sharetribe.md)
 * [airbyte_source_shippo](docs/data-sources/source_shippo.md)
 * [airbyte_source_shipstation](docs/data-sources/source_shipstation.md)

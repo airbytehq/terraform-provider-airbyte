@@ -29,6 +29,7 @@ const (
 	DestinationBigqueryUpdateDatasetLocationEuropeCentral1         DestinationBigqueryUpdateDatasetLocation = "europe-central1"
 	DestinationBigqueryUpdateDatasetLocationEuropeCentral2         DestinationBigqueryUpdateDatasetLocation = "europe-central2"
 	DestinationBigqueryUpdateDatasetLocationEuropeNorth1           DestinationBigqueryUpdateDatasetLocation = "europe-north1"
+	DestinationBigqueryUpdateDatasetLocationEuropeNorth2           DestinationBigqueryUpdateDatasetLocation = "europe-north2"
 	DestinationBigqueryUpdateDatasetLocationEuropeSouthwest1       DestinationBigqueryUpdateDatasetLocation = "europe-southwest1"
 	DestinationBigqueryUpdateDatasetLocationEuropeWest1            DestinationBigqueryUpdateDatasetLocation = "europe-west1"
 	DestinationBigqueryUpdateDatasetLocationEuropeWest2            DestinationBigqueryUpdateDatasetLocation = "europe-west2"
@@ -99,6 +100,8 @@ func (e *DestinationBigqueryUpdateDatasetLocation) UnmarshalJSON(data []byte) er
 	case "europe-central2":
 		fallthrough
 	case "europe-north1":
+		fallthrough
+	case "europe-north2":
 		fallthrough
 	case "europe-southwest1":
 		fallthrough

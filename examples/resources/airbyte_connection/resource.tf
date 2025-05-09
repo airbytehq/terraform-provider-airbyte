@@ -5,6 +5,7 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "..."
         ]
+        include_files = false
         mappers = [
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
@@ -17,7 +18,8 @@ resource "airbyte_connection" "my_connection" {
             type = "field-renaming"
           }
         ]
-        name = "...my_name..."
+        name      = "...my_name..."
+        namespace = "...my_namespace..."
         primary_key = [
           [
             # ...

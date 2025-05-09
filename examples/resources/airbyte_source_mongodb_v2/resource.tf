@@ -12,6 +12,7 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
       }
     }
     discover_sample_size                 = 95684
+    discover_timeout_seconds             = 787
     initial_load_timeout_hours           = 0
     initial_waiting_seconds              = 7
     invalid_cdc_cursor_position_behavior = "Fail sync"

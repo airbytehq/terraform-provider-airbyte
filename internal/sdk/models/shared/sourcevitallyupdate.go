@@ -38,7 +38,7 @@ func (e *SourceVitallyUpdateStatus) UnmarshalJSON(data []byte) error {
 }
 
 type SourceVitallyUpdate struct {
-	// Provide only the domain part, like https://{your-domain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
+	// Provide only the subdomain part, like https://{your-custom-subdomain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
 	Domain string `json:"domain"`
 	// Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned.
 	Status SourceVitallyUpdateStatus `json:"status"`

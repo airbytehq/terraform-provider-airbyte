@@ -6,6 +6,7 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
       }
     }
     enable_experimental_streams = false
+    num_worker                  = 1
     start_date                  = "2017-01-25T00:00:00Z"
   }
   definition_id = "5a78ec38-3a27-4695-8c44-7a6d7e5af928"

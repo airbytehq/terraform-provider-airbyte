@@ -21,6 +21,7 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
       }
     }
     enable_experimental_streams = false
+    num_worker                  = 1
     start_date                  = "2017-01-25T00:00:00Z"
   }
   definition_id = "5a78ec38-3a27-4695-8c44-7a6d7e5af928"
@@ -61,6 +62,7 @@ Required:
 Optional:
 
 - `enable_experimental_streams` (Boolean) If enabled then experimental streams become available for sync. Default: false
+- `num_worker` (Number) The number of worker threads to use for the sync. Default: 3
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If not set, "2006-06-01T00:00:00Z" (Hubspot creation date) will be used as start date. It's recommended to provide relevant to your data start date value to optimize synchronization.
 
 <a id="nestedatt--configuration--credentials"></a>

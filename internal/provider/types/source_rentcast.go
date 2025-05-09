@@ -5,19 +5,19 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceRentcast struct {
-	Address      types.String `tfsdk:"address"`
-	APIKey       types.String `tfsdk:"api_key"`
-	BathRooms    types.Int64  `tfsdk:"bath_rooms"`
-	Bedrooms     types.Number `tfsdk:"bedrooms"`
-	City         types.String `tfsdk:"city"`
-	DataType     types.String `tfsdk:"data_type"`
-	DaysOld      types.String `tfsdk:"days_old"`
-	HistoryRange types.String `tfsdk:"history_range"`
-	Latitude     types.String `tfsdk:"latitude"`
-	Longitude    types.String `tfsdk:"longitude"`
-	PropertyType types.String `tfsdk:"property_type"`
-	Radius       types.String `tfsdk:"radius"`
-	State        types.String `tfsdk:"state"`
-	Status       types.String `tfsdk:"status"`
-	Zipcode      types.String `tfsdk:"zipcode"`
+	Address      types.String  `tfsdk:"address"`
+	APIKey       types.String  `tfsdk:"api_key"`
+	BathRooms    types.Int64   `tfsdk:"bath_rooms"`
+	Bedrooms     types.Float64 `tfsdk:"bedrooms"`
+	City         types.String  `tfsdk:"city"`
+	DataType     types.String  `tfsdk:"data_type"`
+	DaysOld      types.String  `tfsdk:"days_old"`
+	HistoryRange types.String  `tfsdk:"history_range"`
+	Latitude     types.String  `tfsdk:"latitude"`
+	Longitude    types.String  `tfsdk:"longitude"`
+	PropertyType types.String  `tfsdk:"property_type"`
+	Radius       types.String  `tfsdk:"radius"`
+	State        types.String  `tfsdk:"state"`
+	Status       types.String  `tfsdk:"status"`
+	Zipcode      types.String  `tfsdk:"zipcode"`
 }

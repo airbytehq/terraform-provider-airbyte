@@ -5,8 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type EveryNThEntry struct {
-	AdditionalProperties types.String `tfsdk:"additional_properties"`
-	LoggingType          types.String `tfsdk:"logging_type"`
-	MaxEntryCount        types.Number `tfsdk:"max_entry_count"`
-	NthEntryToLog        types.Int64  `tfsdk:"nth_entry_to_log"`
+	AdditionalProperties types.String  `tfsdk:"additional_properties"`
+	LoggingType          types.String  `tfsdk:"logging_type"`
+	MaxEntryCount        types.Float64 `tfsdk:"max_entry_count"`
+	NthEntryToLog        types.Int64   `tfsdk:"nth_entry_to_log"`
 }

@@ -6,6 +6,7 @@ package shared
 type StreamProperties struct {
 	StreamName               *string                  `json:"streamName,omitempty"`
 	SyncModes                []ConnectionSyncModeEnum `json:"syncModes,omitempty"`
+	Streamnamespace          *string                  `json:"streamnamespace,omitempty"`
 	DefaultCursorField       []string                 `json:"defaultCursorField,omitempty"`
 	SourceDefinedCursorField *bool                    `json:"sourceDefinedCursorField,omitempty"`
 	SourceDefinedPrimaryKey  [][]string               `json:"sourceDefinedPrimaryKey,omitempty"`
@@ -24,6 +25,13 @@ func (o *StreamProperties) GetSyncModes() []ConnectionSyncModeEnum {
 		return nil
 	}
 	return o.SyncModes
+}
+
+func (o *StreamProperties) GetStreamnamespace() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Streamnamespace
 }
 
 func (o *StreamProperties) GetDefaultCursorField() []string {

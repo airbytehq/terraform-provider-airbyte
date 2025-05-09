@@ -5,5 +5,5 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type APIKey struct {
-	Apikey types.String `tfsdk:"apikey"`
+	APIKey types.String `tfsdk:"api_key"`
 }

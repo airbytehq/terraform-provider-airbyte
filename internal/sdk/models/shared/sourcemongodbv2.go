@@ -369,6 +369,8 @@ type SourceMongodbV2 struct {
 	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// The maximum number of documents to sample when attempting to discover the unique fields for a collection.
 	DiscoverSampleSize *int64 `default:"10000" json:"discover_sample_size"`
+	// The amount of time the connector will wait when it discovers a document. Defaults to 600 seconds. Valid range: 5 seconds to 1200 seconds.
+	DiscoverTimeoutSeconds *int64 `default:"600" json:"discover_timeout_seconds"`
 	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
 	InvalidCdcCursorPositionBehavior *InvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
 	// Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images.
@@ -415,6 +417,13 @@ func (o *SourceMongodbV2) GetDiscoverSampleSize() *int64 {
 		return nil
 	}
 	return o.DiscoverSampleSize
+}
+
+func (o *SourceMongodbV2) GetDiscoverTimeoutSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DiscoverTimeoutSeconds
 }
 
 func (o *SourceMongodbV2) GetInvalidCdcCursorPositionBehavior() *InvalidCDCPositionBehaviorAdvanced {

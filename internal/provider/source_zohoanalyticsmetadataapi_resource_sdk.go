@@ -3,12 +3,17 @@
 package provider
 
 import (
+	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalyticsMetadataAPICreateRequest() *shared.SourceZohoAnalyticsMetadataAPICreateRequest {
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalyticsMetadataAPICreateRequest(ctx context.Context) (*shared.SourceZohoAnalyticsMetadataAPICreateRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
 	var name string
 	name = r.Name.ValueString()
 
@@ -37,7 +42,7 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 		dataCenter = nil
 	}
 	var orgID float64
-	orgID, _ = r.Configuration.OrgID.ValueBigFloat().Float64()
+	orgID = r.Configuration.OrgID.ValueFloat64()
 
 	configuration := shared.SourceZohoAnalyticsMetadataAPI{
 		ClientID:     clientID,
@@ -59,10 +64,103 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-	return &out
+
+	return &out, diags
 }
 
-func (r *SourceZohoAnalyticsMetadataAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalyticsMetadataAPIPutRequest(ctx context.Context) (*shared.SourceZohoAnalyticsMetadataAPIPutRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	dataCenter := new(shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter)
+	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
+		*dataCenter = shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter(r.Configuration.DataCenter.ValueString())
+	} else {
+		dataCenter = nil
+	}
+	var orgID float64
+	orgID = r.Configuration.OrgID.ValueFloat64()
+
+	configuration := shared.SourceZohoAnalyticsMetadataAPIUpdate{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		RefreshToken: refreshToken,
+		DataCenter:   dataCenter,
+		OrgID:        orgID,
+	}
+	out := shared.SourceZohoAnalyticsMetadataAPIPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToOperationsPutSourceZohoAnalyticsMetadataAPIRequest(ctx context.Context) (*operations.PutSourceZohoAnalyticsMetadataAPIRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	sourceZohoAnalyticsMetadataAPIPutRequest, sourceZohoAnalyticsMetadataAPIPutRequestDiags := r.ToSharedSourceZohoAnalyticsMetadataAPIPutRequest(ctx)
+	diags.Append(sourceZohoAnalyticsMetadataAPIPutRequestDiags...)
+
+	if diags.HasError() {
+		return nil, diags
+	}
+
+	out := operations.PutSourceZohoAnalyticsMetadataAPIRequest{
+		SourceID:                                 sourceID,
+		SourceZohoAnalyticsMetadataAPIPutRequest: sourceZohoAnalyticsMetadataAPIPutRequest,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToOperationsGetSourceZohoAnalyticsMetadataAPIRequest(ctx context.Context) (*operations.GetSourceZohoAnalyticsMetadataAPIRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.GetSourceZohoAnalyticsMetadataAPIRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToOperationsDeleteSourceZohoAnalyticsMetadataAPIRequest(ctx context.Context) (*operations.DeleteSourceZohoAnalyticsMetadataAPIRequest, diag.Diagnostics) {
+	var diags diag.Diagnostics
+
+	var sourceID string
+	sourceID = r.SourceID.ValueString()
+
+	out := operations.DeleteSourceZohoAnalyticsMetadataAPIRequest{
+		SourceID: sourceID,
+	}
+
+	return &out, diags
+}
+
+func (r *SourceZohoAnalyticsMetadataAPIResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -87,19 +185,19 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) RefreshFromSharedSourceRes
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific1 tfTypes.JobTypeResourceLimit
-				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific tfTypes.JobTypeResourceLimit
+				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
 				}
 			}
 		}
@@ -107,44 +205,6 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) RefreshFromSharedSourceRes
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-}
 
-func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalyticsMetadataAPIPutRequest() *shared.SourceZohoAnalyticsMetadataAPIPutRequest {
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
-	dataCenter := new(shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter)
-	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
-		*dataCenter = shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter(r.Configuration.DataCenter.ValueString())
-	} else {
-		dataCenter = nil
-	}
-	var orgID float64
-	orgID, _ = r.Configuration.OrgID.ValueBigFloat().Float64()
-
-	configuration := shared.SourceZohoAnalyticsMetadataAPIUpdate{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-		RefreshToken: refreshToken,
-		DataCenter:   dataCenter,
-		OrgID:        orgID,
-	}
-	out := shared.SourceZohoAnalyticsMetadataAPIPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-	return &out
+	return diags
 }

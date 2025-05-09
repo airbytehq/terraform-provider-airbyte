@@ -11,22 +11,21 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/numberdefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-	"math/big"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -135,11 +134,14 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 															stringvalidator.OneOf("EveryNth"),
 														},
 													},
-													"max_entry_count": schema.NumberAttribute{
+													"max_entry_count": schema.Float64Attribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     numberdefault.StaticBigFloat(big.NewFloat(100)),
+														Default:     float64default.StaticFloat64(100),
 														Description: `Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100`,
+														Validators: []validator.Float64{
+															float64validator.Between(1, 1000),
+														},
 													},
 													"nth_entry_to_log": schema.Int64Attribute{
 														Required:    true,
@@ -176,11 +178,14 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 															stringvalidator.OneOf("FirstN"),
 														},
 													},
-													"max_entry_count": schema.NumberAttribute{
+													"max_entry_count": schema.Float64Attribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     numberdefault.StaticBigFloat(big.NewFloat(100)),
+														Default:     float64default.StaticFloat64(100),
 														Description: `Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100`,
+														Validators: []validator.Float64{
+															float64validator.Between(1, 1000),
+														},
 													},
 												},
 												Description: `Log first N entries per stream.`,
@@ -212,19 +217,25 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 															),
 														},
 													},
-													"max_entry_count": schema.NumberAttribute{
+													"max_entry_count": schema.Float64Attribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     numberdefault.StaticBigFloat(big.NewFloat(100)),
+														Default:     float64default.StaticFloat64(100),
 														Description: `Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries. Default: 100`,
+														Validators: []validator.Float64{
+															float64validator.Between(1, 1000),
+														},
 													},
-													"sampling_ratio": schema.NumberAttribute{
+													"sampling_ratio": schema.Float64Attribute{
 														Computed:    true,
 														Optional:    true,
-														Default:     numberdefault.StaticBigFloat(big.NewFloat(0.001)),
+														Default:     float64default.StaticFloat64(0.001),
 														Description: `A positive floating number smaller than 1. Default: 0.001`,
+														Validators: []validator.Float64{
+															float64validator.AtMost(1),
+														},
 													},
-													"seed": schema.NumberAttribute{
+													"seed": schema.Float64Attribute{
 														Optional:    true,
 														Description: `When the seed is unspecified, the current time millis will be used as the seed.`,
 													},
@@ -537,7 +548,12 @@ func (r *DestinationDevNullResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request := data.ToSharedDestinationDevNullCreateRequest()
+	request, requestDiags := data.ToSharedDestinationDevNullCreateRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 	res, err := r.client.Destinations.CreateDestinationDevNull(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -558,15 +574,24 @@ func (r *DestinationDevNullResource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
 
-	request1 := operations.GetDestinationDevNullRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationDevNull(ctx, request1)
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	request1, request1Diags := data.ToOperationsGetDestinationDevNullRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationDevNull(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -586,8 +611,17 @@ func (r *DestinationDevNullResource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -611,13 +645,13 @@ func (r *DestinationDevNullResource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsGetDestinationDevNullRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.GetDestinationDevNullRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.GetDestinationDevNull(ctx, request)
+	res, err := r.client.Destinations.GetDestinationDevNull(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -641,7 +675,11 @@ func (r *DestinationDevNullResource) Read(ctx context.Context, req resource.Read
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -661,15 +699,13 @@ func (r *DestinationDevNullResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsPutDestinationDevNullRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	destinationDevNullPutRequest := data.ToSharedDestinationDevNullPutRequest()
-	request := operations.PutDestinationDevNullRequest{
-		DestinationID:                destinationID,
-		DestinationDevNullPutRequest: destinationDevNullPutRequest,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.PutDestinationDevNull(ctx, request)
+	res, err := r.client.Destinations.PutDestinationDevNull(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -685,14 +721,19 @@ func (r *DestinationDevNullResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
-	var destinationId1 string
-	destinationId1 = data.DestinationID.ValueString()
 
-	request1 := operations.GetDestinationDevNullRequest{
-		DestinationID: destinationId1,
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res1, err := r.client.Destinations.GetDestinationDevNull(ctx, request1)
+	request1, request1Diags := data.ToOperationsGetDestinationDevNullRequest(ctx)
+	resp.Diagnostics.Append(request1Diags...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	res1, err := r.client.Destinations.GetDestinationDevNull(ctx, *request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -712,8 +753,17 @@ func (r *DestinationDevNullResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
-	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -737,13 +787,13 @@ func (r *DestinationDevNullResource) Delete(ctx context.Context, req resource.De
 		return
 	}
 
-	var destinationID string
-	destinationID = data.DestinationID.ValueString()
+	request, requestDiags := data.ToOperationsDeleteDestinationDevNullRequest(ctx)
+	resp.Diagnostics.Append(requestDiags...)
 
-	request := operations.DeleteDestinationDevNullRequest{
-		DestinationID: destinationID,
+	if resp.Diagnostics.HasError() {
+		return
 	}
-	res, err := r.client.Destinations.DeleteDestinationDevNull(ctx, request)
+	res, err := r.client.Destinations.DeleteDestinationDevNull(ctx, *request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

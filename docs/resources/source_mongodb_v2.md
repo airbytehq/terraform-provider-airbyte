@@ -27,6 +27,7 @@ resource "airbyte_source_mongodb_v2" "my_source_mongodbv2" {
       }
     }
     discover_sample_size                 = 95684
+    discover_timeout_seconds             = 787
     initial_load_timeout_hours           = 0
     initial_waiting_seconds              = 7
     invalid_cdc_cursor_position_behavior = "Fail sync"
@@ -71,6 +72,7 @@ Required:
 Optional:
 
 - `discover_sample_size` (Number) The maximum number of documents to sample when attempting to discover the unique fields for a collection. Default: 10000
+- `discover_timeout_seconds` (Number) The amount of time the connector will wait when it discovers a document. Defaults to 600 seconds. Valid range: 5 seconds to 1200 seconds. Default: 600
 - `initial_load_timeout_hours` (Number) The amount of time an initial load is allowed to continue for before catching up on CDC logs. Default: 8
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Default: 300
 - `invalid_cdc_cursor_position_behavior` (String) Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss. Default: "Fail sync"; must be one of ["Fail sync", "Re-sync data"]

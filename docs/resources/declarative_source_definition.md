@@ -16,6 +16,7 @@ DeclarativeSourceDefinition Resource
 resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition" {
   manifest     = "{ \"see\": \"documentation\" }"
   name         = "...my_name..."
+  version      = 3
   workspace_id = "e5279006-d3bf-4277-ada7-423cb18aaece"
 }
 ```
@@ -29,15 +30,18 @@ resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition
 - `name` (String) Requires replacement if changed.
 - `workspace_id` (String)
 
+### Optional
+
+- `version` (Number)
+
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `version` (Number)
 
 ## Import
 
 Import is supported using the following syntax:
 
 ```shell
-terraform import airbyte_declarative_source_definition.my_airbyte_declarative_source_definition "{ \"definition_id\": \"\",  \"workspace_id\": \"\"}"
+terraform import airbyte_declarative_source_definition.my_airbyte_declarative_source_definition "{ \"id\": \"\",  \"workspace_id\": \"\"}"
 ```

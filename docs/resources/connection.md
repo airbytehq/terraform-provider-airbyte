@@ -20,6 +20,7 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "..."
         ]
+        include_files = false
         mappers = [
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"
@@ -32,7 +33,8 @@ resource "airbyte_connection" "my_connection" {
             type = "field-renaming"
           }
         ]
-        name = "...my_name..."
+        name      = "...my_name..."
+        namespace = "...my_namespace..."
         primary_key = [
           [
             # ...
@@ -113,8 +115,10 @@ Optional:
 Optional:
 
 - `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `include_files` (Boolean) Whether to move raw files from the source to the destination during the sync.
 - `mappers` (Attributes List) Mappers that should be applied to the stream before writing to the destination. (see [below for nested schema](#nestedatt--configurations--streams--mappers))
 - `name` (String) Not Null
+- `namespace` (String) Namespace of the stream.
 - `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
 - `selected_fields` (Attributes List) Paths to the fields that will be included in the configured catalog. (see [below for nested schema](#nestedatt--configurations--streams--selected_fields))
 - `sync_mode` (String) must be one of ["full_refresh_overwrite", "full_refresh_overwrite_deduped", "full_refresh_append", "incremental_append", "incremental_deduped_history"]

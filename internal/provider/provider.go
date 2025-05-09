@@ -7,6 +7,7 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -14,7 +15,8 @@ import (
 	"net/http"
 )
 
-var _ provider.Provider = &AirbyteProvider{}
+var _ provider.Provider = (*AirbyteProvider)(nil)
+var _ provider.ProviderWithEphemeralResources = (*AirbyteProvider)(nil)
 
 type AirbyteProvider struct {
 	// version is set to the provider version on release, "dev" when the
@@ -96,38 +98,8 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	} else {
 		bearerAuth = nil
 	}
-	var basicAuth *shared.SchemeBasicAuth
-	var username string
-	username = data.Username.ValueString()
-
-	var password string
-	password = data.Password.ValueString()
-
-	basicAuth = &shared.SchemeBasicAuth{
-		Username: username,
-		Password: password,
-	}
-	var clientCredentials *shared.SchemeClientCredentials
-	var clientID string
-	clientID = data.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = data.ClientSecret.ValueString()
-
-	var tokenURL string
-	tokenURL = data.TokenURL.ValueString()
-
-	if clientID != "" && clientSecret != "" {
-		clientCredentials = &shared.SchemeClientCredentials{
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			TokenURL:     tokenURL,
-		}
-	}
 	security := shared.Security{
-		BearerAuth:        bearerAuth,
-		BasicAuth:         basicAuth,
-		ClientCredentials: clientCredentials,
+		BearerAuth: bearerAuth,
 	}
 
 	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
@@ -146,6 +118,7 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	client := sdk.New(opts...)
 
 	resp.DataSourceData = client
+	resp.EphemeralResourceData = client
 	resp.ResourceData = client
 }
 
@@ -225,6 +198,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceAssemblyaiResource,
 		NewSourceAuth0Resource,
 		NewSourceAviationstackResource,
+		NewSourceAwinAdvertiserResource,
 		NewSourceAwsCloudtrailResource,
 		NewSourceAzureBlobStorageResource,
 		NewSourceAzureTableResource,
@@ -326,6 +300,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceExchangeRatesResource,
 		NewSourceEzofficeinventoryResource,
 		NewSourceFacebookMarketingResource,
+		NewSourceFacebookPagesResource,
 		NewSourceFactorialResource,
 		NewSourceFakerResource,
 		NewSourceFastbillResource,
@@ -438,6 +413,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceLessAnnoyingCrmResource,
 		NewSourceLeverHiringResource,
 		NewSourceLightspeedRetailResource,
+		NewSourceLinearResource,
 		NewSourceLinkedinAdsResource,
 		NewSourceLinkedinPagesResource,
 		NewSourceLinnworksResource,
@@ -505,6 +481,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceOpenweatherResource,
 		NewSourceOpinionStageResource,
 		NewSourceOpsgenieResource,
+		NewSourceOpuswatchResource,
 		NewSourceOracleResource,
 		NewSourceOracleEnterpriseResource,
 		NewSourceOrbResource,
@@ -603,6 +580,7 @@ func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewSourceServiceNowResource,
 		NewSourceSftpResource,
 		NewSourceSftpBulkResource,
+		NewSourceSharepointEnterpriseResource,
 		NewSourceSharetribeResource,
 		NewSourceShippoResource,
 		NewSourceShipstationResource,
@@ -809,6 +787,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceAssemblyaiDataSource,
 		NewSourceAuth0DataSource,
 		NewSourceAviationstackDataSource,
+		NewSourceAwinAdvertiserDataSource,
 		NewSourceAwsCloudtrailDataSource,
 		NewSourceAzureBlobStorageDataSource,
 		NewSourceAzureTableDataSource,
@@ -910,6 +889,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceExchangeRatesDataSource,
 		NewSourceEzofficeinventoryDataSource,
 		NewSourceFacebookMarketingDataSource,
+		NewSourceFacebookPagesDataSource,
 		NewSourceFactorialDataSource,
 		NewSourceFakerDataSource,
 		NewSourceFastbillDataSource,
@@ -1022,6 +1002,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceLessAnnoyingCrmDataSource,
 		NewSourceLeverHiringDataSource,
 		NewSourceLightspeedRetailDataSource,
+		NewSourceLinearDataSource,
 		NewSourceLinkedinAdsDataSource,
 		NewSourceLinkedinPagesDataSource,
 		NewSourceLinnworksDataSource,
@@ -1089,6 +1070,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceOpenweatherDataSource,
 		NewSourceOpinionStageDataSource,
 		NewSourceOpsgenieDataSource,
+		NewSourceOpuswatchDataSource,
 		NewSourceOracleDataSource,
 		NewSourceOracleEnterpriseDataSource,
 		NewSourceOrbDataSource,
@@ -1187,6 +1169,7 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceServiceNowDataSource,
 		NewSourceSftpDataSource,
 		NewSourceSftpBulkDataSource,
+		NewSourceSharepointEnterpriseDataSource,
 		NewSourceSharetribeDataSource,
 		NewSourceShippoDataSource,
 		NewSourceShipstationDataSource,
@@ -1315,6 +1298,10 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceDefinitionDataSource,
 		NewWorkspaceDataSource,
 	}
+}
+
+func (p *AirbyteProvider) EphemeralResources(ctx context.Context) []func() ephemeral.EphemeralResource {
+	return []func() ephemeral.EphemeralResource{}
 }
 
 func New(version string) func() provider.Provider {

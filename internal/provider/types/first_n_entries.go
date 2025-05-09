@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type FirstNEntries struct {
-	AdditionalProperties types.String `tfsdk:"additional_properties"`
-	LoggingType          types.String `tfsdk:"logging_type"`
-	MaxEntryCount        types.Number `tfsdk:"max_entry_count"`
+	AdditionalProperties types.String  `tfsdk:"additional_properties"`
+	LoggingType          types.String  `tfsdk:"logging_type"`
+	MaxEntryCount        types.Float64 `tfsdk:"max_entry_count"`
 }

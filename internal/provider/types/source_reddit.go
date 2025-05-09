@@ -8,7 +8,7 @@ type SourceReddit struct {
 	APIKey        types.String   `tfsdk:"api_key"`
 	Exact         types.Bool     `tfsdk:"exact"`
 	IncludeOver18 types.Bool     `tfsdk:"include_over_18"`
-	Limit         types.Number   `tfsdk:"limit"`
+	Limit         types.Float64  `tfsdk:"limit"`
 	Query         types.String   `tfsdk:"query"`
 	StartDate     types.String   `tfsdk:"start_date"`
 	Subreddits    []types.String `tfsdk:"subreddits"`

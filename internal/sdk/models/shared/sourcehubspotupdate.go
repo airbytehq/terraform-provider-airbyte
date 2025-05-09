@@ -205,6 +205,8 @@ type SourceHubspotUpdate struct {
 	Credentials SourceHubspotUpdateAuthentication `json:"credentials"`
 	// If enabled then experimental streams become available for sync.
 	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
+	// The number of worker threads to use for the sync.
+	NumWorker *int64 `default:"3" json:"num_worker"`
 }
 
 func (s SourceHubspotUpdate) MarshalJSON() ([]byte, error) {
@@ -237,4 +239,11 @@ func (o *SourceHubspotUpdate) GetEnableExperimentalStreams() *bool {
 		return nil
 	}
 	return o.EnableExperimentalStreams
+}
+
+func (o *SourceHubspotUpdate) GetNumWorker() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NumWorker
 }

@@ -53,7 +53,7 @@ resource "airbyte_source_vitally" "my_source_vitally" {
 
 Required:
 
-- `domain` (String) Provide only the domain part, like https://{your-domain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
+- `domain` (String) Provide only the subdomain part, like https://{your-custom-subdomain}.rest.vitally.io/.  Keep empty if you don't have a subdomain.
 - `secret_token` (String) sk_live_secret_token
 - `status` (String) Status of the Vitally accounts. One of the following values; active, churned, activeOrChurned. must be one of ["active", "churned", "activeOrChurned"]
 

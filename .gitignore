@@ -1,3 +1,4 @@
+.speakeasy/temp/
 .terraform
 terraform-provider-airbyte
 .terraform*

@@ -5,6 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceXsolla struct {
-	APIKey    types.String `tfsdk:"api_key"`
-	ProjectID types.Number `tfsdk:"project_id"`
+	APIKey    types.String  `tfsdk:"api_key"`
+	ProjectID types.Float64 `tfsdk:"project_id"`
 }
