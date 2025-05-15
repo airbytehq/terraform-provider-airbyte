@@ -45,5 +45,5 @@ resource "airbyte_destination_definition" "my_destinationdefinition" {
 Import is supported using the following syntax:
 
 ```shell
-terraform import airbyte_destination_definition.my_airbyte_destination_definition "{ \"id\": \"\",  \"workspace_id\": \"\"}"
+terraform import airbyte_destination_definition.my_airbyte_destination_definition "{ \"definition_id\": \"\",  \"workspace_id\": \"\"}"
 ```

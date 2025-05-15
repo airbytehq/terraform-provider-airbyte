@@ -3,16 +3,11 @@
 package provider
 
 import (
-	"context"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *PermissionResourceModel) ToSharedPermissionCreateRequest(ctx context.Context) (*shared.PermissionCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *PermissionResourceModel) ToSharedPermissionCreateRequest() *shared.PermissionCreateRequest {
 	permissionType := shared.PublicPermissionType(r.PermissionType.ValueString())
 	var userID string
 	userID = r.UserID.ValueString()
@@ -35,71 +30,10 @@ func (r *PermissionResourceModel) ToSharedPermissionCreateRequest(ctx context.Co
 		WorkspaceID:    workspaceID,
 		OrganizationID: organizationID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *PermissionResourceModel) ToSharedPermissionUpdateRequest(ctx context.Context) (*shared.PermissionUpdateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	permissionType := shared.PermissionType(r.PermissionType.ValueString())
-	out := shared.PermissionUpdateRequest{
-		PermissionType: permissionType,
-	}
-
-	return &out, diags
-}
-
-func (r *PermissionResourceModel) ToOperationsUpdatePermissionRequest(ctx context.Context) (*operations.UpdatePermissionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var permissionID string
-	permissionID = r.PermissionID.ValueString()
-
-	permissionUpdateRequest, permissionUpdateRequestDiags := r.ToSharedPermissionUpdateRequest(ctx)
-	diags.Append(permissionUpdateRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.UpdatePermissionRequest{
-		PermissionID:            permissionID,
-		PermissionUpdateRequest: *permissionUpdateRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *PermissionResourceModel) ToOperationsGetPermissionRequest(ctx context.Context) (*operations.GetPermissionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var permissionID string
-	permissionID = r.PermissionID.ValueString()
-
-	out := operations.GetPermissionRequest{
-		PermissionID: permissionID,
-	}
-
-	return &out, diags
-}
-
-func (r *PermissionResourceModel) ToOperationsDeletePermissionRequest(ctx context.Context) (*operations.DeletePermissionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var permissionID string
-	permissionID = r.PermissionID.ValueString()
-
-	out := operations.DeletePermissionRequest{
-		PermissionID: permissionID,
-	}
-
-	return &out, diags
-}
-
-func (r *PermissionResourceModel) RefreshFromSharedPermissionResponse(ctx context.Context, resp *shared.PermissionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *PermissionResourceModel) RefreshFromSharedPermissionResponse(resp *shared.PermissionResponse) {
 	if resp != nil {
 		r.OrganizationID = types.StringPointerValue(resp.OrganizationID)
 		r.PermissionID = types.StringValue(resp.PermissionID)
@@ -107,6 +41,12 @@ func (r *PermissionResourceModel) RefreshFromSharedPermissionResponse(ctx contex
 		r.UserID = types.StringValue(resp.UserID)
 		r.WorkspaceID = types.StringPointerValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *PermissionResourceModel) ToSharedPermissionUpdateRequest() *shared.PermissionUpdateRequest {
+	permissionType := shared.PermissionType(r.PermissionType.ValueString())
+	out := shared.PermissionUpdateRequest{
+		PermissionType: permissionType,
+	}
+	return &out
 }

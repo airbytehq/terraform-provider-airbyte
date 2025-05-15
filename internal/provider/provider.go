@@ -7,7 +7,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
-	"github.com/hashicorp/terraform-plugin-framework/ephemeral"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -15,8 +14,7 @@ import (
 	"net/http"
 )
 
-var _ provider.Provider = (*AirbyteProvider)(nil)
-var _ provider.ProviderWithEphemeralResources = (*AirbyteProvider)(nil)
+var _ provider.Provider = &AirbyteProvider{}
 
 type AirbyteProvider struct {
 	// version is set to the provider version on release, "dev" when the
@@ -98,8 +96,38 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	} else {
 		bearerAuth = nil
 	}
+	var basicAuth *shared.SchemeBasicAuth
+	var username string
+	username = data.Username.ValueString()
+
+	var password string
+	password = data.Password.ValueString()
+
+	basicAuth = &shared.SchemeBasicAuth{
+		Username: username,
+		Password: password,
+	}
+	var clientCredentials *shared.SchemeClientCredentials
+	var clientID string
+	clientID = data.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = data.ClientSecret.ValueString()
+
+	var tokenURL string
+	tokenURL = data.TokenURL.ValueString()
+
+	if clientID != "" && clientSecret != "" {
+		clientCredentials = &shared.SchemeClientCredentials{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			TokenURL:     tokenURL,
+		}
+	}
 	security := shared.Security{
-		BearerAuth: bearerAuth,
+		BearerAuth:        bearerAuth,
+		BasicAuth:         basicAuth,
+		ClientCredentials: clientCredentials,
 	}
 
 	providerHTTPTransportOpts := ProviderHTTPTransportOpts{
@@ -118,7 +146,6 @@ func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureR
 	client := sdk.New(opts...)
 
 	resp.DataSourceData = client
-	resp.EphemeralResourceData = client
 	resp.ResourceData = client
 }
 
@@ -1298,10 +1325,6 @@ func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.D
 		NewSourceDefinitionDataSource,
 		NewWorkspaceDataSource,
 	}
-}
-
-func (p *AirbyteProvider) EphemeralResources(ctx context.Context) []func() ephemeral.EphemeralResource {
-	return []func() ephemeral.EphemeralResource{}
 }
 
 func New(version string) func() provider.Provider {

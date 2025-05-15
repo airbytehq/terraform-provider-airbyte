@@ -5,8 +5,8 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationDeepset struct {
-	APIKey    types.String  `tfsdk:"api_key"`
-	BaseURL   types.String  `tfsdk:"base_url"`
-	Retries   types.Float64 `tfsdk:"retries"`
-	Workspace types.String  `tfsdk:"workspace"`
+	APIKey    types.String `tfsdk:"api_key"`
+	BaseURL   types.String `tfsdk:"base_url"`
+	Retries   types.Number `tfsdk:"retries"`
+	Workspace types.String `tfsdk:"workspace"`
 }

@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -291,12 +292,7 @@ func (r *DestinationMotherduckResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToSharedDestinationMotherduckCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedDestinationMotherduckCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationMotherduck(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -317,24 +313,15 @@ func (r *DestinationMotherduckResource) Create(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMotherduckRequest{
+		DestinationID: destinationID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetDestinationMotherduckRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMotherduck(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMotherduck(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -354,17 +341,8 @@ func (r *DestinationMotherduckResource) Create(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -388,13 +366,13 @@ func (r *DestinationMotherduckResource) Read(ctx context.Context, req resource.R
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationMotherduckRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetDestinationMotherduckRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.GetDestinationMotherduck(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationMotherduck(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -418,11 +396,7 @@ func (r *DestinationMotherduckResource) Read(ctx context.Context, req resource.R
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -442,13 +416,15 @@ func (r *DestinationMotherduckResource) Update(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutDestinationMotherduckRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	destinationMotherduckPutRequest := data.ToSharedDestinationMotherduckPutRequest()
+	request := operations.PutDestinationMotherduckRequest{
+		DestinationID:                   destinationID,
+		DestinationMotherduckPutRequest: destinationMotherduckPutRequest,
 	}
-	res, err := r.client.Destinations.PutDestinationMotherduck(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationMotherduck(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -464,19 +440,14 @@ func (r *DestinationMotherduckResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationId1 string
+	destinationId1 = data.DestinationID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMotherduckRequest{
+		DestinationID: destinationId1,
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationMotherduckRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMotherduck(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMotherduck(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -496,17 +467,8 @@ func (r *DestinationMotherduckResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -530,13 +492,13 @@ func (r *DestinationMotherduckResource) Delete(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationMotherduckRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteDestinationMotherduckRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.DeleteDestinationMotherduck(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationMotherduck(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

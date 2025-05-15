@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest(ctx context.Context) (*shared.DestinationAstraCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest() *shared.DestinationAstraCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -246,13 +241,57 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraCreateRequest(ct
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest(ctx context.Context) (*shared.DestinationAstraPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *DestinationAstraResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	if resp != nil {
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+				}
+			}
+		}
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+}
 
+func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest() *shared.DestinationAstraPutRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -478,104 +517,5 @@ func (r *DestinationAstraResourceModel) ToSharedDestinationAstraPutRequest(ctx c
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
-}
-
-func (r *DestinationAstraResourceModel) ToOperationsPutDestinationAstraRequest(ctx context.Context) (*operations.PutDestinationAstraRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	destinationAstraPutRequest, destinationAstraPutRequestDiags := r.ToSharedDestinationAstraPutRequest(ctx)
-	diags.Append(destinationAstraPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutDestinationAstraRequest{
-		DestinationID:              destinationID,
-		DestinationAstraPutRequest: destinationAstraPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationAstraResourceModel) ToOperationsGetDestinationAstraRequest(ctx context.Context) (*operations.GetDestinationAstraRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.GetDestinationAstraRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationAstraResourceModel) ToOperationsDeleteDestinationAstraRequest(ctx context.Context) (*operations.DeleteDestinationAstraRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.DeleteDestinationAstraRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationAstraResourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DefinitionID = types.StringValue(resp.DefinitionID)
-		r.DestinationID = types.StringValue(resp.DestinationID)
-		r.DestinationType = types.StringValue(resp.DestinationType)
-		r.Name = types.StringValue(resp.Name)
-		if resp.ResourceAllocation == nil {
-			r.ResourceAllocation = nil
-		} else {
-			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
-			if resp.ResourceAllocation.Default == nil {
-				r.ResourceAllocation.Default = nil
-			} else {
-				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
-				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
-				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
-				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
-				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
-				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
-				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
-			}
-			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
-			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
-				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
-			}
-			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
-				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
-				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
-				}
-			}
-		}
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-
-	return diags
+	return &out
 }

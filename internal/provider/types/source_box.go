@@ -5,7 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceBox struct {
-	ClientID     types.String  `tfsdk:"client_id"`
-	ClientSecret types.String  `tfsdk:"client_secret"`
-	User         types.Float64 `tfsdk:"user"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
+	User         types.Number `tfsdk:"user"`
 }

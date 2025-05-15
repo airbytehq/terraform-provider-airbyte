@@ -3,18 +3,13 @@
 package provider
 
 import (
-	"context"
 	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationCustomResourceModel) ToSharedDestinationCustomCreateRequest(ctx context.Context) (*shared.DestinationCustomCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationCustomResourceModel) ToSharedDestinationCustomCreateRequest() *shared.DestinationCustomCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -35,80 +30,10 @@ func (r *DestinationCustomResourceModel) ToSharedDestinationCustomCreateRequest(
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DestinationCustomResourceModel) ToSharedDestinationCustomPutRequest(ctx context.Context) (*shared.DestinationCustomPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var configuration interface{}
-	_ = json.Unmarshal([]byte(r.Configuration.ValueString()), &configuration)
-	out := shared.DestinationCustomPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationCustomResourceModel) ToOperationsPutDestinationCustomRequest(ctx context.Context) (*operations.PutDestinationCustomRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	destinationCustomPutRequest, destinationCustomPutRequestDiags := r.ToSharedDestinationCustomPutRequest(ctx)
-	diags.Append(destinationCustomPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutDestinationCustomRequest{
-		DestinationID:               destinationID,
-		DestinationCustomPutRequest: destinationCustomPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationCustomResourceModel) ToOperationsGetDestinationCustomRequest(ctx context.Context) (*operations.GetDestinationCustomRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.GetDestinationCustomRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationCustomResourceModel) ToOperationsDeleteDestinationCustomRequest(ctx context.Context) (*operations.DeleteDestinationCustomRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.DeleteDestinationCustomRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationCustomResourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *DestinationCustomResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
 	if resp != nil {
 		configurationResult, _ := json.Marshal(resp.Configuration)
 		r.Configuration = types.StringValue(string(configurationResult))
@@ -137,24 +62,39 @@ func (r *DestinationCustomResourceModel) RefreshFromSharedDestinationResponse(ct
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *DestinationCustomResourceModel) ToSharedDestinationCustomPutRequest() *shared.DestinationCustomPutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var configuration interface{}
+	_ = json.Unmarshal([]byte(r.Configuration.ValueString()), &configuration)
+	out := shared.DestinationCustomPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

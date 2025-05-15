@@ -5,9 +5,9 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFreeAgentConnector struct {
-	ClientID            types.String  `tfsdk:"client_id"`
-	ClientRefreshToken2 types.String  `tfsdk:"client_refresh_token_2"`
-	ClientSecret        types.String  `tfsdk:"client_secret"`
-	PayrollYear         types.Float64 `tfsdk:"payroll_year"`
-	UpdatedSince        types.String  `tfsdk:"updated_since"`
+	ClientID            types.String `tfsdk:"client_id"`
+	ClientRefreshToken2 types.String `tfsdk:"client_refresh_token_2"`
+	ClientSecret        types.String `tfsdk:"client_secret"`
+	PayrollYear         types.Number `tfsdk:"payroll_year"`
+	UpdatedSince        types.String `tfsdk:"updated_since"`
 }

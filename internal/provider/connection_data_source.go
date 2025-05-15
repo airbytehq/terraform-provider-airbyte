@@ -7,6 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -326,13 +327,13 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetConnectionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var connectionID string
+	connectionID = data.ConnectionID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetConnectionRequest{
+		ConnectionID: connectionID,
 	}
-	res, err := r.client.Connections.GetConnection(ctx, *request)
+	res, err := r.client.Connections.GetConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -356,11 +357,7 @@ func (r *ConnectionDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedConnectionResponse(ctx, res.ConnectionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

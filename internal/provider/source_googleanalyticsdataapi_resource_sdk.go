@@ -3,18 +3,13 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
 	customTypes "github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPICreateRequest(ctx context.Context) (*shared.SourceGoogleAnalyticsDataAPICreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPICreateRequest() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -184,7 +179,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue
 						if expressionsItem.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value3 float64
-							value3 = expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value3, _ = expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue{
 								Value: value3,
@@ -225,7 +220,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue
 						if expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value5 float64
-							value5 = expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value5, _ = expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue{
 								Value: value5,
@@ -254,7 +249,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue
 						if expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value7 float64
-							value7 = expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value7, _ = expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue{
 								Value: value7,
@@ -369,7 +364,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue
 						if expressionsItem1.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value11 float64
-							value11 = expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value11, _ = expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue{
 								Value: value11,
@@ -410,7 +405,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue
 						if expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value13 float64
-							value13 = expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value13, _ = expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDoubleValue{
 								Value: value13,
@@ -439,7 +434,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue
 						if expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value15 float64
-							value15 = expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value15, _ = expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue{
 								Value: value15,
@@ -554,7 +549,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value19 float64
-							value19 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value19, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue{
 								Value: value19,
@@ -595,7 +590,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value21 float64
-							value21 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value21, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue{
 								Value: value21,
@@ -624,7 +619,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value23 float64
-							value23 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value23, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue{
 								Value: value23,
@@ -737,7 +732,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var doubleValue *shared.DoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
 						var value27 float64
-						value27 = customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+						value27, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 						doubleValue = &shared.DoubleValue{
 							Value: value27,
@@ -778,7 +773,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIDoubleValue *shared.SourceGoogleAnalyticsDataAPIDoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 						var value29 float64
-						value29 = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+						value29, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIDoubleValue = &shared.SourceGoogleAnalyticsDataAPIDoubleValue{
 							Value: value29,
@@ -807,7 +802,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPISchemasDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasDoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 						var value31 float64
-						value31 = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+						value31, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPISchemasDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasDoubleValue{
 							Value: value31,
@@ -921,7 +916,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue
 						if expressionsItem2.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value35 float64
-							value35 = expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value35, _ = expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue{
 								Value: value35,
@@ -962,7 +957,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue
 						if expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value37 float64
-							value37 = expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value37, _ = expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue{
 								Value: value37,
@@ -991,7 +986,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue
 						if expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value39 float64
-							value39 = expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value39, _ = expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue{
 								Value: value39,
@@ -1106,7 +1101,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue
 						if expressionsItem3.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value43 float64
-							value43 = expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value43, _ = expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue{
 								Value: value43,
@@ -1147,7 +1142,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue
 						if expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value45 float64
-							value45 = expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value45, _ = expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue{
 								Value: value45,
@@ -1176,7 +1171,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue
 						if expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value47 float64
-							value47 = expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value47, _ = expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue{
 								Value: value47,
@@ -1291,7 +1286,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value51 float64
-							value51 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value51, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue{
 								Value: value51,
@@ -1332,7 +1327,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value53 float64
-							value53 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value53, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue{
 								Value: value53,
@@ -1361,7 +1356,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value55 float64
-							value55 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value55, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue{
 								Value: value55,
@@ -1474,7 +1469,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
 						var value59 float64
-						value59 = customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+						value59, _ = customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDoubleValue{
 							Value: value59,
@@ -1515,7 +1510,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 						var value61 float64
-						value61 = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+						value61, _ = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterDoubleValue{
 							Value: value61,
@@ -1544,7 +1539,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 						var value63 float64
-						value63 = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+						value63, _ = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue{
 							Value: value63,
@@ -1709,13 +1704,57 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPIPutRequest(ctx context.Context) (*shared.SourceGoogleAnalyticsDataAPIPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
+	if resp != nil {
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+				}
+			}
+		}
+		r.SourceID = types.StringValue(resp.SourceID)
+		r.SourceType = types.StringValue(resp.SourceType)
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+}
 
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalyticsDataAPIPutRequest() *shared.SourceGoogleAnalyticsDataAPIPutRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -1879,7 +1918,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue
 						if expressionsItem.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value3 float64
-							value3 = expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value3, _ = expressionsItem.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1DoubleValue{
 								Value: value3,
@@ -1920,7 +1959,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue
 						if expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value5 float64
-							value5 = expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value5, _ = expressionsItem.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsDoubleValue{
 								Value: value5,
@@ -1949,7 +1988,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue
 						if expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value7 float64
-							value7 = expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value7, _ = expressionsItem.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ExpressionsFilterDoubleValue{
 								Value: value7,
@@ -2064,7 +2103,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue
 						if expressionsItem1.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value11 float64
-							value11 = expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value11, _ = expressionsItem1.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDoubleValue{
 								Value: value11,
@@ -2105,7 +2144,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue
 						if expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value13 float64
-							value13 = expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value13, _ = expressionsItem1.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterDoubleValue{
 								Value: value13,
@@ -2134,7 +2173,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue
 						if expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value15 float64
-							value15 = expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value15, _ = expressionsItem1.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2DoubleValue{
 								Value: value15,
@@ -2249,7 +2288,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value19 float64
-							value19 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value19, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3DoubleValue{
 								Value: value19,
@@ -2290,7 +2329,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value21 float64
-							value21 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value21, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionDoubleValue{
 								Value: value21,
@@ -2319,7 +2358,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue
 						if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value23 float64
-							value23 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value23, _ = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3ExpressionFilterDoubleValue{
 								Value: value23,
@@ -2432,7 +2471,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateDoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
 						var value27 float64
-						value27 = customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+						value27, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateDoubleValue{
 							Value: value27,
@@ -2473,7 +2512,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 						var value29 float64
-						value29 = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+						value29, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasDoubleValue{
 							Value: value29,
@@ -2502,7 +2541,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue
 					if customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 						var value31 float64
-						value31 = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+						value31, _ = customReportsArrayItem.DimensionFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDoubleValue{
 							Value: value31,
@@ -2616,7 +2655,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue
 						if expressionsItem2.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value35 float64
-							value35 = expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value35, _ = expressionsItem2.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsDoubleValue{
 								Value: value35,
@@ -2657,7 +2696,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue
 						if expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value37 float64
-							value37 = expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value37, _ = expressionsItem2.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ExpressionsFilterDoubleValue{
 								Value: value37,
@@ -2686,7 +2725,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue
 						if expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value39 float64
-							value39 = expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value39, _ = expressionsItem2.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1DoubleValue{
 								Value: value39,
@@ -2801,7 +2840,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue
 						if expressionsItem3.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value43 float64
-							value43 = expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value43, _ = expressionsItem3.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2DoubleValue{
 								Value: value43,
@@ -2842,7 +2881,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue
 						if expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value45 float64
-							value45 = expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value45, _ = expressionsItem3.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsDoubleValue{
 								Value: value45,
@@ -2871,7 +2910,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue
 						if expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value47 float64
-							value47 = expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value47, _ = expressionsItem3.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ExpressionsFilterDoubleValue{
 								Value: value47,
@@ -2986,7 +3025,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue != nil {
 							var value51 float64
-							value51 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+							value51, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3DoubleValue{
 								Value: value51,
@@ -3027,7 +3066,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 							var value53 float64
-							value53 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+							value53, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionDoubleValue{
 								Value: value53,
@@ -3056,7 +3095,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue
 						if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 							var value55 float64
-							value55 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+							value55, _ = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 							sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ExpressionFilterDoubleValue{
 								Value: value55,
@@ -3169,7 +3208,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue != nil {
 						var value59 float64
-						value59 = customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueFloat64()
+						value59, _ = customReportsArrayItem.MetricFilter.Filter.Filter.NumericFilter.Value.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterDoubleValue{
 							Value: value59,
@@ -3210,7 +3249,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue != nil {
 						var value61 float64
-						value61 = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueFloat64()
+						value61, _ = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.FromValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterDoubleValue{
 							Value: value61,
@@ -3239,7 +3278,7 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue
 					if customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue != nil {
 						var value63 float64
-						value63 = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueFloat64()
+						value63, _ = customReportsArrayItem.MetricFilter.Filter.Filter.BetweenFilter.ToValue.DoubleValue.Value.ValueBigFloat().Float64()
 
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter4DoubleValue{
 							Value: value63,
@@ -3396,104 +3435,5 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToOperationsPutSourceGoogleAnalyticsDataAPIRequest(ctx context.Context) (*operations.PutSourceGoogleAnalyticsDataAPIRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceGoogleAnalyticsDataAPIPutRequest, sourceGoogleAnalyticsDataAPIPutRequestDiags := r.ToSharedSourceGoogleAnalyticsDataAPIPutRequest(ctx)
-	diags.Append(sourceGoogleAnalyticsDataAPIPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceGoogleAnalyticsDataAPIRequest{
-		SourceID:                               sourceID,
-		SourceGoogleAnalyticsDataAPIPutRequest: sourceGoogleAnalyticsDataAPIPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToOperationsGetSourceGoogleAnalyticsDataAPIRequest(ctx context.Context) (*operations.GetSourceGoogleAnalyticsDataAPIRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToOperationsDeleteSourceGoogleAnalyticsDataAPIRequest(ctx context.Context) (*operations.DeleteSourceGoogleAnalyticsDataAPIRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceGoogleAnalyticsDataAPIRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DefinitionID = types.StringValue(resp.DefinitionID)
-		r.Name = types.StringValue(resp.Name)
-		if resp.ResourceAllocation == nil {
-			r.ResourceAllocation = nil
-		} else {
-			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
-			if resp.ResourceAllocation.Default == nil {
-				r.ResourceAllocation.Default = nil
-			} else {
-				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
-				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
-				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
-				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
-				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
-				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
-				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
-			}
-			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
-			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
-				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
-			}
-			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
-				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
-				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
-				}
-			}
-		}
-		r.SourceID = types.StringValue(resp.SourceID)
-		r.SourceType = types.StringValue(resp.SourceType)
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-
-	return diags
+	return &out
 }
