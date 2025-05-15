@@ -43,5 +43,5 @@ resource "airbyte_declarative_source_definition" "my_declarativesourcedefinition
 Import is supported using the following syntax:
 
 ```shell
-terraform import airbyte_declarative_source_definition.my_airbyte_declarative_source_definition "{ \"id\": \"\",  \"workspace_id\": \"\"}"
+terraform import airbyte_declarative_source_definition.my_airbyte_declarative_source_definition "{ \"definition_id\": \"\",  \"workspace_id\": \"\"}"
 ```
