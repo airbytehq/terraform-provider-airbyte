@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -634,12 +635,7 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request, requestDiags := data.ToSharedDestinationMilvusCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedDestinationMilvusCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -660,24 +656,15 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMilvusRequest{
+		DestinationID: destinationID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetDestinationMilvusRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -697,17 +684,8 @@ func (r *DestinationMilvusResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -731,13 +709,13 @@ func (r *DestinationMilvusResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationMilvusRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetDestinationMilvusRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.GetDestinationMilvus(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -761,11 +739,7 @@ func (r *DestinationMilvusResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -785,13 +759,15 @@ func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutDestinationMilvusRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	destinationMilvusPutRequest := data.ToSharedDestinationMilvusPutRequest()
+	request := operations.PutDestinationMilvusRequest{
+		DestinationID:               destinationID,
+		DestinationMilvusPutRequest: destinationMilvusPutRequest,
 	}
-	res, err := r.client.Destinations.PutDestinationMilvus(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -807,19 +783,14 @@ func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationId1 string
+	destinationId1 = data.DestinationID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMilvusRequest{
+		DestinationID: destinationId1,
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationMilvusRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMilvus(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -839,17 +810,8 @@ func (r *DestinationMilvusResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -873,13 +835,13 @@ func (r *DestinationMilvusResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationMilvusRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteDestinationMilvusRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.DeleteDestinationMilvus(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationMilvus(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

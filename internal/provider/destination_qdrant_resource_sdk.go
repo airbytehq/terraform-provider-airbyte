@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(ctx context.Context) (*shared.DestinationQdrantCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest() *shared.DestinationQdrantCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -286,13 +281,57 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantCreateRequest(
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest(ctx context.Context) (*shared.DestinationQdrantPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *DestinationQdrantResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
+	if resp != nil {
+		r.CreatedAt = types.Int64Value(resp.CreatedAt)
+		r.DefinitionID = types.StringValue(resp.DefinitionID)
+		r.DestinationID = types.StringValue(resp.DestinationID)
+		r.DestinationType = types.StringValue(resp.DestinationType)
+		r.Name = types.StringValue(resp.Name)
+		if resp.ResourceAllocation == nil {
+			r.ResourceAllocation = nil
+		} else {
+			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
+			if resp.ResourceAllocation.Default == nil {
+				r.ResourceAllocation.Default = nil
+			} else {
+				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
+				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
+				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
+				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
+				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
+				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
+				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
+			}
+			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
+			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
+				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
+			}
+			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
+				} else {
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
+				}
+			}
+		}
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+}
 
+func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest() *shared.DestinationQdrantPutRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -558,104 +597,5 @@ func (r *DestinationQdrantResourceModel) ToSharedDestinationQdrantPutRequest(ctx
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
-}
-
-func (r *DestinationQdrantResourceModel) ToOperationsPutDestinationQdrantRequest(ctx context.Context) (*operations.PutDestinationQdrantRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	destinationQdrantPutRequest, destinationQdrantPutRequestDiags := r.ToSharedDestinationQdrantPutRequest(ctx)
-	diags.Append(destinationQdrantPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutDestinationQdrantRequest{
-		DestinationID:               destinationID,
-		DestinationQdrantPutRequest: destinationQdrantPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationQdrantResourceModel) ToOperationsGetDestinationQdrantRequest(ctx context.Context) (*operations.GetDestinationQdrantRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.GetDestinationQdrantRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationQdrantResourceModel) ToOperationsDeleteDestinationQdrantRequest(ctx context.Context) (*operations.DeleteDestinationQdrantRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.DeleteDestinationQdrantRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationQdrantResourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DefinitionID = types.StringValue(resp.DefinitionID)
-		r.DestinationID = types.StringValue(resp.DestinationID)
-		r.DestinationType = types.StringValue(resp.DestinationType)
-		r.Name = types.StringValue(resp.Name)
-		if resp.ResourceAllocation == nil {
-			r.ResourceAllocation = nil
-		} else {
-			r.ResourceAllocation = &tfTypes.ScopedResourceRequirements{}
-			if resp.ResourceAllocation.Default == nil {
-				r.ResourceAllocation.Default = nil
-			} else {
-				r.ResourceAllocation.Default = &tfTypes.ResourceRequirements{}
-				r.ResourceAllocation.Default.CPULimit = types.StringPointerValue(resp.ResourceAllocation.Default.CPULimit)
-				r.ResourceAllocation.Default.CPURequest = types.StringPointerValue(resp.ResourceAllocation.Default.CPURequest)
-				r.ResourceAllocation.Default.EphemeralStorageLimit = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageLimit)
-				r.ResourceAllocation.Default.EphemeralStorageRequest = types.StringPointerValue(resp.ResourceAllocation.Default.EphemeralStorageRequest)
-				r.ResourceAllocation.Default.MemoryLimit = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryLimit)
-				r.ResourceAllocation.Default.MemoryRequest = types.StringPointerValue(resp.ResourceAllocation.Default.MemoryRequest)
-			}
-			r.ResourceAllocation.JobSpecific = []tfTypes.JobTypeResourceLimit{}
-			if len(r.ResourceAllocation.JobSpecific) > len(resp.ResourceAllocation.JobSpecific) {
-				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
-			}
-			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
-				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
-				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
-				}
-			}
-		}
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-
-	return diags
+	return &out
 }

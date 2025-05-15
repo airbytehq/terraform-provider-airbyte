@@ -7,6 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -264,13 +265,13 @@ func (r *WorkspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetWorkspaceRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetWorkspaceRequest{
+		WorkspaceID: workspaceID,
 	}
-	res, err := r.client.Workspaces.GetWorkspace(ctx, *request)
+	res, err := r.client.Workspaces.GetWorkspace(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -294,11 +295,7 @@ func (r *WorkspaceDataSource) Read(ctx context.Context, req datasource.ReadReque
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedWorkspaceResponse(ctx, res.WorkspaceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedWorkspaceResponse(res.WorkspaceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

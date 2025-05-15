@@ -7,6 +7,7 @@ import (
 	"fmt"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -178,13 +179,13 @@ func (r *SourceTinyemailDataSource) Read(ctx context.Context, req datasource.Rea
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceTinyemailRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetSourceTinyemailRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.GetSourceTinyemail(ctx, *request)
+	res, err := r.client.Sources.GetSourceTinyemail(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -208,11 +209,7 @@ func (r *SourceTinyemailDataSource) Read(ctx context.Context, req datasource.Rea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

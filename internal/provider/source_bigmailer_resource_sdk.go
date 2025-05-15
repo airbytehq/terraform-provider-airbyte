@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceBigmailerResourceModel) ToSharedSourceBigmailerCreateRequest(ctx context.Context) (*shared.SourceBigmailerCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceBigmailerResourceModel) ToSharedSourceBigmailerCreateRequest() *shared.SourceBigmailerCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -45,84 +40,10 @@ func (r *SourceBigmailerResourceModel) ToSharedSourceBigmailerCreateRequest(ctx 
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceBigmailerResourceModel) ToSharedSourceBigmailerPutRequest(ctx context.Context) (*shared.SourceBigmailerPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	configuration := shared.SourceBigmailerUpdate{
-		APIKey: apiKey,
-	}
-	out := shared.SourceBigmailerPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceBigmailerResourceModel) ToOperationsPutSourceBigmailerRequest(ctx context.Context) (*operations.PutSourceBigmailerRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceBigmailerPutRequest, sourceBigmailerPutRequestDiags := r.ToSharedSourceBigmailerPutRequest(ctx)
-	diags.Append(sourceBigmailerPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceBigmailerRequest{
-		SourceID:                  sourceID,
-		SourceBigmailerPutRequest: sourceBigmailerPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceBigmailerResourceModel) ToOperationsGetSourceBigmailerRequest(ctx context.Context) (*operations.GetSourceBigmailerRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceBigmailerRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceBigmailerResourceModel) ToOperationsDeleteSourceBigmailerRequest(ctx context.Context) (*operations.DeleteSourceBigmailerRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceBigmailerRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceBigmailerResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *SourceBigmailerResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -147,19 +68,19 @@ func (r *SourceBigmailerResourceModel) RefreshFromSharedSourceResponse(ctx conte
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
@@ -167,6 +88,25 @@ func (r *SourceBigmailerResourceModel) RefreshFromSharedSourceResponse(ctx conte
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *SourceBigmailerResourceModel) ToSharedSourceBigmailerPutRequest() *shared.SourceBigmailerPutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	configuration := shared.SourceBigmailerUpdate{
+		APIKey: apiKey,
+	}
+	out := shared.SourceBigmailerPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

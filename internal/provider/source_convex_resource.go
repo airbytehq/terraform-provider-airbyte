@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -291,12 +292,7 @@ func (r *SourceConvexResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
-	request, requestDiags := data.ToSharedSourceConvexCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedSourceConvexCreateRequest()
 	res, err := r.client.Sources.CreateSourceConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -317,24 +313,15 @@ func (r *SourceConvexResource) Create(ctx context.Context, req resource.CreateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceConvexRequest{
+		SourceID: sourceID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetSourceConvexRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceConvex(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceConvex(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -354,17 +341,8 @@ func (r *SourceConvexResource) Create(ctx context.Context, req resource.CreateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -388,13 +366,13 @@ func (r *SourceConvexResource) Read(ctx context.Context, req resource.ReadReques
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceConvexRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetSourceConvexRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.GetSourceConvex(ctx, *request)
+	res, err := r.client.Sources.GetSourceConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -418,11 +396,7 @@ func (r *SourceConvexResource) Read(ctx context.Context, req resource.ReadReques
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -442,13 +416,15 @@ func (r *SourceConvexResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutSourceConvexRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	sourceConvexPutRequest := data.ToSharedSourceConvexPutRequest()
+	request := operations.PutSourceConvexRequest{
+		SourceID:               sourceID,
+		SourceConvexPutRequest: sourceConvexPutRequest,
 	}
-	res, err := r.client.Sources.PutSourceConvex(ctx, *request)
+	res, err := r.client.Sources.PutSourceConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -464,19 +440,14 @@ func (r *SourceConvexResource) Update(ctx context.Context, req resource.UpdateRe
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceId1 string
+	sourceId1 = data.SourceID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceConvexRequest{
+		SourceID: sourceId1,
 	}
-	request1, request1Diags := data.ToOperationsGetSourceConvexRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceConvex(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceConvex(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -496,17 +467,8 @@ func (r *SourceConvexResource) Update(ctx context.Context, req resource.UpdateRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -530,13 +492,13 @@ func (r *SourceConvexResource) Delete(ctx context.Context, req resource.DeleteRe
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteSourceConvexRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteSourceConvexRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.DeleteSourceConvex(ctx, *request)
+	res, err := r.client.Sources.DeleteSourceConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

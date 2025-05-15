@@ -3,131 +3,113 @@
 package provider
 
 import (
-	"context"
 	"encoding/json"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ConnectionDataSourceModel) ToOperationsGetConnectionRequest(ctx context.Context) (*operations.GetConnectionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var connectionID string
-	connectionID = r.ConnectionID.ValueString()
-
-	out := operations.GetConnectionRequest{
-		ConnectionID: connectionID,
-	}
-
-	return &out, diags
-}
-
-func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx context.Context, resp *shared.ConnectionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *shared.ConnectionResponse) {
 	if resp != nil {
 		r.Configurations.Streams = []tfTypes.StreamConfiguration{}
 		if len(r.Configurations.Streams) > len(resp.Configurations.Streams) {
 			r.Configurations.Streams = r.Configurations.Streams[:len(resp.Configurations.Streams)]
 		}
 		for streamsCount, streamsItem := range resp.Configurations.Streams {
-			var streams tfTypes.StreamConfiguration
-			streams.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
+			var streams1 tfTypes.StreamConfiguration
+			streams1.CursorField = make([]types.String, 0, len(streamsItem.CursorField))
 			for _, v := range streamsItem.CursorField {
-				streams.CursorField = append(streams.CursorField, types.StringValue(v))
+				streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
 			}
-			streams.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
-			streams.Mappers = []tfTypes.ConfiguredStreamMapper{}
+			streams1.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
+			streams1.Mappers = []tfTypes.ConfiguredStreamMapper{}
 			for mappersCount, mappersItem := range streamsItem.Mappers {
-				var mappers tfTypes.ConfiguredStreamMapper
-				mappers.ID = types.StringPointerValue(mappersItem.ID)
+				var mappers1 tfTypes.ConfiguredStreamMapper
+				mappers1.ID = types.StringPointerValue(mappersItem.ID)
 				if mappersItem.MapperConfiguration.Encryption != nil {
-					mappers.MapperConfiguration.Encryption = &tfTypes.Encryption{}
+					mappers1.MapperConfiguration.Encryption = &tfTypes.Encryption{}
 					if mappersItem.MapperConfiguration.Encryption.EncryptionAES != nil {
-						mappers.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
-						mappers.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
-						mappers.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
-						mappers.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
-						mappers.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
-						mappers.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
-						mappers.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
+						mappers1.MapperConfiguration.Encryption.Aes = &tfTypes.EncryptionAES{}
+						mappers1.MapperConfiguration.Encryption.Aes.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Algorithm))
+						mappers1.MapperConfiguration.Encryption.Aes.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.FieldNameSuffix)
+						mappers1.MapperConfiguration.Encryption.Aes.Key = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Key)
+						mappers1.MapperConfiguration.Encryption.Aes.Mode = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Mode))
+						mappers1.MapperConfiguration.Encryption.Aes.Padding = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionAES.Padding))
+						mappers1.MapperConfiguration.Encryption.Aes.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionAES.TargetField)
 					}
 					if mappersItem.MapperConfiguration.Encryption.EncryptionRSA != nil {
-						mappers.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
-						mappers.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
-						mappers.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
-						mappers.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
-						mappers.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
+						mappers1.MapperConfiguration.Encryption.Rsa = &tfTypes.EncryptionRSA{}
+						mappers1.MapperConfiguration.Encryption.Rsa.Algorithm = types.StringValue(string(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.Algorithm))
+						mappers1.MapperConfiguration.Encryption.Rsa.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.FieldNameSuffix)
+						mappers1.MapperConfiguration.Encryption.Rsa.PublicKey = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.PublicKey)
+						mappers1.MapperConfiguration.Encryption.Rsa.TargetField = types.StringValue(mappersItem.MapperConfiguration.Encryption.EncryptionRSA.TargetField)
 					}
 				}
 				if mappersItem.MapperConfiguration.FieldRenaming != nil {
-					mappers.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
-					mappers.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
-					mappers.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
+					mappers1.MapperConfiguration.FieldRenaming = &tfTypes.FieldRenaming{}
+					mappers1.MapperConfiguration.FieldRenaming.NewFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.NewFieldName)
+					mappers1.MapperConfiguration.FieldRenaming.OriginalFieldName = types.StringValue(mappersItem.MapperConfiguration.FieldRenaming.OriginalFieldName)
 				}
 				if mappersItem.MapperConfiguration.Hashing != nil {
-					mappers.MapperConfiguration.Hashing = &tfTypes.Hashing{}
-					mappers.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
-					mappers.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
-					mappers.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
+					mappers1.MapperConfiguration.Hashing = &tfTypes.Hashing{}
+					mappers1.MapperConfiguration.Hashing.FieldNameSuffix = types.StringValue(mappersItem.MapperConfiguration.Hashing.FieldNameSuffix)
+					mappers1.MapperConfiguration.Hashing.Method = types.StringValue(string(mappersItem.MapperConfiguration.Hashing.Method))
+					mappers1.MapperConfiguration.Hashing.TargetField = types.StringValue(mappersItem.MapperConfiguration.Hashing.TargetField)
 				}
 				if mappersItem.MapperConfiguration.RowFiltering != nil {
-					mappers.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
+					mappers1.MapperConfiguration.RowFiltering = &tfTypes.RowFiltering{}
 					conditionsResult, _ := json.Marshal(mappersItem.MapperConfiguration.RowFiltering.Conditions)
-					mappers.MapperConfiguration.RowFiltering.Conditions = types.StringValue(string(conditionsResult))
+					mappers1.MapperConfiguration.RowFiltering.Conditions = types.StringValue(string(conditionsResult))
 				}
-				mappers.Type = types.StringValue(string(mappersItem.Type))
-				if mappersCount+1 > len(streams.Mappers) {
-					streams.Mappers = append(streams.Mappers, mappers)
+				mappers1.Type = types.StringValue(string(mappersItem.Type))
+				if mappersCount+1 > len(streams1.Mappers) {
+					streams1.Mappers = append(streams1.Mappers, mappers1)
 				} else {
-					streams.Mappers[mappersCount].ID = mappers.ID
-					streams.Mappers[mappersCount].MapperConfiguration = mappers.MapperConfiguration
-					streams.Mappers[mappersCount].Type = mappers.Type
+					streams1.Mappers[mappersCount].ID = mappers1.ID
+					streams1.Mappers[mappersCount].MapperConfiguration = mappers1.MapperConfiguration
+					streams1.Mappers[mappersCount].Type = mappers1.Type
 				}
 			}
-			streams.Name = types.StringValue(streamsItem.Name)
-			streams.Namespace = types.StringPointerValue(streamsItem.Namespace)
-			streams.PrimaryKey = nil
+			streams1.Name = types.StringValue(streamsItem.Name)
+			streams1.Namespace = types.StringPointerValue(streamsItem.Namespace)
+			streams1.PrimaryKey = nil
 			for _, primaryKeyItem := range streamsItem.PrimaryKey {
-				var primaryKey []types.String
-				primaryKey = make([]types.String, 0, len(primaryKeyItem))
+				var primaryKey1 []types.String
+				primaryKey1 = make([]types.String, 0, len(primaryKeyItem))
 				for _, v := range primaryKeyItem {
-					primaryKey = append(primaryKey, types.StringValue(v))
+					primaryKey1 = append(primaryKey1, types.StringValue(v))
 				}
-				streams.PrimaryKey = append(streams.PrimaryKey, primaryKey)
+				streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
 			}
-			streams.SelectedFields = []tfTypes.SelectedFieldInfo{}
+			streams1.SelectedFields = []tfTypes.SelectedFieldInfo{}
 			for selectedFieldsCount, selectedFieldsItem := range streamsItem.SelectedFields {
-				var selectedFields tfTypes.SelectedFieldInfo
-				selectedFields.FieldPath = make([]types.String, 0, len(selectedFieldsItem.FieldPath))
+				var selectedFields1 tfTypes.SelectedFieldInfo
+				selectedFields1.FieldPath = make([]types.String, 0, len(selectedFieldsItem.FieldPath))
 				for _, v := range selectedFieldsItem.FieldPath {
-					selectedFields.FieldPath = append(selectedFields.FieldPath, types.StringValue(v))
+					selectedFields1.FieldPath = append(selectedFields1.FieldPath, types.StringValue(v))
 				}
-				if selectedFieldsCount+1 > len(streams.SelectedFields) {
-					streams.SelectedFields = append(streams.SelectedFields, selectedFields)
+				if selectedFieldsCount+1 > len(streams1.SelectedFields) {
+					streams1.SelectedFields = append(streams1.SelectedFields, selectedFields1)
 				} else {
-					streams.SelectedFields[selectedFieldsCount].FieldPath = selectedFields.FieldPath
+					streams1.SelectedFields[selectedFieldsCount].FieldPath = selectedFields1.FieldPath
 				}
 			}
 			if streamsItem.SyncMode != nil {
-				streams.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
+				streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
 			} else {
-				streams.SyncMode = types.StringNull()
+				streams1.SyncMode = types.StringNull()
 			}
 			if streamsCount+1 > len(r.Configurations.Streams) {
-				r.Configurations.Streams = append(r.Configurations.Streams, streams)
+				r.Configurations.Streams = append(r.Configurations.Streams, streams1)
 			} else {
-				r.Configurations.Streams[streamsCount].CursorField = streams.CursorField
-				r.Configurations.Streams[streamsCount].IncludeFiles = streams.IncludeFiles
-				r.Configurations.Streams[streamsCount].Mappers = streams.Mappers
-				r.Configurations.Streams[streamsCount].Name = streams.Name
-				r.Configurations.Streams[streamsCount].Namespace = streams.Namespace
-				r.Configurations.Streams[streamsCount].PrimaryKey = streams.PrimaryKey
-				r.Configurations.Streams[streamsCount].SelectedFields = streams.SelectedFields
-				r.Configurations.Streams[streamsCount].SyncMode = streams.SyncMode
+				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+				r.Configurations.Streams[streamsCount].IncludeFiles = streams1.IncludeFiles
+				r.Configurations.Streams[streamsCount].Mappers = streams1.Mappers
+				r.Configurations.Streams[streamsCount].Name = streams1.Name
+				r.Configurations.Streams[streamsCount].Namespace = streams1.Namespace
+				r.Configurations.Streams[streamsCount].PrimaryKey = streams1.PrimaryKey
+				r.Configurations.Streams[streamsCount].SelectedFields = streams1.SelectedFields
+				r.Configurations.Streams[streamsCount].SyncMode = streams1.SyncMode
 			}
 		}
 		r.ConnectionID = types.StringValue(resp.ConnectionID)
@@ -157,22 +139,20 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(ctx cont
 			r.Tags = r.Tags[:len(resp.Tags)]
 		}
 		for tagsCount, tagsItem := range resp.Tags {
-			var tags tfTypes.Tag
-			tags.Color = types.StringValue(tagsItem.Color)
-			tags.Name = types.StringValue(tagsItem.Name)
-			tags.TagID = types.StringValue(tagsItem.TagID)
-			tags.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
+			var tags1 tfTypes.Tag
+			tags1.Color = types.StringValue(tagsItem.Color)
+			tags1.Name = types.StringValue(tagsItem.Name)
+			tags1.TagID = types.StringValue(tagsItem.TagID)
+			tags1.WorkspaceID = types.StringValue(tagsItem.WorkspaceID)
 			if tagsCount+1 > len(r.Tags) {
-				r.Tags = append(r.Tags, tags)
+				r.Tags = append(r.Tags, tags1)
 			} else {
-				r.Tags[tagsCount].Color = tags.Color
-				r.Tags[tagsCount].Name = tags.Name
-				r.Tags[tagsCount].TagID = tags.TagID
-				r.Tags[tagsCount].WorkspaceID = tags.WorkspaceID
+				r.Tags[tagsCount].Color = tags1.Color
+				r.Tags[tagsCount].Name = tags1.Name
+				r.Tags[tagsCount].TagID = tags1.TagID
+				r.Tags[tagsCount].WorkspaceID = tags1.WorkspaceID
 			}
 		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
-
-	return diags
 }

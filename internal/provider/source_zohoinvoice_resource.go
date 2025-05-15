@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -315,12 +316,7 @@ func (r *SourceZohoInvoiceResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request, requestDiags := data.ToSharedSourceZohoInvoiceCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedSourceZohoInvoiceCreateRequest()
 	res, err := r.client.Sources.CreateSourceZohoInvoice(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -341,24 +337,15 @@ func (r *SourceZohoInvoiceResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceZohoInvoiceRequest{
+		SourceID: sourceID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetSourceZohoInvoiceRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceZohoInvoice(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceZohoInvoice(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -378,17 +365,8 @@ func (r *SourceZohoInvoiceResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -412,13 +390,13 @@ func (r *SourceZohoInvoiceResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceZohoInvoiceRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetSourceZohoInvoiceRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.GetSourceZohoInvoice(ctx, *request)
+	res, err := r.client.Sources.GetSourceZohoInvoice(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -442,11 +420,7 @@ func (r *SourceZohoInvoiceResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -466,13 +440,15 @@ func (r *SourceZohoInvoiceResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutSourceZohoInvoiceRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	sourceZohoInvoicePutRequest := data.ToSharedSourceZohoInvoicePutRequest()
+	request := operations.PutSourceZohoInvoiceRequest{
+		SourceID:                    sourceID,
+		SourceZohoInvoicePutRequest: sourceZohoInvoicePutRequest,
 	}
-	res, err := r.client.Sources.PutSourceZohoInvoice(ctx, *request)
+	res, err := r.client.Sources.PutSourceZohoInvoice(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -488,19 +464,14 @@ func (r *SourceZohoInvoiceResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceId1 string
+	sourceId1 = data.SourceID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceZohoInvoiceRequest{
+		SourceID: sourceId1,
 	}
-	request1, request1Diags := data.ToOperationsGetSourceZohoInvoiceRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceZohoInvoice(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceZohoInvoice(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -520,17 +491,8 @@ func (r *SourceZohoInvoiceResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -554,13 +516,13 @@ func (r *SourceZohoInvoiceResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteSourceZohoInvoiceRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteSourceZohoInvoiceRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.DeleteSourceZohoInvoice(ctx, *request)
+	res, err := r.client.Sources.DeleteSourceZohoInvoice(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

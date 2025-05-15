@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -293,12 +294,7 @@ func (r *SourcePostmarkappResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	request, requestDiags := data.ToSharedSourcePostmarkappCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedSourcePostmarkappCreateRequest()
 	res, err := r.client.Sources.CreateSourcePostmarkapp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -319,24 +315,15 @@ func (r *SourcePostmarkappResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourcePostmarkappRequest{
+		SourceID: sourceID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetSourcePostmarkappRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourcePostmarkapp(ctx, *request1)
+	res1, err := r.client.Sources.GetSourcePostmarkapp(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -356,17 +343,8 @@ func (r *SourcePostmarkappResource) Create(ctx context.Context, req resource.Cre
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -390,13 +368,13 @@ func (r *SourcePostmarkappResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourcePostmarkappRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetSourcePostmarkappRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.GetSourcePostmarkapp(ctx, *request)
+	res, err := r.client.Sources.GetSourcePostmarkapp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -420,11 +398,7 @@ func (r *SourcePostmarkappResource) Read(ctx context.Context, req resource.ReadR
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -444,13 +418,15 @@ func (r *SourcePostmarkappResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutSourcePostmarkappRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	sourcePostmarkappPutRequest := data.ToSharedSourcePostmarkappPutRequest()
+	request := operations.PutSourcePostmarkappRequest{
+		SourceID:                    sourceID,
+		SourcePostmarkappPutRequest: sourcePostmarkappPutRequest,
 	}
-	res, err := r.client.Sources.PutSourcePostmarkapp(ctx, *request)
+	res, err := r.client.Sources.PutSourcePostmarkapp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -466,19 +442,14 @@ func (r *SourcePostmarkappResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceId1 string
+	sourceId1 = data.SourceID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourcePostmarkappRequest{
+		SourceID: sourceId1,
 	}
-	request1, request1Diags := data.ToOperationsGetSourcePostmarkappRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourcePostmarkapp(ctx, *request1)
+	res1, err := r.client.Sources.GetSourcePostmarkapp(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -498,17 +469,8 @@ func (r *SourcePostmarkappResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -532,13 +494,13 @@ func (r *SourcePostmarkappResource) Delete(ctx context.Context, req resource.Del
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteSourcePostmarkappRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteSourcePostmarkappRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.DeleteSourcePostmarkapp(ctx, *request)
+	res, err := r.client.Sources.DeleteSourcePostmarkapp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

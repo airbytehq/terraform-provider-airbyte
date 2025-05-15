@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -307,12 +308,7 @@ func (r *SourceSparkpostResource) Create(ctx context.Context, req resource.Creat
 		return
 	}
 
-	request, requestDiags := data.ToSharedSourceSparkpostCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedSourceSparkpostCreateRequest()
 	res, err := r.client.Sources.CreateSourceSparkpost(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -333,24 +329,15 @@ func (r *SourceSparkpostResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceSparkpostRequest{
+		SourceID: sourceID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetSourceSparkpostRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceSparkpost(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceSparkpost(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -370,17 +357,8 @@ func (r *SourceSparkpostResource) Create(ctx context.Context, req resource.Creat
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -404,13 +382,13 @@ func (r *SourceSparkpostResource) Read(ctx context.Context, req resource.ReadReq
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetSourceSparkpostRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetSourceSparkpostRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.GetSourceSparkpost(ctx, *request)
+	res, err := r.client.Sources.GetSourceSparkpost(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -434,11 +412,7 @@ func (r *SourceSparkpostResource) Read(ctx context.Context, req resource.ReadReq
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -458,13 +432,15 @@ func (r *SourceSparkpostResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutSourceSparkpostRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	sourceSparkpostPutRequest := data.ToSharedSourceSparkpostPutRequest()
+	request := operations.PutSourceSparkpostRequest{
+		SourceID:                  sourceID,
+		SourceSparkpostPutRequest: sourceSparkpostPutRequest,
 	}
-	res, err := r.client.Sources.PutSourceSparkpost(ctx, *request)
+	res, err := r.client.Sources.PutSourceSparkpost(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -480,19 +456,14 @@ func (r *SourceSparkpostResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var sourceId1 string
+	sourceId1 = data.SourceID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetSourceSparkpostRequest{
+		SourceID: sourceId1,
 	}
-	request1, request1Diags := data.ToOperationsGetSourceSparkpostRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Sources.GetSourceSparkpost(ctx, *request1)
+	res1, err := r.client.Sources.GetSourceSparkpost(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -512,17 +483,8 @@ func (r *SourceSparkpostResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedSourceResponse(ctx, res1.SourceResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedSourceResponse(res1.SourceResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -546,13 +508,13 @@ func (r *SourceSparkpostResource) Delete(ctx context.Context, req resource.Delet
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteSourceSparkpostRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var sourceID string
+	sourceID = data.SourceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteSourceSparkpostRequest{
+		SourceID: sourceID,
 	}
-	res, err := r.client.Sources.DeleteSourceSparkpost(ctx, *request)
+	res, err := r.client.Sources.DeleteSourceSparkpost(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

@@ -3,18 +3,13 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
-func (r *SourceVwoResourceModel) ToSharedSourceVwoCreateRequest(ctx context.Context) (*shared.SourceVwoCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceVwoResourceModel) ToSharedSourceVwoCreateRequest() *shared.SourceVwoCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -48,86 +43,10 @@ func (r *SourceVwoResourceModel) ToSharedSourceVwoCreateRequest(ctx context.Cont
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceVwoResourceModel) ToSharedSourceVwoPutRequest(ctx context.Context) (*shared.SourceVwoPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	configuration := shared.SourceVwoUpdate{
-		APIKey:    apiKey,
-		StartDate: startDate,
-	}
-	out := shared.SourceVwoPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceVwoResourceModel) ToOperationsPutSourceVwoRequest(ctx context.Context) (*operations.PutSourceVwoRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceVwoPutRequest, sourceVwoPutRequestDiags := r.ToSharedSourceVwoPutRequest(ctx)
-	diags.Append(sourceVwoPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceVwoRequest{
-		SourceID:            sourceID,
-		SourceVwoPutRequest: sourceVwoPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceVwoResourceModel) ToOperationsGetSourceVwoRequest(ctx context.Context) (*operations.GetSourceVwoRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceVwoRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceVwoResourceModel) ToOperationsDeleteSourceVwoRequest(ctx context.Context) (*operations.DeleteSourceVwoRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceVwoRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceVwoResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *SourceVwoResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -152,19 +71,19 @@ func (r *SourceVwoResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
@@ -172,6 +91,27 @@ func (r *SourceVwoResourceModel) RefreshFromSharedSourceResponse(ctx context.Con
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *SourceVwoResourceModel) ToSharedSourceVwoPutRequest() *shared.SourceVwoPutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceVwoUpdate{
+		APIKey:    apiKey,
+		StartDate: startDate,
+	}
+	out := shared.SourceVwoPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

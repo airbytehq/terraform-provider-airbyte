@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceCoassembleResourceModel) ToSharedSourceCoassembleCreateRequest(ctx context.Context) (*shared.SourceCoassembleCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceCoassembleResourceModel) ToSharedSourceCoassembleCreateRequest() *shared.SourceCoassembleCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -49,88 +44,10 @@ func (r *SourceCoassembleResourceModel) ToSharedSourceCoassembleCreateRequest(ct
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceCoassembleResourceModel) ToSharedSourceCoassemblePutRequest(ctx context.Context) (*shared.SourceCoassemblePutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var userToken string
-	userToken = r.Configuration.UserToken.ValueString()
-
-	var userID string
-	userID = r.Configuration.UserID.ValueString()
-
-	configuration := shared.SourceCoassembleUpdate{
-		UserToken: userToken,
-		UserID:    userID,
-	}
-	out := shared.SourceCoassemblePutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceCoassembleResourceModel) ToOperationsPutSourceCoassembleRequest(ctx context.Context) (*operations.PutSourceCoassembleRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceCoassemblePutRequest, sourceCoassemblePutRequestDiags := r.ToSharedSourceCoassemblePutRequest(ctx)
-	diags.Append(sourceCoassemblePutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceCoassembleRequest{
-		SourceID:                   sourceID,
-		SourceCoassemblePutRequest: sourceCoassemblePutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceCoassembleResourceModel) ToOperationsGetSourceCoassembleRequest(ctx context.Context) (*operations.GetSourceCoassembleRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceCoassembleRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceCoassembleResourceModel) ToOperationsDeleteSourceCoassembleRequest(ctx context.Context) (*operations.DeleteSourceCoassembleRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceCoassembleRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -155,19 +72,19 @@ func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(ctx cont
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
@@ -175,6 +92,29 @@ func (r *SourceCoassembleResourceModel) RefreshFromSharedSourceResponse(ctx cont
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *SourceCoassembleResourceModel) ToSharedSourceCoassemblePutRequest() *shared.SourceCoassemblePutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var userToken string
+	userToken = r.Configuration.UserToken.ValueString()
+
+	var userID string
+	userID = r.Configuration.UserID.ValueString()
+
+	configuration := shared.SourceCoassembleUpdate{
+		UserToken: userToken,
+		UserID:    userID,
+	}
+	out := shared.SourceCoassemblePutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

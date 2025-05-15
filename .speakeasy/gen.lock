@@ -3,24 +3,24 @@ id: 83e5483d-e9a0-4437-bced-361e3d1a002e
 management:
   docChecksum: 90d36825cbd0fe17fc093d07ea09e595
   docVersion: 1.0.0
-  speakeasyVersion: 1.539.2
-  generationVersion: 2.591.1
-  releaseVersion: 0.18.0
-  configChecksum: abf405914b51407c05930306b594de50
+  speakeasyVersion: 1.525.2
+  generationVersion: 2.562.3
+  releaseVersion: 0.18.1
+  configChecksum: e222b64399f8fa571d2f5207b90019e2
   repoURL: https://github.com/airbytehq/terraform-provider-airbyte.git
 features:
   terraform:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.2
     constsAndDefaults: 0.2.1
-    core: 3.41.3
+    core: 3.36.1
     deprecations: 2.82.0
     envVarSecurityUsage: 0.1.0
     globalSecurity: 2.81.10
     globalServerURLs: 2.82.1
     groups: 2.81.2
     nullables: 0.0.0
-    oauth2ClientCredentials: 0.1.5
+    oauth2ClientCredentials: 0.1.4
     sets: 0.1.2
     typeOverrides: 2.81.1
     unions: 2.81.17
@@ -4142,9 +4142,6 @@ generatedFiles:
   - internal/provider/sourcedefinition_data_source_sdk.go
   - internal/provider/sourcedefinition_resource.go
   - internal/provider/sourcedefinition_resource_sdk.go
-  - internal/provider/typeconvert/date.go
-  - internal/provider/typeconvert/datetime.go
-  - internal/provider/typeconvert/int32.go
   - internal/provider/types/access_token.go
   - internal/provider/types/account_names.go
   - internal/provider/types/ad_analytics_report_configuration.go
@@ -25086,5 +25083,5 @@ examples:
       responses:
         "200":
           application/json: {"tagId": "18dccc91-0ab1-4f72-9ed7-0b8fc27c5826", "name": "Analytics Team", "color": "FF5733", "workspaceId": "871d9b60-11d1-44cb-8c92-c246d53bf87e"}
-examplesVersion: 1.0.1
+examplesVersion: 1.0.0
 generatedTests: {}

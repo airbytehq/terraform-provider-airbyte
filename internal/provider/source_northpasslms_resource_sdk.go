@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *SourceNorthpassLmsResourceModel) ToSharedSourceNorthpassLmsCreateRequest(ctx context.Context) (*shared.SourceNorthpassLmsCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceNorthpassLmsResourceModel) ToSharedSourceNorthpassLmsCreateRequest() *shared.SourceNorthpassLmsCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -45,84 +40,10 @@ func (r *SourceNorthpassLmsResourceModel) ToSharedSourceNorthpassLmsCreateReques
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceNorthpassLmsResourceModel) ToSharedSourceNorthpassLmsPutRequest(ctx context.Context) (*shared.SourceNorthpassLmsPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	configuration := shared.SourceNorthpassLmsUpdate{
-		APIKey: apiKey,
-	}
-	out := shared.SourceNorthpassLmsPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceNorthpassLmsResourceModel) ToOperationsPutSourceNorthpassLmsRequest(ctx context.Context) (*operations.PutSourceNorthpassLmsRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceNorthpassLmsPutRequest, sourceNorthpassLmsPutRequestDiags := r.ToSharedSourceNorthpassLmsPutRequest(ctx)
-	diags.Append(sourceNorthpassLmsPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceNorthpassLmsRequest{
-		SourceID:                     sourceID,
-		SourceNorthpassLmsPutRequest: sourceNorthpassLmsPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceNorthpassLmsResourceModel) ToOperationsGetSourceNorthpassLmsRequest(ctx context.Context) (*operations.GetSourceNorthpassLmsRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceNorthpassLmsRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceNorthpassLmsResourceModel) ToOperationsDeleteSourceNorthpassLmsRequest(ctx context.Context) (*operations.DeleteSourceNorthpassLmsRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceNorthpassLmsRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceNorthpassLmsResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *SourceNorthpassLmsResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -147,19 +68,19 @@ func (r *SourceNorthpassLmsResourceModel) RefreshFromSharedSourceResponse(ctx co
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
@@ -167,6 +88,25 @@ func (r *SourceNorthpassLmsResourceModel) RefreshFromSharedSourceResponse(ctx co
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *SourceNorthpassLmsResourceModel) ToSharedSourceNorthpassLmsPutRequest() *shared.SourceNorthpassLmsPutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	configuration := shared.SourceNorthpassLmsUpdate{
+		APIKey: apiKey,
+	}
+	out := shared.SourceNorthpassLmsPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

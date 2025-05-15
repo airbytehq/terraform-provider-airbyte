@@ -9,6 +9,7 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -120,13 +121,15 @@ func (r *DestinationDefinitionResource) Create(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToOperationsCreateDestinationDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	createDefinitionRequest := *data.ToSharedCreateDefinitionRequest()
+	request := operations.CreateDestinationDefinitionRequest{
+		WorkspaceID:             workspaceID,
+		CreateDefinitionRequest: createDefinitionRequest,
 	}
-	res, err := r.client.DestinationDefinitions.CreateDestinationDefinition(ctx, *request)
+	res, err := r.client.DestinationDefinitions.CreateDestinationDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -146,17 +149,8 @@ func (r *DestinationDefinitionResource) Create(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDefinitionResponse(ctx, res.DefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDefinitionResponse(res.DefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -180,13 +174,17 @@ func (r *DestinationDefinitionResource) Read(ctx context.Context, req resource.R
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.GetDestinationDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DestinationDefinitions.GetDestinationDefinition(ctx, *request)
+	res, err := r.client.DestinationDefinitions.GetDestinationDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -210,11 +208,7 @@ func (r *DestinationDefinitionResource) Read(ctx context.Context, req resource.R
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDefinitionResponse(ctx, res.DefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDefinitionResponse(res.DefinitionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -234,13 +228,19 @@ func (r *DestinationDefinitionResource) Update(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToOperationsUpdateDestinationDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	updateDefinitionRequest := *data.ToSharedUpdateDefinitionRequest()
+	request := operations.UpdateDestinationDefinitionRequest{
+		WorkspaceID:             workspaceID,
+		DefinitionID:            definitionID,
+		UpdateDefinitionRequest: updateDefinitionRequest,
 	}
-	res, err := r.client.DestinationDefinitions.UpdateDestinationDefinition(ctx, *request)
+	res, err := r.client.DestinationDefinitions.UpdateDestinationDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -260,17 +260,8 @@ func (r *DestinationDefinitionResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDefinitionResponse(ctx, res.DefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDefinitionResponse(res.DefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -294,13 +285,17 @@ func (r *DestinationDefinitionResource) Delete(ctx context.Context, req resource
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.DeleteDestinationDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DestinationDefinitions.DeleteDestinationDefinition(ctx, *request)
+	res, err := r.client.DestinationDefinitions.DeleteDestinationDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -328,7 +323,7 @@ func (r *DestinationDefinitionResource) ImportState(ctx context.Context, req res
 	}
 
 	if err := dec.Decode(&data); err != nil {
-		resp.Diagnostics.AddError("Invalid ID", `The import ID is not valid. It is expected to be a JSON object string with the format: '{ "id": "",  "workspace_id": ""}': `+err.Error())
+		resp.Diagnostics.AddError("Invalid ID", `The ID is not valid. It's expected to be a JSON object alike '{ "definition_id": "",  "workspace_id": ""}': `+err.Error())
 		return
 	}
 

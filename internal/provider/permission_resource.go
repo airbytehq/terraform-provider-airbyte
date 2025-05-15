@@ -7,6 +7,7 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -142,13 +143,8 @@ func (r *PermissionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request, requestDiags := data.ToSharedPermissionCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res, err := r.client.Permissions.CreatePermission(ctx, *request)
+	request := *data.ToSharedPermissionCreateRequest()
+	res, err := r.client.Permissions.CreatePermission(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -168,17 +164,8 @@ func (r *PermissionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedPermissionResponse(ctx, res.PermissionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -202,13 +189,13 @@ func (r *PermissionResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetPermissionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var permissionID string
+	permissionID = data.PermissionID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetPermissionRequest{
+		PermissionID: permissionID,
 	}
-	res, err := r.client.Permissions.GetPermission(ctx, *request)
+	res, err := r.client.Permissions.GetPermission(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -232,11 +219,7 @@ func (r *PermissionResource) Read(ctx context.Context, req resource.ReadRequest,
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedPermissionResponse(ctx, res.PermissionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -256,13 +239,15 @@ func (r *PermissionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	request, requestDiags := data.ToOperationsUpdatePermissionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var permissionID string
+	permissionID = data.PermissionID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	permissionUpdateRequest := *data.ToSharedPermissionUpdateRequest()
+	request := operations.UpdatePermissionRequest{
+		PermissionID:            permissionID,
+		PermissionUpdateRequest: permissionUpdateRequest,
 	}
-	res, err := r.client.Permissions.UpdatePermission(ctx, *request)
+	res, err := r.client.Permissions.UpdatePermission(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -282,17 +267,8 @@ func (r *PermissionResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedPermissionResponse(ctx, res.PermissionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedPermissionResponse(res.PermissionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -316,13 +292,13 @@ func (r *PermissionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeletePermissionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var permissionID string
+	permissionID = data.PermissionID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeletePermissionRequest{
+		PermissionID: permissionID,
 	}
-	res, err := r.client.Permissions.DeletePermission(ctx, *request)
+	res, err := r.client.Permissions.DeletePermission(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

@@ -5,6 +5,6 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSmartreach struct {
-	APIKey types.String  `tfsdk:"api_key"`
-	Teamid types.Float64 `tfsdk:"teamid"`
+	APIKey types.String `tfsdk:"api_key"`
+	Teamid types.Number `tfsdk:"teamid"`
 }

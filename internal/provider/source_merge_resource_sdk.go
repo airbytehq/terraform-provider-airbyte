@@ -3,18 +3,13 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
-func (r *SourceMergeResourceModel) ToSharedSourceMergeCreateRequest(ctx context.Context) (*shared.SourceMergeCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *SourceMergeResourceModel) ToSharedSourceMergeCreateRequest() *shared.SourceMergeCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -52,90 +47,10 @@ func (r *SourceMergeResourceModel) ToSharedSourceMergeCreateRequest(ctx context.
 		Configuration: configuration,
 		SecretID:      secretID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *SourceMergeResourceModel) ToSharedSourceMergePutRequest(ctx context.Context) (*shared.SourceMergePutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var accountToken string
-	accountToken = r.Configuration.AccountToken.ValueString()
-
-	var apiToken string
-	apiToken = r.Configuration.APIToken.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	configuration := shared.SourceMergeUpdate{
-		AccountToken: accountToken,
-		APIToken:     apiToken,
-		StartDate:    startDate,
-	}
-	out := shared.SourceMergePutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceMergeResourceModel) ToOperationsPutSourceMergeRequest(ctx context.Context) (*operations.PutSourceMergeRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	sourceMergePutRequest, sourceMergePutRequestDiags := r.ToSharedSourceMergePutRequest(ctx)
-	diags.Append(sourceMergePutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutSourceMergeRequest{
-		SourceID:              sourceID,
-		SourceMergePutRequest: sourceMergePutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceMergeResourceModel) ToOperationsGetSourceMergeRequest(ctx context.Context) (*operations.GetSourceMergeRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.GetSourceMergeRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceMergeResourceModel) ToOperationsDeleteSourceMergeRequest(ctx context.Context) (*operations.DeleteSourceMergeRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var sourceID string
-	sourceID = r.SourceID.ValueString()
-
-	out := operations.DeleteSourceMergeRequest{
-		SourceID: sourceID,
-	}
-
-	return &out, diags
-}
-
-func (r *SourceMergeResourceModel) RefreshFromSharedSourceResponse(ctx context.Context, resp *shared.SourceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *SourceMergeResourceModel) RefreshFromSharedSourceResponse(resp *shared.SourceResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -160,19 +75,19 @@ func (r *SourceMergeResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
@@ -180,6 +95,31 @@ func (r *SourceMergeResourceModel) RefreshFromSharedSourceResponse(ctx context.C
 		r.SourceType = types.StringValue(resp.SourceType)
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *SourceMergeResourceModel) ToSharedSourceMergePutRequest() *shared.SourceMergePutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var accountToken string
+	accountToken = r.Configuration.AccountToken.ValueString()
+
+	var apiToken string
+	apiToken = r.Configuration.APIToken.ValueString()
+
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceMergeUpdate{
+		AccountToken: accountToken,
+		APIToken:     apiToken,
+		StartDate:    startDate,
+	}
+	out := shared.SourceMergePutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

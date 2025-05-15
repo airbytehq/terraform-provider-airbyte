@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	"encoding/json"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSourceDefinitionRequest(ctx context.Context) (*shared.CreateDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSourceDefinitionRequest() *shared.CreateDeclarativeSourceDefinitionRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -30,34 +25,20 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSour
 		Version:  version,
 		Manifest: manifest,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DeclarativeSourceDefinitionResourceModel) ToOperationsCreateDeclarativeSourceDefinitionRequest(ctx context.Context) (*operations.CreateDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	createDeclarativeSourceDefinitionRequest, createDeclarativeSourceDefinitionRequestDiags := r.ToSharedCreateDeclarativeSourceDefinitionRequest(ctx)
-	diags.Append(createDeclarativeSourceDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
+func (r *DeclarativeSourceDefinitionResourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(resp *shared.DeclarativeSourceDefinitionResponse) {
+	if resp != nil {
+		r.ID = types.StringValue(resp.ID)
+		manifestResult, _ := json.Marshal(resp.Manifest)
+		r.Manifest = types.StringValue(string(manifestResult))
+		r.Name = types.StringValue(resp.Name)
+		r.Version = types.Int64Value(resp.Version)
 	}
-
-	out := operations.CreateDeclarativeSourceDefinitionRequest{
-		WorkspaceID:                              workspaceID,
-		CreateDeclarativeSourceDefinitionRequest: *createDeclarativeSourceDefinitionRequest,
-	}
-
-	return &out, diags
 }
 
-func (r *DeclarativeSourceDefinitionResourceModel) ToSharedUpdateDeclarativeSourceDefinitionRequest(ctx context.Context) (*shared.UpdateDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DeclarativeSourceDefinitionResourceModel) ToSharedUpdateDeclarativeSourceDefinitionRequest() *shared.UpdateDeclarativeSourceDefinitionRequest {
 	version := new(int64)
 	if !r.Version.IsUnknown() && !r.Version.IsNull() {
 		*version = r.Version.ValueInt64()
@@ -70,79 +51,5 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedUpdateDeclarativeSour
 		Version:  version,
 		Manifest: manifest,
 	}
-
-	return &out, diags
-}
-
-func (r *DeclarativeSourceDefinitionResourceModel) ToOperationsUpdateDeclarativeSourceDefinitionRequest(ctx context.Context) (*operations.UpdateDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	updateDeclarativeSourceDefinitionRequest, updateDeclarativeSourceDefinitionRequestDiags := r.ToSharedUpdateDeclarativeSourceDefinitionRequest(ctx)
-	diags.Append(updateDeclarativeSourceDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.UpdateDeclarativeSourceDefinitionRequest{
-		WorkspaceID:                              workspaceID,
-		DefinitionID:                             definitionID,
-		UpdateDeclarativeSourceDefinitionRequest: *updateDeclarativeSourceDefinitionRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DeclarativeSourceDefinitionResourceModel) ToOperationsGetDeclarativeSourceDefinitionRequest(ctx context.Context) (*operations.GetDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.GetDeclarativeSourceDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *DeclarativeSourceDefinitionResourceModel) ToOperationsDeleteDeclarativeSourceDefinitionRequest(ctx context.Context) (*operations.DeleteDeclarativeSourceDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.DeleteDeclarativeSourceDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *DeclarativeSourceDefinitionResourceModel) RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx context.Context, resp *shared.DeclarativeSourceDefinitionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.ID = types.StringValue(resp.ID)
-		manifestResult, _ := json.Marshal(resp.Manifest)
-		r.Manifest = types.StringValue(string(manifestResult))
-		r.Name = types.StringValue(resp.Name)
-		r.Version = types.Int64Value(resp.Version)
-	}
-
-	return diags
+	return &out
 }

@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -342,12 +343,7 @@ func (r *DestinationCobraResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	request, requestDiags := data.ToSharedDestinationCobraCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedDestinationCobraCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationCobra(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -368,24 +364,15 @@ func (r *DestinationCobraResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationCobraRequest{
+		DestinationID: destinationID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetDestinationCobraRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationCobra(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationCobra(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -405,17 +392,8 @@ func (r *DestinationCobraResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -439,13 +417,13 @@ func (r *DestinationCobraResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationCobraRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetDestinationCobraRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.GetDestinationCobra(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationCobra(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -469,11 +447,7 @@ func (r *DestinationCobraResource) Read(ctx context.Context, req resource.ReadRe
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -493,13 +467,15 @@ func (r *DestinationCobraResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutDestinationCobraRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	destinationCobraPutRequest := data.ToSharedDestinationCobraPutRequest()
+	request := operations.PutDestinationCobraRequest{
+		DestinationID:              destinationID,
+		DestinationCobraPutRequest: destinationCobraPutRequest,
 	}
-	res, err := r.client.Destinations.PutDestinationCobra(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationCobra(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -515,19 +491,14 @@ func (r *DestinationCobraResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationId1 string
+	destinationId1 = data.DestinationID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationCobraRequest{
+		DestinationID: destinationId1,
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationCobraRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationCobra(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationCobra(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -547,17 +518,8 @@ func (r *DestinationCobraResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -581,13 +543,13 @@ func (r *DestinationCobraResource) Delete(ctx context.Context, req resource.Dele
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationCobraRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteDestinationCobraRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.DeleteDestinationCobra(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationCobra(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

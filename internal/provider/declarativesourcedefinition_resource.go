@@ -9,6 +9,7 @@ import (
 	"fmt"
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -117,13 +118,15 @@ func (r *DeclarativeSourceDefinitionResource) Create(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsCreateDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	createDeclarativeSourceDefinitionRequest := *data.ToSharedCreateDeclarativeSourceDefinitionRequest()
+	request := operations.CreateDeclarativeSourceDefinitionRequest{
+		WorkspaceID:                              workspaceID,
+		CreateDeclarativeSourceDefinitionRequest: createDeclarativeSourceDefinitionRequest,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.CreateDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.CreateDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -143,17 +146,8 @@ func (r *DeclarativeSourceDefinitionResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -177,13 +171,17 @@ func (r *DeclarativeSourceDefinitionResource) Read(ctx context.Context, req reso
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.GetDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -207,11 +205,7 @@ func (r *DeclarativeSourceDefinitionResource) Read(ctx context.Context, req reso
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -231,13 +225,19 @@ func (r *DeclarativeSourceDefinitionResource) Update(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsUpdateDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	updateDeclarativeSourceDefinitionRequest := *data.ToSharedUpdateDeclarativeSourceDefinitionRequest()
+	request := operations.UpdateDeclarativeSourceDefinitionRequest{
+		WorkspaceID:                              workspaceID,
+		DefinitionID:                             definitionID,
+		UpdateDeclarativeSourceDefinitionRequest: updateDeclarativeSourceDefinitionRequest,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.UpdateDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.UpdateDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -257,17 +257,8 @@ func (r *DeclarativeSourceDefinitionResource) Update(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -291,13 +282,17 @@ func (r *DeclarativeSourceDefinitionResource) Delete(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.DeleteDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.DeleteDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.DeleteDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -325,7 +320,7 @@ func (r *DeclarativeSourceDefinitionResource) ImportState(ctx context.Context, r
 	}
 
 	if err := dec.Decode(&data); err != nil {
-		resp.Diagnostics.AddError("Invalid ID", `The import ID is not valid. It is expected to be a JSON object string with the format: '{ "id": "",  "workspace_id": ""}': `+err.Error())
+		resp.Diagnostics.AddError("Invalid ID", `The ID is not valid. It's expected to be a JSON object alike '{ "definition_id": "",  "workspace_id": ""}': `+err.Error())
 		return
 	}
 

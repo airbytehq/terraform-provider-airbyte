@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
@@ -506,12 +507,7 @@ func (r *DestinationMssqlV2Resource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	request, requestDiags := data.ToSharedDestinationMssqlV2CreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedDestinationMssqlV2CreateRequest()
 	res, err := r.client.Destinations.CreateDestinationMssqlV2(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -532,24 +528,15 @@ func (r *DestinationMssqlV2Resource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMssqlV2Request{
+		DestinationID: destinationID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetDestinationMssqlV2Request(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMssqlV2(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMssqlV2(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -569,17 +556,8 @@ func (r *DestinationMssqlV2Resource) Create(ctx context.Context, req resource.Cr
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -603,13 +581,13 @@ func (r *DestinationMssqlV2Resource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationMssqlV2Request(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetDestinationMssqlV2Request{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.GetDestinationMssqlV2(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationMssqlV2(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -633,11 +611,7 @@ func (r *DestinationMssqlV2Resource) Read(ctx context.Context, req resource.Read
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -657,13 +631,15 @@ func (r *DestinationMssqlV2Resource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutDestinationMssqlV2Request(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	destinationMssqlV2PutRequest := data.ToSharedDestinationMssqlV2PutRequest()
+	request := operations.PutDestinationMssqlV2Request{
+		DestinationID:                destinationID,
+		DestinationMssqlV2PutRequest: destinationMssqlV2PutRequest,
 	}
-	res, err := r.client.Destinations.PutDestinationMssqlV2(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationMssqlV2(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -679,19 +655,14 @@ func (r *DestinationMssqlV2Resource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationId1 string
+	destinationId1 = data.DestinationID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationMssqlV2Request{
+		DestinationID: destinationId1,
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationMssqlV2Request(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationMssqlV2(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationMssqlV2(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -711,17 +682,8 @@ func (r *DestinationMssqlV2Resource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -745,13 +707,13 @@ func (r *DestinationMssqlV2Resource) Delete(ctx context.Context, req resource.De
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationMssqlV2Request(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteDestinationMssqlV2Request{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.DeleteDestinationMssqlV2(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationMssqlV2(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

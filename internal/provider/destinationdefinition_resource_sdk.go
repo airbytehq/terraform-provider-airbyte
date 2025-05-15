@@ -3,16 +3,11 @@
 package provider
 
 import (
-	"context"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationDefinitionResourceModel) ToSharedCreateDefinitionRequest(ctx context.Context) (*shared.CreateDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationDefinitionResourceModel) ToSharedCreateDefinitionRequest() *shared.CreateDefinitionRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -34,34 +29,20 @@ func (r *DestinationDefinitionResourceModel) ToSharedCreateDefinitionRequest(ctx
 		DockerImageTag:   dockerImageTag,
 		DocumentationURL: documentationURL,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DestinationDefinitionResourceModel) ToOperationsCreateDestinationDefinitionRequest(ctx context.Context) (*operations.CreateDestinationDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	createDefinitionRequest, createDefinitionRequestDiags := r.ToSharedCreateDefinitionRequest(ctx)
-	diags.Append(createDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
+func (r *DestinationDefinitionResourceModel) RefreshFromSharedDefinitionResponse(resp *shared.DefinitionResponse) {
+	if resp != nil {
+		r.DockerImageTag = types.StringValue(resp.DockerImageTag)
+		r.DockerRepository = types.StringValue(resp.DockerRepository)
+		r.DocumentationURL = types.StringPointerValue(resp.DocumentationURL)
+		r.ID = types.StringValue(resp.ID)
+		r.Name = types.StringValue(resp.Name)
 	}
-
-	out := operations.CreateDestinationDefinitionRequest{
-		WorkspaceID:             workspaceID,
-		CreateDefinitionRequest: *createDefinitionRequest,
-	}
-
-	return &out, diags
 }
 
-func (r *DestinationDefinitionResourceModel) ToSharedUpdateDefinitionRequest(ctx context.Context) (*shared.UpdateDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationDefinitionResourceModel) ToSharedUpdateDefinitionRequest() *shared.UpdateDefinitionRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -72,79 +53,5 @@ func (r *DestinationDefinitionResourceModel) ToSharedUpdateDefinitionRequest(ctx
 		Name:           name,
 		DockerImageTag: dockerImageTag,
 	}
-
-	return &out, diags
-}
-
-func (r *DestinationDefinitionResourceModel) ToOperationsUpdateDestinationDefinitionRequest(ctx context.Context) (*operations.UpdateDestinationDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	updateDefinitionRequest, updateDefinitionRequestDiags := r.ToSharedUpdateDefinitionRequest(ctx)
-	diags.Append(updateDefinitionRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.UpdateDestinationDefinitionRequest{
-		WorkspaceID:             workspaceID,
-		DefinitionID:            definitionID,
-		UpdateDefinitionRequest: *updateDefinitionRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationDefinitionResourceModel) ToOperationsGetDestinationDefinitionRequest(ctx context.Context) (*operations.GetDestinationDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.GetDestinationDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationDefinitionResourceModel) ToOperationsDeleteDestinationDefinitionRequest(ctx context.Context) (*operations.DeleteDestinationDefinitionRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var definitionID string
-	definitionID = r.ID.ValueString()
-
-	out := operations.DeleteDestinationDefinitionRequest{
-		WorkspaceID:  workspaceID,
-		DefinitionID: definitionID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationDefinitionResourceModel) RefreshFromSharedDefinitionResponse(ctx context.Context, resp *shared.DefinitionResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.DockerImageTag = types.StringValue(resp.DockerImageTag)
-		r.DockerRepository = types.StringValue(resp.DockerRepository)
-		r.DocumentationURL = types.StringPointerValue(resp.DocumentationURL)
-		r.ID = types.StringValue(resp.ID)
-		r.Name = types.StringValue(resp.Name)
-	}
-
-	return diags
+	return &out
 }

@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest(ctx context.Context) (*shared.WorkspaceCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest() *shared.WorkspaceCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -274,13 +269,129 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceCreateRequest(ctx context.Cont
 		Notifications:  notifications,
 		RegionID:       regionID,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest(ctx context.Context) (*shared.WorkspaceUpdateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
+func (r *WorkspaceResourceModel) RefreshFromSharedWorkspaceResponse(resp *shared.WorkspaceResponse) {
+	if resp != nil {
+		r.DataResidency = types.StringValue(resp.DataResidency)
+		r.Name = types.StringValue(resp.Name)
+		if r.Notifications == nil {
+			r.Notifications = &tfTypes.NotificationsConfig{}
+		}
+		if resp.Notifications.ConnectionUpdate == nil {
+			r.Notifications.ConnectionUpdate = nil
+		} else {
+			r.Notifications.ConnectionUpdate = &tfTypes.NotificationConfig{}
+			if resp.Notifications.ConnectionUpdate.Email == nil {
+				r.Notifications.ConnectionUpdate.Email = nil
+			} else {
+				r.Notifications.ConnectionUpdate.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.ConnectionUpdate.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Email.Enabled)
+			}
+			if resp.Notifications.ConnectionUpdate.Webhook == nil {
+				r.Notifications.ConnectionUpdate.Webhook = nil
+			} else {
+				r.Notifications.ConnectionUpdate.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.ConnectionUpdate.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Webhook.Enabled)
+				r.Notifications.ConnectionUpdate.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdate.Webhook.URL)
+			}
+		}
+		if resp.Notifications.ConnectionUpdateActionRequired == nil {
+			r.Notifications.ConnectionUpdateActionRequired = nil
+		} else {
+			r.Notifications.ConnectionUpdateActionRequired = &tfTypes.NotificationConfig{}
+			if resp.Notifications.ConnectionUpdateActionRequired.Email == nil {
+				r.Notifications.ConnectionUpdateActionRequired.Email = nil
+			} else {
+				r.Notifications.ConnectionUpdateActionRequired.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.ConnectionUpdateActionRequired.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Email.Enabled)
+			}
+			if resp.Notifications.ConnectionUpdateActionRequired.Webhook == nil {
+				r.Notifications.ConnectionUpdateActionRequired.Webhook = nil
+			} else {
+				r.Notifications.ConnectionUpdateActionRequired.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled)
+				r.Notifications.ConnectionUpdateActionRequired.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.URL)
+			}
+		}
+		if resp.Notifications.Failure == nil {
+			r.Notifications.Failure = nil
+		} else {
+			r.Notifications.Failure = &tfTypes.NotificationConfig{}
+			if resp.Notifications.Failure.Email == nil {
+				r.Notifications.Failure.Email = nil
+			} else {
+				r.Notifications.Failure.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.Failure.Email.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Email.Enabled)
+			}
+			if resp.Notifications.Failure.Webhook == nil {
+				r.Notifications.Failure.Webhook = nil
+			} else {
+				r.Notifications.Failure.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.Failure.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Webhook.Enabled)
+				r.Notifications.Failure.Webhook.URL = types.StringPointerValue(resp.Notifications.Failure.Webhook.URL)
+			}
+		}
+		if resp.Notifications.Success == nil {
+			r.Notifications.Success = nil
+		} else {
+			r.Notifications.Success = &tfTypes.NotificationConfig{}
+			if resp.Notifications.Success.Email == nil {
+				r.Notifications.Success.Email = nil
+			} else {
+				r.Notifications.Success.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.Success.Email.Enabled = types.BoolPointerValue(resp.Notifications.Success.Email.Enabled)
+			}
+			if resp.Notifications.Success.Webhook == nil {
+				r.Notifications.Success.Webhook = nil
+			} else {
+				r.Notifications.Success.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.Success.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Success.Webhook.Enabled)
+				r.Notifications.Success.Webhook.URL = types.StringPointerValue(resp.Notifications.Success.Webhook.URL)
+			}
+		}
+		if resp.Notifications.SyncDisabled == nil {
+			r.Notifications.SyncDisabled = nil
+		} else {
+			r.Notifications.SyncDisabled = &tfTypes.NotificationConfig{}
+			if resp.Notifications.SyncDisabled.Email == nil {
+				r.Notifications.SyncDisabled.Email = nil
+			} else {
+				r.Notifications.SyncDisabled.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.SyncDisabled.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Email.Enabled)
+			}
+			if resp.Notifications.SyncDisabled.Webhook == nil {
+				r.Notifications.SyncDisabled.Webhook = nil
+			} else {
+				r.Notifications.SyncDisabled.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.SyncDisabled.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Webhook.Enabled)
+				r.Notifications.SyncDisabled.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabled.Webhook.URL)
+			}
+		}
+		if resp.Notifications.SyncDisabledWarning == nil {
+			r.Notifications.SyncDisabledWarning = nil
+		} else {
+			r.Notifications.SyncDisabledWarning = &tfTypes.NotificationConfig{}
+			if resp.Notifications.SyncDisabledWarning.Email == nil {
+				r.Notifications.SyncDisabledWarning.Email = nil
+			} else {
+				r.Notifications.SyncDisabledWarning.Email = &tfTypes.EmailNotificationConfig{}
+				r.Notifications.SyncDisabledWarning.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Email.Enabled)
+			}
+			if resp.Notifications.SyncDisabledWarning.Webhook == nil {
+				r.Notifications.SyncDisabledWarning.Webhook = nil
+			} else {
+				r.Notifications.SyncDisabledWarning.Webhook = &tfTypes.WebhookNotificationConfig{}
+				r.Notifications.SyncDisabledWarning.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.Enabled)
+				r.Notifications.SyncDisabledWarning.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.URL)
+			}
+		}
+		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+	}
+}
 
+func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest() *shared.WorkspaceUpdateRequest {
 	name := new(string)
 	if !r.Name.IsUnknown() && !r.Name.IsNull() {
 		*name = r.Name.ValueString()
@@ -537,176 +648,5 @@ func (r *WorkspaceResourceModel) ToSharedWorkspaceUpdateRequest(ctx context.Cont
 		Notifications: notifications,
 		RegionID:      regionID,
 	}
-
-	return &out, diags
-}
-
-func (r *WorkspaceResourceModel) ToOperationsUpdateWorkspaceRequest(ctx context.Context) (*operations.UpdateWorkspaceRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	workspaceUpdateRequest, workspaceUpdateRequestDiags := r.ToSharedWorkspaceUpdateRequest(ctx)
-	diags.Append(workspaceUpdateRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.UpdateWorkspaceRequest{
-		WorkspaceID:            workspaceID,
-		WorkspaceUpdateRequest: *workspaceUpdateRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *WorkspaceResourceModel) ToOperationsGetWorkspaceRequest(ctx context.Context) (*operations.GetWorkspaceRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	out := operations.GetWorkspaceRequest{
-		WorkspaceID: workspaceID,
-	}
-
-	return &out, diags
-}
-
-func (r *WorkspaceResourceModel) ToOperationsDeleteWorkspaceRequest(ctx context.Context) (*operations.DeleteWorkspaceRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	out := operations.DeleteWorkspaceRequest{
-		WorkspaceID: workspaceID,
-	}
-
-	return &out, diags
-}
-
-func (r *WorkspaceResourceModel) RefreshFromSharedWorkspaceResponse(ctx context.Context, resp *shared.WorkspaceResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
-	if resp != nil {
-		r.DataResidency = types.StringValue(resp.DataResidency)
-		r.Name = types.StringValue(resp.Name)
-		if r.Notifications == nil {
-			r.Notifications = &tfTypes.NotificationsConfig{}
-		}
-		if resp.Notifications.ConnectionUpdate == nil {
-			r.Notifications.ConnectionUpdate = nil
-		} else {
-			r.Notifications.ConnectionUpdate = &tfTypes.NotificationConfig{}
-			if resp.Notifications.ConnectionUpdate.Email == nil {
-				r.Notifications.ConnectionUpdate.Email = nil
-			} else {
-				r.Notifications.ConnectionUpdate.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.ConnectionUpdate.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Email.Enabled)
-			}
-			if resp.Notifications.ConnectionUpdate.Webhook == nil {
-				r.Notifications.ConnectionUpdate.Webhook = nil
-			} else {
-				r.Notifications.ConnectionUpdate.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.ConnectionUpdate.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdate.Webhook.Enabled)
-				r.Notifications.ConnectionUpdate.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdate.Webhook.URL)
-			}
-		}
-		if resp.Notifications.ConnectionUpdateActionRequired == nil {
-			r.Notifications.ConnectionUpdateActionRequired = nil
-		} else {
-			r.Notifications.ConnectionUpdateActionRequired = &tfTypes.NotificationConfig{}
-			if resp.Notifications.ConnectionUpdateActionRequired.Email == nil {
-				r.Notifications.ConnectionUpdateActionRequired.Email = nil
-			} else {
-				r.Notifications.ConnectionUpdateActionRequired.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.ConnectionUpdateActionRequired.Email.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Email.Enabled)
-			}
-			if resp.Notifications.ConnectionUpdateActionRequired.Webhook == nil {
-				r.Notifications.ConnectionUpdateActionRequired.Webhook = nil
-			} else {
-				r.Notifications.ConnectionUpdateActionRequired.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.Enabled)
-				r.Notifications.ConnectionUpdateActionRequired.Webhook.URL = types.StringPointerValue(resp.Notifications.ConnectionUpdateActionRequired.Webhook.URL)
-			}
-		}
-		if resp.Notifications.Failure == nil {
-			r.Notifications.Failure = nil
-		} else {
-			r.Notifications.Failure = &tfTypes.NotificationConfig{}
-			if resp.Notifications.Failure.Email == nil {
-				r.Notifications.Failure.Email = nil
-			} else {
-				r.Notifications.Failure.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.Failure.Email.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Email.Enabled)
-			}
-			if resp.Notifications.Failure.Webhook == nil {
-				r.Notifications.Failure.Webhook = nil
-			} else {
-				r.Notifications.Failure.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.Failure.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Failure.Webhook.Enabled)
-				r.Notifications.Failure.Webhook.URL = types.StringPointerValue(resp.Notifications.Failure.Webhook.URL)
-			}
-		}
-		if resp.Notifications.Success == nil {
-			r.Notifications.Success = nil
-		} else {
-			r.Notifications.Success = &tfTypes.NotificationConfig{}
-			if resp.Notifications.Success.Email == nil {
-				r.Notifications.Success.Email = nil
-			} else {
-				r.Notifications.Success.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.Success.Email.Enabled = types.BoolPointerValue(resp.Notifications.Success.Email.Enabled)
-			}
-			if resp.Notifications.Success.Webhook == nil {
-				r.Notifications.Success.Webhook = nil
-			} else {
-				r.Notifications.Success.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.Success.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.Success.Webhook.Enabled)
-				r.Notifications.Success.Webhook.URL = types.StringPointerValue(resp.Notifications.Success.Webhook.URL)
-			}
-		}
-		if resp.Notifications.SyncDisabled == nil {
-			r.Notifications.SyncDisabled = nil
-		} else {
-			r.Notifications.SyncDisabled = &tfTypes.NotificationConfig{}
-			if resp.Notifications.SyncDisabled.Email == nil {
-				r.Notifications.SyncDisabled.Email = nil
-			} else {
-				r.Notifications.SyncDisabled.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.SyncDisabled.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Email.Enabled)
-			}
-			if resp.Notifications.SyncDisabled.Webhook == nil {
-				r.Notifications.SyncDisabled.Webhook = nil
-			} else {
-				r.Notifications.SyncDisabled.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.SyncDisabled.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabled.Webhook.Enabled)
-				r.Notifications.SyncDisabled.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabled.Webhook.URL)
-			}
-		}
-		if resp.Notifications.SyncDisabledWarning == nil {
-			r.Notifications.SyncDisabledWarning = nil
-		} else {
-			r.Notifications.SyncDisabledWarning = &tfTypes.NotificationConfig{}
-			if resp.Notifications.SyncDisabledWarning.Email == nil {
-				r.Notifications.SyncDisabledWarning.Email = nil
-			} else {
-				r.Notifications.SyncDisabledWarning.Email = &tfTypes.EmailNotificationConfig{}
-				r.Notifications.SyncDisabledWarning.Email.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Email.Enabled)
-			}
-			if resp.Notifications.SyncDisabledWarning.Webhook == nil {
-				r.Notifications.SyncDisabledWarning.Webhook = nil
-			} else {
-				r.Notifications.SyncDisabledWarning.Webhook = &tfTypes.WebhookNotificationConfig{}
-				r.Notifications.SyncDisabledWarning.Webhook.Enabled = types.BoolPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.Enabled)
-				r.Notifications.SyncDisabledWarning.Webhook.URL = types.StringPointerValue(resp.Notifications.SyncDisabledWarning.Webhook.URL)
-			}
-		}
-		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-	}
-
-	return diags
+	return &out
 }

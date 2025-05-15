@@ -11,6 +11,7 @@ import (
 	speakeasy_stringplanmodifier "github.com/airbytehq/terraform-provider-airbyte/internal/planmodifiers/stringplanmodifier"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -389,12 +390,7 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToSharedDestinationAzureBlobStorageCreateRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	request := data.ToSharedDestinationAzureBlobStorageCreateRequest()
 	res, err := r.client.Destinations.CreateDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -415,24 +411,15 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationAzureBlobStorageRequest{
+		DestinationID: destinationID,
 	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	request1, request1Diags := data.ToOperationsGetDestinationAzureBlobStorageRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -452,17 +439,8 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -486,13 +464,13 @@ func (r *DestinationAzureBlobStorageResource) Read(ctx context.Context, req reso
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDestinationAzureBlobStorageRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.GetDestinationAzureBlobStorageRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, *request)
+	res, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -516,11 +494,7 @@ func (r *DestinationAzureBlobStorageResource) Read(ctx context.Context, req reso
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -540,13 +514,15 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsPutDestinationAzureBlobStorageRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	destinationAzureBlobStoragePutRequest := data.ToSharedDestinationAzureBlobStoragePutRequest()
+	request := operations.PutDestinationAzureBlobStorageRequest{
+		DestinationID:                         destinationID,
+		DestinationAzureBlobStoragePutRequest: destinationAzureBlobStoragePutRequest,
 	}
-	res, err := r.client.Destinations.PutDestinationAzureBlobStorage(ctx, *request)
+	res, err := r.client.Destinations.PutDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -562,19 +538,14 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var destinationId1 string
+	destinationId1 = data.DestinationID.ValueString()
 
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
+	request1 := operations.GetDestinationAzureBlobStorageRequest{
+		DestinationID: destinationId1,
 	}
-	request1, request1Diags := data.ToOperationsGetDestinationAzureBlobStorageRequest(ctx)
-	resp.Diagnostics.Append(request1Diags...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-	res1, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, *request1)
+	res1, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, request1)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res1 != nil && res1.RawResponse != nil {
@@ -594,17 +565,8 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDestinationResponse(ctx, res1.DestinationResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(refreshPlan(ctx, plan, &data)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDestinationResponse(res1.DestinationResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -628,13 +590,13 @@ func (r *DestinationAzureBlobStorageResource) Delete(ctx context.Context, req re
 		return
 	}
 
-	request, requestDiags := data.ToOperationsDeleteDestinationAzureBlobStorageRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var destinationID string
+	destinationID = data.DestinationID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	request := operations.DeleteDestinationAzureBlobStorageRequest{
+		DestinationID: destinationID,
 	}
-	res, err := r.client.Destinations.DeleteDestinationAzureBlobStorage(ctx, *request)
+	res, err := r.client.Destinations.DeleteDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {

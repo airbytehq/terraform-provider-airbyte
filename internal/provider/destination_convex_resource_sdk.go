@@ -3,17 +3,12 @@
 package provider
 
 import (
-	"context"
 	tfTypes "github.com/airbytehq/terraform-provider-airbyte/internal/provider/types"
-	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/shared"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *DestinationConvexResourceModel) ToSharedDestinationConvexCreateRequest(ctx context.Context) (*shared.DestinationConvexCreateRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
+func (r *DestinationConvexResourceModel) ToSharedDestinationConvexCreateRequest() *shared.DestinationConvexCreateRequest {
 	var name string
 	name = r.Name.ValueString()
 
@@ -42,88 +37,10 @@ func (r *DestinationConvexResourceModel) ToSharedDestinationConvexCreateRequest(
 		WorkspaceID:   workspaceID,
 		Configuration: configuration,
 	}
-
-	return &out, diags
+	return &out
 }
 
-func (r *DestinationConvexResourceModel) ToSharedDestinationConvexPutRequest(ctx context.Context) (*shared.DestinationConvexPutRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var name string
-	name = r.Name.ValueString()
-
-	var workspaceID string
-	workspaceID = r.WorkspaceID.ValueString()
-
-	var deploymentURL string
-	deploymentURL = r.Configuration.DeploymentURL.ValueString()
-
-	var accessKey string
-	accessKey = r.Configuration.AccessKey.ValueString()
-
-	configuration := shared.DestinationConvexUpdate{
-		DeploymentURL: deploymentURL,
-		AccessKey:     accessKey,
-	}
-	out := shared.DestinationConvexPutRequest{
-		Name:          name,
-		WorkspaceID:   workspaceID,
-		Configuration: configuration,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationConvexResourceModel) ToOperationsPutDestinationConvexRequest(ctx context.Context) (*operations.PutDestinationConvexRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	destinationConvexPutRequest, destinationConvexPutRequestDiags := r.ToSharedDestinationConvexPutRequest(ctx)
-	diags.Append(destinationConvexPutRequestDiags...)
-
-	if diags.HasError() {
-		return nil, diags
-	}
-
-	out := operations.PutDestinationConvexRequest{
-		DestinationID:               destinationID,
-		DestinationConvexPutRequest: destinationConvexPutRequest,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationConvexResourceModel) ToOperationsGetDestinationConvexRequest(ctx context.Context) (*operations.GetDestinationConvexRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.GetDestinationConvexRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationConvexResourceModel) ToOperationsDeleteDestinationConvexRequest(ctx context.Context) (*operations.DeleteDestinationConvexRequest, diag.Diagnostics) {
-	var diags diag.Diagnostics
-
-	var destinationID string
-	destinationID = r.DestinationID.ValueString()
-
-	out := operations.DeleteDestinationConvexRequest{
-		DestinationID: destinationID,
-	}
-
-	return &out, diags
-}
-
-func (r *DestinationConvexResourceModel) RefreshFromSharedDestinationResponse(ctx context.Context, resp *shared.DestinationResponse) diag.Diagnostics {
-	var diags diag.Diagnostics
-
+func (r *DestinationConvexResourceModel) RefreshFromSharedDestinationResponse(resp *shared.DestinationResponse) {
 	if resp != nil {
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
 		r.DefinitionID = types.StringValue(resp.DefinitionID)
@@ -150,24 +67,47 @@ func (r *DestinationConvexResourceModel) RefreshFromSharedDestinationResponse(ct
 				r.ResourceAllocation.JobSpecific = r.ResourceAllocation.JobSpecific[:len(resp.ResourceAllocation.JobSpecific)]
 			}
 			for jobSpecificCount, jobSpecificItem := range resp.ResourceAllocation.JobSpecific {
-				var jobSpecific tfTypes.JobTypeResourceLimit
-				jobSpecific.JobType = types.StringValue(string(jobSpecificItem.JobType))
-				jobSpecific.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
-				jobSpecific.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
-				jobSpecific.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
-				jobSpecific.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
-				jobSpecific.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
-				jobSpecific.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
+				var jobSpecific1 tfTypes.JobTypeResourceLimit
+				jobSpecific1.JobType = types.StringValue(string(jobSpecificItem.JobType))
+				jobSpecific1.ResourceRequirements.CPULimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPULimit)
+				jobSpecific1.ResourceRequirements.CPURequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.CPURequest)
+				jobSpecific1.ResourceRequirements.EphemeralStorageLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageLimit)
+				jobSpecific1.ResourceRequirements.EphemeralStorageRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.EphemeralStorageRequest)
+				jobSpecific1.ResourceRequirements.MemoryLimit = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryLimit)
+				jobSpecific1.ResourceRequirements.MemoryRequest = types.StringPointerValue(jobSpecificItem.ResourceRequirements.MemoryRequest)
 				if jobSpecificCount+1 > len(r.ResourceAllocation.JobSpecific) {
-					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific)
+					r.ResourceAllocation.JobSpecific = append(r.ResourceAllocation.JobSpecific, jobSpecific1)
 				} else {
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific.JobType
-					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific.ResourceRequirements
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].JobType = jobSpecific1.JobType
+					r.ResourceAllocation.JobSpecific[jobSpecificCount].ResourceRequirements = jobSpecific1.ResourceRequirements
 				}
 			}
 		}
 		r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 	}
+}
 
-	return diags
+func (r *DestinationConvexResourceModel) ToSharedDestinationConvexPutRequest() *shared.DestinationConvexPutRequest {
+	var name string
+	name = r.Name.ValueString()
+
+	var workspaceID string
+	workspaceID = r.WorkspaceID.ValueString()
+
+	var deploymentURL string
+	deploymentURL = r.Configuration.DeploymentURL.ValueString()
+
+	var accessKey string
+	accessKey = r.Configuration.AccessKey.ValueString()
+
+	configuration := shared.DestinationConvexUpdate{
+		DeploymentURL: deploymentURL,
+		AccessKey:     accessKey,
+	}
+	out := shared.DestinationConvexPutRequest{
+		Name:          name,
+		WorkspaceID:   workspaceID,
+		Configuration: configuration,
+	}
+	return &out
 }

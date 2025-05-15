@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
+	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -103,13 +104,17 @@ func (r *DeclarativeSourceDefinitionDataSource) Read(ctx context.Context, req da
 		return
 	}
 
-	request, requestDiags := data.ToOperationsGetDeclarativeSourceDefinitionRequest(ctx)
-	resp.Diagnostics.Append(requestDiags...)
+	var workspaceID string
+	workspaceID = data.WorkspaceID.ValueString()
 
-	if resp.Diagnostics.HasError() {
-		return
+	var definitionID string
+	definitionID = data.ID.ValueString()
+
+	request := operations.GetDeclarativeSourceDefinitionRequest{
+		WorkspaceID:  workspaceID,
+		DefinitionID: definitionID,
 	}
-	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, *request)
+	res, err := r.client.DeclarativeSourceDefinitions.GetDeclarativeSourceDefinition(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
 		if res != nil && res.RawResponse != nil {
@@ -133,11 +138,7 @@ func (r *DeclarativeSourceDefinitionDataSource) Read(ctx context.Context, req da
 		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res.RawResponse))
 		return
 	}
-	resp.Diagnostics.Append(data.RefreshFromSharedDeclarativeSourceDefinitionResponse(ctx, res.DeclarativeSourceDefinitionResponse)...)
-
-	if resp.Diagnostics.HasError() {
-		return
-	}
+	data.RefreshFromSharedDeclarativeSourceDefinitionResponse(res.DeclarativeSourceDefinitionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
