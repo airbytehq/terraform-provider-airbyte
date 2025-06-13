@@ -8,10 +8,10 @@ import (
 )
 
 type SourceSegmentUpdate struct {
-	// The region for the API, e.g., 'api' for US or 'eu1' for EU
-	Region *string `default:"api" json:"region"`
 	// API token to use. Generate it in Segment's Workspace settings.
-	APIToken  string    `json:"api_token"`
+	APIToken string `json:"api_token"`
+	// The region for the API, e.g., 'api' for US or 'eu1' for EU
+	Region    *string   `default:"api" json:"region"`
 	StartDate time.Time `json:"start_date"`
 }
 
@@ -26,18 +26,18 @@ func (s *SourceSegmentUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSegmentUpdate) GetRegion() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Region
-}
-
 func (o *SourceSegmentUpdate) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *SourceSegmentUpdate) GetRegion() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Region
 }
 
 func (o *SourceSegmentUpdate) GetStartDate() time.Time {

@@ -60,8 +60,8 @@ func (e *Sparkpost) UnmarshalJSON(data []byte) error {
 
 type SourceSparkpost struct {
 	APIKey     string             `json:"api_key"`
-	StartDate  time.Time          `json:"start_date"`
 	APIPrefix  *APIEndpointPrefix `default:"api" json:"api_prefix"`
+	StartDate  time.Time          `json:"start_date"`
 	sourceType Sparkpost          `const:"sparkpost" json:"sourceType"`
 }
 
@@ -83,18 +83,18 @@ func (o *SourceSparkpost) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceSparkpost) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceSparkpost) GetAPIPrefix() *APIEndpointPrefix {
 	if o == nil {
 		return nil
 	}
 	return o.APIPrefix
+}
+
+func (o *SourceSparkpost) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceSparkpost) GetSourceType() Sparkpost {

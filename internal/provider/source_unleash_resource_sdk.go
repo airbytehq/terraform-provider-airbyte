@@ -27,23 +27,23 @@ func (r *SourceUnleashResourceModel) ToSharedSourceUnleashCreateRequest() *share
 	var apiURL string
 	apiURL = r.Configuration.APIURL.ValueString()
 
-	projectName := new(string)
-	if !r.Configuration.ProjectName.IsUnknown() && !r.Configuration.ProjectName.IsNull() {
-		*projectName = r.Configuration.ProjectName.ValueString()
-	} else {
-		projectName = nil
-	}
 	nameprefix := new(string)
 	if !r.Configuration.Nameprefix.IsUnknown() && !r.Configuration.Nameprefix.IsNull() {
 		*nameprefix = r.Configuration.Nameprefix.ValueString()
 	} else {
 		nameprefix = nil
 	}
+	projectName := new(string)
+	if !r.Configuration.ProjectName.IsUnknown() && !r.Configuration.ProjectName.IsNull() {
+		*projectName = r.Configuration.ProjectName.ValueString()
+	} else {
+		projectName = nil
+	}
 	configuration := shared.SourceUnleash{
 		APIToken:    apiToken,
 		APIURL:      apiURL,
-		ProjectName: projectName,
 		Nameprefix:  nameprefix,
+		ProjectName: projectName,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -121,23 +121,23 @@ func (r *SourceUnleashResourceModel) ToSharedSourceUnleashPutRequest() *shared.S
 	var apiURL string
 	apiURL = r.Configuration.APIURL.ValueString()
 
-	projectName := new(string)
-	if !r.Configuration.ProjectName.IsUnknown() && !r.Configuration.ProjectName.IsNull() {
-		*projectName = r.Configuration.ProjectName.ValueString()
-	} else {
-		projectName = nil
-	}
 	nameprefix := new(string)
 	if !r.Configuration.Nameprefix.IsUnknown() && !r.Configuration.Nameprefix.IsNull() {
 		*nameprefix = r.Configuration.Nameprefix.ValueString()
 	} else {
 		nameprefix = nil
 	}
+	projectName := new(string)
+	if !r.Configuration.ProjectName.IsUnknown() && !r.Configuration.ProjectName.IsNull() {
+		*projectName = r.Configuration.ProjectName.ValueString()
+	} else {
+		projectName = nil
+	}
 	configuration := shared.SourceUnleashUpdate{
 		APIToken:    apiToken,
 		APIURL:      apiURL,
-		ProjectName: projectName,
 		Nameprefix:  nameprefix,
+		ProjectName: projectName,
 	}
 	out := shared.SourceUnleashPutRequest{
 		Name:          name,

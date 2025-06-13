@@ -21,8 +21,8 @@ func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
+	var credentialsJSON string
+	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
 
 	datasetID := new(string)
 	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
@@ -30,13 +30,13 @@ func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryCreateRequest() *sha
 	} else {
 		datasetID = nil
 	}
-	var credentialsJSON string
-	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
 
 	configuration := shared.SourceBigquery{
-		ProjectID:       projectID,
-		DatasetID:       datasetID,
 		CredentialsJSON: credentialsJSON,
+		DatasetID:       datasetID,
+		ProjectID:       projectID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,8 +108,8 @@ func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
+	var credentialsJSON string
+	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
 
 	datasetID := new(string)
 	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
@@ -117,13 +117,13 @@ func (r *SourceBigqueryResourceModel) ToSharedSourceBigqueryPutRequest() *shared
 	} else {
 		datasetID = nil
 	}
-	var credentialsJSON string
-	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
 
 	configuration := shared.SourceBigqueryUpdate{
-		ProjectID:       projectID,
-		DatasetID:       datasetID,
 		CredentialsJSON: credentialsJSON,
+		DatasetID:       datasetID,
+		ProjectID:       projectID,
 	}
 	out := shared.SourceBigqueryPutRequest{
 		Name:          name,

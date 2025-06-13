@@ -31,18 +31,18 @@ func (r *SourceWordpressResourceModel) ToSharedSourceWordpressCreateRequest() *s
 	} else {
 		password = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	username := new(string)
 	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
 		*username = r.Configuration.Username.ValueString()
 	} else {
 		username = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceWordpress{
 		Domain:    domain,
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -123,18 +123,18 @@ func (r *SourceWordpressResourceModel) ToSharedSourceWordpressPutRequest() *shar
 	} else {
 		password = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	username := new(string)
 	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
 		*username = r.Configuration.Username.ValueString()
 	} else {
 		username = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceWordpressUpdate{
 		Domain:    domain,
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceWordpressPutRequest{
 		Name:          name,

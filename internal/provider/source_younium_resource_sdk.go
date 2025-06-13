@@ -21,14 +21,11 @@ func (r *SourceYouniumResourceModel) ToSharedSourceYouniumCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var legalEntity string
+	legalEntity = r.Configuration.LegalEntity.ValueString()
 
 	var password string
 	password = r.Configuration.Password.ValueString()
-
-	var legalEntity string
-	legalEntity = r.Configuration.LegalEntity.ValueString()
 
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
@@ -36,11 +33,14 @@ func (r *SourceYouniumResourceModel) ToSharedSourceYouniumCreateRequest() *share
 	} else {
 		playground = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceYounium{
-		Username:    username,
-		Password:    password,
 		LegalEntity: legalEntity,
+		Password:    password,
 		Playground:  playground,
+		Username:    username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -112,14 +112,11 @@ func (r *SourceYouniumResourceModel) ToSharedSourceYouniumPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var legalEntity string
+	legalEntity = r.Configuration.LegalEntity.ValueString()
 
 	var password string
 	password = r.Configuration.Password.ValueString()
-
-	var legalEntity string
-	legalEntity = r.Configuration.LegalEntity.ValueString()
 
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
@@ -127,11 +124,14 @@ func (r *SourceYouniumResourceModel) ToSharedSourceYouniumPutRequest() *shared.S
 	} else {
 		playground = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceYouniumUpdate{
-		Username:    username,
-		Password:    password,
 		LegalEntity: legalEntity,
+		Password:    password,
 		Playground:  playground,
+		Username:    username,
 	}
 	out := shared.SourceYouniumPutRequest{
 		Name:          name,

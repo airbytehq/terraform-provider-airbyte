@@ -21,15 +21,15 @@ func (r *SourceApifyDatasetResourceModel) ToSharedSourceApifyDatasetCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var token string
-	token = r.Configuration.Token.ValueString()
-
 	var datasetID string
 	datasetID = r.Configuration.DatasetID.ValueString()
 
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceApifyDataset{
-		Token:     token,
 		DatasetID: datasetID,
+		Token:     token,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceApifyDatasetResourceModel) ToSharedSourceApifyDatasetPutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var token string
-	token = r.Configuration.Token.ValueString()
-
 	var datasetID string
 	datasetID = r.Configuration.DatasetID.ValueString()
 
+	var token string
+	token = r.Configuration.Token.ValueString()
+
 	configuration := shared.SourceApifyDatasetUpdate{
-		Token:     token,
 		DatasetID: datasetID,
+		Token:     token,
 	}
 	out := shared.SourceApifyDatasetPutRequest{
 		Name:          name,

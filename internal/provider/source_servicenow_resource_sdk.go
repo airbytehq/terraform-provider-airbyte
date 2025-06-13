@@ -24,19 +24,19 @@ func (r *SourceServiceNowResourceModel) ToSharedSourceServiceNowCreateRequest() 
 	var baseURL string
 	baseURL = r.Configuration.BaseURL.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceServiceNow{
 		BaseURL:  baseURL,
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,19 +111,19 @@ func (r *SourceServiceNowResourceModel) ToSharedSourceServiceNowPutRequest() *sh
 	var baseURL string
 	baseURL = r.Configuration.BaseURL.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceServiceNowUpdate{
 		BaseURL:  baseURL,
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	out := shared.SourceServiceNowPutRequest{
 		Name:          name,

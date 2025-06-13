@@ -25,11 +25,11 @@ func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftCreateRequest() *s
 	var credentials shared.SourceSalesloftCredentials
 	var authenticateViaOAuth *shared.AuthenticateViaOAuth
 	if r.Configuration.Credentials.AuthenticateViaOAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaOAuth.ClientID.ValueString()
-
 		var accessToken string
 		accessToken = r.Configuration.Credentials.AuthenticateViaOAuth.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaOAuth.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.AuthenticateViaOAuth.ClientSecret.ValueString()
@@ -39,8 +39,8 @@ func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftCreateRequest() *s
 
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.AuthenticateViaOAuth.TokenExpiryDate.ValueString())
 		authenticateViaOAuth = &shared.AuthenticateViaOAuth{
-			ClientID:        clientID,
 			AccessToken:     accessToken,
+			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,
@@ -143,11 +143,11 @@ func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftPutRequest() *shar
 	var credentials shared.SourceSalesloftUpdateCredentials
 	var sourceSalesloftUpdateAuthenticateViaOAuth *shared.SourceSalesloftUpdateAuthenticateViaOAuth
 	if r.Configuration.Credentials.AuthenticateViaOAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaOAuth.ClientID.ValueString()
-
 		var accessToken string
 		accessToken = r.Configuration.Credentials.AuthenticateViaOAuth.AccessToken.ValueString()
+
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaOAuth.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.AuthenticateViaOAuth.ClientSecret.ValueString()
@@ -157,8 +157,8 @@ func (r *SourceSalesloftResourceModel) ToSharedSourceSalesloftPutRequest() *shar
 
 		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.AuthenticateViaOAuth.TokenExpiryDate.ValueString())
 		sourceSalesloftUpdateAuthenticateViaOAuth = &shared.SourceSalesloftUpdateAuthenticateViaOAuth{
-			ClientID:        clientID,
 			AccessToken:     accessToken,
+			ClientID:        clientID,
 			ClientSecret:    clientSecret,
 			RefreshToken:    refreshToken,
 			TokenExpiryDate: tokenExpiryDate,

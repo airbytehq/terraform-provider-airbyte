@@ -34,11 +34,11 @@ func (e *Weatherstack) UnmarshalJSON(data []byte) error {
 type SourceWeatherstack struct {
 	// API access key used to retrieve data from the Weatherstack API.(https://weatherstack.com/product)
 	AccessKey string `json:"access_key"`
-	// A location to query such as city, IP, latitudeLongitude, or zipcode. Multiple locations with semicolon seperated if using a professional plan or higher. For more info- (https://weatherstack.com/documentation#query_parameter)
-	Query string `json:"query"`
 	// This is required for enabling the Historical date API with format- (YYYY-MM-DD). * Note, only supported by paid accounts
-	HistoricalDate string       `json:"historical_date"`
-	sourceType     Weatherstack `const:"weatherstack" json:"sourceType"`
+	HistoricalDate string `json:"historical_date"`
+	// A location to query such as city, IP, latitudeLongitude, or zipcode. Multiple locations with semicolon seperated if using a professional plan or higher. For more info- (https://weatherstack.com/documentation#query_parameter)
+	Query      string       `json:"query"`
+	sourceType Weatherstack `const:"weatherstack" json:"sourceType"`
 }
 
 func (s SourceWeatherstack) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceWeatherstack) GetAccessKey() string {
 	return o.AccessKey
 }
 
-func (o *SourceWeatherstack) GetQuery() string {
-	if o == nil {
-		return ""
-	}
-	return o.Query
-}
-
 func (o *SourceWeatherstack) GetHistoricalDate() string {
 	if o == nil {
 		return ""
 	}
 	return o.HistoricalDate
+}
+
+func (o *SourceWeatherstack) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
 }
 
 func (o *SourceWeatherstack) GetSourceType() Weatherstack {

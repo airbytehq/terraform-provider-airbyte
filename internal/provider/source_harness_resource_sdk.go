@@ -21,6 +21,9 @@ func (r *SourceHarnessResourceModel) ToSharedSourceHarnessCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
+
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -30,13 +33,10 @@ func (r *SourceHarnessResourceModel) ToSharedSourceHarnessCreateRequest() *share
 	} else {
 		apiURL = nil
 	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
 	configuration := shared.SourceHarness{
+		AccountID: accountID,
 		APIKey:    apiKey,
 		APIURL:    apiURL,
-		AccountID: accountID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,6 +108,9 @@ func (r *SourceHarnessResourceModel) ToSharedSourceHarnessPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
+
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
@@ -117,13 +120,10 @@ func (r *SourceHarnessResourceModel) ToSharedSourceHarnessPutRequest() *shared.S
 	} else {
 		apiURL = nil
 	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
 	configuration := shared.SourceHarnessUpdate{
+		AccountID: accountID,
 		APIKey:    apiKey,
 		APIURL:    apiURL,
-		AccountID: accountID,
 	}
 	out := shared.SourceHarnessPutRequest{
 		Name:          name,

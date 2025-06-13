@@ -21,14 +21,20 @@ func (r *SourceFireboltResourceModel) ToSharedSourceFireboltCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var account string
+	account = r.Configuration.Account.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var account string
-	account = r.Configuration.Account.ValueString()
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var engine string
+	engine = r.Configuration.Engine.ValueString()
 
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
@@ -36,19 +42,13 @@ func (r *SourceFireboltResourceModel) ToSharedSourceFireboltCreateRequest() *sha
 	} else {
 		host = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var engine string
-	engine = r.Configuration.Engine.ValueString()
-
 	configuration := shared.SourceFirebolt{
+		Account:      account,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		Account:      account,
-		Host:         host,
 		Database:     database,
 		Engine:       engine,
+		Host:         host,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -120,14 +120,20 @@ func (r *SourceFireboltResourceModel) ToSharedSourceFireboltPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var account string
+	account = r.Configuration.Account.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var account string
-	account = r.Configuration.Account.ValueString()
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var engine string
+	engine = r.Configuration.Engine.ValueString()
 
 	host := new(string)
 	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
@@ -135,19 +141,13 @@ func (r *SourceFireboltResourceModel) ToSharedSourceFireboltPutRequest() *shared
 	} else {
 		host = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var engine string
-	engine = r.Configuration.Engine.ValueString()
-
 	configuration := shared.SourceFireboltUpdate{
+		Account:      account,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		Account:      account,
-		Host:         host,
 		Database:     database,
 		Engine:       engine,
+		Host:         host,
 	}
 	out := shared.SourceFireboltPutRequest{
 		Name:          name,

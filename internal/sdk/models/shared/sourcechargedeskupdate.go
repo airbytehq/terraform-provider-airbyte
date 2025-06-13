@@ -4,9 +4,9 @@ package shared
 
 type SourceChargedeskUpdate struct {
 	Password *string `json:"password,omitempty"`
-	Username string  `json:"username"`
 	// Date from when the sync should start in epoch Unix timestamp
 	StartDate *int64 `json:"start_date,omitempty"`
+	Username  string `json:"username"`
 }
 
 func (o *SourceChargedeskUpdate) GetPassword() *string {
@@ -16,16 +16,16 @@ func (o *SourceChargedeskUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceChargedeskUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceChargedeskUpdate) GetStartDate() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceChargedeskUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

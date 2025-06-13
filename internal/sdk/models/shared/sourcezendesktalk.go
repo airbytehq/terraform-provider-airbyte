@@ -34,11 +34,11 @@ func (e *SourceZendeskTalkSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskTalkAPIToken struct {
+	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
+	APIToken string                            `json:"api_token"`
 	authType *SourceZendeskTalkSchemasAuthType `const:"api_token" json:"auth_type,omitempty"`
 	// The user email for your Zendesk account.
-	Email string `json:"email"`
-	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	APIToken             string `json:"api_token"`
+	Email                string `json:"email"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
@@ -53,6 +53,13 @@ func (s *SourceZendeskTalkAPIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceZendeskTalkAPIToken) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
+}
+
 func (o *SourceZendeskTalkAPIToken) GetAuthType() *SourceZendeskTalkSchemasAuthType {
 	return SourceZendeskTalkSchemasAuthTypeAPIToken.ToPointer()
 }
@@ -62,13 +69,6 @@ func (o *SourceZendeskTalkAPIToken) GetEmail() string {
 		return ""
 	}
 	return o.Email
-}
-
-func (o *SourceZendeskTalkAPIToken) GetAPIToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIToken
 }
 
 func (o *SourceZendeskTalkAPIToken) GetAdditionalProperties() any {
@@ -102,9 +102,9 @@ func (e *SourceZendeskTalkAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskTalkOAuth20 struct {
-	authType *SourceZendeskTalkAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	AccessToken string `json:"access_token"`
+	AccessToken string                     `json:"access_token"`
+	authType    *SourceZendeskTalkAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret
@@ -123,15 +123,15 @@ func (s *SourceZendeskTalkOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskTalkOAuth20) GetAuthType() *SourceZendeskTalkAuthType {
-	return SourceZendeskTalkAuthTypeOauth20.ToPointer()
-}
-
 func (o *SourceZendeskTalkOAuth20) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceZendeskTalkOAuth20) GetAuthType() *SourceZendeskTalkAuthType {
+	return SourceZendeskTalkAuthTypeOauth20.ToPointer()
 }
 
 func (o *SourceZendeskTalkOAuth20) GetClientID() *string {
@@ -243,12 +243,12 @@ func (e *ZendeskTalk) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskTalk struct {
-	// This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
-	Subdomain string `json:"subdomain"`
 	// Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 	Credentials *SourceZendeskTalkAuthentication `json:"credentials,omitempty"`
 	// The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate  time.Time   `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	// This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
+	Subdomain  string      `json:"subdomain"`
 	sourceType ZendeskTalk `const:"zendesk-talk" json:"sourceType"`
 }
 
@@ -263,13 +263,6 @@ func (s *SourceZendeskTalk) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskTalk) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
-}
-
 func (o *SourceZendeskTalk) GetCredentials() *SourceZendeskTalkAuthentication {
 	if o == nil {
 		return nil
@@ -282,6 +275,13 @@ func (o *SourceZendeskTalk) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceZendeskTalk) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }
 
 func (o *SourceZendeskTalk) GetSourceType() ZendeskTalk {

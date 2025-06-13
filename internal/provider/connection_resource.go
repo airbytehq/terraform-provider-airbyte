@@ -100,6 +100,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
 								},
+								"destination_object_name": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
+									},
+									Description: `The name of the destination object that this stream will be written to, used for data activation destinations.`,
+								},
 								"include_files": schema.BoolAttribute{
 									Computed: true,
 									Optional: true,
@@ -554,12 +562,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 			},
 			"data_residency": schema.StringAttribute{
-				Computed: true,
-				Optional: true,
-				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.SuppressDiff(speakeasy_stringplanmodifier.ExplicitSuppress),
-				},
-				DeprecationMessage: `We no longer support modifying dataResidency on Community and Enterprise connections. This will be supported on Cloud until May 31, at which time all connections will use the dataResidency of their associated workspace.`,
+				Optional:           true,
+				DeprecationMessage: `We no longer support modifying dataResidency on Community and Enterprise connections. All connections will use the dataResidency of their associated workspace.`,
 			},
 			"destination_id": schema.StringAttribute{
 				Required: true,
@@ -820,6 +824,34 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 	}
 	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var connectionID string
+	connectionID = data.ConnectionID.ValueString()
+
+	request1 := operations.GetConnectionRequest{
+		ConnectionID: connectionID,
+	}
+	res1, err := r.client.Connections.GetConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.ConnectionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionResponse(res1.ConnectionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -922,6 +954,34 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 	data.RefreshFromSharedConnectionResponse(res.ConnectionResponse)
+	refreshPlan(ctx, plan, &data, resp.Diagnostics)
+	var connectionId1 string
+	connectionId1 = data.ConnectionID.ValueString()
+
+	request1 := operations.GetConnectionRequest{
+		ConnectionID: connectionId1,
+	}
+	res1, err := r.client.Connections.GetConnection(ctx, request1)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res1 != nil && res1.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res1.RawResponse))
+		}
+		return
+	}
+	if res1 == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res1))
+		return
+	}
+	if res1.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res1.StatusCode), debugResponse(res1.RawResponse))
+		return
+	}
+	if !(res1.ConnectionResponse != nil) {
+		resp.Diagnostics.AddError("unexpected response from API. Got an unexpected response body", debugResponse(res1.RawResponse))
+		return
+	}
+	data.RefreshFromSharedConnectionResponse(res1.ConnectionResponse)
 	refreshPlan(ctx, plan, &data, resp.Diagnostics)
 
 	// Save updated data into Terraform state

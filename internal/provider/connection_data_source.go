@@ -32,7 +32,6 @@ type ConnectionDataSourceModel struct {
 	Configurations                   tfTypes.StreamConfigurations       `tfsdk:"configurations"`
 	ConnectionID                     types.String                       `tfsdk:"connection_id"`
 	CreatedAt                        types.Int64                        `tfsdk:"created_at"`
-	DataResidency                    types.String                       `tfsdk:"data_residency"`
 	DestinationID                    types.String                       `tfsdk:"destination_id"`
 	Name                             types.String                       `tfsdk:"name"`
 	NamespaceDefinition              types.String                       `tfsdk:"namespace_definition"`
@@ -68,6 +67,10 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 									Computed:    true,
 									ElementType: types.StringType,
 									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
+								},
+								"destination_object_name": schema.StringAttribute{
+									Computed:    true,
+									Description: `The name of the destination object that this stream will be written to, used for data activation destinations.`,
 								},
 								"include_files": schema.BoolAttribute{
 									Computed:    true,
@@ -217,9 +220,6 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 				Required: true,
 			},
 			"created_at": schema.Int64Attribute{
-				Computed: true,
-			},
-			"data_residency": schema.StringAttribute{
 				Computed: true,
 			},
 			"destination_id": schema.StringAttribute{

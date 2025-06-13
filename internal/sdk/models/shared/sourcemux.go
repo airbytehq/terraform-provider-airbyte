@@ -33,12 +33,12 @@ func (e *Mux) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMux struct {
-	Username  string    `json:"username"`
-	Password  *string   `json:"password,omitempty"`
-	StartDate time.Time `json:"start_date"`
+	Password *string `json:"password,omitempty"`
 	// The playback id for your video asset shown in website details
-	PlaybackID *string `json:"playback_id,omitempty"`
-	sourceType Mux     `const:"mux" json:"sourceType"`
+	PlaybackID *string   `json:"playback_id,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
+	sourceType Mux       `const:"mux" json:"sourceType"`
 }
 
 func (s SourceMux) MarshalJSON() ([]byte, error) {
@@ -52,18 +52,18 @@ func (s *SourceMux) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMux) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceMux) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceMux) GetPlaybackID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlaybackID
 }
 
 func (o *SourceMux) GetStartDate() time.Time {
@@ -73,11 +73,11 @@ func (o *SourceMux) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceMux) GetPlaybackID() *string {
+func (o *SourceMux) GetUsername() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PlaybackID
+	return o.Username
 }
 
 func (o *SourceMux) GetSourceType() Mux {

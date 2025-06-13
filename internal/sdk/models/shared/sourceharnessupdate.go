@@ -7,11 +7,11 @@ import (
 )
 
 type SourceHarnessUpdate struct {
-	APIKey string `json:"api_key"`
-	// The API URL for fetching data from Harness
-	APIURL *string `default:"https://app.harness.io" json:"api_url"`
 	// Harness Account ID
 	AccountID string `json:"account_id"`
+	APIKey    string `json:"api_key"`
+	// The API URL for fetching data from Harness
+	APIURL *string `default:"https://app.harness.io" json:"api_url"`
 }
 
 func (s SourceHarnessUpdate) MarshalJSON() ([]byte, error) {
@@ -23,6 +23,13 @@ func (s *SourceHarnessUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceHarnessUpdate) GetAccountID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountID
 }
 
 func (o *SourceHarnessUpdate) GetAPIKey() string {
@@ -37,11 +44,4 @@ func (o *SourceHarnessUpdate) GetAPIURL() *string {
 		return nil
 	}
 	return o.APIURL
-}
-
-func (o *SourceHarnessUpdate) GetAccountID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountID
 }

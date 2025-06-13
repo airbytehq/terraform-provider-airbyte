@@ -32,10 +32,10 @@ func (e *CampaignMonitor) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCampaignMonitor struct {
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
 	// Date from when the sync should start
 	StartDate  *string         `json:"start_date,omitempty"`
+	Username   string          `json:"username"`
 	sourceType CampaignMonitor `const:"campaign-monitor" json:"sourceType"`
 }
 
@@ -50,13 +50,6 @@ func (s *SourceCampaignMonitor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCampaignMonitor) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceCampaignMonitor) GetPassword() *string {
 	if o == nil {
 		return nil
@@ -69,6 +62,13 @@ func (o *SourceCampaignMonitor) GetStartDate() *string {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceCampaignMonitor) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceCampaignMonitor) GetSourceType() CampaignMonitor {

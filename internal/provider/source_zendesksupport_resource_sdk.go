@@ -23,15 +23,6 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskSupportAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSupportOAuth20 *shared.SourceZendeskSupportOAuth20
@@ -69,19 +60,19 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 		}
 		var sourceZendeskSupportAPIToken *shared.SourceZendeskSupportAPIToken
 		if r.Configuration.Credentials.APIToken != nil {
-			var email string
-			email = r.Configuration.Credentials.APIToken.Email.ValueString()
-
 			var apiToken string
 			apiToken = r.Configuration.Credentials.APIToken.APIToken.ValueString()
+
+			var email string
+			email = r.Configuration.Credentials.APIToken.Email.ValueString()
 
 			var additionalProperties1 interface{}
 			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			sourceZendeskSupportAPIToken = &shared.SourceZendeskSupportAPIToken{
-				Email:                email,
 				APIToken:             apiToken,
+				Email:                email,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -97,11 +88,20 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportCreateRe
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskSupport{
-		StartDate:   startDate,
-		Subdomain:   subdomain,
 		Credentials: credentials,
 		NumWorkers:  numWorkers,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -173,15 +173,6 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskSupportUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSupportUpdateOAuth20 *shared.SourceZendeskSupportUpdateOAuth20
@@ -219,19 +210,19 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutReque
 		}
 		var sourceZendeskSupportUpdateAPIToken *shared.SourceZendeskSupportUpdateAPIToken
 		if r.Configuration.Credentials.APIToken != nil {
-			var email string
-			email = r.Configuration.Credentials.APIToken.Email.ValueString()
-
 			var apiToken string
 			apiToken = r.Configuration.Credentials.APIToken.APIToken.ValueString()
+
+			var email string
+			email = r.Configuration.Credentials.APIToken.Email.ValueString()
 
 			var additionalProperties1 interface{}
 			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			sourceZendeskSupportUpdateAPIToken = &shared.SourceZendeskSupportUpdateAPIToken{
-				Email:                email,
 				APIToken:             apiToken,
+				Email:                email,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -247,11 +238,20 @@ func (r *SourceZendeskSupportResourceModel) ToSharedSourceZendeskSupportPutReque
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskSupportUpdate{
-		StartDate:   startDate,
-		Subdomain:   subdomain,
 		Credentials: credentials,
 		NumWorkers:  numWorkers,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	out := shared.SourceZendeskSupportPutRequest{
 		Name:          name,

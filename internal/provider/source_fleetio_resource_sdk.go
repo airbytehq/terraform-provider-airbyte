@@ -21,15 +21,15 @@ func (r *SourceFleetioResourceModel) ToSharedSourceFleetioCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountToken string
 	accountToken = r.Configuration.AccountToken.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceFleetio{
-		APIKey:       apiKey,
 		AccountToken: accountToken,
+		APIKey:       apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceFleetioResourceModel) ToSharedSourceFleetioPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountToken string
 	accountToken = r.Configuration.AccountToken.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceFleetioUpdate{
-		APIKey:       apiKey,
 		AccountToken: accountToken,
+		APIKey:       apiKey,
 	}
 	out := shared.SourceFleetioPutRequest{
 		Name:          name,

@@ -21,32 +21,53 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
+	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
 	} else {
 		schema = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -143,36 +164,6 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	rawDataSchema := new(string)
-	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
-		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
-	} else {
-		rawDataSchema = nil
-	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
-	dropCascade := new(bool)
-	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
-		*dropCascade = r.Configuration.DropCascade.ValueBool()
-	} else {
-		dropCascade = nil
-	}
-	unconstrainedNumber := new(bool)
-	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
-		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
-	} else {
-		unconstrainedNumber = nil
-	}
 	var tunnelMethod *shared.DestinationPostgresSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationPostgresNoTunnel *shared.DestinationPostgresNoTunnel
@@ -186,6 +177,9 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 		}
 		var destinationPostgresSSHKeyAuthentication *shared.DestinationPostgresSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -198,14 +192,11 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationPostgresSSHKeyAuthentication = &shared.DestinationPostgresSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationPostgresSSHKeyAuthentication != nil {
@@ -243,21 +234,30 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresCreateRequ
 			}
 		}
 	}
+	unconstrainedNumber := new(bool)
+	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
+		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
+	} else {
+		unconstrainedNumber = nil
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationPostgres{
-		Host:                host,
-		Port:                port,
 		Database:            database,
-		Schema:              schema,
-		Username:            username,
-		Password:            password,
-		Ssl:                 ssl,
-		SslMode:             sslMode,
-		JdbcURLParams:       jdbcURLParams,
-		RawDataSchema:       rawDataSchema,
 		DisableTypeDedupe:   disableTypeDedupe,
 		DropCascade:         dropCascade,
-		UnconstrainedNumber: unconstrainedNumber,
+		Host:                host,
+		JdbcURLParams:       jdbcURLParams,
+		Password:            password,
+		Port:                port,
+		RawDataSchema:       rawDataSchema,
+		Schema:              schema,
+		Ssl:                 ssl,
+		SslMode:             sslMode,
 		TunnelMethod:        tunnelMethod,
+		UnconstrainedNumber: unconstrainedNumber,
+		Username:            username,
 	}
 	out := shared.DestinationPostgresCreateRequest{
 		Name:          name,
@@ -322,32 +322,53 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	dropCascade := new(bool)
+	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
+		*dropCascade = r.Configuration.DropCascade.ValueBool()
+	} else {
+		dropCascade = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
 	port := new(int64)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueInt64()
 	} else {
 		port = nil
 	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
+	rawDataSchema := new(string)
+	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
+		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
+	} else {
+		rawDataSchema = nil
+	}
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
 	} else {
 		schema = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -444,36 +465,6 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 			}
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
-	}
-	rawDataSchema := new(string)
-	if !r.Configuration.RawDataSchema.IsUnknown() && !r.Configuration.RawDataSchema.IsNull() {
-		*rawDataSchema = r.Configuration.RawDataSchema.ValueString()
-	} else {
-		rawDataSchema = nil
-	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
-	dropCascade := new(bool)
-	if !r.Configuration.DropCascade.IsUnknown() && !r.Configuration.DropCascade.IsNull() {
-		*dropCascade = r.Configuration.DropCascade.ValueBool()
-	} else {
-		dropCascade = nil
-	}
-	unconstrainedNumber := new(bool)
-	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
-		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
-	} else {
-		unconstrainedNumber = nil
-	}
 	var tunnelMethod *shared.DestinationPostgresUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationPostgresUpdateNoTunnel *shared.DestinationPostgresUpdateNoTunnel
@@ -487,6 +478,9 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 		}
 		var destinationPostgresUpdateSSHKeyAuthentication *shared.DestinationPostgresUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -499,14 +493,11 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationPostgresUpdateSSHKeyAuthentication = &shared.DestinationPostgresUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationPostgresUpdateSSHKeyAuthentication != nil {
@@ -544,21 +535,30 @@ func (r *DestinationPostgresResourceModel) ToSharedDestinationPostgresPutRequest
 			}
 		}
 	}
+	unconstrainedNumber := new(bool)
+	if !r.Configuration.UnconstrainedNumber.IsUnknown() && !r.Configuration.UnconstrainedNumber.IsNull() {
+		*unconstrainedNumber = r.Configuration.UnconstrainedNumber.ValueBool()
+	} else {
+		unconstrainedNumber = nil
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationPostgresUpdate{
-		Host:                host,
-		Port:                port,
 		Database:            database,
-		Schema:              schema,
-		Username:            username,
-		Password:            password,
-		Ssl:                 ssl,
-		SslMode:             sslMode,
-		JdbcURLParams:       jdbcURLParams,
-		RawDataSchema:       rawDataSchema,
 		DisableTypeDedupe:   disableTypeDedupe,
 		DropCascade:         dropCascade,
-		UnconstrainedNumber: unconstrainedNumber,
+		Host:                host,
+		JdbcURLParams:       jdbcURLParams,
+		Password:            password,
+		Port:                port,
+		RawDataSchema:       rawDataSchema,
+		Schema:              schema,
+		Ssl:                 ssl,
+		SslMode:             sslMode,
 		TunnelMethod:        tunnelMethod,
+		UnconstrainedNumber: unconstrainedNumber,
+		Username:            username,
 	}
 	out := shared.DestinationPostgresPutRequest{
 		Name:          name,

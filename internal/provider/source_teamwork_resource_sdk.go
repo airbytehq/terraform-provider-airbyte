@@ -22,9 +22,6 @@ func (r *SourceTeamworkResourceModel) ToSharedSourceTeamworkCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -35,11 +32,14 @@ func (r *SourceTeamworkResourceModel) ToSharedSourceTeamworkCreateRequest() *sha
 	siteName = r.Configuration.SiteName.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceTeamwork{
-		Username:  username,
 		Password:  password,
 		SiteName:  siteName,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,9 +111,6 @@ func (r *SourceTeamworkResourceModel) ToSharedSourceTeamworkPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -124,11 +121,14 @@ func (r *SourceTeamworkResourceModel) ToSharedSourceTeamworkPutRequest() *shared
 	siteName = r.Configuration.SiteName.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceTeamworkUpdate{
-		Username:  username,
 		Password:  password,
 		SiteName:  siteName,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceTeamworkPutRequest{
 		Name:          name,

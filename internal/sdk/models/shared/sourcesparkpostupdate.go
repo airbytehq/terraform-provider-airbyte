@@ -37,8 +37,8 @@ func (e *SourceSparkpostUpdateAPIEndpointPrefix) UnmarshalJSON(data []byte) erro
 
 type SourceSparkpostUpdate struct {
 	APIKey    string                                  `json:"api_key"`
-	StartDate time.Time                               `json:"start_date"`
 	APIPrefix *SourceSparkpostUpdateAPIEndpointPrefix `default:"api" json:"api_prefix"`
+	StartDate time.Time                               `json:"start_date"`
 }
 
 func (s SourceSparkpostUpdate) MarshalJSON() ([]byte, error) {
@@ -59,16 +59,16 @@ func (o *SourceSparkpostUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceSparkpostUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceSparkpostUpdate) GetAPIPrefix() *SourceSparkpostUpdateAPIEndpointPrefix {
 	if o == nil {
 		return nil
 	}
 	return o.APIPrefix
+}
+
+func (o *SourceSparkpostUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

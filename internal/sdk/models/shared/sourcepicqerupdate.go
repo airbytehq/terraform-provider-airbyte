@@ -8,11 +8,11 @@ import (
 )
 
 type SourcePicqerUpdate struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// The organization name which is used to login to picqer
 	OrganizationName string    `json:"organization_name"`
+	Password         *string   `json:"password,omitempty"`
 	StartDate        time.Time `json:"start_date"`
+	Username         string    `json:"username"`
 }
 
 func (s SourcePicqerUpdate) MarshalJSON() ([]byte, error) {
@@ -26,11 +26,11 @@ func (s *SourcePicqerUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePicqerUpdate) GetUsername() string {
+func (o *SourcePicqerUpdate) GetOrganizationName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.OrganizationName
 }
 
 func (o *SourcePicqerUpdate) GetPassword() *string {
@@ -40,16 +40,16 @@ func (o *SourcePicqerUpdate) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourcePicqerUpdate) GetOrganizationName() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrganizationName
-}
-
 func (o *SourcePicqerUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourcePicqerUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

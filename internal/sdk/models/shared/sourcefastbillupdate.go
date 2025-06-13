@@ -3,17 +3,10 @@
 package shared
 
 type SourceFastbillUpdate struct {
-	// Username for Fastbill account
-	Username string `json:"username"`
 	// Fastbill API key
 	APIKey string `json:"api_key"`
-}
-
-func (o *SourceFastbillUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	// Username for Fastbill account
+	Username string `json:"username"`
 }
 
 func (o *SourceFastbillUpdate) GetAPIKey() string {
@@ -21,4 +14,11 @@ func (o *SourceFastbillUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceFastbillUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

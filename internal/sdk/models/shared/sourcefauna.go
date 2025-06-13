@@ -33,9 +33,9 @@ func (e *SourceFaunaDeletionMode) UnmarshalJSON(data []byte) error {
 }
 
 type Enabled struct {
-	deletionMode SourceFaunaDeletionMode `const:"deleted_field" json:"deletion_mode"`
 	// Name of the "deleted at" column.
-	Column *string `default:"deleted_at" json:"column"`
+	Column       *string                 `default:"deleted_at" json:"column"`
+	deletionMode SourceFaunaDeletionMode `const:"deleted_field" json:"deletion_mode"`
 }
 
 func (e Enabled) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (e *Enabled) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Enabled) GetDeletionMode() SourceFaunaDeletionMode {
-	return SourceFaunaDeletionModeDeletedField
-}
-
 func (o *Enabled) GetColumn() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Column
+}
+
+func (o *Enabled) GetDeletionMode() SourceFaunaDeletionMode {
+	return SourceFaunaDeletionModeDeletedField
 }
 
 type SourceFaunaSchemasDeletionMode string
@@ -171,15 +171,15 @@ func (u DeletionMode) MarshalJSON() ([]byte, error) {
 
 // Collection - Settings for the Fauna Collection.
 type Collection struct {
-	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
-	// Choose your page size based on how large the documents are. <br>
-	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
-	PageSize *int64 `default:"64" json:"page_size"`
 	// <b>This only applies to incremental syncs.</b> <br>
 	// Enabling deletion mode informs your destination of deleted documents.<br>
 	// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 	// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 	Deletions DeletionMode `json:"deletions"`
+	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+	// Choose your page size based on how large the documents are. <br>
+	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
+	PageSize *int64 `default:"64" json:"page_size"`
 }
 
 func (c Collection) MarshalJSON() ([]byte, error) {
@@ -193,18 +193,18 @@ func (c *Collection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Collection) GetPageSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PageSize
-}
-
 func (o *Collection) GetDeletions() DeletionMode {
 	if o == nil {
 		return DeletionMode{}
 	}
 	return o.Deletions
+}
+
+func (o *Collection) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
 }
 
 type Fauna string
@@ -231,6 +231,8 @@ func (e *Fauna) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFauna struct {
+	// Settings for the Fauna Collection.
+	Collection *Collection `json:"collection,omitempty"`
 	// Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
 	Domain *string `default:"db.fauna.com" json:"domain"`
 	// Endpoint port.
@@ -238,10 +240,8 @@ type SourceFauna struct {
 	// URL scheme.
 	Scheme *string `default:"https" json:"scheme"`
 	// Fauna secret, used when authenticating with the database.
-	Secret string `json:"secret"`
-	// Settings for the Fauna Collection.
-	Collection *Collection `json:"collection,omitempty"`
-	sourceType Fauna       `const:"fauna" json:"sourceType"`
+	Secret     string `json:"secret"`
+	sourceType Fauna  `const:"fauna" json:"sourceType"`
 }
 
 func (s SourceFauna) MarshalJSON() ([]byte, error) {
@@ -253,6 +253,13 @@ func (s *SourceFauna) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceFauna) GetCollection() *Collection {
+	if o == nil {
+		return nil
+	}
+	return o.Collection
 }
 
 func (o *SourceFauna) GetDomain() *string {
@@ -281,13 +288,6 @@ func (o *SourceFauna) GetSecret() string {
 		return ""
 	}
 	return o.Secret
-}
-
-func (o *SourceFauna) GetCollection() *Collection {
-	if o == nil {
-		return nil
-	}
-	return o.Collection
 }
 
 func (o *SourceFauna) GetSourceType() Fauna {

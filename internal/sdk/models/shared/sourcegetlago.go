@@ -32,10 +32,10 @@ func (e *Getlago) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGetlago struct {
-	// Your Lago API URL
-	APIURL *string `default:"https://api.getlago.com/api/v1" json:"api_url"`
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-	APIKey     string  `json:"api_key"`
+	APIKey string `json:"api_key"`
+	// Your Lago API URL
+	APIURL     *string `default:"https://api.getlago.com/api/v1" json:"api_url"`
 	sourceType Getlago `const:"getlago" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceGetlago) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGetlago) GetAPIURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.APIURL
-}
-
 func (o *SourceGetlago) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceGetlago) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
 }
 
 func (o *SourceGetlago) GetSourceType() Getlago {

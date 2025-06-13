@@ -21,23 +21,23 @@ func (r *SourceGoogleCalendarResourceModel) ToSharedSourceGoogleCalendarCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var calendarid string
+	calendarid = r.Configuration.Calendarid.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
-	var calendarid string
-	calendarid = r.Configuration.Calendarid.ValueString()
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	configuration := shared.SourceGoogleCalendar{
-		ClientID:            clientID,
-		ClientSecret:        clientSecret,
-		ClientRefreshToken2: clientRefreshToken2,
 		Calendarid:          calendarid,
+		ClientID:            clientID,
+		ClientRefreshToken2: clientRefreshToken2,
+		ClientSecret:        clientSecret,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -109,23 +109,23 @@ func (r *SourceGoogleCalendarResourceModel) ToSharedSourceGoogleCalendarPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var calendarid string
+	calendarid = r.Configuration.Calendarid.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
-	var calendarid string
-	calendarid = r.Configuration.Calendarid.ValueString()
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	configuration := shared.SourceGoogleCalendarUpdate{
-		ClientID:            clientID,
-		ClientSecret:        clientSecret,
-		ClientRefreshToken2: clientRefreshToken2,
 		Calendarid:          calendarid,
+		ClientID:            clientID,
+		ClientRefreshToken2: clientRefreshToken2,
+		ClientSecret:        clientSecret,
 	}
 	out := shared.SourceGoogleCalendarPutRequest{
 		Name:          name,

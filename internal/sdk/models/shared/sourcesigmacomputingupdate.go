@@ -8,15 +8,15 @@ import (
 )
 
 type SourceSigmaComputingUpdate struct {
+	// The base url of your sigma organization
+	BaseURL            string `json:"base_url"`
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// The current access token. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthAccessToken *string `json:"oauth_access_token,omitempty"`
 	// The date the current access token expires in. This field might be overridden by the connector based on the token refresh endpoint response.
 	OauthTokenExpiryDate *time.Time `json:"oauth_token_expiry_date,omitempty"`
-	// The base url of your sigma organization
-	BaseURL string `json:"base_url"`
 }
 
 func (s SourceSigmaComputingUpdate) MarshalJSON() ([]byte, error) {
@@ -30,6 +30,13 @@ func (s *SourceSigmaComputingUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceSigmaComputingUpdate) GetBaseURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseURL
+}
+
 func (o *SourceSigmaComputingUpdate) GetClientID() string {
 	if o == nil {
 		return ""
@@ -37,18 +44,18 @@ func (o *SourceSigmaComputingUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceSigmaComputingUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceSigmaComputingUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceSigmaComputingUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceSigmaComputingUpdate) GetOauthAccessToken() *string {
@@ -63,11 +70,4 @@ func (o *SourceSigmaComputingUpdate) GetOauthTokenExpiryDate() *time.Time {
 		return nil
 	}
 	return o.OauthTokenExpiryDate
-}
-
-func (o *SourceSigmaComputingUpdate) GetBaseURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseURL
 }

@@ -21,19 +21,19 @@ func (r *SourceAgilecrmResourceModel) ToSharedSourceAgilecrmCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var email string
-	email = r.Configuration.Email.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var domain string
 	domain = r.Configuration.Domain.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
+	var email string
+	email = r.Configuration.Email.ValueString()
 
 	configuration := shared.SourceAgilecrm{
-		Email:  email,
-		Domain: domain,
 		APIKey: apiKey,
+		Domain: domain,
+		Email:  email,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -105,19 +105,19 @@ func (r *SourceAgilecrmResourceModel) ToSharedSourceAgilecrmPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var email string
-	email = r.Configuration.Email.ValueString()
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var domain string
 	domain = r.Configuration.Domain.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
+	var email string
+	email = r.Configuration.Email.ValueString()
 
 	configuration := shared.SourceAgilecrmUpdate{
-		Email:  email,
-		Domain: domain,
 		APIKey: apiKey,
+		Domain: domain,
+		Email:  email,
 	}
 	out := shared.SourceAgilecrmPutRequest{
 		Name:          name,

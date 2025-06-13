@@ -3,20 +3,13 @@
 package shared
 
 type SourceKekaUpdate struct {
-	Scope  string `json:"scope"`
 	APIKey string `json:"api_key"`
 	// Your client identifier for authentication.
-	ClientID  string `json:"client_id"`
-	GrantType string `json:"grant_type"`
+	ClientID string `json:"client_id"`
 	// Your client secret for secure authentication.
 	ClientSecret string `json:"client_secret"`
-}
-
-func (o *SourceKekaUpdate) GetScope() string {
-	if o == nil {
-		return ""
-	}
-	return o.Scope
+	GrantType    string `json:"grant_type"`
+	Scope        string `json:"scope"`
 }
 
 func (o *SourceKekaUpdate) GetAPIKey() string {
@@ -33,6 +26,13 @@ func (o *SourceKekaUpdate) GetClientID() string {
 	return o.ClientID
 }
 
+func (o *SourceKekaUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
 func (o *SourceKekaUpdate) GetGrantType() string {
 	if o == nil {
 		return ""
@@ -40,9 +40,9 @@ func (o *SourceKekaUpdate) GetGrantType() string {
 	return o.GrantType
 }
 
-func (o *SourceKekaUpdate) GetClientSecret() string {
+func (o *SourceKekaUpdate) GetScope() string {
 	if o == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return o.Scope
 }

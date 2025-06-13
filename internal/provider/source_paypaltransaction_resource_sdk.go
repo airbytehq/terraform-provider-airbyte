@@ -28,7 +28,6 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCr
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	disputeStartDate := new(time.Time)
 	if !r.Configuration.DisputeStartDate.IsUnknown() && !r.Configuration.DisputeStartDate.IsNull() {
 		*disputeStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.DisputeStartDate.ValueString())
@@ -53,6 +52,7 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCr
 	} else {
 		refreshToken = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	timeWindow := new(int64)
 	if !r.Configuration.TimeWindow.IsUnknown() && !r.Configuration.TimeWindow.IsNull() {
 		*timeWindow = r.Configuration.TimeWindow.ValueInt64()
@@ -62,11 +62,11 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionCr
 	configuration := shared.SourcePaypalTransaction{
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		StartDate:        startDate,
 		DisputeStartDate: disputeStartDate,
 		EndDate:          endDate,
 		IsSandbox:        isSandbox,
 		RefreshToken:     refreshToken,
+		StartDate:        startDate,
 		TimeWindow:       timeWindow,
 	}
 	secretID := new(string)
@@ -145,7 +145,6 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPu
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	disputeStartDate := new(time.Time)
 	if !r.Configuration.DisputeStartDate.IsUnknown() && !r.Configuration.DisputeStartDate.IsNull() {
 		*disputeStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.DisputeStartDate.ValueString())
@@ -170,6 +169,7 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPu
 	} else {
 		refreshToken = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	timeWindow := new(int64)
 	if !r.Configuration.TimeWindow.IsUnknown() && !r.Configuration.TimeWindow.IsNull() {
 		*timeWindow = r.Configuration.TimeWindow.ValueInt64()
@@ -179,11 +179,11 @@ func (r *SourcePaypalTransactionResourceModel) ToSharedSourcePaypalTransactionPu
 	configuration := shared.SourcePaypalTransactionUpdate{
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		StartDate:        startDate,
 		DisputeStartDate: disputeStartDate,
 		EndDate:          endDate,
 		IsSandbox:        isSandbox,
 		RefreshToken:     refreshToken,
+		StartDate:        startDate,
 		TimeWindow:       timeWindow,
 	}
 	out := shared.SourcePaypalTransactionPutRequest{

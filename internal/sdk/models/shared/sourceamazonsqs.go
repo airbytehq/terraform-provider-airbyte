@@ -179,25 +179,25 @@ func (e *AmazonSqs) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAmazonSqs struct {
-	// URL of the SQS Queue
-	QueueURL string `json:"queue_url"`
-	// AWS Region of the SQS Queue
-	Region *SourceAmazonSqsAWSRegion `default:"us-east-1" json:"region"`
+	// The Access Key ID of the AWS IAM Role to use for pulling messages
+	AccessKey string `json:"access_key"`
+	// Comma separated list of Mesage Attribute names to return
+	AttributesToReturn *string `default:"All" json:"attributes_to_return"`
 	// Max amount of messages to get in one batch (10 max)
 	MaxBatchSize *int64 `default:"10" json:"max_batch_size"`
 	// Max amount of time in seconds to wait for messages in a single poll (20 max)
 	MaxWaitTime *int64 `default:"20" json:"max_wait_time"`
-	// Comma separated list of Mesage Attribute names to return
-	AttributesToReturn *string `default:"All" json:"attributes_to_return"`
-	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
-	VisibilityTimeout *int64 `default:"20" json:"visibility_timeout"`
-	// The Access Key ID of the AWS IAM Role to use for pulling messages
-	AccessKey string `json:"access_key"`
+	// URL of the SQS Queue
+	QueueURL string `json:"queue_url"`
+	// AWS Region of the SQS Queue
+	Region *SourceAmazonSqsAWSRegion `default:"us-east-1" json:"region"`
 	// The Secret Key of the AWS IAM Role to use for pulling messages
 	SecretKey string `json:"secret_key"`
 	// Note - Different targets have different attribute enum requirements, please refer actions sections in https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/Welcome.html
-	Target     *TheTargetedActionResourceForTheFetch `default:"ReceiveMessage" json:"target"`
-	sourceType AmazonSqs                             `const:"amazon-sqs" json:"sourceType"`
+	Target *TheTargetedActionResourceForTheFetch `default:"ReceiveMessage" json:"target"`
+	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
+	VisibilityTimeout *int64    `default:"20" json:"visibility_timeout"`
+	sourceType        AmazonSqs `const:"amazon-sqs" json:"sourceType"`
 }
 
 func (s SourceAmazonSqs) MarshalJSON() ([]byte, error) {
@@ -211,18 +211,18 @@ func (s *SourceAmazonSqs) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAmazonSqs) GetQueueURL() string {
+func (o *SourceAmazonSqs) GetAccessKey() string {
 	if o == nil {
 		return ""
 	}
-	return o.QueueURL
+	return o.AccessKey
 }
 
-func (o *SourceAmazonSqs) GetRegion() *SourceAmazonSqsAWSRegion {
+func (o *SourceAmazonSqs) GetAttributesToReturn() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Region
+	return o.AttributesToReturn
 }
 
 func (o *SourceAmazonSqs) GetMaxBatchSize() *int64 {
@@ -239,25 +239,18 @@ func (o *SourceAmazonSqs) GetMaxWaitTime() *int64 {
 	return o.MaxWaitTime
 }
 
-func (o *SourceAmazonSqs) GetAttributesToReturn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AttributesToReturn
-}
-
-func (o *SourceAmazonSqs) GetVisibilityTimeout() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.VisibilityTimeout
-}
-
-func (o *SourceAmazonSqs) GetAccessKey() string {
+func (o *SourceAmazonSqs) GetQueueURL() string {
 	if o == nil {
 		return ""
 	}
-	return o.AccessKey
+	return o.QueueURL
+}
+
+func (o *SourceAmazonSqs) GetRegion() *SourceAmazonSqsAWSRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
 }
 
 func (o *SourceAmazonSqs) GetSecretKey() string {
@@ -272,6 +265,13 @@ func (o *SourceAmazonSqs) GetTarget() *TheTargetedActionResourceForTheFetch {
 		return nil
 	}
 	return o.Target
+}
+
+func (o *SourceAmazonSqs) GetVisibilityTimeout() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.VisibilityTimeout
 }
 
 func (o *SourceAmazonSqs) GetSourceType() AmazonSqs {

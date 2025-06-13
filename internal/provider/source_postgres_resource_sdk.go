@@ -22,47 +22,137 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
 	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var replicationMethod *shared.SourcePostgresUpdateMethod
+	if r.Configuration.ReplicationMethod != nil {
+		var readChangesUsingWriteAheadLogCDC *shared.ReadChangesUsingWriteAheadLogCDC
+		if r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC != nil {
+			heartbeatActionQuery := new(string)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
+				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
+			} else {
+				heartbeatActionQuery = nil
+			}
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
+			lsnCommitBehaviour := new(shared.LSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.LSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
+			} else {
+				lsnCommitBehaviour = nil
+			}
+			plugin := new(shared.Plugin)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
+				*plugin = shared.Plugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
+			} else {
+				plugin = nil
+			}
+			var publication string
+			publication = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
+
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
+			var replicationSlot string
+			replicationSlot = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
+
+			var additionalProperties interface{}
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			}
+			readChangesUsingWriteAheadLogCDC = &shared.ReadChangesUsingWriteAheadLogCDC{
+				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				LsnCommitBehaviour:               lsnCommitBehaviour,
+				Plugin:                           plugin,
+				Publication:                      publication,
+				QueueSize:                        queueSize,
+				ReplicationSlot:                  replicationSlot,
+				AdditionalProperties:             additionalProperties,
+			}
+		}
+		if readChangesUsingWriteAheadLogCDC != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				ReadChangesUsingWriteAheadLogCDC: readChangesUsingWriteAheadLogCDC,
+			}
+		}
+		var detectChangesWithXminSystemColumn *shared.DetectChangesWithXminSystemColumn
+		if r.Configuration.ReplicationMethod.DetectChangesWithXminSystemColumn != nil {
+			detectChangesWithXminSystemColumn = &shared.DetectChangesWithXminSystemColumn{}
+		}
+		if detectChangesWithXminSystemColumn != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				DetectChangesWithXminSystemColumn: detectChangesWithXminSystemColumn,
+			}
+		}
+		var sourcePostgresScanChangesWithUserDefinedCursor *shared.SourcePostgresScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+			sourcePostgresScanChangesWithUserDefinedCursor = &shared.SourcePostgresScanChangesWithUserDefinedCursor{}
+		}
+		if sourcePostgresScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				SourcePostgresScanChangesWithUserDefinedCursor: sourcePostgresScanChangesWithUserDefinedCursor,
+			}
+		}
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
 	var sslMode *shared.SSLModes
 	if r.Configuration.SslMode != nil {
 		var disable *shared.Disable
 		if r.Configuration.SslMode.Disable != nil {
-			var additionalProperties interface{}
+			var additionalProperties1 interface{}
 			if !r.Configuration.SslMode.Disable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Disable.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			disable = &shared.Disable{
-				AdditionalProperties: additionalProperties,
+				AdditionalProperties: additionalProperties1,
 			}
 		}
 		if disable != nil {
@@ -72,12 +162,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 		}
 		var allow *shared.Allow
 		if r.Configuration.SslMode.Allow != nil {
-			var additionalProperties1 interface{}
+			var additionalProperties2 interface{}
 			if !r.Configuration.SslMode.Allow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Allow.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties1)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
 			allow = &shared.Allow{
-				AdditionalProperties: additionalProperties1,
+				AdditionalProperties: additionalProperties2,
 			}
 		}
 		if allow != nil {
@@ -87,12 +177,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 		}
 		var prefer *shared.Prefer
 		if r.Configuration.SslMode.Prefer != nil {
-			var additionalProperties2 interface{}
+			var additionalProperties3 interface{}
 			if !r.Configuration.SslMode.Prefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Prefer.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties2)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties3)
 			}
 			prefer = &shared.Prefer{
-				AdditionalProperties: additionalProperties2,
+				AdditionalProperties: additionalProperties3,
 			}
 		}
 		if prefer != nil {
@@ -102,12 +192,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 		}
 		var require *shared.Require
 		if r.Configuration.SslMode.Require != nil {
-			var additionalProperties3 interface{}
+			var additionalProperties4 interface{}
 			if !r.Configuration.SslMode.Require.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Require.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties3)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
 			require = &shared.Require{
-				AdditionalProperties: additionalProperties3,
+				AdditionalProperties: additionalProperties4,
 			}
 		}
 		if require != nil {
@@ -138,16 +228,16 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			} else {
 				clientKeyPassword = nil
 			}
-			var additionalProperties4 interface{}
+			var additionalProperties5 interface{}
 			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties4)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
 			}
 			sourcePostgresVerifyCa = &shared.SourcePostgresVerifyCa{
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
-				AdditionalProperties: additionalProperties4,
+				AdditionalProperties: additionalProperties5,
 			}
 		}
 		if sourcePostgresVerifyCa != nil {
@@ -178,114 +268,21 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			} else {
 				clientKeyPassword1 = nil
 			}
-			var additionalProperties5 interface{}
+			var additionalProperties6 interface{}
 			if !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties5)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
 			}
 			verifyFull = &shared.VerifyFull{
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
-				AdditionalProperties: additionalProperties5,
+				AdditionalProperties: additionalProperties6,
 			}
 		}
 		if verifyFull != nil {
 			sslMode = &shared.SSLModes{
 				VerifyFull: verifyFull,
-			}
-		}
-	}
-	var replicationMethod *shared.SourcePostgresUpdateMethod
-	if r.Configuration.ReplicationMethod != nil {
-		var readChangesUsingWriteAheadLogCDC *shared.ReadChangesUsingWriteAheadLogCDC
-		if r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC != nil {
-			plugin := new(shared.Plugin)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
-				*plugin = shared.Plugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
-			} else {
-				plugin = nil
-			}
-			var replicationSlot string
-			replicationSlot = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
-
-			var publication string
-			publication = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
-
-			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
-			} else {
-				initialWaitingSeconds = nil
-			}
-			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
-			} else {
-				queueSize = nil
-			}
-			lsnCommitBehaviour := new(shared.LSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.LSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
-			} else {
-				lsnCommitBehaviour = nil
-			}
-			heartbeatActionQuery := new(string)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
-				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
-			} else {
-				heartbeatActionQuery = nil
-			}
-			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-				*invalidCdcCursorPositionBehavior = shared.SourcePostgresInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
-			} else {
-				invalidCdcCursorPositionBehavior = nil
-			}
-			initialLoadTimeoutHours := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
-				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
-			} else {
-				initialLoadTimeoutHours = nil
-			}
-			var additionalProperties6 interface{}
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties6)
-			}
-			readChangesUsingWriteAheadLogCDC = &shared.ReadChangesUsingWriteAheadLogCDC{
-				Plugin:                           plugin,
-				ReplicationSlot:                  replicationSlot,
-				Publication:                      publication,
-				InitialWaitingSeconds:            initialWaitingSeconds,
-				QueueSize:                        queueSize,
-				LsnCommitBehaviour:               lsnCommitBehaviour,
-				HeartbeatActionQuery:             heartbeatActionQuery,
-				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-				AdditionalProperties:             additionalProperties6,
-			}
-		}
-		if readChangesUsingWriteAheadLogCDC != nil {
-			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				ReadChangesUsingWriteAheadLogCDC: readChangesUsingWriteAheadLogCDC,
-			}
-		}
-		var detectChangesWithXminSystemColumn *shared.DetectChangesWithXminSystemColumn
-		if r.Configuration.ReplicationMethod.DetectChangesWithXminSystemColumn != nil {
-			detectChangesWithXminSystemColumn = &shared.DetectChangesWithXminSystemColumn{}
-		}
-		if detectChangesWithXminSystemColumn != nil {
-			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				DetectChangesWithXminSystemColumn: detectChangesWithXminSystemColumn,
-			}
-		}
-		var sourcePostgresScanChangesWithUserDefinedCursor *shared.SourcePostgresScanChangesWithUserDefinedCursor
-		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
-			sourcePostgresScanChangesWithUserDefinedCursor = &shared.SourcePostgresScanChangesWithUserDefinedCursor{}
-		}
-		if sourcePostgresScanChangesWithUserDefinedCursor != nil {
-			replicationMethod = &shared.SourcePostgresUpdateMethod{
-				SourcePostgresScanChangesWithUserDefinedCursor: sourcePostgresScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -302,6 +299,9 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 		}
 		var sourcePostgresSSHKeyAuthentication *shared.SourcePostgresSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -314,14 +314,11 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourcePostgresSSHKeyAuthentication = &shared.SourcePostgresSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourcePostgresSSHKeyAuthentication != nil {
@@ -359,17 +356,20 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresCreateRequest() *sha
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePostgres{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Schemas:           schemas,
-		Username:          username,
-		Password:          password,
+		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
-		SslMode:           sslMode,
+		Password:          password,
+		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Schemas:           schemas,
+		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -441,47 +441,137 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var database string
 	database = r.Configuration.Database.ValueString()
 
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
 
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
 	} else {
 		jdbcURLParams = nil
 	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var replicationMethod *shared.SourcePostgresUpdateUpdateMethod
+	if r.Configuration.ReplicationMethod != nil {
+		var sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC *shared.SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC
+		if r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC != nil {
+			heartbeatActionQuery := new(string)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
+				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
+			} else {
+				heartbeatActionQuery = nil
+			}
+			initialLoadTimeoutHours := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
+				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
+			} else {
+				initialLoadTimeoutHours = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
+				*invalidCdcCursorPositionBehavior = shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
+			} else {
+				invalidCdcCursorPositionBehavior = nil
+			}
+			lsnCommitBehaviour := new(shared.SourcePostgresUpdateLSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.SourcePostgresUpdateLSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
+			} else {
+				lsnCommitBehaviour = nil
+			}
+			plugin := new(shared.SourcePostgresUpdatePlugin)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
+				*plugin = shared.SourcePostgresUpdatePlugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
+			} else {
+				plugin = nil
+			}
+			var publication string
+			publication = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
+
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
+			var replicationSlot string
+			replicationSlot = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
+
+			var additionalProperties interface{}
+			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			}
+			sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC{
+				HeartbeatActionQuery:             heartbeatActionQuery,
+				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
+				InitialWaitingSeconds:            initialWaitingSeconds,
+				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
+				LsnCommitBehaviour:               lsnCommitBehaviour,
+				Plugin:                           plugin,
+				Publication:                      publication,
+				QueueSize:                        queueSize,
+				ReplicationSlot:                  replicationSlot,
+				AdditionalProperties:             additionalProperties,
+			}
+		}
+		if sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC: sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC,
+			}
+		}
+		var sourcePostgresUpdateDetectChangesWithXminSystemColumn *shared.SourcePostgresUpdateDetectChangesWithXminSystemColumn
+		if r.Configuration.ReplicationMethod.DetectChangesWithXminSystemColumn != nil {
+			sourcePostgresUpdateDetectChangesWithXminSystemColumn = &shared.SourcePostgresUpdateDetectChangesWithXminSystemColumn{}
+		}
+		if sourcePostgresUpdateDetectChangesWithXminSystemColumn != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateDetectChangesWithXminSystemColumn: sourcePostgresUpdateDetectChangesWithXminSystemColumn,
+			}
+		}
+		var sourcePostgresUpdateScanChangesWithUserDefinedCursor *shared.SourcePostgresUpdateScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
+			sourcePostgresUpdateScanChangesWithUserDefinedCursor = &shared.SourcePostgresUpdateScanChangesWithUserDefinedCursor{}
+		}
+		if sourcePostgresUpdateScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateScanChangesWithUserDefinedCursor: sourcePostgresUpdateScanChangesWithUserDefinedCursor,
+			}
+		}
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
 	var sslMode *shared.SourcePostgresUpdateSSLModes
 	if r.Configuration.SslMode != nil {
 		var sourcePostgresUpdateDisable *shared.SourcePostgresUpdateDisable
 		if r.Configuration.SslMode.Disable != nil {
-			var additionalProperties interface{}
+			var additionalProperties1 interface{}
 			if !r.Configuration.SslMode.Disable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Disable.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Disable.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			sourcePostgresUpdateDisable = &shared.SourcePostgresUpdateDisable{
-				AdditionalProperties: additionalProperties,
+				AdditionalProperties: additionalProperties1,
 			}
 		}
 		if sourcePostgresUpdateDisable != nil {
@@ -491,12 +581,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 		}
 		var sourcePostgresUpdateAllow *shared.SourcePostgresUpdateAllow
 		if r.Configuration.SslMode.Allow != nil {
-			var additionalProperties1 interface{}
+			var additionalProperties2 interface{}
 			if !r.Configuration.SslMode.Allow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Allow.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties1)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Allow.AdditionalProperties.ValueString()), &additionalProperties2)
 			}
 			sourcePostgresUpdateAllow = &shared.SourcePostgresUpdateAllow{
-				AdditionalProperties: additionalProperties1,
+				AdditionalProperties: additionalProperties2,
 			}
 		}
 		if sourcePostgresUpdateAllow != nil {
@@ -506,12 +596,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 		}
 		var sourcePostgresUpdatePrefer *shared.SourcePostgresUpdatePrefer
 		if r.Configuration.SslMode.Prefer != nil {
-			var additionalProperties2 interface{}
+			var additionalProperties3 interface{}
 			if !r.Configuration.SslMode.Prefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Prefer.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties2)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Prefer.AdditionalProperties.ValueString()), &additionalProperties3)
 			}
 			sourcePostgresUpdatePrefer = &shared.SourcePostgresUpdatePrefer{
-				AdditionalProperties: additionalProperties2,
+				AdditionalProperties: additionalProperties3,
 			}
 		}
 		if sourcePostgresUpdatePrefer != nil {
@@ -521,12 +611,12 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 		}
 		var sourcePostgresUpdateRequire *shared.SourcePostgresUpdateRequire
 		if r.Configuration.SslMode.Require != nil {
-			var additionalProperties3 interface{}
+			var additionalProperties4 interface{}
 			if !r.Configuration.SslMode.Require.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.Require.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties3)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.Require.AdditionalProperties.ValueString()), &additionalProperties4)
 			}
 			sourcePostgresUpdateRequire = &shared.SourcePostgresUpdateRequire{
-				AdditionalProperties: additionalProperties3,
+				AdditionalProperties: additionalProperties4,
 			}
 		}
 		if sourcePostgresUpdateRequire != nil {
@@ -557,16 +647,16 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			} else {
 				clientKeyPassword = nil
 			}
-			var additionalProperties4 interface{}
+			var additionalProperties5 interface{}
 			if !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyCa.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties4)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
 			}
 			sourcePostgresUpdateVerifyCa = &shared.SourcePostgresUpdateVerifyCa{
 				CaCertificate:        caCertificate,
 				ClientCertificate:    clientCertificate,
 				ClientKey:            clientKey,
 				ClientKeyPassword:    clientKeyPassword,
-				AdditionalProperties: additionalProperties4,
+				AdditionalProperties: additionalProperties5,
 			}
 		}
 		if sourcePostgresUpdateVerifyCa != nil {
@@ -597,114 +687,21 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			} else {
 				clientKeyPassword1 = nil
 			}
-			var additionalProperties5 interface{}
+			var additionalProperties6 interface{}
 			if !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.VerifyFull.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties5)
+				_ = json.Unmarshal([]byte(r.Configuration.SslMode.VerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
 			}
 			sourcePostgresUpdateVerifyFull = &shared.SourcePostgresUpdateVerifyFull{
 				CaCertificate:        caCertificate1,
 				ClientCertificate:    clientCertificate1,
 				ClientKey:            clientKey1,
 				ClientKeyPassword:    clientKeyPassword1,
-				AdditionalProperties: additionalProperties5,
+				AdditionalProperties: additionalProperties6,
 			}
 		}
 		if sourcePostgresUpdateVerifyFull != nil {
 			sslMode = &shared.SourcePostgresUpdateSSLModes{
 				SourcePostgresUpdateVerifyFull: sourcePostgresUpdateVerifyFull,
-			}
-		}
-	}
-	var replicationMethod *shared.SourcePostgresUpdateUpdateMethod
-	if r.Configuration.ReplicationMethod != nil {
-		var sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC *shared.SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC
-		if r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC != nil {
-			plugin := new(shared.SourcePostgresUpdatePlugin)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
-				*plugin = shared.SourcePostgresUpdatePlugin(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
-			} else {
-				plugin = nil
-			}
-			var replicationSlot string
-			replicationSlot = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
-
-			var publication string
-			publication = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
-
-			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
-			} else {
-				initialWaitingSeconds = nil
-			}
-			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
-			} else {
-				queueSize = nil
-			}
-			lsnCommitBehaviour := new(shared.SourcePostgresUpdateLSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourcePostgresUpdateLSNCommitBehaviour(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
-			} else {
-				lsnCommitBehaviour = nil
-			}
-			heartbeatActionQuery := new(string)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.IsNull() {
-				*heartbeatActionQuery = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.HeartbeatActionQuery.ValueString()
-			} else {
-				heartbeatActionQuery = nil
-			}
-			invalidCdcCursorPositionBehavior := new(shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.IsNull() {
-				*invalidCdcCursorPositionBehavior = shared.SourcePostgresUpdateInvalidCDCPositionBehaviorAdvanced(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InvalidCdcCursorPositionBehavior.ValueString())
-			} else {
-				invalidCdcCursorPositionBehavior = nil
-			}
-			initialLoadTimeoutHours := new(int64)
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.IsNull() {
-				*initialLoadTimeoutHours = r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.InitialLoadTimeoutHours.ValueInt64()
-			} else {
-				initialLoadTimeoutHours = nil
-			}
-			var additionalProperties6 interface{}
-			if !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.ReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties6)
-			}
-			sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC{
-				Plugin:                           plugin,
-				ReplicationSlot:                  replicationSlot,
-				Publication:                      publication,
-				InitialWaitingSeconds:            initialWaitingSeconds,
-				QueueSize:                        queueSize,
-				LsnCommitBehaviour:               lsnCommitBehaviour,
-				HeartbeatActionQuery:             heartbeatActionQuery,
-				InvalidCdcCursorPositionBehavior: invalidCdcCursorPositionBehavior,
-				InitialLoadTimeoutHours:          initialLoadTimeoutHours,
-				AdditionalProperties:             additionalProperties6,
-			}
-		}
-		if sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC != nil {
-			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
-				SourcePostgresUpdateReadChangesUsingWriteAheadLogCDC: sourcePostgresUpdateReadChangesUsingWriteAheadLogCDC,
-			}
-		}
-		var sourcePostgresUpdateDetectChangesWithXminSystemColumn *shared.SourcePostgresUpdateDetectChangesWithXminSystemColumn
-		if r.Configuration.ReplicationMethod.DetectChangesWithXminSystemColumn != nil {
-			sourcePostgresUpdateDetectChangesWithXminSystemColumn = &shared.SourcePostgresUpdateDetectChangesWithXminSystemColumn{}
-		}
-		if sourcePostgresUpdateDetectChangesWithXminSystemColumn != nil {
-			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
-				SourcePostgresUpdateDetectChangesWithXminSystemColumn: sourcePostgresUpdateDetectChangesWithXminSystemColumn,
-			}
-		}
-		var sourcePostgresUpdateScanChangesWithUserDefinedCursor *shared.SourcePostgresUpdateScanChangesWithUserDefinedCursor
-		if r.Configuration.ReplicationMethod.ScanChangesWithUserDefinedCursor != nil {
-			sourcePostgresUpdateScanChangesWithUserDefinedCursor = &shared.SourcePostgresUpdateScanChangesWithUserDefinedCursor{}
-		}
-		if sourcePostgresUpdateScanChangesWithUserDefinedCursor != nil {
-			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
-				SourcePostgresUpdateScanChangesWithUserDefinedCursor: sourcePostgresUpdateScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -721,6 +718,9 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 		}
 		var sourcePostgresUpdateSSHKeyAuthentication *shared.SourcePostgresUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -733,14 +733,11 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourcePostgresUpdateSSHKeyAuthentication = &shared.SourcePostgresUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourcePostgresUpdateSSHKeyAuthentication != nil {
@@ -778,17 +775,20 @@ func (r *SourcePostgresResourceModel) ToSharedSourcePostgresPutRequest() *shared
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePostgresUpdate{
-		Host:              host,
-		Port:              port,
 		Database:          database,
-		Schemas:           schemas,
-		Username:          username,
-		Password:          password,
+		Host:              host,
 		JdbcURLParams:     jdbcURLParams,
-		SslMode:           sslMode,
+		Password:          password,
+		Port:              port,
 		ReplicationMethod: replicationMethod,
+		Schemas:           schemas,
+		SslMode:           sslMode,
 		TunnelMethod:      tunnelMethod,
+		Username:          username,
 	}
 	out := shared.SourcePostgresPutRequest{
 		Name:          name,

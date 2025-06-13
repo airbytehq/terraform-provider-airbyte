@@ -22,11 +22,16 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tenantID := new(string)
-	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
-		*tenantID = r.Configuration.TenantID.ValueString()
-	} else {
-		tenantID = nil
+	var accountNames []shared.AccountNames = []shared.AccountNames{}
+	for _, accountNamesItem := range r.Configuration.AccountNames {
+		var name1 string
+		name1 = accountNamesItem.Name.ValueString()
+
+		operator := shared.Operator(accountNamesItem.Operator.ValueString())
+		accountNames = append(accountNames, shared.AccountNames{
+			Name:     name1,
+			Operator: operator,
+		})
 	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
@@ -37,68 +42,63 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsCreateRequest() *share
 	} else {
 		clientSecret = nil
 	}
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
-	var developerToken string
-	developerToken = r.Configuration.DeveloperToken.ValueString()
-
-	var accountNames []shared.AccountNames = []shared.AccountNames{}
-	for _, accountNamesItem := range r.Configuration.AccountNames {
-		operator := shared.Operator(accountNamesItem.Operator.ValueString())
-		var name1 string
-		name1 = accountNamesItem.Name.ValueString()
-
-		accountNames = append(accountNames, shared.AccountNames{
-			Operator: operator,
-			Name:     name1,
-		})
-	}
-	reportsStartDate := new(customTypes.Date)
-	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
-		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
-	} else {
-		reportsStartDate = nil
-	}
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
-	} else {
-		lookbackWindow = nil
-	}
 	var customReports []shared.CustomReportConfig = []shared.CustomReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
 		var name2 string
 		name2 = customReportsItem.Name.ValueString()
 
-		reportingObject := shared.ReportingDataObject(customReportsItem.ReportingObject.ValueString())
-		var reportColumns []string = []string{}
-		for _, reportColumnsItem := range customReportsItem.ReportColumns {
-			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
-		}
 		reportAggregation := new(string)
 		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
 			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
 		} else {
 			reportAggregation = nil
 		}
+		var reportColumns []string = []string{}
+		for _, reportColumnsItem := range customReportsItem.ReportColumns {
+			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
+		}
+		reportingObject := shared.ReportingDataObject(customReportsItem.ReportingObject.ValueString())
 		customReports = append(customReports, shared.CustomReportConfig{
 			Name:              name2,
-			ReportingObject:   reportingObject,
-			ReportColumns:     reportColumns,
 			ReportAggregation: reportAggregation,
+			ReportColumns:     reportColumns,
+			ReportingObject:   reportingObject,
 		})
 	}
+	var developerToken string
+	developerToken = r.Configuration.DeveloperToken.ValueString()
+
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	reportsStartDate := new(customTypes.Date)
+	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
+		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	} else {
+		reportsStartDate = nil
+	}
+	tenantID := new(string)
+	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
+		*tenantID = r.Configuration.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
 	configuration := shared.SourceBingAds{
-		TenantID:         tenantID,
+		AccountNames:     accountNames,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		RefreshToken:     refreshToken,
-		DeveloperToken:   developerToken,
-		AccountNames:     accountNames,
-		ReportsStartDate: reportsStartDate,
-		LookbackWindow:   lookbackWindow,
 		CustomReports:    customReports,
+		DeveloperToken:   developerToken,
+		LookbackWindow:   lookbackWindow,
+		RefreshToken:     refreshToken,
+		ReportsStartDate: reportsStartDate,
+		TenantID:         tenantID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -170,11 +170,16 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tenantID := new(string)
-	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
-		*tenantID = r.Configuration.TenantID.ValueString()
-	} else {
-		tenantID = nil
+	var accountNames []shared.SourceBingAdsUpdateAccountNames = []shared.SourceBingAdsUpdateAccountNames{}
+	for _, accountNamesItem := range r.Configuration.AccountNames {
+		var name1 string
+		name1 = accountNamesItem.Name.ValueString()
+
+		operator := shared.SourceBingAdsUpdateOperator(accountNamesItem.Operator.ValueString())
+		accountNames = append(accountNames, shared.SourceBingAdsUpdateAccountNames{
+			Name:     name1,
+			Operator: operator,
+		})
 	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
@@ -185,68 +190,63 @@ func (r *SourceBingAdsResourceModel) ToSharedSourceBingAdsPutRequest() *shared.S
 	} else {
 		clientSecret = nil
 	}
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
-	var developerToken string
-	developerToken = r.Configuration.DeveloperToken.ValueString()
-
-	var accountNames []shared.SourceBingAdsUpdateAccountNames = []shared.SourceBingAdsUpdateAccountNames{}
-	for _, accountNamesItem := range r.Configuration.AccountNames {
-		operator := shared.SourceBingAdsUpdateOperator(accountNamesItem.Operator.ValueString())
-		var name1 string
-		name1 = accountNamesItem.Name.ValueString()
-
-		accountNames = append(accountNames, shared.SourceBingAdsUpdateAccountNames{
-			Operator: operator,
-			Name:     name1,
-		})
-	}
-	reportsStartDate := new(customTypes.Date)
-	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
-		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
-	} else {
-		reportsStartDate = nil
-	}
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
-	} else {
-		lookbackWindow = nil
-	}
 	var customReports []shared.SourceBingAdsUpdateCustomReportConfig = []shared.SourceBingAdsUpdateCustomReportConfig{}
 	for _, customReportsItem := range r.Configuration.CustomReports {
 		var name2 string
 		name2 = customReportsItem.Name.ValueString()
 
-		reportingObject := shared.SourceBingAdsUpdateReportingDataObject(customReportsItem.ReportingObject.ValueString())
-		var reportColumns []string = []string{}
-		for _, reportColumnsItem := range customReportsItem.ReportColumns {
-			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
-		}
 		reportAggregation := new(string)
 		if !customReportsItem.ReportAggregation.IsUnknown() && !customReportsItem.ReportAggregation.IsNull() {
 			*reportAggregation = customReportsItem.ReportAggregation.ValueString()
 		} else {
 			reportAggregation = nil
 		}
+		var reportColumns []string = []string{}
+		for _, reportColumnsItem := range customReportsItem.ReportColumns {
+			reportColumns = append(reportColumns, reportColumnsItem.ValueString())
+		}
+		reportingObject := shared.SourceBingAdsUpdateReportingDataObject(customReportsItem.ReportingObject.ValueString())
 		customReports = append(customReports, shared.SourceBingAdsUpdateCustomReportConfig{
 			Name:              name2,
-			ReportingObject:   reportingObject,
-			ReportColumns:     reportColumns,
 			ReportAggregation: reportAggregation,
+			ReportColumns:     reportColumns,
+			ReportingObject:   reportingObject,
 		})
 	}
+	var developerToken string
+	developerToken = r.Configuration.DeveloperToken.ValueString()
+
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	reportsStartDate := new(customTypes.Date)
+	if !r.Configuration.ReportsStartDate.IsUnknown() && !r.Configuration.ReportsStartDate.IsNull() {
+		reportsStartDate = customTypes.MustNewDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	} else {
+		reportsStartDate = nil
+	}
+	tenantID := new(string)
+	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
+		*tenantID = r.Configuration.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
 	configuration := shared.SourceBingAdsUpdate{
-		TenantID:         tenantID,
+		AccountNames:     accountNames,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		RefreshToken:     refreshToken,
-		DeveloperToken:   developerToken,
-		AccountNames:     accountNames,
-		ReportsStartDate: reportsStartDate,
-		LookbackWindow:   lookbackWindow,
 		CustomReports:    customReports,
+		DeveloperToken:   developerToken,
+		LookbackWindow:   lookbackWindow,
+		RefreshToken:     refreshToken,
+		ReportsStartDate: reportsStartDate,
+		TenantID:         tenantID,
 	}
 	out := shared.SourceBingAdsPutRequest{
 		Name:          name,

@@ -32,10 +32,10 @@ func (e *Convex) UnmarshalJSON(data []byte) error {
 }
 
 type SourceConvex struct {
-	DeploymentURL string `json:"deployment_url"`
 	// API access key used to retrieve data from Convex.
-	AccessKey  string `json:"access_key"`
-	sourceType Convex `const:"convex" json:"sourceType"`
+	AccessKey     string `json:"access_key"`
+	DeploymentURL string `json:"deployment_url"`
+	sourceType    Convex `const:"convex" json:"sourceType"`
 }
 
 func (s SourceConvex) MarshalJSON() ([]byte, error) {
@@ -49,18 +49,18 @@ func (s *SourceConvex) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceConvex) GetDeploymentURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentURL
-}
-
 func (o *SourceConvex) GetAccessKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessKey
+}
+
+func (o *SourceConvex) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
 }
 
 func (o *SourceConvex) GetSourceType() Convex {

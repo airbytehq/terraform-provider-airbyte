@@ -4,10 +4,10 @@ package shared
 
 type SourceEmploymentHeroUpdate struct {
 	APIKey string `json:"api_key"`
-	// Organization ID which could be found as result of `organizations` stream to be used in other substreams
-	OrganizationConfigids []any `json:"organization_configids,omitempty"`
 	// Employees IDs in the given organisation found in `employees` stream for passing to sub-streams
 	EmployeesConfigids []any `json:"employees_configids,omitempty"`
+	// Organization ID which could be found as result of `organizations` stream to be used in other substreams
+	OrganizationConfigids []any `json:"organization_configids,omitempty"`
 }
 
 func (o *SourceEmploymentHeroUpdate) GetAPIKey() string {
@@ -17,16 +17,16 @@ func (o *SourceEmploymentHeroUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceEmploymentHeroUpdate) GetOrganizationConfigids() []any {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationConfigids
-}
-
 func (o *SourceEmploymentHeroUpdate) GetEmployeesConfigids() []any {
 	if o == nil {
 		return nil
 	}
 	return o.EmployeesConfigids
+}
+
+func (o *SourceEmploymentHeroUpdate) GetOrganizationConfigids() []any {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationConfigids
 }

@@ -21,18 +21,18 @@ func (r *SourceGetlagoResourceModel) ToSharedSourceGetlagoCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
 	} else {
 		apiURL = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	configuration := shared.SourceGetlago{
-		APIURL: apiURL,
 		APIKey: apiKey,
+		APIURL: apiURL,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,18 +104,18 @@ func (r *SourceGetlagoResourceModel) ToSharedSourceGetlagoPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	apiURL := new(string)
 	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
 		*apiURL = r.Configuration.APIURL.ValueString()
 	} else {
 		apiURL = nil
 	}
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	configuration := shared.SourceGetlagoUpdate{
-		APIURL: apiURL,
 		APIKey: apiKey,
+		APIURL: apiURL,
 	}
 	out := shared.SourceGetlagoPutRequest{
 		Name:          name,

@@ -21,6 +21,16 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var corpusName string
+	corpusName = r.Configuration.CorpusName.ValueString()
+
+	var customerID string
+	customerID = r.Configuration.CustomerID.ValueString()
+
+	var metadataFields []string = []string{}
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
+	}
 	var clientID string
 	clientID = r.Configuration.Oauth2.ClientID.ValueString()
 
@@ -31,12 +41,6 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateReques
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 	}
-	var customerID string
-	customerID = r.Configuration.CustomerID.ValueString()
-
-	var corpusName string
-	corpusName = r.Configuration.CorpusName.ValueString()
-
 	parallelize := new(bool)
 	if !r.Configuration.Parallelize.IsUnknown() && !r.Configuration.Parallelize.IsNull() {
 		*parallelize = r.Configuration.Parallelize.ValueBool()
@@ -53,18 +57,14 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraCreateReques
 	} else {
 		titleField = nil
 	}
-	var metadataFields []string = []string{}
-	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
-		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
-	}
 	configuration := shared.DestinationVectara{
-		Oauth2:         oauth2,
-		CustomerID:     customerID,
 		CorpusName:     corpusName,
+		CustomerID:     customerID,
+		MetadataFields: metadataFields,
+		Oauth2:         oauth2,
 		Parallelize:    parallelize,
 		TextFields:     textFields,
 		TitleField:     titleField,
-		MetadataFields: metadataFields,
 	}
 	out := shared.DestinationVectaraCreateRequest{
 		Name:          name,
@@ -129,6 +129,16 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraPutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var corpusName string
+	corpusName = r.Configuration.CorpusName.ValueString()
+
+	var customerID string
+	customerID = r.Configuration.CustomerID.ValueString()
+
+	var metadataFields []string = []string{}
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
+	}
 	var clientID string
 	clientID = r.Configuration.Oauth2.ClientID.ValueString()
 
@@ -139,12 +149,6 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraPutRequest()
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 	}
-	var customerID string
-	customerID = r.Configuration.CustomerID.ValueString()
-
-	var corpusName string
-	corpusName = r.Configuration.CorpusName.ValueString()
-
 	parallelize := new(bool)
 	if !r.Configuration.Parallelize.IsUnknown() && !r.Configuration.Parallelize.IsNull() {
 		*parallelize = r.Configuration.Parallelize.ValueBool()
@@ -161,18 +165,14 @@ func (r *DestinationVectaraResourceModel) ToSharedDestinationVectaraPutRequest()
 	} else {
 		titleField = nil
 	}
-	var metadataFields []string = []string{}
-	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
-		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
-	}
 	configuration := shared.DestinationVectaraUpdate{
-		Oauth2:         oauth2,
-		CustomerID:     customerID,
 		CorpusName:     corpusName,
+		CustomerID:     customerID,
+		MetadataFields: metadataFields,
+		Oauth2:         oauth2,
 		Parallelize:    parallelize,
 		TextFields:     textFields,
 		TitleField:     titleField,
-		MetadataFields: metadataFields,
 	}
 	out := shared.DestinationVectaraPutRequest{
 		Name:          name,

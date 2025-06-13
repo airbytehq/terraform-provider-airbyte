@@ -27,24 +27,24 @@ func (r *SourceZohoDeskResourceModel) ToSharedSourceZohoDeskCreateRequest() *sha
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var tokenRefreshEndpoint string
-	tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
-
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	includeCustomDomain := new(bool)
 	if !r.Configuration.IncludeCustomDomain.IsUnknown() && !r.Configuration.IncludeCustomDomain.IsNull() {
 		*includeCustomDomain = r.Configuration.IncludeCustomDomain.ValueBool()
 	} else {
 		includeCustomDomain = nil
 	}
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	var tokenRefreshEndpoint string
+	tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
+
 	configuration := shared.SourceZohoDesk{
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		TokenRefreshEndpoint: tokenRefreshEndpoint,
-		RefreshToken:         refreshToken,
 		IncludeCustomDomain:  includeCustomDomain,
+		RefreshToken:         refreshToken,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -122,24 +122,24 @@ func (r *SourceZohoDeskResourceModel) ToSharedSourceZohoDeskPutRequest() *shared
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var tokenRefreshEndpoint string
-	tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
-
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	includeCustomDomain := new(bool)
 	if !r.Configuration.IncludeCustomDomain.IsUnknown() && !r.Configuration.IncludeCustomDomain.IsNull() {
 		*includeCustomDomain = r.Configuration.IncludeCustomDomain.ValueBool()
 	} else {
 		includeCustomDomain = nil
 	}
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
+	var tokenRefreshEndpoint string
+	tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
+
 	configuration := shared.SourceZohoDeskUpdate{
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		TokenRefreshEndpoint: tokenRefreshEndpoint,
-		RefreshToken:         refreshToken,
 		IncludeCustomDomain:  includeCustomDomain,
+		RefreshToken:         refreshToken,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
 	}
 	out := shared.SourceZohoDeskPutRequest{
 		Name:          name,

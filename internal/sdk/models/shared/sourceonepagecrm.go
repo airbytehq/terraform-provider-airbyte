@@ -32,10 +32,10 @@ func (e *Onepagecrm) UnmarshalJSON(data []byte) error {
 }
 
 type SourceOnepagecrm struct {
-	// Enter the user ID of your API app
-	Username string `json:"username"`
 	// Enter your API Key of your API app
-	Password   *string    `json:"password,omitempty"`
+	Password *string `json:"password,omitempty"`
+	// Enter the user ID of your API app
+	Username   string     `json:"username"`
 	sourceType Onepagecrm `const:"onepagecrm" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceOnepagecrm) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOnepagecrm) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceOnepagecrm) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceOnepagecrm) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceOnepagecrm) GetSourceType() Onepagecrm {

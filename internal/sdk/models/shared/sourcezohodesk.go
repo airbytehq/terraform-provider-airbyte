@@ -34,9 +34,9 @@ func (e *ZohoDesk) UnmarshalJSON(data []byte) error {
 type SourceZohoDesk struct {
 	ClientID             string   `json:"client_id"`
 	ClientSecret         string   `json:"client_secret"`
-	TokenRefreshEndpoint string   `json:"token_refresh_endpoint"`
-	RefreshToken         string   `json:"refresh_token"`
 	IncludeCustomDomain  *bool    `json:"include_custom_domain,omitempty"`
+	RefreshToken         string   `json:"refresh_token"`
+	TokenRefreshEndpoint string   `json:"token_refresh_endpoint"`
 	sourceType           ZohoDesk `const:"zoho-desk" json:"sourceType"`
 }
 
@@ -65,11 +65,11 @@ func (o *SourceZohoDesk) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceZohoDesk) GetTokenRefreshEndpoint() string {
+func (o *SourceZohoDesk) GetIncludeCustomDomain() *bool {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.TokenRefreshEndpoint
+	return o.IncludeCustomDomain
 }
 
 func (o *SourceZohoDesk) GetRefreshToken() string {
@@ -79,11 +79,11 @@ func (o *SourceZohoDesk) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceZohoDesk) GetIncludeCustomDomain() *bool {
+func (o *SourceZohoDesk) GetTokenRefreshEndpoint() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.IncludeCustomDomain
+	return o.TokenRefreshEndpoint
 }
 
 func (o *SourceZohoDesk) GetSourceType() ZohoDesk {

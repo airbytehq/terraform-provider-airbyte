@@ -8,11 +8,11 @@ import (
 )
 
 type SourceDingConnectUpdate struct {
-	// Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
-	APIKey string `json:"api_key"`
 	// Optional header to correlate HTTP requests between a client and server.
-	XCorrelationID *string   `json:"X-Correlation-Id,omitempty"`
-	StartDate      time.Time `json:"start_date"`
+	XCorrelationID *string `json:"X-Correlation-Id,omitempty"`
+	// Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
+	APIKey    string    `json:"api_key"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceDingConnectUpdate) MarshalJSON() ([]byte, error) {
@@ -26,18 +26,18 @@ func (s *SourceDingConnectUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDingConnectUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceDingConnectUpdate) GetXCorrelationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.XCorrelationID
+}
+
+func (o *SourceDingConnectUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceDingConnectUpdate) GetStartDate() time.Time {

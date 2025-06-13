@@ -207,23 +207,23 @@ func (e *Databricks) UnmarshalJSON(data []byte) error {
 type DestinationDatabricks struct {
 	// You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
 	AcceptTerms *bool `default:"false" json:"accept_terms"`
+	// Authentication mechanism for Staging files and running queries
+	Authentication DestinationDatabricksAuthentication `json:"authentication"`
+	// The name of the unity catalog for the database
+	Database string `json:"database"`
 	// Databricks Cluster Server Hostname.
 	Hostname string `json:"hostname"`
 	// Databricks Cluster HTTP Path.
 	HTTPPath string `json:"http_path"`
 	// Databricks Cluster Port.
 	Port *string `default:"443" json:"port"`
-	// The name of the unity catalog for the database
-	Database string `json:"database"`
-	// The default schema tables are written. If not specified otherwise, the "default" will be used.
-	Schema *string `default:"default" json:"schema"`
-	// Authentication mechanism for Staging files and running queries
-	Authentication DestinationDatabricksAuthentication `json:"authentication"`
 	// Default to 'true'. Switch it to 'false' for debugging purpose.
 	PurgeStagingData *bool `default:"true" json:"purge_staging_data"`
 	// The schema to write raw tables into (default: airbyte_internal)
-	RawSchemaOverride *string    `default:"airbyte_internal" json:"raw_schema_override"`
-	destinationType   Databricks `const:"databricks" json:"destinationType"`
+	RawSchemaOverride *string `default:"airbyte_internal" json:"raw_schema_override"`
+	// The default schema tables are written. If not specified otherwise, the "default" will be used.
+	Schema          *string    `default:"default" json:"schema"`
+	destinationType Databricks `const:"databricks" json:"destinationType"`
 }
 
 func (d DestinationDatabricks) MarshalJSON() ([]byte, error) {
@@ -242,6 +242,20 @@ func (o *DestinationDatabricks) GetAcceptTerms() *bool {
 		return nil
 	}
 	return o.AcceptTerms
+}
+
+func (o *DestinationDatabricks) GetAuthentication() DestinationDatabricksAuthentication {
+	if o == nil {
+		return DestinationDatabricksAuthentication{}
+	}
+	return o.Authentication
+}
+
+func (o *DestinationDatabricks) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
 }
 
 func (o *DestinationDatabricks) GetHostname() string {
@@ -265,27 +279,6 @@ func (o *DestinationDatabricks) GetPort() *string {
 	return o.Port
 }
 
-func (o *DestinationDatabricks) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
-func (o *DestinationDatabricks) GetSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Schema
-}
-
-func (o *DestinationDatabricks) GetAuthentication() DestinationDatabricksAuthentication {
-	if o == nil {
-		return DestinationDatabricksAuthentication{}
-	}
-	return o.Authentication
-}
-
 func (o *DestinationDatabricks) GetPurgeStagingData() *bool {
 	if o == nil {
 		return nil
@@ -298,6 +291,13 @@ func (o *DestinationDatabricks) GetRawSchemaOverride() *string {
 		return nil
 	}
 	return o.RawSchemaOverride
+}
+
+func (o *DestinationDatabricks) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
 }
 
 func (o *DestinationDatabricks) GetDestinationType() Databricks {

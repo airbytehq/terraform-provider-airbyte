@@ -22,20 +22,20 @@ func (r *SourceFreshbooksResourceModel) ToSharedSourceFreshbooksCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var redirectURI string
-	redirectURI = r.Configuration.RedirectURI.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var businessUUID string
+	businessUUID = r.Configuration.BusinessUUID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
@@ -49,18 +49,18 @@ func (r *SourceFreshbooksResourceModel) ToSharedSourceFreshbooksCreateRequest() 
 	} else {
 		oauthTokenExpiryDate = nil
 	}
-	var businessUUID string
-	businessUUID = r.Configuration.BusinessUUID.ValueString()
+	var redirectURI string
+	redirectURI = r.Configuration.RedirectURI.ValueString()
 
 	configuration := shared.SourceFreshbooks{
-		ClientID:             clientID,
-		ClientSecret:         clientSecret,
-		RedirectURI:          redirectURI,
 		AccountID:            accountID,
+		BusinessUUID:         businessUUID,
+		ClientID:             clientID,
 		ClientRefreshToken:   clientRefreshToken,
+		ClientSecret:         clientSecret,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
-		BusinessUUID:         businessUUID,
+		RedirectURI:          redirectURI,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -132,20 +132,20 @@ func (r *SourceFreshbooksResourceModel) ToSharedSourceFreshbooksPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var redirectURI string
-	redirectURI = r.Configuration.RedirectURI.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var businessUUID string
+	businessUUID = r.Configuration.BusinessUUID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
@@ -159,18 +159,18 @@ func (r *SourceFreshbooksResourceModel) ToSharedSourceFreshbooksPutRequest() *sh
 	} else {
 		oauthTokenExpiryDate = nil
 	}
-	var businessUUID string
-	businessUUID = r.Configuration.BusinessUUID.ValueString()
+	var redirectURI string
+	redirectURI = r.Configuration.RedirectURI.ValueString()
 
 	configuration := shared.SourceFreshbooksUpdate{
-		ClientID:             clientID,
-		ClientSecret:         clientSecret,
-		RedirectURI:          redirectURI,
 		AccountID:            accountID,
+		BusinessUUID:         businessUUID,
+		ClientID:             clientID,
 		ClientRefreshToken:   clientRefreshToken,
+		ClientSecret:         clientSecret,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
-		BusinessUUID:         businessUUID,
+		RedirectURI:          redirectURI,
 	}
 	out := shared.SourceFreshbooksPutRequest{
 		Name:          name,

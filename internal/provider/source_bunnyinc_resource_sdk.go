@@ -25,19 +25,19 @@ func (r *SourceBunnyIncResourceModel) ToSharedSourceBunnyIncCreateRequest() *sha
 	var apikey string
 	apikey = r.Configuration.Apikey.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceBunnyInc{
 		Apikey:    apikey,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -112,19 +112,19 @@ func (r *SourceBunnyIncResourceModel) ToSharedSourceBunnyIncPutRequest() *shared
 	var apikey string
 	apikey = r.Configuration.Apikey.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceBunnyIncUpdate{
 		Apikey:    apikey,
-		Subdomain: subdomain,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	out := shared.SourceBunnyIncPutRequest{
 		Name:          name,

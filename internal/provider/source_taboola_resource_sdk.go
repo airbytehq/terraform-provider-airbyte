@@ -21,18 +21,18 @@ func (r *SourceTaboolaResourceModel) ToSharedSourceTaboolaCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	configuration := shared.SourceTaboola{
-		ClientID:     clientID,
 		AccountID:    accountID,
+		ClientID:     clientID,
 		ClientSecret: clientSecret,
 	}
 	secretID := new(string)
@@ -105,18 +105,18 @@ func (r *SourceTaboolaResourceModel) ToSharedSourceTaboolaPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
+
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	configuration := shared.SourceTaboolaUpdate{
-		ClientID:     clientID,
 		AccountID:    accountID,
+		ClientID:     clientID,
 		ClientSecret: clientSecret,
 	}
 	out := shared.SourceTaboolaPutRequest{

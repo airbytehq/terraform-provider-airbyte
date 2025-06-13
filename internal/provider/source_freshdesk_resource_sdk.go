@@ -28,6 +28,12 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskCreateRequest() *s
 	var domain string
 	domain = r.Configuration.Domain.ValueString()
 
+	lookbackWindowInDays := new(int64)
+	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
+		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
+	} else {
+		lookbackWindowInDays = nil
+	}
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
 		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
@@ -40,18 +46,12 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskCreateRequest() *s
 	} else {
 		startDate = nil
 	}
-	lookbackWindowInDays := new(int64)
-	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
-		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
-	} else {
-		lookbackWindowInDays = nil
-	}
 	configuration := shared.SourceFreshdesk{
 		APIKey:               apiKey,
 		Domain:               domain,
+		LookbackWindowInDays: lookbackWindowInDays,
 		RequestsPerMinute:    requestsPerMinute,
 		StartDate:            startDate,
-		LookbackWindowInDays: lookbackWindowInDays,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -129,6 +129,12 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskPutRequest() *shar
 	var domain string
 	domain = r.Configuration.Domain.ValueString()
 
+	lookbackWindowInDays := new(int64)
+	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
+		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
+	} else {
+		lookbackWindowInDays = nil
+	}
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
 		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
@@ -141,18 +147,12 @@ func (r *SourceFreshdeskResourceModel) ToSharedSourceFreshdeskPutRequest() *shar
 	} else {
 		startDate = nil
 	}
-	lookbackWindowInDays := new(int64)
-	if !r.Configuration.LookbackWindowInDays.IsUnknown() && !r.Configuration.LookbackWindowInDays.IsNull() {
-		*lookbackWindowInDays = r.Configuration.LookbackWindowInDays.ValueInt64()
-	} else {
-		lookbackWindowInDays = nil
-	}
 	configuration := shared.SourceFreshdeskUpdate{
 		APIKey:               apiKey,
 		Domain:               domain,
+		LookbackWindowInDays: lookbackWindowInDays,
 		RequestsPerMinute:    requestsPerMinute,
 		StartDate:            startDate,
-		LookbackWindowInDays: lookbackWindowInDays,
 	}
 	out := shared.SourceFreshdeskPutRequest{
 		Name:          name,

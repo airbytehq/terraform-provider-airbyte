@@ -13,11 +13,14 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/models/operations"
 	"github.com/airbytehq/terraform-provider-airbyte/internal/validators"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -66,6 +69,12 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 					speakeasy_objectplanmodifier.SuppressDiff(speakeasy_objectplanmodifier.ExplicitSuppress),
 				},
 				Attributes: map[string]schema.Attribute{
+					"always_use_aggregation_type_auto": schema.BoolAttribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     booldefault.StaticBool(false),
+						Description: `Some search analytics streams fail with a 400 error if the specified ` + "`" + `aggregationType` + "`" + ` is not supported. This is customer implementation dependent and if this error is encountered, enable this setting which will override the existing ` + "`" + `aggregationType` + "`" + ` to use ` + "`" + `auto` + "`" + ` which should resolve the stream errors. Default: false`,
+					},
 					"authorization": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
@@ -154,6 +163,15 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.`,
 						Validators: []validator.String{
 							validators.IsValidDate(),
+						},
+					},
+					"num_workers": schema.Int64Attribute{
+						Computed:    true,
+						Optional:    true,
+						Default:     int64default.StaticInt64(40),
+						Description: `The number of worker threads to use for the sync. For more details on Google Search Console rate limits, refer to the <a href="https://developers.google.com/webmaster-tools/limits">docs</a>. Default: 40`,
+						Validators: []validator.Int64{
+							int64validator.Between(2, 100),
 						},
 					},
 					"site_urls": schema.ListAttribute{

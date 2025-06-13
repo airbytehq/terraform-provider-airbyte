@@ -62,14 +62,14 @@ func (e *Klarna) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKlarna struct {
-	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
-	Region SourceKlarnaRegion `json:"region"`
+	// A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
+	Password string `json:"password"`
 	// Propertie defining if connector is used against playground or production environment
 	Playground *bool `default:"false" json:"playground"`
+	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
+	Region SourceKlarnaRegion `json:"region"`
 	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
-	Username string `json:"username"`
-	// A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
-	Password   string `json:"password"`
+	Username   string `json:"username"`
 	sourceType Klarna `const:"klarna" json:"sourceType"`
 }
 
@@ -84,11 +84,11 @@ func (s *SourceKlarna) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceKlarna) GetRegion() SourceKlarnaRegion {
+func (o *SourceKlarna) GetPassword() string {
 	if o == nil {
-		return SourceKlarnaRegion("")
+		return ""
 	}
-	return o.Region
+	return o.Password
 }
 
 func (o *SourceKlarna) GetPlayground() *bool {
@@ -98,18 +98,18 @@ func (o *SourceKlarna) GetPlayground() *bool {
 	return o.Playground
 }
 
+func (o *SourceKlarna) GetRegion() SourceKlarnaRegion {
+	if o == nil {
+		return SourceKlarnaRegion("")
+	}
+	return o.Region
+}
+
 func (o *SourceKlarna) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *SourceKlarna) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
 }
 
 func (o *SourceKlarna) GetSourceType() Klarna {

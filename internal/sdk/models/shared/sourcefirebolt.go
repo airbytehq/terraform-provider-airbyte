@@ -32,18 +32,18 @@ func (e *Firebolt) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFirebolt struct {
+	// Firebolt account to login.
+	Account string `json:"account"`
 	// Firebolt service account ID.
 	ClientID string `json:"client_id"`
 	// Firebolt secret, corresponding to the service account ID.
 	ClientSecret string `json:"client_secret"`
-	// Firebolt account to login.
-	Account string `json:"account"`
-	// The host name of your Firebolt database.
-	Host *string `json:"host,omitempty"`
 	// The database to connect to.
 	Database string `json:"database"`
 	// Engine name to connect to.
-	Engine     string   `json:"engine"`
+	Engine string `json:"engine"`
+	// The host name of your Firebolt database.
+	Host       *string  `json:"host,omitempty"`
 	sourceType Firebolt `const:"firebolt" json:"sourceType"`
 }
 
@@ -56,6 +56,13 @@ func (s *SourceFirebolt) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceFirebolt) GetAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.Account
 }
 
 func (o *SourceFirebolt) GetClientID() string {
@@ -72,20 +79,6 @@ func (o *SourceFirebolt) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceFirebolt) GetAccount() string {
-	if o == nil {
-		return ""
-	}
-	return o.Account
-}
-
-func (o *SourceFirebolt) GetHost() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Host
-}
-
 func (o *SourceFirebolt) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -98,6 +91,13 @@ func (o *SourceFirebolt) GetEngine() string {
 		return ""
 	}
 	return o.Engine
+}
+
+func (o *SourceFirebolt) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
 }
 
 func (o *SourceFirebolt) GetSourceType() Firebolt {

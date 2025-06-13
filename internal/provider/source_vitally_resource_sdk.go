@@ -21,24 +21,24 @@ func (r *SourceVitallyResourceModel) ToSharedSourceVitallyCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
-	status := shared.SourceVitallyStatus(r.Configuration.Status.ValueString())
-	var secretToken string
-	secretToken = r.Configuration.SecretToken.ValueString()
-
 	basicAuthHeader := new(string)
 	if !r.Configuration.BasicAuthHeader.IsUnknown() && !r.Configuration.BasicAuthHeader.IsNull() {
 		*basicAuthHeader = r.Configuration.BasicAuthHeader.ValueString()
 	} else {
 		basicAuthHeader = nil
 	}
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
+
+	var secretToken string
+	secretToken = r.Configuration.SecretToken.ValueString()
+
+	status := shared.SourceVitallyStatus(r.Configuration.Status.ValueString())
 	configuration := shared.SourceVitally{
-		Domain:          domain,
-		Status:          status,
-		SecretToken:     secretToken,
 		BasicAuthHeader: basicAuthHeader,
+		Domain:          domain,
+		SecretToken:     secretToken,
+		Status:          status,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,24 +110,24 @@ func (r *SourceVitallyResourceModel) ToSharedSourceVitallyPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
-	status := shared.SourceVitallyUpdateStatus(r.Configuration.Status.ValueString())
-	var secretToken string
-	secretToken = r.Configuration.SecretToken.ValueString()
-
 	basicAuthHeader := new(string)
 	if !r.Configuration.BasicAuthHeader.IsUnknown() && !r.Configuration.BasicAuthHeader.IsNull() {
 		*basicAuthHeader = r.Configuration.BasicAuthHeader.ValueString()
 	} else {
 		basicAuthHeader = nil
 	}
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
+
+	var secretToken string
+	secretToken = r.Configuration.SecretToken.ValueString()
+
+	status := shared.SourceVitallyUpdateStatus(r.Configuration.Status.ValueString())
 	configuration := shared.SourceVitallyUpdate{
-		Domain:          domain,
-		Status:          status,
-		SecretToken:     secretToken,
 		BasicAuthHeader: basicAuthHeader,
+		Domain:          domain,
+		SecretToken:     secretToken,
+		Status:          status,
 	}
 	out := shared.SourceVitallyPutRequest{
 		Name:          name,

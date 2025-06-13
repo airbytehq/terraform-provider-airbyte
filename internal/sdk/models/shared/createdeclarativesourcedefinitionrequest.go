@@ -3,8 +3,7 @@
 package shared
 
 type CreateDeclarativeSourceDefinitionRequest struct {
-	Name    string `json:"name"`
-	Version *int64 `json:"version,omitempty"`
+	Name string `json:"name"`
 	// Low code CDK manifest JSON object
 	Manifest any `json:"manifest"`
 }
@@ -14,13 +13,6 @@ func (o *CreateDeclarativeSourceDefinitionRequest) GetName() string {
 		return ""
 	}
 	return o.Name
-}
-
-func (o *CreateDeclarativeSourceDefinitionRequest) GetVersion() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Version
 }
 
 func (o *CreateDeclarativeSourceDefinitionRequest) GetManifest() any {

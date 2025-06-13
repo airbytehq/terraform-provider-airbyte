@@ -5,12 +5,13 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type StreamConfiguration struct {
-	CursorField    []types.String           `tfsdk:"cursor_field"`
-	IncludeFiles   types.Bool               `tfsdk:"include_files"`
-	Mappers        []ConfiguredStreamMapper `tfsdk:"mappers"`
-	Name           types.String             `tfsdk:"name"`
-	Namespace      types.String             `tfsdk:"namespace"`
-	PrimaryKey     [][]types.String         `tfsdk:"primary_key"`
-	SelectedFields []SelectedFieldInfo      `tfsdk:"selected_fields"`
-	SyncMode       types.String             `tfsdk:"sync_mode"`
+	CursorField           []types.String           `tfsdk:"cursor_field"`
+	DestinationObjectName types.String             `tfsdk:"destination_object_name"`
+	IncludeFiles          types.Bool               `tfsdk:"include_files"`
+	Mappers               []ConfiguredStreamMapper `tfsdk:"mappers"`
+	Name                  types.String             `tfsdk:"name"`
+	Namespace             types.String             `tfsdk:"namespace"`
+	PrimaryKey            [][]types.String         `tfsdk:"primary_key"`
+	SelectedFields        []SelectedFieldInfo      `tfsdk:"selected_fields"`
+	SyncMode              types.String             `tfsdk:"sync_mode"`
 }

@@ -30,20 +30,20 @@ func (o *DestinationVectaraUpdateOAuth20Credentials) GetClientSecret() string {
 
 // DestinationVectaraUpdate - Configuration to connect to the Vectara instance
 type DestinationVectaraUpdate struct {
-	// OAuth2.0 credentials used to authenticate admin actions (creating/deleting corpora)
-	Oauth2 DestinationVectaraUpdateOAuth20Credentials `json:"oauth2"`
-	// Your customer id as it is in the authenticaion url
-	CustomerID string `json:"customer_id"`
 	// The Name of Corpus to load data into
 	CorpusName string `json:"corpus_name"`
+	// Your customer id as it is in the authenticaion url
+	CustomerID string `json:"customer_id"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// OAuth2.0 credentials used to authenticate admin actions (creating/deleting corpora)
+	Oauth2 DestinationVectaraUpdateOAuth20Credentials `json:"oauth2"`
 	// Parallelize indexing into Vectara with multiple threads
 	Parallelize *bool `default:"false" json:"parallelize"`
 	// List of fields in the record that should be in the section of the document. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
 	TextFields []string `json:"text_fields,omitempty"`
 	// A field that will be used to populate the `title` of each document. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
 	TitleField *string `default:"" json:"title_field"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
 }
 
 func (d DestinationVectaraUpdate) MarshalJSON() ([]byte, error) {
@@ -57,11 +57,11 @@ func (d *DestinationVectaraUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationVectaraUpdate) GetOauth2() DestinationVectaraUpdateOAuth20Credentials {
+func (o *DestinationVectaraUpdate) GetCorpusName() string {
 	if o == nil {
-		return DestinationVectaraUpdateOAuth20Credentials{}
+		return ""
 	}
-	return o.Oauth2
+	return o.CorpusName
 }
 
 func (o *DestinationVectaraUpdate) GetCustomerID() string {
@@ -71,11 +71,18 @@ func (o *DestinationVectaraUpdate) GetCustomerID() string {
 	return o.CustomerID
 }
 
-func (o *DestinationVectaraUpdate) GetCorpusName() string {
+func (o *DestinationVectaraUpdate) GetMetadataFields() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.CorpusName
+	return o.MetadataFields
+}
+
+func (o *DestinationVectaraUpdate) GetOauth2() DestinationVectaraUpdateOAuth20Credentials {
+	if o == nil {
+		return DestinationVectaraUpdateOAuth20Credentials{}
+	}
+	return o.Oauth2
 }
 
 func (o *DestinationVectaraUpdate) GetParallelize() *bool {
@@ -97,11 +104,4 @@ func (o *DestinationVectaraUpdate) GetTitleField() *string {
 		return nil
 	}
 	return o.TitleField
-}
-
-func (o *DestinationVectaraUpdate) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
 }

@@ -33,20 +33,20 @@ func (e *Finnworlds) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFinnworlds struct {
-	// Choose isin, ticker, reg_lei or cik
-	List                  *string `default:"ticker" json:"list"`
-	ListCountriesForBonds *string `default:"country" json:"list_countries_for_bonds"`
-	Key                   string  `json:"key"`
 	// For example 10y, 5y, 2y...
 	BondType []any `json:"bond_type,omitempty"`
-	// brazil, united states, italia, japan
-	Countries []any `json:"countries,omitempty"`
-	// AAPL, T, MU, GOOG
-	Tickers   []any     `json:"tickers,omitempty"`
-	StartDate time.Time `json:"start_date"`
 	// Options Available: beef, cheese, oil, ...
-	Commodities []any      `json:"commodities,omitempty"`
-	sourceType  Finnworlds `const:"finnworlds" json:"sourceType"`
+	Commodities []any `json:"commodities,omitempty"`
+	// brazil, united states, italia, japan
+	Countries []any  `json:"countries,omitempty"`
+	Key       string `json:"key"`
+	// Choose isin, ticker, reg_lei or cik
+	List                  *string   `default:"ticker" json:"list"`
+	ListCountriesForBonds *string   `default:"country" json:"list_countries_for_bonds"`
+	StartDate             time.Time `json:"start_date"`
+	// AAPL, T, MU, GOOG
+	Tickers    []any      `json:"tickers,omitempty"`
+	sourceType Finnworlds `const:"finnworlds" json:"sourceType"`
 }
 
 func (s SourceFinnworlds) MarshalJSON() ([]byte, error) {
@@ -58,6 +58,34 @@ func (s *SourceFinnworlds) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceFinnworlds) GetBondType() []any {
+	if o == nil {
+		return nil
+	}
+	return o.BondType
+}
+
+func (o *SourceFinnworlds) GetCommodities() []any {
+	if o == nil {
+		return nil
+	}
+	return o.Commodities
+}
+
+func (o *SourceFinnworlds) GetCountries() []any {
+	if o == nil {
+		return nil
+	}
+	return o.Countries
+}
+
+func (o *SourceFinnworlds) GetKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.Key
 }
 
 func (o *SourceFinnworlds) GetList() *string {
@@ -74,34 +102,6 @@ func (o *SourceFinnworlds) GetListCountriesForBonds() *string {
 	return o.ListCountriesForBonds
 }
 
-func (o *SourceFinnworlds) GetKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.Key
-}
-
-func (o *SourceFinnworlds) GetBondType() []any {
-	if o == nil {
-		return nil
-	}
-	return o.BondType
-}
-
-func (o *SourceFinnworlds) GetCountries() []any {
-	if o == nil {
-		return nil
-	}
-	return o.Countries
-}
-
-func (o *SourceFinnworlds) GetTickers() []any {
-	if o == nil {
-		return nil
-	}
-	return o.Tickers
-}
-
 func (o *SourceFinnworlds) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -109,11 +109,11 @@ func (o *SourceFinnworlds) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceFinnworlds) GetCommodities() []any {
+func (o *SourceFinnworlds) GetTickers() []any {
 	if o == nil {
 		return nil
 	}
-	return o.Commodities
+	return o.Tickers
 }
 
 func (o *SourceFinnworlds) GetSourceType() Finnworlds {

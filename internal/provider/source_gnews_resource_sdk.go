@@ -24,34 +24,11 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var query string
-	query = r.Configuration.Query.ValueString()
-
-	language := new(shared.SourceGnewsLanguage)
-	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceGnewsLanguage(r.Configuration.Language.ValueString())
-	} else {
-		language = nil
-	}
 	country := new(shared.SourceGnewsCountry)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
 		*country = shared.SourceGnewsCountry(r.Configuration.Country.ValueString())
 	} else {
 		country = nil
-	}
-	var in []shared.In = []shared.In{}
-	for _, inItem := range r.Configuration.In {
-		in = append(in, shared.In(inItem.ValueString()))
-	}
-	var nullable []shared.Nullable = []shared.Nullable{}
-	for _, nullableItem := range r.Configuration.Nullable {
-		nullable = append(nullable, shared.Nullable(nullableItem.ValueString()))
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
 	}
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -59,11 +36,34 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 	} else {
 		endDate = nil
 	}
+	var in []shared.In = []shared.In{}
+	for _, inItem := range r.Configuration.In {
+		in = append(in, shared.In(inItem.ValueString()))
+	}
+	language := new(shared.SourceGnewsLanguage)
+	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
+		*language = shared.SourceGnewsLanguage(r.Configuration.Language.ValueString())
+	} else {
+		language = nil
+	}
+	var nullable []shared.Nullable = []shared.Nullable{}
+	for _, nullableItem := range r.Configuration.Nullable {
+		nullable = append(nullable, shared.Nullable(nullableItem.ValueString()))
+	}
+	var query string
+	query = r.Configuration.Query.ValueString()
+
 	sortby := new(shared.SourceGnewsSortBy)
 	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
 		*sortby = shared.SourceGnewsSortBy(r.Configuration.Sortby.ValueString())
 	} else {
 		sortby = nil
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
 	}
 	topHeadlinesQuery := new(string)
 	if !r.Configuration.TopHeadlinesQuery.IsUnknown() && !r.Configuration.TopHeadlinesQuery.IsNull() {
@@ -79,14 +79,14 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsCreateRequest() *shared.So
 	}
 	configuration := shared.SourceGnews{
 		APIKey:            apiKey,
-		Query:             query,
-		Language:          language,
 		Country:           country,
-		In:                in,
-		Nullable:          nullable,
-		StartDate:         startDate,
 		EndDate:           endDate,
+		In:                in,
+		Language:          language,
+		Nullable:          nullable,
+		Query:             query,
 		Sortby:            sortby,
+		StartDate:         startDate,
 		TopHeadlinesQuery: topHeadlinesQuery,
 		TopHeadlinesTopic: topHeadlinesTopic,
 	}
@@ -163,34 +163,11 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.Sourc
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var query string
-	query = r.Configuration.Query.ValueString()
-
-	language := new(shared.SourceGnewsUpdateLanguage)
-	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceGnewsUpdateLanguage(r.Configuration.Language.ValueString())
-	} else {
-		language = nil
-	}
 	country := new(shared.SourceGnewsUpdateCountry)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
 		*country = shared.SourceGnewsUpdateCountry(r.Configuration.Country.ValueString())
 	} else {
 		country = nil
-	}
-	var in []shared.SourceGnewsUpdateIn = []shared.SourceGnewsUpdateIn{}
-	for _, inItem := range r.Configuration.In {
-		in = append(in, shared.SourceGnewsUpdateIn(inItem.ValueString()))
-	}
-	var nullable []shared.SourceGnewsUpdateNullable = []shared.SourceGnewsUpdateNullable{}
-	for _, nullableItem := range r.Configuration.Nullable {
-		nullable = append(nullable, shared.SourceGnewsUpdateNullable(nullableItem.ValueString()))
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
 	}
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -198,11 +175,34 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.Sourc
 	} else {
 		endDate = nil
 	}
+	var in []shared.SourceGnewsUpdateIn = []shared.SourceGnewsUpdateIn{}
+	for _, inItem := range r.Configuration.In {
+		in = append(in, shared.SourceGnewsUpdateIn(inItem.ValueString()))
+	}
+	language := new(shared.SourceGnewsUpdateLanguage)
+	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
+		*language = shared.SourceGnewsUpdateLanguage(r.Configuration.Language.ValueString())
+	} else {
+		language = nil
+	}
+	var nullable []shared.SourceGnewsUpdateNullable = []shared.SourceGnewsUpdateNullable{}
+	for _, nullableItem := range r.Configuration.Nullable {
+		nullable = append(nullable, shared.SourceGnewsUpdateNullable(nullableItem.ValueString()))
+	}
+	var query string
+	query = r.Configuration.Query.ValueString()
+
 	sortby := new(shared.SourceGnewsUpdateSortBy)
 	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
 		*sortby = shared.SourceGnewsUpdateSortBy(r.Configuration.Sortby.ValueString())
 	} else {
 		sortby = nil
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
 	}
 	topHeadlinesQuery := new(string)
 	if !r.Configuration.TopHeadlinesQuery.IsUnknown() && !r.Configuration.TopHeadlinesQuery.IsNull() {
@@ -218,14 +218,14 @@ func (r *SourceGnewsResourceModel) ToSharedSourceGnewsPutRequest() *shared.Sourc
 	}
 	configuration := shared.SourceGnewsUpdate{
 		APIKey:            apiKey,
-		Query:             query,
-		Language:          language,
 		Country:           country,
-		In:                in,
-		Nullable:          nullable,
-		StartDate:         startDate,
 		EndDate:           endDate,
+		In:                in,
+		Language:          language,
+		Nullable:          nullable,
+		Query:             query,
 		Sortby:            sortby,
+		StartDate:         startDate,
 		TopHeadlinesQuery: topHeadlinesQuery,
 		TopHeadlinesTopic: topHeadlinesTopic,
 	}

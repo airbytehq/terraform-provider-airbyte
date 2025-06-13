@@ -3,15 +3,8 @@
 package shared
 
 type SourceCoassembleUpdate struct {
-	UserToken string `json:"user_token"`
 	UserID    string `json:"user_id"`
-}
-
-func (o *SourceCoassembleUpdate) GetUserToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserToken
+	UserToken string `json:"user_token"`
 }
 
 func (o *SourceCoassembleUpdate) GetUserID() string {
@@ -19,4 +12,11 @@ func (o *SourceCoassembleUpdate) GetUserID() string {
 		return ""
 	}
 	return o.UserID
+}
+
+func (o *SourceCoassembleUpdate) GetUserToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserToken
 }

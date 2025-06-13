@@ -24,45 +24,11 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPICreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	searchQuery := new(string)
-	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
-		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	category := new(shared.Category)
+	if !r.Configuration.Category.IsUnknown() && !r.Configuration.Category.IsNull() {
+		*category = shared.Category(r.Configuration.Category.ValueString())
 	} else {
-		searchQuery = nil
-	}
-	var searchIn []shared.SearchIn = []shared.SearchIn{}
-	for _, searchInItem := range r.Configuration.SearchIn {
-		searchIn = append(searchIn, shared.SearchIn(searchInItem.ValueString()))
-	}
-	var sources []string = []string{}
-	for _, sourcesItem := range r.Configuration.Sources {
-		sources = append(sources, sourcesItem.ValueString())
-	}
-	var domains []string = []string{}
-	for _, domainsItem := range r.Configuration.Domains {
-		domains = append(domains, domainsItem.ValueString())
-	}
-	var excludeDomains []string = []string{}
-	for _, excludeDomainsItem := range r.Configuration.ExcludeDomains {
-		excludeDomains = append(excludeDomains, excludeDomainsItem.ValueString())
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
-	}
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
-	language := new(shared.Language)
-	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.Language(r.Configuration.Language.ValueString())
-	} else {
-		language = nil
+		category = nil
 	}
 	country := new(shared.Country)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
@@ -70,11 +36,35 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPICreateRequest() *share
 	} else {
 		country = nil
 	}
-	category := new(shared.Category)
-	if !r.Configuration.Category.IsUnknown() && !r.Configuration.Category.IsNull() {
-		*category = shared.Category(r.Configuration.Category.ValueString())
+	var domains []string = []string{}
+	for _, domainsItem := range r.Configuration.Domains {
+		domains = append(domains, domainsItem.ValueString())
+	}
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		category = nil
+		endDate = nil
+	}
+	var excludeDomains []string = []string{}
+	for _, excludeDomainsItem := range r.Configuration.ExcludeDomains {
+		excludeDomains = append(excludeDomains, excludeDomainsItem.ValueString())
+	}
+	language := new(shared.Language)
+	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
+		*language = shared.Language(r.Configuration.Language.ValueString())
+	} else {
+		language = nil
+	}
+	var searchIn []shared.SearchIn = []shared.SearchIn{}
+	for _, searchInItem := range r.Configuration.SearchIn {
+		searchIn = append(searchIn, shared.SearchIn(searchInItem.ValueString()))
+	}
+	searchQuery := new(string)
+	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
+		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	} else {
+		searchQuery = nil
 	}
 	sortBy := new(shared.SortBy)
 	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
@@ -82,19 +72,29 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPICreateRequest() *share
 	} else {
 		sortBy = nil
 	}
+	var sources []string = []string{}
+	for _, sourcesItem := range r.Configuration.Sources {
+		sources = append(sources, sourcesItem.ValueString())
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceNewsAPI{
 		APIKey:         apiKey,
-		SearchQuery:    searchQuery,
-		SearchIn:       searchIn,
-		Sources:        sources,
-		Domains:        domains,
-		ExcludeDomains: excludeDomains,
-		StartDate:      startDate,
-		EndDate:        endDate,
-		Language:       language,
-		Country:        country,
 		Category:       category,
+		Country:        country,
+		Domains:        domains,
+		EndDate:        endDate,
+		ExcludeDomains: excludeDomains,
+		Language:       language,
+		SearchIn:       searchIn,
+		SearchQuery:    searchQuery,
 		SortBy:         sortBy,
+		Sources:        sources,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -169,45 +169,11 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPIPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	searchQuery := new(string)
-	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
-		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	category := new(shared.SourceNewsAPIUpdateCategory)
+	if !r.Configuration.Category.IsUnknown() && !r.Configuration.Category.IsNull() {
+		*category = shared.SourceNewsAPIUpdateCategory(r.Configuration.Category.ValueString())
 	} else {
-		searchQuery = nil
-	}
-	var searchIn []shared.SourceNewsAPIUpdateSearchIn = []shared.SourceNewsAPIUpdateSearchIn{}
-	for _, searchInItem := range r.Configuration.SearchIn {
-		searchIn = append(searchIn, shared.SourceNewsAPIUpdateSearchIn(searchInItem.ValueString()))
-	}
-	var sources []string = []string{}
-	for _, sourcesItem := range r.Configuration.Sources {
-		sources = append(sources, sourcesItem.ValueString())
-	}
-	var domains []string = []string{}
-	for _, domainsItem := range r.Configuration.Domains {
-		domains = append(domains, domainsItem.ValueString())
-	}
-	var excludeDomains []string = []string{}
-	for _, excludeDomainsItem := range r.Configuration.ExcludeDomains {
-		excludeDomains = append(excludeDomains, excludeDomainsItem.ValueString())
-	}
-	startDate := new(string)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate = r.Configuration.StartDate.ValueString()
-	} else {
-		startDate = nil
-	}
-	endDate := new(string)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate = r.Configuration.EndDate.ValueString()
-	} else {
-		endDate = nil
-	}
-	language := new(shared.SourceNewsAPIUpdateLanguage)
-	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceNewsAPIUpdateLanguage(r.Configuration.Language.ValueString())
-	} else {
-		language = nil
+		category = nil
 	}
 	country := new(shared.SourceNewsAPIUpdateCountry)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
@@ -215,11 +181,35 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPIPutRequest() *shared.S
 	} else {
 		country = nil
 	}
-	category := new(shared.SourceNewsAPIUpdateCategory)
-	if !r.Configuration.Category.IsUnknown() && !r.Configuration.Category.IsNull() {
-		*category = shared.SourceNewsAPIUpdateCategory(r.Configuration.Category.ValueString())
+	var domains []string = []string{}
+	for _, domainsItem := range r.Configuration.Domains {
+		domains = append(domains, domainsItem.ValueString())
+	}
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
-		category = nil
+		endDate = nil
+	}
+	var excludeDomains []string = []string{}
+	for _, excludeDomainsItem := range r.Configuration.ExcludeDomains {
+		excludeDomains = append(excludeDomains, excludeDomainsItem.ValueString())
+	}
+	language := new(shared.SourceNewsAPIUpdateLanguage)
+	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
+		*language = shared.SourceNewsAPIUpdateLanguage(r.Configuration.Language.ValueString())
+	} else {
+		language = nil
+	}
+	var searchIn []shared.SourceNewsAPIUpdateSearchIn = []shared.SourceNewsAPIUpdateSearchIn{}
+	for _, searchInItem := range r.Configuration.SearchIn {
+		searchIn = append(searchIn, shared.SourceNewsAPIUpdateSearchIn(searchInItem.ValueString()))
+	}
+	searchQuery := new(string)
+	if !r.Configuration.SearchQuery.IsUnknown() && !r.Configuration.SearchQuery.IsNull() {
+		*searchQuery = r.Configuration.SearchQuery.ValueString()
+	} else {
+		searchQuery = nil
 	}
 	sortBy := new(shared.SourceNewsAPIUpdateSortBy)
 	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
@@ -227,19 +217,29 @@ func (r *SourceNewsAPIResourceModel) ToSharedSourceNewsAPIPutRequest() *shared.S
 	} else {
 		sortBy = nil
 	}
+	var sources []string = []string{}
+	for _, sourcesItem := range r.Configuration.Sources {
+		sources = append(sources, sourcesItem.ValueString())
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceNewsAPIUpdate{
 		APIKey:         apiKey,
-		SearchQuery:    searchQuery,
-		SearchIn:       searchIn,
-		Sources:        sources,
-		Domains:        domains,
-		ExcludeDomains: excludeDomains,
-		StartDate:      startDate,
-		EndDate:        endDate,
-		Language:       language,
-		Country:        country,
 		Category:       category,
+		Country:        country,
+		Domains:        domains,
+		EndDate:        endDate,
+		ExcludeDomains: excludeDomains,
+		Language:       language,
+		SearchIn:       searchIn,
+		SearchQuery:    searchQuery,
 		SortBy:         sortBy,
+		Sources:        sources,
+		StartDate:      startDate,
 	}
 	out := shared.SourceNewsAPIPutRequest{
 		Name:          name,

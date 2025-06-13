@@ -9,6 +9,33 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports string
+
+const (
+	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsClickViewTime  SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "click/view_time"
+	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsConversionTime SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "conversion_time"
+)
+
+func (e SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) ToPointer() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
+	return &e
+}
+func (e *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "click/view_time":
+		fallthrough
+	case "conversion_time":
+		*e = SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports: %v", v)
+	}
+}
+
 type SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenticationRequest string
 
 const (
@@ -33,11 +60,11 @@ func (e *SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenti
 }
 
 type SourceOutbrainAmplifyUpdateUsernamePassword struct {
-	type_ SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenticationRequest `const:"username_password" json:"type"`
+	// Add Password for authentication.
+	Password string                                                                               `json:"password"`
+	type_    SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenticationRequest `const:"username_password" json:"type"`
 	// Add Username for authentication.
 	Username string `json:"username"`
-	// Add Password for authentication.
-	Password string `json:"password"`
 }
 
 func (s SourceOutbrainAmplifyUpdateUsernamePassword) MarshalJSON() ([]byte, error) {
@@ -51,6 +78,13 @@ func (s *SourceOutbrainAmplifyUpdateUsernamePassword) UnmarshalJSON(data []byte)
 	return nil
 }
 
+func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
 func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetType() SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenticationRequest {
 	return SourceOutbrainAmplifyUpdateBothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword
 }
@@ -60,13 +94,6 @@ func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *SourceOutbrainAmplifyUpdateUsernamePassword) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
 }
 
 type SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequests string
@@ -93,9 +120,9 @@ func (e *SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationReques
 }
 
 type SourceOutbrainAmplifyUpdateAccessToken struct {
-	type_ SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequests `const:"access_token" json:"type"`
 	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                                                    `json:"access_token"`
+	type_       SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequests `const:"access_token" json:"type"`
 }
 
 func (s SourceOutbrainAmplifyUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -109,15 +136,15 @@ func (s *SourceOutbrainAmplifyUpdateAccessToken) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *SourceOutbrainAmplifyUpdateAccessToken) GetType() SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequests {
-	return SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequestsAccessToken
-}
-
 func (o *SourceOutbrainAmplifyUpdateAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceOutbrainAmplifyUpdateAccessToken) GetType() SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequests {
+	return SourceOutbrainAmplifyUpdateAccessTokenIsRequiredForAuthenticationRequestsAccessToken
 }
 
 type SourceOutbrainAmplifyUpdateAuthenticationMethodType string
@@ -184,36 +211,6 @@ func (u SourceOutbrainAmplifyUpdateAuthenticationMethod) MarshalJSON() ([]byte, 
 	return nil, errors.New("could not marshal union type SourceOutbrainAmplifyUpdateAuthenticationMethod: all fields are null")
 }
 
-// SourceOutbrainAmplifyUpdateGranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-type SourceOutbrainAmplifyUpdateGranularityForPeriodicReports string
-
-const (
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsDaily   SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "daily"
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsWeekly  SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "weekly"
-	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsMonthly SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "monthly"
-)
-
-func (e SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) ToPointer() *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports {
-	return &e
-}
-func (e *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "daily":
-		fallthrough
-	case "weekly":
-		fallthrough
-	case "monthly":
-		*e = SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateGranularityForPeriodicReports: %v", v)
-	}
-}
-
 // SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion - The granularity used for geo location data in reports.
 type SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion string
 
@@ -244,46 +241,56 @@ func (e *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion) UnmarshalJS
 	}
 }
 
-// SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-type SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports string
+// SourceOutbrainAmplifyUpdateGranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type SourceOutbrainAmplifyUpdateGranularityForPeriodicReports string
 
 const (
-	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsClickViewTime  SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "click/view_time"
-	SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReportsConversionTime SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports = "conversion_time"
+	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsDaily   SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "daily"
+	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsWeekly  SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "weekly"
+	SourceOutbrainAmplifyUpdateGranularityForPeriodicReportsMonthly SourceOutbrainAmplifyUpdateGranularityForPeriodicReports = "monthly"
 )
 
-func (e SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) ToPointer() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
+func (e SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) ToPointer() *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports {
 	return &e
 }
-func (e *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+func (e *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "click/view_time":
+	case "daily":
 		fallthrough
-	case "conversion_time":
-		*e = SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports(v)
+	case "weekly":
+		fallthrough
+	case "monthly":
+		*e = SourceOutbrainAmplifyUpdateGranularityForPeriodicReports(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports: %v", v)
+		return fmt.Errorf("invalid value for SourceOutbrainAmplifyUpdateGranularityForPeriodicReports: %v", v)
 	}
 }
 
 type SourceOutbrainAmplifyUpdate struct {
-	// Credentials for making authenticated requests requires either username/password or access_token.
-	Credentials SourceOutbrainAmplifyUpdateAuthenticationMethod `json:"credentials"`
-	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-	ReportGranularity *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports `json:"report_granularity,omitempty"`
-	// The granularity used for geo location data in reports.
-	GeoLocationBreakdown *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
-	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
-	// Date in the format YYYY-MM-DD.
-	EndDate *string `json:"end_date,omitempty"`
 	// The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
 	ConversionCount *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports `json:"conversion_count,omitempty"`
+	// Credentials for making authenticated requests requires either username/password or access_token.
+	Credentials SourceOutbrainAmplifyUpdateAuthenticationMethod `json:"credentials"`
+	// Date in the format YYYY-MM-DD.
+	EndDate *string `json:"end_date,omitempty"`
+	// The granularity used for geo location data in reports.
+	GeoLocationBreakdown *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
+	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+	ReportGranularity *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports `json:"report_granularity,omitempty"`
+	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
+	StartDate string `json:"start_date"`
+}
+
+func (o *SourceOutbrainAmplifyUpdate) GetConversionCount() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
+	if o == nil {
+		return nil
+	}
+	return o.ConversionCount
 }
 
 func (o *SourceOutbrainAmplifyUpdate) GetCredentials() SourceOutbrainAmplifyUpdateAuthenticationMethod {
@@ -293,11 +300,11 @@ func (o *SourceOutbrainAmplifyUpdate) GetCredentials() SourceOutbrainAmplifyUpda
 	return o.Credentials
 }
 
-func (o *SourceOutbrainAmplifyUpdate) GetReportGranularity() *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports {
+func (o *SourceOutbrainAmplifyUpdate) GetEndDate() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ReportGranularity
+	return o.EndDate
 }
 
 func (o *SourceOutbrainAmplifyUpdate) GetGeoLocationBreakdown() *SourceOutbrainAmplifyUpdateGranularityForGeoLocationRegion {
@@ -307,23 +314,16 @@ func (o *SourceOutbrainAmplifyUpdate) GetGeoLocationBreakdown() *SourceOutbrainA
 	return o.GeoLocationBreakdown
 }
 
+func (o *SourceOutbrainAmplifyUpdate) GetReportGranularity() *SourceOutbrainAmplifyUpdateGranularityForPeriodicReports {
+	if o == nil {
+		return nil
+	}
+	return o.ReportGranularity
+}
+
 func (o *SourceOutbrainAmplifyUpdate) GetStartDate() string {
 	if o == nil {
 		return ""
 	}
 	return o.StartDate
-}
-
-func (o *SourceOutbrainAmplifyUpdate) GetEndDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
-}
-
-func (o *SourceOutbrainAmplifyUpdate) GetConversionCount() *SourceOutbrainAmplifyUpdateDefinitionOfConversionCountInReports {
-	if o == nil {
-		return nil
-	}
-	return o.ConversionCount
 }

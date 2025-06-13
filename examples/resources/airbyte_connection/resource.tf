@@ -5,7 +5,8 @@ resource "airbyte_connection" "my_connection" {
         cursor_field = [
           "..."
         ]
-        include_files = false
+        destination_object_name = "...my_destination_object_name..."
+        include_files           = false
         mappers = [
           {
             id = "6563d1b7-013b-4974-a129-ba463c808f28"

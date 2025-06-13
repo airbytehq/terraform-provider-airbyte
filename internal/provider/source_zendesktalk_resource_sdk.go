@@ -23,9 +23,6 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskTalkAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskTalkOAuth20 *shared.SourceZendeskTalkOAuth20
@@ -63,19 +60,19 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkCreateRequest(
 		}
 		var sourceZendeskTalkAPIToken *shared.SourceZendeskTalkAPIToken
 		if r.Configuration.Credentials.APIToken != nil {
-			var email string
-			email = r.Configuration.Credentials.APIToken.Email.ValueString()
-
 			var apiToken string
 			apiToken = r.Configuration.Credentials.APIToken.APIToken.ValueString()
+
+			var email string
+			email = r.Configuration.Credentials.APIToken.Email.ValueString()
 
 			var additionalProperties1 interface{}
 			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			sourceZendeskTalkAPIToken = &shared.SourceZendeskTalkAPIToken{
-				Email:                email,
 				APIToken:             apiToken,
+				Email:                email,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -86,10 +83,13 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkCreateRequest(
 		}
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskTalk{
-		Subdomain:   subdomain,
 		Credentials: credentials,
 		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -161,9 +161,6 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	var credentials *shared.SourceZendeskTalkUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskTalkUpdateOAuth20 *shared.SourceZendeskTalkUpdateOAuth20
@@ -201,19 +198,19 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkPutRequest() *
 		}
 		var sourceZendeskTalkUpdateAPIToken *shared.SourceZendeskTalkUpdateAPIToken
 		if r.Configuration.Credentials.APIToken != nil {
-			var email string
-			email = r.Configuration.Credentials.APIToken.Email.ValueString()
-
 			var apiToken string
 			apiToken = r.Configuration.Credentials.APIToken.APIToken.ValueString()
+
+			var email string
+			email = r.Configuration.Credentials.APIToken.Email.ValueString()
 
 			var additionalProperties1 interface{}
 			if !r.Configuration.Credentials.APIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.APIToken.AdditionalProperties.IsNull() {
 				_ = json.Unmarshal([]byte(r.Configuration.Credentials.APIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 			}
 			sourceZendeskTalkUpdateAPIToken = &shared.SourceZendeskTalkUpdateAPIToken{
-				Email:                email,
 				APIToken:             apiToken,
+				Email:                email,
 				AdditionalProperties: additionalProperties1,
 			}
 		}
@@ -224,10 +221,13 @@ func (r *SourceZendeskTalkResourceModel) ToSharedSourceZendeskTalkPutRequest() *
 		}
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskTalkUpdate{
-		Subdomain:   subdomain,
 		Credentials: credentials,
 		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	out := shared.SourceZendeskTalkPutRequest{
 		Name:          name,

@@ -33,25 +33,25 @@ func (e *PolygonStockAPI) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePolygonStockAPI struct {
-	// Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
-	Sort *string `json:"sort,omitempty"`
-	// The target date for the aggregate window.
-	Limit *int64 `json:"limit,omitempty"`
-	// Your API ACCESS Key
-	APIKey string `json:"apiKey"`
 	// Determines whether or not the results are adjusted for splits. By default, results are adjusted and set to true. Set this to false to get results that are NOT adjusted for splits.
 	Adjusted *string `json:"adjusted,omitempty"`
+	// Your API ACCESS Key
+	APIKey string `json:"apiKey"`
 	// The target date for the aggregate window.
 	EndDate types.Date `json:"end_date"`
-	// The size of the time window.
-	Timespan string `json:"timespan"`
+	// The target date for the aggregate window.
+	Limit *int64 `json:"limit,omitempty"`
 	// The size of the timespan multiplier.
 	Multiplier int64 `json:"multiplier"`
+	// Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
+	Sort *string `json:"sort,omitempty"`
 	// The beginning date for the aggregate window.
 	StartDate types.Date `json:"start_date"`
 	// The exchange symbol that this item is traded under.
-	StocksTicker string          `json:"stocksTicker"`
-	sourceType   PolygonStockAPI `const:"polygon-stock-api" json:"sourceType"`
+	StocksTicker string `json:"stocksTicker"`
+	// The size of the time window.
+	Timespan   string          `json:"timespan"`
+	sourceType PolygonStockAPI `const:"polygon-stock-api" json:"sourceType"`
 }
 
 func (s SourcePolygonStockAPI) MarshalJSON() ([]byte, error) {
@@ -65,18 +65,11 @@ func (s *SourcePolygonStockAPI) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePolygonStockAPI) GetSort() *string {
+func (o *SourcePolygonStockAPI) GetAdjusted() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Sort
-}
-
-func (o *SourcePolygonStockAPI) GetLimit() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Limit
+	return o.Adjusted
 }
 
 func (o *SourcePolygonStockAPI) GetAPIKey() string {
@@ -86,13 +79,6 @@ func (o *SourcePolygonStockAPI) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourcePolygonStockAPI) GetAdjusted() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Adjusted
-}
-
 func (o *SourcePolygonStockAPI) GetEndDate() types.Date {
 	if o == nil {
 		return types.Date{}
@@ -100,11 +86,11 @@ func (o *SourcePolygonStockAPI) GetEndDate() types.Date {
 	return o.EndDate
 }
 
-func (o *SourcePolygonStockAPI) GetTimespan() string {
+func (o *SourcePolygonStockAPI) GetLimit() *int64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Timespan
+	return o.Limit
 }
 
 func (o *SourcePolygonStockAPI) GetMultiplier() int64 {
@@ -112,6 +98,13 @@ func (o *SourcePolygonStockAPI) GetMultiplier() int64 {
 		return 0
 	}
 	return o.Multiplier
+}
+
+func (o *SourcePolygonStockAPI) GetSort() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Sort
 }
 
 func (o *SourcePolygonStockAPI) GetStartDate() types.Date {
@@ -126,6 +119,13 @@ func (o *SourcePolygonStockAPI) GetStocksTicker() string {
 		return ""
 	}
 	return o.StocksTicker
+}
+
+func (o *SourcePolygonStockAPI) GetTimespan() string {
+	if o == nil {
+		return ""
+	}
+	return o.Timespan
 }
 
 func (o *SourcePolygonStockAPI) GetSourceType() PolygonStockAPI {

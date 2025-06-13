@@ -22,6 +22,9 @@ func (r *SourceStravaResourceModel) ToSharedSourceStravaCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var athleteID int64
+	athleteID = r.Configuration.AthleteID.ValueInt64()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -31,15 +34,12 @@ func (r *SourceStravaResourceModel) ToSharedSourceStravaCreateRequest() *shared.
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	var athleteID int64
-	athleteID = r.Configuration.AthleteID.ValueInt64()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStrava{
+		AthleteID:    athleteID,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
-		AthleteID:    athleteID,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -112,6 +112,9 @@ func (r *SourceStravaResourceModel) ToSharedSourceStravaPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var athleteID int64
+	athleteID = r.Configuration.AthleteID.ValueInt64()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -121,15 +124,12 @@ func (r *SourceStravaResourceModel) ToSharedSourceStravaPutRequest() *shared.Sou
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	var athleteID int64
-	athleteID = r.Configuration.AthleteID.ValueInt64()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStravaUpdate{
+		AthleteID:    athleteID,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
-		AthleteID:    athleteID,
 		StartDate:    startDate,
 	}
 	out := shared.SourceStravaPutRequest{

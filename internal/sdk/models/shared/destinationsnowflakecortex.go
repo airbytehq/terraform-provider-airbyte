@@ -34,14 +34,14 @@ func (e *DestinationSnowflakeCortexSchemasEmbeddingEmbedding5Mode) UnmarshalJSON
 
 // DestinationSnowflakeCortexOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationSnowflakeCortexOpenAICompatible struct {
-	mode   *DestinationSnowflakeCortexSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                                   `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                                     `json:"dimensions"`
+	mode       *DestinationSnowflakeCortexSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationSnowflakeCortexOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationSnowflakeCortexOpenAICompatible) UnmarshalJSON(data []byte) 
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationSnowflakeCortexOpenAICompatible) GetMode() *DestinationSnowflakeCortexSchemasEmbeddingEmbedding5Mode {
-	return DestinationSnowflakeCortexSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationSnowflakeCortexOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationSnowflakeCortexOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationSnowflakeCortexOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationSnowflakeCortexOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationSnowflakeCortexOpenAICompatible) GetMode() *DestinationSnowflakeCortexSchemasEmbeddingEmbedding5Mode {
+	return DestinationSnowflakeCortexSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationSnowflakeCortexOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode) UnmarshalJSON(
 
 // DestinationSnowflakeCortexAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationSnowflakeCortexAzureOpenAI struct {
-	mode *DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                                   `json:"deployment"`
+	mode       *DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationSnowflakeCortexAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (d *DestinationSnowflakeCortexAzureOpenAI) UnmarshalJSON(data []byte) error
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationSnowflakeCortexAzureOpenAI) GetMode() *DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode {
-	return DestinationSnowflakeCortexSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationSnowflakeCortexAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationSnowflakeCortexAzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *DestinationSnowflakeCortexAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationSnowflakeCortexAzureOpenAI) GetMode() *DestinationSnowflakeCortexSchemasEmbeddingEmbeddingMode {
+	return DestinationSnowflakeCortexSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationSnowflakeCortexAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationSnowflakeCortexSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationSnowflakeCortexSchemasMode) UnmarshalJSON(data []byte) error
 
 // DestinationSnowflakeCortexCohere - Use the Cohere API to embed text.
 type DestinationSnowflakeCortexCohere struct {
-	mode      *DestinationSnowflakeCortexSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                                 `json:"cohere_key"`
+	mode      *DestinationSnowflakeCortexSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationSnowflakeCortexCohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (d *DestinationSnowflakeCortexCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationSnowflakeCortexCohere) GetMode() *DestinationSnowflakeCortexSchemasMode {
-	return DestinationSnowflakeCortexSchemasModeCohere.ToPointer()
-}
-
 func (o *DestinationSnowflakeCortexCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationSnowflakeCortexCohere) GetMode() *DestinationSnowflakeCortexSchemasMode {
+	return DestinationSnowflakeCortexSchemasModeCohere.ToPointer()
 }
 
 type DestinationSnowflakeCortexMode string
@@ -432,27 +432,103 @@ func (u DestinationSnowflakeCortexEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationSnowflakeCortexEmbedding: all fields are null")
 }
 
-type DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterModeCode DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
+type DestinationSnowflakeCortexCredentials struct {
+	// Enter the password you want to use to access the database
+	Password string `json:"password"`
 }
-func (e *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+
+func (o *DestinationSnowflakeCortexCredentials) GetPassword() string {
+	if o == nil {
+		return ""
 	}
-	switch v {
-	case "code":
-		*e = DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	return o.Password
+}
+
+// SnowflakeConnection - Snowflake can be used to store vector data and retrieve embeddings.
+type SnowflakeConnection struct {
+	Credentials DestinationSnowflakeCortexCredentials `json:"credentials"`
+	// Enter the name of the database that you want to sync data into
+	Database string `json:"database"`
+	// Enter the name of the default schema
+	DefaultSchema string `json:"default_schema"`
+	// Enter the account name you want to use to access the database. This is usually the identifier before .snowflakecomputing.com
+	Host string `json:"host"`
+	// Enter the role that you want to use to access Snowflake
+	Role string `json:"role"`
+	// Enter the name of the user you want to use to access the database
+	Username string `json:"username"`
+	// Enter the name of the warehouse that you want to use as a compute cluster
+	Warehouse string `json:"warehouse"`
+}
+
+func (o *SnowflakeConnection) GetCredentials() DestinationSnowflakeCortexCredentials {
+	if o == nil {
+		return DestinationSnowflakeCortexCredentials{}
 	}
+	return o.Credentials
+}
+
+func (o *SnowflakeConnection) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *SnowflakeConnection) GetDefaultSchema() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultSchema
+}
+
+func (o *SnowflakeConnection) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SnowflakeConnection) GetRole() string {
+	if o == nil {
+		return ""
+	}
+	return o.Role
+}
+
+func (o *SnowflakeConnection) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+func (o *SnowflakeConnection) GetWarehouse() string {
+	if o == nil {
+		return ""
+	}
+	return o.Warehouse
+}
+
+type DestinationSnowflakeCortexFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationSnowflakeCortexFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationSnowflakeCortexFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
 }
 
 // DestinationSnowflakeCortexLanguage - Split code in suitable places based on the programming language
@@ -524,11 +600,34 @@ func (e *DestinationSnowflakeCortexLanguage) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterModeCode DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
 // DestinationSnowflakeCortexByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationSnowflakeCortexByProgrammingLanguage struct {
-	mode *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 	// Split code in suitable places based on the programming language
-	Language DestinationSnowflakeCortexLanguage `json:"language"`
+	Language DestinationSnowflakeCortexLanguage                                       `json:"language"`
+	mode     *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationSnowflakeCortexByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -542,15 +641,15 @@ func (d *DestinationSnowflakeCortexByProgrammingLanguage) UnmarshalJSON(data []b
 	return nil
 }
 
-func (o *DestinationSnowflakeCortexByProgrammingLanguage) GetMode() *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
 func (o *DestinationSnowflakeCortexByProgrammingLanguage) GetLanguage() DestinationSnowflakeCortexLanguage {
 	if o == nil {
 		return DestinationSnowflakeCortexLanguage("")
 	}
 	return o.Language
+}
+
+func (o *DestinationSnowflakeCortexByProgrammingLanguage) GetMode() *DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationSnowflakeCortexSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
 }
 
 type DestinationSnowflakeCortexSchemasProcessingTextSplitterMode string
@@ -630,11 +729,11 @@ func (e *DestinationSnowflakeCortexSchemasProcessingMode) UnmarshalJSON(data []b
 
 // DestinationSnowflakeCortexBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationSnowflakeCortexBySeparator struct {
-	mode *DestinationSnowflakeCortexSchemasProcessingMode `const:"separator" json:"mode"`
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                            `default:"false" json:"keep_separator"`
+	mode          *DestinationSnowflakeCortexSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
 }
 
 func (d DestinationSnowflakeCortexBySeparator) MarshalJSON() ([]byte, error) {
@@ -648,6 +747,13 @@ func (d *DestinationSnowflakeCortexBySeparator) UnmarshalJSON(data []byte) error
 	return nil
 }
 
+func (o *DestinationSnowflakeCortexBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
 func (o *DestinationSnowflakeCortexBySeparator) GetMode() *DestinationSnowflakeCortexSchemasProcessingMode {
 	return DestinationSnowflakeCortexSchemasProcessingModeSeparator.ToPointer()
 }
@@ -657,13 +763,6 @@ func (o *DestinationSnowflakeCortexBySeparator) GetSeparators() []string {
 		return nil
 	}
 	return o.Separators
-}
-
-func (o *DestinationSnowflakeCortexBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
 }
 
 type DestinationSnowflakeCortexTextSplitterType string
@@ -752,40 +851,19 @@ func (u DestinationSnowflakeCortexTextSplitter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationSnowflakeCortexTextSplitter: all fields are null")
 }
 
-type DestinationSnowflakeCortexFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationSnowflakeCortexFieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *DestinationSnowflakeCortexFieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
 type DestinationSnowflakeCortexProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationSnowflakeCortexTextSplitter `json:"text_splitter,omitempty"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
 	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
 	FieldNameMappings []DestinationSnowflakeCortexFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationSnowflakeCortexTextSplitter `json:"text_splitter,omitempty"`
 }
 
 func (d DestinationSnowflakeCortexProcessingConfigModel) MarshalJSON() ([]byte, error) {
@@ -799,13 +877,6 @@ func (d *DestinationSnowflakeCortexProcessingConfigModel) UnmarshalJSON(data []b
 	return nil
 }
 
-func (o *DestinationSnowflakeCortexProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
 func (o *DestinationSnowflakeCortexProcessingConfigModel) GetChunkOverlap() *int64 {
 	if o == nil {
 		return nil
@@ -813,25 +884,11 @@ func (o *DestinationSnowflakeCortexProcessingConfigModel) GetChunkOverlap() *int
 	return o.ChunkOverlap
 }
 
-func (o *DestinationSnowflakeCortexProcessingConfigModel) GetTextFields() []string {
+func (o *DestinationSnowflakeCortexProcessingConfigModel) GetChunkSize() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.TextFields
-}
-
-func (o *DestinationSnowflakeCortexProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationSnowflakeCortexProcessingConfigModel) GetTextSplitter() *DestinationSnowflakeCortexTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
+	return o.ChunkSize
 }
 
 func (o *DestinationSnowflakeCortexProcessingConfigModel) GetFieldNameMappings() []DestinationSnowflakeCortexFieldNameMappingConfigModel {
@@ -841,82 +898,25 @@ func (o *DestinationSnowflakeCortexProcessingConfigModel) GetFieldNameMappings()
 	return o.FieldNameMappings
 }
 
-type DestinationSnowflakeCortexCredentials struct {
-	// Enter the password you want to use to access the database
-	Password string `json:"password"`
-}
-
-func (o *DestinationSnowflakeCortexCredentials) GetPassword() string {
+func (o *DestinationSnowflakeCortexProcessingConfigModel) GetMetadataFields() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Password
+	return o.MetadataFields
 }
 
-// SnowflakeConnection - Snowflake can be used to store vector data and retrieve embeddings.
-type SnowflakeConnection struct {
-	// Enter the account name you want to use to access the database. This is usually the identifier before .snowflakecomputing.com
-	Host string `json:"host"`
-	// Enter the role that you want to use to access Snowflake
-	Role string `json:"role"`
-	// Enter the name of the warehouse that you want to use as a compute cluster
-	Warehouse string `json:"warehouse"`
-	// Enter the name of the database that you want to sync data into
-	Database string `json:"database"`
-	// Enter the name of the default schema
-	DefaultSchema string `json:"default_schema"`
-	// Enter the name of the user you want to use to access the database
-	Username    string                                `json:"username"`
-	Credentials DestinationSnowflakeCortexCredentials `json:"credentials"`
-}
-
-func (o *SnowflakeConnection) GetHost() string {
+func (o *DestinationSnowflakeCortexProcessingConfigModel) GetTextFields() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Host
+	return o.TextFields
 }
 
-func (o *SnowflakeConnection) GetRole() string {
+func (o *DestinationSnowflakeCortexProcessingConfigModel) GetTextSplitter() *DestinationSnowflakeCortexTextSplitter {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Role
-}
-
-func (o *SnowflakeConnection) GetWarehouse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Warehouse
-}
-
-func (o *SnowflakeConnection) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
-func (o *SnowflakeConnection) GetDefaultSchema() string {
-	if o == nil {
-		return ""
-	}
-	return o.DefaultSchema
-}
-
-func (o *SnowflakeConnection) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *SnowflakeConnection) GetCredentials() DestinationSnowflakeCortexCredentials {
-	if o == nil {
-		return DestinationSnowflakeCortexCredentials{}
-	}
-	return o.Credentials
+	return o.TextSplitter
 }
 
 type SnowflakeCortex string
@@ -954,13 +954,13 @@ func (e *SnowflakeCortex) UnmarshalJSON(data []byte) error {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationSnowflakeCortex struct {
 	// Embedding configuration
-	Embedding  DestinationSnowflakeCortexEmbedding             `json:"embedding"`
-	Processing DestinationSnowflakeCortexProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationSnowflakeCortexEmbedding `json:"embedding"`
 	// Snowflake can be used to store vector data and retrieve embeddings.
-	Indexing        SnowflakeConnection `json:"indexing"`
-	destinationType SnowflakeCortex     `const:"snowflake-cortex" json:"destinationType"`
+	Indexing SnowflakeConnection `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText     *bool                                           `default:"false" json:"omit_raw_text"`
+	Processing      DestinationSnowflakeCortexProcessingConfigModel `json:"processing"`
+	destinationType SnowflakeCortex                                 `const:"snowflake-cortex" json:"destinationType"`
 }
 
 func (d DestinationSnowflakeCortex) MarshalJSON() ([]byte, error) {
@@ -981,11 +981,11 @@ func (o *DestinationSnowflakeCortex) GetEmbedding() DestinationSnowflakeCortexEm
 	return o.Embedding
 }
 
-func (o *DestinationSnowflakeCortex) GetProcessing() DestinationSnowflakeCortexProcessingConfigModel {
+func (o *DestinationSnowflakeCortex) GetIndexing() SnowflakeConnection {
 	if o == nil {
-		return DestinationSnowflakeCortexProcessingConfigModel{}
+		return SnowflakeConnection{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationSnowflakeCortex) GetOmitRawText() *bool {
@@ -995,11 +995,11 @@ func (o *DestinationSnowflakeCortex) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationSnowflakeCortex) GetIndexing() SnowflakeConnection {
+func (o *DestinationSnowflakeCortex) GetProcessing() DestinationSnowflakeCortexProcessingConfigModel {
 	if o == nil {
-		return SnowflakeConnection{}
+		return DestinationSnowflakeCortexProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }
 
 func (o *DestinationSnowflakeCortex) GetDestinationType() SnowflakeCortex {

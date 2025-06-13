@@ -34,11 +34,11 @@ func (e *Wrike) UnmarshalJSON(data []byte) error {
 type SourceWrike struct {
 	// Permanent access token. You can find documentation on how to acquire a permanent access token  <a href="https://developers.wrike.com/oauth-20-authorization/">here</a>
 	AccessToken string `json:"access_token"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Only comments after this date will be replicated.
+	StartDate *string `json:"start_date,omitempty"`
 	// Wrike's instance such as `app-us2.wrike.com`
 	WrikeInstance *string `default:"app-us2.wrike.com" json:"wrike_instance"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Only comments after this date will be replicated.
-	StartDate  *string `json:"start_date,omitempty"`
-	sourceType Wrike   `const:"wrike" json:"sourceType"`
+	sourceType    Wrike   `const:"wrike" json:"sourceType"`
 }
 
 func (s SourceWrike) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceWrike) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *SourceWrike) GetWrikeInstance() *string {
-	if o == nil {
-		return nil
-	}
-	return o.WrikeInstance
-}
-
 func (o *SourceWrike) GetStartDate() *string {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceWrike) GetWrikeInstance() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WrikeInstance
 }
 
 func (o *SourceWrike) GetSourceType() Wrike {

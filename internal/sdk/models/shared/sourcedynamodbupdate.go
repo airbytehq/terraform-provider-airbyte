@@ -83,9 +83,9 @@ func (e *SourceDynamodbUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDynamodbUpdateAuthenticateViaAccessKeys struct {
-	authType *SourceDynamodbUpdateAuthType `const:"User" json:"auth_type,omitempty"`
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
-	AccessKeyID string `json:"access_key_id"`
+	AccessKeyID string                        `json:"access_key_id"`
+	authType    *SourceDynamodbUpdateAuthType `const:"User" json:"auth_type,omitempty"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey      string `json:"secret_access_key"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
@@ -102,15 +102,15 @@ func (s *SourceDynamodbUpdateAuthenticateViaAccessKeys) UnmarshalJSON(data []byt
 	return nil
 }
 
-func (o *SourceDynamodbUpdateAuthenticateViaAccessKeys) GetAuthType() *SourceDynamodbUpdateAuthType {
-	return SourceDynamodbUpdateAuthTypeUser.ToPointer()
-}
-
 func (o *SourceDynamodbUpdateAuthenticateViaAccessKeys) GetAccessKeyID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessKeyID
+}
+
+func (o *SourceDynamodbUpdateAuthenticateViaAccessKeys) GetAuthType() *SourceDynamodbUpdateAuthType {
+	return SourceDynamodbUpdateAuthTypeUser.ToPointer()
 }
 
 func (o *SourceDynamodbUpdateAuthenticateViaAccessKeys) GetSecretAccessKey() string {
@@ -319,12 +319,12 @@ type SourceDynamodbUpdate struct {
 	Credentials *SourceDynamodbUpdateCredentials `json:"credentials,omitempty"`
 	// the URL of the Dynamodb database
 	Endpoint *string `default:"" json:"endpoint"`
+	// Ignore tables with missing scan/read permissions
+	IgnoreMissingReadPermissionsTables *bool `default:"false" json:"ignore_missing_read_permissions_tables"`
 	// The region of the Dynamodb database
 	Region *SourceDynamodbUpdateDynamodbRegion `default:"" json:"region"`
 	// Comma separated reserved attribute names present in your tables
 	ReservedAttributeNames *string `json:"reserved_attribute_names,omitempty"`
-	// Ignore tables with missing scan/read permissions
-	IgnoreMissingReadPermissionsTables *bool `default:"false" json:"ignore_missing_read_permissions_tables"`
 }
 
 func (s SourceDynamodbUpdate) MarshalJSON() ([]byte, error) {
@@ -352,6 +352,13 @@ func (o *SourceDynamodbUpdate) GetEndpoint() *string {
 	return o.Endpoint
 }
 
+func (o *SourceDynamodbUpdate) GetIgnoreMissingReadPermissionsTables() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IgnoreMissingReadPermissionsTables
+}
+
 func (o *SourceDynamodbUpdate) GetRegion() *SourceDynamodbUpdateDynamodbRegion {
 	if o == nil {
 		return nil
@@ -364,11 +371,4 @@ func (o *SourceDynamodbUpdate) GetReservedAttributeNames() *string {
 		return nil
 	}
 	return o.ReservedAttributeNames
-}
-
-func (o *SourceDynamodbUpdate) GetIgnoreMissingReadPermissionsTables() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IgnoreMissingReadPermissionsTables
 }

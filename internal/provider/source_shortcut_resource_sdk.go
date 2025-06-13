@@ -25,17 +25,17 @@ func (r *SourceShortcutResourceModel) ToSharedSourceShortcutCreateRequest() *sha
 	var apiKey2 string
 	apiKey2 = r.Configuration.APIKey2.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
 		*query = r.Configuration.Query.ValueString()
 	} else {
 		query = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShortcut{
 		APIKey2:   apiKey2,
-		StartDate: startDate,
 		Query:     query,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceShortcutResourceModel) ToSharedSourceShortcutPutRequest() *shared
 	var apiKey2 string
 	apiKey2 = r.Configuration.APIKey2.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
 		*query = r.Configuration.Query.ValueString()
 	} else {
 		query = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShortcutUpdate{
 		APIKey2:   apiKey2,
-		StartDate: startDate,
 		Query:     query,
+		StartDate: startDate,
 	}
 	out := shared.SourceShortcutPutRequest{
 		Name:          name,

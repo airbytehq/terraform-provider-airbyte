@@ -9,10 +9,10 @@ import (
 
 type SourceNebiusAiUpdate struct {
 	// API key or access token
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Limit for each response objects
-	Limit *string `default:"20" json:"limit"`
+	Limit     *string   `default:"20" json:"limit"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceNebiusAiUpdate) MarshalJSON() ([]byte, error) {
@@ -33,16 +33,16 @@ func (o *SourceNebiusAiUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNebiusAiUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceNebiusAiUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceNebiusAiUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

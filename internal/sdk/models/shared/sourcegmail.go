@@ -33,8 +33,8 @@ func (e *Gmail) UnmarshalJSON(data []byte) error {
 
 type SourceGmail struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// Include drafts/messages from SPAM and TRASH in the results. Defaults to false.
 	IncludeSpamAndTrash *bool `default:"false" json:"include_spam_and_trash"`
 	sourceType          Gmail `const:"gmail" json:"sourceType"`
@@ -58,18 +58,18 @@ func (o *SourceGmail) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGmail) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGmail) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceGmail) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceGmail) GetIncludeSpamAndTrash() *bool {

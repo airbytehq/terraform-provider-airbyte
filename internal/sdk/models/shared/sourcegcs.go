@@ -10,34 +10,197 @@ import (
 	"time"
 )
 
-// SourceGcsValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type SourceGcsValidationPolicy string
+type SourceGcsSchemasAuthType string
 
 const (
-	SourceGcsValidationPolicyEmitRecord      SourceGcsValidationPolicy = "Emit Record"
-	SourceGcsValidationPolicySkipRecord      SourceGcsValidationPolicy = "Skip Record"
-	SourceGcsValidationPolicyWaitForDiscover SourceGcsValidationPolicy = "Wait for Discover"
+	SourceGcsSchemasAuthTypeService SourceGcsSchemasAuthType = "Service"
 )
 
-func (e SourceGcsValidationPolicy) ToPointer() *SourceGcsValidationPolicy {
+func (e SourceGcsSchemasAuthType) ToPointer() *SourceGcsSchemasAuthType {
 	return &e
 }
-func (e *SourceGcsValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceGcsSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = SourceGcsValidationPolicy(v)
+	case "Service":
+		*e = SourceGcsSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGcsValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceGcsSchemasAuthType: %v", v)
 	}
+}
+
+type ServiceAccountAuthentication struct {
+	authType *SourceGcsSchemasAuthType `const:"Service" json:"auth_type"`
+	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
+	ServiceAccount string `json:"service_account"`
+}
+
+func (s ServiceAccountAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ServiceAccountAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ServiceAccountAuthentication) GetAuthType() *SourceGcsSchemasAuthType {
+	return SourceGcsSchemasAuthTypeService.ToPointer()
+}
+
+func (o *ServiceAccountAuthentication) GetServiceAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServiceAccount
+}
+
+type SourceGcsAuthType string
+
+const (
+	SourceGcsAuthTypeClient SourceGcsAuthType = "Client"
+)
+
+func (e SourceGcsAuthType) ToPointer() *SourceGcsAuthType {
+	return &e
+}
+func (e *SourceGcsAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Client":
+		*e = SourceGcsAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsAuthType: %v", v)
+	}
+}
+
+type AuthenticateViaGoogleOAuth struct {
+	// Access Token
+	AccessToken string             `json:"access_token"`
+	authType    *SourceGcsAuthType `const:"Client" json:"auth_type"`
+	// Client ID
+	ClientID string `json:"client_id"`
+	// Client Secret
+	ClientSecret string `json:"client_secret"`
+	// Access Token
+	RefreshToken string `json:"refresh_token"`
+}
+
+func (a AuthenticateViaGoogleOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaGoogleOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaGoogleOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
+func (o *AuthenticateViaGoogleOAuth) GetAuthType() *SourceGcsAuthType {
+	return SourceGcsAuthTypeClient.ToPointer()
+}
+
+func (o *AuthenticateViaGoogleOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *AuthenticateViaGoogleOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *AuthenticateViaGoogleOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+type SourceGcsAuthenticationType string
+
+const (
+	SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth   SourceGcsAuthenticationType = "Authenticate via Google (OAuth)"
+	SourceGcsAuthenticationTypeServiceAccountAuthentication SourceGcsAuthenticationType = "Service Account Authentication."
+)
+
+// SourceGcsAuthentication - Credentials for connecting to the Google Cloud Storage API
+type SourceGcsAuthentication struct {
+	AuthenticateViaGoogleOAuth   *AuthenticateViaGoogleOAuth   `queryParam:"inline"`
+	ServiceAccountAuthentication *ServiceAccountAuthentication `queryParam:"inline"`
+
+	Type SourceGcsAuthenticationType
+}
+
+func CreateSourceGcsAuthenticationAuthenticateViaGoogleOAuth(authenticateViaGoogleOAuth AuthenticateViaGoogleOAuth) SourceGcsAuthentication {
+	typ := SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth
+
+	return SourceGcsAuthentication{
+		AuthenticateViaGoogleOAuth: &authenticateViaGoogleOAuth,
+		Type:                       typ,
+	}
+}
+
+func CreateSourceGcsAuthenticationServiceAccountAuthentication(serviceAccountAuthentication ServiceAccountAuthentication) SourceGcsAuthentication {
+	typ := SourceGcsAuthenticationTypeServiceAccountAuthentication
+
+	return SourceGcsAuthentication{
+		ServiceAccountAuthentication: &serviceAccountAuthentication,
+		Type:                         typ,
+	}
+}
+
+func (u *SourceGcsAuthentication) UnmarshalJSON(data []byte) error {
+
+	var serviceAccountAuthentication ServiceAccountAuthentication = ServiceAccountAuthentication{}
+	if err := utils.UnmarshalJSON(data, &serviceAccountAuthentication, "", true, true); err == nil {
+		u.ServiceAccountAuthentication = &serviceAccountAuthentication
+		u.Type = SourceGcsAuthenticationTypeServiceAccountAuthentication
+		return nil
+	}
+
+	var authenticateViaGoogleOAuth AuthenticateViaGoogleOAuth = AuthenticateViaGoogleOAuth{}
+	if err := utils.UnmarshalJSON(data, &authenticateViaGoogleOAuth, "", true, true); err == nil {
+		u.AuthenticateViaGoogleOAuth = &authenticateViaGoogleOAuth
+		u.Type = SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGcsAuthentication", string(data))
+}
+
+func (u SourceGcsAuthentication) MarshalJSON() ([]byte, error) {
+	if u.AuthenticateViaGoogleOAuth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaGoogleOAuth, "", true)
+	}
+
+	if u.ServiceAccountAuthentication != nil {
+		return utils.MarshalJSON(u.ServiceAccountAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceGcsAuthentication: all fields are null")
 }
 
 type SourceGcsSchemasStreamsFormatFormat6Filetype string
@@ -105,39 +268,6 @@ func (e *SourceGcsSchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte)
 	}
 }
 
-// SourceGcsParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type SourceGcsParsingStrategy string
-
-const (
-	SourceGcsParsingStrategyAuto    SourceGcsParsingStrategy = "auto"
-	SourceGcsParsingStrategyFast    SourceGcsParsingStrategy = "fast"
-	SourceGcsParsingStrategyOcrOnly SourceGcsParsingStrategy = "ocr_only"
-	SourceGcsParsingStrategyHiRes   SourceGcsParsingStrategy = "hi_res"
-)
-
-func (e SourceGcsParsingStrategy) ToPointer() *SourceGcsParsingStrategy {
-	return &e
-}
-func (e *SourceGcsParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = SourceGcsParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceGcsParsingStrategy: %v", v)
-	}
-}
-
 type SourceGcsSchemasMode string
 
 const (
@@ -184,11 +314,11 @@ func (o *APIParameterConfigModel) GetValue() string {
 
 // ViaAPI - Process files via an API, using the `hi_res` mode. This option is useful for increased performance and accuracy, but requires an API key and a hosted instance of unstructured.
 type ViaAPI struct {
-	mode *SourceGcsSchemasMode `const:"api" json:"mode"`
 	// The API key to use matching the environment
 	APIKey *string `default:"" json:"api_key"`
 	// The URL of the unstructured API to use
-	APIURL *string `default:"https://api.unstructured.io" json:"api_url"`
+	APIURL *string               `default:"https://api.unstructured.io" json:"api_url"`
+	mode   *SourceGcsSchemasMode `const:"api" json:"mode"`
 	// List of parameters send to the API
 	Parameters []APIParameterConfigModel `json:"parameters,omitempty"`
 }
@@ -204,10 +334,6 @@ func (v *ViaAPI) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ViaAPI) GetMode() *SourceGcsSchemasMode {
-	return SourceGcsSchemasModeAPI.ToPointer()
-}
-
 func (o *ViaAPI) GetAPIKey() *string {
 	if o == nil {
 		return nil
@@ -220,6 +346,10 @@ func (o *ViaAPI) GetAPIURL() *string {
 		return nil
 	}
 	return o.APIURL
+}
+
+func (o *ViaAPI) GetMode() *SourceGcsSchemasMode {
+	return SourceGcsSchemasModeAPI.ToPointer()
 }
 
 func (o *ViaAPI) GetParameters() []APIParameterConfigModel {
@@ -336,15 +466,48 @@ func (u SourceGcsProcessing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceGcsProcessing: all fields are null")
 }
 
+// SourceGcsParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceGcsParsingStrategy string
+
+const (
+	SourceGcsParsingStrategyAuto    SourceGcsParsingStrategy = "auto"
+	SourceGcsParsingStrategyFast    SourceGcsParsingStrategy = "fast"
+	SourceGcsParsingStrategyOcrOnly SourceGcsParsingStrategy = "ocr_only"
+	SourceGcsParsingStrategyHiRes   SourceGcsParsingStrategy = "hi_res"
+)
+
+func (e SourceGcsParsingStrategy) ToPointer() *SourceGcsParsingStrategy {
+	return &e
+}
+func (e *SourceGcsParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceGcsParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsParsingStrategy: %v", v)
+	}
+}
+
 // SourceGcsUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceGcsUnstructuredDocumentFormat struct {
 	filetype *SourceGcsSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceGcsProcessing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
 	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
 	Strategy *SourceGcsParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *SourceGcsProcessing `json:"processing,omitempty"`
 }
 
 func (s SourceGcsUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
@@ -362,6 +525,13 @@ func (o *SourceGcsUnstructuredDocumentFormat) GetFiletype() *SourceGcsSchemasStr
 	return SourceGcsSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
+func (o *SourceGcsUnstructuredDocumentFormat) GetProcessing() *SourceGcsProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
 func (o *SourceGcsUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
@@ -374,13 +544,6 @@ func (o *SourceGcsUnstructuredDocumentFormat) GetStrategy() *SourceGcsParsingStr
 		return nil
 	}
 	return o.Strategy
-}
-
-func (o *SourceGcsUnstructuredDocumentFormat) GetProcessing() *SourceGcsProcessing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
 }
 
 type SourceGcsSchemasStreamsFormatFiletype string
@@ -407,9 +570,9 @@ func (e *SourceGcsSchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error
 }
 
 type SourceGcsParquetFormat struct {
-	filetype *SourceGcsSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	DecimalAsFloat *bool                                  `default:"false" json:"decimal_as_float"`
+	filetype       *SourceGcsSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 }
 
 func (s SourceGcsParquetFormat) MarshalJSON() ([]byte, error) {
@@ -423,15 +586,15 @@ func (s *SourceGcsParquetFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGcsParquetFormat) GetFiletype() *SourceGcsSchemasStreamsFormatFiletype {
-	return SourceGcsSchemasStreamsFormatFiletypeParquet.ToPointer()
-}
-
 func (o *SourceGcsParquetFormat) GetDecimalAsFloat() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DecimalAsFloat
+}
+
+func (o *SourceGcsParquetFormat) GetFiletype() *SourceGcsSchemasStreamsFormatFiletype {
+	return SourceGcsSchemasStreamsFormatFiletypeParquet.ToPointer()
 }
 
 type SourceGcsSchemasStreamsFiletype string
@@ -523,9 +686,9 @@ func (e *SourceGcsSchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte)
 }
 
 type SourceGcsUserProvided struct {
-	headerDefinitionType *SourceGcsSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
+	ColumnNames          []string                                     `json:"column_names"`
+	headerDefinitionType *SourceGcsSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceGcsUserProvided) MarshalJSON() ([]byte, error) {
@@ -539,15 +702,15 @@ func (s *SourceGcsUserProvided) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGcsUserProvided) GetHeaderDefinitionType() *SourceGcsSchemasStreamsHeaderDefinitionType {
-	return SourceGcsSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
 func (o *SourceGcsUserProvided) GetColumnNames() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.ColumnNames
+}
+
+func (o *SourceGcsUserProvided) GetHeaderDefinitionType() *SourceGcsSchemasStreamsHeaderDefinitionType {
+	return SourceGcsSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
 }
 
 type SourceGcsSchemasHeaderDefinitionType string
@@ -721,33 +884,33 @@ func (u SourceGcsCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 }
 
 type SourceGcsCSVFormat struct {
-	filetype *SourceGcsSchemasFiletype `const:"csv" json:"filetype"`
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                  `json:"false_values,omitempty"`
+	filetype    *SourceGcsSchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceGcsCSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
 }
 
 func (s SourceGcsCSVFormat) MarshalJSON() ([]byte, error) {
@@ -761,36 +924,11 @@ func (s *SourceGcsCSVFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGcsCSVFormat) GetFiletype() *SourceGcsSchemasFiletype {
-	return SourceGcsSchemasFiletypeCsv.ToPointer()
-}
-
 func (o *SourceGcsCSVFormat) GetDelimiter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Delimiter
-}
-
-func (o *SourceGcsCSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *SourceGcsCSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *SourceGcsCSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
 }
 
 func (o *SourceGcsCSVFormat) GetDoubleQuote() *bool {
@@ -800,46 +938,18 @@ func (o *SourceGcsCSVFormat) GetDoubleQuote() *bool {
 	return o.DoubleQuote
 }
 
-func (o *SourceGcsCSVFormat) GetNullValues() []string {
+func (o *SourceGcsCSVFormat) GetEncoding() *string {
 	if o == nil {
 		return nil
 	}
-	return o.NullValues
+	return o.Encoding
 }
 
-func (o *SourceGcsCSVFormat) GetStringsCanBeNull() *bool {
+func (o *SourceGcsCSVFormat) GetEscapeChar() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StringsCanBeNull
-}
-
-func (o *SourceGcsCSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *SourceGcsCSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *SourceGcsCSVFormat) GetHeaderDefinition() *SourceGcsCSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *SourceGcsCSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
+	return o.EscapeChar
 }
 
 func (o *SourceGcsCSVFormat) GetFalseValues() []string {
@@ -849,11 +959,64 @@ func (o *SourceGcsCSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
+func (o *SourceGcsCSVFormat) GetFiletype() *SourceGcsSchemasFiletype {
+	return SourceGcsSchemasFiletypeCsv.ToPointer()
+}
+
+func (o *SourceGcsCSVFormat) GetHeaderDefinition() *SourceGcsCSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
 func (o *SourceGcsCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *SourceGcsCSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *SourceGcsCSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *SourceGcsCSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *SourceGcsCSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *SourceGcsCSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *SourceGcsCSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
 }
 
 type SourceGcsFiletype string
@@ -880,9 +1043,9 @@ func (e *SourceGcsFiletype) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGcsAvroFormat struct {
-	filetype *SourceGcsFiletype `const:"avro" json:"filetype"`
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	DoubleAsString *bool              `default:"false" json:"double_as_string"`
+	filetype       *SourceGcsFiletype `const:"avro" json:"filetype"`
 }
 
 func (s SourceGcsAvroFormat) MarshalJSON() ([]byte, error) {
@@ -896,15 +1059,15 @@ func (s *SourceGcsAvroFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGcsAvroFormat) GetFiletype() *SourceGcsFiletype {
-	return SourceGcsFiletypeAvro.ToPointer()
-}
-
 func (o *SourceGcsAvroFormat) GetDoubleAsString() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DoubleAsString
+}
+
+func (o *SourceGcsAvroFormat) GetFiletype() *SourceGcsFiletype {
+	return SourceGcsFiletypeAvro.ToPointer()
 }
 
 type SourceGcsFormatType string
@@ -1059,23 +1222,53 @@ func (u SourceGcsFormat) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceGcsFormat: all fields are null")
 }
 
+// SourceGcsValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceGcsValidationPolicy string
+
+const (
+	SourceGcsValidationPolicyEmitRecord      SourceGcsValidationPolicy = "Emit Record"
+	SourceGcsValidationPolicySkipRecord      SourceGcsValidationPolicy = "Skip Record"
+	SourceGcsValidationPolicyWaitForDiscover SourceGcsValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceGcsValidationPolicy) ToPointer() *SourceGcsValidationPolicy {
+	return &e
+}
+func (e *SourceGcsValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceGcsValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGcsValidationPolicy: %v", v)
+	}
+}
+
 type SourceGcsFileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *SourceGcsValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 	Format SourceGcsFormat `json:"format"`
-	// When enabled, syncs will not validate or structure records against the stream's schema.
-	Schemaless *bool `default:"false" json:"schemaless"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceGcsValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
 func (s SourceGcsFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -1087,34 +1280,6 @@ func (s *SourceGcsFileBasedStreamConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceGcsFileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceGcsFileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *SourceGcsFileBasedStreamConfig) GetValidationPolicy() *SourceGcsValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *SourceGcsFileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
 }
 
 func (o *SourceGcsFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
@@ -1131,11 +1296,25 @@ func (o *SourceGcsFileBasedStreamConfig) GetFormat() SourceGcsFormat {
 	return o.Format
 }
 
-func (o *SourceGcsFileBasedStreamConfig) GetSchemaless() *bool {
+func (o *SourceGcsFileBasedStreamConfig) GetGlobs() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schemaless
+	return o.Globs
+}
+
+func (o *SourceGcsFileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *SourceGcsFileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *SourceGcsFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
@@ -1145,197 +1324,18 @@ func (o *SourceGcsFileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
-type SourceGcsSchemasAuthType string
-
-const (
-	SourceGcsSchemasAuthTypeService SourceGcsSchemasAuthType = "Service"
-)
-
-func (e SourceGcsSchemasAuthType) ToPointer() *SourceGcsSchemasAuthType {
-	return &e
-}
-func (e *SourceGcsSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Service":
-		*e = SourceGcsSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceGcsSchemasAuthType: %v", v)
-	}
-}
-
-type ServiceAccountAuthentication struct {
-	authType *SourceGcsSchemasAuthType `const:"Service" json:"auth_type"`
-	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
-	ServiceAccount string `json:"service_account"`
-}
-
-func (s ServiceAccountAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *ServiceAccountAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ServiceAccountAuthentication) GetAuthType() *SourceGcsSchemasAuthType {
-	return SourceGcsSchemasAuthTypeService.ToPointer()
-}
-
-func (o *ServiceAccountAuthentication) GetServiceAccount() string {
+func (o *SourceGcsFileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
-		return ""
-	}
-	return o.ServiceAccount
-}
-
-type SourceGcsAuthType string
-
-const (
-	SourceGcsAuthTypeClient SourceGcsAuthType = "Client"
-)
-
-func (e SourceGcsAuthType) ToPointer() *SourceGcsAuthType {
-	return &e
-}
-func (e *SourceGcsAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Client":
-		*e = SourceGcsAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceGcsAuthType: %v", v)
-	}
-}
-
-type AuthenticateViaGoogleOAuth struct {
-	authType *SourceGcsAuthType `const:"Client" json:"auth_type"`
-	// Client ID
-	ClientID string `json:"client_id"`
-	// Client Secret
-	ClientSecret string `json:"client_secret"`
-	// Access Token
-	AccessToken string `json:"access_token"`
-	// Access Token
-	RefreshToken string `json:"refresh_token"`
-}
-
-func (a AuthenticateViaGoogleOAuth) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AuthenticateViaGoogleOAuth) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AuthenticateViaGoogleOAuth) GetAuthType() *SourceGcsAuthType {
-	return SourceGcsAuthTypeClient.ToPointer()
-}
-
-func (o *AuthenticateViaGoogleOAuth) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *AuthenticateViaGoogleOAuth) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *AuthenticateViaGoogleOAuth) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
-}
-
-func (o *AuthenticateViaGoogleOAuth) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
-type SourceGcsAuthenticationType string
-
-const (
-	SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth   SourceGcsAuthenticationType = "Authenticate via Google (OAuth)"
-	SourceGcsAuthenticationTypeServiceAccountAuthentication SourceGcsAuthenticationType = "Service Account Authentication."
-)
-
-// SourceGcsAuthentication - Credentials for connecting to the Google Cloud Storage API
-type SourceGcsAuthentication struct {
-	AuthenticateViaGoogleOAuth   *AuthenticateViaGoogleOAuth   `queryParam:"inline"`
-	ServiceAccountAuthentication *ServiceAccountAuthentication `queryParam:"inline"`
-
-	Type SourceGcsAuthenticationType
-}
-
-func CreateSourceGcsAuthenticationAuthenticateViaGoogleOAuth(authenticateViaGoogleOAuth AuthenticateViaGoogleOAuth) SourceGcsAuthentication {
-	typ := SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth
-
-	return SourceGcsAuthentication{
-		AuthenticateViaGoogleOAuth: &authenticateViaGoogleOAuth,
-		Type:                       typ,
-	}
-}
-
-func CreateSourceGcsAuthenticationServiceAccountAuthentication(serviceAccountAuthentication ServiceAccountAuthentication) SourceGcsAuthentication {
-	typ := SourceGcsAuthenticationTypeServiceAccountAuthentication
-
-	return SourceGcsAuthentication{
-		ServiceAccountAuthentication: &serviceAccountAuthentication,
-		Type:                         typ,
-	}
-}
-
-func (u *SourceGcsAuthentication) UnmarshalJSON(data []byte) error {
-
-	var serviceAccountAuthentication ServiceAccountAuthentication = ServiceAccountAuthentication{}
-	if err := utils.UnmarshalJSON(data, &serviceAccountAuthentication, "", true, true); err == nil {
-		u.ServiceAccountAuthentication = &serviceAccountAuthentication
-		u.Type = SourceGcsAuthenticationTypeServiceAccountAuthentication
 		return nil
 	}
-
-	var authenticateViaGoogleOAuth AuthenticateViaGoogleOAuth = AuthenticateViaGoogleOAuth{}
-	if err := utils.UnmarshalJSON(data, &authenticateViaGoogleOAuth, "", true, true); err == nil {
-		u.AuthenticateViaGoogleOAuth = &authenticateViaGoogleOAuth
-		u.Type = SourceGcsAuthenticationTypeAuthenticateViaGoogleOAuth
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceGcsAuthentication", string(data))
+	return o.Schemaless
 }
 
-func (u SourceGcsAuthentication) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaGoogleOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaGoogleOAuth, "", true)
+func (o *SourceGcsFileBasedStreamConfig) GetValidationPolicy() *SourceGcsValidationPolicy {
+	if o == nil {
+		return nil
 	}
-
-	if u.ServiceAccountAuthentication != nil {
-		return utils.MarshalJSON(u.ServiceAccountAuthentication, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceGcsAuthentication: all fields are null")
+	return o.ValidationPolicy
 }
 
 type Gcs string
@@ -1365,15 +1365,15 @@ func (e *Gcs) UnmarshalJSON(data []byte) error {
 // modified to uptake the changes because it is responsible for converting
 // legacy GCS configs into file based configs using the File-Based CDK.
 type SourceGcs struct {
+	// Name of the GCS bucket where the file(s) exist.
+	Bucket string `json:"bucket"`
+	// Credentials for connecting to the Google Cloud Storage API
+	Credentials SourceGcsAuthentication `json:"credentials"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []SourceGcsFileBasedStreamConfig `json:"streams"`
-	// Credentials for connecting to the Google Cloud Storage API
-	Credentials SourceGcsAuthentication `json:"credentials"`
-	// Name of the GCS bucket where the file(s) exist.
-	Bucket     string `json:"bucket"`
-	sourceType Gcs    `const:"gcs" json:"sourceType"`
+	Streams    []SourceGcsFileBasedStreamConfig `json:"streams"`
+	sourceType Gcs                              `const:"gcs" json:"sourceType"`
 }
 
 func (s SourceGcs) MarshalJSON() ([]byte, error) {
@@ -1385,6 +1385,20 @@ func (s *SourceGcs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceGcs) GetBucket() string {
+	if o == nil {
+		return ""
+	}
+	return o.Bucket
+}
+
+func (o *SourceGcs) GetCredentials() SourceGcsAuthentication {
+	if o == nil {
+		return SourceGcsAuthentication{}
+	}
+	return o.Credentials
 }
 
 func (o *SourceGcs) GetStartDate() *time.Time {
@@ -1399,20 +1413,6 @@ func (o *SourceGcs) GetStreams() []SourceGcsFileBasedStreamConfig {
 		return []SourceGcsFileBasedStreamConfig{}
 	}
 	return o.Streams
-}
-
-func (o *SourceGcs) GetCredentials() SourceGcsAuthentication {
-	if o == nil {
-		return SourceGcsAuthentication{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceGcs) GetBucket() string {
-	if o == nil {
-		return ""
-	}
-	return o.Bucket
 }
 
 func (o *SourceGcs) GetSourceType() Gcs {

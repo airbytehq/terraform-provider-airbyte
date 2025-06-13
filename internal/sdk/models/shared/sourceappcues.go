@@ -33,11 +33,11 @@ func (e *Appcues) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAppcues struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// Account ID of Appcues found in account settings page (https://studio.appcues.com/settings/account)
 	AccountID  string    `json:"account_id"`
+	Password   *string   `json:"password,omitempty"`
 	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
 	sourceType Appcues   `const:"appcues" json:"sourceType"`
 }
 
@@ -52,11 +52,11 @@ func (s *SourceAppcues) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAppcues) GetUsername() string {
+func (o *SourceAppcues) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.AccountID
 }
 
 func (o *SourceAppcues) GetPassword() *string {
@@ -66,18 +66,18 @@ func (o *SourceAppcues) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceAppcues) GetAccountID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountID
-}
-
 func (o *SourceAppcues) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceAppcues) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceAppcues) GetSourceType() Appcues {

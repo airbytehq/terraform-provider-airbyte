@@ -22,17 +22,14 @@ func (r *SourceCouchbaseResourceModel) ToSharedSourceCouchbaseCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
 	var connectionString string
 	connectionString = r.Configuration.ConnectionString.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var password string
 	password = r.Configuration.Password.ValueString()
-
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -40,12 +37,15 @@ func (r *SourceCouchbaseResourceModel) ToSharedSourceCouchbaseCreateRequest() *s
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceCouchbase{
-		ConnectionString: connectionString,
-		Username:         username,
-		Password:         password,
 		Bucket:           bucket,
+		ConnectionString: connectionString,
+		Password:         password,
 		StartDate:        startDate,
+		Username:         username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,17 +117,14 @@ func (r *SourceCouchbaseResourceModel) ToSharedSourceCouchbasePutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bucket string
+	bucket = r.Configuration.Bucket.ValueString()
+
 	var connectionString string
 	connectionString = r.Configuration.ConnectionString.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var password string
 	password = r.Configuration.Password.ValueString()
-
-	var bucket string
-	bucket = r.Configuration.Bucket.ValueString()
 
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
@@ -135,12 +132,15 @@ func (r *SourceCouchbaseResourceModel) ToSharedSourceCouchbasePutRequest() *shar
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceCouchbaseUpdate{
-		ConnectionString: connectionString,
-		Username:         username,
-		Password:         password,
 		Bucket:           bucket,
+		ConnectionString: connectionString,
+		Password:         password,
 		StartDate:        startDate,
+		Username:         username,
 	}
 	out := shared.SourceCouchbasePutRequest{
 		Name:          name,

@@ -21,18 +21,18 @@ func (r *SourceModeResourceModel) ToSharedSourceModeCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiToken string
-	apiToken = r.Configuration.APIToken.ValueString()
-
 	var apiSecret string
 	apiSecret = r.Configuration.APISecret.ValueString()
+
+	var apiToken string
+	apiToken = r.Configuration.APIToken.ValueString()
 
 	var workspace string
 	workspace = r.Configuration.Workspace.ValueString()
 
 	configuration := shared.SourceMode{
-		APIToken:  apiToken,
 		APISecret: apiSecret,
+		APIToken:  apiToken,
 		Workspace: workspace,
 	}
 	secretID := new(string)
@@ -105,18 +105,18 @@ func (r *SourceModeResourceModel) ToSharedSourceModePutRequest() *shared.SourceM
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiToken string
-	apiToken = r.Configuration.APIToken.ValueString()
-
 	var apiSecret string
 	apiSecret = r.Configuration.APISecret.ValueString()
+
+	var apiToken string
+	apiToken = r.Configuration.APIToken.ValueString()
 
 	var workspace string
 	workspace = r.Configuration.Workspace.ValueString()
 
 	configuration := shared.SourceModeUpdate{
-		APIToken:  apiToken,
 		APISecret: apiSecret,
+		APIToken:  apiToken,
 		Workspace: workspace,
 	}
 	out := shared.SourceModePutRequest{

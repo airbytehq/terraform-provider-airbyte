@@ -22,10 +22,22 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	convertConversionsEvent := new(bool)
+	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
+		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	} else {
+		convertConversionsEvent = nil
+	}
 	var credentials *shared.SourceGoogleAnalyticsDataAPICredentials
 	if r.Configuration.Credentials != nil {
 		var sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth
 		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			var clientID string
 			clientID = r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
 
@@ -35,17 +47,11 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
 
-			accessToken := new(string)
-			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceGoogleAnalyticsDataAPIAuthenticateViaGoogleOauth != nil {
@@ -68,34 +74,83 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 			}
 		}
 	}
-	var propertyIds []string = []string{}
-	for _, propertyIdsItem := range r.Configuration.PropertyIds {
-		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
-	}
-	dateRangesStartDate := new(customTypes.Date)
-	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
-		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
-	} else {
-		dateRangesStartDate = nil
-	}
-	dateRangesEndDate := new(customTypes.Date)
-	if !r.Configuration.DateRangesEndDate.IsUnknown() && !r.Configuration.DateRangesEndDate.IsNull() {
-		dateRangesEndDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesEndDate.ValueString())
-	} else {
-		dateRangesEndDate = nil
-	}
 	var customReportsArray []shared.SourceGoogleAnalyticsDataAPICustomReportConfig = []shared.SourceGoogleAnalyticsDataAPICustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var name1 string
-		name1 = customReportsArrayItem.Name.ValueString()
+		var cohortSpec *shared.CohortReports
+		if customReportsArrayItem.CohortSpec != nil {
+			var sourceGoogleAnalyticsDataAPIDisabled *shared.SourceGoogleAnalyticsDataAPIDisabled
+			if customReportsArrayItem.CohortSpec.Disabled != nil {
+				sourceGoogleAnalyticsDataAPIDisabled = &shared.SourceGoogleAnalyticsDataAPIDisabled{}
+			}
+			if sourceGoogleAnalyticsDataAPIDisabled != nil {
+				cohortSpec = &shared.CohortReports{
+					SourceGoogleAnalyticsDataAPIDisabled: sourceGoogleAnalyticsDataAPIDisabled,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled
+			if customReportsArrayItem.CohortSpec.Enabled != nil {
+				var cohortReportSettings *shared.CohortReportSettings
+				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
+					accumulate := new(bool)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
+						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
+					} else {
+						accumulate = nil
+					}
+					cohortReportSettings = &shared.CohortReportSettings{
+						Accumulate: accumulate,
+					}
+				}
+				var cohorts []shared.Cohorts = []shared.Cohorts{}
+				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
+					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
+					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
+					dateRange := shared.DateRange{
+						EndDate:   endDate,
+						StartDate: startDate,
+					}
+					dimension := shared.Dimension(cohortsItem.Dimension.ValueString())
+					name1 := new(string)
+					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
+						*name1 = cohortsItem.Name.ValueString()
+					} else {
+						name1 = nil
+					}
+					cohorts = append(cohorts, shared.Cohorts{
+						DateRange: dateRange,
+						Dimension: dimension,
+						Name:      name1,
+					})
+				}
+				var cohortsRange *shared.CohortsRange
+				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
+					var endOffset int64
+					endOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
 
-		var dimensions []string = []string{}
-		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
-			dimensions = append(dimensions, dimensionsItem.ValueString())
-		}
-		var metrics []string = []string{}
-		for _, metricsItem := range customReportsArrayItem.Metrics {
-			metrics = append(metrics, metricsItem.ValueString())
+					granularity := shared.SourceGoogleAnalyticsDataAPIGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
+					startOffset := new(int64)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
+						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
+					} else {
+						startOffset = nil
+					}
+					cohortsRange = &shared.CohortsRange{
+						EndOffset:   endOffset,
+						Granularity: granularity,
+						StartOffset: startOffset,
+					}
+				}
+				sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled{
+					CohortReportSettings: cohortReportSettings,
+					Cohorts:              cohorts,
+					CohortsRange:         cohortsRange,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled != nil {
+				cohortSpec = &shared.CohortReports{
+					SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled,
+				}
+			}
 		}
 		var dimensionFilter *shared.DimensionsFilter
 		if customReportsArrayItem.DimensionFilter != nil {
@@ -109,6 +164,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter
 					if expressionsItem.Filter.StringFilter != nil {
+						caseSensitive := new(bool)
+						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive = nil
+						}
 						var matchType []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums{}
 						for _, matchTypeItem := range expressionsItem.Filter.StringFilter.MatchType {
 							matchType = append(matchType, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums(matchTypeItem.ValueString()))
@@ -116,16 +177,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value string
 						value = expressionsItem.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive := new(bool)
-						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter{
+							CaseSensitive: caseSensitive,
 							MatchType:     matchType,
 							Value:         value,
-							CaseSensitive: caseSensitive,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayStringFilter != nil {
@@ -135,19 +190,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter
 					if expressionsItem.Filter.InListFilter != nil {
-						var values []string = []string{}
-						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
-							values = append(values, valuesItem.ValueString())
-						}
 						caseSensitive1 := new(bool)
 						if !expressionsItem.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive1 = expressionsItem.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive1 = nil
 						}
+						var values []string = []string{}
+						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
+							values = append(values, valuesItem.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter{
-							Values:        values,
 							CaseSensitive: caseSensitive1,
+							Values:        values,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayInListFilter != nil {
@@ -294,6 +349,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter1 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter
 					if expressionsItem1.Filter.StringFilter != nil {
+						caseSensitive2 := new(bool)
+						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive2 = nil
+						}
 						var matchType1 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums{}
 						for _, matchTypeItem1 := range expressionsItem1.Filter.StringFilter.MatchType {
 							matchType1 = append(matchType1, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums(matchTypeItem1.ValueString()))
@@ -301,16 +362,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value8 string
 						value8 = expressionsItem1.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive2 := new(bool)
-						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive2 = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter{
+							CaseSensitive: caseSensitive2,
 							MatchType:     matchType1,
 							Value:         value8,
-							CaseSensitive: caseSensitive2,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterStringFilter != nil {
@@ -320,19 +375,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter
 					if expressionsItem1.Filter.InListFilter != nil {
-						var values1 []string = []string{}
-						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
-							values1 = append(values1, valuesItem1.ValueString())
-						}
 						caseSensitive3 := new(bool)
 						if !expressionsItem1.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive3 = expressionsItem1.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive3 = nil
 						}
+						var values1 []string = []string{}
+						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
+							values1 = append(values1, valuesItem1.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter{
-							Values:        values1,
 							CaseSensitive: caseSensitive3,
+							Values:        values1,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterInListFilter != nil {
@@ -479,6 +534,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter2 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter
 					var sourceGoogleAnalyticsDataAPISchemasStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasStringFilter
 					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive4 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive4 = nil
+						}
 						var matchType2 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums{}
 						for _, matchTypeItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
 							matchType2 = append(matchType2, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums(matchTypeItem2.ValueString()))
@@ -486,16 +547,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value16 string
 						value16 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive4 := new(bool)
-						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive4 = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasStringFilter{
+							CaseSensitive: caseSensitive4,
 							MatchType:     matchType2,
 							Value:         value16,
-							CaseSensitive: caseSensitive4,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasStringFilter != nil {
@@ -505,19 +560,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasInListFilter
 					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter != nil {
-						var values2 []string = []string{}
-						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
-							values2 = append(values2, valuesItem2.ValueString())
-						}
 						caseSensitive5 := new(bool)
 						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive5 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive5 = nil
 						}
+						var values2 []string = []string{}
+						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values2 = append(values2, valuesItem2.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasInListFilter{
-							Values:        values2,
 							CaseSensitive: caseSensitive5,
+							Values:        values2,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasInListFilter != nil {
@@ -662,6 +717,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var filter3 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayDimensionFilterFilter
 				var stringFilter *shared.StringFilter
 				if customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive6 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive6 = nil
+					}
 					var matchType3 []shared.SourceGoogleAnalyticsDataAPIValidEnums = []shared.SourceGoogleAnalyticsDataAPIValidEnums{}
 					for _, matchTypeItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.MatchType {
 						matchType3 = append(matchType3, shared.SourceGoogleAnalyticsDataAPIValidEnums(matchTypeItem3.ValueString()))
@@ -669,16 +730,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var value24 string
 					value24 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.Value.ValueString()
 
-					caseSensitive6 := new(bool)
-					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
-						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
-					} else {
-						caseSensitive6 = nil
-					}
 					stringFilter = &shared.StringFilter{
+						CaseSensitive: caseSensitive6,
 						MatchType:     matchType3,
 						Value:         value24,
-						CaseSensitive: caseSensitive6,
 					}
 				}
 				if stringFilter != nil {
@@ -688,19 +743,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 				var inListFilter *shared.InListFilter
 				if customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter != nil {
-					var values3 []string = []string{}
-					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
-						values3 = append(values3, valuesItem3.ValueString())
-					}
 					caseSensitive7 := new(bool)
 					if !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
 						*caseSensitive7 = customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
 					} else {
 						caseSensitive7 = nil
 					}
+					var values3 []string = []string{}
+					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
+						values3 = append(values3, valuesItem3.ValueString())
+					}
 					inListFilter = &shared.InListFilter{
-						Values:        values3,
 						CaseSensitive: caseSensitive7,
+						Values:        values3,
 					}
 				}
 				if inListFilter != nil {
@@ -834,6 +889,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 			}
 		}
+		var dimensions []string = []string{}
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, dimensionsItem.ValueString())
+		}
 		var metricFilter *shared.MetricsFilter
 		if customReportsArrayItem.MetricFilter != nil {
 			var sourceGoogleAnalyticsDataAPIAndGroup *shared.SourceGoogleAnalyticsDataAPIAndGroup
@@ -846,6 +905,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter4 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterFilter
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter
 					if expressionsItem2.Filter.StringFilter != nil {
+						caseSensitive8 := new(bool)
+						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive8 = nil
+						}
 						var matchType4 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums{}
 						for _, matchTypeItem4 := range expressionsItem2.Filter.StringFilter.MatchType {
 							matchType4 = append(matchType4, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums(matchTypeItem4.ValueString()))
@@ -853,16 +918,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value32 string
 						value32 = expressionsItem2.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive8 := new(bool)
-						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive8 = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter{
+							CaseSensitive: caseSensitive8,
 							MatchType:     matchType4,
 							Value:         value32,
-							CaseSensitive: caseSensitive8,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterStringFilter != nil {
@@ -872,19 +931,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter
 					if expressionsItem2.Filter.InListFilter != nil {
-						var values4 []string = []string{}
-						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
-							values4 = append(values4, valuesItem4.ValueString())
-						}
 						caseSensitive9 := new(bool)
 						if !expressionsItem2.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive9 = expressionsItem2.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive9 = nil
 						}
+						var values4 []string = []string{}
+						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
+							values4 = append(values4, valuesItem4.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter{
-							Values:        values4,
 							CaseSensitive: caseSensitive9,
+							Values:        values4,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterInListFilter != nil {
@@ -1031,6 +1090,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter5 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterFilter
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter
 					if expressionsItem3.Filter.StringFilter != nil {
+						caseSensitive10 := new(bool)
+						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive10 = nil
+						}
 						var matchType5 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums{}
 						for _, matchTypeItem5 := range expressionsItem3.Filter.StringFilter.MatchType {
 							matchType5 = append(matchType5, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums(matchTypeItem5.ValueString()))
@@ -1038,16 +1103,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value40 string
 						value40 = expressionsItem3.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive10 := new(bool)
-						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive10 = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter{
+							CaseSensitive: caseSensitive10,
 							MatchType:     matchType5,
 							Value:         value40,
-							CaseSensitive: caseSensitive10,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter != nil {
@@ -1057,19 +1116,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter
 					if expressionsItem3.Filter.InListFilter != nil {
-						var values5 []string = []string{}
-						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
-							values5 = append(values5, valuesItem5.ValueString())
-						}
 						caseSensitive11 := new(bool)
 						if !expressionsItem3.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive11 = expressionsItem3.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive11 = nil
 						}
+						var values5 []string = []string{}
+						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
+							values5 = append(values5, valuesItem5.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter{
-							Values:        values5,
 							CaseSensitive: caseSensitive11,
+							Values:        values5,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter != nil {
@@ -1216,6 +1275,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter6 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter
 					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive12 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive12 = nil
+						}
 						var matchType6 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums{}
 						for _, matchTypeItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
 							matchType6 = append(matchType6, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums(matchTypeItem6.ValueString()))
@@ -1223,16 +1288,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value48 string
 						value48 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive12 := new(bool)
-						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive12 = nil
-						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter{
+							CaseSensitive: caseSensitive12,
 							MatchType:     matchType6,
 							Value:         value48,
-							CaseSensitive: caseSensitive12,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter != nil {
@@ -1242,19 +1301,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter
 					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter != nil {
-						var values6 []string = []string{}
-						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
-							values6 = append(values6, valuesItem6.ValueString())
-						}
 						caseSensitive13 := new(bool)
 						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive13 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive13 = nil
 						}
+						var values6 []string = []string{}
+						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values6 = append(values6, valuesItem6.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter{
-							Values:        values6,
 							CaseSensitive: caseSensitive13,
+							Values:        values6,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter != nil {
@@ -1399,6 +1458,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var filter7 shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayFilter
 				var sourceGoogleAnalyticsDataAPIStringFilter *shared.SourceGoogleAnalyticsDataAPIStringFilter
 				if customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive14 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive14 = nil
+					}
 					var matchType7 []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums = []shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums{}
 					for _, matchTypeItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.MatchType {
 						matchType7 = append(matchType7, shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayValidEnums(matchTypeItem7.ValueString()))
@@ -1406,16 +1471,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var value56 string
 					value56 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.Value.ValueString()
 
-					caseSensitive14 := new(bool)
-					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
-						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
-					} else {
-						caseSensitive14 = nil
-					}
 					sourceGoogleAnalyticsDataAPIStringFilter = &shared.SourceGoogleAnalyticsDataAPIStringFilter{
+						CaseSensitive: caseSensitive14,
 						MatchType:     matchType7,
 						Value:         value56,
-						CaseSensitive: caseSensitive14,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIStringFilter != nil {
@@ -1425,19 +1484,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 				var sourceGoogleAnalyticsDataAPIInListFilter *shared.SourceGoogleAnalyticsDataAPIInListFilter
 				if customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter != nil {
-					var values7 []string = []string{}
-					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
-						values7 = append(values7, valuesItem7.ValueString())
-					}
 					caseSensitive15 := new(bool)
 					if !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
 						*caseSensitive15 = customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
 					} else {
 						caseSensitive15 = nil
 					}
+					var values7 []string = []string{}
+					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
+						values7 = append(values7, valuesItem7.ValueString())
+					}
 					sourceGoogleAnalyticsDataAPIInListFilter = &shared.SourceGoogleAnalyticsDataAPIInListFilter{
-						Values:        values7,
 						CaseSensitive: caseSensitive15,
+						Values:        values7,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIInListFilter != nil {
@@ -1571,102 +1630,33 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 			}
 		}
-		var cohortSpec *shared.CohortReports
-		if customReportsArrayItem.CohortSpec != nil {
-			var sourceGoogleAnalyticsDataAPIDisabled *shared.SourceGoogleAnalyticsDataAPIDisabled
-			if customReportsArrayItem.CohortSpec.Disabled != nil {
-				sourceGoogleAnalyticsDataAPIDisabled = &shared.SourceGoogleAnalyticsDataAPIDisabled{}
-			}
-			if sourceGoogleAnalyticsDataAPIDisabled != nil {
-				cohortSpec = &shared.CohortReports{
-					SourceGoogleAnalyticsDataAPIDisabled: sourceGoogleAnalyticsDataAPIDisabled,
-				}
-			}
-			var sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled *shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled
-			if customReportsArrayItem.CohortSpec.Enabled != nil {
-				var cohorts []shared.Cohorts = []shared.Cohorts{}
-				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
-					name2 := new(string)
-					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
-						*name2 = cohortsItem.Name.ValueString()
-					} else {
-						name2 = nil
-					}
-					dimension := shared.Dimension(cohortsItem.Dimension.ValueString())
-					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
-					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
-					dateRange := shared.DateRange{
-						StartDate: startDate,
-						EndDate:   endDate,
-					}
-					cohorts = append(cohorts, shared.Cohorts{
-						Name:      name2,
-						Dimension: dimension,
-						DateRange: dateRange,
-					})
-				}
-				var cohortsRange *shared.CohortsRange
-				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
-					granularity := shared.SourceGoogleAnalyticsDataAPIGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
-					startOffset := new(int64)
-					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
-						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
-					} else {
-						startOffset = nil
-					}
-					var endOffset int64
-					endOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
-
-					cohortsRange = &shared.CohortsRange{
-						Granularity: granularity,
-						StartOffset: startOffset,
-						EndOffset:   endOffset,
-					}
-				}
-				var cohortReportSettings *shared.CohortReportSettings
-				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
-					accumulate := new(bool)
-					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
-						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
-					} else {
-						accumulate = nil
-					}
-					cohortReportSettings = &shared.CohortReportSettings{
-						Accumulate: accumulate,
-					}
-				}
-				sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled = &shared.SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled{
-					Cohorts:              cohorts,
-					CohortsRange:         cohortsRange,
-					CohortReportSettings: cohortReportSettings,
-				}
-			}
-			if sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled != nil {
-				cohortSpec = &shared.CohortReports{
-					SourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled: sourceGoogleAnalyticsDataAPISchemasCustomReportsArrayEnabled,
-				}
-			}
+		var metrics []string = []string{}
+		for _, metricsItem := range customReportsArrayItem.Metrics {
+			metrics = append(metrics, metricsItem.ValueString())
 		}
+		var name2 string
+		name2 = customReportsArrayItem.Name.ValueString()
+
 		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPICustomReportConfig{
-			Name:            name1,
-			Dimensions:      dimensions,
-			Metrics:         metrics,
-			DimensionFilter: dimensionFilter,
-			MetricFilter:    metricFilter,
 			CohortSpec:      cohortSpec,
+			DimensionFilter: dimensionFilter,
+			Dimensions:      dimensions,
+			MetricFilter:    metricFilter,
+			Metrics:         metrics,
+			Name:            name2,
 		})
 	}
-	windowInDays := new(int64)
-	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
-		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
+	dateRangesEndDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesEndDate.IsUnknown() && !r.Configuration.DateRangesEndDate.IsNull() {
+		dateRangesEndDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesEndDate.ValueString())
 	} else {
-		windowInDays = nil
+		dateRangesEndDate = nil
 	}
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	dateRangesStartDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
+		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	} else {
-		lookbackWindow = nil
+		dateRangesStartDate = nil
 	}
 	keepEmptyRows := new(bool)
 	if !r.Configuration.KeepEmptyRows.IsUnknown() && !r.Configuration.KeepEmptyRows.IsNull() {
@@ -1674,22 +1664,32 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	} else {
 		keepEmptyRows = nil
 	}
-	convertConversionsEvent := new(bool)
-	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
-		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
-		convertConversionsEvent = nil
+		lookbackWindow = nil
+	}
+	var propertyIds []string = []string{}
+	for _, propertyIdsItem := range r.Configuration.PropertyIds {
+		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
+	}
+	windowInDays := new(int64)
+	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
+		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
+	} else {
+		windowInDays = nil
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPI{
-		Credentials:             credentials,
-		PropertyIds:             propertyIds,
-		DateRangesStartDate:     dateRangesStartDate,
-		DateRangesEndDate:       dateRangesEndDate,
-		CustomReportsArray:      customReportsArray,
-		WindowInDays:            windowInDays,
-		LookbackWindow:          lookbackWindow,
-		KeepEmptyRows:           keepEmptyRows,
 		ConvertConversionsEvent: convertConversionsEvent,
+		Credentials:             credentials,
+		CustomReportsArray:      customReportsArray,
+		DateRangesEndDate:       dateRangesEndDate,
+		DateRangesStartDate:     dateRangesStartDate,
+		KeepEmptyRows:           keepEmptyRows,
+		LookbackWindow:          lookbackWindow,
+		PropertyIds:             propertyIds,
+		WindowInDays:            windowInDays,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -1761,10 +1761,22 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	convertConversionsEvent := new(bool)
+	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
+		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	} else {
+		convertConversionsEvent = nil
+	}
 	var credentials *shared.SourceGoogleAnalyticsDataAPIUpdateCredentials
 	if r.Configuration.Credentials != nil {
 		var sourceGoogleAnalyticsDataAPIUpdateAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsDataAPIUpdateAuthenticateViaGoogleOauth
 		if r.Configuration.Credentials.AuthenticateViaGoogleOauth != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			var clientID string
 			clientID = r.Configuration.Credentials.AuthenticateViaGoogleOauth.ClientID.ValueString()
 
@@ -1774,17 +1786,11 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.RefreshToken.ValueString()
 
-			accessToken := new(string)
-			if !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsUnknown() && !r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.AuthenticateViaGoogleOauth.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			sourceGoogleAnalyticsDataAPIUpdateAuthenticateViaGoogleOauth = &shared.SourceGoogleAnalyticsDataAPIUpdateAuthenticateViaGoogleOauth{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceGoogleAnalyticsDataAPIUpdateAuthenticateViaGoogleOauth != nil {
@@ -1807,34 +1813,83 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 			}
 		}
 	}
-	var propertyIds []string = []string{}
-	for _, propertyIdsItem := range r.Configuration.PropertyIds {
-		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
-	}
-	dateRangesStartDate := new(customTypes.Date)
-	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
-		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
-	} else {
-		dateRangesStartDate = nil
-	}
-	dateRangesEndDate := new(customTypes.Date)
-	if !r.Configuration.DateRangesEndDate.IsUnknown() && !r.Configuration.DateRangesEndDate.IsNull() {
-		dateRangesEndDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesEndDate.ValueString())
-	} else {
-		dateRangesEndDate = nil
-	}
 	var customReportsArray []shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig = []shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var name1 string
-		name1 = customReportsArrayItem.Name.ValueString()
+		var cohortSpec *shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports
+		if customReportsArrayItem.CohortSpec != nil {
+			var sourceGoogleAnalyticsDataAPIUpdateDisabled *shared.SourceGoogleAnalyticsDataAPIUpdateDisabled
+			if customReportsArrayItem.CohortSpec.Disabled != nil {
+				sourceGoogleAnalyticsDataAPIUpdateDisabled = &shared.SourceGoogleAnalyticsDataAPIUpdateDisabled{}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateDisabled != nil {
+				cohortSpec = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports{
+					SourceGoogleAnalyticsDataAPIUpdateDisabled: sourceGoogleAnalyticsDataAPIUpdateDisabled,
+				}
+			}
+			var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled
+			if customReportsArrayItem.CohortSpec.Enabled != nil {
+				var cohortReportSettings *shared.SourceGoogleAnalyticsDataAPIUpdateCohortReportSettings
+				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
+					accumulate := new(bool)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
+						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
+					} else {
+						accumulate = nil
+					}
+					cohortReportSettings = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReportSettings{
+						Accumulate: accumulate,
+					}
+				}
+				var cohorts []shared.SourceGoogleAnalyticsDataAPIUpdateCohorts = []shared.SourceGoogleAnalyticsDataAPIUpdateCohorts{}
+				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
+					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
+					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
+					dateRange := shared.SourceGoogleAnalyticsDataAPIUpdateDateRange{
+						EndDate:   endDate,
+						StartDate: startDate,
+					}
+					dimension := shared.SourceGoogleAnalyticsDataAPIUpdateDimension(cohortsItem.Dimension.ValueString())
+					name1 := new(string)
+					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
+						*name1 = cohortsItem.Name.ValueString()
+					} else {
+						name1 = nil
+					}
+					cohorts = append(cohorts, shared.SourceGoogleAnalyticsDataAPIUpdateCohorts{
+						DateRange: dateRange,
+						Dimension: dimension,
+						Name:      name1,
+					})
+				}
+				var cohortsRange *shared.SourceGoogleAnalyticsDataAPIUpdateCohortsRange
+				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
+					var endOffset int64
+					endOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
 
-		var dimensions []string = []string{}
-		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
-			dimensions = append(dimensions, dimensionsItem.ValueString())
-		}
-		var metrics []string = []string{}
-		for _, metricsItem := range customReportsArrayItem.Metrics {
-			metrics = append(metrics, metricsItem.ValueString())
+					granularity := shared.SourceGoogleAnalyticsDataAPIUpdateGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
+					startOffset := new(int64)
+					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
+						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
+					} else {
+						startOffset = nil
+					}
+					cohortsRange = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortsRange{
+						EndOffset:   endOffset,
+						Granularity: granularity,
+						StartOffset: startOffset,
+					}
+				}
+				sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled{
+					CohortReportSettings: cohortReportSettings,
+					Cohorts:              cohorts,
+					CohortsRange:         cohortsRange,
+				}
+			}
+			if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled != nil {
+				cohortSpec = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports{
+					SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled,
+				}
+			}
 		}
 		var dimensionFilter *shared.SourceGoogleAnalyticsDataAPIUpdateDimensionsFilter
 		if customReportsArrayItem.DimensionFilter != nil {
@@ -1848,6 +1903,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter
 					if expressionsItem.Filter.StringFilter != nil {
+						caseSensitive := new(bool)
+						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive = nil
+						}
 						var matchType []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums{}
 						for _, matchTypeItem := range expressionsItem.Filter.StringFilter.MatchType {
 							matchType = append(matchType, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter1ValidEnums(matchTypeItem.ValueString()))
@@ -1855,16 +1916,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value string
 						value = expressionsItem.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive := new(bool)
-						if !expressionsItem.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive = expressionsItem.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter{
+							CaseSensitive: caseSensitive,
 							MatchType:     matchType,
 							Value:         value,
-							CaseSensitive: caseSensitive,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterStringFilter != nil {
@@ -1874,19 +1929,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter
 					if expressionsItem.Filter.InListFilter != nil {
-						var values []string = []string{}
-						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
-							values = append(values, valuesItem.ValueString())
-						}
 						caseSensitive1 := new(bool)
 						if !expressionsItem.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive1 = expressionsItem.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive1 = nil
 						}
+						var values []string = []string{}
+						for _, valuesItem := range expressionsItem.Filter.InListFilter.Values {
+							values = append(values, valuesItem.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter{
-							Values:        values,
 							CaseSensitive: caseSensitive1,
+							Values:        values,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterInListFilter != nil {
@@ -2033,6 +2088,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter1 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter
 					if expressionsItem1.Filter.StringFilter != nil {
+						caseSensitive2 := new(bool)
+						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive2 = nil
+						}
 						var matchType1 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums{}
 						for _, matchTypeItem1 := range expressionsItem1.Filter.StringFilter.MatchType {
 							matchType1 = append(matchType1, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter2ValidEnums(matchTypeItem1.ValueString()))
@@ -2040,16 +2101,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value8 string
 						value8 = expressionsItem1.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive2 := new(bool)
-						if !expressionsItem1.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive2 = expressionsItem1.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive2 = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter{
+							CaseSensitive: caseSensitive2,
 							MatchType:     matchType1,
 							Value:         value8,
-							CaseSensitive: caseSensitive2,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterStringFilter != nil {
@@ -2059,19 +2114,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter
 					if expressionsItem1.Filter.InListFilter != nil {
-						var values1 []string = []string{}
-						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
-							values1 = append(values1, valuesItem1.ValueString())
-						}
 						caseSensitive3 := new(bool)
 						if !expressionsItem1.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem1.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive3 = expressionsItem1.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive3 = nil
 						}
+						var values1 []string = []string{}
+						for _, valuesItem1 := range expressionsItem1.Filter.InListFilter.Values {
+							values1 = append(values1, valuesItem1.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter{
-							Values:        values1,
 							CaseSensitive: caseSensitive3,
+							Values:        values1,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterInListFilter != nil {
@@ -2218,6 +2273,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter2 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilter3Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter
 					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive4 := new(bool)
+						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive4 = nil
+						}
 						var matchType2 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums{}
 						for _, matchTypeItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
 							matchType2 = append(matchType2, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterDimensionsFilterValidEnums(matchTypeItem2.ValueString()))
@@ -2225,16 +2286,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value16 string
 						value16 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive4 := new(bool)
-						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive4 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive4 = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter{
+							CaseSensitive: caseSensitive4,
 							MatchType:     matchType2,
 							Value:         value16,
-							CaseSensitive: caseSensitive4,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayStringFilter != nil {
@@ -2244,19 +2299,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter
 					if customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter != nil {
-						var values2 []string = []string{}
-						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
-							values2 = append(values2, valuesItem2.ValueString())
-						}
 						caseSensitive5 := new(bool)
 						if !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive5 = customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive5 = nil
 						}
+						var values2 []string = []string{}
+						for _, valuesItem2 := range customReportsArrayItem.DimensionFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values2 = append(values2, valuesItem2.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter{
-							Values:        values2,
 							CaseSensitive: caseSensitive5,
+							Values:        values2,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayInListFilter != nil {
@@ -2401,6 +2456,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var filter3 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayDimensionFilterFilter
 				var sourceGoogleAnalyticsDataAPIUpdateStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateStringFilter
 				if customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive6 := new(bool)
+					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive6 = nil
+					}
 					var matchType3 []shared.SourceGoogleAnalyticsDataAPIUpdateValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateValidEnums{}
 					for _, matchTypeItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.MatchType {
 						matchType3 = append(matchType3, shared.SourceGoogleAnalyticsDataAPIUpdateValidEnums(matchTypeItem3.ValueString()))
@@ -2408,16 +2469,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var value24 string
 					value24 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.Value.ValueString()
 
-					caseSensitive6 := new(bool)
-					if !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
-						*caseSensitive6 = customReportsArrayItem.DimensionFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
-					} else {
-						caseSensitive6 = nil
-					}
 					sourceGoogleAnalyticsDataAPIUpdateStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateStringFilter{
+						CaseSensitive: caseSensitive6,
 						MatchType:     matchType3,
 						Value:         value24,
-						CaseSensitive: caseSensitive6,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateStringFilter != nil {
@@ -2427,19 +2482,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 				var sourceGoogleAnalyticsDataAPIUpdateInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateInListFilter
 				if customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter != nil {
-					var values3 []string = []string{}
-					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
-						values3 = append(values3, valuesItem3.ValueString())
-					}
 					caseSensitive7 := new(bool)
 					if !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
 						*caseSensitive7 = customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
 					} else {
 						caseSensitive7 = nil
 					}
+					var values3 []string = []string{}
+					for _, valuesItem3 := range customReportsArrayItem.DimensionFilter.Filter.Filter.InListFilter.Values {
+						values3 = append(values3, valuesItem3.ValueString())
+					}
 					sourceGoogleAnalyticsDataAPIUpdateInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateInListFilter{
-						Values:        values3,
 						CaseSensitive: caseSensitive7,
+						Values:        values3,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateInListFilter != nil {
@@ -2573,6 +2628,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 			}
 		}
+		var dimensions []string = []string{}
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, dimensionsItem.ValueString())
+		}
 		var metricFilter *shared.SourceGoogleAnalyticsDataAPIUpdateMetricsFilter
 		if customReportsArrayItem.MetricFilter != nil {
 			var sourceGoogleAnalyticsDataAPIUpdateSchemasAndGroup *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasAndGroup
@@ -2585,6 +2644,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter4 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter
 					if expressionsItem2.Filter.StringFilter != nil {
+						caseSensitive8 := new(bool)
+						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive8 = nil
+						}
 						var matchType4 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums{}
 						for _, matchTypeItem4 := range expressionsItem2.Filter.StringFilter.MatchType {
 							matchType4 = append(matchType4, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter1ValidEnums(matchTypeItem4.ValueString()))
@@ -2592,16 +2657,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value32 string
 						value32 = expressionsItem2.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive8 := new(bool)
-						if !expressionsItem2.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive8 = expressionsItem2.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive8 = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter{
+							CaseSensitive: caseSensitive8,
 							MatchType:     matchType4,
 							Value:         value32,
-							CaseSensitive: caseSensitive8,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterStringFilter != nil {
@@ -2611,19 +2670,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter
 					if expressionsItem2.Filter.InListFilter != nil {
-						var values4 []string = []string{}
-						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
-							values4 = append(values4, valuesItem4.ValueString())
-						}
 						caseSensitive9 := new(bool)
 						if !expressionsItem2.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem2.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive9 = expressionsItem2.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive9 = nil
 						}
+						var values4 []string = []string{}
+						for _, valuesItem4 := range expressionsItem2.Filter.InListFilter.Values {
+							values4 = append(values4, valuesItem4.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter{
-							Values:        values4,
 							CaseSensitive: caseSensitive9,
+							Values:        values4,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterInListFilter != nil {
@@ -2770,6 +2829,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter5 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterFilter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter
 					if expressionsItem3.Filter.StringFilter != nil {
+						caseSensitive10 := new(bool)
+						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive10 = nil
+						}
 						var matchType5 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums{}
 						for _, matchTypeItem5 := range expressionsItem3.Filter.StringFilter.MatchType {
 							matchType5 = append(matchType5, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter2ValidEnums(matchTypeItem5.ValueString()))
@@ -2777,16 +2842,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value40 string
 						value40 = expressionsItem3.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive10 := new(bool)
-						if !expressionsItem3.Filter.StringFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive10 = expressionsItem3.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive10 = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter{
+							CaseSensitive: caseSensitive10,
 							MatchType:     matchType5,
 							Value:         value40,
-							CaseSensitive: caseSensitive10,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterStringFilter != nil {
@@ -2796,19 +2855,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter
 					if expressionsItem3.Filter.InListFilter != nil {
-						var values5 []string = []string{}
-						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
-							values5 = append(values5, valuesItem5.ValueString())
-						}
 						caseSensitive11 := new(bool)
 						if !expressionsItem3.Filter.InListFilter.CaseSensitive.IsUnknown() && !expressionsItem3.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive11 = expressionsItem3.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive11 = nil
 						}
+						var values5 []string = []string{}
+						for _, valuesItem5 := range expressionsItem3.Filter.InListFilter.Values {
+							values5 = append(values5, valuesItem5.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter{
-							Values:        values5,
 							CaseSensitive: caseSensitive11,
+							Values:        values5,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilterInListFilter != nil {
@@ -2955,6 +3014,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var filter6 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3Filter
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter
 					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter != nil {
+						caseSensitive12 := new(bool)
+						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
+							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
+						} else {
+							caseSensitive12 = nil
+						}
 						var matchType6 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums{}
 						for _, matchTypeItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.MatchType {
 							matchType6 = append(matchType6, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3ValidEnums(matchTypeItem6.ValueString()))
@@ -2962,16 +3027,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 						var value48 string
 						value48 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.Value.ValueString()
 
-						caseSensitive12 := new(bool)
-						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.IsNull() {
-							*caseSensitive12 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.StringFilter.CaseSensitive.ValueBool()
-						} else {
-							caseSensitive12 = nil
-						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter{
+							CaseSensitive: caseSensitive12,
 							MatchType:     matchType6,
 							Value:         value48,
-							CaseSensitive: caseSensitive12,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3StringFilter != nil {
@@ -2981,19 +3040,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					}
 					var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter
 					if customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter != nil {
-						var values6 []string = []string{}
-						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
-							values6 = append(values6, valuesItem6.ValueString())
-						}
 						caseSensitive13 := new(bool)
 						if !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.IsNull() {
 							*caseSensitive13 = customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.CaseSensitive.ValueBool()
 						} else {
 							caseSensitive13 = nil
 						}
+						var values6 []string = []string{}
+						for _, valuesItem6 := range customReportsArrayItem.MetricFilter.NotExpression.Expression.Filter.InListFilter.Values {
+							values6 = append(values6, valuesItem6.ValueString())
+						}
 						sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter{
-							Values:        values6,
 							CaseSensitive: caseSensitive13,
+							Values:        values6,
 						}
 					}
 					if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayMetricFilterMetricsFilter3InListFilter != nil {
@@ -3138,6 +3197,12 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				var filter7 shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayFilter
 				var sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter
 				if customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter != nil {
+					caseSensitive14 := new(bool)
+					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
+						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
+					} else {
+						caseSensitive14 = nil
+					}
 					var matchType7 []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums = []shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums{}
 					for _, matchTypeItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.MatchType {
 						matchType7 = append(matchType7, shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayValidEnums(matchTypeItem7.ValueString()))
@@ -3145,16 +3210,10 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 					var value56 string
 					value56 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.Value.ValueString()
 
-					caseSensitive14 := new(bool)
-					if !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.IsNull() {
-						*caseSensitive14 = customReportsArrayItem.MetricFilter.Filter.Filter.StringFilter.CaseSensitive.ValueBool()
-					} else {
-						caseSensitive14 = nil
-					}
 					sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter{
+						CaseSensitive: caseSensitive14,
 						MatchType:     matchType7,
 						Value:         value56,
-						CaseSensitive: caseSensitive14,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateSchemasStringFilter != nil {
@@ -3164,19 +3223,19 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 				var sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter
 				if customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter != nil {
-					var values7 []string = []string{}
-					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
-						values7 = append(values7, valuesItem7.ValueString())
-					}
 					caseSensitive15 := new(bool)
 					if !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsUnknown() && !customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.IsNull() {
 						*caseSensitive15 = customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.CaseSensitive.ValueBool()
 					} else {
 						caseSensitive15 = nil
 					}
+					var values7 []string = []string{}
+					for _, valuesItem7 := range customReportsArrayItem.MetricFilter.Filter.Filter.InListFilter.Values {
+						values7 = append(values7, valuesItem7.ValueString())
+					}
 					sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter{
-						Values:        values7,
 						CaseSensitive: caseSensitive15,
+						Values:        values7,
 					}
 				}
 				if sourceGoogleAnalyticsDataAPIUpdateSchemasInListFilter != nil {
@@ -3310,102 +3369,33 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 				}
 			}
 		}
-		var cohortSpec *shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports
-		if customReportsArrayItem.CohortSpec != nil {
-			var sourceGoogleAnalyticsDataAPIUpdateDisabled *shared.SourceGoogleAnalyticsDataAPIUpdateDisabled
-			if customReportsArrayItem.CohortSpec.Disabled != nil {
-				sourceGoogleAnalyticsDataAPIUpdateDisabled = &shared.SourceGoogleAnalyticsDataAPIUpdateDisabled{}
-			}
-			if sourceGoogleAnalyticsDataAPIUpdateDisabled != nil {
-				cohortSpec = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports{
-					SourceGoogleAnalyticsDataAPIUpdateDisabled: sourceGoogleAnalyticsDataAPIUpdateDisabled,
-				}
-			}
-			var sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled *shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled
-			if customReportsArrayItem.CohortSpec.Enabled != nil {
-				var cohorts []shared.SourceGoogleAnalyticsDataAPIUpdateCohorts = []shared.SourceGoogleAnalyticsDataAPIUpdateCohorts{}
-				for _, cohortsItem := range customReportsArrayItem.CohortSpec.Enabled.Cohorts {
-					name2 := new(string)
-					if !cohortsItem.Name.IsUnknown() && !cohortsItem.Name.IsNull() {
-						*name2 = cohortsItem.Name.ValueString()
-					} else {
-						name2 = nil
-					}
-					dimension := shared.SourceGoogleAnalyticsDataAPIUpdateDimension(cohortsItem.Dimension.ValueString())
-					startDate := customTypes.MustDateFromString(cohortsItem.DateRange.StartDate.ValueString())
-					endDate := customTypes.MustDateFromString(cohortsItem.DateRange.EndDate.ValueString())
-					dateRange := shared.SourceGoogleAnalyticsDataAPIUpdateDateRange{
-						StartDate: startDate,
-						EndDate:   endDate,
-					}
-					cohorts = append(cohorts, shared.SourceGoogleAnalyticsDataAPIUpdateCohorts{
-						Name:      name2,
-						Dimension: dimension,
-						DateRange: dateRange,
-					})
-				}
-				var cohortsRange *shared.SourceGoogleAnalyticsDataAPIUpdateCohortsRange
-				if customReportsArrayItem.CohortSpec.Enabled.CohortsRange != nil {
-					granularity := shared.SourceGoogleAnalyticsDataAPIUpdateGranularity(customReportsArrayItem.CohortSpec.Enabled.CohortsRange.Granularity.ValueString())
-					startOffset := new(int64)
-					if !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.IsNull() {
-						*startOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.StartOffset.ValueInt64()
-					} else {
-						startOffset = nil
-					}
-					var endOffset int64
-					endOffset = customReportsArrayItem.CohortSpec.Enabled.CohortsRange.EndOffset.ValueInt64()
-
-					cohortsRange = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortsRange{
-						Granularity: granularity,
-						StartOffset: startOffset,
-						EndOffset:   endOffset,
-					}
-				}
-				var cohortReportSettings *shared.SourceGoogleAnalyticsDataAPIUpdateCohortReportSettings
-				if customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings != nil {
-					accumulate := new(bool)
-					if !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsUnknown() && !customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.IsNull() {
-						*accumulate = customReportsArrayItem.CohortSpec.Enabled.CohortReportSettings.Accumulate.ValueBool()
-					} else {
-						accumulate = nil
-					}
-					cohortReportSettings = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReportSettings{
-						Accumulate: accumulate,
-					}
-				}
-				sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled = &shared.SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled{
-					Cohorts:              cohorts,
-					CohortsRange:         cohortsRange,
-					CohortReportSettings: cohortReportSettings,
-				}
-			}
-			if sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled != nil {
-				cohortSpec = &shared.SourceGoogleAnalyticsDataAPIUpdateCohortReports{
-					SourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled: sourceGoogleAnalyticsDataAPIUpdateSchemasCustomReportsArrayEnabled,
-				}
-			}
+		var metrics []string = []string{}
+		for _, metricsItem := range customReportsArrayItem.Metrics {
+			metrics = append(metrics, metricsItem.ValueString())
 		}
+		var name2 string
+		name2 = customReportsArrayItem.Name.ValueString()
+
 		customReportsArray = append(customReportsArray, shared.SourceGoogleAnalyticsDataAPIUpdateCustomReportConfig{
-			Name:            name1,
-			Dimensions:      dimensions,
-			Metrics:         metrics,
-			DimensionFilter: dimensionFilter,
-			MetricFilter:    metricFilter,
 			CohortSpec:      cohortSpec,
+			DimensionFilter: dimensionFilter,
+			Dimensions:      dimensions,
+			MetricFilter:    metricFilter,
+			Metrics:         metrics,
+			Name:            name2,
 		})
 	}
-	windowInDays := new(int64)
-	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
-		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
+	dateRangesEndDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesEndDate.IsUnknown() && !r.Configuration.DateRangesEndDate.IsNull() {
+		dateRangesEndDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesEndDate.ValueString())
 	} else {
-		windowInDays = nil
+		dateRangesEndDate = nil
 	}
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	dateRangesStartDate := new(customTypes.Date)
+	if !r.Configuration.DateRangesStartDate.IsUnknown() && !r.Configuration.DateRangesStartDate.IsNull() {
+		dateRangesStartDate = customTypes.MustNewDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	} else {
-		lookbackWindow = nil
+		dateRangesStartDate = nil
 	}
 	keepEmptyRows := new(bool)
 	if !r.Configuration.KeepEmptyRows.IsUnknown() && !r.Configuration.KeepEmptyRows.IsNull() {
@@ -3413,22 +3403,32 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToSharedSourceGoogleAnalytic
 	} else {
 		keepEmptyRows = nil
 	}
-	convertConversionsEvent := new(bool)
-	if !r.Configuration.ConvertConversionsEvent.IsUnknown() && !r.Configuration.ConvertConversionsEvent.IsNull() {
-		*convertConversionsEvent = r.Configuration.ConvertConversionsEvent.ValueBool()
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
-		convertConversionsEvent = nil
+		lookbackWindow = nil
+	}
+	var propertyIds []string = []string{}
+	for _, propertyIdsItem := range r.Configuration.PropertyIds {
+		propertyIds = append(propertyIds, propertyIdsItem.ValueString())
+	}
+	windowInDays := new(int64)
+	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
+		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
+	} else {
+		windowInDays = nil
 	}
 	configuration := shared.SourceGoogleAnalyticsDataAPIUpdate{
-		Credentials:             credentials,
-		PropertyIds:             propertyIds,
-		DateRangesStartDate:     dateRangesStartDate,
-		DateRangesEndDate:       dateRangesEndDate,
-		CustomReportsArray:      customReportsArray,
-		WindowInDays:            windowInDays,
-		LookbackWindow:          lookbackWindow,
-		KeepEmptyRows:           keepEmptyRows,
 		ConvertConversionsEvent: convertConversionsEvent,
+		Credentials:             credentials,
+		CustomReportsArray:      customReportsArray,
+		DateRangesEndDate:       dateRangesEndDate,
+		DateRangesStartDate:     dateRangesStartDate,
+		KeepEmptyRows:           keepEmptyRows,
+		LookbackWindow:          lookbackWindow,
+		PropertyIds:             propertyIds,
+		WindowInDays:            windowInDays,
 	}
 	out := shared.SourceGoogleAnalyticsDataAPIPutRequest{
 		Name:          name,

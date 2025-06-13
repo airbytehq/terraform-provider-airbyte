@@ -25,12 +25,12 @@ func (r *SourceCapsuleCrmResourceModel) ToSharedSourceCapsuleCrmCreateRequest() 
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	entity := shared.Entity(r.Configuration.Entity.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCapsuleCrm{
 		BearerToken: bearerToken,
-		StartDate:   startDate,
 		Entity:      entity,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -105,12 +105,12 @@ func (r *SourceCapsuleCrmResourceModel) ToSharedSourceCapsuleCrmPutRequest() *sh
 	var bearerToken string
 	bearerToken = r.Configuration.BearerToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	entity := shared.SourceCapsuleCrmUpdateEntity(r.Configuration.Entity.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCapsuleCrmUpdate{
 		BearerToken: bearerToken,
-		StartDate:   startDate,
 		Entity:      entity,
+		StartDate:   startDate,
 	}
 	out := shared.SourceCapsuleCrmPutRequest{
 		Name:          name,

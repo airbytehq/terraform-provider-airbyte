@@ -66,17 +66,17 @@ func (e *Braintree) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBraintree struct {
-	// The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
-	MerchantID string `json:"merchant_id"`
-	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PublicKey string `json:"public_key"`
-	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PrivateKey string `json:"private_key"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Environment specifies where the data will come from.
 	Environment SourceBraintreeEnvironment `json:"environment"`
-	sourceType  Braintree                  `const:"braintree" json:"sourceType"`
+	// The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
+	MerchantID string `json:"merchant_id"`
+	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+	PrivateKey string `json:"private_key"`
+	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+	PublicKey string `json:"public_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Braintree  `const:"braintree" json:"sourceType"`
 }
 
 func (s SourceBraintree) MarshalJSON() ([]byte, error) {
@@ -90,18 +90,18 @@ func (s *SourceBraintree) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceBraintree) GetEnvironment() SourceBraintreeEnvironment {
+	if o == nil {
+		return SourceBraintreeEnvironment("")
+	}
+	return o.Environment
+}
+
 func (o *SourceBraintree) GetMerchantID() string {
 	if o == nil {
 		return ""
 	}
 	return o.MerchantID
-}
-
-func (o *SourceBraintree) GetPublicKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PublicKey
 }
 
 func (o *SourceBraintree) GetPrivateKey() string {
@@ -111,18 +111,18 @@ func (o *SourceBraintree) GetPrivateKey() string {
 	return o.PrivateKey
 }
 
+func (o *SourceBraintree) GetPublicKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PublicKey
+}
+
 func (o *SourceBraintree) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceBraintree) GetEnvironment() SourceBraintreeEnvironment {
-	if o == nil {
-		return SourceBraintreeEnvironment("")
-	}
-	return o.Environment
 }
 
 func (o *SourceBraintree) GetSourceType() Braintree {

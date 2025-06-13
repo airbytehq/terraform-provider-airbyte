@@ -25,12 +25,6 @@ func (r *SourceYousignResourceModel) ToSharedSourceYousignCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	subdomain := new(shared.SourceYousignSubdomain)
-	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
-		*subdomain = shared.SourceYousignSubdomain(r.Configuration.Subdomain.ValueString())
-	} else {
-		subdomain = nil
-	}
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
@@ -38,11 +32,17 @@ func (r *SourceYousignResourceModel) ToSharedSourceYousignCreateRequest() *share
 		limit = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	subdomain := new(shared.SourceYousignSubdomain)
+	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
+		*subdomain = shared.SourceYousignSubdomain(r.Configuration.Subdomain.ValueString())
+	} else {
+		subdomain = nil
+	}
 	configuration := shared.SourceYousign{
 		APIKey:    apiKey,
-		Subdomain: subdomain,
 		Limit:     limit,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,12 +117,6 @@ func (r *SourceYousignResourceModel) ToSharedSourceYousignPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	subdomain := new(shared.SourceYousignUpdateSubdomain)
-	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
-		*subdomain = shared.SourceYousignUpdateSubdomain(r.Configuration.Subdomain.ValueString())
-	} else {
-		subdomain = nil
-	}
 	limit := new(string)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueString()
@@ -130,11 +124,17 @@ func (r *SourceYousignResourceModel) ToSharedSourceYousignPutRequest() *shared.S
 		limit = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	subdomain := new(shared.SourceYousignUpdateSubdomain)
+	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
+		*subdomain = shared.SourceYousignUpdateSubdomain(r.Configuration.Subdomain.ValueString())
+	} else {
+		subdomain = nil
+	}
 	configuration := shared.SourceYousignUpdate{
 		APIKey:    apiKey,
-		Subdomain: subdomain,
 		Limit:     limit,
 		StartDate: startDate,
+		Subdomain: subdomain,
 	}
 	out := shared.SourceYousignPutRequest{
 		Name:          name,

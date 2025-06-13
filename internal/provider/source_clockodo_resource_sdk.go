@@ -35,19 +35,19 @@ func (r *SourceClockodoResourceModel) ToSharedSourceClockodoCreateRequest() *sha
 	} else {
 		externalApplication = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var years []interface{} = []interface{}{}
 	for _, yearsItem := range r.Configuration.Years {
 		var yearsTmp interface{}
 		_ = json.Unmarshal([]byte(yearsItem.ValueString()), &yearsTmp)
 		years = append(years, yearsTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceClockodo{
 		APIKey:              apiKey,
 		EmailAddress:        emailAddress,
 		ExternalApplication: externalApplication,
-		Years:               years,
 		StartDate:           startDate,
+		Years:               years,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -131,19 +131,19 @@ func (r *SourceClockodoResourceModel) ToSharedSourceClockodoPutRequest() *shared
 	} else {
 		externalApplication = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var years []interface{} = []interface{}{}
 	for _, yearsItem := range r.Configuration.Years {
 		var yearsTmp interface{}
 		_ = json.Unmarshal([]byte(yearsItem.ValueString()), &yearsTmp)
 		years = append(years, yearsTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceClockodoUpdate{
 		APIKey:              apiKey,
 		EmailAddress:        emailAddress,
 		ExternalApplication: externalApplication,
-		Years:               years,
 		StartDate:           startDate,
+		Years:               years,
 	}
 	out := shared.SourceClockodoPutRequest{
 		Name:          name,

@@ -21,15 +21,15 @@ func (r *SourceTeamtailorResourceModel) ToSharedSourceTeamtailorCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var xAPIVersion string
-	xAPIVersion = r.Configuration.XAPIVersion.ValueString()
-
 	var api string
 	api = r.Configuration.API.ValueString()
 
+	var xAPIVersion string
+	xAPIVersion = r.Configuration.XAPIVersion.ValueString()
+
 	configuration := shared.SourceTeamtailor{
-		XAPIVersion: xAPIVersion,
 		API:         api,
+		XAPIVersion: xAPIVersion,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceTeamtailorResourceModel) ToSharedSourceTeamtailorPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var xAPIVersion string
-	xAPIVersion = r.Configuration.XAPIVersion.ValueString()
-
 	var api string
 	api = r.Configuration.API.ValueString()
 
+	var xAPIVersion string
+	xAPIVersion = r.Configuration.XAPIVersion.ValueString()
+
 	configuration := shared.SourceTeamtailorUpdate{
-		XAPIVersion: xAPIVersion,
 		API:         api,
+		XAPIVersion: xAPIVersion,
 	}
 	out := shared.SourceTeamtailorPutRequest{
 		Name:          name,

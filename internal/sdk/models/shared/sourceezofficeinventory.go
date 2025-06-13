@@ -35,10 +35,10 @@ func (e *Ezofficeinventory) UnmarshalJSON(data []byte) error {
 type SourceEzofficeinventory struct {
 	// Your EZOfficeInventory Access Token. API Access is disabled by default. Enable API Access in Settings > Integrations > API Integration and click on Update to generate a new access token
 	APIKey string `json:"api_key"`
-	// The company name used in signup, also visible in the URL when logged in.
-	Subdomain string `json:"subdomain"`
 	// Earliest date you want to sync historical streams (inventory_histories, asset_histories, asset_stock_histories) from
-	StartDate  time.Time         `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
+	// The company name used in signup, also visible in the URL when logged in.
+	Subdomain  string            `json:"subdomain"`
 	sourceType Ezofficeinventory `const:"ezofficeinventory" json:"sourceType"`
 }
 
@@ -60,18 +60,18 @@ func (o *SourceEzofficeinventory) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceEzofficeinventory) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
-}
-
 func (o *SourceEzofficeinventory) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceEzofficeinventory) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }
 
 func (o *SourceEzofficeinventory) GetSourceType() Ezofficeinventory {

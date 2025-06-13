@@ -33,10 +33,12 @@ func (e *Recharge) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRecharge struct {
-	// The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
 	AccessToken string `json:"access_token"`
+	// Specifies how many days of historical data should be reloaded each time the recharge connector runs.
+	LookbackWindowDays *int64 `default:"0" json:"lookback_window_days"`
+	// The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
+	StartDate time.Time `json:"start_date"`
 	// Define whether or not the `Orders` stream should use the deprecated `2021-01` API version, or use `2021-11`, otherwise.
 	UseOrdersDeprecatedAPI *bool    `default:"true" json:"use_orders_deprecated_api"`
 	sourceType             Recharge `const:"recharge" json:"sourceType"`
@@ -53,18 +55,25 @@ func (s *SourceRecharge) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceRecharge) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceRecharge) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceRecharge) GetLookbackWindowDays() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackWindowDays
+}
+
+func (o *SourceRecharge) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceRecharge) GetUseOrdersDeprecatedAPI() *bool {

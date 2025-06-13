@@ -28,14 +28,14 @@ func (r *SourceShipstationResourceModel) ToSharedSourceShipstationCreateRequest(
 	} else {
 		password = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShipstation{
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -113,14 +113,14 @@ func (r *SourceShipstationResourceModel) ToSharedSourceShipstationPutRequest() *
 	} else {
 		password = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShipstationUpdate{
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceShipstationPutRequest{
 		Name:          name,

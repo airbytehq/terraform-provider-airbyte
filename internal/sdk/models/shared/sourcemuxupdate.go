@@ -8,11 +8,11 @@ import (
 )
 
 type SourceMuxUpdate struct {
-	Username  string    `json:"username"`
-	Password  *string   `json:"password,omitempty"`
-	StartDate time.Time `json:"start_date"`
+	Password *string `json:"password,omitempty"`
 	// The playback id for your video asset shown in website details
-	PlaybackID *string `json:"playback_id,omitempty"`
+	PlaybackID *string   `json:"playback_id,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
 }
 
 func (s SourceMuxUpdate) MarshalJSON() ([]byte, error) {
@@ -26,18 +26,18 @@ func (s *SourceMuxUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMuxUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceMuxUpdate) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceMuxUpdate) GetPlaybackID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlaybackID
 }
 
 func (o *SourceMuxUpdate) GetStartDate() time.Time {
@@ -47,9 +47,9 @@ func (o *SourceMuxUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceMuxUpdate) GetPlaybackID() *string {
+func (o *SourceMuxUpdate) GetUsername() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.PlaybackID
+	return o.Username
 }

@@ -21,20 +21,29 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	allowLeadingNumbers := new(bool)
+	if !r.Configuration.AllowLeadingNumbers.IsUnknown() && !r.Configuration.AllowLeadingNumbers.IsNull() {
+		*allowLeadingNumbers = r.Configuration.AllowLeadingNumbers.ValueBool()
+	} else {
+		allowLeadingNumbers = nil
+	}
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
 		*batchSize = r.Configuration.BatchSize.ValueInt64()
 	} else {
 		batchSize = nil
 	}
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
-	namesConversion := new(bool)
-	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
-		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	combineLetterNumberPairs := new(bool)
+	if !r.Configuration.CombineLetterNumberPairs.IsUnknown() && !r.Configuration.CombineLetterNumberPairs.IsNull() {
+		*combineLetterNumberPairs = r.Configuration.CombineLetterNumberPairs.ValueBool()
 	} else {
-		namesConversion = nil
+		combineLetterNumberPairs = nil
+	}
+	combineNumberWordPairs := new(bool)
+	if !r.Configuration.CombineNumberWordPairs.IsUnknown() && !r.Configuration.CombineNumberWordPairs.IsNull() {
+		*combineNumberWordPairs = r.Configuration.CombineNumberWordPairs.ValueBool()
+	} else {
+		combineNumberWordPairs = nil
 	}
 	var credentials shared.SourceGoogleSheetsAuthentication
 	var sourceGoogleSheetsAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsAuthenticateViaGoogleOAuth
@@ -73,11 +82,51 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsCreateReques
 			SourceGoogleSheetsServiceAccountKeyAuthentication: sourceGoogleSheetsServiceAccountKeyAuthentication,
 		}
 	}
+	namesConversion := new(bool)
+	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
+		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	} else {
+		namesConversion = nil
+	}
+	removeLeadingTrailingUnderscores := new(bool)
+	if !r.Configuration.RemoveLeadingTrailingUnderscores.IsUnknown() && !r.Configuration.RemoveLeadingTrailingUnderscores.IsNull() {
+		*removeLeadingTrailingUnderscores = r.Configuration.RemoveLeadingTrailingUnderscores.ValueBool()
+	} else {
+		removeLeadingTrailingUnderscores = nil
+	}
+	removeSpecialCharacters := new(bool)
+	if !r.Configuration.RemoveSpecialCharacters.IsUnknown() && !r.Configuration.RemoveSpecialCharacters.IsNull() {
+		*removeSpecialCharacters = r.Configuration.RemoveSpecialCharacters.ValueBool()
+	} else {
+		removeSpecialCharacters = nil
+	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
+	var streamNameOverrides []shared.StreamNameOverrides = []shared.StreamNameOverrides{}
+	for _, streamNameOverridesItem := range r.Configuration.StreamNameOverrides {
+		var customStreamName string
+		customStreamName = streamNameOverridesItem.CustomStreamName.ValueString()
+
+		var sourceStreamName string
+		sourceStreamName = streamNameOverridesItem.SourceStreamName.ValueString()
+
+		streamNameOverrides = append(streamNameOverrides, shared.StreamNameOverrides{
+			CustomStreamName: customStreamName,
+			SourceStreamName: sourceStreamName,
+		})
+	}
 	configuration := shared.SourceGoogleSheets{
-		BatchSize:       batchSize,
-		SpreadsheetID:   spreadsheetID,
-		NamesConversion: namesConversion,
-		Credentials:     credentials,
+		AllowLeadingNumbers:              allowLeadingNumbers,
+		BatchSize:                        batchSize,
+		CombineLetterNumberPairs:         combineLetterNumberPairs,
+		CombineNumberWordPairs:           combineNumberWordPairs,
+		Credentials:                      credentials,
+		NamesConversion:                  namesConversion,
+		RemoveLeadingTrailingUnderscores: removeLeadingTrailingUnderscores,
+		RemoveSpecialCharacters:          removeSpecialCharacters,
+		SpreadsheetID:                    spreadsheetID,
+		StreamNameOverrides:              streamNameOverrides,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -149,20 +198,29 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsPutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	allowLeadingNumbers := new(bool)
+	if !r.Configuration.AllowLeadingNumbers.IsUnknown() && !r.Configuration.AllowLeadingNumbers.IsNull() {
+		*allowLeadingNumbers = r.Configuration.AllowLeadingNumbers.ValueBool()
+	} else {
+		allowLeadingNumbers = nil
+	}
 	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
 		*batchSize = r.Configuration.BatchSize.ValueInt64()
 	} else {
 		batchSize = nil
 	}
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
-	namesConversion := new(bool)
-	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
-		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	combineLetterNumberPairs := new(bool)
+	if !r.Configuration.CombineLetterNumberPairs.IsUnknown() && !r.Configuration.CombineLetterNumberPairs.IsNull() {
+		*combineLetterNumberPairs = r.Configuration.CombineLetterNumberPairs.ValueBool()
 	} else {
-		namesConversion = nil
+		combineLetterNumberPairs = nil
+	}
+	combineNumberWordPairs := new(bool)
+	if !r.Configuration.CombineNumberWordPairs.IsUnknown() && !r.Configuration.CombineNumberWordPairs.IsNull() {
+		*combineNumberWordPairs = r.Configuration.CombineNumberWordPairs.ValueBool()
+	} else {
+		combineNumberWordPairs = nil
 	}
 	var credentials shared.SourceGoogleSheetsUpdateAuthentication
 	var sourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsUpdateAuthenticateViaGoogleOAuth
@@ -201,11 +259,51 @@ func (r *SourceGoogleSheetsResourceModel) ToSharedSourceGoogleSheetsPutRequest()
 			SourceGoogleSheetsUpdateServiceAccountKeyAuthentication: sourceGoogleSheetsUpdateServiceAccountKeyAuthentication,
 		}
 	}
+	namesConversion := new(bool)
+	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
+		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	} else {
+		namesConversion = nil
+	}
+	removeLeadingTrailingUnderscores := new(bool)
+	if !r.Configuration.RemoveLeadingTrailingUnderscores.IsUnknown() && !r.Configuration.RemoveLeadingTrailingUnderscores.IsNull() {
+		*removeLeadingTrailingUnderscores = r.Configuration.RemoveLeadingTrailingUnderscores.ValueBool()
+	} else {
+		removeLeadingTrailingUnderscores = nil
+	}
+	removeSpecialCharacters := new(bool)
+	if !r.Configuration.RemoveSpecialCharacters.IsUnknown() && !r.Configuration.RemoveSpecialCharacters.IsNull() {
+		*removeSpecialCharacters = r.Configuration.RemoveSpecialCharacters.ValueBool()
+	} else {
+		removeSpecialCharacters = nil
+	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
+	var streamNameOverrides []shared.SourceGoogleSheetsUpdateStreamNameOverrides = []shared.SourceGoogleSheetsUpdateStreamNameOverrides{}
+	for _, streamNameOverridesItem := range r.Configuration.StreamNameOverrides {
+		var customStreamName string
+		customStreamName = streamNameOverridesItem.CustomStreamName.ValueString()
+
+		var sourceStreamName string
+		sourceStreamName = streamNameOverridesItem.SourceStreamName.ValueString()
+
+		streamNameOverrides = append(streamNameOverrides, shared.SourceGoogleSheetsUpdateStreamNameOverrides{
+			CustomStreamName: customStreamName,
+			SourceStreamName: sourceStreamName,
+		})
+	}
 	configuration := shared.SourceGoogleSheetsUpdate{
-		BatchSize:       batchSize,
-		SpreadsheetID:   spreadsheetID,
-		NamesConversion: namesConversion,
-		Credentials:     credentials,
+		AllowLeadingNumbers:              allowLeadingNumbers,
+		BatchSize:                        batchSize,
+		CombineLetterNumberPairs:         combineLetterNumberPairs,
+		CombineNumberWordPairs:           combineNumberWordPairs,
+		Credentials:                      credentials,
+		NamesConversion:                  namesConversion,
+		RemoveLeadingTrailingUnderscores: removeLeadingTrailingUnderscores,
+		RemoveSpecialCharacters:          removeSpecialCharacters,
+		SpreadsheetID:                    spreadsheetID,
+		StreamNameOverrides:              streamNameOverrides,
 	}
 	out := shared.SourceGoogleSheetsPutRequest{
 		Name:          name,

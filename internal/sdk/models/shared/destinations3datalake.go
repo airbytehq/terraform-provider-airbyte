@@ -9,6 +9,330 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type DestinationS3DataLakeSchemasCatalogType string
+
+const (
+	DestinationS3DataLakeSchemasCatalogTypeRest DestinationS3DataLakeSchemasCatalogType = "REST"
+)
+
+func (e DestinationS3DataLakeSchemasCatalogType) ToPointer() *DestinationS3DataLakeSchemasCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeSchemasCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "REST":
+		*e = DestinationS3DataLakeSchemasCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeSchemasCatalogType: %v", v)
+	}
+}
+
+// RestCatalog - Configuration details for connecting to a REST catalog.
+type RestCatalog struct {
+	CatalogType *DestinationS3DataLakeSchemasCatalogType `default:"REST" json:"catalog_type"`
+	// The namespace to be used in the Table identifier.
+	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
+	//            `Destination-defined` or `Source-defined`
+	Namespace string `json:"namespace"`
+	// The base URL of the Rest server used to connect to the Rest catalog.
+	ServerURI            string `json:"server_uri"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (r RestCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RestCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RestCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *RestCatalog) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *RestCatalog) GetServerURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerURI
+}
+
+func (o *RestCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationS3DataLakeCatalogType string
+
+const (
+	DestinationS3DataLakeCatalogTypeGlue DestinationS3DataLakeCatalogType = "GLUE"
+)
+
+func (e DestinationS3DataLakeCatalogType) ToPointer() *DestinationS3DataLakeCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GLUE":
+		*e = DestinationS3DataLakeCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeCatalogType: %v", v)
+	}
+}
+
+// GlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
+type GlueCatalog struct {
+	CatalogType *DestinationS3DataLakeCatalogType `default:"GLUE" json:"catalog_type"`
+	// The Glue database name. This will ONLY be used if the `Destination Namespace` setting for the connection is set to `Destination-defined` or `Source-defined`
+	DatabaseName string `json:"database_name"`
+	// The AWS Account ID associated with the Glue service used by the Iceberg catalog.
+	GlueID string `json:"glue_id"`
+	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
+	RoleArn              *string `json:"role_arn,omitempty"`
+	AdditionalProperties any     `additionalProperties:"true" json:"-"`
+}
+
+func (g GlueCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GlueCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GlueCatalog) GetCatalogType() *DestinationS3DataLakeCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *GlueCatalog) GetDatabaseName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DatabaseName
+}
+
+func (o *GlueCatalog) GetGlueID() string {
+	if o == nil {
+		return ""
+	}
+	return o.GlueID
+}
+
+func (o *GlueCatalog) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
+}
+
+func (o *GlueCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type DestinationS3DataLakeSchemasCatalogTypeCatalogType string
+
+const (
+	DestinationS3DataLakeSchemasCatalogTypeCatalogTypeNessie DestinationS3DataLakeSchemasCatalogTypeCatalogType = "NESSIE"
+)
+
+func (e DestinationS3DataLakeSchemasCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeSchemasCatalogTypeCatalogType {
+	return &e
+}
+func (e *DestinationS3DataLakeSchemasCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "NESSIE":
+		*e = DestinationS3DataLakeSchemasCatalogTypeCatalogType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3DataLakeSchemasCatalogTypeCatalogType: %v", v)
+	}
+}
+
+// NessieCatalog - Configuration details for connecting to a Nessie-based Iceberg catalog.
+type NessieCatalog struct {
+	// Optional token for authentication with the Nessie server.
+	AccessToken *string                                             `json:"access_token,omitempty"`
+	CatalogType *DestinationS3DataLakeSchemasCatalogTypeCatalogType `default:"NESSIE" json:"catalog_type"`
+	// The Nessie namespace to be used in the Table identifier.
+	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
+	//            `Destination-defined` or `Source-defined`
+	Namespace string `json:"namespace"`
+	// The base URL of the Nessie server used to connect to the Nessie catalog.
+	ServerURI            string `json:"server_uri"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
+}
+
+func (n NessieCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
+}
+
+func (n *NessieCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *NessieCatalog) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
+}
+
+func (o *NessieCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogTypeCatalogType {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogType
+}
+
+func (o *NessieCatalog) GetNamespace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Namespace
+}
+
+func (o *NessieCatalog) GetServerURI() string {
+	if o == nil {
+		return ""
+	}
+	return o.ServerURI
+}
+
+func (o *NessieCatalog) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type CatalogTypeType string
+
+const (
+	CatalogTypeTypeNessieCatalog CatalogTypeType = "Nessie Catalog"
+	CatalogTypeTypeGlueCatalog   CatalogTypeType = "Glue Catalog"
+	CatalogTypeTypeRestCatalog   CatalogTypeType = "Rest Catalog"
+)
+
+// CatalogType - Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
+type CatalogType struct {
+	NessieCatalog *NessieCatalog `queryParam:"inline"`
+	GlueCatalog   *GlueCatalog   `queryParam:"inline"`
+	RestCatalog   *RestCatalog   `queryParam:"inline"`
+
+	Type CatalogTypeType
+}
+
+func CreateCatalogTypeNessieCatalog(nessieCatalog NessieCatalog) CatalogType {
+	typ := CatalogTypeTypeNessieCatalog
+
+	return CatalogType{
+		NessieCatalog: &nessieCatalog,
+		Type:          typ,
+	}
+}
+
+func CreateCatalogTypeGlueCatalog(glueCatalog GlueCatalog) CatalogType {
+	typ := CatalogTypeTypeGlueCatalog
+
+	return CatalogType{
+		GlueCatalog: &glueCatalog,
+		Type:        typ,
+	}
+}
+
+func CreateCatalogTypeRestCatalog(restCatalog RestCatalog) CatalogType {
+	typ := CatalogTypeTypeRestCatalog
+
+	return CatalogType{
+		RestCatalog: &restCatalog,
+		Type:        typ,
+	}
+}
+
+func (u *CatalogType) UnmarshalJSON(data []byte) error {
+
+	var restCatalog RestCatalog = RestCatalog{}
+	if err := utils.UnmarshalJSON(data, &restCatalog, "", true, true); err == nil {
+		u.RestCatalog = &restCatalog
+		u.Type = CatalogTypeTypeRestCatalog
+		return nil
+	}
+
+	var nessieCatalog NessieCatalog = NessieCatalog{}
+	if err := utils.UnmarshalJSON(data, &nessieCatalog, "", true, true); err == nil {
+		u.NessieCatalog = &nessieCatalog
+		u.Type = CatalogTypeTypeNessieCatalog
+		return nil
+	}
+
+	var glueCatalog GlueCatalog = GlueCatalog{}
+	if err := utils.UnmarshalJSON(data, &glueCatalog, "", true, true); err == nil {
+		u.GlueCatalog = &glueCatalog
+		u.Type = CatalogTypeTypeGlueCatalog
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CatalogType", string(data))
+}
+
+func (u CatalogType) MarshalJSON() ([]byte, error) {
+	if u.NessieCatalog != nil {
+		return utils.MarshalJSON(u.NessieCatalog, "", true)
+	}
+
+	if u.GlueCatalog != nil {
+		return utils.MarshalJSON(u.GlueCatalog, "", true)
+	}
+
+	if u.RestCatalog != nil {
+		return utils.MarshalJSON(u.RestCatalog, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CatalogType: all fields are null")
+}
+
 // DestinationS3DataLakeS3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 type DestinationS3DataLakeS3BucketRegion string
 
@@ -132,330 +456,6 @@ func (e *DestinationS3DataLakeS3BucketRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationS3DataLakeSchemasCatalogType string
-
-const (
-	DestinationS3DataLakeSchemasCatalogTypeRest DestinationS3DataLakeSchemasCatalogType = "REST"
-)
-
-func (e DestinationS3DataLakeSchemasCatalogType) ToPointer() *DestinationS3DataLakeSchemasCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeSchemasCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "REST":
-		*e = DestinationS3DataLakeSchemasCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeSchemasCatalogType: %v", v)
-	}
-}
-
-// RestCatalog - Configuration details for connecting to a REST catalog.
-type RestCatalog struct {
-	CatalogType *DestinationS3DataLakeSchemasCatalogType `default:"REST" json:"catalog_type"`
-	// The base URL of the Rest server used to connect to the Rest catalog.
-	ServerURI string `json:"server_uri"`
-	// The namespace to be used in the Table identifier.
-	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
-	//            `Destination-defined` or `Source-defined`
-	Namespace            string `json:"namespace"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (r RestCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(r, "", false)
-}
-
-func (r *RestCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *RestCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *RestCatalog) GetServerURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServerURI
-}
-
-func (o *RestCatalog) GetNamespace() string {
-	if o == nil {
-		return ""
-	}
-	return o.Namespace
-}
-
-func (o *RestCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationS3DataLakeCatalogType string
-
-const (
-	DestinationS3DataLakeCatalogTypeGlue DestinationS3DataLakeCatalogType = "GLUE"
-)
-
-func (e DestinationS3DataLakeCatalogType) ToPointer() *DestinationS3DataLakeCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GLUE":
-		*e = DestinationS3DataLakeCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeCatalogType: %v", v)
-	}
-}
-
-// GlueCatalog - Configuration details for connecting to an AWS Glue-based Iceberg catalog.
-type GlueCatalog struct {
-	CatalogType *DestinationS3DataLakeCatalogType `default:"GLUE" json:"catalog_type"`
-	// The AWS Account ID associated with the Glue service used by the Iceberg catalog.
-	GlueID string `json:"glue_id"`
-	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
-	RoleArn *string `json:"role_arn,omitempty"`
-	// The Glue database name. This will ONLY be used if the `Destination Namespace` setting for the connection is set to `Destination-defined` or `Source-defined`
-	DatabaseName         string `json:"database_name"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (g GlueCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(g, "", false)
-}
-
-func (g *GlueCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *GlueCatalog) GetCatalogType() *DestinationS3DataLakeCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *GlueCatalog) GetGlueID() string {
-	if o == nil {
-		return ""
-	}
-	return o.GlueID
-}
-
-func (o *GlueCatalog) GetRoleArn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RoleArn
-}
-
-func (o *GlueCatalog) GetDatabaseName() string {
-	if o == nil {
-		return ""
-	}
-	return o.DatabaseName
-}
-
-func (o *GlueCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type DestinationS3DataLakeSchemasCatalogTypeCatalogType string
-
-const (
-	DestinationS3DataLakeSchemasCatalogTypeCatalogTypeNessie DestinationS3DataLakeSchemasCatalogTypeCatalogType = "NESSIE"
-)
-
-func (e DestinationS3DataLakeSchemasCatalogTypeCatalogType) ToPointer() *DestinationS3DataLakeSchemasCatalogTypeCatalogType {
-	return &e
-}
-func (e *DestinationS3DataLakeSchemasCatalogTypeCatalogType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NESSIE":
-		*e = DestinationS3DataLakeSchemasCatalogTypeCatalogType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3DataLakeSchemasCatalogTypeCatalogType: %v", v)
-	}
-}
-
-// NessieCatalog - Configuration details for connecting to a Nessie-based Iceberg catalog.
-type NessieCatalog struct {
-	CatalogType *DestinationS3DataLakeSchemasCatalogTypeCatalogType `default:"NESSIE" json:"catalog_type"`
-	// The base URL of the Nessie server used to connect to the Nessie catalog.
-	ServerURI string `json:"server_uri"`
-	// Optional token for authentication with the Nessie server.
-	AccessToken *string `json:"access_token,omitempty"`
-	// The Nessie namespace to be used in the Table identifier.
-	//            This will ONLY be used if the `Destination Namespace` setting for the connection is set to
-	//            `Destination-defined` or `Source-defined`
-	Namespace            string `json:"namespace"`
-	AdditionalProperties any    `additionalProperties:"true" json:"-"`
-}
-
-func (n NessieCatalog) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(n, "", false)
-}
-
-func (n *NessieCatalog) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *NessieCatalog) GetCatalogType() *DestinationS3DataLakeSchemasCatalogTypeCatalogType {
-	if o == nil {
-		return nil
-	}
-	return o.CatalogType
-}
-
-func (o *NessieCatalog) GetServerURI() string {
-	if o == nil {
-		return ""
-	}
-	return o.ServerURI
-}
-
-func (o *NessieCatalog) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
-}
-
-func (o *NessieCatalog) GetNamespace() string {
-	if o == nil {
-		return ""
-	}
-	return o.Namespace
-}
-
-func (o *NessieCatalog) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type CatalogTypeType string
-
-const (
-	CatalogTypeTypeNessieCatalog CatalogTypeType = "Nessie Catalog"
-	CatalogTypeTypeGlueCatalog   CatalogTypeType = "Glue Catalog"
-	CatalogTypeTypeRestCatalog   CatalogTypeType = "Rest Catalog"
-)
-
-// CatalogType - Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
-type CatalogType struct {
-	NessieCatalog *NessieCatalog `queryParam:"inline"`
-	GlueCatalog   *GlueCatalog   `queryParam:"inline"`
-	RestCatalog   *RestCatalog   `queryParam:"inline"`
-
-	Type CatalogTypeType
-}
-
-func CreateCatalogTypeNessieCatalog(nessieCatalog NessieCatalog) CatalogType {
-	typ := CatalogTypeTypeNessieCatalog
-
-	return CatalogType{
-		NessieCatalog: &nessieCatalog,
-		Type:          typ,
-	}
-}
-
-func CreateCatalogTypeGlueCatalog(glueCatalog GlueCatalog) CatalogType {
-	typ := CatalogTypeTypeGlueCatalog
-
-	return CatalogType{
-		GlueCatalog: &glueCatalog,
-		Type:        typ,
-	}
-}
-
-func CreateCatalogTypeRestCatalog(restCatalog RestCatalog) CatalogType {
-	typ := CatalogTypeTypeRestCatalog
-
-	return CatalogType{
-		RestCatalog: &restCatalog,
-		Type:        typ,
-	}
-}
-
-func (u *CatalogType) UnmarshalJSON(data []byte) error {
-
-	var restCatalog RestCatalog = RestCatalog{}
-	if err := utils.UnmarshalJSON(data, &restCatalog, "", true, true); err == nil {
-		u.RestCatalog = &restCatalog
-		u.Type = CatalogTypeTypeRestCatalog
-		return nil
-	}
-
-	var nessieCatalog NessieCatalog = NessieCatalog{}
-	if err := utils.UnmarshalJSON(data, &nessieCatalog, "", true, true); err == nil {
-		u.NessieCatalog = &nessieCatalog
-		u.Type = CatalogTypeTypeNessieCatalog
-		return nil
-	}
-
-	var glueCatalog GlueCatalog = GlueCatalog{}
-	if err := utils.UnmarshalJSON(data, &glueCatalog, "", true, true); err == nil {
-		u.GlueCatalog = &glueCatalog
-		u.Type = CatalogTypeTypeGlueCatalog
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CatalogType", string(data))
-}
-
-func (u CatalogType) MarshalJSON() ([]byte, error) {
-	if u.NessieCatalog != nil {
-		return utils.MarshalJSON(u.NessieCatalog, "", true)
-	}
-
-	if u.GlueCatalog != nil {
-		return utils.MarshalJSON(u.GlueCatalog, "", true)
-	}
-
-	if u.RestCatalog != nil {
-		return utils.MarshalJSON(u.RestCatalog, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CatalogType: all fields are null")
-}
-
 type S3DataLake string
 
 const (
@@ -483,21 +483,21 @@ func (e *S3DataLake) UnmarshalJSON(data []byte) error {
 type DestinationS3DataLake struct {
 	// The AWS Access Key ID with permissions for S3 and Glue operations.
 	AccessKeyID *string `json:"access_key_id,omitempty"`
-	// The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
-	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	// Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
+	CatalogType CatalogType `json:"catalog_type"`
+	// The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information.
+	MainBranchName *string `default:"main" json:"main_branch_name"`
 	// The name of the S3 bucket that will host the Iceberg data.
 	S3BucketName string `json:"s3_bucket_name"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 	S3BucketRegion DestinationS3DataLakeS3BucketRegion `json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
 	S3Endpoint *string `json:"s3_endpoint,omitempty"`
+	// The AWS Secret Access Key paired with the Access Key ID for AWS authentication.
+	SecretAccessKey *string `json:"secret_access_key,omitempty"`
 	// The root location of the data warehouse used by the Iceberg catalog. Typically includes a bucket name and path within that bucket. For AWS Glue and Nessie, must include the storage protocol (such as "s3://" for Amazon S3).
-	WarehouseLocation string `json:"warehouse_location"`
-	// The primary or default branch name in the catalog. Most query engines will use "main" by default. See <a href="https://iceberg.apache.org/docs/latest/branching/">Iceberg documentation</a> for more information.
-	MainBranchName *string `default:"main" json:"main_branch_name"`
-	// Specifies the type of Iceberg catalog (e.g., NESSIE, GLUE, REST) and its associated configuration.
-	CatalogType     CatalogType `json:"catalog_type"`
-	destinationType S3DataLake  `const:"s3-data-lake" json:"destinationType"`
+	WarehouseLocation string     `json:"warehouse_location"`
+	destinationType   S3DataLake `const:"s3-data-lake" json:"destinationType"`
 }
 
 func (d DestinationS3DataLake) MarshalJSON() ([]byte, error) {
@@ -518,11 +518,18 @@ func (o *DestinationS3DataLake) GetAccessKeyID() *string {
 	return o.AccessKeyID
 }
 
-func (o *DestinationS3DataLake) GetSecretAccessKey() *string {
+func (o *DestinationS3DataLake) GetCatalogType() CatalogType {
+	if o == nil {
+		return CatalogType{}
+	}
+	return o.CatalogType
+}
+
+func (o *DestinationS3DataLake) GetMainBranchName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SecretAccessKey
+	return o.MainBranchName
 }
 
 func (o *DestinationS3DataLake) GetS3BucketName() string {
@@ -546,25 +553,18 @@ func (o *DestinationS3DataLake) GetS3Endpoint() *string {
 	return o.S3Endpoint
 }
 
+func (o *DestinationS3DataLake) GetSecretAccessKey() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SecretAccessKey
+}
+
 func (o *DestinationS3DataLake) GetWarehouseLocation() string {
 	if o == nil {
 		return ""
 	}
 	return o.WarehouseLocation
-}
-
-func (o *DestinationS3DataLake) GetMainBranchName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.MainBranchName
-}
-
-func (o *DestinationS3DataLake) GetCatalogType() CatalogType {
-	if o == nil {
-		return CatalogType{}
-	}
-	return o.CatalogType
 }
 
 func (o *DestinationS3DataLake) GetDestinationType() S3DataLake {

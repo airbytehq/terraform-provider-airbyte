@@ -25,30 +25,30 @@ func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnector
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
-	updatedSince := new(time.Time)
-	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
-		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
-	} else {
-		updatedSince = nil
-	}
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	payrollYear := new(float64)
 	if !r.Configuration.PayrollYear.IsUnknown() && !r.Configuration.PayrollYear.IsNull() {
 		*payrollYear, _ = r.Configuration.PayrollYear.ValueBigFloat().Float64()
 	} else {
 		payrollYear = nil
 	}
+	updatedSince := new(time.Time)
+	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
+		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
+	} else {
+		updatedSince = nil
+	}
 	configuration := shared.SourceFreeAgentConnector{
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken2: clientRefreshToken2,
-		UpdatedSince:        updatedSince,
+		ClientSecret:        clientSecret,
 		PayrollYear:         payrollYear,
+		UpdatedSince:        updatedSince,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -123,30 +123,30 @@ func (r *SourceFreeAgentConnectorResourceModel) ToSharedSourceFreeAgentConnector
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken2 string
 	clientRefreshToken2 = r.Configuration.ClientRefreshToken2.ValueString()
 
-	updatedSince := new(time.Time)
-	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
-		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
-	} else {
-		updatedSince = nil
-	}
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	payrollYear := new(float64)
 	if !r.Configuration.PayrollYear.IsUnknown() && !r.Configuration.PayrollYear.IsNull() {
 		*payrollYear, _ = r.Configuration.PayrollYear.ValueBigFloat().Float64()
 	} else {
 		payrollYear = nil
 	}
+	updatedSince := new(time.Time)
+	if !r.Configuration.UpdatedSince.IsUnknown() && !r.Configuration.UpdatedSince.IsNull() {
+		*updatedSince, _ = time.Parse(time.RFC3339Nano, r.Configuration.UpdatedSince.ValueString())
+	} else {
+		updatedSince = nil
+	}
 	configuration := shared.SourceFreeAgentConnectorUpdate{
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken2: clientRefreshToken2,
-		UpdatedSince:        updatedSince,
+		ClientSecret:        clientSecret,
 		PayrollYear:         payrollYear,
+		UpdatedSince:        updatedSince,
 	}
 	out := shared.SourceFreeAgentConnectorPutRequest{
 		Name:          name,

@@ -9,152 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-// DestinationS3S3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-type DestinationS3S3BucketRegion string
-
-const (
-	DestinationS3S3BucketRegionUnknown      DestinationS3S3BucketRegion = ""
-	DestinationS3S3BucketRegionAfSouth1     DestinationS3S3BucketRegion = "af-south-1"
-	DestinationS3S3BucketRegionApEast1      DestinationS3S3BucketRegion = "ap-east-1"
-	DestinationS3S3BucketRegionApNortheast1 DestinationS3S3BucketRegion = "ap-northeast-1"
-	DestinationS3S3BucketRegionApNortheast2 DestinationS3S3BucketRegion = "ap-northeast-2"
-	DestinationS3S3BucketRegionApNortheast3 DestinationS3S3BucketRegion = "ap-northeast-3"
-	DestinationS3S3BucketRegionApSouth1     DestinationS3S3BucketRegion = "ap-south-1"
-	DestinationS3S3BucketRegionApSouth2     DestinationS3S3BucketRegion = "ap-south-2"
-	DestinationS3S3BucketRegionApSoutheast1 DestinationS3S3BucketRegion = "ap-southeast-1"
-	DestinationS3S3BucketRegionApSoutheast2 DestinationS3S3BucketRegion = "ap-southeast-2"
-	DestinationS3S3BucketRegionApSoutheast3 DestinationS3S3BucketRegion = "ap-southeast-3"
-	DestinationS3S3BucketRegionApSoutheast4 DestinationS3S3BucketRegion = "ap-southeast-4"
-	DestinationS3S3BucketRegionCaCentral1   DestinationS3S3BucketRegion = "ca-central-1"
-	DestinationS3S3BucketRegionCaWest1      DestinationS3S3BucketRegion = "ca-west-1"
-	DestinationS3S3BucketRegionCnNorth1     DestinationS3S3BucketRegion = "cn-north-1"
-	DestinationS3S3BucketRegionCnNorthwest1 DestinationS3S3BucketRegion = "cn-northwest-1"
-	DestinationS3S3BucketRegionEuCentral1   DestinationS3S3BucketRegion = "eu-central-1"
-	DestinationS3S3BucketRegionEuCentral2   DestinationS3S3BucketRegion = "eu-central-2"
-	DestinationS3S3BucketRegionEuNorth1     DestinationS3S3BucketRegion = "eu-north-1"
-	DestinationS3S3BucketRegionEuSouth1     DestinationS3S3BucketRegion = "eu-south-1"
-	DestinationS3S3BucketRegionEuSouth2     DestinationS3S3BucketRegion = "eu-south-2"
-	DestinationS3S3BucketRegionEuWest1      DestinationS3S3BucketRegion = "eu-west-1"
-	DestinationS3S3BucketRegionEuWest2      DestinationS3S3BucketRegion = "eu-west-2"
-	DestinationS3S3BucketRegionEuWest3      DestinationS3S3BucketRegion = "eu-west-3"
-	DestinationS3S3BucketRegionIlCentral1   DestinationS3S3BucketRegion = "il-central-1"
-	DestinationS3S3BucketRegionMeCentral1   DestinationS3S3BucketRegion = "me-central-1"
-	DestinationS3S3BucketRegionMeSouth1     DestinationS3S3BucketRegion = "me-south-1"
-	DestinationS3S3BucketRegionSaEast1      DestinationS3S3BucketRegion = "sa-east-1"
-	DestinationS3S3BucketRegionUsEast1      DestinationS3S3BucketRegion = "us-east-1"
-	DestinationS3S3BucketRegionUsEast2      DestinationS3S3BucketRegion = "us-east-2"
-	DestinationS3S3BucketRegionUsGovEast1   DestinationS3S3BucketRegion = "us-gov-east-1"
-	DestinationS3S3BucketRegionUsGovWest1   DestinationS3S3BucketRegion = "us-gov-west-1"
-	DestinationS3S3BucketRegionUsWest1      DestinationS3S3BucketRegion = "us-west-1"
-	DestinationS3S3BucketRegionUsWest2      DestinationS3S3BucketRegion = "us-west-2"
-)
-
-func (e DestinationS3S3BucketRegion) ToPointer() *DestinationS3S3BucketRegion {
-	return &e
-}
-func (e *DestinationS3S3BucketRegion) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "":
-		fallthrough
-	case "af-south-1":
-		fallthrough
-	case "ap-east-1":
-		fallthrough
-	case "ap-northeast-1":
-		fallthrough
-	case "ap-northeast-2":
-		fallthrough
-	case "ap-northeast-3":
-		fallthrough
-	case "ap-south-1":
-		fallthrough
-	case "ap-south-2":
-		fallthrough
-	case "ap-southeast-1":
-		fallthrough
-	case "ap-southeast-2":
-		fallthrough
-	case "ap-southeast-3":
-		fallthrough
-	case "ap-southeast-4":
-		fallthrough
-	case "ca-central-1":
-		fallthrough
-	case "ca-west-1":
-		fallthrough
-	case "cn-north-1":
-		fallthrough
-	case "cn-northwest-1":
-		fallthrough
-	case "eu-central-1":
-		fallthrough
-	case "eu-central-2":
-		fallthrough
-	case "eu-north-1":
-		fallthrough
-	case "eu-south-1":
-		fallthrough
-	case "eu-south-2":
-		fallthrough
-	case "eu-west-1":
-		fallthrough
-	case "eu-west-2":
-		fallthrough
-	case "eu-west-3":
-		fallthrough
-	case "il-central-1":
-		fallthrough
-	case "me-central-1":
-		fallthrough
-	case "me-south-1":
-		fallthrough
-	case "sa-east-1":
-		fallthrough
-	case "us-east-1":
-		fallthrough
-	case "us-east-2":
-		fallthrough
-	case "us-gov-east-1":
-		fallthrough
-	case "us-gov-west-1":
-		fallthrough
-	case "us-west-1":
-		fallthrough
-	case "us-west-2":
-		*e = DestinationS3S3BucketRegion(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3S3BucketRegion: %v", v)
-	}
-}
-
-type DestinationS3SchemasFormatOutputFormatFormatType string
-
-const (
-	DestinationS3SchemasFormatOutputFormatFormatTypeParquet DestinationS3SchemasFormatOutputFormatFormatType = "Parquet"
-)
-
-func (e DestinationS3SchemasFormatOutputFormatFormatType) ToPointer() *DestinationS3SchemasFormatOutputFormatFormatType {
-	return &e
-}
-func (e *DestinationS3SchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Parquet":
-		*e = DestinationS3SchemasFormatOutputFormatFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormatFormatType: %v", v)
-	}
-}
-
 // DestinationS3SchemasCompressionCodec - The compression algorithm used to compress data pages.
 type DestinationS3SchemasCompressionCodec string
 
@@ -197,21 +51,44 @@ func (e *DestinationS3SchemasCompressionCodec) UnmarshalJSON(data []byte) error 
 	}
 }
 
+type DestinationS3SchemasFormatOutputFormatFormatType string
+
+const (
+	DestinationS3SchemasFormatOutputFormatFormatTypeParquet DestinationS3SchemasFormatOutputFormatFormatType = "Parquet"
+)
+
+func (e DestinationS3SchemasFormatOutputFormatFormatType) ToPointer() *DestinationS3SchemasFormatOutputFormatFormatType {
+	return &e
+}
+func (e *DestinationS3SchemasFormatOutputFormatFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Parquet":
+		*e = DestinationS3SchemasFormatOutputFormatFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatOutputFormatFormatType: %v", v)
+	}
+}
+
 type DestinationS3ParquetColumnarStorage struct {
-	FormatType *DestinationS3SchemasFormatOutputFormatFormatType `default:"Parquet" json:"format_type"`
-	// The compression algorithm used to compress data pages.
-	CompressionCodec *DestinationS3SchemasCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
 	BlockSizeMb *int64 `default:"128" json:"block_size_mb"`
+	// The compression algorithm used to compress data pages.
+	CompressionCodec *DestinationS3SchemasCompressionCodec `default:"UNCOMPRESSED" json:"compression_codec"`
+	// Default: true.
+	DictionaryEncoding *bool `json:"dictionary_encoding,omitempty"`
+	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
+	DictionaryPageSizeKb *int64                                            `default:"1024" json:"dictionary_page_size_kb"`
+	FormatType           *DestinationS3SchemasFormatOutputFormatFormatType `default:"Parquet" json:"format_type"`
 	// Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
 	MaxPaddingSizeMb *int64 `default:"8" json:"max_padding_size_mb"`
 	// The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
-	PageSizeKb *int64 `default:"1024" json:"page_size_kb"`
-	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-	DictionaryPageSizeKb *int64 `default:"1024" json:"dictionary_page_size_kb"`
-	// Default: true.
-	DictionaryEncoding   *bool `json:"dictionary_encoding,omitempty"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	PageSizeKb           *int64 `default:"1024" json:"page_size_kb"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3ParquetColumnarStorage) MarshalJSON() ([]byte, error) {
@@ -225,11 +102,11 @@ func (d *DestinationS3ParquetColumnarStorage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationS3ParquetColumnarStorage) GetFormatType() *DestinationS3SchemasFormatOutputFormatFormatType {
+func (o *DestinationS3ParquetColumnarStorage) GetBlockSizeMb() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.FormatType
+	return o.BlockSizeMb
 }
 
 func (o *DestinationS3ParquetColumnarStorage) GetCompressionCodec() *DestinationS3SchemasCompressionCodec {
@@ -239,11 +116,25 @@ func (o *DestinationS3ParquetColumnarStorage) GetCompressionCodec() *Destination
 	return o.CompressionCodec
 }
 
-func (o *DestinationS3ParquetColumnarStorage) GetBlockSizeMb() *int64 {
+func (o *DestinationS3ParquetColumnarStorage) GetDictionaryEncoding() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.BlockSizeMb
+	return o.DictionaryEncoding
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DictionaryPageSizeKb
+}
+
+func (o *DestinationS3ParquetColumnarStorage) GetFormatType() *DestinationS3SchemasFormatOutputFormatFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 func (o *DestinationS3ParquetColumnarStorage) GetMaxPaddingSizeMb() *int64 {
@@ -260,48 +151,11 @@ func (o *DestinationS3ParquetColumnarStorage) GetPageSizeKb() *int64 {
 	return o.PageSizeKb
 }
 
-func (o *DestinationS3ParquetColumnarStorage) GetDictionaryPageSizeKb() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DictionaryPageSizeKb
-}
-
-func (o *DestinationS3ParquetColumnarStorage) GetDictionaryEncoding() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.DictionaryEncoding
-}
-
 func (o *DestinationS3ParquetColumnarStorage) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
 	return o.AdditionalProperties
-}
-
-type DestinationS3SchemasFormatFormatType string
-
-const (
-	DestinationS3SchemasFormatFormatTypeAvro DestinationS3SchemasFormatFormatType = "Avro"
-)
-
-func (e DestinationS3SchemasFormatFormatType) ToPointer() *DestinationS3SchemasFormatFormatType {
-	return &e
-}
-func (e *DestinationS3SchemasFormatFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Avro":
-		*e = DestinationS3SchemasFormatFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3SchemasFormatFormatType: %v", v)
-	}
 }
 
 type DestinationS3SchemasFormatOutputFormat3CompressionCodecCodec string
@@ -806,11 +660,34 @@ func (u DestinationS3CompressionCodec) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationS3CompressionCodec: all fields are null")
 }
 
+type DestinationS3SchemasFormatFormatType string
+
+const (
+	DestinationS3SchemasFormatFormatTypeAvro DestinationS3SchemasFormatFormatType = "Avro"
+)
+
+func (e DestinationS3SchemasFormatFormatType) ToPointer() *DestinationS3SchemasFormatFormatType {
+	return &e
+}
+func (e *DestinationS3SchemasFormatFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Avro":
+		*e = DestinationS3SchemasFormatFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatFormatType: %v", v)
+	}
+}
+
 type DestinationS3AvroApacheAvro struct {
-	FormatType *DestinationS3SchemasFormatFormatType `default:"Avro" json:"format_type"`
 	// The compression algorithm used to compress data. Default to no compression.
-	CompressionCodec     DestinationS3CompressionCodec `json:"compression_codec"`
-	AdditionalProperties any                           `additionalProperties:"true" json:"-"`
+	CompressionCodec     DestinationS3CompressionCodec         `json:"compression_codec"`
+	FormatType           *DestinationS3SchemasFormatFormatType `default:"Avro" json:"format_type"`
+	AdditionalProperties any                                   `additionalProperties:"true" json:"-"`
 }
 
 func (d DestinationS3AvroApacheAvro) MarshalJSON() ([]byte, error) {
@@ -824,13 +701,6 @@ func (d *DestinationS3AvroApacheAvro) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationS3AvroApacheAvro) GetFormatType() *DestinationS3SchemasFormatFormatType {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
 func (o *DestinationS3AvroApacheAvro) GetCompressionCodec() DestinationS3CompressionCodec {
 	if o == nil {
 		return DestinationS3CompressionCodec{}
@@ -838,60 +708,18 @@ func (o *DestinationS3AvroApacheAvro) GetCompressionCodec() DestinationS3Compres
 	return o.CompressionCodec
 }
 
+func (o *DestinationS3AvroApacheAvro) GetFormatType() *DestinationS3SchemasFormatFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
 func (o *DestinationS3AvroApacheAvro) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
 	return o.AdditionalProperties
-}
-
-type DestinationS3SchemasFormatType string
-
-const (
-	DestinationS3SchemasFormatTypeJsonl DestinationS3SchemasFormatType = "JSONL"
-)
-
-func (e DestinationS3SchemasFormatType) ToPointer() *DestinationS3SchemasFormatType {
-	return &e
-}
-func (e *DestinationS3SchemasFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JSONL":
-		*e = DestinationS3SchemasFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3SchemasFormatType: %v", v)
-	}
-}
-
-type DestinationS3SchemasFlattening string
-
-const (
-	DestinationS3SchemasFlatteningNoFlattening        DestinationS3SchemasFlattening = "No flattening"
-	DestinationS3SchemasFlatteningRootLevelFlattening DestinationS3SchemasFlattening = "Root level flattening"
-)
-
-func (e DestinationS3SchemasFlattening) ToPointer() *DestinationS3SchemasFlattening {
-	return &e
-}
-func (e *DestinationS3SchemasFlattening) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "No flattening":
-		fallthrough
-	case "Root level flattening":
-		*e = DestinationS3SchemasFlattening(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3SchemasFlattening: %v", v)
-	}
 }
 
 type DestinationS3SchemasFormatOutputFormatCompressionType string
@@ -1064,11 +892,60 @@ func (u DestinationS3SchemasCompression) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationS3SchemasCompression: all fields are null")
 }
 
+type DestinationS3SchemasFlattening string
+
+const (
+	DestinationS3SchemasFlatteningNoFlattening        DestinationS3SchemasFlattening = "No flattening"
+	DestinationS3SchemasFlatteningRootLevelFlattening DestinationS3SchemasFlattening = "Root level flattening"
+)
+
+func (e DestinationS3SchemasFlattening) ToPointer() *DestinationS3SchemasFlattening {
+	return &e
+}
+func (e *DestinationS3SchemasFlattening) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "No flattening":
+		fallthrough
+	case "Root level flattening":
+		*e = DestinationS3SchemasFlattening(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3SchemasFlattening: %v", v)
+	}
+}
+
+type DestinationS3SchemasFormatType string
+
+const (
+	DestinationS3SchemasFormatTypeJsonl DestinationS3SchemasFormatType = "JSONL"
+)
+
+func (e DestinationS3SchemasFormatType) ToPointer() *DestinationS3SchemasFormatType {
+	return &e
+}
+func (e *DestinationS3SchemasFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "JSONL":
+		*e = DestinationS3SchemasFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3SchemasFormatType: %v", v)
+	}
+}
+
 type DestinationS3JSONLinesNewlineDelimitedJSON struct {
-	FormatType *DestinationS3SchemasFormatType `default:"JSONL" json:"format_type"`
-	Flattening *DestinationS3SchemasFlattening `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression          *DestinationS3SchemasCompression `json:"compression,omitempty"`
+	Flattening           *DestinationS3SchemasFlattening  `default:"No flattening" json:"flattening"`
+	FormatType           *DestinationS3SchemasFormatType  `default:"JSONL" json:"format_type"`
 	AdditionalProperties any                              `additionalProperties:"true" json:"-"`
 }
 
@@ -1083,11 +960,11 @@ func (d *DestinationS3JSONLinesNewlineDelimitedJSON) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationS3SchemasFormatType {
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetCompression() *DestinationS3SchemasCompression {
 	if o == nil {
 		return nil
 	}
-	return o.FormatType
+	return o.Compression
 }
 
 func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationS3SchemasFlattening {
@@ -1097,11 +974,11 @@ func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFlattening() *Destinatio
 	return o.Flattening
 }
 
-func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetCompression() *DestinationS3SchemasCompression {
+func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationS3SchemasFormatType {
 	if o == nil {
 		return nil
 	}
-	return o.Compression
+	return o.FormatType
 }
 
 func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetAdditionalProperties() any {
@@ -1109,55 +986,6 @@ func (o *DestinationS3JSONLinesNewlineDelimitedJSON) GetAdditionalProperties() a
 		return nil
 	}
 	return o.AdditionalProperties
-}
-
-type DestinationS3FormatType string
-
-const (
-	DestinationS3FormatTypeCsv DestinationS3FormatType = "CSV"
-)
-
-func (e DestinationS3FormatType) ToPointer() *DestinationS3FormatType {
-	return &e
-}
-func (e *DestinationS3FormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CSV":
-		*e = DestinationS3FormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3FormatType: %v", v)
-	}
-}
-
-type DestinationS3Flattening string
-
-const (
-	DestinationS3FlatteningNoFlattening        DestinationS3Flattening = "No flattening"
-	DestinationS3FlatteningRootLevelFlattening DestinationS3Flattening = "Root level flattening"
-)
-
-func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
-	return &e
-}
-func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "No flattening":
-		fallthrough
-	case "Root level flattening":
-		*e = DestinationS3Flattening(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationS3Flattening: %v", v)
-	}
 }
 
 type DestinationS3SchemasCompressionType string
@@ -1330,11 +1158,60 @@ func (u DestinationS3Compression) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationS3Compression: all fields are null")
 }
 
+type DestinationS3Flattening string
+
+const (
+	DestinationS3FlatteningNoFlattening        DestinationS3Flattening = "No flattening"
+	DestinationS3FlatteningRootLevelFlattening DestinationS3Flattening = "Root level flattening"
+)
+
+func (e DestinationS3Flattening) ToPointer() *DestinationS3Flattening {
+	return &e
+}
+func (e *DestinationS3Flattening) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "No flattening":
+		fallthrough
+	case "Root level flattening":
+		*e = DestinationS3Flattening(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3Flattening: %v", v)
+	}
+}
+
+type DestinationS3FormatType string
+
+const (
+	DestinationS3FormatTypeCsv DestinationS3FormatType = "CSV"
+)
+
+func (e DestinationS3FormatType) ToPointer() *DestinationS3FormatType {
+	return &e
+}
+func (e *DestinationS3FormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CSV":
+		*e = DestinationS3FormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3FormatType: %v", v)
+	}
+}
+
 type DestinationS3CSVCommaSeparatedValues struct {
-	FormatType *DestinationS3FormatType `default:"CSV" json:"format_type"`
-	Flattening *DestinationS3Flattening `default:"No flattening" json:"flattening"`
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression          *DestinationS3Compression `json:"compression,omitempty"`
+	Flattening           *DestinationS3Flattening  `default:"No flattening" json:"flattening"`
+	FormatType           *DestinationS3FormatType  `default:"CSV" json:"format_type"`
 	AdditionalProperties any                       `additionalProperties:"true" json:"-"`
 }
 
@@ -1349,11 +1226,11 @@ func (d *DestinationS3CSVCommaSeparatedValues) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *DestinationS3CSVCommaSeparatedValues) GetFormatType() *DestinationS3FormatType {
+func (o *DestinationS3CSVCommaSeparatedValues) GetCompression() *DestinationS3Compression {
 	if o == nil {
 		return nil
 	}
-	return o.FormatType
+	return o.Compression
 }
 
 func (o *DestinationS3CSVCommaSeparatedValues) GetFlattening() *DestinationS3Flattening {
@@ -1363,11 +1240,11 @@ func (o *DestinationS3CSVCommaSeparatedValues) GetFlattening() *DestinationS3Fla
 	return o.Flattening
 }
 
-func (o *DestinationS3CSVCommaSeparatedValues) GetCompression() *DestinationS3Compression {
+func (o *DestinationS3CSVCommaSeparatedValues) GetFormatType() *DestinationS3FormatType {
 	if o == nil {
 		return nil
 	}
-	return o.Compression
+	return o.FormatType
 }
 
 func (o *DestinationS3CSVCommaSeparatedValues) GetAdditionalProperties() any {
@@ -1485,6 +1362,129 @@ func (u DestinationS3OutputFormat) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationS3OutputFormat: all fields are null")
 }
 
+// DestinationS3S3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
+type DestinationS3S3BucketRegion string
+
+const (
+	DestinationS3S3BucketRegionUnknown      DestinationS3S3BucketRegion = ""
+	DestinationS3S3BucketRegionAfSouth1     DestinationS3S3BucketRegion = "af-south-1"
+	DestinationS3S3BucketRegionApEast1      DestinationS3S3BucketRegion = "ap-east-1"
+	DestinationS3S3BucketRegionApNortheast1 DestinationS3S3BucketRegion = "ap-northeast-1"
+	DestinationS3S3BucketRegionApNortheast2 DestinationS3S3BucketRegion = "ap-northeast-2"
+	DestinationS3S3BucketRegionApNortheast3 DestinationS3S3BucketRegion = "ap-northeast-3"
+	DestinationS3S3BucketRegionApSouth1     DestinationS3S3BucketRegion = "ap-south-1"
+	DestinationS3S3BucketRegionApSouth2     DestinationS3S3BucketRegion = "ap-south-2"
+	DestinationS3S3BucketRegionApSoutheast1 DestinationS3S3BucketRegion = "ap-southeast-1"
+	DestinationS3S3BucketRegionApSoutheast2 DestinationS3S3BucketRegion = "ap-southeast-2"
+	DestinationS3S3BucketRegionApSoutheast3 DestinationS3S3BucketRegion = "ap-southeast-3"
+	DestinationS3S3BucketRegionApSoutheast4 DestinationS3S3BucketRegion = "ap-southeast-4"
+	DestinationS3S3BucketRegionCaCentral1   DestinationS3S3BucketRegion = "ca-central-1"
+	DestinationS3S3BucketRegionCaWest1      DestinationS3S3BucketRegion = "ca-west-1"
+	DestinationS3S3BucketRegionCnNorth1     DestinationS3S3BucketRegion = "cn-north-1"
+	DestinationS3S3BucketRegionCnNorthwest1 DestinationS3S3BucketRegion = "cn-northwest-1"
+	DestinationS3S3BucketRegionEuCentral1   DestinationS3S3BucketRegion = "eu-central-1"
+	DestinationS3S3BucketRegionEuCentral2   DestinationS3S3BucketRegion = "eu-central-2"
+	DestinationS3S3BucketRegionEuNorth1     DestinationS3S3BucketRegion = "eu-north-1"
+	DestinationS3S3BucketRegionEuSouth1     DestinationS3S3BucketRegion = "eu-south-1"
+	DestinationS3S3BucketRegionEuSouth2     DestinationS3S3BucketRegion = "eu-south-2"
+	DestinationS3S3BucketRegionEuWest1      DestinationS3S3BucketRegion = "eu-west-1"
+	DestinationS3S3BucketRegionEuWest2      DestinationS3S3BucketRegion = "eu-west-2"
+	DestinationS3S3BucketRegionEuWest3      DestinationS3S3BucketRegion = "eu-west-3"
+	DestinationS3S3BucketRegionIlCentral1   DestinationS3S3BucketRegion = "il-central-1"
+	DestinationS3S3BucketRegionMeCentral1   DestinationS3S3BucketRegion = "me-central-1"
+	DestinationS3S3BucketRegionMeSouth1     DestinationS3S3BucketRegion = "me-south-1"
+	DestinationS3S3BucketRegionSaEast1      DestinationS3S3BucketRegion = "sa-east-1"
+	DestinationS3S3BucketRegionUsEast1      DestinationS3S3BucketRegion = "us-east-1"
+	DestinationS3S3BucketRegionUsEast2      DestinationS3S3BucketRegion = "us-east-2"
+	DestinationS3S3BucketRegionUsGovEast1   DestinationS3S3BucketRegion = "us-gov-east-1"
+	DestinationS3S3BucketRegionUsGovWest1   DestinationS3S3BucketRegion = "us-gov-west-1"
+	DestinationS3S3BucketRegionUsWest1      DestinationS3S3BucketRegion = "us-west-1"
+	DestinationS3S3BucketRegionUsWest2      DestinationS3S3BucketRegion = "us-west-2"
+)
+
+func (e DestinationS3S3BucketRegion) ToPointer() *DestinationS3S3BucketRegion {
+	return &e
+}
+func (e *DestinationS3S3BucketRegion) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "":
+		fallthrough
+	case "af-south-1":
+		fallthrough
+	case "ap-east-1":
+		fallthrough
+	case "ap-northeast-1":
+		fallthrough
+	case "ap-northeast-2":
+		fallthrough
+	case "ap-northeast-3":
+		fallthrough
+	case "ap-south-1":
+		fallthrough
+	case "ap-south-2":
+		fallthrough
+	case "ap-southeast-1":
+		fallthrough
+	case "ap-southeast-2":
+		fallthrough
+	case "ap-southeast-3":
+		fallthrough
+	case "ap-southeast-4":
+		fallthrough
+	case "ca-central-1":
+		fallthrough
+	case "ca-west-1":
+		fallthrough
+	case "cn-north-1":
+		fallthrough
+	case "cn-northwest-1":
+		fallthrough
+	case "eu-central-1":
+		fallthrough
+	case "eu-central-2":
+		fallthrough
+	case "eu-north-1":
+		fallthrough
+	case "eu-south-1":
+		fallthrough
+	case "eu-south-2":
+		fallthrough
+	case "eu-west-1":
+		fallthrough
+	case "eu-west-2":
+		fallthrough
+	case "eu-west-3":
+		fallthrough
+	case "il-central-1":
+		fallthrough
+	case "me-central-1":
+		fallthrough
+	case "me-south-1":
+		fallthrough
+	case "sa-east-1":
+		fallthrough
+	case "us-east-1":
+		fallthrough
+	case "us-east-2":
+		fallthrough
+	case "us-gov-east-1":
+		fallthrough
+	case "us-gov-west-1":
+		fallthrough
+	case "us-west-1":
+		fallthrough
+	case "us-west-2":
+		*e = DestinationS3S3BucketRegion(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3S3BucketRegion: %v", v)
+	}
+}
+
 type DestinationS3S3 string
 
 const (
@@ -1511,8 +1511,10 @@ func (e *DestinationS3S3) UnmarshalJSON(data []byte) error {
 type DestinationS3 struct {
 	// The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
 	AccessKeyID *string `json:"access_key_id,omitempty"`
-	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
-	SecretAccessKey *string `json:"secret_access_key,omitempty"`
+	// Pattern to match file names in the bucket directory. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ListingKeysUsingAPIs.html">here</a>
+	FileNamePattern *string `json:"file_name_pattern,omitempty"`
+	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
+	Format DestinationS3OutputFormat `json:"format"`
 	// The ARN of the AWS role to assume. Only usable in Airbyte Cloud.
 	RoleArn *string `json:"role_arn,omitempty"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
@@ -1521,14 +1523,12 @@ type DestinationS3 struct {
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 	S3BucketRegion *DestinationS3S3BucketRegion `default:"" json:"s3_bucket_region"`
-	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
-	Format DestinationS3OutputFormat `json:"format"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
 	S3Endpoint *string `json:"s3_endpoint,omitempty"`
 	// Format string on how data will be organized inside the bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>
 	S3PathFormat *string `json:"s3_path_format,omitempty"`
-	// Pattern to match file names in the bucket directory. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ListingKeysUsingAPIs.html">here</a>
-	FileNamePattern *string         `json:"file_name_pattern,omitempty"`
+	// The corresponding secret to the access key ID. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>
+	SecretAccessKey *string         `json:"secret_access_key,omitempty"`
 	destinationType DestinationS3S3 `const:"s3" json:"destinationType"`
 }
 
@@ -1550,11 +1550,18 @@ func (o *DestinationS3) GetAccessKeyID() *string {
 	return o.AccessKeyID
 }
 
-func (o *DestinationS3) GetSecretAccessKey() *string {
+func (o *DestinationS3) GetFileNamePattern() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SecretAccessKey
+	return o.FileNamePattern
+}
+
+func (o *DestinationS3) GetFormat() DestinationS3OutputFormat {
+	if o == nil {
+		return DestinationS3OutputFormat{}
+	}
+	return o.Format
 }
 
 func (o *DestinationS3) GetRoleArn() *string {
@@ -1585,13 +1592,6 @@ func (o *DestinationS3) GetS3BucketRegion() *DestinationS3S3BucketRegion {
 	return o.S3BucketRegion
 }
 
-func (o *DestinationS3) GetFormat() DestinationS3OutputFormat {
-	if o == nil {
-		return DestinationS3OutputFormat{}
-	}
-	return o.Format
-}
-
 func (o *DestinationS3) GetS3Endpoint() *string {
 	if o == nil {
 		return nil
@@ -1606,11 +1606,11 @@ func (o *DestinationS3) GetS3PathFormat() *string {
 	return o.S3PathFormat
 }
 
-func (o *DestinationS3) GetFileNamePattern() *string {
+func (o *DestinationS3) GetSecretAccessKey() *string {
 	if o == nil {
 		return nil
 	}
-	return o.FileNamePattern
+	return o.SecretAccessKey
 }
 
 func (o *DestinationS3) GetDestinationType() DestinationS3S3 {

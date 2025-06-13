@@ -3,17 +3,10 @@
 package shared
 
 type SourceMailosaurUpdate struct {
-	// Enter "api" here
-	Username string `json:"username"`
 	// Enter your api key here
 	Password *string `json:"password,omitempty"`
-}
-
-func (o *SourceMailosaurUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	// Enter "api" here
+	Username string `json:"username"`
 }
 
 func (o *SourceMailosaurUpdate) GetPassword() *string {
@@ -21,4 +14,11 @@ func (o *SourceMailosaurUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceMailosaurUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

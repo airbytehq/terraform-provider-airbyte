@@ -21,18 +21,18 @@ func (r *DestinationTimeplusResourceModel) ToSharedDestinationTimeplusCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apikey string
+	apikey = r.Configuration.Apikey.ValueString()
+
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
 		*endpoint = r.Configuration.Endpoint.ValueString()
 	} else {
 		endpoint = nil
 	}
-	var apikey string
-	apikey = r.Configuration.Apikey.ValueString()
-
 	configuration := shared.DestinationTimeplus{
-		Endpoint: endpoint,
 		Apikey:   apikey,
+		Endpoint: endpoint,
 	}
 	out := shared.DestinationTimeplusCreateRequest{
 		Name:          name,
@@ -97,18 +97,18 @@ func (r *DestinationTimeplusResourceModel) ToSharedDestinationTimeplusPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var apikey string
+	apikey = r.Configuration.Apikey.ValueString()
+
 	endpoint := new(string)
 	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
 		*endpoint = r.Configuration.Endpoint.ValueString()
 	} else {
 		endpoint = nil
 	}
-	var apikey string
-	apikey = r.Configuration.Apikey.ValueString()
-
 	configuration := shared.DestinationTimeplusUpdate{
-		Endpoint: endpoint,
 		Apikey:   apikey,
+		Endpoint: endpoint,
 	}
 	out := shared.DestinationTimeplusPutRequest{
 		Name:          name,

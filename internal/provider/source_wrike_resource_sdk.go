@@ -24,22 +24,22 @@ func (r *SourceWrikeResourceModel) ToSharedSourceWrikeCreateRequest() *shared.So
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
-	wrikeInstance := new(string)
-	if !r.Configuration.WrikeInstance.IsUnknown() && !r.Configuration.WrikeInstance.IsNull() {
-		*wrikeInstance = r.Configuration.WrikeInstance.ValueString()
-	} else {
-		wrikeInstance = nil
-	}
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
 	} else {
 		startDate = nil
 	}
+	wrikeInstance := new(string)
+	if !r.Configuration.WrikeInstance.IsUnknown() && !r.Configuration.WrikeInstance.IsNull() {
+		*wrikeInstance = r.Configuration.WrikeInstance.ValueString()
+	} else {
+		wrikeInstance = nil
+	}
 	configuration := shared.SourceWrike{
 		AccessToken:   accessToken,
-		WrikeInstance: wrikeInstance,
 		StartDate:     startDate,
+		WrikeInstance: wrikeInstance,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,22 +114,22 @@ func (r *SourceWrikeResourceModel) ToSharedSourceWrikePutRequest() *shared.Sourc
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
-	wrikeInstance := new(string)
-	if !r.Configuration.WrikeInstance.IsUnknown() && !r.Configuration.WrikeInstance.IsNull() {
-		*wrikeInstance = r.Configuration.WrikeInstance.ValueString()
-	} else {
-		wrikeInstance = nil
-	}
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
 	} else {
 		startDate = nil
 	}
+	wrikeInstance := new(string)
+	if !r.Configuration.WrikeInstance.IsUnknown() && !r.Configuration.WrikeInstance.IsNull() {
+		*wrikeInstance = r.Configuration.WrikeInstance.ValueString()
+	} else {
+		wrikeInstance = nil
+	}
 	configuration := shared.SourceWrikeUpdate{
 		AccessToken:   accessToken,
-		WrikeInstance: wrikeInstance,
 		StartDate:     startDate,
+		WrikeInstance: wrikeInstance,
 	}
 	out := shared.SourceWrikePutRequest{
 		Name:          name,

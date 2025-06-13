@@ -1,5 +1,6 @@
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
+    always_use_aggregation_type_auto = false
     authorization = {
       service_account_key_authentication = {
         email                = "...my_email..."
@@ -13,8 +14,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
         name = "...my_name..."
       }
     ]
-    data_state = "final"
-    end_date   = "2021-12-12"
+    data_state  = "final"
+    end_date    = "2021-12-12"
+    num_workers = 30
     site_urls = [
       "..."
     ]

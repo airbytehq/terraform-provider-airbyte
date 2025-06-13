@@ -33,11 +33,11 @@ func (e *Front) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFront struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Page limit for the responses
-	PageLimit  *string `default:"50" json:"page_limit"`
-	sourceType Front   `const:"front" json:"sourceType"`
+	PageLimit  *string   `default:"50" json:"page_limit"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Front     `const:"front" json:"sourceType"`
 }
 
 func (s SourceFront) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceFront) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceFront) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceFront) GetPageLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PageLimit
+}
+
+func (o *SourceFront) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceFront) GetSourceType() Front {

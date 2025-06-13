@@ -22,11 +22,11 @@ func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userAuthKey string
-	userAuthKey = r.Configuration.UserAuthKey.ValueString()
-
 	var applications []shared.Applications = []shared.Applications{}
 	for _, applicationsItem := range r.Configuration.Applications {
+		var appAPIKey string
+		appAPIKey = applicationsItem.AppAPIKey.ValueString()
+
 		var appID string
 		appID = applicationsItem.AppID.ValueString()
 
@@ -36,24 +36,24 @@ func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalCreateRequest() *s
 		} else {
 			appName = nil
 		}
-		var appAPIKey string
-		appAPIKey = applicationsItem.AppAPIKey.ValueString()
-
 		applications = append(applications, shared.Applications{
+			AppAPIKey: appAPIKey,
 			AppID:     appID,
 			AppName:   appName,
-			AppAPIKey: appAPIKey,
 		})
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var outcomeNames string
 	outcomeNames = r.Configuration.OutcomeNames.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var userAuthKey string
+	userAuthKey = r.Configuration.UserAuthKey.ValueString()
+
 	configuration := shared.SourceOnesignal{
-		UserAuthKey:  userAuthKey,
 		Applications: applications,
-		StartDate:    startDate,
 		OutcomeNames: outcomeNames,
+		StartDate:    startDate,
+		UserAuthKey:  userAuthKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,11 +125,11 @@ func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userAuthKey string
-	userAuthKey = r.Configuration.UserAuthKey.ValueString()
-
 	var applications []shared.SourceOnesignalUpdateApplications = []shared.SourceOnesignalUpdateApplications{}
 	for _, applicationsItem := range r.Configuration.Applications {
+		var appAPIKey string
+		appAPIKey = applicationsItem.AppAPIKey.ValueString()
+
 		var appID string
 		appID = applicationsItem.AppID.ValueString()
 
@@ -139,24 +139,24 @@ func (r *SourceOnesignalResourceModel) ToSharedSourceOnesignalPutRequest() *shar
 		} else {
 			appName = nil
 		}
-		var appAPIKey string
-		appAPIKey = applicationsItem.AppAPIKey.ValueString()
-
 		applications = append(applications, shared.SourceOnesignalUpdateApplications{
+			AppAPIKey: appAPIKey,
 			AppID:     appID,
 			AppName:   appName,
-			AppAPIKey: appAPIKey,
 		})
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var outcomeNames string
 	outcomeNames = r.Configuration.OutcomeNames.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var userAuthKey string
+	userAuthKey = r.Configuration.UserAuthKey.ValueString()
+
 	configuration := shared.SourceOnesignalUpdate{
-		UserAuthKey:  userAuthKey,
 		Applications: applications,
-		StartDate:    startDate,
 		OutcomeNames: outcomeNames,
+		StartDate:    startDate,
+		UserAuthKey:  userAuthKey,
 	}
 	out := shared.SourceOnesignalPutRequest{
 		Name:          name,

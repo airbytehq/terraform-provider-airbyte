@@ -24,9 +24,6 @@ func (r *SourceTyntecSmsResourceModel) ToSharedSourceTyntecSmsCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var to string
-	to = r.Configuration.To.ValueString()
-
 	var from string
 	from = r.Configuration.From.ValueString()
 
@@ -36,11 +33,14 @@ func (r *SourceTyntecSmsResourceModel) ToSharedSourceTyntecSmsCreateRequest() *s
 	} else {
 		message = nil
 	}
+	var to string
+	to = r.Configuration.To.ValueString()
+
 	configuration := shared.SourceTyntecSms{
 		APIKey:  apiKey,
-		To:      to,
 		From:    from,
 		Message: message,
+		To:      to,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,9 +115,6 @@ func (r *SourceTyntecSmsResourceModel) ToSharedSourceTyntecSmsPutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var to string
-	to = r.Configuration.To.ValueString()
-
 	var from string
 	from = r.Configuration.From.ValueString()
 
@@ -127,11 +124,14 @@ func (r *SourceTyntecSmsResourceModel) ToSharedSourceTyntecSmsPutRequest() *shar
 	} else {
 		message = nil
 	}
+	var to string
+	to = r.Configuration.To.ValueString()
+
 	configuration := shared.SourceTyntecSmsUpdate{
 		APIKey:  apiKey,
-		To:      to,
 		From:    from,
 		Message: message,
+		To:      to,
 	}
 	out := shared.SourceTyntecSmsPutRequest{
 		Name:          name,

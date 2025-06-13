@@ -25,22 +25,22 @@ func (r *SourceDriftResourceModel) ToSharedSourceDriftCreateRequest() *shared.So
 	if r.Configuration.Credentials != nil {
 		var sourceDriftOAuth20 *shared.SourceDriftOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 			sourceDriftOAuth20 = &shared.SourceDriftOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -148,22 +148,22 @@ func (r *SourceDriftResourceModel) ToSharedSourceDriftPutRequest() *shared.Sourc
 	if r.Configuration.Credentials != nil {
 		var sourceDriftUpdateOAuth20 *shared.SourceDriftUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 			sourceDriftUpdateOAuth20 = &shared.SourceDriftUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}

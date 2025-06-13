@@ -34,10 +34,10 @@ func (e *SourceSnowflakeUpdateSchemasCredentialsAuthType) UnmarshalJSON(data []b
 
 type SourceSnowflakeUpdateUsernameAndPassword struct {
 	authType SourceSnowflakeUpdateSchemasCredentialsAuthType `const:"username/password" json:"auth_type"`
-	// The username you created to allow Airbyte to access the database.
-	Username string `json:"username"`
 	// The password associated with the username.
 	Password string `json:"password"`
+	// The username you created to allow Airbyte to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceSnowflakeUpdateUsernameAndPassword) MarshalJSON() ([]byte, error) {
@@ -55,18 +55,18 @@ func (o *SourceSnowflakeUpdateUsernameAndPassword) GetAuthType() SourceSnowflake
 	return SourceSnowflakeUpdateSchemasCredentialsAuthTypeUsernamePassword
 }
 
-func (o *SourceSnowflakeUpdateUsernameAndPassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceSnowflakeUpdateUsernameAndPassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *SourceSnowflakeUpdateUsernameAndPassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceSnowflakeUpdateSchemasAuthType string
@@ -94,12 +94,12 @@ func (e *SourceSnowflakeUpdateSchemasAuthType) UnmarshalJSON(data []byte) error 
 
 type SourceSnowflakeUpdateKeyPairAuthentication struct {
 	authType *SourceSnowflakeUpdateSchemasAuthType `const:"Key Pair Authentication" json:"auth_type,omitempty"`
-	// The username you created to allow Airbyte to access the database.
-	Username string `json:"username"`
 	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/sources/snowflake#key-pair-authentication">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Passphrase for private key
 	PrivateKeyPassword *string `json:"private_key_password,omitempty"`
+	// The username you created to allow Airbyte to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceSnowflakeUpdateKeyPairAuthentication) MarshalJSON() ([]byte, error) {
@@ -117,13 +117,6 @@ func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetAuthType() *SourceSnowfl
 	return SourceSnowflakeUpdateSchemasAuthTypeKeyPairAuthentication.ToPointer()
 }
 
-func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetPrivateKey() string {
 	if o == nil {
 		return ""
@@ -136,6 +129,13 @@ func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetPrivateKeyPassword() *st
 		return nil
 	}
 	return o.PrivateKeyPassword
+}
+
+func (o *SourceSnowflakeUpdateKeyPairAuthentication) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceSnowflakeUpdateAuthType string
@@ -162,13 +162,13 @@ func (e *SourceSnowflakeUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSnowflakeUpdateOAuth20 struct {
-	authType SourceSnowflakeUpdateAuthType `const:"OAuth" json:"auth_type"`
+	// Access Token for making authenticated requests.
+	AccessToken *string                       `json:"access_token,omitempty"`
+	authType    SourceSnowflakeUpdateAuthType `const:"OAuth" json:"auth_type"`
 	// The Client ID of your Snowflake developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Snowflake developer application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken *string `json:"access_token,omitempty"`
 	// Refresh Token for making authenticated requests.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
@@ -182,6 +182,13 @@ func (s *SourceSnowflakeUpdateOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceSnowflakeUpdateOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceSnowflakeUpdateOAuth20) GetAuthType() SourceSnowflakeUpdateAuthType {
@@ -200,13 +207,6 @@ func (o *SourceSnowflakeUpdateOAuth20) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceSnowflakeUpdateOAuth20) GetAccessToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AccessToken
 }
 
 func (o *SourceSnowflakeUpdateOAuth20) GetRefreshToken() *string {
@@ -303,18 +303,18 @@ func (u SourceSnowflakeUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) 
 
 type SourceSnowflakeUpdate struct {
 	Credentials *SourceSnowflakeUpdateAuthorizationMethod `json:"credentials,omitempty"`
-	// The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).
-	Host string `json:"host"`
-	// The role you created for Airbyte to access Snowflake.
-	Role string `json:"role"`
-	// The warehouse you created for Airbyte to access data.
-	Warehouse string `json:"warehouse"`
 	// The database you created for Airbyte to access data.
 	Database string `json:"database"`
-	// The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
-	Schema *string `json:"schema,omitempty"`
+	// The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).
+	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The role you created for Airbyte to access Snowflake.
+	Role string `json:"role"`
+	// The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
+	Schema *string `json:"schema,omitempty"`
+	// The warehouse you created for Airbyte to access data.
+	Warehouse string `json:"warehouse"`
 }
 
 func (o *SourceSnowflakeUpdate) GetCredentials() *SourceSnowflakeUpdateAuthorizationMethod {
@@ -324,11 +324,25 @@ func (o *SourceSnowflakeUpdate) GetCredentials() *SourceSnowflakeUpdateAuthoriza
 	return o.Credentials
 }
 
+func (o *SourceSnowflakeUpdate) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
 func (o *SourceSnowflakeUpdate) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
+}
+
+func (o *SourceSnowflakeUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
 }
 
 func (o *SourceSnowflakeUpdate) GetRole() string {
@@ -338,20 +352,6 @@ func (o *SourceSnowflakeUpdate) GetRole() string {
 	return o.Role
 }
 
-func (o *SourceSnowflakeUpdate) GetWarehouse() string {
-	if o == nil {
-		return ""
-	}
-	return o.Warehouse
-}
-
-func (o *SourceSnowflakeUpdate) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
 func (o *SourceSnowflakeUpdate) GetSchema() *string {
 	if o == nil {
 		return nil
@@ -359,9 +359,9 @@ func (o *SourceSnowflakeUpdate) GetSchema() *string {
 	return o.Schema
 }
 
-func (o *SourceSnowflakeUpdate) GetJdbcURLParams() *string {
+func (o *SourceSnowflakeUpdate) GetWarehouse() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.JdbcURLParams
+	return o.Warehouse
 }

@@ -61,13 +61,13 @@ func (e *Assemblyai) UnmarshalJSON(data []byte) error {
 
 type SourceAssemblyai struct {
 	// Your AssemblyAI API key. You can find it in the AssemblyAI dashboard at https://www.assemblyai.com/app/api-keys.
-	APIKey    string    `json:"api_key"`
+	APIKey string `json:"api_key"`
+	// The request ID for LeMur responses
+	RequestID *string   `json:"request_id,omitempty"`
 	StartDate time.Time `json:"start_date"`
 	// The subtitle format for transcript_subtitle stream
 	SubtitleFormat *SubtitleFormat `default:"srt" json:"subtitle_format"`
-	// The request ID for LeMur responses
-	RequestID  *string    `json:"request_id,omitempty"`
-	sourceType Assemblyai `const:"assemblyai" json:"sourceType"`
+	sourceType     Assemblyai      `const:"assemblyai" json:"sourceType"`
 }
 
 func (s SourceAssemblyai) MarshalJSON() ([]byte, error) {
@@ -88,6 +88,13 @@ func (o *SourceAssemblyai) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceAssemblyai) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
 func (o *SourceAssemblyai) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -100,13 +107,6 @@ func (o *SourceAssemblyai) GetSubtitleFormat() *SubtitleFormat {
 		return nil
 	}
 	return o.SubtitleFormat
-}
-
-func (o *SourceAssemblyai) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
 }
 
 func (o *SourceAssemblyai) GetSourceType() Assemblyai {

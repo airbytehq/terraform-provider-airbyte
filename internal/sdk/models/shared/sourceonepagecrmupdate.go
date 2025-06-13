@@ -3,17 +3,10 @@
 package shared
 
 type SourceOnepagecrmUpdate struct {
-	// Enter the user ID of your API app
-	Username string `json:"username"`
 	// Enter your API Key of your API app
 	Password *string `json:"password,omitempty"`
-}
-
-func (o *SourceOnepagecrmUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	// Enter the user ID of your API app
+	Username string `json:"username"`
 }
 
 func (o *SourceOnepagecrmUpdate) GetPassword() *string {
@@ -21,4 +14,11 @@ func (o *SourceOnepagecrmUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceOnepagecrmUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

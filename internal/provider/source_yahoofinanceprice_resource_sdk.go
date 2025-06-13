@@ -21,9 +21,6 @@ func (r *SourceYahooFinancePriceResourceModel) ToSharedSourceYahooFinancePriceCr
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var tickers string
-	tickers = r.Configuration.Tickers.ValueString()
-
 	interval := new(shared.SourceYahooFinancePriceInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
 		*interval = shared.SourceYahooFinancePriceInterval(r.Configuration.Interval.ValueString())
@@ -36,10 +33,13 @@ func (r *SourceYahooFinancePriceResourceModel) ToSharedSourceYahooFinancePriceCr
 	} else {
 		rangeVar = nil
 	}
+	var tickers string
+	tickers = r.Configuration.Tickers.ValueString()
+
 	configuration := shared.SourceYahooFinancePrice{
-		Tickers:  tickers,
 		Interval: interval,
 		Range:    rangeVar,
+		Tickers:  tickers,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,9 +111,6 @@ func (r *SourceYahooFinancePriceResourceModel) ToSharedSourceYahooFinancePricePu
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var tickers string
-	tickers = r.Configuration.Tickers.ValueString()
-
 	interval := new(shared.SourceYahooFinancePriceUpdateInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
 		*interval = shared.SourceYahooFinancePriceUpdateInterval(r.Configuration.Interval.ValueString())
@@ -126,10 +123,13 @@ func (r *SourceYahooFinancePriceResourceModel) ToSharedSourceYahooFinancePricePu
 	} else {
 		rangeVar = nil
 	}
+	var tickers string
+	tickers = r.Configuration.Tickers.ValueString()
+
 	configuration := shared.SourceYahooFinancePriceUpdate{
-		Tickers:  tickers,
 		Interval: interval,
 		Range:    rangeVar,
+		Tickers:  tickers,
 	}
 	out := shared.SourceYahooFinancePricePutRequest{
 		Name:          name,

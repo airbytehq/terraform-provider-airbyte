@@ -60,10 +60,10 @@ func (e *Mailgun) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMailgun struct {
-	// Primary account API key to access your Mailgun data.
-	PrivateKey string `json:"private_key"`
 	// Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 	DomainRegion *DomainRegionCode `default:"US" json:"domain_region"`
+	// Primary account API key to access your Mailgun data.
+	PrivateKey string `json:"private_key"`
 	// UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 	StartDate  *time.Time `json:"start_date,omitempty"`
 	sourceType Mailgun    `const:"mailgun" json:"sourceType"`
@@ -80,18 +80,18 @@ func (s *SourceMailgun) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMailgun) GetPrivateKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.PrivateKey
-}
-
 func (o *SourceMailgun) GetDomainRegion() *DomainRegionCode {
 	if o == nil {
 		return nil
 	}
 	return o.DomainRegion
+}
+
+func (o *SourceMailgun) GetPrivateKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PrivateKey
 }
 
 func (o *SourceMailgun) GetStartDate() *time.Time {

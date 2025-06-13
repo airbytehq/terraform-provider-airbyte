@@ -22,44 +22,34 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteUrls []string = []string{}
-	for _, siteUrlsItem := range r.Configuration.SiteUrls {
-		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
-	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	alwaysUseAggregationTypeAuto := new(bool)
+	if !r.Configuration.AlwaysUseAggregationTypeAuto.IsUnknown() && !r.Configuration.AlwaysUseAggregationTypeAuto.IsNull() {
+		*alwaysUseAggregationTypeAuto = r.Configuration.AlwaysUseAggregationTypeAuto.ValueBool()
 	} else {
-		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
+		alwaysUseAggregationTypeAuto = nil
 	}
 	var authorization shared.SourceGoogleSearchConsoleAuthenticationType
 	var sourceGoogleSearchConsoleOAuth *shared.SourceGoogleSearchConsoleOAuth
 	if r.Configuration.Authorization.OAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Authorization.OAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Authorization.OAuth.ClientSecret.ValueString()
-
 		accessToken := new(string)
 		if !r.Configuration.Authorization.OAuth.AccessToken.IsUnknown() && !r.Configuration.Authorization.OAuth.AccessToken.IsNull() {
 			*accessToken = r.Configuration.Authorization.OAuth.AccessToken.ValueString()
 		} else {
 			accessToken = nil
 		}
+		var clientID string
+		clientID = r.Configuration.Authorization.OAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Authorization.OAuth.ClientSecret.ValueString()
+
 		var refreshToken string
 		refreshToken = r.Configuration.Authorization.OAuth.RefreshToken.ValueString()
 
 		sourceGoogleSearchConsoleOAuth = &shared.SourceGoogleSearchConsoleOAuth{
+			AccessToken:  accessToken,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			AccessToken:  accessToken,
 			RefreshToken: refreshToken,
 		}
 	}
@@ -70,15 +60,15 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	var sourceGoogleSearchConsoleServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleServiceAccountKeyAuthentication
 	if r.Configuration.Authorization.ServiceAccountKeyAuthentication != nil {
-		var serviceAccountInfo string
-		serviceAccountInfo = r.Configuration.Authorization.ServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
-
 		var email string
 		email = r.Configuration.Authorization.ServiceAccountKeyAuthentication.Email.ValueString()
 
+		var serviceAccountInfo string
+		serviceAccountInfo = r.Configuration.Authorization.ServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+
 		sourceGoogleSearchConsoleServiceAccountKeyAuthentication = &shared.SourceGoogleSearchConsoleServiceAccountKeyAuthentication{
-			ServiceAccountInfo: serviceAccountInfo,
 			Email:              email,
+			ServiceAccountInfo: serviceAccountInfo,
 		}
 	}
 	if sourceGoogleSearchConsoleServiceAccountKeyAuthentication != nil {
@@ -88,16 +78,16 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	var customReportsArray []shared.SourceGoogleSearchConsoleCustomReportConfig = []shared.SourceGoogleSearchConsoleCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var name1 string
-		name1 = customReportsArrayItem.Name.ValueString()
-
 		var dimensions []shared.SourceGoogleSearchConsoleValidEnums = []shared.SourceGoogleSearchConsoleValidEnums{}
 		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
 			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleValidEnums(dimensionsItem.ValueString()))
 		}
+		var name1 string
+		name1 = customReportsArrayItem.Name.ValueString()
+
 		customReportsArray = append(customReportsArray, shared.SourceGoogleSearchConsoleCustomReportConfig{
-			Name:       name1,
 			Dimensions: dimensions,
+			Name:       name1,
 		})
 	}
 	dataState := new(shared.DataFreshness)
@@ -106,13 +96,37 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		dataState = nil
 	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
+	var siteUrls []string = []string{}
+	for _, siteUrlsItem := range r.Configuration.SiteUrls {
+		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
+	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGoogleSearchConsole{
-		SiteUrls:           siteUrls,
-		StartDate:          startDate,
-		EndDate:            endDate,
-		Authorization:      authorization,
-		CustomReportsArray: customReportsArray,
-		DataState:          dataState,
+		AlwaysUseAggregationTypeAuto: alwaysUseAggregationTypeAuto,
+		Authorization:                authorization,
+		CustomReportsArray:           customReportsArray,
+		DataState:                    dataState,
+		EndDate:                      endDate,
+		NumWorkers:                   numWorkers,
+		SiteUrls:                     siteUrls,
+		StartDate:                    startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -184,44 +198,34 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteUrls []string = []string{}
-	for _, siteUrlsItem := range r.Configuration.SiteUrls {
-		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
-	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	alwaysUseAggregationTypeAuto := new(bool)
+	if !r.Configuration.AlwaysUseAggregationTypeAuto.IsUnknown() && !r.Configuration.AlwaysUseAggregationTypeAuto.IsNull() {
+		*alwaysUseAggregationTypeAuto = r.Configuration.AlwaysUseAggregationTypeAuto.ValueBool()
 	} else {
-		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
+		alwaysUseAggregationTypeAuto = nil
 	}
 	var authorization shared.SourceGoogleSearchConsoleUpdateAuthenticationType
 	var sourceGoogleSearchConsoleUpdateOAuth *shared.SourceGoogleSearchConsoleUpdateOAuth
 	if r.Configuration.Authorization.OAuth != nil {
-		var clientID string
-		clientID = r.Configuration.Authorization.OAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Authorization.OAuth.ClientSecret.ValueString()
-
 		accessToken := new(string)
 		if !r.Configuration.Authorization.OAuth.AccessToken.IsUnknown() && !r.Configuration.Authorization.OAuth.AccessToken.IsNull() {
 			*accessToken = r.Configuration.Authorization.OAuth.AccessToken.ValueString()
 		} else {
 			accessToken = nil
 		}
+		var clientID string
+		clientID = r.Configuration.Authorization.OAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Authorization.OAuth.ClientSecret.ValueString()
+
 		var refreshToken string
 		refreshToken = r.Configuration.Authorization.OAuth.RefreshToken.ValueString()
 
 		sourceGoogleSearchConsoleUpdateOAuth = &shared.SourceGoogleSearchConsoleUpdateOAuth{
+			AccessToken:  accessToken,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			AccessToken:  accessToken,
 			RefreshToken: refreshToken,
 		}
 	}
@@ -232,15 +236,15 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	var sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication
 	if r.Configuration.Authorization.ServiceAccountKeyAuthentication != nil {
-		var serviceAccountInfo string
-		serviceAccountInfo = r.Configuration.Authorization.ServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
-
 		var email string
 		email = r.Configuration.Authorization.ServiceAccountKeyAuthentication.Email.ValueString()
 
+		var serviceAccountInfo string
+		serviceAccountInfo = r.Configuration.Authorization.ServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+
 		sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication = &shared.SourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication{
-			ServiceAccountInfo: serviceAccountInfo,
 			Email:              email,
+			ServiceAccountInfo: serviceAccountInfo,
 		}
 	}
 	if sourceGoogleSearchConsoleUpdateServiceAccountKeyAuthentication != nil {
@@ -250,16 +254,16 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	}
 	var customReportsArray []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig = []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig{}
 	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
-		var name1 string
-		name1 = customReportsArrayItem.Name.ValueString()
-
 		var dimensions []shared.SourceGoogleSearchConsoleUpdateValidEnums = []shared.SourceGoogleSearchConsoleUpdateValidEnums{}
 		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
 			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleUpdateValidEnums(dimensionsItem.ValueString()))
 		}
+		var name1 string
+		name1 = customReportsArrayItem.Name.ValueString()
+
 		customReportsArray = append(customReportsArray, shared.SourceGoogleSearchConsoleUpdateCustomReportConfig{
-			Name:       name1,
 			Dimensions: dimensions,
+			Name:       name1,
 		})
 	}
 	dataState := new(shared.SourceGoogleSearchConsoleUpdateDataFreshness)
@@ -268,13 +272,37 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToSharedSourceGoogleSearchConso
 	} else {
 		dataState = nil
 	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
+	var siteUrls []string = []string{}
+	for _, siteUrlsItem := range r.Configuration.SiteUrls {
+		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
+	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGoogleSearchConsoleUpdate{
-		SiteUrls:           siteUrls,
-		StartDate:          startDate,
-		EndDate:            endDate,
-		Authorization:      authorization,
-		CustomReportsArray: customReportsArray,
-		DataState:          dataState,
+		AlwaysUseAggregationTypeAuto: alwaysUseAggregationTypeAuto,
+		Authorization:                authorization,
+		CustomReportsArray:           customReportsArray,
+		DataState:                    dataState,
+		EndDate:                      endDate,
+		NumWorkers:                   numWorkers,
+		SiteUrls:                     siteUrls,
+		StartDate:                    startDate,
 	}
 	out := shared.SourceGoogleSearchConsolePutRequest{
 		Name:          name,

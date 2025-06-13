@@ -24,26 +24,26 @@ func (r *SourceZohoBiginResourceModel) ToSharedSourceZohoBiginCreateRequest() *s
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
+	var clientRefreshToken string
+	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	dataCenter := new(shared.SourceZohoBiginDataCenter)
 	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
 		*dataCenter = shared.SourceZohoBiginDataCenter(r.Configuration.DataCenter.ValueString())
 	} else {
 		dataCenter = nil
 	}
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var clientRefreshToken string
-	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
-
 	var moduleName string
 	moduleName = r.Configuration.ModuleName.ValueString()
 
 	configuration := shared.SourceZohoBigin{
 		ClientID:           clientID,
-		DataCenter:         dataCenter,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
+		DataCenter:         dataCenter,
 		ModuleName:         moduleName,
 	}
 	secretID := new(string)
@@ -119,26 +119,26 @@ func (r *SourceZohoBiginResourceModel) ToSharedSourceZohoBiginPutRequest() *shar
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
+	var clientRefreshToken string
+	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	dataCenter := new(shared.SourceZohoBiginUpdateDataCenter)
 	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
 		*dataCenter = shared.SourceZohoBiginUpdateDataCenter(r.Configuration.DataCenter.ValueString())
 	} else {
 		dataCenter = nil
 	}
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
-	var clientRefreshToken string
-	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
-
 	var moduleName string
 	moduleName = r.Configuration.ModuleName.ValueString()
 
 	configuration := shared.SourceZohoBiginUpdate{
 		ClientID:           clientID,
-		DataCenter:         dataCenter,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
+		DataCenter:         dataCenter,
 		ModuleName:         moduleName,
 	}
 	out := shared.SourceZohoBiginPutRequest{

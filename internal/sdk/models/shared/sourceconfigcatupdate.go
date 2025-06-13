@@ -3,17 +3,10 @@
 package shared
 
 type SourceConfigcatUpdate struct {
-	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Username string `json:"username"`
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Password string `json:"password"`
-}
-
-func (o *SourceConfigcatUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
+	Username string `json:"username"`
 }
 
 func (o *SourceConfigcatUpdate) GetPassword() string {
@@ -21,4 +14,11 @@ func (o *SourceConfigcatUpdate) GetPassword() string {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *SourceConfigcatUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

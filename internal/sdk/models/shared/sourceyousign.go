@@ -62,12 +62,12 @@ func (e *Yousign) UnmarshalJSON(data []byte) error {
 type SourceYousign struct {
 	// API key or access token
 	APIKey string `json:"api_key"`
-	// The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
-	Subdomain *SourceYousignSubdomain `default:"api" json:"subdomain"`
 	// Limit for each response objects
-	Limit      *string   `default:"10" json:"limit"`
-	StartDate  time.Time `json:"start_date"`
-	sourceType Yousign   `const:"yousign" json:"sourceType"`
+	Limit     *string   `default:"10" json:"limit"`
+	StartDate time.Time `json:"start_date"`
+	// The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
+	Subdomain  *SourceYousignSubdomain `default:"api" json:"subdomain"`
+	sourceType Yousign                 `const:"yousign" json:"sourceType"`
 }
 
 func (s SourceYousign) MarshalJSON() ([]byte, error) {
@@ -88,13 +88,6 @@ func (o *SourceYousign) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceYousign) GetSubdomain() *SourceYousignSubdomain {
-	if o == nil {
-		return nil
-	}
-	return o.Subdomain
-}
-
 func (o *SourceYousign) GetLimit() *string {
 	if o == nil {
 		return nil
@@ -107,6 +100,13 @@ func (o *SourceYousign) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceYousign) GetSubdomain() *SourceYousignSubdomain {
+	if o == nil {
+		return nil
+	}
+	return o.Subdomain
 }
 
 func (o *SourceYousign) GetSourceType() Yousign {

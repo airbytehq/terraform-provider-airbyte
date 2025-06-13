@@ -31,6 +31,18 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	var email string
 	email = r.Configuration.Email.ValueString()
 
+	lookbackWindowMinutes := new(int64)
+	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
+		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
+	} else {
+		lookbackWindowMinutes = nil
+	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -41,33 +53,14 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraCreateRequest() *shared.Sour
 	} else {
 		startDate = nil
 	}
-	lookbackWindowMinutes := new(int64)
-	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
-		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
-	} else {
-		lookbackWindowMinutes = nil
-	}
-	enableExperimentalStreams := new(bool)
-	if !r.Configuration.EnableExperimentalStreams.IsUnknown() && !r.Configuration.EnableExperimentalStreams.IsNull() {
-		*enableExperimentalStreams = r.Configuration.EnableExperimentalStreams.ValueBool()
-	} else {
-		enableExperimentalStreams = nil
-	}
-	numWorkers := new(int64)
-	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
-		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
-	} else {
-		numWorkers = nil
-	}
 	configuration := shared.SourceJira{
-		APIToken:                  apiToken,
-		Domain:                    domain,
-		Email:                     email,
-		Projects:                  projects,
-		StartDate:                 startDate,
-		LookbackWindowMinutes:     lookbackWindowMinutes,
-		EnableExperimentalStreams: enableExperimentalStreams,
-		NumWorkers:                numWorkers,
+		APIToken:              apiToken,
+		Domain:                domain,
+		Email:                 email,
+		LookbackWindowMinutes: lookbackWindowMinutes,
+		NumWorkers:            numWorkers,
+		Projects:              projects,
+		StartDate:             startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -148,6 +141,18 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	var email string
 	email = r.Configuration.Email.ValueString()
 
+	lookbackWindowMinutes := new(int64)
+	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
+		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
+	} else {
+		lookbackWindowMinutes = nil
+	}
+	numWorkers := new(int64)
+	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
+		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
+	} else {
+		numWorkers = nil
+	}
 	var projects []string = []string{}
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
@@ -158,33 +163,14 @@ func (r *SourceJiraResourceModel) ToSharedSourceJiraPutRequest() *shared.SourceJ
 	} else {
 		startDate = nil
 	}
-	lookbackWindowMinutes := new(int64)
-	if !r.Configuration.LookbackWindowMinutes.IsUnknown() && !r.Configuration.LookbackWindowMinutes.IsNull() {
-		*lookbackWindowMinutes = r.Configuration.LookbackWindowMinutes.ValueInt64()
-	} else {
-		lookbackWindowMinutes = nil
-	}
-	enableExperimentalStreams := new(bool)
-	if !r.Configuration.EnableExperimentalStreams.IsUnknown() && !r.Configuration.EnableExperimentalStreams.IsNull() {
-		*enableExperimentalStreams = r.Configuration.EnableExperimentalStreams.ValueBool()
-	} else {
-		enableExperimentalStreams = nil
-	}
-	numWorkers := new(int64)
-	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
-		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
-	} else {
-		numWorkers = nil
-	}
 	configuration := shared.SourceJiraUpdate{
-		APIToken:                  apiToken,
-		Domain:                    domain,
-		Email:                     email,
-		Projects:                  projects,
-		StartDate:                 startDate,
-		LookbackWindowMinutes:     lookbackWindowMinutes,
-		EnableExperimentalStreams: enableExperimentalStreams,
-		NumWorkers:                numWorkers,
+		APIToken:              apiToken,
+		Domain:                domain,
+		Email:                 email,
+		LookbackWindowMinutes: lookbackWindowMinutes,
+		NumWorkers:            numWorkers,
+		Projects:              projects,
+		StartDate:             startDate,
 	}
 	out := shared.SourceJiraPutRequest{
 		Name:          name,

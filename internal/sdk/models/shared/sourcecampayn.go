@@ -32,9 +32,9 @@ func (e *Campayn) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCampayn struct {
-	SubDomain string `json:"sub_domain"`
 	// API key to use. Find it in your Campayn account settings. Keep it secure as it grants access to your Campayn data.
 	APIKey     string  `json:"api_key"`
+	SubDomain  string  `json:"sub_domain"`
 	sourceType Campayn `const:"campayn" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourceCampayn) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCampayn) GetSubDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.SubDomain
-}
-
 func (o *SourceCampayn) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceCampayn) GetSubDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.SubDomain
 }
 
 func (o *SourceCampayn) GetSourceType() Campayn {

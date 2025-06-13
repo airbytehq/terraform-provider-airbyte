@@ -9,29 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
-type DestinationAzureBlobStorageUpdateSchemasFormatType string
-
-const (
-	DestinationAzureBlobStorageUpdateSchemasFormatTypeJsonl DestinationAzureBlobStorageUpdateSchemasFormatType = "JSONL"
-)
-
-func (e DestinationAzureBlobStorageUpdateSchemasFormatType) ToPointer() *DestinationAzureBlobStorageUpdateSchemasFormatType {
-	return &e
-}
-func (e *DestinationAzureBlobStorageUpdateSchemasFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "JSONL":
-		*e = DestinationAzureBlobStorageUpdateSchemasFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageUpdateSchemasFormatType: %v", v)
-	}
-}
-
 type DestinationAzureBlobStorageUpdateSchemasFlattening string
 
 const (
@@ -58,9 +35,32 @@ func (e *DestinationAzureBlobStorageUpdateSchemasFlattening) UnmarshalJSON(data 
 	}
 }
 
+type DestinationAzureBlobStorageUpdateSchemasFormatType string
+
+const (
+	DestinationAzureBlobStorageUpdateSchemasFormatTypeJsonl DestinationAzureBlobStorageUpdateSchemasFormatType = "JSONL"
+)
+
+func (e DestinationAzureBlobStorageUpdateSchemasFormatType) ToPointer() *DestinationAzureBlobStorageUpdateSchemasFormatType {
+	return &e
+}
+func (e *DestinationAzureBlobStorageUpdateSchemasFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "JSONL":
+		*e = DestinationAzureBlobStorageUpdateSchemasFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageUpdateSchemasFormatType: %v", v)
+	}
+}
+
 type DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON struct {
-	FormatType           *DestinationAzureBlobStorageUpdateSchemasFormatType `default:"JSONL" json:"format_type"`
 	Flattening           *DestinationAzureBlobStorageUpdateSchemasFlattening `default:"No flattening" json:"flattening"`
+	FormatType           *DestinationAzureBlobStorageUpdateSchemasFormatType `default:"JSONL" json:"format_type"`
 	AdditionalProperties any                                                 `additionalProperties:"true" json:"-"`
 }
 
@@ -75,13 +75,6 @@ func (d *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) Unmarsh
 	return nil
 }
 
-func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationAzureBlobStorageUpdateSchemasFormatType {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
 func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFlattening() *DestinationAzureBlobStorageUpdateSchemasFlattening {
 	if o == nil {
 		return nil
@@ -89,34 +82,18 @@ func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFlat
 	return o.Flattening
 }
 
+func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetFormatType() *DestinationAzureBlobStorageUpdateSchemasFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
+}
+
 func (o *DestinationAzureBlobStorageUpdateJSONLinesNewlineDelimitedJSON) GetAdditionalProperties() any {
 	if o == nil {
 		return nil
 	}
 	return o.AdditionalProperties
-}
-
-type DestinationAzureBlobStorageUpdateFormatType string
-
-const (
-	DestinationAzureBlobStorageUpdateFormatTypeCsv DestinationAzureBlobStorageUpdateFormatType = "CSV"
-)
-
-func (e DestinationAzureBlobStorageUpdateFormatType) ToPointer() *DestinationAzureBlobStorageUpdateFormatType {
-	return &e
-}
-func (e *DestinationAzureBlobStorageUpdateFormatType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CSV":
-		*e = DestinationAzureBlobStorageUpdateFormatType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageUpdateFormatType: %v", v)
-	}
 }
 
 type DestinationAzureBlobStorageUpdateFlattening string
@@ -145,9 +122,32 @@ func (e *DestinationAzureBlobStorageUpdateFlattening) UnmarshalJSON(data []byte)
 	}
 }
 
+type DestinationAzureBlobStorageUpdateFormatType string
+
+const (
+	DestinationAzureBlobStorageUpdateFormatTypeCsv DestinationAzureBlobStorageUpdateFormatType = "CSV"
+)
+
+func (e DestinationAzureBlobStorageUpdateFormatType) ToPointer() *DestinationAzureBlobStorageUpdateFormatType {
+	return &e
+}
+func (e *DestinationAzureBlobStorageUpdateFormatType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CSV":
+		*e = DestinationAzureBlobStorageUpdateFormatType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageUpdateFormatType: %v", v)
+	}
+}
+
 type DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues struct {
-	FormatType           *DestinationAzureBlobStorageUpdateFormatType `default:"CSV" json:"format_type"`
 	Flattening           *DestinationAzureBlobStorageUpdateFlattening `default:"No flattening" json:"flattening"`
+	FormatType           *DestinationAzureBlobStorageUpdateFormatType `default:"CSV" json:"format_type"`
 	AdditionalProperties any                                          `additionalProperties:"true" json:"-"`
 }
 
@@ -162,18 +162,18 @@ func (d *DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues) UnmarshalJSON
 	return nil
 }
 
-func (o *DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues) GetFormatType() *DestinationAzureBlobStorageUpdateFormatType {
-	if o == nil {
-		return nil
-	}
-	return o.FormatType
-}
-
 func (o *DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues) GetFlattening() *DestinationAzureBlobStorageUpdateFlattening {
 	if o == nil {
 		return nil
 	}
 	return o.Flattening
+}
+
+func (o *DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues) GetFormatType() *DestinationAzureBlobStorageUpdateFormatType {
+	if o == nil {
+		return nil
+	}
+	return o.FormatType
 }
 
 func (o *DestinationAzureBlobStorageUpdateCSVCommaSeparatedValues) GetAdditionalProperties() any {
@@ -248,20 +248,20 @@ func (u DestinationAzureBlobStorageUpdateOutputFormat) MarshalJSON() ([]byte, er
 }
 
 type DestinationAzureBlobStorageUpdate struct {
-	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
-	AzureBlobStorageEndpointDomainName *string `json:"azure_blob_storage_endpoint_domain_name,omitempty"`
+	// The Azure blob storage account key. If you set this value, you must not set the Shared Access Signature.
+	AzureBlobStorageAccountKey *string `json:"azure_blob_storage_account_key,omitempty"`
 	// The name of the Azure Blob Storage Account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#storage-accounts">here</a>.
 	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
 	// The name of the Azure Blob Storage Container. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/blobs/storage-blobs-introduction#containers">here</a>.
 	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
-	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the account key.
-	SharedAccessSignature *string `json:"shared_access_signature,omitempty"`
-	// The Azure blob storage account key. If you set this value, you must not set the Shared Access Signature.
-	AzureBlobStorageAccountKey *string `json:"azure_blob_storage_account_key,omitempty"`
+	// This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.
+	AzureBlobStorageEndpointDomainName *string `json:"azure_blob_storage_endpoint_domain_name,omitempty"`
 	// The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable.
 	AzureBlobStorageSpillSize *int64 `default:"500" json:"azure_blob_storage_spill_size"`
 	// Format of the data output.
 	Format DestinationAzureBlobStorageUpdateOutputFormat `json:"format"`
+	// A shared access signature (SAS) provides secure delegated access to resources in your storage account. Read more <a href="https://learn.microsoft.com/en-gb/azure/storage/common/storage-sas-overview?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json">here</a>. If you set this value, you must not set the account key.
+	SharedAccessSignature *string `json:"shared_access_signature,omitempty"`
 }
 
 func (d DestinationAzureBlobStorageUpdate) MarshalJSON() ([]byte, error) {
@@ -275,11 +275,11 @@ func (d *DestinationAzureBlobStorageUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageEndpointDomainName() *string {
+func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageAccountKey() *string {
 	if o == nil {
 		return nil
 	}
-	return o.AzureBlobStorageEndpointDomainName
+	return o.AzureBlobStorageAccountKey
 }
 
 func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageAccountName() string {
@@ -296,18 +296,11 @@ func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageContainerName() s
 	return o.AzureBlobStorageContainerName
 }
 
-func (o *DestinationAzureBlobStorageUpdate) GetSharedAccessSignature() *string {
+func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageEndpointDomainName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.SharedAccessSignature
-}
-
-func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageAccountKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AzureBlobStorageAccountKey
+	return o.AzureBlobStorageEndpointDomainName
 }
 
 func (o *DestinationAzureBlobStorageUpdate) GetAzureBlobStorageSpillSize() *int64 {
@@ -322,4 +315,11 @@ func (o *DestinationAzureBlobStorageUpdate) GetFormat() DestinationAzureBlobStor
 		return DestinationAzureBlobStorageUpdateOutputFormat{}
 	}
 	return o.Format
+}
+
+func (o *DestinationAzureBlobStorageUpdate) GetSharedAccessSignature() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SharedAccessSignature
 }

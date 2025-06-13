@@ -21,6 +21,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 			for _, v := range streamsItem.CursorField {
 				streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
 			}
+			streams1.DestinationObjectName = types.StringPointerValue(streamsItem.DestinationObjectName)
 			streams1.IncludeFiles = types.BoolPointerValue(streamsItem.IncludeFiles)
 			streams1.Mappers = []tfTypes.ConfiguredStreamMapper{}
 			for mappersCount, mappersItem := range streamsItem.Mappers {
@@ -103,6 +104,7 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 				r.Configurations.Streams = append(r.Configurations.Streams, streams1)
 			} else {
 				r.Configurations.Streams[streamsCount].CursorField = streams1.CursorField
+				r.Configurations.Streams[streamsCount].DestinationObjectName = streams1.DestinationObjectName
 				r.Configurations.Streams[streamsCount].IncludeFiles = streams1.IncludeFiles
 				r.Configurations.Streams[streamsCount].Mappers = streams1.Mappers
 				r.Configurations.Streams[streamsCount].Name = streams1.Name
@@ -114,7 +116,6 @@ func (r *ConnectionDataSourceModel) RefreshFromSharedConnectionResponse(resp *sh
 		}
 		r.ConnectionID = types.StringValue(resp.ConnectionID)
 		r.CreatedAt = types.Int64Value(resp.CreatedAt)
-		r.DataResidency = types.StringValue(resp.DataResidency)
 		r.DestinationID = types.StringValue(resp.DestinationID)
 		r.Name = types.StringValue(resp.Name)
 		if resp.NamespaceDefinition != nil {

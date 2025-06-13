@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type UsernamePassword struct {
-	Password types.String `tfsdk:"password"`
-	Username types.String `tfsdk:"username"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	Password             types.String `tfsdk:"password"`
+	Username             types.String `tfsdk:"username"`
 }

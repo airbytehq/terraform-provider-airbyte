@@ -33,11 +33,11 @@ func (e *Shortcut) UnmarshalJSON(data []byte) error {
 }
 
 type SourceShortcut struct {
-	APIKey2   string    `json:"api_key_2"`
-	StartDate time.Time `json:"start_date"`
+	APIKey2 string `json:"api_key_2"`
 	// Query for searching as defined in `https://help.shortcut.com/hc/en-us/articles/360000046646-Searching-in-Shortcut-Using-Search-Operators`
-	Query      *string  `default:"title:Our first Epic" json:"query"`
-	sourceType Shortcut `const:"shortcut" json:"sourceType"`
+	Query      *string   `default:"title:Our first Epic" json:"query"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Shortcut  `const:"shortcut" json:"sourceType"`
 }
 
 func (s SourceShortcut) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceShortcut) GetAPIKey2() string {
 	return o.APIKey2
 }
 
-func (o *SourceShortcut) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceShortcut) GetQuery() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *SourceShortcut) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceShortcut) GetSourceType() Shortcut {

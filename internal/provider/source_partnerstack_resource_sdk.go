@@ -21,6 +21,9 @@ func (r *SourcePartnerstackResourceModel) ToSharedSourcePartnerstackCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var privateKey string
+	privateKey = r.Configuration.PrivateKey.ValueString()
+
 	var publicKey string
 	publicKey = r.Configuration.PublicKey.ValueString()
 
@@ -30,13 +33,10 @@ func (r *SourcePartnerstackResourceModel) ToSharedSourcePartnerstackCreateReques
 	} else {
 		startDate = nil
 	}
-	var privateKey string
-	privateKey = r.Configuration.PrivateKey.ValueString()
-
 	configuration := shared.SourcePartnerstack{
+		PrivateKey: privateKey,
 		PublicKey:  publicKey,
 		StartDate:  startDate,
-		PrivateKey: privateKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,6 +108,9 @@ func (r *SourcePartnerstackResourceModel) ToSharedSourcePartnerstackPutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var privateKey string
+	privateKey = r.Configuration.PrivateKey.ValueString()
+
 	var publicKey string
 	publicKey = r.Configuration.PublicKey.ValueString()
 
@@ -117,13 +120,10 @@ func (r *SourcePartnerstackResourceModel) ToSharedSourcePartnerstackPutRequest()
 	} else {
 		startDate = nil
 	}
-	var privateKey string
-	privateKey = r.Configuration.PrivateKey.ValueString()
-
 	configuration := shared.SourcePartnerstackUpdate{
+		PrivateKey: privateKey,
 		PublicKey:  publicKey,
 		StartDate:  startDate,
-		PrivateKey: privateKey,
 	}
 	out := shared.SourcePartnerstackPutRequest{
 		Name:          name,

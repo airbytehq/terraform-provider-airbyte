@@ -22,25 +22,6 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
-	} else {
-		lookbackWindow = nil
-	}
-	joinChannels := new(bool)
-	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
-		*joinChannels = r.Configuration.JoinChannels.ValueBool()
-	} else {
-		joinChannels = nil
-	}
-	includePrivateChannels := new(bool)
-	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
-		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
-	} else {
-		includePrivateChannels = nil
-	}
 	var channelFilter []string = []string{}
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
@@ -49,19 +30,19 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 	if r.Configuration.Credentials != nil {
 		var signInViaSlackOAuth *shared.SignInViaSlackOAuth
 		if r.Configuration.Credentials.SignInViaSlackOAuth != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.SignInViaSlackOAuth.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.SignInViaSlackOAuth.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.SignInViaSlackOAuth.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.SignInViaSlackOAuth.AccessToken.ValueString()
-
 			signInViaSlackOAuth = &shared.SignInViaSlackOAuth{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if signInViaSlackOAuth != nil {
@@ -84,13 +65,32 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackCreateRequest() *shared.So
 			}
 		}
 	}
+	includePrivateChannels := new(bool)
+	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
+		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
+	} else {
+		includePrivateChannels = nil
+	}
+	joinChannels := new(bool)
+	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
+		*joinChannels = r.Configuration.JoinChannels.ValueBool()
+	} else {
+		joinChannels = nil
+	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlack{
-		StartDate:              startDate,
-		LookbackWindow:         lookbackWindow,
-		JoinChannels:           joinChannels,
-		IncludePrivateChannels: includePrivateChannels,
 		ChannelFilter:          channelFilter,
 		Credentials:            credentials,
+		IncludePrivateChannels: includePrivateChannels,
+		JoinChannels:           joinChannels,
+		LookbackWindow:         lookbackWindow,
+		StartDate:              startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -162,25 +162,6 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	lookbackWindow := new(int64)
-	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
-		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
-	} else {
-		lookbackWindow = nil
-	}
-	joinChannels := new(bool)
-	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
-		*joinChannels = r.Configuration.JoinChannels.ValueBool()
-	} else {
-		joinChannels = nil
-	}
-	includePrivateChannels := new(bool)
-	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
-		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
-	} else {
-		includePrivateChannels = nil
-	}
 	var channelFilter []string = []string{}
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
 		channelFilter = append(channelFilter, channelFilterItem.ValueString())
@@ -189,19 +170,19 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.Sourc
 	if r.Configuration.Credentials != nil {
 		var sourceSlackUpdateSignInViaSlackOAuth *shared.SourceSlackUpdateSignInViaSlackOAuth
 		if r.Configuration.Credentials.SignInViaSlackOAuth != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.SignInViaSlackOAuth.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.SignInViaSlackOAuth.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.SignInViaSlackOAuth.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.SignInViaSlackOAuth.AccessToken.ValueString()
-
 			sourceSlackUpdateSignInViaSlackOAuth = &shared.SourceSlackUpdateSignInViaSlackOAuth{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceSlackUpdateSignInViaSlackOAuth != nil {
@@ -224,13 +205,32 @@ func (r *SourceSlackResourceModel) ToSharedSourceSlackPutRequest() *shared.Sourc
 			}
 		}
 	}
+	includePrivateChannels := new(bool)
+	if !r.Configuration.IncludePrivateChannels.IsUnknown() && !r.Configuration.IncludePrivateChannels.IsNull() {
+		*includePrivateChannels = r.Configuration.IncludePrivateChannels.ValueBool()
+	} else {
+		includePrivateChannels = nil
+	}
+	joinChannels := new(bool)
+	if !r.Configuration.JoinChannels.IsUnknown() && !r.Configuration.JoinChannels.IsNull() {
+		*joinChannels = r.Configuration.JoinChannels.ValueBool()
+	} else {
+		joinChannels = nil
+	}
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlackUpdate{
-		StartDate:              startDate,
-		LookbackWindow:         lookbackWindow,
-		JoinChannels:           joinChannels,
-		IncludePrivateChannels: includePrivateChannels,
 		ChannelFilter:          channelFilter,
 		Credentials:            credentials,
+		IncludePrivateChannels: includePrivateChannels,
+		JoinChannels:           joinChannels,
+		LookbackWindow:         lookbackWindow,
+		StartDate:              startDate,
 	}
 	out := shared.SourceSlackPutRequest{
 		Name:          name,

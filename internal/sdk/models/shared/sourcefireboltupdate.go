@@ -3,18 +3,25 @@
 package shared
 
 type SourceFireboltUpdate struct {
+	// Firebolt account to login.
+	Account string `json:"account"`
 	// Firebolt service account ID.
 	ClientID string `json:"client_id"`
 	// Firebolt secret, corresponding to the service account ID.
 	ClientSecret string `json:"client_secret"`
-	// Firebolt account to login.
-	Account string `json:"account"`
-	// The host name of your Firebolt database.
-	Host *string `json:"host,omitempty"`
 	// The database to connect to.
 	Database string `json:"database"`
 	// Engine name to connect to.
 	Engine string `json:"engine"`
+	// The host name of your Firebolt database.
+	Host *string `json:"host,omitempty"`
+}
+
+func (o *SourceFireboltUpdate) GetAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.Account
 }
 
 func (o *SourceFireboltUpdate) GetClientID() string {
@@ -31,20 +38,6 @@ func (o *SourceFireboltUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceFireboltUpdate) GetAccount() string {
-	if o == nil {
-		return ""
-	}
-	return o.Account
-}
-
-func (o *SourceFireboltUpdate) GetHost() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Host
-}
-
 func (o *SourceFireboltUpdate) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -57,4 +50,11 @@ func (o *SourceFireboltUpdate) GetEngine() string {
 		return ""
 	}
 	return o.Engine
+}
+
+func (o *SourceFireboltUpdate) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
 }

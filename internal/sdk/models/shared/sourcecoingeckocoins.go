@@ -84,18 +84,18 @@ type SourceCoingeckoCoins struct {
 	// `/coins/list` endpoint.
 	//
 	CoinID string `json:"coin_id"`
-	// The target currency of market data (e.g. usd, eur, jpy, etc.)
-	//
-	VsCurrency string `json:"vs_currency"`
 	// The number of days of data for market chart.
 	//
 	Days *Days `default:"30" json:"days"`
+	// The end date for the historical data stream in dd-mm-yyyy format.
+	//
+	EndDate *types.Date `json:"end_date,omitempty"`
 	// The start date for the historical data stream in dd-mm-yyyy format.
 	//
 	StartDate types.Date `json:"start_date"`
-	// The end date for the historical data stream in dd-mm-yyyy format.
+	// The target currency of market data (e.g. usd, eur, jpy, etc.)
 	//
-	EndDate    *types.Date    `json:"end_date,omitempty"`
+	VsCurrency string         `json:"vs_currency"`
 	sourceType CoingeckoCoins `const:"coingecko-coins" json:"sourceType"`
 }
 
@@ -124,18 +124,18 @@ func (o *SourceCoingeckoCoins) GetCoinID() string {
 	return o.CoinID
 }
 
-func (o *SourceCoingeckoCoins) GetVsCurrency() string {
-	if o == nil {
-		return ""
-	}
-	return o.VsCurrency
-}
-
 func (o *SourceCoingeckoCoins) GetDays() *Days {
 	if o == nil {
 		return nil
 	}
 	return o.Days
+}
+
+func (o *SourceCoingeckoCoins) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
 }
 
 func (o *SourceCoingeckoCoins) GetStartDate() types.Date {
@@ -145,11 +145,11 @@ func (o *SourceCoingeckoCoins) GetStartDate() types.Date {
 	return o.StartDate
 }
 
-func (o *SourceCoingeckoCoins) GetEndDate() *types.Date {
+func (o *SourceCoingeckoCoins) GetVsCurrency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.EndDate
+	return o.VsCurrency
 }
 
 func (o *SourceCoingeckoCoins) GetSourceType() CoingeckoCoins {

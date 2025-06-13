@@ -3,10 +3,17 @@
 package shared
 
 type SourceGoogleCalendarUpdate struct {
-	ClientID            string `json:"client_id"`
-	ClientSecret        string `json:"client_secret"`
-	ClientRefreshToken2 string `json:"client_refresh_token_2"`
 	Calendarid          string `json:"calendarid"`
+	ClientID            string `json:"client_id"`
+	ClientRefreshToken2 string `json:"client_refresh_token_2"`
+	ClientSecret        string `json:"client_secret"`
+}
+
+func (o *SourceGoogleCalendarUpdate) GetCalendarid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Calendarid
 }
 
 func (o *SourceGoogleCalendarUpdate) GetClientID() string {
@@ -16,13 +23,6 @@ func (o *SourceGoogleCalendarUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGoogleCalendarUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGoogleCalendarUpdate) GetClientRefreshToken2() string {
 	if o == nil {
 		return ""
@@ -30,9 +30,9 @@ func (o *SourceGoogleCalendarUpdate) GetClientRefreshToken2() string {
 	return o.ClientRefreshToken2
 }
 
-func (o *SourceGoogleCalendarUpdate) GetCalendarid() string {
+func (o *SourceGoogleCalendarUpdate) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
-	return o.Calendarid
+	return o.ClientSecret
 }

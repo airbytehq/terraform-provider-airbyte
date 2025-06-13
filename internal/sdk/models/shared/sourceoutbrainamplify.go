@@ -9,6 +9,33 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// DefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type DefinitionOfConversionCountInReports string
+
+const (
+	DefinitionOfConversionCountInReportsClickViewTime  DefinitionOfConversionCountInReports = "click/view_time"
+	DefinitionOfConversionCountInReportsConversionTime DefinitionOfConversionCountInReports = "conversion_time"
+)
+
+func (e DefinitionOfConversionCountInReports) ToPointer() *DefinitionOfConversionCountInReports {
+	return &e
+}
+func (e *DefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "click/view_time":
+		fallthrough
+	case "conversion_time":
+		*e = DefinitionOfConversionCountInReports(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DefinitionOfConversionCountInReports: %v", v)
+	}
+}
+
 type BothUsernameAndPasswordIsRequiredForAuthenticationRequest string
 
 const (
@@ -32,41 +59,41 @@ func (e *BothUsernameAndPasswordIsRequiredForAuthenticationRequest) UnmarshalJSO
 	}
 }
 
-type UsernamePassword struct {
-	type_ BothUsernameAndPasswordIsRequiredForAuthenticationRequest `const:"username_password" json:"type"`
+type SourceOutbrainAmplifyUsernamePassword struct {
+	// Add Password for authentication.
+	Password string                                                    `json:"password"`
+	type_    BothUsernameAndPasswordIsRequiredForAuthenticationRequest `const:"username_password" json:"type"`
 	// Add Username for authentication.
 	Username string `json:"username"`
-	// Add Password for authentication.
-	Password string `json:"password"`
 }
 
-func (u UsernamePassword) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(u, "", false)
+func (s SourceOutbrainAmplifyUsernamePassword) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
 }
 
-func (u *UsernamePassword) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, true); err != nil {
+func (s *SourceOutbrainAmplifyUsernamePassword) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UsernamePassword) GetType() BothUsernameAndPasswordIsRequiredForAuthenticationRequest {
-	return BothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword
-}
-
-func (o *UsernamePassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *UsernamePassword) GetPassword() string {
+func (o *SourceOutbrainAmplifyUsernamePassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *SourceOutbrainAmplifyUsernamePassword) GetType() BothUsernameAndPasswordIsRequiredForAuthenticationRequest {
+	return BothUsernameAndPasswordIsRequiredForAuthenticationRequestUsernamePassword
+}
+
+func (o *SourceOutbrainAmplifyUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type AccessTokenIsRequiredForAuthenticationRequests string
@@ -93,9 +120,9 @@ func (e *AccessTokenIsRequiredForAuthenticationRequests) UnmarshalJSON(data []by
 }
 
 type SourceOutbrainAmplifyAccessToken struct {
-	type_ AccessTokenIsRequiredForAuthenticationRequests `const:"access_token" json:"type"`
 	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                         `json:"access_token"`
+	type_       AccessTokenIsRequiredForAuthenticationRequests `const:"access_token" json:"type"`
 }
 
 func (s SourceOutbrainAmplifyAccessToken) MarshalJSON() ([]byte, error) {
@@ -109,10 +136,6 @@ func (s *SourceOutbrainAmplifyAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOutbrainAmplifyAccessToken) GetType() AccessTokenIsRequiredForAuthenticationRequests {
-	return AccessTokenIsRequiredForAuthenticationRequestsAccessToken
-}
-
 func (o *SourceOutbrainAmplifyAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
@@ -120,17 +143,21 @@ func (o *SourceOutbrainAmplifyAccessToken) GetAccessToken() string {
 	return o.AccessToken
 }
 
+func (o *SourceOutbrainAmplifyAccessToken) GetType() AccessTokenIsRequiredForAuthenticationRequests {
+	return AccessTokenIsRequiredForAuthenticationRequestsAccessToken
+}
+
 type SourceOutbrainAmplifyAuthenticationMethodType string
 
 const (
-	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyAccessToken SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Access token"
-	SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword                 SourceOutbrainAmplifyAuthenticationMethodType = "Username Password"
+	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyAccessToken      SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Access token"
+	SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyAuthenticationMethodType = "source-outbrain-amplify_Username Password"
 )
 
 // SourceOutbrainAmplifyAuthenticationMethod - Credentials for making authenticated requests requires either username/password or access_token.
 type SourceOutbrainAmplifyAuthenticationMethod struct {
-	SourceOutbrainAmplifyAccessToken *SourceOutbrainAmplifyAccessToken `queryParam:"inline"`
-	UsernamePassword                 *UsernamePassword                 `queryParam:"inline"`
+	SourceOutbrainAmplifyAccessToken      *SourceOutbrainAmplifyAccessToken      `queryParam:"inline"`
+	SourceOutbrainAmplifyUsernamePassword *SourceOutbrainAmplifyUsernamePassword `queryParam:"inline"`
 
 	Type SourceOutbrainAmplifyAuthenticationMethodType
 }
@@ -144,12 +171,12 @@ func CreateSourceOutbrainAmplifyAuthenticationMethodSourceOutbrainAmplifyAccessT
 	}
 }
 
-func CreateSourceOutbrainAmplifyAuthenticationMethodUsernamePassword(usernamePassword UsernamePassword) SourceOutbrainAmplifyAuthenticationMethod {
-	typ := SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword
+func CreateSourceOutbrainAmplifyAuthenticationMethodSourceOutbrainAmplifyUsernamePassword(sourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyUsernamePassword) SourceOutbrainAmplifyAuthenticationMethod {
+	typ := SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword
 
 	return SourceOutbrainAmplifyAuthenticationMethod{
-		UsernamePassword: &usernamePassword,
-		Type:             typ,
+		SourceOutbrainAmplifyUsernamePassword: &sourceOutbrainAmplifyUsernamePassword,
+		Type:                                  typ,
 	}
 }
 
@@ -162,10 +189,10 @@ func (u *SourceOutbrainAmplifyAuthenticationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
-	var usernamePassword UsernamePassword = UsernamePassword{}
-	if err := utils.UnmarshalJSON(data, &usernamePassword, "", true, true); err == nil {
-		u.UsernamePassword = &usernamePassword
-		u.Type = SourceOutbrainAmplifyAuthenticationMethodTypeUsernamePassword
+	var sourceOutbrainAmplifyUsernamePassword SourceOutbrainAmplifyUsernamePassword = SourceOutbrainAmplifyUsernamePassword{}
+	if err := utils.UnmarshalJSON(data, &sourceOutbrainAmplifyUsernamePassword, "", true, true); err == nil {
+		u.SourceOutbrainAmplifyUsernamePassword = &sourceOutbrainAmplifyUsernamePassword
+		u.Type = SourceOutbrainAmplifyAuthenticationMethodTypeSourceOutbrainAmplifyUsernamePassword
 		return nil
 	}
 
@@ -177,41 +204,11 @@ func (u SourceOutbrainAmplifyAuthenticationMethod) MarshalJSON() ([]byte, error)
 		return utils.MarshalJSON(u.SourceOutbrainAmplifyAccessToken, "", true)
 	}
 
-	if u.UsernamePassword != nil {
-		return utils.MarshalJSON(u.UsernamePassword, "", true)
+	if u.SourceOutbrainAmplifyUsernamePassword != nil {
+		return utils.MarshalJSON(u.SourceOutbrainAmplifyUsernamePassword, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SourceOutbrainAmplifyAuthenticationMethod: all fields are null")
-}
-
-// GranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-type GranularityForPeriodicReports string
-
-const (
-	GranularityForPeriodicReportsDaily   GranularityForPeriodicReports = "daily"
-	GranularityForPeriodicReportsWeekly  GranularityForPeriodicReports = "weekly"
-	GranularityForPeriodicReportsMonthly GranularityForPeriodicReports = "monthly"
-)
-
-func (e GranularityForPeriodicReports) ToPointer() *GranularityForPeriodicReports {
-	return &e
-}
-func (e *GranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "daily":
-		fallthrough
-	case "weekly":
-		fallthrough
-	case "monthly":
-		*e = GranularityForPeriodicReports(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GranularityForPeriodicReports: %v", v)
-	}
 }
 
 // GranularityForGeoLocationRegion - The granularity used for geo location data in reports.
@@ -244,30 +241,33 @@ func (e *GranularityForGeoLocationRegion) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DefinitionOfConversionCountInReports - The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-type DefinitionOfConversionCountInReports string
+// GranularityForPeriodicReports - The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+type GranularityForPeriodicReports string
 
 const (
-	DefinitionOfConversionCountInReportsClickViewTime  DefinitionOfConversionCountInReports = "click/view_time"
-	DefinitionOfConversionCountInReportsConversionTime DefinitionOfConversionCountInReports = "conversion_time"
+	GranularityForPeriodicReportsDaily   GranularityForPeriodicReports = "daily"
+	GranularityForPeriodicReportsWeekly  GranularityForPeriodicReports = "weekly"
+	GranularityForPeriodicReportsMonthly GranularityForPeriodicReports = "monthly"
 )
 
-func (e DefinitionOfConversionCountInReports) ToPointer() *DefinitionOfConversionCountInReports {
+func (e GranularityForPeriodicReports) ToPointer() *GranularityForPeriodicReports {
 	return &e
 }
-func (e *DefinitionOfConversionCountInReports) UnmarshalJSON(data []byte) error {
+func (e *GranularityForPeriodicReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "click/view_time":
+	case "daily":
 		fallthrough
-	case "conversion_time":
-		*e = DefinitionOfConversionCountInReports(v)
+	case "weekly":
+		fallthrough
+	case "monthly":
+		*e = GranularityForPeriodicReports(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DefinitionOfConversionCountInReports: %v", v)
+		return fmt.Errorf("invalid value for GranularityForPeriodicReports: %v", v)
 	}
 }
 
@@ -295,19 +295,19 @@ func (e *OutbrainAmplify) UnmarshalJSON(data []byte) error {
 }
 
 type SourceOutbrainAmplify struct {
-	// Credentials for making authenticated requests requires either username/password or access_token.
-	Credentials SourceOutbrainAmplifyAuthenticationMethod `json:"credentials"`
-	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
-	ReportGranularity *GranularityForPeriodicReports `json:"report_granularity,omitempty"`
-	// The granularity used for geo location data in reports.
-	GeoLocationBreakdown *GranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
-	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
-	// Date in the format YYYY-MM-DD.
-	EndDate *string `json:"end_date,omitempty"`
 	// The definition of conversion count in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
 	ConversionCount *DefinitionOfConversionCountInReports `json:"conversion_count,omitempty"`
-	sourceType      OutbrainAmplify                       `const:"outbrain-amplify" json:"sourceType"`
+	// Credentials for making authenticated requests requires either username/password or access_token.
+	Credentials SourceOutbrainAmplifyAuthenticationMethod `json:"credentials"`
+	// Date in the format YYYY-MM-DD.
+	EndDate *string `json:"end_date,omitempty"`
+	// The granularity used for geo location data in reports.
+	GeoLocationBreakdown *GranularityForGeoLocationRegion `json:"geo_location_breakdown,omitempty"`
+	// The granularity used for periodic data in reports. See <a href="https://amplifyv01.docs.apiary.io/#reference/performance-reporting/periodic/retrieve-performance-statistics-for-all-marketer-campaigns-by-periodic-breakdown">the docs</a>.
+	ReportGranularity *GranularityForPeriodicReports `json:"report_granularity,omitempty"`
+	// Date in the format YYYY-MM-DD eg. 2017-01-25. Any data before this date will not be replicated.
+	StartDate  string          `json:"start_date"`
+	sourceType OutbrainAmplify `const:"outbrain-amplify" json:"sourceType"`
 }
 
 func (s SourceOutbrainAmplify) MarshalJSON() ([]byte, error) {
@@ -321,32 +321,18 @@ func (s *SourceOutbrainAmplify) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceOutbrainAmplify) GetConversionCount() *DefinitionOfConversionCountInReports {
+	if o == nil {
+		return nil
+	}
+	return o.ConversionCount
+}
+
 func (o *SourceOutbrainAmplify) GetCredentials() SourceOutbrainAmplifyAuthenticationMethod {
 	if o == nil {
 		return SourceOutbrainAmplifyAuthenticationMethod{}
 	}
 	return o.Credentials
-}
-
-func (o *SourceOutbrainAmplify) GetReportGranularity() *GranularityForPeriodicReports {
-	if o == nil {
-		return nil
-	}
-	return o.ReportGranularity
-}
-
-func (o *SourceOutbrainAmplify) GetGeoLocationBreakdown() *GranularityForGeoLocationRegion {
-	if o == nil {
-		return nil
-	}
-	return o.GeoLocationBreakdown
-}
-
-func (o *SourceOutbrainAmplify) GetStartDate() string {
-	if o == nil {
-		return ""
-	}
-	return o.StartDate
 }
 
 func (o *SourceOutbrainAmplify) GetEndDate() *string {
@@ -356,11 +342,25 @@ func (o *SourceOutbrainAmplify) GetEndDate() *string {
 	return o.EndDate
 }
 
-func (o *SourceOutbrainAmplify) GetConversionCount() *DefinitionOfConversionCountInReports {
+func (o *SourceOutbrainAmplify) GetGeoLocationBreakdown() *GranularityForGeoLocationRegion {
 	if o == nil {
 		return nil
 	}
-	return o.ConversionCount
+	return o.GeoLocationBreakdown
+}
+
+func (o *SourceOutbrainAmplify) GetReportGranularity() *GranularityForPeriodicReports {
+	if o == nil {
+		return nil
+	}
+	return o.ReportGranularity
+}
+
+func (o *SourceOutbrainAmplify) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }
 
 func (o *SourceOutbrainAmplify) GetSourceType() OutbrainAmplify {

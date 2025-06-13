@@ -21,27 +21,27 @@ func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuiteCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var realm string
-	realm = r.Configuration.Realm.ValueString()
-
 	var consumerKey string
 	consumerKey = r.Configuration.ConsumerKey.ValueString()
 
 	var consumerSecret string
 	consumerSecret = r.Configuration.ConsumerSecret.ValueString()
 
+	var objectTypes []string = []string{}
+	for _, objectTypesItem := range r.Configuration.ObjectTypes {
+		objectTypes = append(objectTypes, objectTypesItem.ValueString())
+	}
+	var realm string
+	realm = r.Configuration.Realm.ValueString()
+
+	var startDatetime string
+	startDatetime = r.Configuration.StartDatetime.ValueString()
+
 	var tokenKey string
 	tokenKey = r.Configuration.TokenKey.ValueString()
 
 	var tokenSecret string
 	tokenSecret = r.Configuration.TokenSecret.ValueString()
-
-	var objectTypes []string = []string{}
-	for _, objectTypesItem := range r.Configuration.ObjectTypes {
-		objectTypes = append(objectTypes, objectTypesItem.ValueString())
-	}
-	var startDatetime string
-	startDatetime = r.Configuration.StartDatetime.ValueString()
 
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
@@ -50,13 +50,13 @@ func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuiteCreateRequest() *sha
 		windowInDays = nil
 	}
 	configuration := shared.SourceNetsuite{
-		Realm:          realm,
 		ConsumerKey:    consumerKey,
 		ConsumerSecret: consumerSecret,
+		ObjectTypes:    objectTypes,
+		Realm:          realm,
+		StartDatetime:  startDatetime,
 		TokenKey:       tokenKey,
 		TokenSecret:    tokenSecret,
-		ObjectTypes:    objectTypes,
-		StartDatetime:  startDatetime,
 		WindowInDays:   windowInDays,
 	}
 	secretID := new(string)
@@ -129,27 +129,27 @@ func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuitePutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var realm string
-	realm = r.Configuration.Realm.ValueString()
-
 	var consumerKey string
 	consumerKey = r.Configuration.ConsumerKey.ValueString()
 
 	var consumerSecret string
 	consumerSecret = r.Configuration.ConsumerSecret.ValueString()
 
+	var objectTypes []string = []string{}
+	for _, objectTypesItem := range r.Configuration.ObjectTypes {
+		objectTypes = append(objectTypes, objectTypesItem.ValueString())
+	}
+	var realm string
+	realm = r.Configuration.Realm.ValueString()
+
+	var startDatetime string
+	startDatetime = r.Configuration.StartDatetime.ValueString()
+
 	var tokenKey string
 	tokenKey = r.Configuration.TokenKey.ValueString()
 
 	var tokenSecret string
 	tokenSecret = r.Configuration.TokenSecret.ValueString()
-
-	var objectTypes []string = []string{}
-	for _, objectTypesItem := range r.Configuration.ObjectTypes {
-		objectTypes = append(objectTypes, objectTypesItem.ValueString())
-	}
-	var startDatetime string
-	startDatetime = r.Configuration.StartDatetime.ValueString()
 
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
@@ -158,13 +158,13 @@ func (r *SourceNetsuiteResourceModel) ToSharedSourceNetsuitePutRequest() *shared
 		windowInDays = nil
 	}
 	configuration := shared.SourceNetsuiteUpdate{
-		Realm:          realm,
 		ConsumerKey:    consumerKey,
 		ConsumerSecret: consumerSecret,
+		ObjectTypes:    objectTypes,
+		Realm:          realm,
+		StartDatetime:  startDatetime,
 		TokenKey:       tokenKey,
 		TokenSecret:    tokenSecret,
-		ObjectTypes:    objectTypes,
-		StartDatetime:  startDatetime,
 		WindowInDays:   windowInDays,
 	}
 	out := shared.SourceNetsuitePutRequest{

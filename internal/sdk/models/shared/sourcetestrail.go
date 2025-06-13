@@ -33,12 +33,12 @@ func (e *Testrail) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTestrail struct {
-	Username  string    `json:"username"`
-	Password  *string   `json:"password,omitempty"`
-	StartDate time.Time `json:"start_date"`
 	// The unique domain name for accessing testrail
-	DomainName string   `json:"domain_name"`
-	sourceType Testrail `const:"testrail" json:"sourceType"`
+	DomainName string    `json:"domain_name"`
+	Password   *string   `json:"password,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	Username   string    `json:"username"`
+	sourceType Testrail  `const:"testrail" json:"sourceType"`
 }
 
 func (s SourceTestrail) MarshalJSON() ([]byte, error) {
@@ -52,11 +52,11 @@ func (s *SourceTestrail) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTestrail) GetUsername() string {
+func (o *SourceTestrail) GetDomainName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.DomainName
 }
 
 func (o *SourceTestrail) GetPassword() *string {
@@ -73,11 +73,11 @@ func (o *SourceTestrail) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceTestrail) GetDomainName() string {
+func (o *SourceTestrail) GetUsername() string {
 	if o == nil {
 		return ""
 	}
-	return o.DomainName
+	return o.Username
 }
 
 func (o *SourceTestrail) GetSourceType() Testrail {

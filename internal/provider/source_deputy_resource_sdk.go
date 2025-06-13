@@ -21,15 +21,15 @@ func (r *SourceDeputyResourceModel) ToSharedSourceDeputyCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var baseURL string
-	baseURL = r.Configuration.BaseURL.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var baseURL string
+	baseURL = r.Configuration.BaseURL.ValueString()
+
 	configuration := shared.SourceDeputy{
-		BaseURL: baseURL,
 		APIKey:  apiKey,
+		BaseURL: baseURL,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceDeputyResourceModel) ToSharedSourceDeputyPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var baseURL string
-	baseURL = r.Configuration.BaseURL.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var baseURL string
+	baseURL = r.Configuration.BaseURL.ValueString()
+
 	configuration := shared.SourceDeputyUpdate{
-		BaseURL: baseURL,
 		APIKey:  apiKey,
+		BaseURL: baseURL,
 	}
 	out := shared.SourceDeputyPutRequest{
 		Name:          name,

@@ -33,21 +33,21 @@ func (e *Pardot) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePardot struct {
-	// Pardot Business ID, can be found at Setup > Pardot > Pardot Account Setup
-	PardotBusinessUnitID string `json:"pardot_business_unit_id"`
 	// The Consumer Key that can be found when viewing your app in Salesforce
 	ClientID string `json:"client_id"`
 	// The Consumer Secret that can be found when viewing your app in Salesforce
 	ClientSecret string `json:"client_secret"`
+	// Whether or not the the app is in a Salesforce sandbox. If you do not know what this, assume it is false.
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
+	// The maximum number of records to return per request
+	PageSize *string `default:"1000" json:"page_size"`
+	// Pardot Business ID, can be found at Setup > Pardot > Pardot Account Setup
+	PardotBusinessUnitID string `json:"pardot_business_unit_id"`
 	// Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
 	RefreshToken string `json:"refresh_token"`
 	// UTC date and time in the format 2000-01-01T00:00:00Z. Any data before this date will not be replicated. Defaults to the year Pardot was released.
-	StartDate *time.Time `default:"2007-01-01T00:00:00Z" json:"start_date"`
-	// The maximum number of records to return per request
-	PageSize *string `default:"1000" json:"page_size"`
-	// Whether or not the the app is in a Salesforce sandbox. If you do not know what this, assume it is false.
-	IsSandbox  *bool  `default:"false" json:"is_sandbox"`
-	sourceType Pardot `const:"pardot" json:"sourceType"`
+	StartDate  *time.Time `default:"2007-01-01T00:00:00Z" json:"start_date"`
+	sourceType Pardot     `const:"pardot" json:"sourceType"`
 }
 
 func (s SourcePardot) MarshalJSON() ([]byte, error) {
@@ -59,13 +59,6 @@ func (s *SourcePardot) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourcePardot) GetPardotBusinessUnitID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PardotBusinessUnitID
 }
 
 func (o *SourcePardot) GetClientID() string {
@@ -82,6 +75,27 @@ func (o *SourcePardot) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+func (o *SourcePardot) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *SourcePardot) GetPageSize() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *SourcePardot) GetPardotBusinessUnitID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PardotBusinessUnitID
+}
+
 func (o *SourcePardot) GetRefreshToken() string {
 	if o == nil {
 		return ""
@@ -94,20 +108,6 @@ func (o *SourcePardot) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourcePardot) GetPageSize() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PageSize
-}
-
-func (o *SourcePardot) GetIsSandbox() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsSandbox
 }
 
 func (o *SourcePardot) GetSourceType() Pardot {

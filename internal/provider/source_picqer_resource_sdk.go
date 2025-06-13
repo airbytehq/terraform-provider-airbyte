@@ -22,8 +22,8 @@ func (r *SourcePicqerResourceModel) ToSharedSourcePicqerCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var organizationName string
+	organizationName = r.Configuration.OrganizationName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -31,15 +31,15 @@ func (r *SourcePicqerResourceModel) ToSharedSourcePicqerCreateRequest() *shared.
 	} else {
 		password = nil
 	}
-	var organizationName string
-	organizationName = r.Configuration.OrganizationName.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePicqer{
-		Username:         username,
-		Password:         password,
 		OrganizationName: organizationName,
+		Password:         password,
 		StartDate:        startDate,
+		Username:         username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,8 +111,8 @@ func (r *SourcePicqerResourceModel) ToSharedSourcePicqerPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var organizationName string
+	organizationName = r.Configuration.OrganizationName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -120,15 +120,15 @@ func (r *SourcePicqerResourceModel) ToSharedSourcePicqerPutRequest() *shared.Sou
 	} else {
 		password = nil
 	}
-	var organizationName string
-	organizationName = r.Configuration.OrganizationName.ValueString()
-
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourcePicqerUpdate{
-		Username:         username,
-		Password:         password,
 		OrganizationName: organizationName,
+		Password:         password,
 		StartDate:        startDate,
+		Username:         username,
 	}
 	out := shared.SourcePicqerPutRequest{
 		Name:          name,

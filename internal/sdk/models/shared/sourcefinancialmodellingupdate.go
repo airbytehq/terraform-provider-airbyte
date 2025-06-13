@@ -52,13 +52,13 @@ type SourceFinancialModellingUpdate struct {
 	APIKey string `json:"api_key"`
 	// The stock exchange : AMEX, AMS, AQS, ASX, ATH, BER, BME, BRU, BSE, BUD, BUE, BVC, CAI, CBOE, CNQ, CPH, DFM, DOH, DUS, DXE, EGX, EURONEXT, HAM, HEL, HKSE, ICE, IOB, IST, JKT, JNB, JPX, KLS, KOE, KSC, KUW, LSE, MCX, MEX, MIL, MUN, NASDAQ, NEO, NSE, NYSE, NZE, OEM, OQX, OSL, OTC, PNK, PRA, RIS, SAO, SAU, SES, SET, SGO, SHH, SHZ, SIX, STO, STU, TAI, TLV, TSX, TSXV, TWO, VIE, VSE, WSE, XETRA
 	Exchange *string `default:"NASDAQ" json:"exchange"`
-	// Used in screener to filter out stocks with a market cap more than the give marketcap
-	Marketcapmorethan *string `json:"marketcapmorethan,omitempty"`
 	// Used in screener to filter out stocks with a market cap lower than the give marketcap
 	Marketcaplowerthan *string `json:"marketcaplowerthan,omitempty"`
+	// Used in screener to filter out stocks with a market cap more than the give marketcap
+	Marketcapmorethan *string   `json:"marketcapmorethan,omitempty"`
+	StartDate         time.Time `json:"start_date"`
 	// For example 1min, 5min, 15min, 30min, 1hour, 4hour
 	TimeFrame *SourceFinancialModellingUpdateTimeFrame `default:"4hour" json:"time_frame"`
-	StartDate time.Time                                `json:"start_date"`
 }
 
 func (s SourceFinancialModellingUpdate) MarshalJSON() ([]byte, error) {
@@ -86,13 +86,6 @@ func (o *SourceFinancialModellingUpdate) GetExchange() *string {
 	return o.Exchange
 }
 
-func (o *SourceFinancialModellingUpdate) GetMarketcapmorethan() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Marketcapmorethan
-}
-
 func (o *SourceFinancialModellingUpdate) GetMarketcaplowerthan() *string {
 	if o == nil {
 		return nil
@@ -100,11 +93,11 @@ func (o *SourceFinancialModellingUpdate) GetMarketcaplowerthan() *string {
 	return o.Marketcaplowerthan
 }
 
-func (o *SourceFinancialModellingUpdate) GetTimeFrame() *SourceFinancialModellingUpdateTimeFrame {
+func (o *SourceFinancialModellingUpdate) GetMarketcapmorethan() *string {
 	if o == nil {
 		return nil
 	}
-	return o.TimeFrame
+	return o.Marketcapmorethan
 }
 
 func (o *SourceFinancialModellingUpdate) GetStartDate() time.Time {
@@ -112,4 +105,11 @@ func (o *SourceFinancialModellingUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceFinancialModellingUpdate) GetTimeFrame() *SourceFinancialModellingUpdateTimeFrame {
+	if o == nil {
+		return nil
+	}
+	return o.TimeFrame
 }

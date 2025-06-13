@@ -25,22 +25,22 @@ func (r *SourceOuraResourceModel) ToSharedSourceOuraCreateRequest() *shared.Sour
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	endDatetime := new(time.Time)
 	if !r.Configuration.EndDatetime.IsUnknown() && !r.Configuration.EndDatetime.IsNull() {
 		*endDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDatetime.ValueString())
 	} else {
 		endDatetime = nil
 	}
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
 	configuration := shared.SourceOura{
 		APIKey:        apiKey,
-		StartDatetime: startDatetime,
 		EndDatetime:   endDatetime,
+		StartDatetime: startDatetime,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,22 +115,22 @@ func (r *SourceOuraResourceModel) ToSharedSourceOuraPutRequest() *shared.SourceO
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDatetime := new(time.Time)
-	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
-		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
-	} else {
-		startDatetime = nil
-	}
 	endDatetime := new(time.Time)
 	if !r.Configuration.EndDatetime.IsUnknown() && !r.Configuration.EndDatetime.IsNull() {
 		*endDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDatetime.ValueString())
 	} else {
 		endDatetime = nil
 	}
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
 	configuration := shared.SourceOuraUpdate{
 		APIKey:        apiKey,
-		StartDatetime: startDatetime,
 		EndDatetime:   endDatetime,
+		StartDatetime: startDatetime,
 	}
 	out := shared.SourceOuraPutRequest{
 		Name:          name,

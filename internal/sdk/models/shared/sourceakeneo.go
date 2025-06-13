@@ -32,13 +32,13 @@ func (e *Akeneo) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAkeneo struct {
+	APIUsername string `json:"api_username"`
+	ClientID    string `json:"client_id"`
 	// https://cb8715249e.trial.akeneo.cloud
-	Host        string  `json:"host"`
-	APIUsername string  `json:"api_username"`
-	Password    string  `json:"password"`
-	ClientID    string  `json:"client_id"`
-	Secret      *string `json:"secret,omitempty"`
-	sourceType  Akeneo  `const:"akeneo" json:"sourceType"`
+	Host       string  `json:"host"`
+	Password   string  `json:"password"`
+	Secret     *string `json:"secret,omitempty"`
+	sourceType Akeneo  `const:"akeneo" json:"sourceType"`
 }
 
 func (s SourceAkeneo) MarshalJSON() ([]byte, error) {
@@ -52,13 +52,6 @@ func (s *SourceAkeneo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceAkeneo) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
 func (o *SourceAkeneo) GetAPIUsername() string {
 	if o == nil {
 		return ""
@@ -66,18 +59,25 @@ func (o *SourceAkeneo) GetAPIUsername() string {
 	return o.APIUsername
 }
 
-func (o *SourceAkeneo) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
 func (o *SourceAkeneo) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
+}
+
+func (o *SourceAkeneo) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceAkeneo) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }
 
 func (o *SourceAkeneo) GetSecret() *string {

@@ -3,10 +3,17 @@
 package shared
 
 type SourceJamfProUpdate struct {
+	Password *string `json:"password,omitempty"`
 	// The unique subdomain for your Jamf Pro instance.
-	Subdomain string  `json:"subdomain"`
-	Username  string  `json:"username"`
-	Password  *string `json:"password,omitempty"`
+	Subdomain string `json:"subdomain"`
+	Username  string `json:"username"`
+}
+
+func (o *SourceJamfProUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
 }
 
 func (o *SourceJamfProUpdate) GetSubdomain() string {
@@ -21,11 +28,4 @@ func (o *SourceJamfProUpdate) GetUsername() string {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *SourceJamfProUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }

@@ -38,12 +38,12 @@ func (e *SourceNexiopayUpdateSubdomain) UnmarshalJSON(data []byte) error {
 
 type SourceNexiopayUpdate struct {
 	// Your Nexio API key (password). You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the API key.
-	APIKey string `json:"api_key"`
-	// Your Nexio API username. You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the username.
-	Username string `json:"username"`
+	APIKey    string    `json:"api_key"`
+	StartDate time.Time `json:"start_date"`
 	// The subdomain for the Nexio API environment, such as 'nexiopaysandbox' or 'nexiopay'.
 	Subdomain *SourceNexiopayUpdateSubdomain `default:"nexiopay" json:"subdomain"`
-	StartDate time.Time                      `json:"start_date"`
+	// Your Nexio API username. You can find it in the Nexio Dashboard under Settings > User Management. Select the API user and copy the username.
+	Username string `json:"username"`
 }
 
 func (s SourceNexiopayUpdate) MarshalJSON() ([]byte, error) {
@@ -64,11 +64,11 @@ func (o *SourceNexiopayUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNexiopayUpdate) GetUsername() string {
+func (o *SourceNexiopayUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.Username
+	return o.StartDate
 }
 
 func (o *SourceNexiopayUpdate) GetSubdomain() *SourceNexiopayUpdateSubdomain {
@@ -78,9 +78,9 @@ func (o *SourceNexiopayUpdate) GetSubdomain() *SourceNexiopayUpdateSubdomain {
 	return o.Subdomain
 }
 
-func (o *SourceNexiopayUpdate) GetStartDate() time.Time {
+func (o *SourceNexiopayUpdate) GetUsername() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.StartDate
+	return o.Username
 }

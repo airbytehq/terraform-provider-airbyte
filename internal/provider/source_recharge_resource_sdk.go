@@ -22,10 +22,16 @@ func (r *SourceRechargeResourceModel) ToSharedSourceRechargeCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
+	lookbackWindowDays := new(int64)
+	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
+		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
+	} else {
+		lookbackWindowDays = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	useOrdersDeprecatedAPI := new(bool)
 	if !r.Configuration.UseOrdersDeprecatedAPI.IsUnknown() && !r.Configuration.UseOrdersDeprecatedAPI.IsNull() {
 		*useOrdersDeprecatedAPI = r.Configuration.UseOrdersDeprecatedAPI.ValueBool()
@@ -33,8 +39,9 @@ func (r *SourceRechargeResourceModel) ToSharedSourceRechargeCreateRequest() *sha
 		useOrdersDeprecatedAPI = nil
 	}
 	configuration := shared.SourceRecharge{
-		StartDate:              startDate,
 		AccessToken:            accessToken,
+		LookbackWindowDays:     lookbackWindowDays,
+		StartDate:              startDate,
 		UseOrdersDeprecatedAPI: useOrdersDeprecatedAPI,
 	}
 	secretID := new(string)
@@ -107,10 +114,16 @@ func (r *SourceRechargeResourceModel) ToSharedSourceRechargePutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
+	lookbackWindowDays := new(int64)
+	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
+		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
+	} else {
+		lookbackWindowDays = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	useOrdersDeprecatedAPI := new(bool)
 	if !r.Configuration.UseOrdersDeprecatedAPI.IsUnknown() && !r.Configuration.UseOrdersDeprecatedAPI.IsNull() {
 		*useOrdersDeprecatedAPI = r.Configuration.UseOrdersDeprecatedAPI.ValueBool()
@@ -118,8 +131,9 @@ func (r *SourceRechargeResourceModel) ToSharedSourceRechargePutRequest() *shared
 		useOrdersDeprecatedAPI = nil
 	}
 	configuration := shared.SourceRechargeUpdate{
-		StartDate:              startDate,
 		AccessToken:            accessToken,
+		LookbackWindowDays:     lookbackWindowDays,
+		StartDate:              startDate,
 		UseOrdersDeprecatedAPI: useOrdersDeprecatedAPI,
 	}
 	out := shared.SourceRechargePutRequest{

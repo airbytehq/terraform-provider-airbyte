@@ -37,8 +37,6 @@ type SourcePaypalTransaction struct {
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Paypal developer application.
 	ClientSecret string `json:"client_secret"`
-	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
-	StartDate time.Time `json:"start_date"`
 	// Start Date parameter for the list dispute endpoint in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This Start Date must be in range within 180 days before present time, and requires ONLY 3 miliseconds(mandatory). If you don't use this option, it defaults to a start date set 180 days in the past.
 	DisputeStartDate *time.Time `json:"dispute_start_date,omitempty"`
 	// End Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. This can be help you select specific range of time, mainly for test purposes  or data integrity tests. When this is not used, now_utc() is used by the streams. This does not apply to Disputes and Product streams.
@@ -47,6 +45,8 @@ type SourcePaypalTransaction struct {
 	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// The key to refresh the expired access token.
 	RefreshToken *string `json:"refresh_token,omitempty"`
+	// Start Date for data extraction in <a href=\"https://datatracker.ietf.org/doc/html/rfc3339#section-5.6\">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
+	StartDate time.Time `json:"start_date"`
 	// The number of days per request. Must be a number between 1 and 31.
 	TimeWindow *int64            `default:"7" json:"time_window"`
 	sourceType PaypalTransaction `const:"paypal-transaction" json:"sourceType"`
@@ -77,13 +77,6 @@ func (o *SourcePaypalTransaction) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourcePaypalTransaction) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourcePaypalTransaction) GetDisputeStartDate() *time.Time {
 	if o == nil {
 		return nil
@@ -110,6 +103,13 @@ func (o *SourcePaypalTransaction) GetRefreshToken() *string {
 		return nil
 	}
 	return o.RefreshToken
+}
+
+func (o *SourcePaypalTransaction) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourcePaypalTransaction) GetTimeWindow() *int64 {

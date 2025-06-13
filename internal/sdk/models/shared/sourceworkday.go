@@ -36,9 +36,9 @@ func (e *Rest) UnmarshalJSON(data []byte) error {
 type RESTAPIStreams struct {
 	// Follow the instructions in the "OAuth 2.0 in Postman - API Client for Integrations" article in the Workday community docs to obtain access token.
 	AccessToken string `json:"access_token"`
+	authType    Rest   `const:"REST" json:"auth_type"`
 	// Rows after this date will be synced, default 2 years ago.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	authType  Rest       `const:"REST" json:"auth_type"`
 }
 
 func (r RESTAPIStreams) MarshalJSON() ([]byte, error) {
@@ -59,15 +59,15 @@ func (o *RESTAPIStreams) GetAccessToken() string {
 	return o.AccessToken
 }
 
+func (o *RESTAPIStreams) GetAuthType() Rest {
+	return RestRest
+}
+
 func (o *RESTAPIStreams) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *RESTAPIStreams) GetAuthType() Rest {
-	return RestRest
 }
 
 type Raas string
@@ -94,11 +94,11 @@ func (e *Raas) UnmarshalJSON(data []byte) error {
 }
 
 type ReportBasedStreams struct {
-	Username string `json:"username"`
+	authType Raas   `const:"RAAS" json:"auth_type"`
 	Password string `json:"password"`
 	// Report IDs can be found by clicking the three dots on the right side of the report > Web Service > View URLs > in JSON url copy everything between Workday tenant/ and ?format=json.
-	ReportIds []any `json:"report_ids"`
-	authType  Raas  `const:"RAAS" json:"auth_type"`
+	ReportIds []any  `json:"report_ids"`
+	Username  string `json:"username"`
 }
 
 func (r ReportBasedStreams) MarshalJSON() ([]byte, error) {
@@ -112,11 +112,8 @@ func (r *ReportBasedStreams) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ReportBasedStreams) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+func (o *ReportBasedStreams) GetAuthType() Raas {
+	return RaasRaas
 }
 
 func (o *ReportBasedStreams) GetPassword() string {
@@ -133,8 +130,11 @@ func (o *ReportBasedStreams) GetReportIds() []any {
 	return o.ReportIds
 }
 
-func (o *ReportBasedStreams) GetAuthType() Raas {
-	return RaasRaas
+func (o *ReportBasedStreams) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type SourceWorkdayAuthenticationType string
@@ -225,10 +225,10 @@ func (e *Workday) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkday struct {
-	TenantID string `json:"tenant_id"`
-	Host     string `json:"host"`
 	// Report Based Streams and REST API Streams use different methods of Authentication. Choose streams type you want to sync and provide needed credentials for them.
 	Credentials SourceWorkdayAuthentication `json:"credentials"`
+	Host        string                      `json:"host"`
+	TenantID    string                      `json:"tenant_id"`
 	sourceType  Workday                     `const:"workday" json:"sourceType"`
 }
 
@@ -243,11 +243,11 @@ func (s *SourceWorkday) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWorkday) GetTenantID() string {
+func (o *SourceWorkday) GetCredentials() SourceWorkdayAuthentication {
 	if o == nil {
-		return ""
+		return SourceWorkdayAuthentication{}
 	}
-	return o.TenantID
+	return o.Credentials
 }
 
 func (o *SourceWorkday) GetHost() string {
@@ -257,11 +257,11 @@ func (o *SourceWorkday) GetHost() string {
 	return o.Host
 }
 
-func (o *SourceWorkday) GetCredentials() SourceWorkdayAuthentication {
+func (o *SourceWorkday) GetTenantID() string {
 	if o == nil {
-		return SourceWorkdayAuthentication{}
+		return ""
 	}
-	return o.Credentials
+	return o.TenantID
 }
 
 func (o *SourceWorkday) GetSourceType() Workday {

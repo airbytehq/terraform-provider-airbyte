@@ -25,10 +25,17 @@ func (r *SourceCalendlyResourceModel) ToSharedSourceCalendlyCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	lookbackDays := new(float64)
+	if !r.Configuration.LookbackDays.IsUnknown() && !r.Configuration.LookbackDays.IsNull() {
+		*lookbackDays, _ = r.Configuration.LookbackDays.ValueBigFloat().Float64()
+	} else {
+		lookbackDays = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCalendly{
-		APIKey:    apiKey,
-		StartDate: startDate,
+		APIKey:       apiKey,
+		LookbackDays: lookbackDays,
+		StartDate:    startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -103,10 +110,17 @@ func (r *SourceCalendlyResourceModel) ToSharedSourceCalendlyPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	lookbackDays := new(float64)
+	if !r.Configuration.LookbackDays.IsUnknown() && !r.Configuration.LookbackDays.IsNull() {
+		*lookbackDays, _ = r.Configuration.LookbackDays.ValueBigFloat().Float64()
+	} else {
+		lookbackDays = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCalendlyUpdate{
-		APIKey:    apiKey,
-		StartDate: startDate,
+		APIKey:       apiKey,
+		LookbackDays: lookbackDays,
+		StartDate:    startDate,
 	}
 	out := shared.SourceCalendlyPutRequest{
 		Name:          name,

@@ -13,10 +13,10 @@ type SourceClockodoUpdate struct {
 	// Your Clockodo account email address. Find it in your Clockodo account settings.
 	EmailAddress string `json:"email_address"`
 	// Identification of the calling application, including the email address of a technical contact person. Format: [name of application or company];[email address].
-	ExternalApplication *string `default:"Airbyte" json:"external_application"`
+	ExternalApplication *string   `default:"Airbyte" json:"external_application"`
+	StartDate           time.Time `json:"start_date"`
 	// 2024, 2025
-	Years     []any     `json:"years"`
-	StartDate time.Time `json:"start_date"`
+	Years []any `json:"years"`
 }
 
 func (s SourceClockodoUpdate) MarshalJSON() ([]byte, error) {
@@ -51,16 +51,16 @@ func (o *SourceClockodoUpdate) GetExternalApplication() *string {
 	return o.ExternalApplication
 }
 
-func (o *SourceClockodoUpdate) GetYears() []any {
-	if o == nil {
-		return []any{}
-	}
-	return o.Years
-}
-
 func (o *SourceClockodoUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceClockodoUpdate) GetYears() []any {
+	if o == nil {
+		return []any{}
+	}
+	return o.Years
 }

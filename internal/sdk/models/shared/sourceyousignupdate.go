@@ -39,11 +39,11 @@ func (e *SourceYousignUpdateSubdomain) UnmarshalJSON(data []byte) error {
 type SourceYousignUpdate struct {
 	// API key or access token
 	APIKey string `json:"api_key"`
-	// The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
-	Subdomain *SourceYousignUpdateSubdomain `default:"api" json:"subdomain"`
 	// Limit for each response objects
 	Limit     *string   `default:"10" json:"limit"`
 	StartDate time.Time `json:"start_date"`
+	// The subdomain for the Yousign API environment, such as 'sandbox' or 'api'.
+	Subdomain *SourceYousignUpdateSubdomain `default:"api" json:"subdomain"`
 }
 
 func (s SourceYousignUpdate) MarshalJSON() ([]byte, error) {
@@ -64,13 +64,6 @@ func (o *SourceYousignUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceYousignUpdate) GetSubdomain() *SourceYousignUpdateSubdomain {
-	if o == nil {
-		return nil
-	}
-	return o.Subdomain
-}
-
 func (o *SourceYousignUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
@@ -83,4 +76,11 @@ func (o *SourceYousignUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceYousignUpdate) GetSubdomain() *SourceYousignUpdateSubdomain {
+	if o == nil {
+		return nil
+	}
+	return o.Subdomain
 }

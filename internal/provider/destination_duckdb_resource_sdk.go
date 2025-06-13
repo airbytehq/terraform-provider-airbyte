@@ -21,15 +21,15 @@ func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var destinationPath string
+	destinationPath = r.Configuration.DestinationPath.ValueString()
+
 	motherduckAPIKey := new(string)
 	if !r.Configuration.MotherduckAPIKey.IsUnknown() && !r.Configuration.MotherduckAPIKey.IsNull() {
 		*motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
 	} else {
 		motherduckAPIKey = nil
 	}
-	var destinationPath string
-	destinationPath = r.Configuration.DestinationPath.ValueString()
-
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
@@ -37,8 +37,8 @@ func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbCreateRequest(
 		schema = nil
 	}
 	configuration := shared.DestinationDuckdb{
-		MotherduckAPIKey: motherduckAPIKey,
 		DestinationPath:  destinationPath,
+		MotherduckAPIKey: motherduckAPIKey,
 		Schema:           schema,
 	}
 	out := shared.DestinationDuckdbCreateRequest{
@@ -104,15 +104,15 @@ func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var destinationPath string
+	destinationPath = r.Configuration.DestinationPath.ValueString()
+
 	motherduckAPIKey := new(string)
 	if !r.Configuration.MotherduckAPIKey.IsUnknown() && !r.Configuration.MotherduckAPIKey.IsNull() {
 		*motherduckAPIKey = r.Configuration.MotherduckAPIKey.ValueString()
 	} else {
 		motherduckAPIKey = nil
 	}
-	var destinationPath string
-	destinationPath = r.Configuration.DestinationPath.ValueString()
-
 	schema := new(string)
 	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
 		*schema = r.Configuration.Schema.ValueString()
@@ -120,8 +120,8 @@ func (r *DestinationDuckdbResourceModel) ToSharedDestinationDuckdbPutRequest() *
 		schema = nil
 	}
 	configuration := shared.DestinationDuckdbUpdate{
-		MotherduckAPIKey: motherduckAPIKey,
 		DestinationPath:  destinationPath,
+		MotherduckAPIKey: motherduckAPIKey,
 		Schema:           schema,
 	}
 	out := shared.DestinationDuckdbPutRequest{

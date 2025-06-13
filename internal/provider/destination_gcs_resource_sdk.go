@@ -21,18 +21,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var gcsBucketName string
-	gcsBucketName = r.Configuration.GcsBucketName.ValueString()
-
-	var gcsBucketPath string
-	gcsBucketPath = r.Configuration.GcsBucketPath.ValueString()
-
-	gcsBucketRegion := new(shared.GCSBucketRegion)
-	if !r.Configuration.GcsBucketRegion.IsUnknown() && !r.Configuration.GcsBucketRegion.IsNull() {
-		*gcsBucketRegion = shared.GCSBucketRegion(r.Configuration.GcsBucketRegion.ValueString())
-	} else {
-		gcsBucketRegion = nil
-	}
 	var credential shared.DestinationGcsAuthentication
 	var hmacKey *shared.HMACKey
 	if r.Configuration.Credential.HMACKey != nil {
@@ -62,12 +50,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 	var format shared.DestinationGcsOutputFormat
 	var avroApacheAvro *shared.AvroApacheAvro
 	if r.Configuration.Format.AvroApacheAvro != nil {
-		formatType := new(shared.DestinationGcsFormatType)
-		if !r.Configuration.Format.AvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.FormatType.IsNull() {
-			*formatType = shared.DestinationGcsFormatType(r.Configuration.Format.AvroApacheAvro.FormatType.ValueString())
-		} else {
-			formatType = nil
-		}
 		var compressionCodec shared.CompressionCodec
 		var noCompression *shared.NoCompression
 		if r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression != nil {
@@ -199,9 +181,15 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 				Snappy: snappy,
 			}
 		}
+		formatType := new(shared.DestinationGcsFormatType)
+		if !r.Configuration.Format.AvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.FormatType.IsNull() {
+			*formatType = shared.DestinationGcsFormatType(r.Configuration.Format.AvroApacheAvro.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		avroApacheAvro = &shared.AvroApacheAvro{
-			FormatType:       formatType,
 			CompressionCodec: compressionCodec,
+			FormatType:       formatType,
 		}
 	}
 	if avroApacheAvro != nil {
@@ -211,18 +199,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 	}
 	var destinationGcsCSVCommaSeparatedValues *shared.DestinationGcsCSVCommaSeparatedValues
 	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
-		formatType1 := new(shared.DestinationGcsSchemasFormatType)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
-			*formatType1 = shared.DestinationGcsSchemasFormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
-		} else {
-			formatType1 = nil
-		}
-		flattening := new(shared.Normalization)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.Normalization(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
-		} else {
-			flattening = nil
-		}
 		var compression *shared.Compression
 		if r.Configuration.Format.CSVCommaSeparatedValues.Compression != nil {
 			var destinationGcsNoCompression *shared.DestinationGcsNoCompression
@@ -260,10 +236,22 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 				}
 			}
 		}
+		flattening := new(shared.Normalization)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.Normalization(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		formatType1 := new(shared.DestinationGcsSchemasFormatType)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType1 = shared.DestinationGcsSchemasFormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType1 = nil
+		}
 		destinationGcsCSVCommaSeparatedValues = &shared.DestinationGcsCSVCommaSeparatedValues{
-			FormatType:  formatType1,
-			Flattening:  flattening,
 			Compression: compression,
+			Flattening:  flattening,
+			FormatType:  formatType1,
 		}
 	}
 	if destinationGcsCSVCommaSeparatedValues != nil {
@@ -273,12 +261,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 	}
 	var destinationGcsJSONLinesNewlineDelimitedJSON *shared.DestinationGcsJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-		formatType2 := new(shared.DestinationGcsSchemasFormatFormatType)
-		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
-			*formatType2 = shared.DestinationGcsSchemasFormatFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		} else {
-			formatType2 = nil
-		}
 		var compression1 *shared.DestinationGcsCompression
 		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression != nil {
 			var destinationGcsSchemasNoCompression *shared.DestinationGcsSchemasNoCompression
@@ -316,9 +298,15 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 				}
 			}
 		}
+		formatType2 := new(shared.DestinationGcsSchemasFormatFormatType)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType2 = shared.DestinationGcsSchemasFormatFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType2 = nil
+		}
 		destinationGcsJSONLinesNewlineDelimitedJSON = &shared.DestinationGcsJSONLinesNewlineDelimitedJSON{
-			FormatType:  formatType2,
 			Compression: compression1,
+			FormatType:  formatType2,
 		}
 	}
 	if destinationGcsJSONLinesNewlineDelimitedJSON != nil {
@@ -328,11 +316,11 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 	}
 	var destinationGcsParquetColumnarStorage *shared.DestinationGcsParquetColumnarStorage
 	if r.Configuration.Format.ParquetColumnarStorage != nil {
-		formatType3 := new(shared.DestinationGcsSchemasFormatOutputFormatFormatType)
-		if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
-			*formatType3 = shared.DestinationGcsSchemasFormatOutputFormatFormatType(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+		blockSizeMb := new(int64)
+		if !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsNull() {
+			*blockSizeMb = r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.ValueInt64()
 		} else {
-			formatType3 = nil
+			blockSizeMb = nil
 		}
 		compressionCodec1 := new(shared.DestinationGcsCompressionCodec)
 		if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
@@ -340,11 +328,23 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 		} else {
 			compressionCodec1 = nil
 		}
-		blockSizeMb := new(int64)
-		if !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsNull() {
-			*blockSizeMb = r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.ValueInt64()
+		dictionaryEncoding := new(bool)
+		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsNull() {
+			*dictionaryEncoding = r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.ValueBool()
 		} else {
-			blockSizeMb = nil
+			dictionaryEncoding = nil
+		}
+		dictionaryPageSizeKb := new(int64)
+		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
+			*dictionaryPageSizeKb = r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
+		} else {
+			dictionaryPageSizeKb = nil
+		}
+		formatType3 := new(shared.DestinationGcsSchemasFormatOutputFormatFormatType)
+		if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
+			*formatType3 = shared.DestinationGcsSchemasFormatOutputFormatFormatType(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+		} else {
+			formatType3 = nil
 		}
 		maxPaddingSizeMb := new(int64)
 		if !r.Configuration.Format.ParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
@@ -358,26 +358,14 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 		} else {
 			pageSizeKb = nil
 		}
-		dictionaryPageSizeKb := new(int64)
-		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
-			*dictionaryPageSizeKb = r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
-		} else {
-			dictionaryPageSizeKb = nil
-		}
-		dictionaryEncoding := new(bool)
-		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsNull() {
-			*dictionaryEncoding = r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.ValueBool()
-		} else {
-			dictionaryEncoding = nil
-		}
 		destinationGcsParquetColumnarStorage = &shared.DestinationGcsParquetColumnarStorage{
-			FormatType:           formatType3,
-			CompressionCodec:     compressionCodec1,
 			BlockSizeMb:          blockSizeMb,
+			CompressionCodec:     compressionCodec1,
+			DictionaryEncoding:   dictionaryEncoding,
+			DictionaryPageSizeKb: dictionaryPageSizeKb,
+			FormatType:           formatType3,
 			MaxPaddingSizeMb:     maxPaddingSizeMb,
 			PageSizeKb:           pageSizeKb,
-			DictionaryPageSizeKb: dictionaryPageSizeKb,
-			DictionaryEncoding:   dictionaryEncoding,
 		}
 	}
 	if destinationGcsParquetColumnarStorage != nil {
@@ -385,12 +373,24 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsCreateRequest() *sha
 			DestinationGcsParquetColumnarStorage: destinationGcsParquetColumnarStorage,
 		}
 	}
+	var gcsBucketName string
+	gcsBucketName = r.Configuration.GcsBucketName.ValueString()
+
+	var gcsBucketPath string
+	gcsBucketPath = r.Configuration.GcsBucketPath.ValueString()
+
+	gcsBucketRegion := new(shared.GCSBucketRegion)
+	if !r.Configuration.GcsBucketRegion.IsUnknown() && !r.Configuration.GcsBucketRegion.IsNull() {
+		*gcsBucketRegion = shared.GCSBucketRegion(r.Configuration.GcsBucketRegion.ValueString())
+	} else {
+		gcsBucketRegion = nil
+	}
 	configuration := shared.DestinationGcs{
+		Credential:      credential,
+		Format:          format,
 		GcsBucketName:   gcsBucketName,
 		GcsBucketPath:   gcsBucketPath,
 		GcsBucketRegion: gcsBucketRegion,
-		Credential:      credential,
-		Format:          format,
 	}
 	out := shared.DestinationGcsCreateRequest{
 		Name:          name,
@@ -455,18 +455,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var gcsBucketName string
-	gcsBucketName = r.Configuration.GcsBucketName.ValueString()
-
-	var gcsBucketPath string
-	gcsBucketPath = r.Configuration.GcsBucketPath.ValueString()
-
-	gcsBucketRegion := new(shared.DestinationGCSUpdateGCSBucketRegion)
-	if !r.Configuration.GcsBucketRegion.IsUnknown() && !r.Configuration.GcsBucketRegion.IsNull() {
-		*gcsBucketRegion = shared.DestinationGCSUpdateGCSBucketRegion(r.Configuration.GcsBucketRegion.ValueString())
-	} else {
-		gcsBucketRegion = nil
-	}
 	var credential shared.DestinationGcsUpdateAuthentication
 	var destinationGcsUpdateHMACKey *shared.DestinationGcsUpdateHMACKey
 	if r.Configuration.Credential.HMACKey != nil {
@@ -496,12 +484,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 	var format shared.DestinationGcsUpdateOutputFormat
 	var destinationGcsUpdateAvroApacheAvro *shared.DestinationGcsUpdateAvroApacheAvro
 	if r.Configuration.Format.AvroApacheAvro != nil {
-		formatType := new(shared.DestinationGcsUpdateFormatType)
-		if !r.Configuration.Format.AvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.FormatType.IsNull() {
-			*formatType = shared.DestinationGcsUpdateFormatType(r.Configuration.Format.AvroApacheAvro.FormatType.ValueString())
-		} else {
-			formatType = nil
-		}
 		var compressionCodec shared.DestinationGcsUpdateCompressionCodec
 		var destinationGcsUpdateNoCompression *shared.DestinationGcsUpdateNoCompression
 		if r.Configuration.Format.AvroApacheAvro.CompressionCodec.NoCompression != nil {
@@ -633,9 +615,15 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 				DestinationGcsUpdateSnappy: destinationGcsUpdateSnappy,
 			}
 		}
+		formatType := new(shared.DestinationGcsUpdateFormatType)
+		if !r.Configuration.Format.AvroApacheAvro.FormatType.IsUnknown() && !r.Configuration.Format.AvroApacheAvro.FormatType.IsNull() {
+			*formatType = shared.DestinationGcsUpdateFormatType(r.Configuration.Format.AvroApacheAvro.FormatType.ValueString())
+		} else {
+			formatType = nil
+		}
 		destinationGcsUpdateAvroApacheAvro = &shared.DestinationGcsUpdateAvroApacheAvro{
-			FormatType:       formatType,
 			CompressionCodec: compressionCodec,
+			FormatType:       formatType,
 		}
 	}
 	if destinationGcsUpdateAvroApacheAvro != nil {
@@ -645,18 +633,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 	}
 	var destinationGcsUpdateCSVCommaSeparatedValues *shared.DestinationGcsUpdateCSVCommaSeparatedValues
 	if r.Configuration.Format.CSVCommaSeparatedValues != nil {
-		formatType1 := new(shared.DestinationGcsUpdateSchemasFormatType)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
-			*formatType1 = shared.DestinationGcsUpdateSchemasFormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
-		} else {
-			formatType1 = nil
-		}
-		flattening := new(shared.DestinationGcsUpdateNormalization)
-		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.DestinationGcsUpdateNormalization(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
-		} else {
-			flattening = nil
-		}
 		var compression *shared.DestinationGcsUpdateCompression
 		if r.Configuration.Format.CSVCommaSeparatedValues.Compression != nil {
 			var destinationGcsUpdateSchemasNoCompression *shared.DestinationGcsUpdateSchemasNoCompression
@@ -694,10 +670,22 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 				}
 			}
 		}
+		flattening := new(shared.DestinationGcsUpdateNormalization)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.DestinationGcsUpdateNormalization(r.Configuration.Format.CSVCommaSeparatedValues.Flattening.ValueString())
+		} else {
+			flattening = nil
+		}
+		formatType1 := new(shared.DestinationGcsUpdateSchemasFormatType)
+		if !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsUnknown() && !r.Configuration.Format.CSVCommaSeparatedValues.FormatType.IsNull() {
+			*formatType1 = shared.DestinationGcsUpdateSchemasFormatType(r.Configuration.Format.CSVCommaSeparatedValues.FormatType.ValueString())
+		} else {
+			formatType1 = nil
+		}
 		destinationGcsUpdateCSVCommaSeparatedValues = &shared.DestinationGcsUpdateCSVCommaSeparatedValues{
-			FormatType:  formatType1,
-			Flattening:  flattening,
 			Compression: compression,
+			Flattening:  flattening,
+			FormatType:  formatType1,
 		}
 	}
 	if destinationGcsUpdateCSVCommaSeparatedValues != nil {
@@ -707,12 +695,6 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 	}
 	var destinationGcsUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationGcsUpdateJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-		formatType2 := new(shared.DestinationGcsUpdateSchemasFormatFormatType)
-		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
-			*formatType2 = shared.DestinationGcsUpdateSchemasFormatFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-		} else {
-			formatType2 = nil
-		}
 		var compression1 *shared.DestinationGcsUpdateSchemasCompression
 		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON.Compression != nil {
 			var destinationGcsUpdateSchemasFormatNoCompression *shared.DestinationGcsUpdateSchemasFormatNoCompression
@@ -750,9 +732,15 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 				}
 			}
 		}
+		formatType2 := new(shared.DestinationGcsUpdateSchemasFormatFormatType)
+		if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+			*formatType2 = shared.DestinationGcsUpdateSchemasFormatFormatType(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		} else {
+			formatType2 = nil
+		}
 		destinationGcsUpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationGcsUpdateJSONLinesNewlineDelimitedJSON{
-			FormatType:  formatType2,
 			Compression: compression1,
+			FormatType:  formatType2,
 		}
 	}
 	if destinationGcsUpdateJSONLinesNewlineDelimitedJSON != nil {
@@ -762,11 +750,11 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 	}
 	var destinationGcsUpdateParquetColumnarStorage *shared.DestinationGcsUpdateParquetColumnarStorage
 	if r.Configuration.Format.ParquetColumnarStorage != nil {
-		formatType3 := new(shared.DestinationGcsUpdateSchemasFormatOutputFormatFormatType)
-		if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
-			*formatType3 = shared.DestinationGcsUpdateSchemasFormatOutputFormatFormatType(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+		blockSizeMb := new(int64)
+		if !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsNull() {
+			*blockSizeMb = r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.ValueInt64()
 		} else {
-			formatType3 = nil
+			blockSizeMb = nil
 		}
 		compressionCodec1 := new(shared.DestinationGcsUpdateSchemasCompressionCodec)
 		if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
@@ -774,11 +762,23 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 		} else {
 			compressionCodec1 = nil
 		}
-		blockSizeMb := new(int64)
-		if !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.IsNull() {
-			*blockSizeMb = r.Configuration.Format.ParquetColumnarStorage.BlockSizeMb.ValueInt64()
+		dictionaryEncoding := new(bool)
+		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsNull() {
+			*dictionaryEncoding = r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.ValueBool()
 		} else {
-			blockSizeMb = nil
+			dictionaryEncoding = nil
+		}
+		dictionaryPageSizeKb := new(int64)
+		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
+			*dictionaryPageSizeKb = r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
+		} else {
+			dictionaryPageSizeKb = nil
+		}
+		formatType3 := new(shared.DestinationGcsUpdateSchemasFormatOutputFormatFormatType)
+		if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
+			*formatType3 = shared.DestinationGcsUpdateSchemasFormatOutputFormatFormatType(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+		} else {
+			formatType3 = nil
 		}
 		maxPaddingSizeMb := new(int64)
 		if !r.Configuration.Format.ParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
@@ -792,26 +792,14 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 		} else {
 			pageSizeKb = nil
 		}
-		dictionaryPageSizeKb := new(int64)
-		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
-			*dictionaryPageSizeKb = r.Configuration.Format.ParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
-		} else {
-			dictionaryPageSizeKb = nil
-		}
-		dictionaryEncoding := new(bool)
-		if !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.IsNull() {
-			*dictionaryEncoding = r.Configuration.Format.ParquetColumnarStorage.DictionaryEncoding.ValueBool()
-		} else {
-			dictionaryEncoding = nil
-		}
 		destinationGcsUpdateParquetColumnarStorage = &shared.DestinationGcsUpdateParquetColumnarStorage{
-			FormatType:           formatType3,
-			CompressionCodec:     compressionCodec1,
 			BlockSizeMb:          blockSizeMb,
+			CompressionCodec:     compressionCodec1,
+			DictionaryEncoding:   dictionaryEncoding,
+			DictionaryPageSizeKb: dictionaryPageSizeKb,
+			FormatType:           formatType3,
 			MaxPaddingSizeMb:     maxPaddingSizeMb,
 			PageSizeKb:           pageSizeKb,
-			DictionaryPageSizeKb: dictionaryPageSizeKb,
-			DictionaryEncoding:   dictionaryEncoding,
 		}
 	}
 	if destinationGcsUpdateParquetColumnarStorage != nil {
@@ -819,12 +807,24 @@ func (r *DestinationGcsResourceModel) ToSharedDestinationGcsPutRequest() *shared
 			DestinationGcsUpdateParquetColumnarStorage: destinationGcsUpdateParquetColumnarStorage,
 		}
 	}
+	var gcsBucketName string
+	gcsBucketName = r.Configuration.GcsBucketName.ValueString()
+
+	var gcsBucketPath string
+	gcsBucketPath = r.Configuration.GcsBucketPath.ValueString()
+
+	gcsBucketRegion := new(shared.DestinationGCSUpdateGCSBucketRegion)
+	if !r.Configuration.GcsBucketRegion.IsUnknown() && !r.Configuration.GcsBucketRegion.IsNull() {
+		*gcsBucketRegion = shared.DestinationGCSUpdateGCSBucketRegion(r.Configuration.GcsBucketRegion.ValueString())
+	} else {
+		gcsBucketRegion = nil
+	}
 	configuration := shared.DestinationGcsUpdate{
+		Credential:      credential,
+		Format:          format,
 		GcsBucketName:   gcsBucketName,
 		GcsBucketPath:   gcsBucketPath,
 		GcsBucketRegion: gcsBucketRegion,
-		Credential:      credential,
-		Format:          format,
 	}
 	out := shared.DestinationGcsPutRequest{
 		Name:          name,

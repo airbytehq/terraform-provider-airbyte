@@ -21,15 +21,15 @@ func (r *SourceConfigcatResourceModel) ToSharedSourceConfigcatCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var password string
 	password = r.Configuration.Password.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceConfigcat{
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceConfigcatResourceModel) ToSharedSourceConfigcatPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var password string
 	password = r.Configuration.Password.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceConfigcatUpdate{
-		Username: username,
 		Password: password,
+		Username: username,
 	}
 	out := shared.SourceConfigcatPutRequest{
 		Name:          name,

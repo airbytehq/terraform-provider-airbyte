@@ -21,14 +21,14 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var queueURL string
-	queueURL = r.Configuration.QueueURL.ValueString()
+	var accessKey string
+	accessKey = r.Configuration.AccessKey.ValueString()
 
-	region := new(shared.SourceAmazonSqsAWSRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceAmazonSqsAWSRegion(r.Configuration.Region.ValueString())
+	attributesToReturn := new(string)
+	if !r.Configuration.AttributesToReturn.IsUnknown() && !r.Configuration.AttributesToReturn.IsNull() {
+		*attributesToReturn = r.Configuration.AttributesToReturn.ValueString()
 	} else {
-		region = nil
+		attributesToReturn = nil
 	}
 	maxBatchSize := new(int64)
 	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
@@ -42,21 +42,15 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsCreateRequest() *s
 	} else {
 		maxWaitTime = nil
 	}
-	attributesToReturn := new(string)
-	if !r.Configuration.AttributesToReturn.IsUnknown() && !r.Configuration.AttributesToReturn.IsNull() {
-		*attributesToReturn = r.Configuration.AttributesToReturn.ValueString()
-	} else {
-		attributesToReturn = nil
-	}
-	visibilityTimeout := new(int64)
-	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
-		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
-	} else {
-		visibilityTimeout = nil
-	}
-	var accessKey string
-	accessKey = r.Configuration.AccessKey.ValueString()
+	var queueURL string
+	queueURL = r.Configuration.QueueURL.ValueString()
 
+	region := new(shared.SourceAmazonSqsAWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonSqsAWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
 	var secretKey string
 	secretKey = r.Configuration.SecretKey.ValueString()
 
@@ -66,16 +60,22 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsCreateRequest() *s
 	} else {
 		target = nil
 	}
+	visibilityTimeout := new(int64)
+	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
+		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
+	} else {
+		visibilityTimeout = nil
+	}
 	configuration := shared.SourceAmazonSqs{
-		QueueURL:           queueURL,
-		Region:             region,
+		AccessKey:          accessKey,
+		AttributesToReturn: attributesToReturn,
 		MaxBatchSize:       maxBatchSize,
 		MaxWaitTime:        maxWaitTime,
-		AttributesToReturn: attributesToReturn,
-		VisibilityTimeout:  visibilityTimeout,
-		AccessKey:          accessKey,
+		QueueURL:           queueURL,
+		Region:             region,
 		SecretKey:          secretKey,
 		Target:             target,
+		VisibilityTimeout:  visibilityTimeout,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -147,14 +147,14 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var queueURL string
-	queueURL = r.Configuration.QueueURL.ValueString()
+	var accessKey string
+	accessKey = r.Configuration.AccessKey.ValueString()
 
-	region := new(shared.SourceAmazonSqsUpdateAWSRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceAmazonSqsUpdateAWSRegion(r.Configuration.Region.ValueString())
+	attributesToReturn := new(string)
+	if !r.Configuration.AttributesToReturn.IsUnknown() && !r.Configuration.AttributesToReturn.IsNull() {
+		*attributesToReturn = r.Configuration.AttributesToReturn.ValueString()
 	} else {
-		region = nil
+		attributesToReturn = nil
 	}
 	maxBatchSize := new(int64)
 	if !r.Configuration.MaxBatchSize.IsUnknown() && !r.Configuration.MaxBatchSize.IsNull() {
@@ -168,21 +168,15 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsPutRequest() *shar
 	} else {
 		maxWaitTime = nil
 	}
-	attributesToReturn := new(string)
-	if !r.Configuration.AttributesToReturn.IsUnknown() && !r.Configuration.AttributesToReturn.IsNull() {
-		*attributesToReturn = r.Configuration.AttributesToReturn.ValueString()
-	} else {
-		attributesToReturn = nil
-	}
-	visibilityTimeout := new(int64)
-	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
-		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
-	} else {
-		visibilityTimeout = nil
-	}
-	var accessKey string
-	accessKey = r.Configuration.AccessKey.ValueString()
+	var queueURL string
+	queueURL = r.Configuration.QueueURL.ValueString()
 
+	region := new(shared.SourceAmazonSqsUpdateAWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonSqsUpdateAWSRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
 	var secretKey string
 	secretKey = r.Configuration.SecretKey.ValueString()
 
@@ -192,16 +186,22 @@ func (r *SourceAmazonSqsResourceModel) ToSharedSourceAmazonSqsPutRequest() *shar
 	} else {
 		target = nil
 	}
+	visibilityTimeout := new(int64)
+	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
+		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
+	} else {
+		visibilityTimeout = nil
+	}
 	configuration := shared.SourceAmazonSqsUpdate{
-		QueueURL:           queueURL,
-		Region:             region,
+		AccessKey:          accessKey,
+		AttributesToReturn: attributesToReturn,
 		MaxBatchSize:       maxBatchSize,
 		MaxWaitTime:        maxWaitTime,
-		AttributesToReturn: attributesToReturn,
-		VisibilityTimeout:  visibilityTimeout,
-		AccessKey:          accessKey,
+		QueueURL:           queueURL,
+		Region:             region,
 		SecretKey:          secretKey,
 		Target:             target,
+		VisibilityTimeout:  visibilityTimeout,
 	}
 	out := shared.SourceAmazonSqsPutRequest{
 		Name:          name,

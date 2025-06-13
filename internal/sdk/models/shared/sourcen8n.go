@@ -32,10 +32,10 @@ func (e *N8n) UnmarshalJSON(data []byte) error {
 }
 
 type SourceN8n struct {
-	// Hostname of the n8n instance
-	Host string `json:"host"`
 	// Your API KEY. See <a href="https://docs.n8n.io/api/authentication">here</a>
-	APIKey     string `json:"api_key"`
+	APIKey string `json:"api_key"`
+	// Hostname of the n8n instance
+	Host       string `json:"host"`
 	sourceType N8n    `const:"n8n" json:"sourceType"`
 }
 
@@ -50,18 +50,18 @@ func (s *SourceN8n) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceN8n) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
 func (o *SourceN8n) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceN8n) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
 }
 
 func (o *SourceN8n) GetSourceType() N8n {

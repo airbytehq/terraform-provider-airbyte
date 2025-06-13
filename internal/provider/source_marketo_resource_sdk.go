@@ -22,20 +22,20 @@ func (r *SourceMarketoResourceModel) ToSharedSourceMarketoCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domainURL string
-	domainURL = r.Configuration.DomainURL.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	var domainURL string
+	domainURL = r.Configuration.DomainURL.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMarketo{
-		DomainURL:    domainURL,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		DomainURL:    domainURL,
 		StartDate:    startDate,
 	}
 	secretID := new(string)
@@ -108,20 +108,20 @@ func (r *SourceMarketoResourceModel) ToSharedSourceMarketoPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domainURL string
-	domainURL = r.Configuration.DomainURL.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	var domainURL string
+	domainURL = r.Configuration.DomainURL.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceMarketoUpdate{
-		DomainURL:    domainURL,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		DomainURL:    domainURL,
 		StartDate:    startDate,
 	}
 	out := shared.SourceMarketoPutRequest{

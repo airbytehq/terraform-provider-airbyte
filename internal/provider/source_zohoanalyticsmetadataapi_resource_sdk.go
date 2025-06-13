@@ -27,9 +27,6 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	dataCenter := new(shared.SourceZohoAnalyticsMetadataAPIDataCenter)
 	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
 		*dataCenter = shared.SourceZohoAnalyticsMetadataAPIDataCenter(r.Configuration.DataCenter.ValueString())
@@ -39,12 +36,15 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 	var orgID float64
 	orgID, _ = r.Configuration.OrgID.ValueBigFloat().Float64()
 
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
 	configuration := shared.SourceZohoAnalyticsMetadataAPI{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RefreshToken: refreshToken,
 		DataCenter:   dataCenter,
 		OrgID:        orgID,
+		RefreshToken: refreshToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -122,9 +122,6 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var refreshToken string
-	refreshToken = r.Configuration.RefreshToken.ValueString()
-
 	dataCenter := new(shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter)
 	if !r.Configuration.DataCenter.IsUnknown() && !r.Configuration.DataCenter.IsNull() {
 		*dataCenter = shared.SourceZohoAnalyticsMetadataAPIUpdateDataCenter(r.Configuration.DataCenter.ValueString())
@@ -134,12 +131,15 @@ func (r *SourceZohoAnalyticsMetadataAPIResourceModel) ToSharedSourceZohoAnalytic
 	var orgID float64
 	orgID, _ = r.Configuration.OrgID.ValueBigFloat().Float64()
 
+	var refreshToken string
+	refreshToken = r.Configuration.RefreshToken.ValueString()
+
 	configuration := shared.SourceZohoAnalyticsMetadataAPIUpdate{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RefreshToken: refreshToken,
 		DataCenter:   dataCenter,
 		OrgID:        orgID,
+		RefreshToken: refreshToken,
 	}
 	out := shared.SourceZohoAnalyticsMetadataAPIPutRequest{
 		Name:          name,

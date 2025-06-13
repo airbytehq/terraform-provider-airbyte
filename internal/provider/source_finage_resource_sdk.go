@@ -26,6 +26,13 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	period := new(string)
+	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
+		*period = r.Configuration.Period.ValueString()
+	} else {
+		period = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var symbols []interface{} = []interface{}{}
 	for _, symbolsItem := range r.Configuration.Symbols {
 		var symbolsTmp interface{}
@@ -44,12 +51,6 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	} else {
 		timeVar = nil
 	}
-	period := new(string)
-	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
-		*period = r.Configuration.Period.ValueString()
-	} else {
-		period = nil
-	}
 	timeAggregates := new(shared.TimeAggregates)
 	if !r.Configuration.TimeAggregates.IsUnknown() && !r.Configuration.TimeAggregates.IsNull() {
 		*timeAggregates = shared.TimeAggregates(r.Configuration.TimeAggregates.ValueString())
@@ -62,16 +63,15 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinageCreateRequest() *shared.
 	} else {
 		timePeriod = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinage{
 		APIKey:            apiKey,
+		Period:            period,
+		StartDate:         startDate,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
 		Time:              timeVar,
-		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,
-		StartDate:         startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -146,6 +146,13 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	period := new(string)
+	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
+		*period = r.Configuration.Period.ValueString()
+	} else {
+		period = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var symbols []interface{} = []interface{}{}
 	for _, symbolsItem := range r.Configuration.Symbols {
 		var symbolsTmp interface{}
@@ -164,12 +171,6 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	} else {
 		timeVar = nil
 	}
-	period := new(string)
-	if !r.Configuration.Period.IsUnknown() && !r.Configuration.Period.IsNull() {
-		*period = r.Configuration.Period.ValueString()
-	} else {
-		period = nil
-	}
 	timeAggregates := new(shared.SourceFinageUpdateTimeAggregates)
 	if !r.Configuration.TimeAggregates.IsUnknown() && !r.Configuration.TimeAggregates.IsNull() {
 		*timeAggregates = shared.SourceFinageUpdateTimeAggregates(r.Configuration.TimeAggregates.ValueString())
@@ -182,16 +183,15 @@ func (r *SourceFinageResourceModel) ToSharedSourceFinagePutRequest() *shared.Sou
 	} else {
 		timePeriod = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFinageUpdate{
 		APIKey:            apiKey,
+		Period:            period,
+		StartDate:         startDate,
 		Symbols:           symbols,
 		TechIndicatorType: techIndicatorType,
 		Time:              timeVar,
-		Period:            period,
 		TimeAggregates:    timeAggregates,
 		TimePeriod:        timePeriod,
-		StartDate:         startDate,
 	}
 	out := shared.SourceFinagePutRequest{
 		Name:          name,

@@ -33,12 +33,12 @@ func (e *Sendowl) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSendowl struct {
-	// Enter you API Key
-	Username string `json:"username"`
 	// Enter your API secret
-	Password   *string   `json:"password,omitempty"`
-	StartDate  time.Time `json:"start_date"`
-	sourceType Sendowl   `const:"sendowl" json:"sourceType"`
+	Password  *string   `json:"password,omitempty"`
+	StartDate time.Time `json:"start_date"`
+	// Enter you API Key
+	Username   string  `json:"username"`
+	sourceType Sendowl `const:"sendowl" json:"sourceType"`
 }
 
 func (s SourceSendowl) MarshalJSON() ([]byte, error) {
@@ -50,13 +50,6 @@ func (s *SourceSendowl) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceSendowl) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourceSendowl) GetPassword() *string {
@@ -71,6 +64,13 @@ func (o *SourceSendowl) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceSendowl) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceSendowl) GetSourceType() Sendowl {

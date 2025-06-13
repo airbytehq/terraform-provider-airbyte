@@ -3,15 +3,8 @@
 package shared
 
 type SourceDbtUpdate struct {
-	APIKey2   string `json:"api_key_2"`
 	AccountID string `json:"account_id"`
-}
-
-func (o *SourceDbtUpdate) GetAPIKey2() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey2
+	APIKey2   string `json:"api_key_2"`
 }
 
 func (o *SourceDbtUpdate) GetAccountID() string {
@@ -19,4 +12,11 @@ func (o *SourceDbtUpdate) GetAccountID() string {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceDbtUpdate) GetAPIKey2() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey2
 }

@@ -10,33 +10,257 @@ import (
 	"time"
 )
 
-// SourceMicrosoftOnedriveValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type SourceMicrosoftOnedriveValidationPolicy string
+type SourceMicrosoftOnedriveSchemasAuthType string
 
 const (
-	SourceMicrosoftOnedriveValidationPolicyEmitRecord      SourceMicrosoftOnedriveValidationPolicy = "Emit Record"
-	SourceMicrosoftOnedriveValidationPolicySkipRecord      SourceMicrosoftOnedriveValidationPolicy = "Skip Record"
-	SourceMicrosoftOnedriveValidationPolicyWaitForDiscover SourceMicrosoftOnedriveValidationPolicy = "Wait for Discover"
+	SourceMicrosoftOnedriveSchemasAuthTypeService SourceMicrosoftOnedriveSchemasAuthType = "Service"
 )
 
-func (e SourceMicrosoftOnedriveValidationPolicy) ToPointer() *SourceMicrosoftOnedriveValidationPolicy {
+func (e SourceMicrosoftOnedriveSchemasAuthType) ToPointer() *SourceMicrosoftOnedriveSchemasAuthType {
 	return &e
 }
-func (e *SourceMicrosoftOnedriveValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceMicrosoftOnedriveSchemasAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = SourceMicrosoftOnedriveValidationPolicy(v)
+	case "Service":
+		*e = SourceMicrosoftOnedriveSchemasAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveSchemasAuthType: %v", v)
+	}
+}
+
+// ServiceKeyAuthentication - ServiceCredentials class for service key authentication.
+// This class is structured similarly to OAuthCredentials but for a different authentication method.
+type ServiceKeyAuthentication struct {
+	authType *SourceMicrosoftOnedriveSchemasAuthType `const:"Service" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Tenant ID of the Microsoft OneDrive user
+	TenantID string `json:"tenant_id"`
+	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
+	UserPrincipalName string `json:"user_principal_name"`
+}
+
+func (s ServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ServiceKeyAuthentication) GetAuthType() *SourceMicrosoftOnedriveSchemasAuthType {
+	return SourceMicrosoftOnedriveSchemasAuthTypeService.ToPointer()
+}
+
+func (o *ServiceKeyAuthentication) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *ServiceKeyAuthentication) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *ServiceKeyAuthentication) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+func (o *ServiceKeyAuthentication) GetUserPrincipalName() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserPrincipalName
+}
+
+type SourceMicrosoftOnedriveAuthType string
+
+const (
+	SourceMicrosoftOnedriveAuthTypeClient SourceMicrosoftOnedriveAuthType = "Client"
+)
+
+func (e SourceMicrosoftOnedriveAuthType) ToPointer() *SourceMicrosoftOnedriveAuthType {
+	return &e
+}
+func (e *SourceMicrosoftOnedriveAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Client":
+		*e = SourceMicrosoftOnedriveAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveAuthType: %v", v)
+	}
+}
+
+// AuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
+// This class uses pydantic for data validation and settings management.
+type AuthenticateViaMicrosoftOAuth struct {
+	authType *SourceMicrosoftOnedriveAuthType `const:"Client" json:"auth_type"`
+	// Client ID of your Microsoft developer application
+	ClientID string `json:"client_id"`
+	// Client Secret of your Microsoft developer application
+	ClientSecret string `json:"client_secret"`
+	// Refresh Token of your Microsoft developer application
+	RefreshToken string `json:"refresh_token"`
+	// Tenant ID of the Microsoft OneDrive user
+	TenantID string `json:"tenant_id"`
+}
+
+func (a AuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AuthenticateViaMicrosoftOAuth) GetAuthType() *SourceMicrosoftOnedriveAuthType {
+	return SourceMicrosoftOnedriveAuthTypeClient.ToPointer()
+}
+
+func (o *AuthenticateViaMicrosoftOAuth) GetClientID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientID
+}
+
+func (o *AuthenticateViaMicrosoftOAuth) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
+}
+
+func (o *AuthenticateViaMicrosoftOAuth) GetRefreshToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.RefreshToken
+}
+
+func (o *AuthenticateViaMicrosoftOAuth) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+type SourceMicrosoftOnedriveAuthenticationType string
+
+const (
+	SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth SourceMicrosoftOnedriveAuthenticationType = "Authenticate via Microsoft (OAuth)"
+	SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication      SourceMicrosoftOnedriveAuthenticationType = "Service Key Authentication"
+)
+
+// SourceMicrosoftOnedriveAuthentication - Credentials for connecting to the One Drive API
+type SourceMicrosoftOnedriveAuthentication struct {
+	AuthenticateViaMicrosoftOAuth *AuthenticateViaMicrosoftOAuth `queryParam:"inline"`
+	ServiceKeyAuthentication      *ServiceKeyAuthentication      `queryParam:"inline"`
+
+	Type SourceMicrosoftOnedriveAuthenticationType
+}
+
+func CreateSourceMicrosoftOnedriveAuthenticationAuthenticateViaMicrosoftOAuth(authenticateViaMicrosoftOAuth AuthenticateViaMicrosoftOAuth) SourceMicrosoftOnedriveAuthentication {
+	typ := SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth
+
+	return SourceMicrosoftOnedriveAuthentication{
+		AuthenticateViaMicrosoftOAuth: &authenticateViaMicrosoftOAuth,
+		Type:                          typ,
+	}
+}
+
+func CreateSourceMicrosoftOnedriveAuthenticationServiceKeyAuthentication(serviceKeyAuthentication ServiceKeyAuthentication) SourceMicrosoftOnedriveAuthentication {
+	typ := SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication
+
+	return SourceMicrosoftOnedriveAuthentication{
+		ServiceKeyAuthentication: &serviceKeyAuthentication,
+		Type:                     typ,
+	}
+}
+
+func (u *SourceMicrosoftOnedriveAuthentication) UnmarshalJSON(data []byte) error {
+
+	var authenticateViaMicrosoftOAuth AuthenticateViaMicrosoftOAuth = AuthenticateViaMicrosoftOAuth{}
+	if err := utils.UnmarshalJSON(data, &authenticateViaMicrosoftOAuth, "", true, true); err == nil {
+		u.AuthenticateViaMicrosoftOAuth = &authenticateViaMicrosoftOAuth
+		u.Type = SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth
+		return nil
+	}
+
+	var serviceKeyAuthentication ServiceKeyAuthentication = ServiceKeyAuthentication{}
+	if err := utils.UnmarshalJSON(data, &serviceKeyAuthentication, "", true, true); err == nil {
+		u.ServiceKeyAuthentication = &serviceKeyAuthentication
+		u.Type = SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftOnedriveAuthentication", string(data))
+}
+
+func (u SourceMicrosoftOnedriveAuthentication) MarshalJSON() ([]byte, error) {
+	if u.AuthenticateViaMicrosoftOAuth != nil {
+		return utils.MarshalJSON(u.AuthenticateViaMicrosoftOAuth, "", true)
+	}
+
+	if u.ServiceKeyAuthentication != nil {
+		return utils.MarshalJSON(u.ServiceKeyAuthentication, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceMicrosoftOnedriveAuthentication: all fields are null")
+}
+
+// SearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' to search in the selected OneDrive drive, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
+type SearchScope string
+
+const (
+	SearchScopeAccessibleDrives SearchScope = "ACCESSIBLE_DRIVES"
+	SearchScopeSharedItems      SearchScope = "SHARED_ITEMS"
+	SearchScopeAll              SearchScope = "ALL"
+)
+
+func (e SearchScope) ToPointer() *SearchScope {
+	return &e
+}
+func (e *SearchScope) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACCESSIBLE_DRIVES":
+		fallthrough
+	case "SHARED_ITEMS":
+		fallthrough
+	case "ALL":
+		*e = SearchScope(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SearchScope: %v", v)
 	}
 }
 
@@ -60,39 +284,6 @@ func (e *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype) UnmarshalJSO
 		return nil
 	default:
 		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype: %v", v)
-	}
-}
-
-// SourceMicrosoftOnedriveParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type SourceMicrosoftOnedriveParsingStrategy string
-
-const (
-	SourceMicrosoftOnedriveParsingStrategyAuto    SourceMicrosoftOnedriveParsingStrategy = "auto"
-	SourceMicrosoftOnedriveParsingStrategyFast    SourceMicrosoftOnedriveParsingStrategy = "fast"
-	SourceMicrosoftOnedriveParsingStrategyOcrOnly SourceMicrosoftOnedriveParsingStrategy = "ocr_only"
-	SourceMicrosoftOnedriveParsingStrategyHiRes   SourceMicrosoftOnedriveParsingStrategy = "hi_res"
-)
-
-func (e SourceMicrosoftOnedriveParsingStrategy) ToPointer() *SourceMicrosoftOnedriveParsingStrategy {
-	return &e
-}
-func (e *SourceMicrosoftOnedriveParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = SourceMicrosoftOnedriveParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveParsingStrategy: %v", v)
 	}
 }
 
@@ -181,15 +372,48 @@ func (u SourceMicrosoftOnedriveProcessing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceMicrosoftOnedriveProcessing: all fields are null")
 }
 
+// SourceMicrosoftOnedriveParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceMicrosoftOnedriveParsingStrategy string
+
+const (
+	SourceMicrosoftOnedriveParsingStrategyAuto    SourceMicrosoftOnedriveParsingStrategy = "auto"
+	SourceMicrosoftOnedriveParsingStrategyFast    SourceMicrosoftOnedriveParsingStrategy = "fast"
+	SourceMicrosoftOnedriveParsingStrategyOcrOnly SourceMicrosoftOnedriveParsingStrategy = "ocr_only"
+	SourceMicrosoftOnedriveParsingStrategyHiRes   SourceMicrosoftOnedriveParsingStrategy = "hi_res"
+)
+
+func (e SourceMicrosoftOnedriveParsingStrategy) ToPointer() *SourceMicrosoftOnedriveParsingStrategy {
+	return &e
+}
+func (e *SourceMicrosoftOnedriveParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceMicrosoftOnedriveParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveParsingStrategy: %v", v)
+	}
+}
+
 // SourceMicrosoftOnedriveUnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceMicrosoftOnedriveUnstructuredDocumentFormat struct {
 	filetype *SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceMicrosoftOnedriveProcessing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
 	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
 	Strategy *SourceMicrosoftOnedriveParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *SourceMicrosoftOnedriveProcessing `json:"processing,omitempty"`
 }
 
 func (s SourceMicrosoftOnedriveUnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
@@ -207,6 +431,13 @@ func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetFiletype() *Sourc
 	return SourceMicrosoftOnedriveSchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
+func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftOnedriveProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
 func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
@@ -219,13 +450,6 @@ func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetStrategy() *Sourc
 		return nil
 	}
 	return o.Strategy
-}
-
-func (o *SourceMicrosoftOnedriveUnstructuredDocumentFormat) GetProcessing() *SourceMicrosoftOnedriveProcessing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
 }
 
 type SourceMicrosoftOnedriveSchemasStreamsFormatFiletype string
@@ -252,9 +476,9 @@ func (e *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype) UnmarshalJSON(data
 }
 
 type SourceMicrosoftOnedriveParquetFormat struct {
-	filetype *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	DecimalAsFloat *bool                                                `default:"false" json:"decimal_as_float"`
+	filetype       *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 }
 
 func (s SourceMicrosoftOnedriveParquetFormat) MarshalJSON() ([]byte, error) {
@@ -268,15 +492,15 @@ func (s *SourceMicrosoftOnedriveParquetFormat) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *SourceMicrosoftOnedriveParquetFormat) GetFiletype() *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype {
-	return SourceMicrosoftOnedriveSchemasStreamsFormatFiletypeParquet.ToPointer()
-}
-
 func (o *SourceMicrosoftOnedriveParquetFormat) GetDecimalAsFloat() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DecimalAsFloat
+}
+
+func (o *SourceMicrosoftOnedriveParquetFormat) GetFiletype() *SourceMicrosoftOnedriveSchemasStreamsFormatFiletype {
+	return SourceMicrosoftOnedriveSchemasStreamsFormatFiletypeParquet.ToPointer()
 }
 
 type SourceMicrosoftOnedriveSchemasStreamsFiletype string
@@ -368,9 +592,9 @@ func (e *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType) UnmarshalJSO
 }
 
 type SourceMicrosoftOnedriveUserProvided struct {
-	headerDefinitionType *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
+	ColumnNames          []string                                                   `json:"column_names"`
+	headerDefinitionType *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceMicrosoftOnedriveUserProvided) MarshalJSON() ([]byte, error) {
@@ -384,15 +608,15 @@ func (s *SourceMicrosoftOnedriveUserProvided) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMicrosoftOnedriveUserProvided) GetHeaderDefinitionType() *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType {
-	return SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
 func (o *SourceMicrosoftOnedriveUserProvided) GetColumnNames() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.ColumnNames
+}
+
+func (o *SourceMicrosoftOnedriveUserProvided) GetHeaderDefinitionType() *SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionType {
+	return SourceMicrosoftOnedriveSchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
 }
 
 type SourceMicrosoftOnedriveSchemasHeaderDefinitionType string
@@ -566,33 +790,33 @@ func (u SourceMicrosoftOnedriveCSVHeaderDefinition) MarshalJSON() ([]byte, error
 }
 
 type SourceMicrosoftOnedriveCSVFormat struct {
-	filetype *SourceMicrosoftOnedriveSchemasFiletype `const:"csv" json:"filetype"`
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                                `json:"false_values,omitempty"`
+	filetype    *SourceMicrosoftOnedriveSchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceMicrosoftOnedriveCSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
 }
 
 func (s SourceMicrosoftOnedriveCSVFormat) MarshalJSON() ([]byte, error) {
@@ -606,36 +830,11 @@ func (s *SourceMicrosoftOnedriveCSVFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMicrosoftOnedriveCSVFormat) GetFiletype() *SourceMicrosoftOnedriveSchemasFiletype {
-	return SourceMicrosoftOnedriveSchemasFiletypeCsv.ToPointer()
-}
-
 func (o *SourceMicrosoftOnedriveCSVFormat) GetDelimiter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Delimiter
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
 }
 
 func (o *SourceMicrosoftOnedriveCSVFormat) GetDoubleQuote() *bool {
@@ -645,46 +844,18 @@ func (o *SourceMicrosoftOnedriveCSVFormat) GetDoubleQuote() *bool {
 	return o.DoubleQuote
 }
 
-func (o *SourceMicrosoftOnedriveCSVFormat) GetNullValues() []string {
+func (o *SourceMicrosoftOnedriveCSVFormat) GetEncoding() *string {
 	if o == nil {
 		return nil
 	}
-	return o.NullValues
+	return o.Encoding
 }
 
-func (o *SourceMicrosoftOnedriveCSVFormat) GetStringsCanBeNull() *bool {
+func (o *SourceMicrosoftOnedriveCSVFormat) GetEscapeChar() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StringsCanBeNull
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetHeaderDefinition() *SourceMicrosoftOnedriveCSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *SourceMicrosoftOnedriveCSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
+	return o.EscapeChar
 }
 
 func (o *SourceMicrosoftOnedriveCSVFormat) GetFalseValues() []string {
@@ -694,11 +865,64 @@ func (o *SourceMicrosoftOnedriveCSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
+func (o *SourceMicrosoftOnedriveCSVFormat) GetFiletype() *SourceMicrosoftOnedriveSchemasFiletype {
+	return SourceMicrosoftOnedriveSchemasFiletypeCsv.ToPointer()
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetHeaderDefinition() *SourceMicrosoftOnedriveCSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
 func (o *SourceMicrosoftOnedriveCSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *SourceMicrosoftOnedriveCSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
 }
 
 type SourceMicrosoftOnedriveFiletype string
@@ -725,9 +949,9 @@ func (e *SourceMicrosoftOnedriveFiletype) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMicrosoftOnedriveAvroFormat struct {
-	filetype *SourceMicrosoftOnedriveFiletype `const:"avro" json:"filetype"`
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	DoubleAsString *bool                            `default:"false" json:"double_as_string"`
+	filetype       *SourceMicrosoftOnedriveFiletype `const:"avro" json:"filetype"`
 }
 
 func (s SourceMicrosoftOnedriveAvroFormat) MarshalJSON() ([]byte, error) {
@@ -741,15 +965,15 @@ func (s *SourceMicrosoftOnedriveAvroFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMicrosoftOnedriveAvroFormat) GetFiletype() *SourceMicrosoftOnedriveFiletype {
-	return SourceMicrosoftOnedriveFiletypeAvro.ToPointer()
-}
-
 func (o *SourceMicrosoftOnedriveAvroFormat) GetDoubleAsString() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DoubleAsString
+}
+
+func (o *SourceMicrosoftOnedriveAvroFormat) GetFiletype() *SourceMicrosoftOnedriveFiletype {
+	return SourceMicrosoftOnedriveFiletypeAvro.ToPointer()
 }
 
 type SourceMicrosoftOnedriveFormatType string
@@ -882,21 +1106,51 @@ func (u SourceMicrosoftOnedriveFormat) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceMicrosoftOnedriveFormat: all fields are null")
 }
 
+// SourceMicrosoftOnedriveValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceMicrosoftOnedriveValidationPolicy string
+
+const (
+	SourceMicrosoftOnedriveValidationPolicyEmitRecord      SourceMicrosoftOnedriveValidationPolicy = "Emit Record"
+	SourceMicrosoftOnedriveValidationPolicySkipRecord      SourceMicrosoftOnedriveValidationPolicy = "Skip Record"
+	SourceMicrosoftOnedriveValidationPolicyWaitForDiscover SourceMicrosoftOnedriveValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceMicrosoftOnedriveValidationPolicy) ToPointer() *SourceMicrosoftOnedriveValidationPolicy {
+	return &e
+}
+func (e *SourceMicrosoftOnedriveValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceMicrosoftOnedriveValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveValidationPolicy: %v", v)
+	}
+}
+
 type SourceMicrosoftOnedriveFileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *SourceMicrosoftOnedriveValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 	Format SourceMicrosoftOnedriveFormat `json:"format"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
 	// When enabled, syncs will not validate or structure records against the stream's schema.
 	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceMicrosoftOnedriveValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
 func (s SourceMicrosoftOnedriveFileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -908,34 +1162,6 @@ func (s *SourceMicrosoftOnedriveFileBasedStreamConfig) UnmarshalJSON(data []byte
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetValidationPolicy() *SourceMicrosoftOnedriveValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
 }
 
 func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
@@ -952,6 +1178,27 @@ func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetFormat() SourceMicroso
 	return o.Format
 }
 
+func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetGlobs() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Globs
+}
+
+func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
 func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
 		return nil
@@ -959,258 +1206,11 @@ func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetSchemaless() *bool {
 	return o.Schemaless
 }
 
-type SourceMicrosoftOnedriveSchemasAuthType string
-
-const (
-	SourceMicrosoftOnedriveSchemasAuthTypeService SourceMicrosoftOnedriveSchemasAuthType = "Service"
-)
-
-func (e SourceMicrosoftOnedriveSchemasAuthType) ToPointer() *SourceMicrosoftOnedriveSchemasAuthType {
-	return &e
-}
-func (e *SourceMicrosoftOnedriveSchemasAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Service":
-		*e = SourceMicrosoftOnedriveSchemasAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveSchemasAuthType: %v", v)
-	}
-}
-
-// ServiceKeyAuthentication - ServiceCredentials class for service key authentication.
-// This class is structured similarly to OAuthCredentials but for a different authentication method.
-type ServiceKeyAuthentication struct {
-	authType *SourceMicrosoftOnedriveSchemasAuthType `const:"Service" json:"auth_type"`
-	// Tenant ID of the Microsoft OneDrive user
-	TenantID string `json:"tenant_id"`
-	// Special characters such as a period, comma, space, and the at sign (@) are converted to underscores (_). More details: https://learn.microsoft.com/en-us/sharepoint/list-onedrive-urls
-	UserPrincipalName string `json:"user_principal_name"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-}
-
-func (s ServiceKeyAuthentication) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *ServiceKeyAuthentication) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ServiceKeyAuthentication) GetAuthType() *SourceMicrosoftOnedriveSchemasAuthType {
-	return SourceMicrosoftOnedriveSchemasAuthTypeService.ToPointer()
-}
-
-func (o *ServiceKeyAuthentication) GetTenantID() string {
+func (o *SourceMicrosoftOnedriveFileBasedStreamConfig) GetValidationPolicy() *SourceMicrosoftOnedriveValidationPolicy {
 	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *ServiceKeyAuthentication) GetUserPrincipalName() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserPrincipalName
-}
-
-func (o *ServiceKeyAuthentication) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *ServiceKeyAuthentication) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-type SourceMicrosoftOnedriveAuthType string
-
-const (
-	SourceMicrosoftOnedriveAuthTypeClient SourceMicrosoftOnedriveAuthType = "Client"
-)
-
-func (e SourceMicrosoftOnedriveAuthType) ToPointer() *SourceMicrosoftOnedriveAuthType {
-	return &e
-}
-func (e *SourceMicrosoftOnedriveAuthType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Client":
-		*e = SourceMicrosoftOnedriveAuthType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftOnedriveAuthType: %v", v)
-	}
-}
-
-// AuthenticateViaMicrosoftOAuth - OAuthCredentials class to hold authentication details for Microsoft OAuth authentication.
-// This class uses pydantic for data validation and settings management.
-type AuthenticateViaMicrosoftOAuth struct {
-	authType *SourceMicrosoftOnedriveAuthType `const:"Client" json:"auth_type"`
-	// Tenant ID of the Microsoft OneDrive user
-	TenantID string `json:"tenant_id"`
-	// Client ID of your Microsoft developer application
-	ClientID string `json:"client_id"`
-	// Client Secret of your Microsoft developer application
-	ClientSecret string `json:"client_secret"`
-	// Refresh Token of your Microsoft developer application
-	RefreshToken string `json:"refresh_token"`
-}
-
-func (a AuthenticateViaMicrosoftOAuth) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AuthenticateViaMicrosoftOAuth) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *AuthenticateViaMicrosoftOAuth) GetAuthType() *SourceMicrosoftOnedriveAuthType {
-	return SourceMicrosoftOnedriveAuthTypeClient.ToPointer()
-}
-
-func (o *AuthenticateViaMicrosoftOAuth) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
-}
-
-func (o *AuthenticateViaMicrosoftOAuth) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *AuthenticateViaMicrosoftOAuth) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
-func (o *AuthenticateViaMicrosoftOAuth) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
-}
-
-type SourceMicrosoftOnedriveAuthenticationType string
-
-const (
-	SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth SourceMicrosoftOnedriveAuthenticationType = "Authenticate via Microsoft (OAuth)"
-	SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication      SourceMicrosoftOnedriveAuthenticationType = "Service Key Authentication"
-)
-
-// SourceMicrosoftOnedriveAuthentication - Credentials for connecting to the One Drive API
-type SourceMicrosoftOnedriveAuthentication struct {
-	AuthenticateViaMicrosoftOAuth *AuthenticateViaMicrosoftOAuth `queryParam:"inline"`
-	ServiceKeyAuthentication      *ServiceKeyAuthentication      `queryParam:"inline"`
-
-	Type SourceMicrosoftOnedriveAuthenticationType
-}
-
-func CreateSourceMicrosoftOnedriveAuthenticationAuthenticateViaMicrosoftOAuth(authenticateViaMicrosoftOAuth AuthenticateViaMicrosoftOAuth) SourceMicrosoftOnedriveAuthentication {
-	typ := SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth
-
-	return SourceMicrosoftOnedriveAuthentication{
-		AuthenticateViaMicrosoftOAuth: &authenticateViaMicrosoftOAuth,
-		Type:                          typ,
-	}
-}
-
-func CreateSourceMicrosoftOnedriveAuthenticationServiceKeyAuthentication(serviceKeyAuthentication ServiceKeyAuthentication) SourceMicrosoftOnedriveAuthentication {
-	typ := SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication
-
-	return SourceMicrosoftOnedriveAuthentication{
-		ServiceKeyAuthentication: &serviceKeyAuthentication,
-		Type:                     typ,
-	}
-}
-
-func (u *SourceMicrosoftOnedriveAuthentication) UnmarshalJSON(data []byte) error {
-
-	var authenticateViaMicrosoftOAuth AuthenticateViaMicrosoftOAuth = AuthenticateViaMicrosoftOAuth{}
-	if err := utils.UnmarshalJSON(data, &authenticateViaMicrosoftOAuth, "", true, true); err == nil {
-		u.AuthenticateViaMicrosoftOAuth = &authenticateViaMicrosoftOAuth
-		u.Type = SourceMicrosoftOnedriveAuthenticationTypeAuthenticateViaMicrosoftOAuth
 		return nil
 	}
-
-	var serviceKeyAuthentication ServiceKeyAuthentication = ServiceKeyAuthentication{}
-	if err := utils.UnmarshalJSON(data, &serviceKeyAuthentication, "", true, true); err == nil {
-		u.ServiceKeyAuthentication = &serviceKeyAuthentication
-		u.Type = SourceMicrosoftOnedriveAuthenticationTypeServiceKeyAuthentication
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceMicrosoftOnedriveAuthentication", string(data))
-}
-
-func (u SourceMicrosoftOnedriveAuthentication) MarshalJSON() ([]byte, error) {
-	if u.AuthenticateViaMicrosoftOAuth != nil {
-		return utils.MarshalJSON(u.AuthenticateViaMicrosoftOAuth, "", true)
-	}
-
-	if u.ServiceKeyAuthentication != nil {
-		return utils.MarshalJSON(u.ServiceKeyAuthentication, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceMicrosoftOnedriveAuthentication: all fields are null")
-}
-
-// SearchScope - Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' to search in the selected OneDrive drive, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
-type SearchScope string
-
-const (
-	SearchScopeAccessibleDrives SearchScope = "ACCESSIBLE_DRIVES"
-	SearchScopeSharedItems      SearchScope = "SHARED_ITEMS"
-	SearchScopeAll              SearchScope = "ALL"
-)
-
-func (e SearchScope) ToPointer() *SearchScope {
-	return &e
-}
-func (e *SearchScope) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ACCESSIBLE_DRIVES":
-		fallthrough
-	case "SHARED_ITEMS":
-		fallthrough
-	case "ALL":
-		*e = SearchScope(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SearchScope: %v", v)
-	}
+	return o.ValidationPolicy
 }
 
 type MicrosoftOnedrive string
@@ -1239,19 +1239,19 @@ func (e *MicrosoftOnedrive) UnmarshalJSON(data []byte) error {
 // SourceMicrosoftOnedrive - SourceMicrosoftOneDriveSpec class for Microsoft OneDrive Source Specification.
 // This class combines the authentication details with additional configuration for the OneDrive API.
 type SourceMicrosoftOnedrive struct {
-	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams []SourceMicrosoftOnedriveFileBasedStreamConfig `json:"streams"`
 	// Credentials for connecting to the One Drive API
 	Credentials SourceMicrosoftOnedriveAuthentication `json:"credentials"`
 	// Name of the Microsoft OneDrive drive where the file(s) exist.
 	DriveName *string `default:"OneDrive" json:"drive_name"`
+	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
+	FolderPath *string `default:"." json:"folder_path"`
 	// Specifies the location(s) to search for files. Valid options are 'ACCESSIBLE_DRIVES' to search in the selected OneDrive drive, 'SHARED_ITEMS' for shared items the user has access to, and 'ALL' to search both.
 	SearchScope *SearchScope `default:"ALL" json:"search_scope"`
-	// Path to a specific folder within the drives to search for files. Leave empty to search all folders of the drives. This does not apply to shared items.
-	FolderPath *string           `default:"." json:"folder_path"`
-	sourceType MicrosoftOnedrive `const:"microsoft-onedrive" json:"sourceType"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams    []SourceMicrosoftOnedriveFileBasedStreamConfig `json:"streams"`
+	sourceType MicrosoftOnedrive                              `const:"microsoft-onedrive" json:"sourceType"`
 }
 
 func (s SourceMicrosoftOnedrive) MarshalJSON() ([]byte, error) {
@@ -1263,20 +1263,6 @@ func (s *SourceMicrosoftOnedrive) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMicrosoftOnedrive) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceMicrosoftOnedrive) GetStreams() []SourceMicrosoftOnedriveFileBasedStreamConfig {
-	if o == nil {
-		return []SourceMicrosoftOnedriveFileBasedStreamConfig{}
-	}
-	return o.Streams
 }
 
 func (o *SourceMicrosoftOnedrive) GetCredentials() SourceMicrosoftOnedriveAuthentication {
@@ -1293,6 +1279,13 @@ func (o *SourceMicrosoftOnedrive) GetDriveName() *string {
 	return o.DriveName
 }
 
+func (o *SourceMicrosoftOnedrive) GetFolderPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FolderPath
+}
+
 func (o *SourceMicrosoftOnedrive) GetSearchScope() *SearchScope {
 	if o == nil {
 		return nil
@@ -1300,11 +1293,18 @@ func (o *SourceMicrosoftOnedrive) GetSearchScope() *SearchScope {
 	return o.SearchScope
 }
 
-func (o *SourceMicrosoftOnedrive) GetFolderPath() *string {
+func (o *SourceMicrosoftOnedrive) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
-	return o.FolderPath
+	return o.StartDate
+}
+
+func (o *SourceMicrosoftOnedrive) GetStreams() []SourceMicrosoftOnedriveFileBasedStreamConfig {
+	if o == nil {
+		return []SourceMicrosoftOnedriveFileBasedStreamConfig{}
+	}
+	return o.Streams
 }
 
 func (o *SourceMicrosoftOnedrive) GetSourceType() MicrosoftOnedrive {

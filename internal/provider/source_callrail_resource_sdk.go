@@ -21,18 +21,18 @@ func (r *SourceCallrailResourceModel) ToSharedSourceCallrailCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
 	configuration := shared.SourceCallrail{
-		APIKey:    apiKey,
 		AccountID: accountID,
+		APIKey:    apiKey,
 		StartDate: startDate,
 	}
 	secretID := new(string)
@@ -105,18 +105,18 @@ func (r *SourceCallrailResourceModel) ToSharedSourceCallrailPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
 	configuration := shared.SourceCallrailUpdate{
-		APIKey:    apiKey,
 		AccountID: accountID,
+		APIKey:    apiKey,
 		StartDate: startDate,
 	}
 	out := shared.SourceCallrailPutRequest{

@@ -21,11 +21,14 @@ func (r *SourceAlphaVantageResourceModel) ToSharedSourceAlphaVantageCreateReques
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	adjusted := new(bool)
+	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
+		*adjusted = r.Configuration.Adjusted.ValueBool()
+	} else {
+		adjusted = nil
+	}
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
-
-	var symbol string
-	symbol = r.Configuration.Symbol.ValueString()
 
 	interval := new(shared.Interval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
@@ -33,24 +36,21 @@ func (r *SourceAlphaVantageResourceModel) ToSharedSourceAlphaVantageCreateReques
 	} else {
 		interval = nil
 	}
-	adjusted := new(bool)
-	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
-		*adjusted = r.Configuration.Adjusted.ValueBool()
-	} else {
-		adjusted = nil
-	}
 	outputsize := new(shared.OutputSize)
 	if !r.Configuration.Outputsize.IsUnknown() && !r.Configuration.Outputsize.IsNull() {
 		*outputsize = shared.OutputSize(r.Configuration.Outputsize.ValueString())
 	} else {
 		outputsize = nil
 	}
+	var symbol string
+	symbol = r.Configuration.Symbol.ValueString()
+
 	configuration := shared.SourceAlphaVantage{
-		APIKey:     apiKey,
-		Symbol:     symbol,
-		Interval:   interval,
 		Adjusted:   adjusted,
+		APIKey:     apiKey,
+		Interval:   interval,
 		Outputsize: outputsize,
+		Symbol:     symbol,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -122,11 +122,14 @@ func (r *SourceAlphaVantageResourceModel) ToSharedSourceAlphaVantagePutRequest()
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	adjusted := new(bool)
+	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
+		*adjusted = r.Configuration.Adjusted.ValueBool()
+	} else {
+		adjusted = nil
+	}
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
-
-	var symbol string
-	symbol = r.Configuration.Symbol.ValueString()
 
 	interval := new(shared.SourceAlphaVantageUpdateInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
@@ -134,24 +137,21 @@ func (r *SourceAlphaVantageResourceModel) ToSharedSourceAlphaVantagePutRequest()
 	} else {
 		interval = nil
 	}
-	adjusted := new(bool)
-	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
-		*adjusted = r.Configuration.Adjusted.ValueBool()
-	} else {
-		adjusted = nil
-	}
 	outputsize := new(shared.SourceAlphaVantageUpdateOutputSize)
 	if !r.Configuration.Outputsize.IsUnknown() && !r.Configuration.Outputsize.IsNull() {
 		*outputsize = shared.SourceAlphaVantageUpdateOutputSize(r.Configuration.Outputsize.ValueString())
 	} else {
 		outputsize = nil
 	}
+	var symbol string
+	symbol = r.Configuration.Symbol.ValueString()
+
 	configuration := shared.SourceAlphaVantageUpdate{
-		APIKey:     apiKey,
-		Symbol:     symbol,
-		Interval:   interval,
 		Adjusted:   adjusted,
+		APIKey:     apiKey,
+		Interval:   interval,
 		Outputsize: outputsize,
+		Symbol:     symbol,
 	}
 	out := shared.SourceAlphaVantagePutRequest{
 		Name:          name,

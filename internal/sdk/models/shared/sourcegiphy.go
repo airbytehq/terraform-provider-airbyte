@@ -34,17 +34,17 @@ func (e *Giphy) UnmarshalJSON(data []byte) error {
 
 type SourceGiphy struct {
 	// Your GIPHY API Key. You can create and find your API key in the GIPHY Developer Dashboard at https://developers.giphy.com/dashboard/.
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// A query for search endpoint
 	Query *string `default:"foo" json:"query"`
+	// Query for clips search endpoint
+	QueryForClips *string `default:"foo" json:"query_for_clips"`
 	// Query for gif search endpoint
 	QueryForGif *string `default:"foo" json:"query_for_gif"`
 	// Query for stickers search endpoint
-	QueryForStickers *string `default:"foo" json:"query_for_stickers"`
-	// Query for clips search endpoint
-	QueryForClips *string `default:"foo" json:"query_for_clips"`
-	sourceType    Giphy   `const:"giphy" json:"sourceType"`
+	QueryForStickers *string   `default:"foo" json:"query_for_stickers"`
+	StartDate        time.Time `json:"start_date"`
+	sourceType       Giphy     `const:"giphy" json:"sourceType"`
 }
 
 func (s SourceGiphy) MarshalJSON() ([]byte, error) {
@@ -65,18 +65,18 @@ func (o *SourceGiphy) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceGiphy) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceGiphy) GetQuery() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *SourceGiphy) GetQueryForClips() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryForClips
 }
 
 func (o *SourceGiphy) GetQueryForGif() *string {
@@ -93,11 +93,11 @@ func (o *SourceGiphy) GetQueryForStickers() *string {
 	return o.QueryForStickers
 }
 
-func (o *SourceGiphy) GetQueryForClips() *string {
+func (o *SourceGiphy) GetStartDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.QueryForClips
+	return o.StartDate
 }
 
 func (o *SourceGiphy) GetSourceType() Giphy {

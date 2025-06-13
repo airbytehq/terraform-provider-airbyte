@@ -34,9 +34,9 @@ func (e *SourceTypeformSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTypeformPrivateToken struct {
-	authType *SourceTypeformSchemasAuthType `const:"access_token" json:"auth_type,omitempty"`
 	// Log into your Typeform account and then generate a personal Access Token.
-	AccessToken string `json:"access_token"`
+	AccessToken string                         `json:"access_token"`
+	authType    *SourceTypeformSchemasAuthType `const:"access_token" json:"auth_type,omitempty"`
 }
 
 func (s SourceTypeformPrivateToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceTypeformPrivateToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceTypeformPrivateToken) GetAuthType() *SourceTypeformSchemasAuthType {
-	return SourceTypeformSchemasAuthTypeAccessToken.ToPointer()
-}
-
 func (o *SourceTypeformPrivateToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceTypeformPrivateToken) GetAuthType() *SourceTypeformSchemasAuthType {
+	return SourceTypeformSchemasAuthTypeAccessToken.ToPointer()
 }
 
 type SourceTypeformAuthType string
@@ -85,17 +85,17 @@ func (e *SourceTypeformAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTypeformOAuth20 struct {
-	authType *SourceTypeformAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken string                  `json:"access_token"`
+	authType    *SourceTypeformAuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// The Client ID of the Typeform developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret the Typeform developer application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
-	// The date-time when the access token should be refreshed.
-	TokenExpiryDate time.Time `json:"token_expiry_date"`
 	// The key to refresh the expired access_token.
 	RefreshToken string `json:"refresh_token"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate time.Time `json:"token_expiry_date"`
 }
 
 func (s SourceTypeformOAuth20) MarshalJSON() ([]byte, error) {
@@ -107,6 +107,13 @@ func (s *SourceTypeformOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceTypeformOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceTypeformOAuth20) GetAuthType() *SourceTypeformAuthType {
@@ -127,11 +134,11 @@ func (o *SourceTypeformOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceTypeformOAuth20) GetAccessToken() string {
+func (o *SourceTypeformOAuth20) GetRefreshToken() string {
 	if o == nil {
 		return ""
 	}
-	return o.AccessToken
+	return o.RefreshToken
 }
 
 func (o *SourceTypeformOAuth20) GetTokenExpiryDate() time.Time {
@@ -139,13 +146,6 @@ func (o *SourceTypeformOAuth20) GetTokenExpiryDate() time.Time {
 		return time.Time{}
 	}
 	return o.TokenExpiryDate
-}
-
-func (o *SourceTypeformOAuth20) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
 }
 
 type SourceTypeformAuthorizationMethodType string
@@ -236,11 +236,11 @@ func (e *Typeform) UnmarshalJSON(data []byte) error {
 
 type SourceTypeform struct {
 	Credentials SourceTypeformAuthorizationMethod `json:"credentials"`
-	// The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
-	FormIds    []string `json:"form_ids,omitempty"`
-	sourceType Typeform `const:"typeform" json:"sourceType"`
+	FormIds []string `json:"form_ids,omitempty"`
+	// The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Typeform   `const:"typeform" json:"sourceType"`
 }
 
 func (s SourceTypeform) MarshalJSON() ([]byte, error) {
@@ -261,18 +261,18 @@ func (o *SourceTypeform) GetCredentials() SourceTypeformAuthorizationMethod {
 	return o.Credentials
 }
 
-func (o *SourceTypeform) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceTypeform) GetFormIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.FormIds
+}
+
+func (o *SourceTypeform) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceTypeform) GetSourceType() Typeform {

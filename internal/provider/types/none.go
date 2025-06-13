@@ -2,5 +2,8 @@
 
 package types
 
+import "github.com/hashicorp/terraform-plugin-framework/types"
+
 type None struct {
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

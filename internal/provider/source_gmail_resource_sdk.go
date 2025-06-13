@@ -24,11 +24,11 @@ func (r *SourceGmailResourceModel) ToSharedSourceGmailCreateRequest() *shared.So
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	includeSpamAndTrash := new(bool)
 	if !r.Configuration.IncludeSpamAndTrash.IsUnknown() && !r.Configuration.IncludeSpamAndTrash.IsNull() {
@@ -38,8 +38,8 @@ func (r *SourceGmailResourceModel) ToSharedSourceGmailCreateRequest() *shared.So
 	}
 	configuration := shared.SourceGmail{
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken:  clientRefreshToken,
+		ClientSecret:        clientSecret,
 		IncludeSpamAndTrash: includeSpamAndTrash,
 	}
 	secretID := new(string)
@@ -115,11 +115,11 @@ func (r *SourceGmailResourceModel) ToSharedSourceGmailPutRequest() *shared.Sourc
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	includeSpamAndTrash := new(bool)
 	if !r.Configuration.IncludeSpamAndTrash.IsUnknown() && !r.Configuration.IncludeSpamAndTrash.IsNull() {
@@ -129,8 +129,8 @@ func (r *SourceGmailResourceModel) ToSharedSourceGmailPutRequest() *shared.Sourc
 	}
 	configuration := shared.SourceGmailUpdate{
 		ClientID:            clientID,
-		ClientSecret:        clientSecret,
 		ClientRefreshToken:  clientRefreshToken,
+		ClientSecret:        clientSecret,
 		IncludeSpamAndTrash: includeSpamAndTrash,
 	}
 	out := shared.SourceGmailPutRequest{

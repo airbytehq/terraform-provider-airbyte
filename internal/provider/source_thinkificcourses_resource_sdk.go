@@ -21,15 +21,15 @@ func (r *SourceThinkificCoursesResourceModel) ToSharedSourceThinkificCoursesCrea
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var xAuthSubdomain string
 	xAuthSubdomain = r.Configuration.XAuthSubdomain.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceThinkificCourses{
-		APIKey:         apiKey,
 		XAuthSubdomain: xAuthSubdomain,
+		APIKey:         apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceThinkificCoursesResourceModel) ToSharedSourceThinkificCoursesPutR
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var xAuthSubdomain string
 	xAuthSubdomain = r.Configuration.XAuthSubdomain.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceThinkificCoursesUpdate{
-		APIKey:         apiKey,
 		XAuthSubdomain: xAuthSubdomain,
+		APIKey:         apiKey,
 	}
 	out := shared.SourceThinkificCoursesPutRequest{
 		Name:          name,

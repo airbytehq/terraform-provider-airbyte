@@ -7,16 +7,16 @@ import (
 )
 
 type SourceMicrosoftDataverseUpdate struct {
-	// URL to Microsoft Dataverse API
-	URL string `json:"url"`
-	// Tenant Id of your Microsoft Dataverse Instance
-	TenantID string `json:"tenant_id"`
 	// App Registration Client Id
 	ClientID string `json:"client_id"`
 	// App Registration Client Secret
 	ClientSecretValue string `json:"client_secret_value"`
 	// Max number of results per page. Default=5000
 	OdataMaxpagesize *int64 `default:"5000" json:"odata_maxpagesize"`
+	// Tenant Id of your Microsoft Dataverse Instance
+	TenantID string `json:"tenant_id"`
+	// URL to Microsoft Dataverse API
+	URL string `json:"url"`
 }
 
 func (s SourceMicrosoftDataverseUpdate) MarshalJSON() ([]byte, error) {
@@ -28,20 +28,6 @@ func (s *SourceMicrosoftDataverseUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceMicrosoftDataverseUpdate) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
-}
-
-func (o *SourceMicrosoftDataverseUpdate) GetTenantID() string {
-	if o == nil {
-		return ""
-	}
-	return o.TenantID
 }
 
 func (o *SourceMicrosoftDataverseUpdate) GetClientID() string {
@@ -63,4 +49,18 @@ func (o *SourceMicrosoftDataverseUpdate) GetOdataMaxpagesize() *int64 {
 		return nil
 	}
 	return o.OdataMaxpagesize
+}
+
+func (o *SourceMicrosoftDataverseUpdate) GetTenantID() string {
+	if o == nil {
+		return ""
+	}
+	return o.TenantID
+}
+
+func (o *SourceMicrosoftDataverseUpdate) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

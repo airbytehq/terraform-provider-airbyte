@@ -21,24 +21,24 @@ func (r *SourceKlarnaResourceModel) ToSharedSourceKlarnaCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceKlarnaRegion(r.Configuration.Region.ValueString())
+	var password string
+	password = r.Configuration.Password.ValueString()
+
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
 		*playground = r.Configuration.Playground.ValueBool()
 	} else {
 		playground = nil
 	}
+	region := shared.SourceKlarnaRegion(r.Configuration.Region.ValueString())
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
 	configuration := shared.SourceKlarna{
-		Region:     region,
-		Playground: playground,
-		Username:   username,
 		Password:   password,
+		Playground: playground,
+		Region:     region,
+		Username:   username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,24 +110,24 @@ func (r *SourceKlarnaResourceModel) ToSharedSourceKlarnaPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	region := shared.SourceKlarnaUpdateRegion(r.Configuration.Region.ValueString())
+	var password string
+	password = r.Configuration.Password.ValueString()
+
 	playground := new(bool)
 	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
 		*playground = r.Configuration.Playground.ValueBool()
 	} else {
 		playground = nil
 	}
+	region := shared.SourceKlarnaUpdateRegion(r.Configuration.Region.ValueString())
 	var username string
 	username = r.Configuration.Username.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
 	configuration := shared.SourceKlarnaUpdate{
-		Region:     region,
-		Playground: playground,
-		Username:   username,
 		Password:   password,
+		Playground: playground,
+		Region:     region,
+		Username:   username,
 	}
 	out := shared.SourceKlarnaPutRequest{
 		Name:          name,

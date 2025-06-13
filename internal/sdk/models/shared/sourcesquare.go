@@ -220,13 +220,13 @@ func (e *Square) UnmarshalJSON(data []byte) error {
 type SourceSquare struct {
 	// Choose how to authenticate to Square.
 	Credentials *SourceSquareAuthentication `json:"credentials,omitempty"`
+	// In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
+	IncludeDeletedObjects *bool `default:"false" json:"include_deleted_objects"`
 	// Determines whether to use the sandbox or production environment.
 	IsSandbox *bool `default:"false" json:"is_sandbox"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
-	StartDate *types.Date `default:"2021-01-01" json:"start_date"`
-	// In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
-	IncludeDeletedObjects *bool  `default:"false" json:"include_deleted_objects"`
-	sourceType            Square `const:"square" json:"sourceType"`
+	StartDate  *types.Date `default:"2021-01-01" json:"start_date"`
+	sourceType Square      `const:"square" json:"sourceType"`
 }
 
 func (s SourceSquare) MarshalJSON() ([]byte, error) {
@@ -247,6 +247,13 @@ func (o *SourceSquare) GetCredentials() *SourceSquareAuthentication {
 	return o.Credentials
 }
 
+func (o *SourceSquare) GetIncludeDeletedObjects() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeletedObjects
+}
+
 func (o *SourceSquare) GetIsSandbox() *bool {
 	if o == nil {
 		return nil
@@ -259,13 +266,6 @@ func (o *SourceSquare) GetStartDate() *types.Date {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceSquare) GetIncludeDeletedObjects() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IncludeDeletedObjects
 }
 
 func (o *SourceSquare) GetSourceType() Square {

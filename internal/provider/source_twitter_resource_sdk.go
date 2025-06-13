@@ -25,6 +25,12 @@ func (r *SourceTwitterResourceModel) ToSharedSourceTwitterCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
 	var query string
 	query = r.Configuration.Query.ValueString()
 
@@ -34,17 +40,11 @@ func (r *SourceTwitterResourceModel) ToSharedSourceTwitterCreateRequest() *share
 	} else {
 		startDate = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
 	configuration := shared.SourceTwitter{
 		APIKey:    apiKey,
+		EndDate:   endDate,
 		Query:     query,
 		StartDate: startDate,
-		EndDate:   endDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -119,6 +119,12 @@ func (r *SourceTwitterResourceModel) ToSharedSourceTwitterPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
 	var query string
 	query = r.Configuration.Query.ValueString()
 
@@ -128,17 +134,11 @@ func (r *SourceTwitterResourceModel) ToSharedSourceTwitterPutRequest() *shared.S
 	} else {
 		startDate = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
 	configuration := shared.SourceTwitterUpdate{
 		APIKey:    apiKey,
+		EndDate:   endDate,
 		Query:     query,
 		StartDate: startDate,
-		EndDate:   endDate,
 	}
 	out := shared.SourceTwitterPutRequest{
 		Name:          name,

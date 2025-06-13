@@ -8,10 +8,10 @@ import (
 )
 
 type SourceHeightUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Search query to be used with search stream
-	SearchQuery *string `default:"task" json:"search_query"`
+	SearchQuery *string   `default:"task" json:"search_query"`
+	StartDate   time.Time `json:"start_date"`
 }
 
 func (s SourceHeightUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceHeightUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceHeightUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceHeightUpdate) GetSearchQuery() *string {
 	if o == nil {
 		return nil
 	}
 	return o.SearchQuery
+}
+
+func (o *SourceHeightUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

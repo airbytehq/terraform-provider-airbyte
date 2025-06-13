@@ -64,14 +64,14 @@ func (e *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream) UnmarshalJS
 type SourceNytimesUpdate struct {
 	// API Key
 	APIKey string `json:"api_key"`
-	// Start date to begin the article retrieval (format YYYY-MM)
-	StartDate string `json:"start_date"`
 	// End date to stop the article retrieval (format YYYY-MM)
 	EndDate *string `json:"end_date,omitempty"`
 	// Period of time (in days)
 	Period SourceNytimesUpdatePeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
 	ShareType *SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
+	// Start date to begin the article retrieval (format YYYY-MM)
+	StartDate string `json:"start_date"`
 }
 
 func (o *SourceNytimesUpdate) GetAPIKey() string {
@@ -79,13 +79,6 @@ func (o *SourceNytimesUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
-}
-
-func (o *SourceNytimesUpdate) GetStartDate() string {
-	if o == nil {
-		return ""
-	}
-	return o.StartDate
 }
 
 func (o *SourceNytimesUpdate) GetEndDate() *string {
@@ -107,4 +100,11 @@ func (o *SourceNytimesUpdate) GetShareType() *SourceNytimesUpdateShareTypeUsedFo
 		return nil
 	}
 	return o.ShareType
+}
+
+func (o *SourceNytimesUpdate) GetStartDate() string {
+	if o == nil {
+		return ""
+	}
+	return o.StartDate
 }

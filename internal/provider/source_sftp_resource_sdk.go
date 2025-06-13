@@ -21,18 +21,6 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var user string
-	user = r.Configuration.User.ValueString()
-
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var credentials *shared.SourceSftpAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceSftpPasswordAuthentication *shared.SourceSftpPasswordAuthentication
@@ -64,6 +52,12 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpCreateRequest() *shared.Sour
 			}
 		}
 	}
+	filePattern := new(string)
+	if !r.Configuration.FilePattern.IsUnknown() && !r.Configuration.FilePattern.IsNull() {
+		*filePattern = r.Configuration.FilePattern.ValueString()
+	} else {
+		filePattern = nil
+	}
 	fileTypes := new(string)
 	if !r.Configuration.FileTypes.IsUnknown() && !r.Configuration.FileTypes.IsNull() {
 		*fileTypes = r.Configuration.FileTypes.ValueString()
@@ -76,20 +70,26 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpCreateRequest() *shared.Sour
 	} else {
 		folderPath = nil
 	}
-	filePattern := new(string)
-	if !r.Configuration.FilePattern.IsUnknown() && !r.Configuration.FilePattern.IsNull() {
-		*filePattern = r.Configuration.FilePattern.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		filePattern = nil
+		port = nil
 	}
+	var user string
+	user = r.Configuration.User.ValueString()
+
 	configuration := shared.SourceSftp{
-		User:        user,
-		Host:        host,
-		Port:        port,
 		Credentials: credentials,
+		FilePattern: filePattern,
 		FileTypes:   fileTypes,
 		FolderPath:  folderPath,
-		FilePattern: filePattern,
+		Host:        host,
+		Port:        port,
+		User:        user,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -161,18 +161,6 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpPutRequest() *shared.SourceS
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var user string
-	user = r.Configuration.User.ValueString()
-
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var credentials *shared.SourceSftpUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceSftpUpdatePasswordAuthentication *shared.SourceSftpUpdatePasswordAuthentication
@@ -204,6 +192,12 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpPutRequest() *shared.SourceS
 			}
 		}
 	}
+	filePattern := new(string)
+	if !r.Configuration.FilePattern.IsUnknown() && !r.Configuration.FilePattern.IsNull() {
+		*filePattern = r.Configuration.FilePattern.ValueString()
+	} else {
+		filePattern = nil
+	}
 	fileTypes := new(string)
 	if !r.Configuration.FileTypes.IsUnknown() && !r.Configuration.FileTypes.IsNull() {
 		*fileTypes = r.Configuration.FileTypes.ValueString()
@@ -216,20 +210,26 @@ func (r *SourceSftpResourceModel) ToSharedSourceSftpPutRequest() *shared.SourceS
 	} else {
 		folderPath = nil
 	}
-	filePattern := new(string)
-	if !r.Configuration.FilePattern.IsUnknown() && !r.Configuration.FilePattern.IsNull() {
-		*filePattern = r.Configuration.FilePattern.ValueString()
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
 	} else {
-		filePattern = nil
+		port = nil
 	}
+	var user string
+	user = r.Configuration.User.ValueString()
+
 	configuration := shared.SourceSftpUpdate{
-		User:        user,
-		Host:        host,
-		Port:        port,
 		Credentials: credentials,
+		FilePattern: filePattern,
 		FileTypes:   fileTypes,
 		FolderPath:  folderPath,
-		FilePattern: filePattern,
+		Host:        host,
+		Port:        port,
+		User:        user,
 	}
 	out := shared.SourceSftpPutRequest{
 		Name:          name,

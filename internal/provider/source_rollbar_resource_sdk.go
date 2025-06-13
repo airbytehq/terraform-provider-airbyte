@@ -22,17 +22,17 @@ func (r *SourceRollbarResourceModel) ToSharedSourceRollbarCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountAccessToken string
+	accountAccessToken = r.Configuration.AccountAccessToken.ValueString()
+
 	var projectAccessToken string
 	projectAccessToken = r.Configuration.ProjectAccessToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var accountAccessToken string
-	accountAccessToken = r.Configuration.AccountAccessToken.ValueString()
-
 	configuration := shared.SourceRollbar{
+		AccountAccessToken: accountAccessToken,
 		ProjectAccessToken: projectAccessToken,
 		StartDate:          startDate,
-		AccountAccessToken: accountAccessToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,17 +104,17 @@ func (r *SourceRollbarResourceModel) ToSharedSourceRollbarPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountAccessToken string
+	accountAccessToken = r.Configuration.AccountAccessToken.ValueString()
+
 	var projectAccessToken string
 	projectAccessToken = r.Configuration.ProjectAccessToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var accountAccessToken string
-	accountAccessToken = r.Configuration.AccountAccessToken.ValueString()
-
 	configuration := shared.SourceRollbarUpdate{
+		AccountAccessToken: accountAccessToken,
 		ProjectAccessToken: projectAccessToken,
 		StartDate:          startDate,
-		AccountAccessToken: accountAccessToken,
 	}
 	out := shared.SourceRollbarPutRequest{
 		Name:          name,

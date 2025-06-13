@@ -40,14 +40,14 @@ func (e *SourceChameleonUpdateFilter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceChameleonUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
-	// Max records per page limit
-	Limit *string `default:"50" json:"limit"`
-	// Filter for using in the `segments_experiences` stream
-	Filter *SourceChameleonUpdateFilter `default:"tour" json:"filter"`
+	APIKey string `json:"api_key"`
 	// End date for incremental sync
 	EndDate *time.Time `json:"end_date,omitempty"`
+	// Filter for using in the `segments_experiences` stream
+	Filter *SourceChameleonUpdateFilter `default:"tour" json:"filter"`
+	// Max records per page limit
+	Limit     *string   `default:"50" json:"limit"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceChameleonUpdate) MarshalJSON() ([]byte, error) {
@@ -68,18 +68,11 @@ func (o *SourceChameleonUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceChameleonUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
-func (o *SourceChameleonUpdate) GetLimit() *string {
+func (o *SourceChameleonUpdate) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
 	}
-	return o.Limit
+	return o.EndDate
 }
 
 func (o *SourceChameleonUpdate) GetFilter() *SourceChameleonUpdateFilter {
@@ -89,9 +82,16 @@ func (o *SourceChameleonUpdate) GetFilter() *SourceChameleonUpdateFilter {
 	return o.Filter
 }
 
-func (o *SourceChameleonUpdate) GetEndDate() *time.Time {
+func (o *SourceChameleonUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
-	return o.EndDate
+	return o.Limit
+}
+
+func (o *SourceChameleonUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

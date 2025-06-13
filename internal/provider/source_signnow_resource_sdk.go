@@ -23,24 +23,24 @@ func (r *SourceSignnowResourceModel) ToSharedSourceSignnowCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var authToken string
-	authToken = r.Configuration.AuthToken.ValueString()
-
 	var apiKeyID string
 	apiKeyID = r.Configuration.APIKeyID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var authToken string
+	authToken = r.Configuration.AuthToken.ValueString()
+
 	var nameFilterForDocuments []interface{} = []interface{}{}
 	for _, nameFilterForDocumentsItem := range r.Configuration.NameFilterForDocuments {
 		var nameFilterForDocumentsTmp interface{}
 		_ = json.Unmarshal([]byte(nameFilterForDocumentsItem.ValueString()), &nameFilterForDocumentsTmp)
 		nameFilterForDocuments = append(nameFilterForDocuments, nameFilterForDocumentsTmp)
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSignnow{
-		AuthToken:              authToken,
 		APIKeyID:               apiKeyID,
-		StartDate:              startDate,
+		AuthToken:              authToken,
 		NameFilterForDocuments: nameFilterForDocuments,
+		StartDate:              startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -112,24 +112,24 @@ func (r *SourceSignnowResourceModel) ToSharedSourceSignnowPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var authToken string
-	authToken = r.Configuration.AuthToken.ValueString()
-
 	var apiKeyID string
 	apiKeyID = r.Configuration.APIKeyID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var authToken string
+	authToken = r.Configuration.AuthToken.ValueString()
+
 	var nameFilterForDocuments []interface{} = []interface{}{}
 	for _, nameFilterForDocumentsItem := range r.Configuration.NameFilterForDocuments {
 		var nameFilterForDocumentsTmp interface{}
 		_ = json.Unmarshal([]byte(nameFilterForDocumentsItem.ValueString()), &nameFilterForDocumentsTmp)
 		nameFilterForDocuments = append(nameFilterForDocuments, nameFilterForDocumentsTmp)
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSignnowUpdate{
-		AuthToken:              authToken,
 		APIKeyID:               apiKeyID,
-		StartDate:              startDate,
+		AuthToken:              authToken,
 		NameFilterForDocuments: nameFilterForDocuments,
+		StartDate:              startDate,
 	}
 	out := shared.SourceSignnowPutRequest{
 		Name:          name,

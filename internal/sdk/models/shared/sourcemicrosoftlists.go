@@ -32,12 +32,12 @@ func (e *MicrosoftLists) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMicrosoftLists struct {
-	SiteID           string         `json:"site_id"`
+	ApplicationIDURI string         `json:"application_id_uri"`
 	ClientID         string         `json:"client_id"`
 	ClientSecret     string         `json:"client_secret"`
-	ApplicationIDURI string         `json:"application_id_uri"`
-	TenantID         string         `json:"tenant_id"`
 	Domain           string         `json:"domain"`
+	SiteID           string         `json:"site_id"`
+	TenantID         string         `json:"tenant_id"`
 	sourceType       MicrosoftLists `const:"microsoft-lists" json:"sourceType"`
 }
 
@@ -52,11 +52,11 @@ func (s *SourceMicrosoftLists) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMicrosoftLists) GetSiteID() string {
+func (o *SourceMicrosoftLists) GetApplicationIDURI() string {
 	if o == nil {
 		return ""
 	}
-	return o.SiteID
+	return o.ApplicationIDURI
 }
 
 func (o *SourceMicrosoftLists) GetClientID() string {
@@ -73,11 +73,18 @@ func (o *SourceMicrosoftLists) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceMicrosoftLists) GetApplicationIDURI() string {
+func (o *SourceMicrosoftLists) GetDomain() string {
 	if o == nil {
 		return ""
 	}
-	return o.ApplicationIDURI
+	return o.Domain
+}
+
+func (o *SourceMicrosoftLists) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
 }
 
 func (o *SourceMicrosoftLists) GetTenantID() string {
@@ -85,13 +92,6 @@ func (o *SourceMicrosoftLists) GetTenantID() string {
 		return ""
 	}
 	return o.TenantID
-}
-
-func (o *SourceMicrosoftLists) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
 }
 
 func (o *SourceMicrosoftLists) GetSourceType() MicrosoftLists {

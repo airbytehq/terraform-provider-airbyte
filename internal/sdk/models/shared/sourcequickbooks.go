@@ -56,24 +56,24 @@ func (e *Quickbooks) UnmarshalJSON(data []byte) error {
 }
 
 type SourceQuickbooks struct {
-	// Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
-	RealmID  string    `json:"realm_id"`
-	authType *AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
+	// Access token for making authenticated requests.
+	AccessToken string    `json:"access_token"`
+	authType    *AuthType `const:"oauth2.0" json:"auth_type,omitempty"`
 	// Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientID string `json:"client_id"`
-	// Access token for making authenticated requests.
-	AccessToken string `json:"access_token"`
 	//  Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientSecret string `json:"client_secret"`
+	// Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
+	RealmID string `json:"realm_id"`
 	// A token used when refreshing the access token.
 	RefreshToken string `json:"refresh_token"`
-	// The date-time when the access token should be refreshed.
-	TokenExpiryDate time.Time `json:"token_expiry_date"`
+	// Determines whether to use the sandbox or production environment.
+	Sandbox *bool `default:"false" json:"sandbox"`
 	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
-	// Determines whether to use the sandbox or production environment.
-	Sandbox    *bool      `default:"false" json:"sandbox"`
-	sourceType Quickbooks `const:"quickbooks" json:"sourceType"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate time.Time  `json:"token_expiry_date"`
+	sourceType      Quickbooks `const:"quickbooks" json:"sourceType"`
 }
 
 func (s SourceQuickbooks) MarshalJSON() ([]byte, error) {
@@ -87,11 +87,11 @@ func (s *SourceQuickbooks) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceQuickbooks) GetRealmID() string {
+func (o *SourceQuickbooks) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
-	return o.RealmID
+	return o.AccessToken
 }
 
 func (o *SourceQuickbooks) GetAuthType() *AuthType {
@@ -105,18 +105,18 @@ func (o *SourceQuickbooks) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceQuickbooks) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
-}
-
 func (o *SourceQuickbooks) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceQuickbooks) GetRealmID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RealmID
 }
 
 func (o *SourceQuickbooks) GetRefreshToken() string {
@@ -126,11 +126,11 @@ func (o *SourceQuickbooks) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-func (o *SourceQuickbooks) GetTokenExpiryDate() time.Time {
+func (o *SourceQuickbooks) GetSandbox() *bool {
 	if o == nil {
-		return time.Time{}
+		return nil
 	}
-	return o.TokenExpiryDate
+	return o.Sandbox
 }
 
 func (o *SourceQuickbooks) GetStartDate() time.Time {
@@ -140,11 +140,11 @@ func (o *SourceQuickbooks) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceQuickbooks) GetSandbox() *bool {
+func (o *SourceQuickbooks) GetTokenExpiryDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.Sandbox
+	return o.TokenExpiryDate
 }
 
 func (o *SourceQuickbooks) GetSourceType() Quickbooks {

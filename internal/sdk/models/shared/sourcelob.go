@@ -34,11 +34,11 @@ func (e *Lob) UnmarshalJSON(data []byte) error {
 
 type SourceLob struct {
 	// API key to use for authentication. You can find your account's API keys in your Dashboard Settings at https://dashboard.lob.com/settings/api-keys.
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Max records per page limit
-	Limit      *string `default:"50" json:"limit"`
-	sourceType Lob     `const:"lob" json:"sourceType"`
+	Limit      *string   `default:"50" json:"limit"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Lob       `const:"lob" json:"sourceType"`
 }
 
 func (s SourceLob) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceLob) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceLob) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceLob) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceLob) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceLob) GetSourceType() Lob {

@@ -1,11 +1,10 @@
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
-    api_token                   = "...my_api_token..."
-    domain                      = "<your-domain>.atlassian.net"
-    email                       = "...my_email..."
-    enable_experimental_streams = false
-    lookback_window_minutes     = 60
-    num_workers                 = 1
+    api_token               = "...my_api_token..."
+    domain                  = "<your-domain>.atlassian.net"
+    email                   = "...my_email..."
+    lookback_window_minutes = 60
+    num_workers             = 1
     projects = [
       "..."
     ]

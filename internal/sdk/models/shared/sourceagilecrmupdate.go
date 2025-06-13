@@ -3,19 +3,19 @@
 package shared
 
 type SourceAgilecrmUpdate struct {
-	// Your Agile CRM account email address. This is used as the username for authentication.
-	Email string `json:"email"`
-	// The specific subdomain for your Agile CRM account
-	Domain string `json:"domain"`
 	// API key to use. Find it at Admin Settings -> API & Analytics -> API Key in your Agile CRM account.
 	APIKey string `json:"api_key"`
+	// The specific subdomain for your Agile CRM account
+	Domain string `json:"domain"`
+	// Your Agile CRM account email address. This is used as the username for authentication.
+	Email string `json:"email"`
 }
 
-func (o *SourceAgilecrmUpdate) GetEmail() string {
+func (o *SourceAgilecrmUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
-	return o.Email
+	return o.APIKey
 }
 
 func (o *SourceAgilecrmUpdate) GetDomain() string {
@@ -25,9 +25,9 @@ func (o *SourceAgilecrmUpdate) GetDomain() string {
 	return o.Domain
 }
 
-func (o *SourceAgilecrmUpdate) GetAPIKey() string {
+func (o *SourceAgilecrmUpdate) GetEmail() string {
 	if o == nil {
 		return ""
 	}
-	return o.APIKey
+	return o.Email
 }

@@ -21,61 +21,46 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var endpoint string
-	endpoint = r.Configuration.Endpoint.ValueString()
-
-	upsert := new(bool)
-	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
-		*upsert = r.Configuration.Upsert.ValueBool()
-	} else {
-		upsert = nil
-	}
-	caCertificate := new(string)
-	if !r.Configuration.CaCertificate.IsUnknown() && !r.Configuration.CaCertificate.IsNull() {
-		*caCertificate = r.Configuration.CaCertificate.ValueString()
-	} else {
-		caCertificate = nil
-	}
 	var authenticationMethod *shared.DestinationElasticsearchAuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
-		var none *shared.None
+		var destinationElasticsearchNone *shared.DestinationElasticsearchNone
 		if r.Configuration.AuthenticationMethod.None != nil {
-			none = &shared.None{}
+			destinationElasticsearchNone = &shared.DestinationElasticsearchNone{}
 		}
-		if none != nil {
+		if destinationElasticsearchNone != nil {
 			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
-				None: none,
+				DestinationElasticsearchNone: destinationElasticsearchNone,
 			}
 		}
-		var apiKeySecret *shared.APIKeySecret
+		var destinationElasticsearchAPIKeySecret *shared.DestinationElasticsearchAPIKeySecret
 		if r.Configuration.AuthenticationMethod.APIKeySecret != nil {
 			var apiKeyID string
 			apiKeyID = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeyID.ValueString()
 
-			var apiKeySecret1 string
-			apiKeySecret1 = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeySecret.ValueString()
+			var apiKeySecret string
+			apiKeySecret = r.Configuration.AuthenticationMethod.APIKeySecret.APIKeySecret.ValueString()
 
-			apiKeySecret = &shared.APIKeySecret{
+			destinationElasticsearchAPIKeySecret = &shared.DestinationElasticsearchAPIKeySecret{
 				APIKeyID:     apiKeyID,
-				APIKeySecret: apiKeySecret1,
+				APIKeySecret: apiKeySecret,
 			}
 		}
-		if apiKeySecret != nil {
+		if destinationElasticsearchAPIKeySecret != nil {
 			authenticationMethod = &shared.DestinationElasticsearchAuthenticationMethod{
-				APIKeySecret: apiKeySecret,
+				DestinationElasticsearchAPIKeySecret: destinationElasticsearchAPIKeySecret,
 			}
 		}
 		var destinationElasticsearchUsernamePassword *shared.DestinationElasticsearchUsernamePassword
 		if r.Configuration.AuthenticationMethod.UsernamePassword != nil {
-			var username string
-			username = r.Configuration.AuthenticationMethod.UsernamePassword.Username.ValueString()
-
 			var password string
 			password = r.Configuration.AuthenticationMethod.UsernamePassword.Password.ValueString()
 
+			var username string
+			username = r.Configuration.AuthenticationMethod.UsernamePassword.Username.ValueString()
+
 			destinationElasticsearchUsernamePassword = &shared.DestinationElasticsearchUsernamePassword{
-				Username: username,
 				Password: password,
+				Username: username,
 			}
 		}
 		if destinationElasticsearchUsernamePassword != nil {
@@ -83,6 +68,21 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 				DestinationElasticsearchUsernamePassword: destinationElasticsearchUsernamePassword,
 			}
 		}
+	}
+	caCertificate := new(string)
+	if !r.Configuration.CaCertificate.IsUnknown() && !r.Configuration.CaCertificate.IsNull() {
+		*caCertificate = r.Configuration.CaCertificate.ValueString()
+	} else {
+		caCertificate = nil
+	}
+	var endpoint string
+	endpoint = r.Configuration.Endpoint.ValueString()
+
+	pathPrefix := new(string)
+	if !r.Configuration.PathPrefix.IsUnknown() && !r.Configuration.PathPrefix.IsNull() {
+		*pathPrefix = r.Configuration.PathPrefix.ValueString()
+	} else {
+		pathPrefix = nil
 	}
 	var tunnelMethod *shared.DestinationElasticsearchSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -97,6 +97,9 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		}
 		var destinationElasticsearchSSHKeyAuthentication *shared.DestinationElasticsearchSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -109,14 +112,11 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationElasticsearchSSHKeyAuthentication = &shared.DestinationElasticsearchSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationElasticsearchSSHKeyAuthentication != nil {
@@ -154,12 +154,19 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 			}
 		}
 	}
+	upsert := new(bool)
+	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
+		*upsert = r.Configuration.Upsert.ValueBool()
+	} else {
+		upsert = nil
+	}
 	configuration := shared.DestinationElasticsearch{
-		Endpoint:             endpoint,
-		Upsert:               upsert,
-		CaCertificate:        caCertificate,
 		AuthenticationMethod: authenticationMethod,
+		CaCertificate:        caCertificate,
+		Endpoint:             endpoint,
+		PathPrefix:           pathPrefix,
 		TunnelMethod:         tunnelMethod,
+		Upsert:               upsert,
 	}
 	out := shared.DestinationElasticsearchCreateRequest{
 		Name:          name,
@@ -224,21 +231,6 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var endpoint string
-	endpoint = r.Configuration.Endpoint.ValueString()
-
-	upsert := new(bool)
-	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
-		*upsert = r.Configuration.Upsert.ValueBool()
-	} else {
-		upsert = nil
-	}
-	caCertificate := new(string)
-	if !r.Configuration.CaCertificate.IsUnknown() && !r.Configuration.CaCertificate.IsNull() {
-		*caCertificate = r.Configuration.CaCertificate.ValueString()
-	} else {
-		caCertificate = nil
-	}
 	var authenticationMethod *shared.DestinationElasticsearchUpdateAuthenticationMethod
 	if r.Configuration.AuthenticationMethod != nil {
 		var destinationElasticsearchUpdateNone *shared.DestinationElasticsearchUpdateNone
@@ -270,15 +262,15 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		}
 		var destinationElasticsearchUpdateUsernamePassword *shared.DestinationElasticsearchUpdateUsernamePassword
 		if r.Configuration.AuthenticationMethod.UsernamePassword != nil {
-			var username string
-			username = r.Configuration.AuthenticationMethod.UsernamePassword.Username.ValueString()
-
 			var password string
 			password = r.Configuration.AuthenticationMethod.UsernamePassword.Password.ValueString()
 
+			var username string
+			username = r.Configuration.AuthenticationMethod.UsernamePassword.Username.ValueString()
+
 			destinationElasticsearchUpdateUsernamePassword = &shared.DestinationElasticsearchUpdateUsernamePassword{
-				Username: username,
 				Password: password,
+				Username: username,
 			}
 		}
 		if destinationElasticsearchUpdateUsernamePassword != nil {
@@ -286,6 +278,21 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 				DestinationElasticsearchUpdateUsernamePassword: destinationElasticsearchUpdateUsernamePassword,
 			}
 		}
+	}
+	caCertificate := new(string)
+	if !r.Configuration.CaCertificate.IsUnknown() && !r.Configuration.CaCertificate.IsNull() {
+		*caCertificate = r.Configuration.CaCertificate.ValueString()
+	} else {
+		caCertificate = nil
+	}
+	var endpoint string
+	endpoint = r.Configuration.Endpoint.ValueString()
+
+	pathPrefix := new(string)
+	if !r.Configuration.PathPrefix.IsUnknown() && !r.Configuration.PathPrefix.IsNull() {
+		*pathPrefix = r.Configuration.PathPrefix.ValueString()
+	} else {
+		pathPrefix = nil
 	}
 	var tunnelMethod *shared.DestinationElasticsearchUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
@@ -300,6 +307,9 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 		}
 		var destinationElasticsearchUpdateSSHKeyAuthentication *shared.DestinationElasticsearchUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -312,14 +322,11 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationElasticsearchUpdateSSHKeyAuthentication = &shared.DestinationElasticsearchUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationElasticsearchUpdateSSHKeyAuthentication != nil {
@@ -357,12 +364,19 @@ func (r *DestinationElasticsearchResourceModel) ToSharedDestinationElasticsearch
 			}
 		}
 	}
+	upsert := new(bool)
+	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
+		*upsert = r.Configuration.Upsert.ValueBool()
+	} else {
+		upsert = nil
+	}
 	configuration := shared.DestinationElasticsearchUpdate{
-		Endpoint:             endpoint,
-		Upsert:               upsert,
-		CaCertificate:        caCertificate,
 		AuthenticationMethod: authenticationMethod,
+		CaCertificate:        caCertificate,
+		Endpoint:             endpoint,
+		PathPrefix:           pathPrefix,
 		TunnelMethod:         tunnelMethod,
+		Upsert:               upsert,
 	}
 	out := shared.DestinationElasticsearchPutRequest{
 		Name:          name,

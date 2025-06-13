@@ -24,9 +24,6 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabaseCreateRequest() *sha
 	var instanceAPIURL string
 	instanceAPIURL = r.Configuration.InstanceAPIURL.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -39,11 +36,14 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabaseCreateRequest() *sha
 	} else {
 		sessionToken = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMetabase{
 		InstanceAPIURL: instanceAPIURL,
-		Username:       username,
 		Password:       password,
 		SessionToken:   sessionToken,
+		Username:       username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -118,9 +118,6 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabasePutRequest() *shared
 	var instanceAPIURL string
 	instanceAPIURL = r.Configuration.InstanceAPIURL.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -133,11 +130,14 @@ func (r *SourceMetabaseResourceModel) ToSharedSourceMetabasePutRequest() *shared
 	} else {
 		sessionToken = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMetabaseUpdate{
 		InstanceAPIURL: instanceAPIURL,
-		Username:       username,
 		Password:       password,
 		SessionToken:   sessionToken,
+		Username:       username,
 	}
 	out := shared.SourceMetabasePutRequest{
 		Name:          name,

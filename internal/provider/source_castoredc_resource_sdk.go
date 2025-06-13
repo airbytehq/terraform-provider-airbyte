@@ -22,12 +22,6 @@ func (r *SourceCastorEdcResourceModel) ToSharedSourceCastorEdcCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	urlRegion := new(shared.URLRegion)
-	if !r.Configuration.URLRegion.IsUnknown() && !r.Configuration.URLRegion.IsNull() {
-		*urlRegion = shared.URLRegion(r.Configuration.URLRegion.ValueString())
-	} else {
-		urlRegion = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -35,11 +29,17 @@ func (r *SourceCastorEdcResourceModel) ToSharedSourceCastorEdcCreateRequest() *s
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	urlRegion := new(shared.URLRegion)
+	if !r.Configuration.URLRegion.IsUnknown() && !r.Configuration.URLRegion.IsNull() {
+		*urlRegion = shared.URLRegion(r.Configuration.URLRegion.ValueString())
+	} else {
+		urlRegion = nil
+	}
 	configuration := shared.SourceCastorEdc{
-		URLRegion:    urlRegion,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		StartDate:    startDate,
+		URLRegion:    urlRegion,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,12 +111,6 @@ func (r *SourceCastorEdcResourceModel) ToSharedSourceCastorEdcPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	urlRegion := new(shared.SourceCastorEdcUpdateURLRegion)
-	if !r.Configuration.URLRegion.IsUnknown() && !r.Configuration.URLRegion.IsNull() {
-		*urlRegion = shared.SourceCastorEdcUpdateURLRegion(r.Configuration.URLRegion.ValueString())
-	} else {
-		urlRegion = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
@@ -124,11 +118,17 @@ func (r *SourceCastorEdcResourceModel) ToSharedSourceCastorEdcPutRequest() *shar
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	urlRegion := new(shared.SourceCastorEdcUpdateURLRegion)
+	if !r.Configuration.URLRegion.IsUnknown() && !r.Configuration.URLRegion.IsNull() {
+		*urlRegion = shared.SourceCastorEdcUpdateURLRegion(r.Configuration.URLRegion.ValueString())
+	} else {
+		urlRegion = nil
+	}
 	configuration := shared.SourceCastorEdcUpdate{
-		URLRegion:    urlRegion,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		StartDate:    startDate,
+		URLRegion:    urlRegion,
 	}
 	out := shared.SourceCastorEdcPutRequest{
 		Name:          name,

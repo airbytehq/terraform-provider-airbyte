@@ -9,6 +9,30 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// CacheType - Redis cache type to store data in.
+type CacheType string
+
+const (
+	CacheTypeHash CacheType = "hash"
+)
+
+func (e CacheType) ToPointer() *CacheType {
+	return &e
+}
+func (e *CacheType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "hash":
+		*e = CacheType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CacheType: %v", v)
+	}
+}
+
 type DestinationRedisSchemasMode string
 
 const (
@@ -34,7 +58,6 @@ func (e *DestinationRedisSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationRedisVerifyFull - Verify-full SSL mode.
 type DestinationRedisVerifyFull struct {
-	mode *DestinationRedisSchemasMode `const:"verify-full" json:"mode"`
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Client certificate
@@ -42,7 +65,8 @@ type DestinationRedisVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string `json:"client_key_password,omitempty"`
+	ClientKeyPassword *string                      `json:"client_key_password,omitempty"`
+	mode              *DestinationRedisSchemasMode `const:"verify-full" json:"mode"`
 }
 
 func (d DestinationRedisVerifyFull) MarshalJSON() ([]byte, error) {
@@ -54,10 +78,6 @@ func (d *DestinationRedisVerifyFull) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationRedisVerifyFull) GetMode() *DestinationRedisSchemasMode {
-	return DestinationRedisSchemasModeVerifyFull.ToPointer()
 }
 
 func (o *DestinationRedisVerifyFull) GetCaCertificate() string {
@@ -86,6 +106,10 @@ func (o *DestinationRedisVerifyFull) GetClientKeyPassword() *string {
 		return nil
 	}
 	return o.ClientKeyPassword
+}
+
+func (o *DestinationRedisVerifyFull) GetMode() *DestinationRedisSchemasMode {
+	return DestinationRedisSchemasModeVerifyFull.ToPointer()
 }
 
 type DestinationRedisMode string
@@ -197,30 +221,6 @@ func (u DestinationRedisSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationRedisSSLModes: all fields are null")
 }
 
-// CacheType - Redis cache type to store data in.
-type CacheType string
-
-const (
-	CacheTypeHash CacheType = "hash"
-)
-
-func (e CacheType) ToPointer() *CacheType {
-	return &e
-}
-func (e *CacheType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "hash":
-		*e = CacheType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CacheType: %v", v)
-	}
-}
-
 // DestinationRedisSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
 type DestinationRedisSchemasTunnelMethodTunnelMethod string
 
@@ -246,10 +246,10 @@ func (e *DestinationRedisSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []b
 }
 
 type DestinationRedisPasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationRedisSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationRedisSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -269,15 +269,15 @@ func (d *DestinationRedisPasswordAuthentication) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *DestinationRedisPasswordAuthentication) GetTunnelMethod() DestinationRedisSchemasTunnelMethodTunnelMethod {
-	return DestinationRedisSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationRedisPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationRedisPasswordAuthentication) GetTunnelMethod() DestinationRedisSchemasTunnelMethodTunnelMethod {
+	return DestinationRedisSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationRedisPasswordAuthentication) GetTunnelPort() *int64 {
@@ -326,16 +326,16 @@ func (e *DestinationRedisSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationRedisSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationRedisSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationRedisSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationRedisSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -349,8 +349,11 @@ func (d *DestinationRedisSSHKeyAuthentication) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *DestinationRedisSSHKeyAuthentication) GetTunnelMethod() DestinationRedisSchemasTunnelMethod {
-	return DestinationRedisSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationRedisSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationRedisSSHKeyAuthentication) GetTunnelHost() string {
@@ -358,6 +361,10 @@ func (o *DestinationRedisSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationRedisSSHKeyAuthentication) GetTunnelMethod() DestinationRedisSchemasTunnelMethod {
+	return DestinationRedisSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationRedisSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -372,13 +379,6 @@ func (o *DestinationRedisSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationRedisSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationRedisTunnelMethod - No ssh tunnel needed to connect to database
@@ -535,24 +535,24 @@ func (e *Redis) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationRedis struct {
+	// Redis cache type to store data in.
+	CacheType *CacheType `default:"hash" json:"cache_type"`
 	// Redis host to connect to.
 	Host string `json:"host"`
-	// Port of Redis.
-	Port *int64 `default:"6379" json:"port"`
-	// Username associated with Redis.
-	Username string `json:"username"`
 	// Password associated with Redis.
 	Password *string `json:"password,omitempty"`
+	// Port of Redis.
+	Port *int64 `default:"6379" json:"port"`
 	// Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
 	Ssl *bool `default:"false" json:"ssl"`
 	// SSL connection modes.
 	//   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
 	SslMode *DestinationRedisSSLModes `json:"ssl_mode,omitempty"`
-	// Redis cache type to store data in.
-	CacheType *CacheType `default:"hash" json:"cache_type"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod    *DestinationRedisSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	destinationType Redis                            `const:"redis" json:"destinationType"`
+	TunnelMethod *DestinationRedisSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// Username associated with Redis.
+	Username        string `json:"username"`
+	destinationType Redis  `const:"redis" json:"destinationType"`
 }
 
 func (d DestinationRedis) MarshalJSON() ([]byte, error) {
@@ -566,6 +566,13 @@ func (d *DestinationRedis) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationRedis) GetCacheType() *CacheType {
+	if o == nil {
+		return nil
+	}
+	return o.CacheType
+}
+
 func (o *DestinationRedis) GetHost() string {
 	if o == nil {
 		return ""
@@ -573,25 +580,18 @@ func (o *DestinationRedis) GetHost() string {
 	return o.Host
 }
 
-func (o *DestinationRedis) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *DestinationRedis) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationRedis) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *DestinationRedis) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 func (o *DestinationRedis) GetSsl() *bool {
@@ -608,18 +608,18 @@ func (o *DestinationRedis) GetSslMode() *DestinationRedisSSLModes {
 	return o.SslMode
 }
 
-func (o *DestinationRedis) GetCacheType() *CacheType {
-	if o == nil {
-		return nil
-	}
-	return o.CacheType
-}
-
 func (o *DestinationRedis) GetTunnelMethod() *DestinationRedisSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationRedis) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *DestinationRedis) GetDestinationType() Redis {

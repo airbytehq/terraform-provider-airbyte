@@ -12,17 +12,10 @@ func (r *DeclarativeSourceDefinitionResourceModel) ToSharedCreateDeclarativeSour
 	var name string
 	name = r.Name.ValueString()
 
-	version := new(int64)
-	if !r.Version.IsUnknown() && !r.Version.IsNull() {
-		*version = r.Version.ValueInt64()
-	} else {
-		version = nil
-	}
 	var manifest interface{}
 	_ = json.Unmarshal([]byte(r.Manifest.ValueString()), &manifest)
 	out := shared.CreateDeclarativeSourceDefinitionRequest{
 		Name:     name,
-		Version:  version,
 		Manifest: manifest,
 	}
 	return &out
@@ -39,16 +32,9 @@ func (r *DeclarativeSourceDefinitionResourceModel) RefreshFromSharedDeclarativeS
 }
 
 func (r *DeclarativeSourceDefinitionResourceModel) ToSharedUpdateDeclarativeSourceDefinitionRequest() *shared.UpdateDeclarativeSourceDefinitionRequest {
-	version := new(int64)
-	if !r.Version.IsUnknown() && !r.Version.IsNull() {
-		*version = r.Version.ValueInt64()
-	} else {
-		version = nil
-	}
 	var manifest interface{}
 	_ = json.Unmarshal([]byte(r.Manifest.ValueString()), &manifest)
 	out := shared.UpdateDeclarativeSourceDefinitionRequest{
-		Version:  version,
 		Manifest: manifest,
 	}
 	return &out

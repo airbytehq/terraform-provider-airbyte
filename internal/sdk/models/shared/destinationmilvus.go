@@ -34,14 +34,14 @@ func (e *DestinationMilvusSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(data []b
 
 // DestinationMilvusOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationMilvusOpenAICompatible struct {
-	mode   *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                          `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                            `json:"dimensions"`
+	mode       *DestinationMilvusSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationMilvusOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationMilvusOpenAICompatible) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationMilvusOpenAICompatible) GetMode() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
-	return DestinationMilvusSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationMilvusOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationMilvusOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationMilvusOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationMilvusOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationMilvusOpenAICompatible) GetMode() *DestinationMilvusSchemasEmbeddingEmbedding5Mode {
+	return DestinationMilvusSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationMilvusOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationMilvusSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationMilvusSchemasEmbeddingEmbeddingMode) UnmarshalJSON(data []by
 
 // DestinationMilvusAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationMilvusAzureOpenAI struct {
-	mode *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                          `json:"deployment"`
+	mode       *DestinationMilvusSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationMilvusAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (d *DestinationMilvusAzureOpenAI) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationMilvusAzureOpenAI) GetMode() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
-	return DestinationMilvusSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationMilvusAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationMilvusAzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *DestinationMilvusAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationMilvusAzureOpenAI) GetMode() *DestinationMilvusSchemasEmbeddingEmbeddingMode {
+	return DestinationMilvusSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationMilvusAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationMilvusSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationMilvusSchemasMode) UnmarshalJSON(data []byte) error {
 
 // DestinationMilvusCohere - Use the Cohere API to embed text.
 type DestinationMilvusCohere struct {
-	mode      *DestinationMilvusSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                        `json:"cohere_key"`
+	mode      *DestinationMilvusSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationMilvusCohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (d *DestinationMilvusCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationMilvusCohere) GetMode() *DestinationMilvusSchemasMode {
-	return DestinationMilvusSchemasModeCohere.ToPointer()
-}
-
 func (o *DestinationMilvusCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationMilvusCohere) GetMode() *DestinationMilvusSchemasMode {
+	return DestinationMilvusSchemasModeCohere.ToPointer()
 }
 
 type DestinationMilvusMode string
@@ -432,415 +432,6 @@ func (u DestinationMilvusEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationMilvusEmbedding: all fields are null")
 }
 
-type DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationMilvusSchemasProcessingTextSplitterTextSplitterModeCode DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
-}
-func (e *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "code":
-		*e = DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode: %v", v)
-	}
-}
-
-// DestinationMilvusLanguage - Split code in suitable places based on the programming language
-type DestinationMilvusLanguage string
-
-const (
-	DestinationMilvusLanguageCpp      DestinationMilvusLanguage = "cpp"
-	DestinationMilvusLanguageGo       DestinationMilvusLanguage = "go"
-	DestinationMilvusLanguageJava     DestinationMilvusLanguage = "java"
-	DestinationMilvusLanguageJs       DestinationMilvusLanguage = "js"
-	DestinationMilvusLanguagePhp      DestinationMilvusLanguage = "php"
-	DestinationMilvusLanguageProto    DestinationMilvusLanguage = "proto"
-	DestinationMilvusLanguagePython   DestinationMilvusLanguage = "python"
-	DestinationMilvusLanguageRst      DestinationMilvusLanguage = "rst"
-	DestinationMilvusLanguageRuby     DestinationMilvusLanguage = "ruby"
-	DestinationMilvusLanguageRust     DestinationMilvusLanguage = "rust"
-	DestinationMilvusLanguageScala    DestinationMilvusLanguage = "scala"
-	DestinationMilvusLanguageSwift    DestinationMilvusLanguage = "swift"
-	DestinationMilvusLanguageMarkdown DestinationMilvusLanguage = "markdown"
-	DestinationMilvusLanguageLatex    DestinationMilvusLanguage = "latex"
-	DestinationMilvusLanguageHTML     DestinationMilvusLanguage = "html"
-	DestinationMilvusLanguageSol      DestinationMilvusLanguage = "sol"
-)
-
-func (e DestinationMilvusLanguage) ToPointer() *DestinationMilvusLanguage {
-	return &e
-}
-func (e *DestinationMilvusLanguage) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cpp":
-		fallthrough
-	case "go":
-		fallthrough
-	case "java":
-		fallthrough
-	case "js":
-		fallthrough
-	case "php":
-		fallthrough
-	case "proto":
-		fallthrough
-	case "python":
-		fallthrough
-	case "rst":
-		fallthrough
-	case "ruby":
-		fallthrough
-	case "rust":
-		fallthrough
-	case "scala":
-		fallthrough
-	case "swift":
-		fallthrough
-	case "markdown":
-		fallthrough
-	case "latex":
-		fallthrough
-	case "html":
-		fallthrough
-	case "sol":
-		*e = DestinationMilvusLanguage(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMilvusLanguage: %v", v)
-	}
-}
-
-// DestinationMilvusByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
-type DestinationMilvusByProgrammingLanguage struct {
-	mode *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
-	// Split code in suitable places based on the programming language
-	Language DestinationMilvusLanguage `json:"language"`
-}
-
-func (d DestinationMilvusByProgrammingLanguage) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMilvusByProgrammingLanguage) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMilvusByProgrammingLanguage) GetMode() *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationMilvusSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
-func (o *DestinationMilvusByProgrammingLanguage) GetLanguage() DestinationMilvusLanguage {
-	if o == nil {
-		return DestinationMilvusLanguage("")
-	}
-	return o.Language
-}
-
-type DestinationMilvusSchemasProcessingTextSplitterMode string
-
-const (
-	DestinationMilvusSchemasProcessingTextSplitterModeMarkdown DestinationMilvusSchemasProcessingTextSplitterMode = "markdown"
-)
-
-func (e DestinationMilvusSchemasProcessingTextSplitterMode) ToPointer() *DestinationMilvusSchemasProcessingTextSplitterMode {
-	return &e
-}
-func (e *DestinationMilvusSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "markdown":
-		*e = DestinationMilvusSchemasProcessingTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingTextSplitterMode: %v", v)
-	}
-}
-
-// DestinationMilvusByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
-type DestinationMilvusByMarkdownHeader struct {
-	mode *DestinationMilvusSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
-	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
-	SplitLevel *int64 `default:"1" json:"split_level"`
-}
-
-func (d DestinationMilvusByMarkdownHeader) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMilvusByMarkdownHeader) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMilvusByMarkdownHeader) GetMode() *DestinationMilvusSchemasProcessingTextSplitterMode {
-	return DestinationMilvusSchemasProcessingTextSplitterModeMarkdown.ToPointer()
-}
-
-func (o *DestinationMilvusByMarkdownHeader) GetSplitLevel() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SplitLevel
-}
-
-type DestinationMilvusSchemasProcessingMode string
-
-const (
-	DestinationMilvusSchemasProcessingModeSeparator DestinationMilvusSchemasProcessingMode = "separator"
-)
-
-func (e DestinationMilvusSchemasProcessingMode) ToPointer() *DestinationMilvusSchemasProcessingMode {
-	return &e
-}
-func (e *DestinationMilvusSchemasProcessingMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "separator":
-		*e = DestinationMilvusSchemasProcessingMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingMode: %v", v)
-	}
-}
-
-// DestinationMilvusBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
-type DestinationMilvusBySeparator struct {
-	mode *DestinationMilvusSchemasProcessingMode `const:"separator" json:"mode"`
-	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
-	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
-}
-
-func (d DestinationMilvusBySeparator) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMilvusBySeparator) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMilvusBySeparator) GetMode() *DestinationMilvusSchemasProcessingMode {
-	return DestinationMilvusSchemasProcessingModeSeparator.ToPointer()
-}
-
-func (o *DestinationMilvusBySeparator) GetSeparators() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Separators
-}
-
-func (o *DestinationMilvusBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
-}
-
-type DestinationMilvusTextSplitterType string
-
-const (
-	DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator           DestinationMilvusTextSplitterType = "destination-milvus_By Separator"
-	DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader      DestinationMilvusTextSplitterType = "destination-milvus_By Markdown header"
-	DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage DestinationMilvusTextSplitterType = "destination-milvus_By Programming Language"
-)
-
-// DestinationMilvusTextSplitter - Split text fields into chunks based on the specified method.
-type DestinationMilvusTextSplitter struct {
-	DestinationMilvusBySeparator           *DestinationMilvusBySeparator           `queryParam:"inline"`
-	DestinationMilvusByMarkdownHeader      *DestinationMilvusByMarkdownHeader      `queryParam:"inline"`
-	DestinationMilvusByProgrammingLanguage *DestinationMilvusByProgrammingLanguage `queryParam:"inline"`
-
-	Type DestinationMilvusTextSplitterType
-}
-
-func CreateDestinationMilvusTextSplitterDestinationMilvusBySeparator(destinationMilvusBySeparator DestinationMilvusBySeparator) DestinationMilvusTextSplitter {
-	typ := DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator
-
-	return DestinationMilvusTextSplitter{
-		DestinationMilvusBySeparator: &destinationMilvusBySeparator,
-		Type:                         typ,
-	}
-}
-
-func CreateDestinationMilvusTextSplitterDestinationMilvusByMarkdownHeader(destinationMilvusByMarkdownHeader DestinationMilvusByMarkdownHeader) DestinationMilvusTextSplitter {
-	typ := DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader
-
-	return DestinationMilvusTextSplitter{
-		DestinationMilvusByMarkdownHeader: &destinationMilvusByMarkdownHeader,
-		Type:                              typ,
-	}
-}
-
-func CreateDestinationMilvusTextSplitterDestinationMilvusByProgrammingLanguage(destinationMilvusByProgrammingLanguage DestinationMilvusByProgrammingLanguage) DestinationMilvusTextSplitter {
-	typ := DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage
-
-	return DestinationMilvusTextSplitter{
-		DestinationMilvusByProgrammingLanguage: &destinationMilvusByProgrammingLanguage,
-		Type:                                   typ,
-	}
-}
-
-func (u *DestinationMilvusTextSplitter) UnmarshalJSON(data []byte) error {
-
-	var destinationMilvusByMarkdownHeader DestinationMilvusByMarkdownHeader = DestinationMilvusByMarkdownHeader{}
-	if err := utils.UnmarshalJSON(data, &destinationMilvusByMarkdownHeader, "", true, true); err == nil {
-		u.DestinationMilvusByMarkdownHeader = &destinationMilvusByMarkdownHeader
-		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader
-		return nil
-	}
-
-	var destinationMilvusByProgrammingLanguage DestinationMilvusByProgrammingLanguage = DestinationMilvusByProgrammingLanguage{}
-	if err := utils.UnmarshalJSON(data, &destinationMilvusByProgrammingLanguage, "", true, true); err == nil {
-		u.DestinationMilvusByProgrammingLanguage = &destinationMilvusByProgrammingLanguage
-		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage
-		return nil
-	}
-
-	var destinationMilvusBySeparator DestinationMilvusBySeparator = DestinationMilvusBySeparator{}
-	if err := utils.UnmarshalJSON(data, &destinationMilvusBySeparator, "", true, true); err == nil {
-		u.DestinationMilvusBySeparator = &destinationMilvusBySeparator
-		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMilvusTextSplitter", string(data))
-}
-
-func (u DestinationMilvusTextSplitter) MarshalJSON() ([]byte, error) {
-	if u.DestinationMilvusBySeparator != nil {
-		return utils.MarshalJSON(u.DestinationMilvusBySeparator, "", true)
-	}
-
-	if u.DestinationMilvusByMarkdownHeader != nil {
-		return utils.MarshalJSON(u.DestinationMilvusByMarkdownHeader, "", true)
-	}
-
-	if u.DestinationMilvusByProgrammingLanguage != nil {
-		return utils.MarshalJSON(u.DestinationMilvusByProgrammingLanguage, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DestinationMilvusTextSplitter: all fields are null")
-}
-
-type DestinationMilvusFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationMilvusFieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *DestinationMilvusFieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
-type DestinationMilvusProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
-	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
-	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationMilvusTextSplitter `json:"text_splitter,omitempty"`
-	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
-	FieldNameMappings []DestinationMilvusFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
-}
-
-func (d DestinationMilvusProcessingConfigModel) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationMilvusProcessingConfigModel) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetChunkOverlap() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ChunkOverlap
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetTextFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TextFields
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetTextSplitter() *DestinationMilvusTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
-}
-
-func (o *DestinationMilvusProcessingConfigModel) GetFieldNameMappings() []DestinationMilvusFieldNameMappingConfigModel {
-	if o == nil {
-		return nil
-	}
-	return o.FieldNameMappings
-}
-
 type DestinationMilvusSchemasIndexingAuthAuthenticationMode string
 
 const (
@@ -910,10 +501,10 @@ func (e *DestinationMilvusSchemasIndexingAuthMode) UnmarshalJSON(data []byte) er
 // DestinationMilvusUsernamePassword - Authenticate using username and password (suitable for self-managed Milvus clusters)
 type DestinationMilvusUsernamePassword struct {
 	mode *DestinationMilvusSchemasIndexingAuthMode `const:"username_password" json:"mode"`
-	// Username for the Milvus instance
-	Username string `json:"username"`
 	// Password for the Milvus instance
 	Password string `json:"password"`
+	// Username for the Milvus instance
+	Username string `json:"username"`
 }
 
 func (d DestinationMilvusUsernamePassword) MarshalJSON() ([]byte, error) {
@@ -931,18 +522,18 @@ func (o *DestinationMilvusUsernamePassword) GetMode() *DestinationMilvusSchemasI
 	return DestinationMilvusSchemasIndexingAuthModeUsernamePassword.ToPointer()
 }
 
-func (o *DestinationMilvusUsernamePassword) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *DestinationMilvusUsernamePassword) GetPassword() string {
 	if o == nil {
 		return ""
 	}
 	return o.Password
+}
+
+func (o *DestinationMilvusUsernamePassword) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 type DestinationMilvusSchemasIndexingMode string
@@ -1085,18 +676,18 @@ func (u DestinationMilvusAuthentication) MarshalJSON() ([]byte, error) {
 
 // DestinationMilvusIndexing - Indexing configuration
 type DestinationMilvusIndexing struct {
-	// The public endpoint of the Milvus instance.
-	Host string `json:"host"`
-	// The database to connect to
-	Db *string `default:"" json:"db"`
-	// The collection to load data into
-	Collection string `json:"collection"`
 	// Authentication method
 	Auth DestinationMilvusAuthentication `json:"auth"`
-	// The field in the entity that contains the vector
-	VectorField *string `default:"vector" json:"vector_field"`
+	// The collection to load data into
+	Collection string `json:"collection"`
+	// The database to connect to
+	Db *string `default:"" json:"db"`
+	// The public endpoint of the Milvus instance.
+	Host string `json:"host"`
 	// The field in the entity that contains the embedded text
 	TextField *string `default:"text" json:"text_field"`
+	// The field in the entity that contains the vector
+	VectorField *string `default:"vector" json:"vector_field"`
 }
 
 func (d DestinationMilvusIndexing) MarshalJSON() ([]byte, error) {
@@ -1110,18 +701,11 @@ func (d *DestinationMilvusIndexing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationMilvusIndexing) GetHost() string {
+func (o *DestinationMilvusIndexing) GetAuth() DestinationMilvusAuthentication {
 	if o == nil {
-		return ""
+		return DestinationMilvusAuthentication{}
 	}
-	return o.Host
-}
-
-func (o *DestinationMilvusIndexing) GetDb() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Db
+	return o.Auth
 }
 
 func (o *DestinationMilvusIndexing) GetCollection() string {
@@ -1131,11 +715,25 @@ func (o *DestinationMilvusIndexing) GetCollection() string {
 	return o.Collection
 }
 
-func (o *DestinationMilvusIndexing) GetAuth() DestinationMilvusAuthentication {
+func (o *DestinationMilvusIndexing) GetDb() *string {
 	if o == nil {
-		return DestinationMilvusAuthentication{}
+		return nil
 	}
-	return o.Auth
+	return o.Db
+}
+
+func (o *DestinationMilvusIndexing) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationMilvusIndexing) GetTextField() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TextField
 }
 
 func (o *DestinationMilvusIndexing) GetVectorField() *string {
@@ -1145,11 +743,413 @@ func (o *DestinationMilvusIndexing) GetVectorField() *string {
 	return o.VectorField
 }
 
-func (o *DestinationMilvusIndexing) GetTextField() *string {
+type DestinationMilvusFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationMilvusFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationMilvusFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
+}
+
+// DestinationMilvusLanguage - Split code in suitable places based on the programming language
+type DestinationMilvusLanguage string
+
+const (
+	DestinationMilvusLanguageCpp      DestinationMilvusLanguage = "cpp"
+	DestinationMilvusLanguageGo       DestinationMilvusLanguage = "go"
+	DestinationMilvusLanguageJava     DestinationMilvusLanguage = "java"
+	DestinationMilvusLanguageJs       DestinationMilvusLanguage = "js"
+	DestinationMilvusLanguagePhp      DestinationMilvusLanguage = "php"
+	DestinationMilvusLanguageProto    DestinationMilvusLanguage = "proto"
+	DestinationMilvusLanguagePython   DestinationMilvusLanguage = "python"
+	DestinationMilvusLanguageRst      DestinationMilvusLanguage = "rst"
+	DestinationMilvusLanguageRuby     DestinationMilvusLanguage = "ruby"
+	DestinationMilvusLanguageRust     DestinationMilvusLanguage = "rust"
+	DestinationMilvusLanguageScala    DestinationMilvusLanguage = "scala"
+	DestinationMilvusLanguageSwift    DestinationMilvusLanguage = "swift"
+	DestinationMilvusLanguageMarkdown DestinationMilvusLanguage = "markdown"
+	DestinationMilvusLanguageLatex    DestinationMilvusLanguage = "latex"
+	DestinationMilvusLanguageHTML     DestinationMilvusLanguage = "html"
+	DestinationMilvusLanguageSol      DestinationMilvusLanguage = "sol"
+)
+
+func (e DestinationMilvusLanguage) ToPointer() *DestinationMilvusLanguage {
+	return &e
+}
+func (e *DestinationMilvusLanguage) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cpp":
+		fallthrough
+	case "go":
+		fallthrough
+	case "java":
+		fallthrough
+	case "js":
+		fallthrough
+	case "php":
+		fallthrough
+	case "proto":
+		fallthrough
+	case "python":
+		fallthrough
+	case "rst":
+		fallthrough
+	case "ruby":
+		fallthrough
+	case "rust":
+		fallthrough
+	case "scala":
+		fallthrough
+	case "swift":
+		fallthrough
+	case "markdown":
+		fallthrough
+	case "latex":
+		fallthrough
+	case "html":
+		fallthrough
+	case "sol":
+		*e = DestinationMilvusLanguage(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMilvusLanguage: %v", v)
+	}
+}
+
+type DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationMilvusSchemasProcessingTextSplitterTextSplitterModeCode DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationMilvusByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
+type DestinationMilvusByProgrammingLanguage struct {
+	// Split code in suitable places based on the programming language
+	Language DestinationMilvusLanguage                                       `json:"language"`
+	mode     *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
+}
+
+func (d DestinationMilvusByProgrammingLanguage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusByProgrammingLanguage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusByProgrammingLanguage) GetLanguage() DestinationMilvusLanguage {
+	if o == nil {
+		return DestinationMilvusLanguage("")
+	}
+	return o.Language
+}
+
+func (o *DestinationMilvusByProgrammingLanguage) GetMode() *DestinationMilvusSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationMilvusSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
+}
+
+type DestinationMilvusSchemasProcessingTextSplitterMode string
+
+const (
+	DestinationMilvusSchemasProcessingTextSplitterModeMarkdown DestinationMilvusSchemasProcessingTextSplitterMode = "markdown"
+)
+
+func (e DestinationMilvusSchemasProcessingTextSplitterMode) ToPointer() *DestinationMilvusSchemasProcessingTextSplitterMode {
+	return &e
+}
+func (e *DestinationMilvusSchemasProcessingTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "markdown":
+		*e = DestinationMilvusSchemasProcessingTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingTextSplitterMode: %v", v)
+	}
+}
+
+// DestinationMilvusByMarkdownHeader - Split the text by Markdown headers down to the specified header level. If the chunk size fits multiple sections, they will be combined into a single chunk.
+type DestinationMilvusByMarkdownHeader struct {
+	mode *DestinationMilvusSchemasProcessingTextSplitterMode `const:"markdown" json:"mode"`
+	// Level of markdown headers to split text fields by. Headings down to the specified level will be used as split points
+	SplitLevel *int64 `default:"1" json:"split_level"`
+}
+
+func (d DestinationMilvusByMarkdownHeader) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusByMarkdownHeader) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusByMarkdownHeader) GetMode() *DestinationMilvusSchemasProcessingTextSplitterMode {
+	return DestinationMilvusSchemasProcessingTextSplitterModeMarkdown.ToPointer()
+}
+
+func (o *DestinationMilvusByMarkdownHeader) GetSplitLevel() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.TextField
+	return o.SplitLevel
+}
+
+type DestinationMilvusSchemasProcessingMode string
+
+const (
+	DestinationMilvusSchemasProcessingModeSeparator DestinationMilvusSchemasProcessingMode = "separator"
+)
+
+func (e DestinationMilvusSchemasProcessingMode) ToPointer() *DestinationMilvusSchemasProcessingMode {
+	return &e
+}
+func (e *DestinationMilvusSchemasProcessingMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "separator":
+		*e = DestinationMilvusSchemasProcessingMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationMilvusSchemasProcessingMode: %v", v)
+	}
+}
+
+// DestinationMilvusBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
+type DestinationMilvusBySeparator struct {
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                   `default:"false" json:"keep_separator"`
+	mode          *DestinationMilvusSchemasProcessingMode `const:"separator" json:"mode"`
+	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
+	Separators []string `json:"separators,omitempty"`
+}
+
+func (d DestinationMilvusBySeparator) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusBySeparator) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
+func (o *DestinationMilvusBySeparator) GetMode() *DestinationMilvusSchemasProcessingMode {
+	return DestinationMilvusSchemasProcessingModeSeparator.ToPointer()
+}
+
+func (o *DestinationMilvusBySeparator) GetSeparators() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Separators
+}
+
+type DestinationMilvusTextSplitterType string
+
+const (
+	DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator           DestinationMilvusTextSplitterType = "destination-milvus_By Separator"
+	DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader      DestinationMilvusTextSplitterType = "destination-milvus_By Markdown header"
+	DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage DestinationMilvusTextSplitterType = "destination-milvus_By Programming Language"
+)
+
+// DestinationMilvusTextSplitter - Split text fields into chunks based on the specified method.
+type DestinationMilvusTextSplitter struct {
+	DestinationMilvusBySeparator           *DestinationMilvusBySeparator           `queryParam:"inline"`
+	DestinationMilvusByMarkdownHeader      *DestinationMilvusByMarkdownHeader      `queryParam:"inline"`
+	DestinationMilvusByProgrammingLanguage *DestinationMilvusByProgrammingLanguage `queryParam:"inline"`
+
+	Type DestinationMilvusTextSplitterType
+}
+
+func CreateDestinationMilvusTextSplitterDestinationMilvusBySeparator(destinationMilvusBySeparator DestinationMilvusBySeparator) DestinationMilvusTextSplitter {
+	typ := DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator
+
+	return DestinationMilvusTextSplitter{
+		DestinationMilvusBySeparator: &destinationMilvusBySeparator,
+		Type:                         typ,
+	}
+}
+
+func CreateDestinationMilvusTextSplitterDestinationMilvusByMarkdownHeader(destinationMilvusByMarkdownHeader DestinationMilvusByMarkdownHeader) DestinationMilvusTextSplitter {
+	typ := DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader
+
+	return DestinationMilvusTextSplitter{
+		DestinationMilvusByMarkdownHeader: &destinationMilvusByMarkdownHeader,
+		Type:                              typ,
+	}
+}
+
+func CreateDestinationMilvusTextSplitterDestinationMilvusByProgrammingLanguage(destinationMilvusByProgrammingLanguage DestinationMilvusByProgrammingLanguage) DestinationMilvusTextSplitter {
+	typ := DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage
+
+	return DestinationMilvusTextSplitter{
+		DestinationMilvusByProgrammingLanguage: &destinationMilvusByProgrammingLanguage,
+		Type:                                   typ,
+	}
+}
+
+func (u *DestinationMilvusTextSplitter) UnmarshalJSON(data []byte) error {
+
+	var destinationMilvusByMarkdownHeader DestinationMilvusByMarkdownHeader = DestinationMilvusByMarkdownHeader{}
+	if err := utils.UnmarshalJSON(data, &destinationMilvusByMarkdownHeader, "", true, true); err == nil {
+		u.DestinationMilvusByMarkdownHeader = &destinationMilvusByMarkdownHeader
+		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusByMarkdownHeader
+		return nil
+	}
+
+	var destinationMilvusByProgrammingLanguage DestinationMilvusByProgrammingLanguage = DestinationMilvusByProgrammingLanguage{}
+	if err := utils.UnmarshalJSON(data, &destinationMilvusByProgrammingLanguage, "", true, true); err == nil {
+		u.DestinationMilvusByProgrammingLanguage = &destinationMilvusByProgrammingLanguage
+		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusByProgrammingLanguage
+		return nil
+	}
+
+	var destinationMilvusBySeparator DestinationMilvusBySeparator = DestinationMilvusBySeparator{}
+	if err := utils.UnmarshalJSON(data, &destinationMilvusBySeparator, "", true, true); err == nil {
+		u.DestinationMilvusBySeparator = &destinationMilvusBySeparator
+		u.Type = DestinationMilvusTextSplitterTypeDestinationMilvusBySeparator
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DestinationMilvusTextSplitter", string(data))
+}
+
+func (u DestinationMilvusTextSplitter) MarshalJSON() ([]byte, error) {
+	if u.DestinationMilvusBySeparator != nil {
+		return utils.MarshalJSON(u.DestinationMilvusBySeparator, "", true)
+	}
+
+	if u.DestinationMilvusByMarkdownHeader != nil {
+		return utils.MarshalJSON(u.DestinationMilvusByMarkdownHeader, "", true)
+	}
+
+	if u.DestinationMilvusByProgrammingLanguage != nil {
+		return utils.MarshalJSON(u.DestinationMilvusByProgrammingLanguage, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type DestinationMilvusTextSplitter: all fields are null")
+}
+
+type DestinationMilvusProcessingConfigModel struct {
+	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
+	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
+	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
+	FieldNameMappings []DestinationMilvusFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationMilvusTextSplitter `json:"text_splitter,omitempty"`
+}
+
+func (d DestinationMilvusProcessingConfigModel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationMilvusProcessingConfigModel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetChunkOverlap() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ChunkOverlap
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetChunkSize() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.ChunkSize
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetFieldNameMappings() []DestinationMilvusFieldNameMappingConfigModel {
+	if o == nil {
+		return nil
+	}
+	return o.FieldNameMappings
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetTextFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TextFields
+}
+
+func (o *DestinationMilvusProcessingConfigModel) GetTextSplitter() *DestinationMilvusTextSplitter {
+	if o == nil {
+		return nil
+	}
+	return o.TextSplitter
 }
 
 type Milvus string
@@ -1187,13 +1187,13 @@ func (e *Milvus) UnmarshalJSON(data []byte) error {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationMilvus struct {
 	// Embedding configuration
-	Embedding  DestinationMilvusEmbedding             `json:"embedding"`
-	Processing DestinationMilvusProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationMilvusEmbedding `json:"embedding"`
 	// Indexing configuration
-	Indexing        DestinationMilvusIndexing `json:"indexing"`
-	destinationType Milvus                    `const:"milvus" json:"destinationType"`
+	Indexing DestinationMilvusIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText     *bool                                  `default:"false" json:"omit_raw_text"`
+	Processing      DestinationMilvusProcessingConfigModel `json:"processing"`
+	destinationType Milvus                                 `const:"milvus" json:"destinationType"`
 }
 
 func (d DestinationMilvus) MarshalJSON() ([]byte, error) {
@@ -1214,11 +1214,11 @@ func (o *DestinationMilvus) GetEmbedding() DestinationMilvusEmbedding {
 	return o.Embedding
 }
 
-func (o *DestinationMilvus) GetProcessing() DestinationMilvusProcessingConfigModel {
+func (o *DestinationMilvus) GetIndexing() DestinationMilvusIndexing {
 	if o == nil {
-		return DestinationMilvusProcessingConfigModel{}
+		return DestinationMilvusIndexing{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationMilvus) GetOmitRawText() *bool {
@@ -1228,11 +1228,11 @@ func (o *DestinationMilvus) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationMilvus) GetIndexing() DestinationMilvusIndexing {
+func (o *DestinationMilvus) GetProcessing() DestinationMilvusProcessingConfigModel {
 	if o == nil {
-		return DestinationMilvusIndexing{}
+		return DestinationMilvusProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }
 
 func (o *DestinationMilvus) GetDestinationType() Milvus {

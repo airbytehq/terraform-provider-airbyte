@@ -22,6 +22,77 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var credentials shared.SourceMicrosoftOnedriveAuthentication
+	var authenticateViaMicrosoftOAuth *shared.AuthenticateViaMicrosoftOAuth
+	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+
+		var tenantID string
+		tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
+
+		authenticateViaMicrosoftOAuth = &shared.AuthenticateViaMicrosoftOAuth{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+			TenantID:     tenantID,
+		}
+	}
+	if authenticateViaMicrosoftOAuth != nil {
+		credentials = shared.SourceMicrosoftOnedriveAuthentication{
+			AuthenticateViaMicrosoftOAuth: authenticateViaMicrosoftOAuth,
+		}
+	}
+	var serviceKeyAuthentication *shared.ServiceKeyAuthentication
+	if r.Configuration.Credentials.ServiceKeyAuthentication != nil {
+		var clientId1 string
+		clientId1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientID.ValueString()
+
+		var clientSecret1 string
+		clientSecret1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientSecret.ValueString()
+
+		var tenantId1 string
+		tenantId1 = r.Configuration.Credentials.ServiceKeyAuthentication.TenantID.ValueString()
+
+		var userPrincipalName string
+		userPrincipalName = r.Configuration.Credentials.ServiceKeyAuthentication.UserPrincipalName.ValueString()
+
+		serviceKeyAuthentication = &shared.ServiceKeyAuthentication{
+			ClientID:          clientId1,
+			ClientSecret:      clientSecret1,
+			TenantID:          tenantId1,
+			UserPrincipalName: userPrincipalName,
+		}
+	}
+	if serviceKeyAuthentication != nil {
+		credentials = shared.SourceMicrosoftOnedriveAuthentication{
+			ServiceKeyAuthentication: serviceKeyAuthentication,
+		}
+	}
+	driveName := new(string)
+	if !r.Configuration.DriveName.IsUnknown() && !r.Configuration.DriveName.IsNull() {
+		*driveName = r.Configuration.DriveName.ValueString()
+	} else {
+		driveName = nil
+	}
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	searchScope := new(shared.SearchScope)
+	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
+		*searchScope = shared.SearchScope(r.Configuration.SearchScope.ValueString())
+	} else {
+		searchScope = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -30,25 +101,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 	}
 	var streams []shared.SourceMicrosoftOnedriveFileBasedStreamConfig = []shared.SourceMicrosoftOnedriveFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceMicrosoftOnedriveValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceMicrosoftOnedriveValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -81,17 +133,11 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -99,33 +145,15 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceMicrosoftOnedriveCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -163,34 +191,58 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceMicrosoftOnedriveCSVFormat = &shared.SourceMicrosoftOnedriveCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftOnedriveCSVFormat != nil {
@@ -226,18 +278,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 		}
 		var sourceMicrosoftOnedriveUnstructuredDocumentFormat *shared.SourceMicrosoftOnedriveUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceMicrosoftOnedriveParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftOnedriveParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceMicrosoftOnedriveProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceMicrosoftOnedriveLocal *shared.SourceMicrosoftOnedriveLocal
@@ -250,10 +290,22 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceMicrosoftOnedriveParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftOnedriveParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceMicrosoftOnedriveUnstructuredDocumentFormat = &shared.SourceMicrosoftOnedriveUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceMicrosoftOnedriveUnstructuredDocumentFormat != nil {
@@ -261,100 +313,48 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedriveCr
 				SourceMicrosoftOnedriveUnstructuredDocumentFormat: sourceMicrosoftOnedriveUnstructuredDocumentFormat,
 			}
 		}
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
 		} else {
 			schemaless = nil
 		}
+		validationPolicy := new(shared.SourceMicrosoftOnedriveValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceMicrosoftOnedriveValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceMicrosoftOnedriveFileBasedStreamConfig{
-			Name:                      name1,
-			Globs:                     globs,
-			ValidationPolicy:          validationPolicy,
-			InputSchema:               inputSchema,
 			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
 			Format:                    format,
+			Globs:                     globs,
+			InputSchema:               inputSchema,
+			Name:                      name1,
 			Schemaless:                schemaless,
+			ValidationPolicy:          validationPolicy,
 		})
 	}
-	var credentials shared.SourceMicrosoftOnedriveAuthentication
-	var authenticateViaMicrosoftOAuth *shared.AuthenticateViaMicrosoftOAuth
-	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
-		var tenantID string
-		tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
-
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
-
-		authenticateViaMicrosoftOAuth = &shared.AuthenticateViaMicrosoftOAuth{
-			TenantID:     tenantID,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
-		}
-	}
-	if authenticateViaMicrosoftOAuth != nil {
-		credentials = shared.SourceMicrosoftOnedriveAuthentication{
-			AuthenticateViaMicrosoftOAuth: authenticateViaMicrosoftOAuth,
-		}
-	}
-	var serviceKeyAuthentication *shared.ServiceKeyAuthentication
-	if r.Configuration.Credentials.ServiceKeyAuthentication != nil {
-		var tenantId1 string
-		tenantId1 = r.Configuration.Credentials.ServiceKeyAuthentication.TenantID.ValueString()
-
-		var userPrincipalName string
-		userPrincipalName = r.Configuration.Credentials.ServiceKeyAuthentication.UserPrincipalName.ValueString()
-
-		var clientId1 string
-		clientId1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientID.ValueString()
-
-		var clientSecret1 string
-		clientSecret1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientSecret.ValueString()
-
-		serviceKeyAuthentication = &shared.ServiceKeyAuthentication{
-			TenantID:          tenantId1,
-			UserPrincipalName: userPrincipalName,
-			ClientID:          clientId1,
-			ClientSecret:      clientSecret1,
-		}
-	}
-	if serviceKeyAuthentication != nil {
-		credentials = shared.SourceMicrosoftOnedriveAuthentication{
-			ServiceKeyAuthentication: serviceKeyAuthentication,
-		}
-	}
-	driveName := new(string)
-	if !r.Configuration.DriveName.IsUnknown() && !r.Configuration.DriveName.IsNull() {
-		*driveName = r.Configuration.DriveName.ValueString()
-	} else {
-		driveName = nil
-	}
-	searchScope := new(shared.SearchScope)
-	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
-		*searchScope = shared.SearchScope(r.Configuration.SearchScope.ValueString())
-	} else {
-		searchScope = nil
-	}
-	folderPath := new(string)
-	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
-		*folderPath = r.Configuration.FolderPath.ValueString()
-	} else {
-		folderPath = nil
-	}
 	configuration := shared.SourceMicrosoftOnedrive{
-		StartDate:   startDate,
-		Streams:     streams,
 		Credentials: credentials,
 		DriveName:   driveName,
-		SearchScope: searchScope,
 		FolderPath:  folderPath,
+		SearchScope: searchScope,
+		StartDate:   startDate,
+		Streams:     streams,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -426,6 +426,77 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var credentials shared.SourceMicrosoftOnedriveUpdateAuthentication
+	var sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth *shared.SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth
+	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
+
+		var tenantID string
+		tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
+
+		sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth = &shared.SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+			TenantID:     tenantID,
+		}
+	}
+	if sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth != nil {
+		credentials = shared.SourceMicrosoftOnedriveUpdateAuthentication{
+			SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth: sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth,
+		}
+	}
+	var sourceMicrosoftOnedriveUpdateServiceKeyAuthentication *shared.SourceMicrosoftOnedriveUpdateServiceKeyAuthentication
+	if r.Configuration.Credentials.ServiceKeyAuthentication != nil {
+		var clientId1 string
+		clientId1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientID.ValueString()
+
+		var clientSecret1 string
+		clientSecret1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientSecret.ValueString()
+
+		var tenantId1 string
+		tenantId1 = r.Configuration.Credentials.ServiceKeyAuthentication.TenantID.ValueString()
+
+		var userPrincipalName string
+		userPrincipalName = r.Configuration.Credentials.ServiceKeyAuthentication.UserPrincipalName.ValueString()
+
+		sourceMicrosoftOnedriveUpdateServiceKeyAuthentication = &shared.SourceMicrosoftOnedriveUpdateServiceKeyAuthentication{
+			ClientID:          clientId1,
+			ClientSecret:      clientSecret1,
+			TenantID:          tenantId1,
+			UserPrincipalName: userPrincipalName,
+		}
+	}
+	if sourceMicrosoftOnedriveUpdateServiceKeyAuthentication != nil {
+		credentials = shared.SourceMicrosoftOnedriveUpdateAuthentication{
+			SourceMicrosoftOnedriveUpdateServiceKeyAuthentication: sourceMicrosoftOnedriveUpdateServiceKeyAuthentication,
+		}
+	}
+	driveName := new(string)
+	if !r.Configuration.DriveName.IsUnknown() && !r.Configuration.DriveName.IsNull() {
+		*driveName = r.Configuration.DriveName.ValueString()
+	} else {
+		driveName = nil
+	}
+	folderPath := new(string)
+	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
+		*folderPath = r.Configuration.FolderPath.ValueString()
+	} else {
+		folderPath = nil
+	}
+	searchScope := new(shared.SourceMicrosoftOnedriveUpdateSearchScope)
+	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
+		*searchScope = shared.SourceMicrosoftOnedriveUpdateSearchScope(r.Configuration.SearchScope.ValueString())
+	} else {
+		searchScope = nil
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -434,25 +505,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 	}
 	var streams []shared.SourceMicrosoftOnedriveUpdateFileBasedStreamConfig = []shared.SourceMicrosoftOnedriveUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceMicrosoftOnedriveUpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceMicrosoftOnedriveUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -485,17 +537,11 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -503,33 +549,15 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceMicrosoftOnedriveUpdateCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -567,34 +595,58 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceMicrosoftOnedriveUpdateCSVFormat = &shared.SourceMicrosoftOnedriveUpdateCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceMicrosoftOnedriveUpdateCSVFormat != nil {
@@ -630,18 +682,6 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 		}
 		var sourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat *shared.SourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceMicrosoftOnedriveUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceMicrosoftOnedriveUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceMicrosoftOnedriveUpdateProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceMicrosoftOnedriveUpdateLocal *shared.SourceMicrosoftOnedriveUpdateLocal
@@ -654,10 +694,22 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceMicrosoftOnedriveUpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceMicrosoftOnedriveUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat = &shared.SourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat != nil {
@@ -665,100 +717,48 @@ func (r *SourceMicrosoftOnedriveResourceModel) ToSharedSourceMicrosoftOnedrivePu
 				SourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat: sourceMicrosoftOnedriveUpdateUnstructuredDocumentFormat,
 			}
 		}
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		schemaless := new(bool)
 		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
 			*schemaless = streamsItem.Schemaless.ValueBool()
 		} else {
 			schemaless = nil
 		}
+		validationPolicy := new(shared.SourceMicrosoftOnedriveUpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceMicrosoftOnedriveUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceMicrosoftOnedriveUpdateFileBasedStreamConfig{
-			Name:                      name1,
-			Globs:                     globs,
-			ValidationPolicy:          validationPolicy,
-			InputSchema:               inputSchema,
 			DaysToSyncIfHistoryIsFull: daysToSyncIfHistoryIsFull,
 			Format:                    format,
+			Globs:                     globs,
+			InputSchema:               inputSchema,
+			Name:                      name1,
 			Schemaless:                schemaless,
+			ValidationPolicy:          validationPolicy,
 		})
 	}
-	var credentials shared.SourceMicrosoftOnedriveUpdateAuthentication
-	var sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth *shared.SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth
-	if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth != nil {
-		var tenantID string
-		tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.TenantID.ValueString()
-
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.ClientSecret.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth.RefreshToken.ValueString()
-
-		sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth = &shared.SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth{
-			TenantID:     tenantID,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
-		}
-	}
-	if sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth != nil {
-		credentials = shared.SourceMicrosoftOnedriveUpdateAuthentication{
-			SourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth: sourceMicrosoftOnedriveUpdateAuthenticateViaMicrosoftOAuth,
-		}
-	}
-	var sourceMicrosoftOnedriveUpdateServiceKeyAuthentication *shared.SourceMicrosoftOnedriveUpdateServiceKeyAuthentication
-	if r.Configuration.Credentials.ServiceKeyAuthentication != nil {
-		var tenantId1 string
-		tenantId1 = r.Configuration.Credentials.ServiceKeyAuthentication.TenantID.ValueString()
-
-		var userPrincipalName string
-		userPrincipalName = r.Configuration.Credentials.ServiceKeyAuthentication.UserPrincipalName.ValueString()
-
-		var clientId1 string
-		clientId1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientID.ValueString()
-
-		var clientSecret1 string
-		clientSecret1 = r.Configuration.Credentials.ServiceKeyAuthentication.ClientSecret.ValueString()
-
-		sourceMicrosoftOnedriveUpdateServiceKeyAuthentication = &shared.SourceMicrosoftOnedriveUpdateServiceKeyAuthentication{
-			TenantID:          tenantId1,
-			UserPrincipalName: userPrincipalName,
-			ClientID:          clientId1,
-			ClientSecret:      clientSecret1,
-		}
-	}
-	if sourceMicrosoftOnedriveUpdateServiceKeyAuthentication != nil {
-		credentials = shared.SourceMicrosoftOnedriveUpdateAuthentication{
-			SourceMicrosoftOnedriveUpdateServiceKeyAuthentication: sourceMicrosoftOnedriveUpdateServiceKeyAuthentication,
-		}
-	}
-	driveName := new(string)
-	if !r.Configuration.DriveName.IsUnknown() && !r.Configuration.DriveName.IsNull() {
-		*driveName = r.Configuration.DriveName.ValueString()
-	} else {
-		driveName = nil
-	}
-	searchScope := new(shared.SourceMicrosoftOnedriveUpdateSearchScope)
-	if !r.Configuration.SearchScope.IsUnknown() && !r.Configuration.SearchScope.IsNull() {
-		*searchScope = shared.SourceMicrosoftOnedriveUpdateSearchScope(r.Configuration.SearchScope.ValueString())
-	} else {
-		searchScope = nil
-	}
-	folderPath := new(string)
-	if !r.Configuration.FolderPath.IsUnknown() && !r.Configuration.FolderPath.IsNull() {
-		*folderPath = r.Configuration.FolderPath.ValueString()
-	} else {
-		folderPath = nil
-	}
 	configuration := shared.SourceMicrosoftOnedriveUpdate{
-		StartDate:   startDate,
-		Streams:     streams,
 		Credentials: credentials,
 		DriveName:   driveName,
-		SearchScope: searchScope,
 		FolderPath:  folderPath,
+		SearchScope: searchScope,
+		StartDate:   startDate,
+		Streams:     streams,
 	}
 	out := shared.SourceMicrosoftOnedrivePutRequest{
 		Name:          name,

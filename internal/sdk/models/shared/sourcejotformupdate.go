@@ -61,6 +61,29 @@ func (o *SourceJotformUpdateEnterprise) GetEnterpriseURL() string {
 	return o.EnterpriseURL
 }
 
+type SourceJotformUpdateSchemasAPIEndpointAPIEndpoint string
+
+const (
+	SourceJotformUpdateSchemasAPIEndpointAPIEndpointBasic SourceJotformUpdateSchemasAPIEndpointAPIEndpoint = "basic"
+)
+
+func (e SourceJotformUpdateSchemasAPIEndpointAPIEndpoint) ToPointer() *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint {
+	return &e
+}
+func (e *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "basic":
+		*e = SourceJotformUpdateSchemasAPIEndpointAPIEndpoint(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceJotformUpdateSchemasAPIEndpointAPIEndpoint: %v", v)
+	}
+}
+
 // SourceJotformUpdateBaseURLPrefix - You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
 type SourceJotformUpdateBaseURLPrefix string
 
@@ -91,33 +114,10 @@ func (e *SourceJotformUpdateBaseURLPrefix) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceJotformUpdateSchemasAPIEndpointAPIEndpoint string
-
-const (
-	SourceJotformUpdateSchemasAPIEndpointAPIEndpointBasic SourceJotformUpdateSchemasAPIEndpointAPIEndpoint = "basic"
-)
-
-func (e SourceJotformUpdateSchemasAPIEndpointAPIEndpoint) ToPointer() *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint {
-	return &e
-}
-func (e *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "basic":
-		*e = SourceJotformUpdateSchemasAPIEndpointAPIEndpoint(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceJotformUpdateSchemasAPIEndpointAPIEndpoint: %v", v)
-	}
-}
-
 type SourceJotformUpdateBasic struct {
-	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
-	URLPrefix   *SourceJotformUpdateBaseURLPrefix                 `default:"Standard" json:"url_prefix"`
 	apiEndpoint *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint `const:"basic" json:"api_endpoint,omitempty"`
+	// You can access our API through the following URLs - Standard API Usage (Use the default API URL - https://api.jotform.com), For EU (Use the EU API URL - https://eu-api.jotform.com), For HIPAA (Use the HIPAA API URL - https://hipaa-api.jotform.com)
+	URLPrefix *SourceJotformUpdateBaseURLPrefix `default:"Standard" json:"url_prefix"`
 }
 
 func (s SourceJotformUpdateBasic) MarshalJSON() ([]byte, error) {
@@ -131,15 +131,15 @@ func (s *SourceJotformUpdateBasic) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceJotformUpdateBasic) GetAPIEndpoint() *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint {
+	return SourceJotformUpdateSchemasAPIEndpointAPIEndpointBasic.ToPointer()
+}
+
 func (o *SourceJotformUpdateBasic) GetURLPrefix() *SourceJotformUpdateBaseURLPrefix {
 	if o == nil {
 		return nil
 	}
 	return o.URLPrefix
-}
-
-func (o *SourceJotformUpdateBasic) GetAPIEndpoint() *SourceJotformUpdateSchemasAPIEndpointAPIEndpoint {
-	return SourceJotformUpdateSchemasAPIEndpointAPIEndpointBasic.ToPointer()
 }
 
 type SourceJotformUpdateAPIEndpointType string
@@ -206,10 +206,10 @@ func (u SourceJotformUpdateAPIEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 type SourceJotformUpdate struct {
+	APIEndpoint SourceJotformUpdateAPIEndpoint `json:"api_endpoint"`
 	APIKey      string                         `json:"api_key"`
 	EndDate     time.Time                      `json:"end_date"`
 	StartDate   time.Time                      `json:"start_date"`
-	APIEndpoint SourceJotformUpdateAPIEndpoint `json:"api_endpoint"`
 }
 
 func (s SourceJotformUpdate) MarshalJSON() ([]byte, error) {
@@ -221,6 +221,13 @@ func (s *SourceJotformUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceJotformUpdate) GetAPIEndpoint() SourceJotformUpdateAPIEndpoint {
+	if o == nil {
+		return SourceJotformUpdateAPIEndpoint{}
+	}
+	return o.APIEndpoint
 }
 
 func (o *SourceJotformUpdate) GetAPIKey() string {
@@ -242,11 +249,4 @@ func (o *SourceJotformUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceJotformUpdate) GetAPIEndpoint() SourceJotformUpdateAPIEndpoint {
-	if o == nil {
-		return SourceJotformUpdateAPIEndpoint{}
-	}
-	return o.APIEndpoint
 }

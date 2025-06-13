@@ -35,10 +35,10 @@ func (e *SourceGoogleDirectoryUpdateSchemasCredentialsTitle) UnmarshalJSON(data 
 
 // SourceGoogleDirectoryUpdateServiceAccountKey - For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.
 type SourceGoogleDirectoryUpdateServiceAccountKey struct {
-	// Authentication Scenario
-	credentialsTitle *SourceGoogleDirectoryUpdateSchemasCredentialsTitle `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`
+	// Authentication Scenario
+	credentialsTitle *SourceGoogleDirectoryUpdateSchemasCredentialsTitle `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 }
@@ -54,15 +54,15 @@ func (s *SourceGoogleDirectoryUpdateServiceAccountKey) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *SourceGoogleDirectoryUpdateServiceAccountKey) GetCredentialsTitle() *SourceGoogleDirectoryUpdateSchemasCredentialsTitle {
-	return SourceGoogleDirectoryUpdateSchemasCredentialsTitleServiceAccounts.ToPointer()
-}
-
 func (o *SourceGoogleDirectoryUpdateServiceAccountKey) GetCredentialsJSON() string {
 	if o == nil {
 		return ""
 	}
 	return o.CredentialsJSON
+}
+
+func (o *SourceGoogleDirectoryUpdateServiceAccountKey) GetCredentialsTitle() *SourceGoogleDirectoryUpdateSchemasCredentialsTitle {
+	return SourceGoogleDirectoryUpdateSchemasCredentialsTitleServiceAccounts.ToPointer()
 }
 
 func (o *SourceGoogleDirectoryUpdateServiceAccountKey) GetEmail() string {
@@ -98,12 +98,12 @@ func (e *SourceGoogleDirectoryUpdateCredentialsTitle) UnmarshalJSON(data []byte)
 
 // SourceGoogleDirectoryUpdateSignInViaGoogleOAuth - For these scenario user only needs to give permission to read Google Directory data.
 type SourceGoogleDirectoryUpdateSignInViaGoogleOAuth struct {
-	// Authentication Scenario
-	credentialsTitle *SourceGoogleDirectoryUpdateCredentialsTitle `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Client ID of the developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of the developer application.
 	ClientSecret string `json:"client_secret"`
+	// Authentication Scenario
+	credentialsTitle *SourceGoogleDirectoryUpdateCredentialsTitle `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Token for obtaining a new access token.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -119,10 +119,6 @@ func (s *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) UnmarshalJSON(data []b
 	return nil
 }
 
-func (o *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) GetCredentialsTitle() *SourceGoogleDirectoryUpdateCredentialsTitle {
-	return SourceGoogleDirectoryUpdateCredentialsTitleWebServerApp.ToPointer()
-}
-
 func (o *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) GetClientID() string {
 	if o == nil {
 		return ""
@@ -135,6 +131,10 @@ func (o *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) GetClientSecret() stri
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) GetCredentialsTitle() *SourceGoogleDirectoryUpdateCredentialsTitle {
+	return SourceGoogleDirectoryUpdateCredentialsTitleWebServerApp.ToPointer()
 }
 
 func (o *SourceGoogleDirectoryUpdateSignInViaGoogleOAuth) GetRefreshToken() string {

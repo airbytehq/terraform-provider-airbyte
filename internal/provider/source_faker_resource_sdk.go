@@ -21,29 +21,17 @@ func (r *SourceFakerResourceModel) ToSharedSourceFakerCreateRequest() *shared.So
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	count := new(int64)
-	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
-		*count = r.Configuration.Count.ValueInt64()
-	} else {
-		count = nil
-	}
-	seed := new(int64)
-	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
-		*seed = r.Configuration.Seed.ValueInt64()
-	} else {
-		seed = nil
-	}
-	recordsPerSlice := new(int64)
-	if !r.Configuration.RecordsPerSlice.IsUnknown() && !r.Configuration.RecordsPerSlice.IsNull() {
-		*recordsPerSlice = r.Configuration.RecordsPerSlice.ValueInt64()
-	} else {
-		recordsPerSlice = nil
-	}
 	alwaysUpdated := new(bool)
 	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
 		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
 	} else {
 		alwaysUpdated = nil
+	}
+	count := new(int64)
+	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
+		*count = r.Configuration.Count.ValueInt64()
+	} else {
+		count = nil
 	}
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
@@ -51,12 +39,24 @@ func (r *SourceFakerResourceModel) ToSharedSourceFakerCreateRequest() *shared.So
 	} else {
 		parallelism = nil
 	}
+	recordsPerSlice := new(int64)
+	if !r.Configuration.RecordsPerSlice.IsUnknown() && !r.Configuration.RecordsPerSlice.IsNull() {
+		*recordsPerSlice = r.Configuration.RecordsPerSlice.ValueInt64()
+	} else {
+		recordsPerSlice = nil
+	}
+	seed := new(int64)
+	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
+		*seed = r.Configuration.Seed.ValueInt64()
+	} else {
+		seed = nil
+	}
 	configuration := shared.SourceFaker{
-		Count:           count,
-		Seed:            seed,
-		RecordsPerSlice: recordsPerSlice,
 		AlwaysUpdated:   alwaysUpdated,
+		Count:           count,
 		Parallelism:     parallelism,
+		RecordsPerSlice: recordsPerSlice,
+		Seed:            seed,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -128,29 +128,17 @@ func (r *SourceFakerResourceModel) ToSharedSourceFakerPutRequest() *shared.Sourc
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	count := new(int64)
-	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
-		*count = r.Configuration.Count.ValueInt64()
-	} else {
-		count = nil
-	}
-	seed := new(int64)
-	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
-		*seed = r.Configuration.Seed.ValueInt64()
-	} else {
-		seed = nil
-	}
-	recordsPerSlice := new(int64)
-	if !r.Configuration.RecordsPerSlice.IsUnknown() && !r.Configuration.RecordsPerSlice.IsNull() {
-		*recordsPerSlice = r.Configuration.RecordsPerSlice.ValueInt64()
-	} else {
-		recordsPerSlice = nil
-	}
 	alwaysUpdated := new(bool)
 	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
 		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
 	} else {
 		alwaysUpdated = nil
+	}
+	count := new(int64)
+	if !r.Configuration.Count.IsUnknown() && !r.Configuration.Count.IsNull() {
+		*count = r.Configuration.Count.ValueInt64()
+	} else {
+		count = nil
 	}
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
@@ -158,12 +146,24 @@ func (r *SourceFakerResourceModel) ToSharedSourceFakerPutRequest() *shared.Sourc
 	} else {
 		parallelism = nil
 	}
+	recordsPerSlice := new(int64)
+	if !r.Configuration.RecordsPerSlice.IsUnknown() && !r.Configuration.RecordsPerSlice.IsNull() {
+		*recordsPerSlice = r.Configuration.RecordsPerSlice.ValueInt64()
+	} else {
+		recordsPerSlice = nil
+	}
+	seed := new(int64)
+	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
+		*seed = r.Configuration.Seed.ValueInt64()
+	} else {
+		seed = nil
+	}
 	configuration := shared.SourceFakerUpdate{
-		Count:           count,
-		Seed:            seed,
-		RecordsPerSlice: recordsPerSlice,
 		AlwaysUpdated:   alwaysUpdated,
+		Count:           count,
 		Parallelism:     parallelism,
+		RecordsPerSlice: recordsPerSlice,
+		Seed:            seed,
 	}
 	out := shared.SourceFakerPutRequest{
 		Name:          name,

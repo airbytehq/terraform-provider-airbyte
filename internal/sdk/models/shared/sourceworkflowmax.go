@@ -33,9 +33,9 @@ func (e *Workflowmax) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkflowmax struct {
-	APIKey2 string `json:"api_key_2"`
 	// The account id for workflowmax
 	AccountID  string      `json:"account_id"`
+	APIKey2    string      `json:"api_key_2"`
 	StartDate  time.Time   `json:"start_date"`
 	sourceType Workflowmax `const:"workflowmax" json:"sourceType"`
 }
@@ -51,18 +51,18 @@ func (s *SourceWorkflowmax) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWorkflowmax) GetAPIKey2() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey2
-}
-
 func (o *SourceWorkflowmax) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceWorkflowmax) GetAPIKey2() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey2
 }
 
 func (o *SourceWorkflowmax) GetStartDate() time.Time {

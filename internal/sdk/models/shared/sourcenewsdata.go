@@ -8,6 +8,59 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type SourceNewsdataCategory string
+
+const (
+	SourceNewsdataCategoryBusiness      SourceNewsdataCategory = "business"
+	SourceNewsdataCategoryEntertainment SourceNewsdataCategory = "entertainment"
+	SourceNewsdataCategoryEnvironment   SourceNewsdataCategory = "environment"
+	SourceNewsdataCategoryFood          SourceNewsdataCategory = "food"
+	SourceNewsdataCategoryHealth        SourceNewsdataCategory = "health"
+	SourceNewsdataCategoryPolitics      SourceNewsdataCategory = "politics"
+	SourceNewsdataCategoryScience       SourceNewsdataCategory = "science"
+	SourceNewsdataCategorySports        SourceNewsdataCategory = "sports"
+	SourceNewsdataCategoryTechnology    SourceNewsdataCategory = "technology"
+	SourceNewsdataCategoryTop           SourceNewsdataCategory = "top"
+	SourceNewsdataCategoryWorld         SourceNewsdataCategory = "world"
+)
+
+func (e SourceNewsdataCategory) ToPointer() *SourceNewsdataCategory {
+	return &e
+}
+func (e *SourceNewsdataCategory) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "business":
+		fallthrough
+	case "entertainment":
+		fallthrough
+	case "environment":
+		fallthrough
+	case "food":
+		fallthrough
+	case "health":
+		fallthrough
+	case "politics":
+		fallthrough
+	case "science":
+		fallthrough
+	case "sports":
+		fallthrough
+	case "technology":
+		fallthrough
+	case "top":
+		fallthrough
+	case "world":
+		*e = SourceNewsdataCategory(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceNewsdataCategory: %v", v)
+	}
+}
+
 type SourceNewsdataCountry string
 
 const (
@@ -256,59 +309,6 @@ func (e *SourceNewsdataCountry) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type SourceNewsdataCategory string
-
-const (
-	SourceNewsdataCategoryBusiness      SourceNewsdataCategory = "business"
-	SourceNewsdataCategoryEntertainment SourceNewsdataCategory = "entertainment"
-	SourceNewsdataCategoryEnvironment   SourceNewsdataCategory = "environment"
-	SourceNewsdataCategoryFood          SourceNewsdataCategory = "food"
-	SourceNewsdataCategoryHealth        SourceNewsdataCategory = "health"
-	SourceNewsdataCategoryPolitics      SourceNewsdataCategory = "politics"
-	SourceNewsdataCategoryScience       SourceNewsdataCategory = "science"
-	SourceNewsdataCategorySports        SourceNewsdataCategory = "sports"
-	SourceNewsdataCategoryTechnology    SourceNewsdataCategory = "technology"
-	SourceNewsdataCategoryTop           SourceNewsdataCategory = "top"
-	SourceNewsdataCategoryWorld         SourceNewsdataCategory = "world"
-)
-
-func (e SourceNewsdataCategory) ToPointer() *SourceNewsdataCategory {
-	return &e
-}
-func (e *SourceNewsdataCategory) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "business":
-		fallthrough
-	case "entertainment":
-		fallthrough
-	case "environment":
-		fallthrough
-	case "food":
-		fallthrough
-	case "health":
-		fallthrough
-	case "politics":
-		fallthrough
-	case "science":
-		fallthrough
-	case "sports":
-		fallthrough
-	case "technology":
-		fallthrough
-	case "top":
-		fallthrough
-	case "world":
-		*e = SourceNewsdataCategory(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceNewsdataCategory: %v", v)
-	}
-}
-
 type SourceNewsdataLanguage string
 
 const (
@@ -488,17 +488,17 @@ func (e *Newsdata) UnmarshalJSON(data []byte) error {
 }
 
 type SourceNewsdata struct {
+	OneOf any `json:"OneOf,omitempty"`
 	// API Key
 	APIKey string `json:"api_key"`
-	// Domains (maximum 5) to restrict the search to. Use the sources stream to find top sources id.
-	Domain []string `json:"domain,omitempty"`
-	// 2-letter ISO 3166-1 countries (maximum 5) to restrict the search to.
-	Country []SourceNewsdataCountry `json:"country,omitempty"`
 	// Categories (maximum 5) to restrict the search to.
 	Category []SourceNewsdataCategory `json:"category,omitempty"`
+	// 2-letter ISO 3166-1 countries (maximum 5) to restrict the search to.
+	Country []SourceNewsdataCountry `json:"country,omitempty"`
+	// Domains (maximum 5) to restrict the search to. Use the sources stream to find top sources id.
+	Domain []string `json:"domain,omitempty"`
 	// Languages (maximum 5) to restrict the search to.
 	Language   []SourceNewsdataLanguage `json:"language,omitempty"`
-	OneOf      any                      `json:"OneOf,omitempty"`
 	sourceType Newsdata                 `const:"newsdata" json:"sourceType"`
 }
 
@@ -513,25 +513,18 @@ func (s *SourceNewsdata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceNewsdata) GetOneOf() any {
+	if o == nil {
+		return nil
+	}
+	return o.OneOf
+}
+
 func (o *SourceNewsdata) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
-}
-
-func (o *SourceNewsdata) GetDomain() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Domain
-}
-
-func (o *SourceNewsdata) GetCountry() []SourceNewsdataCountry {
-	if o == nil {
-		return nil
-	}
-	return o.Country
 }
 
 func (o *SourceNewsdata) GetCategory() []SourceNewsdataCategory {
@@ -541,18 +534,25 @@ func (o *SourceNewsdata) GetCategory() []SourceNewsdataCategory {
 	return o.Category
 }
 
+func (o *SourceNewsdata) GetCountry() []SourceNewsdataCountry {
+	if o == nil {
+		return nil
+	}
+	return o.Country
+}
+
+func (o *SourceNewsdata) GetDomain() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
+}
+
 func (o *SourceNewsdata) GetLanguage() []SourceNewsdataLanguage {
 	if o == nil {
 		return nil
 	}
 	return o.Language
-}
-
-func (o *SourceNewsdata) GetOneOf() any {
-	if o == nil {
-		return nil
-	}
-	return o.OneOf
 }
 
 func (o *SourceNewsdata) GetSourceType() Newsdata {

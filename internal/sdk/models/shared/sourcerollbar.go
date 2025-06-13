@@ -33,9 +33,9 @@ func (e *Rollbar) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRollbar struct {
+	AccountAccessToken string    `json:"account_access_token"`
 	ProjectAccessToken string    `json:"project_access_token"`
 	StartDate          time.Time `json:"start_date"`
-	AccountAccessToken string    `json:"account_access_token"`
 	sourceType         Rollbar   `const:"rollbar" json:"sourceType"`
 }
 
@@ -50,6 +50,13 @@ func (s *SourceRollbar) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceRollbar) GetAccountAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccountAccessToken
+}
+
 func (o *SourceRollbar) GetProjectAccessToken() string {
 	if o == nil {
 		return ""
@@ -62,13 +69,6 @@ func (o *SourceRollbar) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceRollbar) GetAccountAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountAccessToken
 }
 
 func (o *SourceRollbar) GetSourceType() Rollbar {

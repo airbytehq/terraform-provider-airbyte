@@ -22,27 +22,23 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var credentials *shared.SourceZendeskSunshineAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineOAuth20 *shared.SourceZendeskSunshineOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceZendeskSunshineOAuth20 = &shared.SourceZendeskSunshineOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceZendeskSunshineOAuth20 != nil {
@@ -69,10 +65,14 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshineCreate
 			}
 		}
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskSunshine{
-		Subdomain:   subdomain,
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -144,27 +144,23 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var credentials *shared.SourceZendeskSunshineUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceZendeskSunshineUpdateOAuth20 *shared.SourceZendeskSunshineUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			sourceZendeskSunshineUpdateOAuth20 = &shared.SourceZendeskSunshineUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceZendeskSunshineUpdateOAuth20 != nil {
@@ -191,10 +187,14 @@ func (r *SourceZendeskSunshineResourceModel) ToSharedSourceZendeskSunshinePutReq
 			}
 		}
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceZendeskSunshineUpdate{
-		Subdomain:   subdomain,
-		StartDate:   startDate,
 		Credentials: credentials,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
 	}
 	out := shared.SourceZendeskSunshinePutRequest{
 		Name:          name,

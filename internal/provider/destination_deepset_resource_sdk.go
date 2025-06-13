@@ -30,20 +30,20 @@ func (r *DestinationDeepsetResourceModel) ToSharedDestinationDeepsetCreateReques
 	} else {
 		baseURL = nil
 	}
-	var workspace string
-	workspace = r.Configuration.Workspace.ValueString()
-
 	retries := new(float64)
 	if !r.Configuration.Retries.IsUnknown() && !r.Configuration.Retries.IsNull() {
 		*retries, _ = r.Configuration.Retries.ValueBigFloat().Float64()
 	} else {
 		retries = nil
 	}
+	var workspace string
+	workspace = r.Configuration.Workspace.ValueString()
+
 	configuration := shared.DestinationDeepset{
 		APIKey:    apiKey,
 		BaseURL:   baseURL,
-		Workspace: workspace,
 		Retries:   retries,
+		Workspace: workspace,
 	}
 	out := shared.DestinationDeepsetCreateRequest{
 		Name:          name,
@@ -117,20 +117,20 @@ func (r *DestinationDeepsetResourceModel) ToSharedDestinationDeepsetPutRequest()
 	} else {
 		baseURL = nil
 	}
-	var workspace string
-	workspace = r.Configuration.Workspace.ValueString()
-
 	retries := new(float64)
 	if !r.Configuration.Retries.IsUnknown() && !r.Configuration.Retries.IsNull() {
 		*retries, _ = r.Configuration.Retries.ValueBigFloat().Float64()
 	} else {
 		retries = nil
 	}
+	var workspace string
+	workspace = r.Configuration.Workspace.ValueString()
+
 	configuration := shared.DestinationDeepsetUpdate{
 		APIKey:    apiKey,
 		BaseURL:   baseURL,
-		Workspace: workspace,
 		Retries:   retries,
+		Workspace: workspace,
 	}
 	out := shared.DestinationDeepsetPutRequest{
 		Name:          name,

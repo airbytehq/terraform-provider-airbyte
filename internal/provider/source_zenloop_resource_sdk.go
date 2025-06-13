@@ -30,23 +30,23 @@ func (r *SourceZenloopResourceModel) ToSharedSourceZenloopCreateRequest() *share
 	} else {
 		dateFrom = nil
 	}
-	surveyID := new(string)
-	if !r.Configuration.SurveyID.IsUnknown() && !r.Configuration.SurveyID.IsNull() {
-		*surveyID = r.Configuration.SurveyID.ValueString()
-	} else {
-		surveyID = nil
-	}
 	surveyGroupID := new(string)
 	if !r.Configuration.SurveyGroupID.IsUnknown() && !r.Configuration.SurveyGroupID.IsNull() {
 		*surveyGroupID = r.Configuration.SurveyGroupID.ValueString()
 	} else {
 		surveyGroupID = nil
 	}
+	surveyID := new(string)
+	if !r.Configuration.SurveyID.IsUnknown() && !r.Configuration.SurveyID.IsNull() {
+		*surveyID = r.Configuration.SurveyID.ValueString()
+	} else {
+		surveyID = nil
+	}
 	configuration := shared.SourceZenloop{
 		APIToken:      apiToken,
 		DateFrom:      dateFrom,
-		SurveyID:      surveyID,
 		SurveyGroupID: surveyGroupID,
+		SurveyID:      surveyID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -127,23 +127,23 @@ func (r *SourceZenloopResourceModel) ToSharedSourceZenloopPutRequest() *shared.S
 	} else {
 		dateFrom = nil
 	}
-	surveyID := new(string)
-	if !r.Configuration.SurveyID.IsUnknown() && !r.Configuration.SurveyID.IsNull() {
-		*surveyID = r.Configuration.SurveyID.ValueString()
-	} else {
-		surveyID = nil
-	}
 	surveyGroupID := new(string)
 	if !r.Configuration.SurveyGroupID.IsUnknown() && !r.Configuration.SurveyGroupID.IsNull() {
 		*surveyGroupID = r.Configuration.SurveyGroupID.ValueString()
 	} else {
 		surveyGroupID = nil
 	}
+	surveyID := new(string)
+	if !r.Configuration.SurveyID.IsUnknown() && !r.Configuration.SurveyID.IsNull() {
+		*surveyID = r.Configuration.SurveyID.ValueString()
+	} else {
+		surveyID = nil
+	}
 	configuration := shared.SourceZenloopUpdate{
 		APIToken:      apiToken,
 		DateFrom:      dateFrom,
-		SurveyID:      surveyID,
 		SurveyGroupID: surveyGroupID,
+		SurveyID:      surveyID,
 	}
 	out := shared.SourceZenloopPutRequest{
 		Name:          name,

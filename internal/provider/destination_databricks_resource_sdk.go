@@ -27,27 +27,6 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreate
 	} else {
 		acceptTerms = nil
 	}
-	var hostname string
-	hostname = r.Configuration.Hostname.ValueString()
-
-	var httpPath string
-	httpPath = r.Configuration.HTTPPath.ValueString()
-
-	port := new(string)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueString()
-	} else {
-		port = nil
-	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	schema := new(string)
-	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
-		*schema = r.Configuration.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	var authentication shared.DestinationDatabricksAuthentication
 	var oAuth2Recommended *shared.OAuth2Recommended
 	if r.Configuration.Authentication.OAuth2Recommended != nil {
@@ -81,6 +60,21 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreate
 			DestinationDatabricksPersonalAccessToken: destinationDatabricksPersonalAccessToken,
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var hostname string
+	hostname = r.Configuration.Hostname.ValueString()
+
+	var httpPath string
+	httpPath = r.Configuration.HTTPPath.ValueString()
+
+	port := new(string)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueString()
+	} else {
+		port = nil
+	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
@@ -93,16 +87,22 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksCreate
 	} else {
 		rawSchemaOverride = nil
 	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	configuration := shared.DestinationDatabricks{
 		AcceptTerms:       acceptTerms,
+		Authentication:    authentication,
+		Database:          database,
 		Hostname:          hostname,
 		HTTPPath:          httpPath,
 		Port:              port,
-		Database:          database,
-		Schema:            schema,
-		Authentication:    authentication,
 		PurgeStagingData:  purgeStagingData,
 		RawSchemaOverride: rawSchemaOverride,
+		Schema:            schema,
 	}
 	out := shared.DestinationDatabricksCreateRequest{
 		Name:          name,
@@ -173,27 +173,6 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutReq
 	} else {
 		acceptTerms = nil
 	}
-	var hostname string
-	hostname = r.Configuration.Hostname.ValueString()
-
-	var httpPath string
-	httpPath = r.Configuration.HTTPPath.ValueString()
-
-	port := new(string)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueString()
-	} else {
-		port = nil
-	}
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	schema := new(string)
-	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
-		*schema = r.Configuration.Schema.ValueString()
-	} else {
-		schema = nil
-	}
 	var authentication shared.DestinationDatabricksUpdateAuthentication
 	var destinationDatabricksUpdateOAuth2Recommended *shared.DestinationDatabricksUpdateOAuth2Recommended
 	if r.Configuration.Authentication.OAuth2Recommended != nil {
@@ -227,6 +206,21 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutReq
 			DestinationDatabricksUpdatePersonalAccessToken: destinationDatabricksUpdatePersonalAccessToken,
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	var hostname string
+	hostname = r.Configuration.Hostname.ValueString()
+
+	var httpPath string
+	httpPath = r.Configuration.HTTPPath.ValueString()
+
+	port := new(string)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueString()
+	} else {
+		port = nil
+	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
@@ -239,16 +233,22 @@ func (r *DestinationDatabricksResourceModel) ToSharedDestinationDatabricksPutReq
 	} else {
 		rawSchemaOverride = nil
 	}
+	schema := new(string)
+	if !r.Configuration.Schema.IsUnknown() && !r.Configuration.Schema.IsNull() {
+		*schema = r.Configuration.Schema.ValueString()
+	} else {
+		schema = nil
+	}
 	configuration := shared.DestinationDatabricksUpdate{
 		AcceptTerms:       acceptTerms,
+		Authentication:    authentication,
+		Database:          database,
 		Hostname:          hostname,
 		HTTPPath:          httpPath,
 		Port:              port,
-		Database:          database,
-		Schema:            schema,
-		Authentication:    authentication,
 		PurgeStagingData:  purgeStagingData,
 		RawSchemaOverride: rawSchemaOverride,
+		Schema:            schema,
 	}
 	out := shared.DestinationDatabricksPutRequest{
 		Name:          name,

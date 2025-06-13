@@ -32,36 +32,36 @@ func (e *Rentcast) UnmarshalJSON(data []byte) error {
 }
 
 type SourceRentcast struct {
-	APIKey string `json:"api_key"`
 	// The full address of the property, in the format of Street, City, State, Zip. Used to retrieve data for a specific property, or together with the radius parameter to search for listings in a specific area
 	Address *string `json:"address,omitempty"`
+	APIKey  string  `json:"api_key"`
+	// The number of bathrooms, used to search for listings matching this criteria. Supports fractions to indicate partial bathrooms
+	BathRooms *int64 `json:"bath_rooms,omitempty"`
+	// The number of bedrooms, used to search for listings matching this criteria. Use 0 to indicate a studio layout
+	Bedrooms *float64 `json:"bedrooms,omitempty"`
 	// The name of the city, used to search for listings in a specific city. This parameter is case-sensitive
 	City *string `json:"city,omitempty"`
-	// The 2-character state abbreviation, used to search for listings in a specific state. This parameter is case-sensitive
-	State *string `json:"state,omitempty"`
-	// The 5-digit zip code, used to search for listings in a specific zip code
-	Zipcode *string `json:"zipcode,omitempty"`
+	// The type of aggregate market data to return. Defaults to "All" if not provided : All , Sale , Rental
+	DataType *string `json:"data_type_,omitempty"`
+	// The maximum number of days since a property was listed on the market, with a minimum of 1 or The maximum number of days since a property was last sold, with a minimum of 1. Used to search for properties that were sold within the specified date range
+	DaysOld *string `json:"days_old,omitempty"`
+	// The time range for historical record entries, in months. Defaults to 12 if not provided
+	HistoryRange *string `json:"history_range,omitempty"`
 	// The latitude of the search area. Use the latitude/longitude and radius parameters to search for listings in a specific area
 	Latitude *string `json:"latitude,omitempty"`
 	// The longitude of the search area. Use the latitude/longitude and radius parameters to search for listings in a specific area
 	Longitude *string `json:"longitude,omitempty"`
-	// The radius of the search area in miles, with a maximum of 100. Use in combination with the latitude/longitude or address parameters to search for listings in a specific area
-	Radius *string `json:"radius,omitempty"`
 	// The type of the property, used to search for listings matching this criteria : Single Family , Condo , Townhouse , Manufactured ,  Multi-Family , Apartment , Land ,
 	PropertyType *string `json:"property_type,omitempty"`
-	// The number of bedrooms, used to search for listings matching this criteria. Use 0 to indicate a studio layout
-	Bedrooms *float64 `json:"bedrooms,omitempty"`
-	// The number of bathrooms, used to search for listings matching this criteria. Supports fractions to indicate partial bathrooms
-	BathRooms *int64 `json:"bath_rooms,omitempty"`
+	// The radius of the search area in miles, with a maximum of 100. Use in combination with the latitude/longitude or address parameters to search for listings in a specific area
+	Radius *string `json:"radius,omitempty"`
+	// The 2-character state abbreviation, used to search for listings in a specific state. This parameter is case-sensitive
+	State *string `json:"state,omitempty"`
 	// The current listing status, used to search for listings matching this criteria : Active or Inactive
 	Status *string `json:"status,omitempty"`
-	// The maximum number of days since a property was listed on the market, with a minimum of 1 or The maximum number of days since a property was last sold, with a minimum of 1. Used to search for properties that were sold within the specified date range
-	DaysOld *string `json:"days_old,omitempty"`
-	// The type of aggregate market data to return. Defaults to "All" if not provided : All , Sale , Rental
-	DataType *string `json:"data_type_,omitempty"`
-	// The time range for historical record entries, in months. Defaults to 12 if not provided
-	HistoryRange *string  `json:"history_range,omitempty"`
-	sourceType   Rentcast `const:"rentcast" json:"sourceType"`
+	// The 5-digit zip code, used to search for listings in a specific zip code
+	Zipcode    *string  `json:"zipcode,omitempty"`
+	sourceType Rentcast `const:"rentcast" json:"sourceType"`
 }
 
 func (s SourceRentcast) MarshalJSON() ([]byte, error) {
@@ -75,6 +75,13 @@ func (s *SourceRentcast) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceRentcast) GetAddress() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Address
+}
+
 func (o *SourceRentcast) GetAPIKey() string {
 	if o == nil {
 		return ""
@@ -82,11 +89,18 @@ func (o *SourceRentcast) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceRentcast) GetAddress() *string {
+func (o *SourceRentcast) GetBathRooms() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Address
+	return o.BathRooms
+}
+
+func (o *SourceRentcast) GetBedrooms() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.Bedrooms
 }
 
 func (o *SourceRentcast) GetCity() *string {
@@ -96,18 +110,25 @@ func (o *SourceRentcast) GetCity() *string {
 	return o.City
 }
 
-func (o *SourceRentcast) GetState() *string {
+func (o *SourceRentcast) GetDataType() *string {
 	if o == nil {
 		return nil
 	}
-	return o.State
+	return o.DataType
 }
 
-func (o *SourceRentcast) GetZipcode() *string {
+func (o *SourceRentcast) GetDaysOld() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Zipcode
+	return o.DaysOld
+}
+
+func (o *SourceRentcast) GetHistoryRange() *string {
+	if o == nil {
+		return nil
+	}
+	return o.HistoryRange
 }
 
 func (o *SourceRentcast) GetLatitude() *string {
@@ -124,13 +145,6 @@ func (o *SourceRentcast) GetLongitude() *string {
 	return o.Longitude
 }
 
-func (o *SourceRentcast) GetRadius() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Radius
-}
-
 func (o *SourceRentcast) GetPropertyType() *string {
 	if o == nil {
 		return nil
@@ -138,18 +152,18 @@ func (o *SourceRentcast) GetPropertyType() *string {
 	return o.PropertyType
 }
 
-func (o *SourceRentcast) GetBedrooms() *float64 {
+func (o *SourceRentcast) GetRadius() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Bedrooms
+	return o.Radius
 }
 
-func (o *SourceRentcast) GetBathRooms() *int64 {
+func (o *SourceRentcast) GetState() *string {
 	if o == nil {
 		return nil
 	}
-	return o.BathRooms
+	return o.State
 }
 
 func (o *SourceRentcast) GetStatus() *string {
@@ -159,25 +173,11 @@ func (o *SourceRentcast) GetStatus() *string {
 	return o.Status
 }
 
-func (o *SourceRentcast) GetDaysOld() *string {
+func (o *SourceRentcast) GetZipcode() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DaysOld
-}
-
-func (o *SourceRentcast) GetDataType() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DataType
-}
-
-func (o *SourceRentcast) GetHistoryRange() *string {
-	if o == nil {
-		return nil
-	}
-	return o.HistoryRange
+	return o.Zipcode
 }
 
 func (o *SourceRentcast) GetSourceType() Rentcast {

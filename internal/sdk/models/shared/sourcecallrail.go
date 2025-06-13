@@ -32,10 +32,10 @@ func (e *Callrail) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCallrail struct {
-	// API access key
-	APIKey string `json:"api_key"`
 	// Account ID
 	AccountID string `json:"account_id"`
+	// API access key
+	APIKey string `json:"api_key"`
 	// Start getting data from that date.
 	StartDate  string   `json:"start_date"`
 	sourceType Callrail `const:"callrail" json:"sourceType"`
@@ -52,18 +52,18 @@ func (s *SourceCallrail) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceCallrail) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceCallrail) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceCallrail) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceCallrail) GetStartDate() string {

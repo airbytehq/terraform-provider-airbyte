@@ -21,18 +21,18 @@ func (r *SourceWorkableResourceModel) ToSharedSourceWorkableCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountSubdomain string
 	accountSubdomain = r.Configuration.AccountSubdomain.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
 	configuration := shared.SourceWorkable{
-		APIKey:           apiKey,
 		AccountSubdomain: accountSubdomain,
+		APIKey:           apiKey,
 		StartDate:        startDate,
 	}
 	secretID := new(string)
@@ -105,18 +105,18 @@ func (r *SourceWorkableResourceModel) ToSharedSourceWorkablePutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountSubdomain string
 	accountSubdomain = r.Configuration.AccountSubdomain.ValueString()
+
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
 
 	var startDate string
 	startDate = r.Configuration.StartDate.ValueString()
 
 	configuration := shared.SourceWorkableUpdate{
-		APIKey:           apiKey,
 		AccountSubdomain: accountSubdomain,
+		APIKey:           apiKey,
 		StartDate:        startDate,
 	}
 	out := shared.SourceWorkablePutRequest{

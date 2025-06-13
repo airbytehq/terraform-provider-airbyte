@@ -9,6 +9,219 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+type SourceMssqlSchemasMethod string
+
+const (
+	SourceMssqlSchemasMethodStandard SourceMssqlSchemasMethod = "STANDARD"
+)
+
+func (e SourceMssqlSchemasMethod) ToPointer() *SourceMssqlSchemasMethod {
+	return &e
+}
+func (e *SourceMssqlSchemasMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "STANDARD":
+		*e = SourceMssqlSchemasMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMssqlSchemasMethod: %v", v)
+	}
+}
+
+// ScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type ScanChangesWithUserDefinedCursor struct {
+	method SourceMssqlSchemasMethod `const:"STANDARD" json:"method"`
+}
+
+func (s ScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ScanChangesWithUserDefinedCursor) GetMethod() SourceMssqlSchemasMethod {
+	return SourceMssqlSchemasMethodStandard
+}
+
+// SourceMssqlInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+type SourceMssqlInvalidCDCPositionBehaviorAdvanced string
+
+const (
+	SourceMssqlInvalidCDCPositionBehaviorAdvancedFailSync   SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Fail sync"
+	SourceMssqlInvalidCDCPositionBehaviorAdvancedReSyncData SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
+)
+
+func (e SourceMssqlInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
+	return &e
+}
+func (e *SourceMssqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Fail sync":
+		fallthrough
+	case "Re-sync data":
+		*e = SourceMssqlInvalidCDCPositionBehaviorAdvanced(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMssqlInvalidCDCPositionBehaviorAdvanced: %v", v)
+	}
+}
+
+type SourceMssqlMethod string
+
+const (
+	SourceMssqlMethodCdc SourceMssqlMethod = "CDC"
+)
+
+func (e SourceMssqlMethod) ToPointer() *SourceMssqlMethod {
+	return &e
+}
+func (e *SourceMssqlMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CDC":
+		*e = SourceMssqlMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMssqlMethod: %v", v)
+	}
+}
+
+// ReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.
+type ReadChangesUsingChangeDataCaptureCDC struct {
+	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 3600 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
+	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourceMssqlInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	method                           SourceMssqlMethod                              `const:"CDC" json:"method"`
+	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+	QueueSize *int64 `default:"10000" json:"queue_size"`
+}
+
+func (r ReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *ReadChangesUsingChangeDataCaptureCDC) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
+func (o *ReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
+	if o == nil {
+		return nil
+	}
+	return o.InvalidCdcCursorPositionBehavior
+}
+
+func (o *ReadChangesUsingChangeDataCaptureCDC) GetMethod() SourceMssqlMethod {
+	return SourceMssqlMethodCdc
+}
+
+func (o *ReadChangesUsingChangeDataCaptureCDC) GetQueueSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.QueueSize
+}
+
+type UpdateMethodType string
+
+const (
+	UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC UpdateMethodType = "Read Changes using Change Data Capture (CDC)"
+	UpdateMethodTypeScanChangesWithUserDefinedCursor     UpdateMethodType = "Scan Changes with User Defined Cursor"
+)
+
+// UpdateMethod - Configures how data is extracted from the database.
+type UpdateMethod struct {
+	ReadChangesUsingChangeDataCaptureCDC *ReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
+	ScanChangesWithUserDefinedCursor     *ScanChangesWithUserDefinedCursor     `queryParam:"inline"`
+
+	Type UpdateMethodType
+}
+
+func CreateUpdateMethodReadChangesUsingChangeDataCaptureCDC(readChangesUsingChangeDataCaptureCDC ReadChangesUsingChangeDataCaptureCDC) UpdateMethod {
+	typ := UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
+
+	return UpdateMethod{
+		ReadChangesUsingChangeDataCaptureCDC: &readChangesUsingChangeDataCaptureCDC,
+		Type:                                 typ,
+	}
+}
+
+func CreateUpdateMethodScanChangesWithUserDefinedCursor(scanChangesWithUserDefinedCursor ScanChangesWithUserDefinedCursor) UpdateMethod {
+	typ := UpdateMethodTypeScanChangesWithUserDefinedCursor
+
+	return UpdateMethod{
+		ScanChangesWithUserDefinedCursor: &scanChangesWithUserDefinedCursor,
+		Type:                             typ,
+	}
+}
+
+func (u *UpdateMethod) UnmarshalJSON(data []byte) error {
+
+	var scanChangesWithUserDefinedCursor ScanChangesWithUserDefinedCursor = ScanChangesWithUserDefinedCursor{}
+	if err := utils.UnmarshalJSON(data, &scanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.ScanChangesWithUserDefinedCursor = &scanChangesWithUserDefinedCursor
+		u.Type = UpdateMethodTypeScanChangesWithUserDefinedCursor
+		return nil
+	}
+
+	var readChangesUsingChangeDataCaptureCDC ReadChangesUsingChangeDataCaptureCDC = ReadChangesUsingChangeDataCaptureCDC{}
+	if err := utils.UnmarshalJSON(data, &readChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
+		u.ReadChangesUsingChangeDataCaptureCDC = &readChangesUsingChangeDataCaptureCDC
+		u.Type = UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateMethod", string(data))
+}
+
+func (u UpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.ReadChangesUsingChangeDataCaptureCDC != nil {
+		return utils.MarshalJSON(u.ReadChangesUsingChangeDataCaptureCDC, "", true)
+	}
+
+	if u.ScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type UpdateMethod: all fields are null")
+}
+
 type SourceMssqlSchemasSslMethod string
 
 const (
@@ -34,11 +247,11 @@ func (e *SourceMssqlSchemasSslMethod) UnmarshalJSON(data []byte) error {
 
 // EncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type EncryptedVerifyCertificate struct {
-	sslMethod SourceMssqlSchemasSslMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
-	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-	HostNameInCertificate *string `json:"hostNameInCertificate,omitempty"`
 	// certificate of the server, or of the CA that signed the server certificate
 	Certificate *string `json:"certificate,omitempty"`
+	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
+	HostNameInCertificate *string                     `json:"hostNameInCertificate,omitempty"`
+	sslMethod             SourceMssqlSchemasSslMethod `const:"encrypted_verify_certificate" json:"ssl_method"`
 }
 
 func (e EncryptedVerifyCertificate) MarshalJSON() ([]byte, error) {
@@ -52,8 +265,11 @@ func (e *EncryptedVerifyCertificate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EncryptedVerifyCertificate) GetSslMethod() SourceMssqlSchemasSslMethod {
-	return SourceMssqlSchemasSslMethodEncryptedVerifyCertificate
+func (o *EncryptedVerifyCertificate) GetCertificate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Certificate
 }
 
 func (o *EncryptedVerifyCertificate) GetHostNameInCertificate() *string {
@@ -63,11 +279,8 @@ func (o *EncryptedVerifyCertificate) GetHostNameInCertificate() *string {
 	return o.HostNameInCertificate
 }
 
-func (o *EncryptedVerifyCertificate) GetCertificate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Certificate
+func (o *EncryptedVerifyCertificate) GetSslMethod() SourceMssqlSchemasSslMethod {
+	return SourceMssqlSchemasSslMethodEncryptedVerifyCertificate
 }
 
 type SourceMssqlSslMethod string
@@ -242,219 +455,6 @@ func (u SSLMethod) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SSLMethod: all fields are null")
 }
 
-type SourceMssqlMethod string
-
-const (
-	SourceMssqlMethodStandard SourceMssqlMethod = "STANDARD"
-)
-
-func (e SourceMssqlMethod) ToPointer() *SourceMssqlMethod {
-	return &e
-}
-func (e *SourceMssqlMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STANDARD":
-		*e = SourceMssqlMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMssqlMethod: %v", v)
-	}
-}
-
-// ScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type ScanChangesWithUserDefinedCursor struct {
-	method SourceMssqlMethod `const:"STANDARD" json:"method"`
-}
-
-func (s ScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *ScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ScanChangesWithUserDefinedCursor) GetMethod() SourceMssqlMethod {
-	return SourceMssqlMethodStandard
-}
-
-type Method string
-
-const (
-	MethodCdc Method = "CDC"
-)
-
-func (e Method) ToPointer() *Method {
-	return &e
-}
-func (e *Method) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CDC":
-		*e = Method(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Method: %v", v)
-	}
-}
-
-// SourceMssqlInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-type SourceMssqlInvalidCDCPositionBehaviorAdvanced string
-
-const (
-	SourceMssqlInvalidCDCPositionBehaviorAdvancedFailSync   SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Fail sync"
-	SourceMssqlInvalidCDCPositionBehaviorAdvancedReSyncData SourceMssqlInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
-)
-
-func (e SourceMssqlInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
-	return &e
-}
-func (e *SourceMssqlInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Fail sync":
-		fallthrough
-	case "Re-sync data":
-		*e = SourceMssqlInvalidCDCPositionBehaviorAdvanced(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMssqlInvalidCDCPositionBehaviorAdvanced: %v", v)
-	}
-}
-
-// ReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.
-type ReadChangesUsingChangeDataCaptureCDC struct {
-	method Method `const:"CDC" json:"method"`
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 3600 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceMssqlInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-	QueueSize *int64 `default:"10000" json:"queue_size"`
-	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
-	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
-}
-
-func (r ReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(r, "", false)
-}
-
-func (r *ReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *ReadChangesUsingChangeDataCaptureCDC) GetMethod() Method {
-	return MethodCdc
-}
-
-func (o *ReadChangesUsingChangeDataCaptureCDC) GetInitialWaitingSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialWaitingSeconds
-}
-
-func (o *ReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceMssqlInvalidCDCPositionBehaviorAdvanced {
-	if o == nil {
-		return nil
-	}
-	return o.InvalidCdcCursorPositionBehavior
-}
-
-func (o *ReadChangesUsingChangeDataCaptureCDC) GetQueueSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.QueueSize
-}
-
-func (o *ReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
-}
-
-type UpdateMethodType string
-
-const (
-	UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC UpdateMethodType = "Read Changes using Change Data Capture (CDC)"
-	UpdateMethodTypeScanChangesWithUserDefinedCursor     UpdateMethodType = "Scan Changes with User Defined Cursor"
-)
-
-// UpdateMethod - Configures how data is extracted from the database.
-type UpdateMethod struct {
-	ReadChangesUsingChangeDataCaptureCDC *ReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
-	ScanChangesWithUserDefinedCursor     *ScanChangesWithUserDefinedCursor     `queryParam:"inline"`
-
-	Type UpdateMethodType
-}
-
-func CreateUpdateMethodReadChangesUsingChangeDataCaptureCDC(readChangesUsingChangeDataCaptureCDC ReadChangesUsingChangeDataCaptureCDC) UpdateMethod {
-	typ := UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
-
-	return UpdateMethod{
-		ReadChangesUsingChangeDataCaptureCDC: &readChangesUsingChangeDataCaptureCDC,
-		Type:                                 typ,
-	}
-}
-
-func CreateUpdateMethodScanChangesWithUserDefinedCursor(scanChangesWithUserDefinedCursor ScanChangesWithUserDefinedCursor) UpdateMethod {
-	typ := UpdateMethodTypeScanChangesWithUserDefinedCursor
-
-	return UpdateMethod{
-		ScanChangesWithUserDefinedCursor: &scanChangesWithUserDefinedCursor,
-		Type:                             typ,
-	}
-}
-
-func (u *UpdateMethod) UnmarshalJSON(data []byte) error {
-
-	var scanChangesWithUserDefinedCursor ScanChangesWithUserDefinedCursor = ScanChangesWithUserDefinedCursor{}
-	if err := utils.UnmarshalJSON(data, &scanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.ScanChangesWithUserDefinedCursor = &scanChangesWithUserDefinedCursor
-		u.Type = UpdateMethodTypeScanChangesWithUserDefinedCursor
-		return nil
-	}
-
-	var readChangesUsingChangeDataCaptureCDC ReadChangesUsingChangeDataCaptureCDC = ReadChangesUsingChangeDataCaptureCDC{}
-	if err := utils.UnmarshalJSON(data, &readChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
-		u.ReadChangesUsingChangeDataCaptureCDC = &readChangesUsingChangeDataCaptureCDC
-		u.Type = UpdateMethodTypeReadChangesUsingChangeDataCaptureCDC
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UpdateMethod", string(data))
-}
-
-func (u UpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.ReadChangesUsingChangeDataCaptureCDC != nil {
-		return utils.MarshalJSON(u.ReadChangesUsingChangeDataCaptureCDC, "", true)
-	}
-
-	if u.ScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.ScanChangesWithUserDefinedCursor, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UpdateMethod: all fields are null")
-}
-
 // SourceMssqlSchemasTunnelMethodTunnelMethod - Connect through a jump server tunnel host using username and password authentication
 type SourceMssqlSchemasTunnelMethodTunnelMethod string
 
@@ -480,10 +480,10 @@ func (e *SourceMssqlSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []byte) 
 }
 
 type SourceMssqlPasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod SourceMssqlSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod SourceMssqlSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -503,15 +503,15 @@ func (s *SourceMssqlPasswordAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMssqlPasswordAuthentication) GetTunnelMethod() SourceMssqlSchemasTunnelMethodTunnelMethod {
-	return SourceMssqlSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *SourceMssqlPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceMssqlPasswordAuthentication) GetTunnelMethod() SourceMssqlSchemasTunnelMethodTunnelMethod {
+	return SourceMssqlSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *SourceMssqlPasswordAuthentication) GetTunnelPort() *int64 {
@@ -560,16 +560,16 @@ func (e *SourceMssqlSchemasTunnelMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMssqlSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod SourceMssqlSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod SourceMssqlSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (s SourceMssqlSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -583,8 +583,11 @@ func (s *SourceMssqlSSHKeyAuthentication) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMssqlSSHKeyAuthentication) GetTunnelMethod() SourceMssqlSchemasTunnelMethod {
-	return SourceMssqlSchemasTunnelMethodSSHKeyAuth
+func (o *SourceMssqlSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *SourceMssqlSSHKeyAuthentication) GetTunnelHost() string {
@@ -592,6 +595,10 @@ func (o *SourceMssqlSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceMssqlSSHKeyAuthentication) GetTunnelMethod() SourceMssqlSchemasTunnelMethod {
+	return SourceMssqlSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *SourceMssqlSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -606,13 +613,6 @@ func (o *SourceMssqlSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceMssqlSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // SourceMssqlTunnelMethod - No ssh tunnel needed to connect to database
@@ -769,27 +769,27 @@ func (e *Mssql) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMssql struct {
-	// The hostname of the database.
-	Host string `json:"host"`
-	// The port of the database.
-	Port int64 `json:"port"`
 	// The name of the database.
 	Database string `json:"database"`
-	// The list of schemas to sync from. Defaults to user. Case sensitive.
-	Schemas []string `json:"schemas,omitempty"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// The password associated with the username.
-	Password string `json:"password"`
+	// The hostname of the database.
+	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The encryption method which is used when communicating with the database.
-	SslMethod *SSLMethod `json:"ssl_method,omitempty"`
+	// The password associated with the username.
+	Password string `json:"password"`
+	// The port of the database.
+	Port int64 `json:"port"`
 	// Configures how data is extracted from the database.
 	ReplicationMethod *UpdateMethod `json:"replication_method,omitempty"`
+	// The list of schemas to sync from. Defaults to user. Case sensitive.
+	Schemas []string `json:"schemas,omitempty"`
+	// The encryption method which is used when communicating with the database.
+	SslMethod *SSLMethod `json:"ssl_method,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceMssqlSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	sourceType   Mssql                       `const:"mssql" json:"sourceType"`
+	// The username which is used to access the database.
+	Username   string `json:"username"`
+	sourceType Mssql  `const:"mssql" json:"sourceType"`
 }
 
 func (s SourceMssql) MarshalJSON() ([]byte, error) {
@@ -803,20 +803,6 @@ func (s *SourceMssql) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMssql) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceMssql) GetPort() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Port
-}
-
 func (o *SourceMssql) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -824,25 +810,11 @@ func (o *SourceMssql) GetDatabase() string {
 	return o.Database
 }
 
-func (o *SourceMssql) GetSchemas() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Schemas
-}
-
-func (o *SourceMssql) GetUsername() string {
+func (o *SourceMssql) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
-}
-
-func (o *SourceMssql) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
+	return o.Host
 }
 
 func (o *SourceMssql) GetJdbcURLParams() *string {
@@ -852,11 +824,18 @@ func (o *SourceMssql) GetJdbcURLParams() *string {
 	return o.JdbcURLParams
 }
 
-func (o *SourceMssql) GetSslMethod() *SSLMethod {
+func (o *SourceMssql) GetPassword() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.SslMethod
+	return o.Password
+}
+
+func (o *SourceMssql) GetPort() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Port
 }
 
 func (o *SourceMssql) GetReplicationMethod() *UpdateMethod {
@@ -866,11 +845,32 @@ func (o *SourceMssql) GetReplicationMethod() *UpdateMethod {
 	return o.ReplicationMethod
 }
 
+func (o *SourceMssql) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceMssql) GetSslMethod() *SSLMethod {
+	if o == nil {
+		return nil
+	}
+	return o.SslMethod
+}
+
 func (o *SourceMssql) GetTunnelMethod() *SourceMssqlSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *SourceMssql) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceMssql) GetSourceType() Mssql {

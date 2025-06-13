@@ -9,8 +9,8 @@ import (
 
 type SourceStatsigUpdate struct {
 	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
 	EndDate   time.Time `json:"end_date"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceStatsigUpdate) MarshalJSON() ([]byte, error) {
@@ -31,16 +31,16 @@ func (o *SourceStatsigUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceStatsigUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceStatsigUpdate) GetEndDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.EndDate
+}
+
+func (o *SourceStatsigUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

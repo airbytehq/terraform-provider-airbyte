@@ -164,19 +164,6 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									ElementType: types.StringType,
 									Description: `A list of chosen action_breakdowns for action_breakdowns`,
 								},
-								"action_report_time": schema.StringAttribute{
-									Computed:    true,
-									Optional:    true,
-									Default:     stringdefault.StaticString(`mixed`),
-									Description: `Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd. Default: "mixed"; must be one of ["conversion", "impression", "mixed"]`,
-									Validators: []validator.String{
-										stringvalidator.OneOf(
-											"conversion",
-											"impression",
-											"mixed",
-										),
-									},
-								},
 								"breakdowns": schema.ListAttribute{
 									Computed:    true,
 									Optional:    true,

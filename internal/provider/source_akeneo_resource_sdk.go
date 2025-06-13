@@ -21,17 +21,17 @@ func (r *SourceAkeneoResourceModel) ToSharedSourceAkeneoCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var apiUsername string
 	apiUsername = r.Configuration.APIUsername.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
+
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	var password string
+	password = r.Configuration.Password.ValueString()
 
 	secret := new(string)
 	if !r.Configuration.Secret.IsUnknown() && !r.Configuration.Secret.IsNull() {
@@ -40,10 +40,10 @@ func (r *SourceAkeneoResourceModel) ToSharedSourceAkeneoCreateRequest() *shared.
 		secret = nil
 	}
 	configuration := shared.SourceAkeneo{
-		Host:        host,
 		APIUsername: apiUsername,
-		Password:    password,
 		ClientID:    clientID,
+		Host:        host,
+		Password:    password,
 		Secret:      secret,
 	}
 	secretID := new(string)
@@ -116,17 +116,17 @@ func (r *SourceAkeneoResourceModel) ToSharedSourceAkeneoPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
 	var apiUsername string
 	apiUsername = r.Configuration.APIUsername.ValueString()
 
-	var password string
-	password = r.Configuration.Password.ValueString()
-
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
+
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	var password string
+	password = r.Configuration.Password.ValueString()
 
 	secret := new(string)
 	if !r.Configuration.Secret.IsUnknown() && !r.Configuration.Secret.IsNull() {
@@ -135,10 +135,10 @@ func (r *SourceAkeneoResourceModel) ToSharedSourceAkeneoPutRequest() *shared.Sou
 		secret = nil
 	}
 	configuration := shared.SourceAkeneoUpdate{
-		Host:        host,
 		APIUsername: apiUsername,
-		Password:    password,
 		ClientID:    clientID,
+		Host:        host,
+		Password:    password,
 		Secret:      secret,
 	}
 	out := shared.SourceAkeneoPutRequest{

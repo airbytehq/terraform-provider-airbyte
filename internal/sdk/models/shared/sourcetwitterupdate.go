@@ -10,12 +10,12 @@ import (
 type SourceTwitterUpdate struct {
 	// App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
 	APIKey string `json:"api_key"`
+	// The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
+	EndDate *time.Time `json:"end_date,omitempty"`
 	// Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
 	Query string `json:"query"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
-	EndDate *time.Time `json:"end_date,omitempty"`
 }
 
 func (s SourceTwitterUpdate) MarshalJSON() ([]byte, error) {
@@ -36,6 +36,13 @@ func (o *SourceTwitterUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceTwitterUpdate) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
 func (o *SourceTwitterUpdate) GetQuery() string {
 	if o == nil {
 		return ""
@@ -48,11 +55,4 @@ func (o *SourceTwitterUpdate) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceTwitterUpdate) GetEndDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
 }

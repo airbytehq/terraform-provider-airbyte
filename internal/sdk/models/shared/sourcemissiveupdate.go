@@ -38,11 +38,11 @@ func (e *SourceMissiveUpdateKind) UnmarshalJSON(data []byte) error {
 
 type SourceMissiveUpdate struct {
 	APIKey string `json:"api_key"`
+	// Kind parameter for `contact_groups` stream
+	Kind *SourceMissiveUpdateKind `default:"group" json:"kind"`
 	// Max records per page limit
 	Limit     *string   `default:"50" json:"limit"`
 	StartDate time.Time `json:"start_date"`
-	// Kind parameter for `contact_groups` stream
-	Kind *SourceMissiveUpdateKind `default:"group" json:"kind"`
 }
 
 func (s SourceMissiveUpdate) MarshalJSON() ([]byte, error) {
@@ -63,6 +63,13 @@ func (o *SourceMissiveUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceMissiveUpdate) GetKind() *SourceMissiveUpdateKind {
+	if o == nil {
+		return nil
+	}
+	return o.Kind
+}
+
 func (o *SourceMissiveUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
@@ -75,11 +82,4 @@ func (o *SourceMissiveUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceMissiveUpdate) GetKind() *SourceMissiveUpdateKind {
-	if o == nil {
-		return nil
-	}
-	return o.Kind
 }

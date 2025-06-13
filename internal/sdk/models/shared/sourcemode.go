@@ -32,10 +32,10 @@ func (e *SourceModeMode) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMode struct {
-	// API token to use as the username for Basic Authentication.
-	APIToken string `json:"api_token"`
 	// API secret to use as the password for Basic Authentication.
-	APISecret  string         `json:"api_secret"`
+	APISecret string `json:"api_secret"`
+	// API token to use as the username for Basic Authentication.
+	APIToken   string         `json:"api_token"`
 	Workspace  string         `json:"workspace"`
 	sourceType SourceModeMode `const:"mode" json:"sourceType"`
 }
@@ -51,18 +51,18 @@ func (s *SourceMode) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMode) GetAPIToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIToken
-}
-
 func (o *SourceMode) GetAPISecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.APISecret
+}
+
+func (o *SourceMode) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
 }
 
 func (o *SourceMode) GetWorkspace() string {

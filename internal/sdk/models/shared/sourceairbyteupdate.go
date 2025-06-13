@@ -8,11 +8,11 @@ import (
 )
 
 type SourceAirbyteUpdate struct {
-	ClientID     string    `json:"client_id"`
-	ClientSecret string    `json:"client_secret"`
-	StartDate    time.Time `json:"start_date"`
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// The Host URL of your Self-Managed Deployment (e.x. airbtye.mydomain.com)
-	Host *string `json:"host,omitempty"`
+	Host      *string   `json:"host,omitempty"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceAirbyteUpdate) MarshalJSON() ([]byte, error) {
@@ -40,16 +40,16 @@ func (o *SourceAirbyteUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceAirbyteUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceAirbyteUpdate) GetHost() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Host
+}
+
+func (o *SourceAirbyteUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

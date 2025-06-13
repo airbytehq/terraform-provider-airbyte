@@ -36,11 +36,11 @@ type DestinationDeepset struct {
 	APIKey string `json:"api_key"`
 	// URL of deepset Cloud API (e.g. https://api.cloud.deepset.ai, https://api.us.deepset.ai, etc). Defaults to https://api.cloud.deepset.ai.
 	BaseURL *string `default:"https://api.cloud.deepset.ai" json:"base_url"`
-	// Name of workspace to which to sync the data.
-	Workspace string `json:"workspace"`
 	// Number of times to retry an action before giving up.
-	Retries         *float64 `default:"5" json:"retries"`
-	destinationType Deepset  `const:"deepset" json:"destinationType"`
+	Retries *float64 `default:"5" json:"retries"`
+	// Name of workspace to which to sync the data.
+	Workspace       string  `json:"workspace"`
+	destinationType Deepset `const:"deepset" json:"destinationType"`
 }
 
 func (d DestinationDeepset) MarshalJSON() ([]byte, error) {
@@ -68,18 +68,18 @@ func (o *DestinationDeepset) GetBaseURL() *string {
 	return o.BaseURL
 }
 
-func (o *DestinationDeepset) GetWorkspace() string {
-	if o == nil {
-		return ""
-	}
-	return o.Workspace
-}
-
 func (o *DestinationDeepset) GetRetries() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.Retries
+}
+
+func (o *DestinationDeepset) GetWorkspace() string {
+	if o == nil {
+		return ""
+	}
+	return o.Workspace
 }
 
 func (o *DestinationDeepset) GetDestinationType() Deepset {

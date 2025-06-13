@@ -47,8 +47,8 @@ func (e *SourceZohoCampaignUpdateDataCenter) UnmarshalJSON(data []byte) error {
 
 type SourceZohoCampaignUpdate struct {
 	ClientID2          string                             `json:"client_id_2"`
-	ClientSecret2      string                             `json:"client_secret_2"`
 	ClientRefreshToken string                             `json:"client_refresh_token"`
+	ClientSecret2      string                             `json:"client_secret_2"`
 	DataCenter         SourceZohoCampaignUpdateDataCenter `json:"data_center"`
 }
 
@@ -59,18 +59,18 @@ func (o *SourceZohoCampaignUpdate) GetClientID2() string {
 	return o.ClientID2
 }
 
-func (o *SourceZohoCampaignUpdate) GetClientSecret2() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret2
-}
-
 func (o *SourceZohoCampaignUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceZohoCampaignUpdate) GetClientSecret2() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret2
 }
 
 func (o *SourceZohoCampaignUpdate) GetDataCenter() SourceZohoCampaignUpdateDataCenter {

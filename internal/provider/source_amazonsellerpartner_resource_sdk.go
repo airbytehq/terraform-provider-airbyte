@@ -22,18 +22,6 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	awsEnvironment := new(shared.AWSEnvironment)
-	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
-		*awsEnvironment = shared.AWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
-	} else {
-		awsEnvironment = nil
-	}
-	region := new(shared.AWSRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.AWSRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
-	}
 	accountType := new(shared.AWSSellerPartnerAccountType)
 	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
 		*accountType = shared.AWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
@@ -46,20 +34,38 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		appID = nil
 	}
+	awsEnvironment := new(shared.AWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.AWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	} else {
+		awsEnvironment = nil
+	}
+	financialEventsStep := new(shared.FinancialEventsStepSizeInDays)
+	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
+		*financialEventsStep = shared.FinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
+	} else {
+		financialEventsStep = nil
+	}
 	var lwaAppID string
 	lwaAppID = r.Configuration.LwaAppID.ValueString()
 
 	var lwaClientSecret string
 	lwaClientSecret = r.Configuration.LwaClientSecret.ValueString()
 
+	periodInDays := new(int64)
+	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
+		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
+	} else {
+		periodInDays = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	replicationStartDate := new(time.Time)
-	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
-		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
+	region := new(shared.AWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.AWSRegion(r.Configuration.Region.ValueString())
 	} else {
-		replicationStartDate = nil
+		region = nil
 	}
 	replicationEndDate := new(time.Time)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
@@ -67,18 +73,14 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		replicationEndDate = nil
 	}
-	periodInDays := new(int64)
-	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
-		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
+	replicationStartDate := new(time.Time)
+	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
+		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	} else {
-		periodInDays = nil
+		replicationStartDate = nil
 	}
 	var reportOptionsList []shared.ReportOptions = []shared.ReportOptions{}
 	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
-		reportName := shared.ReportName(reportOptionsListItem.ReportName.ValueString())
-		var streamName string
-		streamName = reportOptionsListItem.StreamName.ValueString()
-
 		var optionsList []shared.OptionsList = []shared.OptionsList{}
 		for _, optionsListItem := range reportOptionsListItem.OptionsList {
 			var optionName string
@@ -92,10 +94,14 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 				OptionValue: optionValue,
 			})
 		}
+		reportName := shared.ReportName(reportOptionsListItem.ReportName.ValueString())
+		var streamName string
+		streamName = reportOptionsListItem.StreamName.ValueString()
+
 		reportOptionsList = append(reportOptionsList, shared.ReportOptions{
+			OptionsList: optionsList,
 			ReportName:  reportName,
 			StreamName:  streamName,
-			OptionsList: optionsList,
 		})
 	}
 	waitToAvoidFatalErrors := new(bool)
@@ -104,26 +110,20 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		waitToAvoidFatalErrors = nil
 	}
-	financialEventsStep := new(shared.FinancialEventsStepSizeInDays)
-	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
-		*financialEventsStep = shared.FinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
-	} else {
-		financialEventsStep = nil
-	}
 	configuration := shared.SourceAmazonSellerPartner{
-		AwsEnvironment:         awsEnvironment,
-		Region:                 region,
 		AccountType:            accountType,
 		AppID:                  appID,
+		AwsEnvironment:         awsEnvironment,
+		FinancialEventsStep:    financialEventsStep,
 		LwaAppID:               lwaAppID,
 		LwaClientSecret:        lwaClientSecret,
-		RefreshToken:           refreshToken,
-		ReplicationStartDate:   replicationStartDate,
-		ReplicationEndDate:     replicationEndDate,
 		PeriodInDays:           periodInDays,
+		RefreshToken:           refreshToken,
+		Region:                 region,
+		ReplicationEndDate:     replicationEndDate,
+		ReplicationStartDate:   replicationStartDate,
 		ReportOptionsList:      reportOptionsList,
 		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
-		FinancialEventsStep:    financialEventsStep,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -195,18 +195,6 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	awsEnvironment := new(shared.SourceAmazonSellerPartnerUpdateAWSEnvironment)
-	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
-		*awsEnvironment = shared.SourceAmazonSellerPartnerUpdateAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
-	} else {
-		awsEnvironment = nil
-	}
-	region := new(shared.SourceAmazonSellerPartnerUpdateAWSRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceAmazonSellerPartnerUpdateAWSRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
-	}
 	accountType := new(shared.SourceAmazonSellerPartnerUpdateAWSSellerPartnerAccountType)
 	if !r.Configuration.AccountType.IsUnknown() && !r.Configuration.AccountType.IsNull() {
 		*accountType = shared.SourceAmazonSellerPartnerUpdateAWSSellerPartnerAccountType(r.Configuration.AccountType.ValueString())
@@ -219,20 +207,38 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		appID = nil
 	}
+	awsEnvironment := new(shared.SourceAmazonSellerPartnerUpdateAWSEnvironment)
+	if !r.Configuration.AwsEnvironment.IsUnknown() && !r.Configuration.AwsEnvironment.IsNull() {
+		*awsEnvironment = shared.SourceAmazonSellerPartnerUpdateAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
+	} else {
+		awsEnvironment = nil
+	}
+	financialEventsStep := new(shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays)
+	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
+		*financialEventsStep = shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
+	} else {
+		financialEventsStep = nil
+	}
 	var lwaAppID string
 	lwaAppID = r.Configuration.LwaAppID.ValueString()
 
 	var lwaClientSecret string
 	lwaClientSecret = r.Configuration.LwaClientSecret.ValueString()
 
+	periodInDays := new(int64)
+	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
+		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
+	} else {
+		periodInDays = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	replicationStartDate := new(time.Time)
-	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
-		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
+	region := new(shared.SourceAmazonSellerPartnerUpdateAWSRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonSellerPartnerUpdateAWSRegion(r.Configuration.Region.ValueString())
 	} else {
-		replicationStartDate = nil
+		region = nil
 	}
 	replicationEndDate := new(time.Time)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
@@ -240,18 +246,14 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		replicationEndDate = nil
 	}
-	periodInDays := new(int64)
-	if !r.Configuration.PeriodInDays.IsUnknown() && !r.Configuration.PeriodInDays.IsNull() {
-		*periodInDays = r.Configuration.PeriodInDays.ValueInt64()
+	replicationStartDate := new(time.Time)
+	if !r.Configuration.ReplicationStartDate.IsUnknown() && !r.Configuration.ReplicationStartDate.IsNull() {
+		*replicationStartDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	} else {
-		periodInDays = nil
+		replicationStartDate = nil
 	}
 	var reportOptionsList []shared.SourceAmazonSellerPartnerUpdateReportOptions = []shared.SourceAmazonSellerPartnerUpdateReportOptions{}
 	for _, reportOptionsListItem := range r.Configuration.ReportOptionsList {
-		reportName := shared.SourceAmazonSellerPartnerUpdateReportName(reportOptionsListItem.ReportName.ValueString())
-		var streamName string
-		streamName = reportOptionsListItem.StreamName.ValueString()
-
 		var optionsList []shared.SourceAmazonSellerPartnerUpdateOptionsList = []shared.SourceAmazonSellerPartnerUpdateOptionsList{}
 		for _, optionsListItem := range reportOptionsListItem.OptionsList {
 			var optionName string
@@ -265,10 +267,14 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 				OptionValue: optionValue,
 			})
 		}
+		reportName := shared.SourceAmazonSellerPartnerUpdateReportName(reportOptionsListItem.ReportName.ValueString())
+		var streamName string
+		streamName = reportOptionsListItem.StreamName.ValueString()
+
 		reportOptionsList = append(reportOptionsList, shared.SourceAmazonSellerPartnerUpdateReportOptions{
+			OptionsList: optionsList,
 			ReportName:  reportName,
 			StreamName:  streamName,
-			OptionsList: optionsList,
 		})
 	}
 	waitToAvoidFatalErrors := new(bool)
@@ -277,26 +283,20 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToSharedSourceAmazonSellerPartn
 	} else {
 		waitToAvoidFatalErrors = nil
 	}
-	financialEventsStep := new(shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays)
-	if !r.Configuration.FinancialEventsStep.IsUnknown() && !r.Configuration.FinancialEventsStep.IsNull() {
-		*financialEventsStep = shared.SourceAmazonSellerPartnerUpdateFinancialEventsStepSizeInDays(r.Configuration.FinancialEventsStep.ValueString())
-	} else {
-		financialEventsStep = nil
-	}
 	configuration := shared.SourceAmazonSellerPartnerUpdate{
-		AwsEnvironment:         awsEnvironment,
-		Region:                 region,
 		AccountType:            accountType,
 		AppID:                  appID,
+		AwsEnvironment:         awsEnvironment,
+		FinancialEventsStep:    financialEventsStep,
 		LwaAppID:               lwaAppID,
 		LwaClientSecret:        lwaClientSecret,
-		RefreshToken:           refreshToken,
-		ReplicationStartDate:   replicationStartDate,
-		ReplicationEndDate:     replicationEndDate,
 		PeriodInDays:           periodInDays,
+		RefreshToken:           refreshToken,
+		Region:                 region,
+		ReplicationEndDate:     replicationEndDate,
+		ReplicationStartDate:   replicationStartDate,
 		ReportOptionsList:      reportOptionsList,
 		WaitToAvoidFatalErrors: waitToAvoidFatalErrors,
-		FinancialEventsStep:    financialEventsStep,
 	}
 	out := shared.SourceAmazonSellerPartnerPutRequest{
 		Name:          name,

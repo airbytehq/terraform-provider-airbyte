@@ -5,6 +5,7 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceCalendly struct {
-	APIKey    types.String `tfsdk:"api_key"`
-	StartDate types.String `tfsdk:"start_date"`
+	APIKey       types.String `tfsdk:"api_key"`
+	LookbackDays types.Number `tfsdk:"lookback_days"`
+	StartDate    types.String `tfsdk:"start_date"`
 }

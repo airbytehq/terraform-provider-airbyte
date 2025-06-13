@@ -21,27 +21,6 @@ func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	var topicID string
-	topicID = r.Configuration.TopicID.ValueString()
-
-	var credentialsJSON string
-	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
-
-	orderingEnabled := new(bool)
-	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
-		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
-	} else {
-		orderingEnabled = nil
-	}
-	batchingEnabled := new(bool)
-	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
-		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
-	} else {
-		batchingEnabled = nil
-	}
 	batchingDelayThreshold := new(int64)
 	if !r.Configuration.BatchingDelayThreshold.IsUnknown() && !r.Configuration.BatchingDelayThreshold.IsNull() {
 		*batchingDelayThreshold = r.Configuration.BatchingDelayThreshold.ValueInt64()
@@ -54,21 +33,42 @@ func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubCreateRequest(
 	} else {
 		batchingElementCountThreshold = nil
 	}
+	batchingEnabled := new(bool)
+	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
+		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
+	} else {
+		batchingEnabled = nil
+	}
 	batchingRequestBytesThreshold := new(int64)
 	if !r.Configuration.BatchingRequestBytesThreshold.IsUnknown() && !r.Configuration.BatchingRequestBytesThreshold.IsNull() {
 		*batchingRequestBytesThreshold = r.Configuration.BatchingRequestBytesThreshold.ValueInt64()
 	} else {
 		batchingRequestBytesThreshold = nil
 	}
+	var credentialsJSON string
+	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+
+	orderingEnabled := new(bool)
+	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
+		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
+	} else {
+		orderingEnabled = nil
+	}
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	var topicID string
+	topicID = r.Configuration.TopicID.ValueString()
+
 	configuration := shared.DestinationPubsub{
-		ProjectID:                     projectID,
-		TopicID:                       topicID,
-		CredentialsJSON:               credentialsJSON,
-		OrderingEnabled:               orderingEnabled,
-		BatchingEnabled:               batchingEnabled,
 		BatchingDelayThreshold:        batchingDelayThreshold,
 		BatchingElementCountThreshold: batchingElementCountThreshold,
+		BatchingEnabled:               batchingEnabled,
 		BatchingRequestBytesThreshold: batchingRequestBytesThreshold,
+		CredentialsJSON:               credentialsJSON,
+		OrderingEnabled:               orderingEnabled,
+		ProjectID:                     projectID,
+		TopicID:                       topicID,
 	}
 	out := shared.DestinationPubsubCreateRequest{
 		Name:          name,
@@ -133,27 +133,6 @@ func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var projectID string
-	projectID = r.Configuration.ProjectID.ValueString()
-
-	var topicID string
-	topicID = r.Configuration.TopicID.ValueString()
-
-	var credentialsJSON string
-	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
-
-	orderingEnabled := new(bool)
-	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
-		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
-	} else {
-		orderingEnabled = nil
-	}
-	batchingEnabled := new(bool)
-	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
-		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
-	} else {
-		batchingEnabled = nil
-	}
 	batchingDelayThreshold := new(int64)
 	if !r.Configuration.BatchingDelayThreshold.IsUnknown() && !r.Configuration.BatchingDelayThreshold.IsNull() {
 		*batchingDelayThreshold = r.Configuration.BatchingDelayThreshold.ValueInt64()
@@ -166,21 +145,42 @@ func (r *DestinationPubsubResourceModel) ToSharedDestinationPubsubPutRequest() *
 	} else {
 		batchingElementCountThreshold = nil
 	}
+	batchingEnabled := new(bool)
+	if !r.Configuration.BatchingEnabled.IsUnknown() && !r.Configuration.BatchingEnabled.IsNull() {
+		*batchingEnabled = r.Configuration.BatchingEnabled.ValueBool()
+	} else {
+		batchingEnabled = nil
+	}
 	batchingRequestBytesThreshold := new(int64)
 	if !r.Configuration.BatchingRequestBytesThreshold.IsUnknown() && !r.Configuration.BatchingRequestBytesThreshold.IsNull() {
 		*batchingRequestBytesThreshold = r.Configuration.BatchingRequestBytesThreshold.ValueInt64()
 	} else {
 		batchingRequestBytesThreshold = nil
 	}
+	var credentialsJSON string
+	credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+
+	orderingEnabled := new(bool)
+	if !r.Configuration.OrderingEnabled.IsUnknown() && !r.Configuration.OrderingEnabled.IsNull() {
+		*orderingEnabled = r.Configuration.OrderingEnabled.ValueBool()
+	} else {
+		orderingEnabled = nil
+	}
+	var projectID string
+	projectID = r.Configuration.ProjectID.ValueString()
+
+	var topicID string
+	topicID = r.Configuration.TopicID.ValueString()
+
 	configuration := shared.DestinationPubsubUpdate{
-		ProjectID:                     projectID,
-		TopicID:                       topicID,
-		CredentialsJSON:               credentialsJSON,
-		OrderingEnabled:               orderingEnabled,
-		BatchingEnabled:               batchingEnabled,
 		BatchingDelayThreshold:        batchingDelayThreshold,
 		BatchingElementCountThreshold: batchingElementCountThreshold,
+		BatchingEnabled:               batchingEnabled,
 		BatchingRequestBytesThreshold: batchingRequestBytesThreshold,
+		CredentialsJSON:               credentialsJSON,
+		OrderingEnabled:               orderingEnabled,
+		ProjectID:                     projectID,
+		TopicID:                       topicID,
 	}
 	out := shared.DestinationPubsubPutRequest{
 		Name:          name,

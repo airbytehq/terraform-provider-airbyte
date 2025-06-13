@@ -21,24 +21,6 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var role string
-	role = r.Configuration.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var schema string
-	schema = r.Configuration.Schema.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var credentials *shared.DestinationSnowflakeAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var destinationSnowflakeKeyPairAuthentication *shared.DestinationSnowflakeKeyPairAuthentication
@@ -78,6 +60,9 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 		}
 		var destinationSnowflakeOAuth20 *shared.DestinationSnowflakeOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -90,16 +75,13 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 			} else {
 				clientSecret = nil
 			}
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 			destinationSnowflakeOAuth20 = &shared.DestinationSnowflakeOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -109,6 +91,18 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 			}
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
@@ -121,37 +115,43 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakeCreateRe
 	} else {
 		rawDataSchema = nil
 	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
 	retentionPeriodDays := new(int64)
 	if !r.Configuration.RetentionPeriodDays.IsUnknown() && !r.Configuration.RetentionPeriodDays.IsNull() {
 		*retentionPeriodDays = r.Configuration.RetentionPeriodDays.ValueInt64()
 	} else {
 		retentionPeriodDays = nil
 	}
+	var role string
+	role = r.Configuration.Role.ValueString()
+
+	var schema string
+	schema = r.Configuration.Schema.ValueString()
+
 	useMergeForUpsert := new(bool)
 	if !r.Configuration.UseMergeForUpsert.IsUnknown() && !r.Configuration.UseMergeForUpsert.IsNull() {
 		*useMergeForUpsert = r.Configuration.UseMergeForUpsert.ValueBool()
 	} else {
 		useMergeForUpsert = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
+	var warehouse string
+	warehouse = r.Configuration.Warehouse.ValueString()
+
 	configuration := shared.DestinationSnowflake{
-		Host:                host,
-		Role:                role,
-		Warehouse:           warehouse,
-		Database:            database,
-		Schema:              schema,
-		Username:            username,
 		Credentials:         credentials,
+		Database:            database,
+		DisableTypeDedupe:   disableTypeDedupe,
+		Host:                host,
 		JdbcURLParams:       jdbcURLParams,
 		RawDataSchema:       rawDataSchema,
-		DisableTypeDedupe:   disableTypeDedupe,
 		RetentionPeriodDays: retentionPeriodDays,
+		Role:                role,
+		Schema:              schema,
 		UseMergeForUpsert:   useMergeForUpsert,
+		Username:            username,
+		Warehouse:           warehouse,
 	}
 	out := shared.DestinationSnowflakeCreateRequest{
 		Name:          name,
@@ -216,24 +216,6 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	var role string
-	role = r.Configuration.Role.ValueString()
-
-	var warehouse string
-	warehouse = r.Configuration.Warehouse.ValueString()
-
-	var database string
-	database = r.Configuration.Database.ValueString()
-
-	var schema string
-	schema = r.Configuration.Schema.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var credentials *shared.DestinationSnowflakeUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var destinationSnowflakeUpdateKeyPairAuthentication *shared.DestinationSnowflakeUpdateKeyPairAuthentication
@@ -273,6 +255,9 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 		}
 		var destinationSnowflakeUpdateOAuth20 *shared.DestinationSnowflakeUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -285,16 +270,13 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 			} else {
 				clientSecret = nil
 			}
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.OAuth20.RefreshToken.ValueString()
 
 			destinationSnowflakeUpdateOAuth20 = &shared.DestinationSnowflakeUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 				RefreshToken: refreshToken,
 			}
 		}
@@ -304,6 +286,18 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 			}
 		}
 	}
+	var database string
+	database = r.Configuration.Database.ValueString()
+
+	disableTypeDedupe := new(bool)
+	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
+		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
+	} else {
+		disableTypeDedupe = nil
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
 		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
@@ -316,37 +310,43 @@ func (r *DestinationSnowflakeResourceModel) ToSharedDestinationSnowflakePutReque
 	} else {
 		rawDataSchema = nil
 	}
-	disableTypeDedupe := new(bool)
-	if !r.Configuration.DisableTypeDedupe.IsUnknown() && !r.Configuration.DisableTypeDedupe.IsNull() {
-		*disableTypeDedupe = r.Configuration.DisableTypeDedupe.ValueBool()
-	} else {
-		disableTypeDedupe = nil
-	}
 	retentionPeriodDays := new(int64)
 	if !r.Configuration.RetentionPeriodDays.IsUnknown() && !r.Configuration.RetentionPeriodDays.IsNull() {
 		*retentionPeriodDays = r.Configuration.RetentionPeriodDays.ValueInt64()
 	} else {
 		retentionPeriodDays = nil
 	}
+	var role string
+	role = r.Configuration.Role.ValueString()
+
+	var schema string
+	schema = r.Configuration.Schema.ValueString()
+
 	useMergeForUpsert := new(bool)
 	if !r.Configuration.UseMergeForUpsert.IsUnknown() && !r.Configuration.UseMergeForUpsert.IsNull() {
 		*useMergeForUpsert = r.Configuration.UseMergeForUpsert.ValueBool()
 	} else {
 		useMergeForUpsert = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
+	var warehouse string
+	warehouse = r.Configuration.Warehouse.ValueString()
+
 	configuration := shared.DestinationSnowflakeUpdate{
-		Host:                host,
-		Role:                role,
-		Warehouse:           warehouse,
-		Database:            database,
-		Schema:              schema,
-		Username:            username,
 		Credentials:         credentials,
+		Database:            database,
+		DisableTypeDedupe:   disableTypeDedupe,
+		Host:                host,
 		JdbcURLParams:       jdbcURLParams,
 		RawDataSchema:       rawDataSchema,
-		DisableTypeDedupe:   disableTypeDedupe,
 		RetentionPeriodDays: retentionPeriodDays,
+		Role:                role,
+		Schema:              schema,
 		UseMergeForUpsert:   useMergeForUpsert,
+		Username:            username,
+		Warehouse:           warehouse,
 	}
 	out := shared.DestinationSnowflakePutRequest{
 		Name:          name,

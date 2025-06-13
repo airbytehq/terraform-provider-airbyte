@@ -3,17 +3,10 @@
 package shared
 
 type SourceN8nUpdate struct {
-	// Hostname of the n8n instance
-	Host string `json:"host"`
 	// Your API KEY. See <a href="https://docs.n8n.io/api/authentication">here</a>
 	APIKey string `json:"api_key"`
-}
-
-func (o *SourceN8nUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
+	// Hostname of the n8n instance
+	Host string `json:"host"`
 }
 
 func (o *SourceN8nUpdate) GetAPIKey() string {
@@ -21,4 +14,11 @@ func (o *SourceN8nUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceN8nUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
 }

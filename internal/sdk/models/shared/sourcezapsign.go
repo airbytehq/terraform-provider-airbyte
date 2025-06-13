@@ -34,11 +34,11 @@ func (e *Zapsign) UnmarshalJSON(data []byte) error {
 
 type SourceZapsign struct {
 	// Your static API token for authentication. You can find it in your ZapSign account under the 'Settings' or 'API' section. For more details, refer to the [Getting Started](https://docs.zapsign.com.br/english/getting-started#how-do-i-get-my-api-token) guide.
-	APIToken  string    `json:"api_token"`
-	StartDate time.Time `json:"start_date"`
+	APIToken string `json:"api_token"`
 	// The signer ids for signer stream
-	SignerIds  []any   `json:"signer_ids,omitempty"`
-	sourceType Zapsign `const:"zapsign" json:"sourceType"`
+	SignerIds  []any     `json:"signer_ids,omitempty"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Zapsign   `const:"zapsign" json:"sourceType"`
 }
 
 func (s SourceZapsign) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceZapsign) GetAPIToken() string {
 	return o.APIToken
 }
 
-func (o *SourceZapsign) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceZapsign) GetSignerIds() []any {
 	if o == nil {
 		return nil
 	}
 	return o.SignerIds
+}
+
+func (o *SourceZapsign) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceZapsign) GetSourceType() Zapsign {

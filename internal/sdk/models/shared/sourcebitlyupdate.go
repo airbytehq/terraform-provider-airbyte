@@ -9,8 +9,8 @@ import (
 
 type SourceBitlyUpdate struct {
 	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
 	EndDate   time.Time `json:"end_date"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceBitlyUpdate) MarshalJSON() ([]byte, error) {
@@ -31,16 +31,16 @@ func (o *SourceBitlyUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceBitlyUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceBitlyUpdate) GetEndDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.EndDate
+}
+
+func (o *SourceBitlyUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

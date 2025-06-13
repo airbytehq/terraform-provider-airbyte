@@ -27,19 +27,19 @@ func (r *SourceChargedeskResourceModel) ToSharedSourceChargedeskCreateRequest() 
 	} else {
 		password = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	startDate := new(int64)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueInt64()
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceChargedesk{
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,19 +117,19 @@ func (r *SourceChargedeskResourceModel) ToSharedSourceChargedeskPutRequest() *sh
 	} else {
 		password = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	startDate := new(int64)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueInt64()
 	} else {
 		startDate = nil
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceChargedeskUpdate{
 		Password:  password,
-		Username:  username,
 		StartDate: startDate,
+		Username:  username,
 	}
 	out := shared.SourceChargedeskPutRequest{
 		Name:          name,

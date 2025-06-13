@@ -5,8 +5,14 @@ package types
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleSheets struct {
-	BatchSize       types.Int64                      `tfsdk:"batch_size"`
-	Credentials     SourceGoogleSheetsAuthentication `tfsdk:"credentials"`
-	NamesConversion types.Bool                       `tfsdk:"names_conversion"`
-	SpreadsheetID   types.String                     `tfsdk:"spreadsheet_id"`
+	AllowLeadingNumbers              types.Bool                       `tfsdk:"allow_leading_numbers"`
+	BatchSize                        types.Int64                      `tfsdk:"batch_size"`
+	CombineLetterNumberPairs         types.Bool                       `tfsdk:"combine_letter_number_pairs"`
+	CombineNumberWordPairs           types.Bool                       `tfsdk:"combine_number_word_pairs"`
+	Credentials                      SourceGoogleSheetsAuthentication `tfsdk:"credentials"`
+	NamesConversion                  types.Bool                       `tfsdk:"names_conversion"`
+	RemoveLeadingTrailingUnderscores types.Bool                       `tfsdk:"remove_leading_trailing_underscores"`
+	RemoveSpecialCharacters          types.Bool                       `tfsdk:"remove_special_characters"`
+	SpreadsheetID                    types.String                     `tfsdk:"spreadsheet_id"`
+	StreamNameOverrides              []StreamNameOverrides            `tfsdk:"stream_name_overrides"`
 }

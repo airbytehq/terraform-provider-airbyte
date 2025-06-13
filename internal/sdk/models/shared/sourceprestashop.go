@@ -35,10 +35,10 @@ func (e *Prestashop) UnmarshalJSON(data []byte) error {
 type SourcePrestashop struct {
 	// Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
 	AccessKey string `json:"access_key"`
-	// Shop URL without trailing slash.
-	URL string `json:"url"`
 	// The Start date in the format YYYY-MM-DD.
-	StartDate  types.Date `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
+	// Shop URL without trailing slash.
+	URL        string     `json:"url"`
 	sourceType Prestashop `const:"prestashop" json:"sourceType"`
 }
 
@@ -60,18 +60,18 @@ func (o *SourcePrestashop) GetAccessKey() string {
 	return o.AccessKey
 }
 
-func (o *SourcePrestashop) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
-}
-
 func (o *SourcePrestashop) GetStartDate() types.Date {
 	if o == nil {
 		return types.Date{}
 	}
 	return o.StartDate
+}
+
+func (o *SourcePrestashop) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }
 
 func (o *SourcePrestashop) GetSourceType() Prestashop {

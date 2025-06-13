@@ -203,21 +203,21 @@ func (e *Sftp) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSftp struct {
-	// The server user
-	User string `json:"user"`
-	// The server host address
-	Host string `json:"host"`
-	// The server port
-	Port *int64 `default:"22" json:"port"`
 	// The server authentication method
 	Credentials *SourceSftpAuthentication `json:"credentials,omitempty"`
+	// The regular expression to specify files for sync in a chosen Folder Path
+	FilePattern *string `default:"" json:"file_pattern"`
 	// Coma separated file types. Currently only 'csv' and 'json' types are supported.
 	FileTypes *string `default:"csv,json" json:"file_types"`
 	// The directory to search files for sync
 	FolderPath *string `default:"" json:"folder_path"`
-	// The regular expression to specify files for sync in a chosen Folder Path
-	FilePattern *string `default:"" json:"file_pattern"`
-	sourceType  Sftp    `const:"sftp" json:"sourceType"`
+	// The server host address
+	Host string `json:"host"`
+	// The server port
+	Port *int64 `default:"22" json:"port"`
+	// The server user
+	User       string `json:"user"`
+	sourceType Sftp   `const:"sftp" json:"sourceType"`
 }
 
 func (s SourceSftp) MarshalJSON() ([]byte, error) {
@@ -231,32 +231,18 @@ func (s *SourceSftp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSftp) GetUser() string {
-	if o == nil {
-		return ""
-	}
-	return o.User
-}
-
-func (o *SourceSftp) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceSftp) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *SourceSftp) GetCredentials() *SourceSftpAuthentication {
 	if o == nil {
 		return nil
 	}
 	return o.Credentials
+}
+
+func (o *SourceSftp) GetFilePattern() *string {
+	if o == nil {
+		return nil
+	}
+	return o.FilePattern
 }
 
 func (o *SourceSftp) GetFileTypes() *string {
@@ -273,11 +259,25 @@ func (o *SourceSftp) GetFolderPath() *string {
 	return o.FolderPath
 }
 
-func (o *SourceSftp) GetFilePattern() *string {
+func (o *SourceSftp) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceSftp) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.FilePattern
+	return o.Port
+}
+
+func (o *SourceSftp) GetUser() string {
+	if o == nil {
+		return ""
+	}
+	return o.User
 }
 
 func (o *SourceSftp) GetSourceType() Sftp {

@@ -33,19 +33,19 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 	}
 	var destinationWeaviateAzureOpenAI *shared.DestinationWeaviateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey string
-		openaiKey = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey string
+		openaiKey = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationWeaviateAzureOpenAI = &shared.DestinationWeaviateAzureOpenAI{
-			OpenaiKey:  openaiKey,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey,
 		}
 	}
 	if destinationWeaviateAzureOpenAI != nil {
@@ -83,15 +83,15 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 	}
 	var fromField *shared.FromField
 	if r.Configuration.Embedding.FromField != nil {
-		var fieldName string
-		fieldName = r.Configuration.Embedding.FromField.FieldName.ValueString()
-
 		var dimensions int64
 		dimensions = r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
 
+		var fieldName string
+		fieldName = r.Configuration.Embedding.FromField.FieldName.ValueString()
+
 		fromField = &shared.FromField{
-			FieldName:  fieldName,
 			Dimensions: dimensions,
+			FieldName:  fieldName,
 		}
 	}
 	if fromField != nil {
@@ -119,20 +119,20 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions1 int64
+		dimensions1 = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions1 int64
-		dimensions1 = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationWeaviateOpenAICompatible = &shared.DestinationWeaviateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions1,
+			ModelName:  modelName,
 		}
 	}
 	if destinationWeaviateOpenAICompatible != nil {
@@ -140,40 +140,150 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 			DestinationWeaviateOpenAICompatible: destinationWeaviateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var additionalHeaders []shared.Header = []shared.Header{}
+	for _, additionalHeadersItem := range r.Configuration.Indexing.AdditionalHeaders {
+		var headerKey string
+		headerKey = additionalHeadersItem.HeaderKey.ValueString()
 
+		var value string
+		value = additionalHeadersItem.Value.ValueString()
+
+		additionalHeaders = append(additionalHeaders, shared.Header{
+			HeaderKey: headerKey,
+			Value:     value,
+		})
+	}
+	var auth shared.DestinationWeaviateAuthentication
+	var destinationWeaviateAPIToken *shared.DestinationWeaviateAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		var token string
+		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
+
+		destinationWeaviateAPIToken = &shared.DestinationWeaviateAPIToken{
+			Token: token,
+		}
+	}
+	if destinationWeaviateAPIToken != nil {
+		auth = shared.DestinationWeaviateAuthentication{
+			DestinationWeaviateAPIToken: destinationWeaviateAPIToken,
+		}
+	}
+	var destinationWeaviateUsernamePassword *shared.DestinationWeaviateUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		var password string
+		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+
+		var username string
+		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+
+		destinationWeaviateUsernamePassword = &shared.DestinationWeaviateUsernamePassword{
+			Password: password,
+			Username: username,
+		}
+	}
+	if destinationWeaviateUsernamePassword != nil {
+		auth = shared.DestinationWeaviateAuthentication{
+			DestinationWeaviateUsernamePassword: destinationWeaviateUsernamePassword,
+		}
+	}
+	var noAuthentication *shared.NoAuthentication
+	if r.Configuration.Indexing.Auth.NoAuthentication != nil {
+		noAuthentication = &shared.NoAuthentication{}
+	}
+	if noAuthentication != nil {
+		auth = shared.DestinationWeaviateAuthentication{
+			NoAuthentication: noAuthentication,
+		}
+	}
+	batchSize := new(int64)
+	if !r.Configuration.Indexing.BatchSize.IsUnknown() && !r.Configuration.Indexing.BatchSize.IsNull() {
+		*batchSize = r.Configuration.Indexing.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
+	defaultVectorizer := new(shared.DefaultVectorizer)
+	if !r.Configuration.Indexing.DefaultVectorizer.IsUnknown() && !r.Configuration.Indexing.DefaultVectorizer.IsNull() {
+		*defaultVectorizer = shared.DefaultVectorizer(r.Configuration.Indexing.DefaultVectorizer.ValueString())
+	} else {
+		defaultVectorizer = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	tenantID := new(string)
+	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
+		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
+	textField := new(string)
+	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
+		*textField = r.Configuration.Indexing.TextField.ValueString()
+	} else {
+		textField = nil
+	}
+	indexing := shared.DestinationWeaviateIndexing{
+		AdditionalHeaders: additionalHeaders,
+		Auth:              auth,
+		BatchSize:         batchSize,
+		DefaultVectorizer: defaultVectorizer,
+		Host:              host,
+		TenantID:          tenantID,
+		TextField:         textField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationWeaviateFieldNameMappingConfigModel = []shared.DestinationWeaviateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField1 string
+		fromField1 = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateFieldNameMappingConfigModel{
+			FromField: fromField1,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationWeaviateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationWeaviateBySeparator *shared.DestinationWeaviateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationWeaviateBySeparator = &shared.DestinationWeaviateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationWeaviateBySeparator != nil {
@@ -211,129 +321,19 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviateCreateRequ
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationWeaviateFieldNameMappingConfigModel = []shared.DestinationWeaviateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField1 string
-		fromField1 = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateFieldNameMappingConfigModel{
-			FromField: fromField1,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationWeaviateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	var auth shared.DestinationWeaviateAuthentication
-	var destinationWeaviateAPIToken *shared.DestinationWeaviateAPIToken
-	if r.Configuration.Indexing.Auth.APIToken != nil {
-		var token string
-		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
-
-		destinationWeaviateAPIToken = &shared.DestinationWeaviateAPIToken{
-			Token: token,
-		}
-	}
-	if destinationWeaviateAPIToken != nil {
-		auth = shared.DestinationWeaviateAuthentication{
-			DestinationWeaviateAPIToken: destinationWeaviateAPIToken,
-		}
-	}
-	var destinationWeaviateUsernamePassword *shared.DestinationWeaviateUsernamePassword
-	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
-
-		var password string
-		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
-
-		destinationWeaviateUsernamePassword = &shared.DestinationWeaviateUsernamePassword{
-			Username: username,
-			Password: password,
-		}
-	}
-	if destinationWeaviateUsernamePassword != nil {
-		auth = shared.DestinationWeaviateAuthentication{
-			DestinationWeaviateUsernamePassword: destinationWeaviateUsernamePassword,
-		}
-	}
-	var noAuthentication *shared.NoAuthentication
-	if r.Configuration.Indexing.Auth.NoAuthentication != nil {
-		noAuthentication = &shared.NoAuthentication{}
-	}
-	if noAuthentication != nil {
-		auth = shared.DestinationWeaviateAuthentication{
-			NoAuthentication: noAuthentication,
-		}
-	}
-	batchSize := new(int64)
-	if !r.Configuration.Indexing.BatchSize.IsUnknown() && !r.Configuration.Indexing.BatchSize.IsNull() {
-		*batchSize = r.Configuration.Indexing.BatchSize.ValueInt64()
-	} else {
-		batchSize = nil
-	}
-	textField := new(string)
-	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
-		*textField = r.Configuration.Indexing.TextField.ValueString()
-	} else {
-		textField = nil
-	}
-	tenantID := new(string)
-	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
-		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
-	} else {
-		tenantID = nil
-	}
-	defaultVectorizer := new(shared.DefaultVectorizer)
-	if !r.Configuration.Indexing.DefaultVectorizer.IsUnknown() && !r.Configuration.Indexing.DefaultVectorizer.IsNull() {
-		*defaultVectorizer = shared.DefaultVectorizer(r.Configuration.Indexing.DefaultVectorizer.ValueString())
-	} else {
-		defaultVectorizer = nil
-	}
-	var additionalHeaders []shared.Header = []shared.Header{}
-	for _, additionalHeadersItem := range r.Configuration.Indexing.AdditionalHeaders {
-		var headerKey string
-		headerKey = additionalHeadersItem.HeaderKey.ValueString()
-
-		var value string
-		value = additionalHeadersItem.Value.ValueString()
-
-		additionalHeaders = append(additionalHeaders, shared.Header{
-			HeaderKey: headerKey,
-			Value:     value,
-		})
-	}
-	indexing := shared.DestinationWeaviateIndexing{
-		Host:              host,
-		Auth:              auth,
-		BatchSize:         batchSize,
-		TextField:         textField,
-		TenantID:          tenantID,
-		DefaultVectorizer: defaultVectorizer,
-		AdditionalHeaders: additionalHeaders,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationWeaviate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationWeaviateCreateRequest{
 		Name:          name,
@@ -410,19 +410,19 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest
 	}
 	var destinationWeaviateUpdateAzureOpenAI *shared.DestinationWeaviateUpdateAzureOpenAI
 	if r.Configuration.Embedding.AzureOpenAI != nil {
-		var openaiKey string
-		openaiKey = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
-
 		var apiBase string
 		apiBase = r.Configuration.Embedding.AzureOpenAI.APIBase.ValueString()
 
 		var deployment string
 		deployment = r.Configuration.Embedding.AzureOpenAI.Deployment.ValueString()
 
+		var openaiKey string
+		openaiKey = r.Configuration.Embedding.AzureOpenAI.OpenaiKey.ValueString()
+
 		destinationWeaviateUpdateAzureOpenAI = &shared.DestinationWeaviateUpdateAzureOpenAI{
-			OpenaiKey:  openaiKey,
 			APIBase:    apiBase,
 			Deployment: deployment,
+			OpenaiKey:  openaiKey,
 		}
 	}
 	if destinationWeaviateUpdateAzureOpenAI != nil {
@@ -460,15 +460,15 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest
 	}
 	var destinationWeaviateUpdateFromField *shared.DestinationWeaviateUpdateFromField
 	if r.Configuration.Embedding.FromField != nil {
-		var fieldName string
-		fieldName = r.Configuration.Embedding.FromField.FieldName.ValueString()
-
 		var dimensions int64
 		dimensions = r.Configuration.Embedding.FromField.Dimensions.ValueInt64()
 
+		var fieldName string
+		fieldName = r.Configuration.Embedding.FromField.FieldName.ValueString()
+
 		destinationWeaviateUpdateFromField = &shared.DestinationWeaviateUpdateFromField{
-			FieldName:  fieldName,
 			Dimensions: dimensions,
+			FieldName:  fieldName,
 		}
 	}
 	if destinationWeaviateUpdateFromField != nil {
@@ -496,20 +496,20 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest
 		var baseURL string
 		baseURL = r.Configuration.Embedding.OpenAICompatible.BaseURL.ValueString()
 
+		var dimensions1 int64
+		dimensions1 = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
+
 		modelName := new(string)
 		if !r.Configuration.Embedding.OpenAICompatible.ModelName.IsUnknown() && !r.Configuration.Embedding.OpenAICompatible.ModelName.IsNull() {
 			*modelName = r.Configuration.Embedding.OpenAICompatible.ModelName.ValueString()
 		} else {
 			modelName = nil
 		}
-		var dimensions1 int64
-		dimensions1 = r.Configuration.Embedding.OpenAICompatible.Dimensions.ValueInt64()
-
 		destinationWeaviateUpdateOpenAICompatible = &shared.DestinationWeaviateUpdateOpenAICompatible{
 			APIKey:     apiKey,
 			BaseURL:    baseURL,
-			ModelName:  modelName,
 			Dimensions: dimensions1,
+			ModelName:  modelName,
 		}
 	}
 	if destinationWeaviateUpdateOpenAICompatible != nil {
@@ -517,40 +517,150 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest
 			DestinationWeaviateUpdateOpenAICompatible: destinationWeaviateUpdateOpenAICompatible,
 		}
 	}
-	var chunkSize int64
-	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+	var additionalHeaders []shared.DestinationWeaviateUpdateHeader = []shared.DestinationWeaviateUpdateHeader{}
+	for _, additionalHeadersItem := range r.Configuration.Indexing.AdditionalHeaders {
+		var headerKey string
+		headerKey = additionalHeadersItem.HeaderKey.ValueString()
 
+		var value string
+		value = additionalHeadersItem.Value.ValueString()
+
+		additionalHeaders = append(additionalHeaders, shared.DestinationWeaviateUpdateHeader{
+			HeaderKey: headerKey,
+			Value:     value,
+		})
+	}
+	var auth shared.DestinationWeaviateUpdateAuthentication
+	var destinationWeaviateUpdateAPIToken *shared.DestinationWeaviateUpdateAPIToken
+	if r.Configuration.Indexing.Auth.APIToken != nil {
+		var token string
+		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
+
+		destinationWeaviateUpdateAPIToken = &shared.DestinationWeaviateUpdateAPIToken{
+			Token: token,
+		}
+	}
+	if destinationWeaviateUpdateAPIToken != nil {
+		auth = shared.DestinationWeaviateUpdateAuthentication{
+			DestinationWeaviateUpdateAPIToken: destinationWeaviateUpdateAPIToken,
+		}
+	}
+	var destinationWeaviateUpdateUsernamePassword *shared.DestinationWeaviateUpdateUsernamePassword
+	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
+		var password string
+		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
+
+		var username string
+		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
+
+		destinationWeaviateUpdateUsernamePassword = &shared.DestinationWeaviateUpdateUsernamePassword{
+			Password: password,
+			Username: username,
+		}
+	}
+	if destinationWeaviateUpdateUsernamePassword != nil {
+		auth = shared.DestinationWeaviateUpdateAuthentication{
+			DestinationWeaviateUpdateUsernamePassword: destinationWeaviateUpdateUsernamePassword,
+		}
+	}
+	var destinationWeaviateUpdateNoAuthentication *shared.DestinationWeaviateUpdateNoAuthentication
+	if r.Configuration.Indexing.Auth.NoAuthentication != nil {
+		destinationWeaviateUpdateNoAuthentication = &shared.DestinationWeaviateUpdateNoAuthentication{}
+	}
+	if destinationWeaviateUpdateNoAuthentication != nil {
+		auth = shared.DestinationWeaviateUpdateAuthentication{
+			DestinationWeaviateUpdateNoAuthentication: destinationWeaviateUpdateNoAuthentication,
+		}
+	}
+	batchSize := new(int64)
+	if !r.Configuration.Indexing.BatchSize.IsUnknown() && !r.Configuration.Indexing.BatchSize.IsNull() {
+		*batchSize = r.Configuration.Indexing.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
+	defaultVectorizer := new(shared.DestinationWeaviateUpdateDefaultVectorizer)
+	if !r.Configuration.Indexing.DefaultVectorizer.IsUnknown() && !r.Configuration.Indexing.DefaultVectorizer.IsNull() {
+		*defaultVectorizer = shared.DestinationWeaviateUpdateDefaultVectorizer(r.Configuration.Indexing.DefaultVectorizer.ValueString())
+	} else {
+		defaultVectorizer = nil
+	}
+	var host string
+	host = r.Configuration.Indexing.Host.ValueString()
+
+	tenantID := new(string)
+	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
+		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
+	textField := new(string)
+	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
+		*textField = r.Configuration.Indexing.TextField.ValueString()
+	} else {
+		textField = nil
+	}
+	indexing := shared.DestinationWeaviateUpdateIndexing{
+		AdditionalHeaders: additionalHeaders,
+		Auth:              auth,
+		BatchSize:         batchSize,
+		DefaultVectorizer: defaultVectorizer,
+		Host:              host,
+		TenantID:          tenantID,
+		TextField:         textField,
+	}
+	omitRawText := new(bool)
+	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
+		*omitRawText = r.Configuration.OmitRawText.ValueBool()
+	} else {
+		omitRawText = nil
+	}
 	chunkOverlap := new(int64)
 	if !r.Configuration.Processing.ChunkOverlap.IsUnknown() && !r.Configuration.Processing.ChunkOverlap.IsNull() {
 		*chunkOverlap = r.Configuration.Processing.ChunkOverlap.ValueInt64()
 	} else {
 		chunkOverlap = nil
 	}
-	var textFields []string = []string{}
-	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
-		textFields = append(textFields, textFieldsItem.ValueString())
+	var chunkSize int64
+	chunkSize = r.Configuration.Processing.ChunkSize.ValueInt64()
+
+	var fieldNameMappings []shared.DestinationWeaviateUpdateFieldNameMappingConfigModel = []shared.DestinationWeaviateUpdateFieldNameMappingConfigModel{}
+	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
+		var fromField string
+		fromField = fieldNameMappingsItem.FromField.ValueString()
+
+		var toField string
+		toField = fieldNameMappingsItem.ToField.ValueString()
+
+		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateUpdateFieldNameMappingConfigModel{
+			FromField: fromField,
+			ToField:   toField,
+		})
 	}
 	var metadataFields []string = []string{}
 	for _, metadataFieldsItem := range r.Configuration.Processing.MetadataFields {
 		metadataFields = append(metadataFields, metadataFieldsItem.ValueString())
 	}
+	var textFields []string = []string{}
+	for _, textFieldsItem := range r.Configuration.Processing.TextFields {
+		textFields = append(textFields, textFieldsItem.ValueString())
+	}
 	var textSplitter *shared.DestinationWeaviateUpdateTextSplitter
 	if r.Configuration.Processing.TextSplitter != nil {
 		var destinationWeaviateUpdateBySeparator *shared.DestinationWeaviateUpdateBySeparator
 		if r.Configuration.Processing.TextSplitter.BySeparator != nil {
-			var separators []string = []string{}
-			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
-				separators = append(separators, separatorsItem.ValueString())
-			}
 			keepSeparator := new(bool)
 			if !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsUnknown() && !r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.IsNull() {
 				*keepSeparator = r.Configuration.Processing.TextSplitter.BySeparator.KeepSeparator.ValueBool()
 			} else {
 				keepSeparator = nil
 			}
+			var separators []string = []string{}
+			for _, separatorsItem := range r.Configuration.Processing.TextSplitter.BySeparator.Separators {
+				separators = append(separators, separatorsItem.ValueString())
+			}
 			destinationWeaviateUpdateBySeparator = &shared.DestinationWeaviateUpdateBySeparator{
-				Separators:    separators,
 				KeepSeparator: keepSeparator,
+				Separators:    separators,
 			}
 		}
 		if destinationWeaviateUpdateBySeparator != nil {
@@ -588,129 +698,19 @@ func (r *DestinationWeaviateResourceModel) ToSharedDestinationWeaviatePutRequest
 			}
 		}
 	}
-	var fieldNameMappings []shared.DestinationWeaviateUpdateFieldNameMappingConfigModel = []shared.DestinationWeaviateUpdateFieldNameMappingConfigModel{}
-	for _, fieldNameMappingsItem := range r.Configuration.Processing.FieldNameMappings {
-		var fromField string
-		fromField = fieldNameMappingsItem.FromField.ValueString()
-
-		var toField string
-		toField = fieldNameMappingsItem.ToField.ValueString()
-
-		fieldNameMappings = append(fieldNameMappings, shared.DestinationWeaviateUpdateFieldNameMappingConfigModel{
-			FromField: fromField,
-			ToField:   toField,
-		})
-	}
 	processing := shared.DestinationWeaviateUpdateProcessingConfigModel{
-		ChunkSize:         chunkSize,
 		ChunkOverlap:      chunkOverlap,
-		TextFields:        textFields,
-		MetadataFields:    metadataFields,
-		TextSplitter:      textSplitter,
+		ChunkSize:         chunkSize,
 		FieldNameMappings: fieldNameMappings,
-	}
-	omitRawText := new(bool)
-	if !r.Configuration.OmitRawText.IsUnknown() && !r.Configuration.OmitRawText.IsNull() {
-		*omitRawText = r.Configuration.OmitRawText.ValueBool()
-	} else {
-		omitRawText = nil
-	}
-	var host string
-	host = r.Configuration.Indexing.Host.ValueString()
-
-	var auth shared.DestinationWeaviateUpdateAuthentication
-	var destinationWeaviateUpdateAPIToken *shared.DestinationWeaviateUpdateAPIToken
-	if r.Configuration.Indexing.Auth.APIToken != nil {
-		var token string
-		token = r.Configuration.Indexing.Auth.APIToken.Token.ValueString()
-
-		destinationWeaviateUpdateAPIToken = &shared.DestinationWeaviateUpdateAPIToken{
-			Token: token,
-		}
-	}
-	if destinationWeaviateUpdateAPIToken != nil {
-		auth = shared.DestinationWeaviateUpdateAuthentication{
-			DestinationWeaviateUpdateAPIToken: destinationWeaviateUpdateAPIToken,
-		}
-	}
-	var destinationWeaviateUpdateUsernamePassword *shared.DestinationWeaviateUpdateUsernamePassword
-	if r.Configuration.Indexing.Auth.UsernamePassword != nil {
-		var username string
-		username = r.Configuration.Indexing.Auth.UsernamePassword.Username.ValueString()
-
-		var password string
-		password = r.Configuration.Indexing.Auth.UsernamePassword.Password.ValueString()
-
-		destinationWeaviateUpdateUsernamePassword = &shared.DestinationWeaviateUpdateUsernamePassword{
-			Username: username,
-			Password: password,
-		}
-	}
-	if destinationWeaviateUpdateUsernamePassword != nil {
-		auth = shared.DestinationWeaviateUpdateAuthentication{
-			DestinationWeaviateUpdateUsernamePassword: destinationWeaviateUpdateUsernamePassword,
-		}
-	}
-	var destinationWeaviateUpdateNoAuthentication *shared.DestinationWeaviateUpdateNoAuthentication
-	if r.Configuration.Indexing.Auth.NoAuthentication != nil {
-		destinationWeaviateUpdateNoAuthentication = &shared.DestinationWeaviateUpdateNoAuthentication{}
-	}
-	if destinationWeaviateUpdateNoAuthentication != nil {
-		auth = shared.DestinationWeaviateUpdateAuthentication{
-			DestinationWeaviateUpdateNoAuthentication: destinationWeaviateUpdateNoAuthentication,
-		}
-	}
-	batchSize := new(int64)
-	if !r.Configuration.Indexing.BatchSize.IsUnknown() && !r.Configuration.Indexing.BatchSize.IsNull() {
-		*batchSize = r.Configuration.Indexing.BatchSize.ValueInt64()
-	} else {
-		batchSize = nil
-	}
-	textField := new(string)
-	if !r.Configuration.Indexing.TextField.IsUnknown() && !r.Configuration.Indexing.TextField.IsNull() {
-		*textField = r.Configuration.Indexing.TextField.ValueString()
-	} else {
-		textField = nil
-	}
-	tenantID := new(string)
-	if !r.Configuration.Indexing.TenantID.IsUnknown() && !r.Configuration.Indexing.TenantID.IsNull() {
-		*tenantID = r.Configuration.Indexing.TenantID.ValueString()
-	} else {
-		tenantID = nil
-	}
-	defaultVectorizer := new(shared.DestinationWeaviateUpdateDefaultVectorizer)
-	if !r.Configuration.Indexing.DefaultVectorizer.IsUnknown() && !r.Configuration.Indexing.DefaultVectorizer.IsNull() {
-		*defaultVectorizer = shared.DestinationWeaviateUpdateDefaultVectorizer(r.Configuration.Indexing.DefaultVectorizer.ValueString())
-	} else {
-		defaultVectorizer = nil
-	}
-	var additionalHeaders []shared.DestinationWeaviateUpdateHeader = []shared.DestinationWeaviateUpdateHeader{}
-	for _, additionalHeadersItem := range r.Configuration.Indexing.AdditionalHeaders {
-		var headerKey string
-		headerKey = additionalHeadersItem.HeaderKey.ValueString()
-
-		var value string
-		value = additionalHeadersItem.Value.ValueString()
-
-		additionalHeaders = append(additionalHeaders, shared.DestinationWeaviateUpdateHeader{
-			HeaderKey: headerKey,
-			Value:     value,
-		})
-	}
-	indexing := shared.DestinationWeaviateUpdateIndexing{
-		Host:              host,
-		Auth:              auth,
-		BatchSize:         batchSize,
-		TextField:         textField,
-		TenantID:          tenantID,
-		DefaultVectorizer: defaultVectorizer,
-		AdditionalHeaders: additionalHeaders,
+		MetadataFields:    metadataFields,
+		TextFields:        textFields,
+		TextSplitter:      textSplitter,
 	}
 	configuration := shared.DestinationWeaviateUpdate{
 		Embedding:   embedding,
-		Processing:  processing,
-		OmitRawText: omitRawText,
 		Indexing:    indexing,
+		OmitRawText: omitRawText,
+		Processing:  processing,
 	}
 	out := shared.DestinationWeaviatePutRequest{
 		Name:          name,

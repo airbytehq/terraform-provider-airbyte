@@ -69,12 +69,12 @@ func (e *SourceCimisUpdateUnitOfMeasure) UnmarshalJSON(data []byte) error {
 
 type SourceCimisUpdate struct {
 	APIKey          string                          `json:"api_key"`
-	TargetsType     SourceCimisUpdateTargetsType    `json:"targets_type"`
-	Targets         []any                           `json:"targets"`
 	DailyDataItems  []any                           `json:"daily_data_items,omitempty"`
+	EndDate         time.Time                       `json:"end_date"`
 	HourlyDataItems []any                           `json:"hourly_data_items,omitempty"`
 	StartDate       time.Time                       `json:"start_date"`
-	EndDate         time.Time                       `json:"end_date"`
+	Targets         []any                           `json:"targets"`
+	TargetsType     SourceCimisUpdateTargetsType    `json:"targets_type"`
 	UnitOfMeasure   *SourceCimisUpdateUnitOfMeasure `json:"unit_of_measure,omitempty"`
 }
 
@@ -96,25 +96,18 @@ func (o *SourceCimisUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceCimisUpdate) GetTargetsType() SourceCimisUpdateTargetsType {
-	if o == nil {
-		return SourceCimisUpdateTargetsType("")
-	}
-	return o.TargetsType
-}
-
-func (o *SourceCimisUpdate) GetTargets() []any {
-	if o == nil {
-		return []any{}
-	}
-	return o.Targets
-}
-
 func (o *SourceCimisUpdate) GetDailyDataItems() []any {
 	if o == nil {
 		return nil
 	}
 	return o.DailyDataItems
+}
+
+func (o *SourceCimisUpdate) GetEndDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.EndDate
 }
 
 func (o *SourceCimisUpdate) GetHourlyDataItems() []any {
@@ -131,11 +124,18 @@ func (o *SourceCimisUpdate) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceCimisUpdate) GetEndDate() time.Time {
+func (o *SourceCimisUpdate) GetTargets() []any {
 	if o == nil {
-		return time.Time{}
+		return []any{}
 	}
-	return o.EndDate
+	return o.Targets
+}
+
+func (o *SourceCimisUpdate) GetTargetsType() SourceCimisUpdateTargetsType {
+	if o == nil {
+		return SourceCimisUpdateTargetsType("")
+	}
+	return o.TargetsType
 }
 
 func (o *SourceCimisUpdate) GetUnitOfMeasure() *SourceCimisUpdateUnitOfMeasure {

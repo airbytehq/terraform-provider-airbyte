@@ -34,8 +34,8 @@ func (e *Shipstation) UnmarshalJSON(data []byte) error {
 
 type SourceShipstation struct {
 	Password   *string     `json:"password,omitempty"`
-	Username   string      `json:"username"`
 	StartDate  time.Time   `json:"start_date"`
+	Username   string      `json:"username"`
 	sourceType Shipstation `const:"shipstation" json:"sourceType"`
 }
 
@@ -57,18 +57,18 @@ func (o *SourceShipstation) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceShipstation) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceShipstation) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceShipstation) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceShipstation) GetSourceType() Shipstation {

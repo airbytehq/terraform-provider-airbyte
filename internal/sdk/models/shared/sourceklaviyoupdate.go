@@ -10,12 +10,12 @@ import (
 type SourceKlaviyoUpdate struct {
 	// Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
 	APIKey string `json:"api_key"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Certain streams like the profiles stream can retrieve predictive analytics data from Klaviyo's API. However, at high volume, this can lead to service availability issues on the API which can be improved by not fetching this field. WARNING: Enabling this setting will stop the  "predictive_analytics" column from being populated in your downstream destination.
 	DisableFetchingPredictiveAnalytics *bool `json:"disable_fetching_predictive_analytics,omitempty"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Klaviyo plan. More info about the rate limit plan tiers can be found on Klaviyo's API <a href="https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling">docs</a>.
 	NumWorkers *int64 `default:"10" json:"num_workers"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This field is optional - if not provided, all data will be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceKlaviyoUpdate) MarshalJSON() ([]byte, error) {
@@ -36,13 +36,6 @@ func (o *SourceKlaviyoUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceKlaviyoUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceKlaviyoUpdate) GetDisableFetchingPredictiveAnalytics() *bool {
 	if o == nil {
 		return nil
@@ -55,4 +48,11 @@ func (o *SourceKlaviyoUpdate) GetNumWorkers() *int64 {
 		return nil
 	}
 	return o.NumWorkers
+}
+
+func (o *SourceKlaviyoUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

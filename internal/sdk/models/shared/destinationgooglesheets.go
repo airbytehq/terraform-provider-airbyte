@@ -217,11 +217,11 @@ func (e *DestinationGoogleSheetsGoogleSheets) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationGoogleSheets struct {
-	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
-	SpreadsheetID string `json:"spreadsheet_id"`
 	// Authentication method to access Google Sheets
-	Credentials     DestinationGoogleSheetsAuthentication `json:"credentials"`
-	destinationType DestinationGoogleSheetsGoogleSheets   `const:"google-sheets" json:"destinationType"`
+	Credentials DestinationGoogleSheetsAuthentication `json:"credentials"`
+	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
+	SpreadsheetID   string                              `json:"spreadsheet_id"`
+	destinationType DestinationGoogleSheetsGoogleSheets `const:"google-sheets" json:"destinationType"`
 }
 
 func (d DestinationGoogleSheets) MarshalJSON() ([]byte, error) {
@@ -235,18 +235,18 @@ func (d *DestinationGoogleSheets) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationGoogleSheets) GetSpreadsheetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.SpreadsheetID
-}
-
 func (o *DestinationGoogleSheets) GetCredentials() DestinationGoogleSheetsAuthentication {
 	if o == nil {
 		return DestinationGoogleSheetsAuthentication{}
 	}
 	return o.Credentials
+}
+
+func (o *DestinationGoogleSheets) GetSpreadsheetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SpreadsheetID
 }
 
 func (o *DestinationGoogleSheets) GetDestinationType() DestinationGoogleSheetsGoogleSheets {

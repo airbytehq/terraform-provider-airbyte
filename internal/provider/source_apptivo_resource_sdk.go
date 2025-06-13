@@ -21,15 +21,15 @@ func (r *SourceApptivoResourceModel) ToSharedSourceApptivoCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceApptivo{
-		APIKey:    apiKey,
 		AccessKey: accessKey,
+		APIKey:    apiKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceApptivoResourceModel) ToSharedSourceApptivoPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	configuration := shared.SourceApptivoUpdate{
-		APIKey:    apiKey,
 		AccessKey: accessKey,
+		APIKey:    apiKey,
 	}
 	out := shared.SourceApptivoPutRequest{
 		Name:          name,

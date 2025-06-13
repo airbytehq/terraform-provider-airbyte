@@ -9,10 +9,10 @@ import (
 
 type SourceSimplesatUpdate struct {
 	APIKey string `json:"api_key"`
-	// Date from when the sync should start
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Date till when the sync should end
 	EndDate *time.Time `json:"end_date,omitempty"`
+	// Date from when the sync should start
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 func (s SourceSimplesatUpdate) MarshalJSON() ([]byte, error) {
@@ -33,16 +33,16 @@ func (o *SourceSimplesatUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceSimplesatUpdate) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
 func (o *SourceSimplesatUpdate) GetEndDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceSimplesatUpdate) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

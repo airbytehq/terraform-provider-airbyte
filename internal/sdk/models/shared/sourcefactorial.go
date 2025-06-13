@@ -33,10 +33,10 @@ func (e *Factorial) UnmarshalJSON(data []byte) error {
 }
 
 type SourceFactorial struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Max records per page limit
 	Limit      *string   `default:"50" json:"limit"`
+	StartDate  time.Time `json:"start_date"`
 	sourceType Factorial `const:"factorial" json:"sourceType"`
 }
 
@@ -58,18 +58,18 @@ func (o *SourceFactorial) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceFactorial) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceFactorial) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceFactorial) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceFactorial) GetSourceType() Factorial {

@@ -22,22 +22,28 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	attributionWindow := new(int64)
+	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
+		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	} else {
+		attributionWindow = nil
+	}
 	var credentials shared.AuthenticationWildcard
 	var serviceAccount *shared.ServiceAccount
 	if r.Configuration.Credentials.ServiceAccount != nil {
-		var username string
-		username = r.Configuration.Credentials.ServiceAccount.Username.ValueString()
+		var projectID int64
+		projectID = r.Configuration.Credentials.ServiceAccount.ProjectID.ValueInt64()
 
 		var secret string
 		secret = r.Configuration.Credentials.ServiceAccount.Secret.ValueString()
 
-		var projectID int64
-		projectID = r.Configuration.Credentials.ServiceAccount.ProjectID.ValueInt64()
+		var username string
+		username = r.Configuration.Credentials.ServiceAccount.Username.ValueString()
 
 		serviceAccount = &shared.ServiceAccount{
-			Username:  username,
-			Secret:    secret,
 			ProjectID: projectID,
+			Secret:    secret,
+			Username:  username,
 		}
 	}
 	if serviceAccount != nil {
@@ -59,17 +65,41 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 			ProjectSecret: projectSecret,
 		}
 	}
-	attributionWindow := new(int64)
-	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
-		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	dateWindowSize := new(int64)
+	if !r.Configuration.DateWindowSize.IsUnknown() && !r.Configuration.DateWindowSize.IsNull() {
+		*dateWindowSize = r.Configuration.DateWindowSize.ValueInt64()
 	} else {
-		attributionWindow = nil
+		dateWindowSize = nil
+	}
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	exportLookbackWindow := new(int64)
+	if !r.Configuration.ExportLookbackWindow.IsUnknown() && !r.Configuration.ExportLookbackWindow.IsNull() {
+		*exportLookbackWindow = r.Configuration.ExportLookbackWindow.ValueInt64()
+	} else {
+		exportLookbackWindow = nil
+	}
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
+	} else {
+		pageSize = nil
 	}
 	projectTimezone := new(string)
 	if !r.Configuration.ProjectTimezone.IsUnknown() && !r.Configuration.ProjectTimezone.IsNull() {
 		*projectTimezone = r.Configuration.ProjectTimezone.ValueString()
 	} else {
 		projectTimezone = nil
+	}
+	region := new(shared.SourceMixpanelRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceMixpanelRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
 	}
 	selectPropertiesByDefault := new(bool)
 	if !r.Configuration.SelectPropertiesByDefault.IsUnknown() && !r.Configuration.SelectPropertiesByDefault.IsNull() {
@@ -83,47 +113,17 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelCreateRequest() *sha
 	} else {
 		startDate = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
-	region := new(shared.SourceMixpanelRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceMixpanelRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
-	}
-	dateWindowSize := new(int64)
-	if !r.Configuration.DateWindowSize.IsUnknown() && !r.Configuration.DateWindowSize.IsNull() {
-		*dateWindowSize = r.Configuration.DateWindowSize.ValueInt64()
-	} else {
-		dateWindowSize = nil
-	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
-	exportLookbackWindow := new(int64)
-	if !r.Configuration.ExportLookbackWindow.IsUnknown() && !r.Configuration.ExportLookbackWindow.IsNull() {
-		*exportLookbackWindow = r.Configuration.ExportLookbackWindow.ValueInt64()
-	} else {
-		exportLookbackWindow = nil
-	}
 	configuration := shared.SourceMixpanel{
-		Credentials:               credentials,
 		AttributionWindow:         attributionWindow,
+		Credentials:               credentials,
+		DateWindowSize:            dateWindowSize,
+		EndDate:                   endDate,
+		ExportLookbackWindow:      exportLookbackWindow,
+		PageSize:                  pageSize,
 		ProjectTimezone:           projectTimezone,
+		Region:                    region,
 		SelectPropertiesByDefault: selectPropertiesByDefault,
 		StartDate:                 startDate,
-		EndDate:                   endDate,
-		Region:                    region,
-		DateWindowSize:            dateWindowSize,
-		PageSize:                  pageSize,
-		ExportLookbackWindow:      exportLookbackWindow,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -195,22 +195,28 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	attributionWindow := new(int64)
+	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
+		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	} else {
+		attributionWindow = nil
+	}
 	var credentials shared.SourceMixpanelUpdateAuthenticationWildcard
 	var sourceMixpanelUpdateServiceAccount *shared.SourceMixpanelUpdateServiceAccount
 	if r.Configuration.Credentials.ServiceAccount != nil {
-		var username string
-		username = r.Configuration.Credentials.ServiceAccount.Username.ValueString()
+		var projectID int64
+		projectID = r.Configuration.Credentials.ServiceAccount.ProjectID.ValueInt64()
 
 		var secret string
 		secret = r.Configuration.Credentials.ServiceAccount.Secret.ValueString()
 
-		var projectID int64
-		projectID = r.Configuration.Credentials.ServiceAccount.ProjectID.ValueInt64()
+		var username string
+		username = r.Configuration.Credentials.ServiceAccount.Username.ValueString()
 
 		sourceMixpanelUpdateServiceAccount = &shared.SourceMixpanelUpdateServiceAccount{
-			Username:  username,
-			Secret:    secret,
 			ProjectID: projectID,
+			Secret:    secret,
+			Username:  username,
 		}
 	}
 	if sourceMixpanelUpdateServiceAccount != nil {
@@ -232,17 +238,41 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 			SourceMixpanelUpdateProjectSecret: sourceMixpanelUpdateProjectSecret,
 		}
 	}
-	attributionWindow := new(int64)
-	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
-		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	dateWindowSize := new(int64)
+	if !r.Configuration.DateWindowSize.IsUnknown() && !r.Configuration.DateWindowSize.IsNull() {
+		*dateWindowSize = r.Configuration.DateWindowSize.ValueInt64()
 	} else {
-		attributionWindow = nil
+		dateWindowSize = nil
+	}
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	exportLookbackWindow := new(int64)
+	if !r.Configuration.ExportLookbackWindow.IsUnknown() && !r.Configuration.ExportLookbackWindow.IsNull() {
+		*exportLookbackWindow = r.Configuration.ExportLookbackWindow.ValueInt64()
+	} else {
+		exportLookbackWindow = nil
+	}
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
+	} else {
+		pageSize = nil
 	}
 	projectTimezone := new(string)
 	if !r.Configuration.ProjectTimezone.IsUnknown() && !r.Configuration.ProjectTimezone.IsNull() {
 		*projectTimezone = r.Configuration.ProjectTimezone.ValueString()
 	} else {
 		projectTimezone = nil
+	}
+	region := new(shared.SourceMixpanelUpdateRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceMixpanelUpdateRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
 	}
 	selectPropertiesByDefault := new(bool)
 	if !r.Configuration.SelectPropertiesByDefault.IsUnknown() && !r.Configuration.SelectPropertiesByDefault.IsNull() {
@@ -256,47 +286,17 @@ func (r *SourceMixpanelResourceModel) ToSharedSourceMixpanelPutRequest() *shared
 	} else {
 		startDate = nil
 	}
-	endDate := new(time.Time)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
-	}
-	region := new(shared.SourceMixpanelUpdateRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceMixpanelUpdateRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
-	}
-	dateWindowSize := new(int64)
-	if !r.Configuration.DateWindowSize.IsUnknown() && !r.Configuration.DateWindowSize.IsNull() {
-		*dateWindowSize = r.Configuration.DateWindowSize.ValueInt64()
-	} else {
-		dateWindowSize = nil
-	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
-	exportLookbackWindow := new(int64)
-	if !r.Configuration.ExportLookbackWindow.IsUnknown() && !r.Configuration.ExportLookbackWindow.IsNull() {
-		*exportLookbackWindow = r.Configuration.ExportLookbackWindow.ValueInt64()
-	} else {
-		exportLookbackWindow = nil
-	}
 	configuration := shared.SourceMixpanelUpdate{
-		Credentials:               credentials,
 		AttributionWindow:         attributionWindow,
+		Credentials:               credentials,
+		DateWindowSize:            dateWindowSize,
+		EndDate:                   endDate,
+		ExportLookbackWindow:      exportLookbackWindow,
+		PageSize:                  pageSize,
 		ProjectTimezone:           projectTimezone,
+		Region:                    region,
 		SelectPropertiesByDefault: selectPropertiesByDefault,
 		StartDate:                 startDate,
-		EndDate:                   endDate,
-		Region:                    region,
-		DateWindowSize:            dateWindowSize,
-		PageSize:                  pageSize,
-		ExportLookbackWindow:      exportLookbackWindow,
 	}
 	out := shared.SourceMixpanelPutRequest{
 		Name:          name,

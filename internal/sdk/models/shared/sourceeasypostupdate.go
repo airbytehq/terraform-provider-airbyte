@@ -8,9 +8,9 @@ import (
 )
 
 type SourceEasypostUpdate struct {
-	// The API Key from your easypost settings
-	Username  string    `json:"username"`
 	StartDate time.Time `json:"start_date"`
+	// The API Key from your easypost settings
+	Username string `json:"username"`
 }
 
 func (s SourceEasypostUpdate) MarshalJSON() ([]byte, error) {
@@ -24,16 +24,16 @@ func (s *SourceEasypostUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceEasypostUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceEasypostUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceEasypostUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

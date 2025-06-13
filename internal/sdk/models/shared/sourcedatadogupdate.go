@@ -8,6 +8,69 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/internal/utils"
 )
 
+// SourceDatadogUpdateDataSource - A data source that is powered by the platform.
+type SourceDatadogUpdateDataSource string
+
+const (
+	SourceDatadogUpdateDataSourceMetrics   SourceDatadogUpdateDataSource = "metrics"
+	SourceDatadogUpdateDataSourceCloudCost SourceDatadogUpdateDataSource = "cloud_cost"
+	SourceDatadogUpdateDataSourceLogs      SourceDatadogUpdateDataSource = "logs"
+	SourceDatadogUpdateDataSourceRum       SourceDatadogUpdateDataSource = "rum"
+)
+
+func (e SourceDatadogUpdateDataSource) ToPointer() *SourceDatadogUpdateDataSource {
+	return &e
+}
+func (e *SourceDatadogUpdateDataSource) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "metrics":
+		fallthrough
+	case "cloud_cost":
+		fallthrough
+	case "logs":
+		fallthrough
+	case "rum":
+		*e = SourceDatadogUpdateDataSource(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceDatadogUpdateDataSource: %v", v)
+	}
+}
+
+type SourceDatadogUpdateQueries struct {
+	// A data source that is powered by the platform.
+	DataSource SourceDatadogUpdateDataSource `json:"data_source"`
+	// The variable name for use in queries.
+	Name string `json:"name"`
+	// A classic query string.
+	Query string `json:"query"`
+}
+
+func (o *SourceDatadogUpdateQueries) GetDataSource() SourceDatadogUpdateDataSource {
+	if o == nil {
+		return SourceDatadogUpdateDataSource("")
+	}
+	return o.DataSource
+}
+
+func (o *SourceDatadogUpdateQueries) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *SourceDatadogUpdateQueries) GetQuery() string {
+	if o == nil {
+		return ""
+	}
+	return o.Query
+}
+
 // SourceDatadogUpdateSite - The site where Datadog data resides in.
 type SourceDatadogUpdateSite string
 
@@ -44,86 +107,23 @@ func (e *SourceDatadogUpdateSite) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDatadogUpdateDataSource - A data source that is powered by the platform.
-type SourceDatadogUpdateDataSource string
-
-const (
-	SourceDatadogUpdateDataSourceMetrics   SourceDatadogUpdateDataSource = "metrics"
-	SourceDatadogUpdateDataSourceCloudCost SourceDatadogUpdateDataSource = "cloud_cost"
-	SourceDatadogUpdateDataSourceLogs      SourceDatadogUpdateDataSource = "logs"
-	SourceDatadogUpdateDataSourceRum       SourceDatadogUpdateDataSource = "rum"
-)
-
-func (e SourceDatadogUpdateDataSource) ToPointer() *SourceDatadogUpdateDataSource {
-	return &e
-}
-func (e *SourceDatadogUpdateDataSource) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "metrics":
-		fallthrough
-	case "cloud_cost":
-		fallthrough
-	case "logs":
-		fallthrough
-	case "rum":
-		*e = SourceDatadogUpdateDataSource(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceDatadogUpdateDataSource: %v", v)
-	}
-}
-
-type SourceDatadogUpdateQueries struct {
-	// The variable name for use in queries.
-	Name string `json:"name"`
-	// A classic query string.
-	Query string `json:"query"`
-	// A data source that is powered by the platform.
-	DataSource SourceDatadogUpdateDataSource `json:"data_source"`
-}
-
-func (o *SourceDatadogUpdateQueries) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceDatadogUpdateQueries) GetQuery() string {
-	if o == nil {
-		return ""
-	}
-	return o.Query
-}
-
-func (o *SourceDatadogUpdateQueries) GetDataSource() SourceDatadogUpdateDataSource {
-	if o == nil {
-		return SourceDatadogUpdateDataSource("")
-	}
-	return o.DataSource
-}
-
 type SourceDatadogUpdate struct {
 	// Datadog API key
 	APIKey string `json:"api_key"`
 	// Datadog application key
 	ApplicationKey string `json:"application_key"`
-	// The search query. This just applies to Incremental syncs. If empty, it'll collect all logs.
-	Query *string `json:"query,omitempty"`
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs.
-	StartDate *string `default:"2023-12-01T00:00:00Z" json:"start_date"`
-	// The site where Datadog data resides in.
-	Site *SourceDatadogUpdateSite `default:"datadoghq.com" json:"site"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Data after this date will  not be replicated. An empty value will represent the current datetime for each  execution. This just applies to Incremental syncs.
 	EndDate *string `json:"end_date,omitempty"`
 	// Maximum number of records to collect per request.
 	MaxRecordsPerRequest *int64 `default:"5000" json:"max_records_per_request"`
 	// List of queries to be run and used as inputs.
 	Queries []SourceDatadogUpdateQueries `json:"queries,omitempty"`
+	// The search query. This just applies to Incremental syncs. If empty, it'll collect all logs.
+	Query *string `json:"query,omitempty"`
+	// The site where Datadog data resides in.
+	Site *SourceDatadogUpdateSite `default:"datadoghq.com" json:"site"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. This just applies to Incremental syncs.
+	StartDate *string `default:"2023-12-01T00:00:00Z" json:"start_date"`
 }
 
 func (s SourceDatadogUpdate) MarshalJSON() ([]byte, error) {
@@ -151,27 +151,6 @@ func (o *SourceDatadogUpdate) GetApplicationKey() string {
 	return o.ApplicationKey
 }
 
-func (o *SourceDatadogUpdate) GetQuery() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Query
-}
-
-func (o *SourceDatadogUpdate) GetStartDate() *string {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
-}
-
-func (o *SourceDatadogUpdate) GetSite() *SourceDatadogUpdateSite {
-	if o == nil {
-		return nil
-	}
-	return o.Site
-}
-
 func (o *SourceDatadogUpdate) GetEndDate() *string {
 	if o == nil {
 		return nil
@@ -191,4 +170,25 @@ func (o *SourceDatadogUpdate) GetQueries() []SourceDatadogUpdateQueries {
 		return nil
 	}
 	return o.Queries
+}
+
+func (o *SourceDatadogUpdate) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SourceDatadogUpdate) GetSite() *SourceDatadogUpdateSite {
+	if o == nil {
+		return nil
+	}
+	return o.Site
+}
+
+func (o *SourceDatadogUpdate) GetStartDate() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

@@ -32,12 +32,12 @@ func (e *UsCensus) UnmarshalJSON(data []byte) error {
 }
 
 type SourceUsCensus struct {
+	// Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
+	APIKey string `json:"api_key"`
 	// The query parameters portion of the GET request, without the api key
 	QueryParams *string `json:"query_params,omitempty"`
 	// The path portion of the GET request
-	QueryPath string `json:"query_path"`
-	// Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
-	APIKey     string   `json:"api_key"`
+	QueryPath  string   `json:"query_path"`
 	sourceType UsCensus `const:"us-census" json:"sourceType"`
 }
 
@@ -52,6 +52,13 @@ func (s *SourceUsCensus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceUsCensus) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
+}
+
 func (o *SourceUsCensus) GetQueryParams() *string {
 	if o == nil {
 		return nil
@@ -64,13 +71,6 @@ func (o *SourceUsCensus) GetQueryPath() string {
 		return ""
 	}
 	return o.QueryPath
-}
-
-func (o *SourceUsCensus) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
 }
 
 func (o *SourceUsCensus) GetSourceType() UsCensus {

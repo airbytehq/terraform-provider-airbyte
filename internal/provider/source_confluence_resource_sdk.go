@@ -21,19 +21,19 @@ func (r *SourceConfluenceResourceModel) ToSharedSourceConfluenceCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var email string
-	email = r.Configuration.Email.ValueString()
-
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
 	var domainName string
 	domainName = r.Configuration.DomainName.ValueString()
 
+	var email string
+	email = r.Configuration.Email.ValueString()
+
 	configuration := shared.SourceConfluence{
-		Email:      email,
 		APIToken:   apiToken,
 		DomainName: domainName,
+		Email:      email,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -105,19 +105,19 @@ func (r *SourceConfluenceResourceModel) ToSharedSourceConfluencePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var email string
-	email = r.Configuration.Email.ValueString()
-
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
 	var domainName string
 	domainName = r.Configuration.DomainName.ValueString()
 
+	var email string
+	email = r.Configuration.Email.ValueString()
+
 	configuration := shared.SourceConfluenceUpdate{
-		Email:      email,
 		APIToken:   apiToken,
 		DomainName: domainName,
+		Email:      email,
 	}
 	out := shared.SourceConfluencePutRequest{
 		Name:          name,

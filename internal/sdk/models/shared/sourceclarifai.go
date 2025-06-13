@@ -33,11 +33,11 @@ func (e *ClarifAi) UnmarshalJSON(data []byte) error {
 }
 
 type SourceClarifAi struct {
-	APIKey string `json:"api_key"`
+	APIKey    string    `json:"api_key"`
+	StartDate time.Time `json:"start_date"`
 	// User ID found in settings
-	UserID     string    `json:"user_id"`
-	StartDate  time.Time `json:"start_date"`
-	sourceType ClarifAi  `const:"clarif-ai" json:"sourceType"`
+	UserID     string   `json:"user_id"`
+	sourceType ClarifAi `const:"clarif-ai" json:"sourceType"`
 }
 
 func (s SourceClarifAi) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceClarifAi) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceClarifAi) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
-}
-
 func (o *SourceClarifAi) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceClarifAi) GetUserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserID
 }
 
 func (o *SourceClarifAi) GetSourceType() ClarifAi {

@@ -22,6 +22,81 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var azureBlobStorageAccountName string
+	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
+
+	var azureBlobStorageContainerName string
+	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
+
+	azureBlobStorageEndpoint := new(string)
+	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
+		*azureBlobStorageEndpoint = r.Configuration.AzureBlobStorageEndpoint.ValueString()
+	} else {
+		azureBlobStorageEndpoint = nil
+	}
+	var credentials shared.SourceAzureBlobStorageAuthentication
+	var authenticateViaOauth2 *shared.AuthenticateViaOauth2
+	if r.Configuration.Credentials.AuthenticateViaOauth2 != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaOauth2.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaOauth2.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaOauth2.RefreshToken.ValueString()
+
+		var tenantID string
+		tenantID = r.Configuration.Credentials.AuthenticateViaOauth2.TenantID.ValueString()
+
+		authenticateViaOauth2 = &shared.AuthenticateViaOauth2{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+			TenantID:     tenantID,
+		}
+	}
+	if authenticateViaOauth2 != nil {
+		credentials = shared.SourceAzureBlobStorageAuthentication{
+			AuthenticateViaOauth2: authenticateViaOauth2,
+		}
+	}
+	var authenticateViaClientCredentials *shared.AuthenticateViaClientCredentials
+	if r.Configuration.Credentials.AuthenticateViaClientCredentials != nil {
+		var appClientID string
+		appClientID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientID.ValueString()
+
+		var appClientSecret string
+		appClientSecret = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientSecret.ValueString()
+
+		var appTenantID string
+		appTenantID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppTenantID.ValueString()
+
+		authenticateViaClientCredentials = &shared.AuthenticateViaClientCredentials{
+			AppClientID:     appClientID,
+			AppClientSecret: appClientSecret,
+			AppTenantID:     appTenantID,
+		}
+	}
+	if authenticateViaClientCredentials != nil {
+		credentials = shared.SourceAzureBlobStorageAuthentication{
+			AuthenticateViaClientCredentials: authenticateViaClientCredentials,
+		}
+	}
+	var authenticateViaStorageAccountKey *shared.AuthenticateViaStorageAccountKey
+	if r.Configuration.Credentials.AuthenticateViaStorageAccountKey != nil {
+		var azureBlobStorageAccountKey string
+		azureBlobStorageAccountKey = r.Configuration.Credentials.AuthenticateViaStorageAccountKey.AzureBlobStorageAccountKey.ValueString()
+
+		authenticateViaStorageAccountKey = &shared.AuthenticateViaStorageAccountKey{
+			AzureBlobStorageAccountKey: azureBlobStorageAccountKey,
+		}
+	}
+	if authenticateViaStorageAccountKey != nil {
+		credentials = shared.SourceAzureBlobStorageAuthentication{
+			AuthenticateViaStorageAccountKey: authenticateViaStorageAccountKey,
+		}
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -30,25 +105,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 	}
 	var streams []shared.FileBasedStreamConfig = []shared.FileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.ValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.ValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -81,17 +137,11 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -99,33 +149,15 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.CSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -163,34 +195,58 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			csvFormat = &shared.CSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if csvFormat != nil {
@@ -226,18 +282,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 		}
 		var unstructuredDocumentFormat *shared.UnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.ParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.Processing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var local *shared.Local
@@ -250,10 +294,22 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.ParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.ParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			unstructuredDocumentFormat = &shared.UnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if unstructuredDocumentFormat != nil {
@@ -261,111 +317,55 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStorageCrea
 				UnstructuredDocumentFormat: unstructuredDocumentFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.ValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.ValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.FileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var credentials shared.SourceAzureBlobStorageAuthentication
-	var authenticateViaOauth2 *shared.AuthenticateViaOauth2
-	if r.Configuration.Credentials.AuthenticateViaOauth2 != nil {
-		var tenantID string
-		tenantID = r.Configuration.Credentials.AuthenticateViaOauth2.TenantID.ValueString()
-
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaOauth2.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaOauth2.ClientSecret.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaOauth2.RefreshToken.ValueString()
-
-		authenticateViaOauth2 = &shared.AuthenticateViaOauth2{
-			TenantID:     tenantID,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
-		}
-	}
-	if authenticateViaOauth2 != nil {
-		credentials = shared.SourceAzureBlobStorageAuthentication{
-			AuthenticateViaOauth2: authenticateViaOauth2,
-		}
-	}
-	var authenticateViaClientCredentials *shared.AuthenticateViaClientCredentials
-	if r.Configuration.Credentials.AuthenticateViaClientCredentials != nil {
-		var appTenantID string
-		appTenantID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppTenantID.ValueString()
-
-		var appClientID string
-		appClientID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientID.ValueString()
-
-		var appClientSecret string
-		appClientSecret = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientSecret.ValueString()
-
-		authenticateViaClientCredentials = &shared.AuthenticateViaClientCredentials{
-			AppTenantID:     appTenantID,
-			AppClientID:     appClientID,
-			AppClientSecret: appClientSecret,
-		}
-	}
-	if authenticateViaClientCredentials != nil {
-		credentials = shared.SourceAzureBlobStorageAuthentication{
-			AuthenticateViaClientCredentials: authenticateViaClientCredentials,
-		}
-	}
-	var authenticateViaStorageAccountKey *shared.AuthenticateViaStorageAccountKey
-	if r.Configuration.Credentials.AuthenticateViaStorageAccountKey != nil {
-		var azureBlobStorageAccountKey string
-		azureBlobStorageAccountKey = r.Configuration.Credentials.AuthenticateViaStorageAccountKey.AzureBlobStorageAccountKey.ValueString()
-
-		authenticateViaStorageAccountKey = &shared.AuthenticateViaStorageAccountKey{
-			AzureBlobStorageAccountKey: azureBlobStorageAccountKey,
-		}
-	}
-	if authenticateViaStorageAccountKey != nil {
-		credentials = shared.SourceAzureBlobStorageAuthentication{
-			AuthenticateViaStorageAccountKey: authenticateViaStorageAccountKey,
-		}
-	}
-	var azureBlobStorageAccountName string
-	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
-
-	var azureBlobStorageContainerName string
-	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
-
-	azureBlobStorageEndpoint := new(string)
-	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
-		*azureBlobStorageEndpoint = r.Configuration.AzureBlobStorageEndpoint.ValueString()
-	} else {
-		azureBlobStorageEndpoint = nil
-	}
 	configuration := shared.SourceAzureBlobStorage{
-		StartDate:                     startDate,
-		Streams:                       streams,
-		Credentials:                   credentials,
 		AzureBlobStorageAccountName:   azureBlobStorageAccountName,
 		AzureBlobStorageContainerName: azureBlobStorageContainerName,
 		AzureBlobStorageEndpoint:      azureBlobStorageEndpoint,
+		Credentials:                   credentials,
+		StartDate:                     startDate,
+		Streams:                       streams,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -437,6 +437,81 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var azureBlobStorageAccountName string
+	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
+
+	var azureBlobStorageContainerName string
+	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
+
+	azureBlobStorageEndpoint := new(string)
+	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
+		*azureBlobStorageEndpoint = r.Configuration.AzureBlobStorageEndpoint.ValueString()
+	} else {
+		azureBlobStorageEndpoint = nil
+	}
+	var credentials shared.SourceAzureBlobStorageUpdateAuthentication
+	var sourceAzureBlobStorageUpdateAuthenticateViaOauth2 *shared.SourceAzureBlobStorageUpdateAuthenticateViaOauth2
+	if r.Configuration.Credentials.AuthenticateViaOauth2 != nil {
+		var clientID string
+		clientID = r.Configuration.Credentials.AuthenticateViaOauth2.ClientID.ValueString()
+
+		var clientSecret string
+		clientSecret = r.Configuration.Credentials.AuthenticateViaOauth2.ClientSecret.ValueString()
+
+		var refreshToken string
+		refreshToken = r.Configuration.Credentials.AuthenticateViaOauth2.RefreshToken.ValueString()
+
+		var tenantID string
+		tenantID = r.Configuration.Credentials.AuthenticateViaOauth2.TenantID.ValueString()
+
+		sourceAzureBlobStorageUpdateAuthenticateViaOauth2 = &shared.SourceAzureBlobStorageUpdateAuthenticateViaOauth2{
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+			TenantID:     tenantID,
+		}
+	}
+	if sourceAzureBlobStorageUpdateAuthenticateViaOauth2 != nil {
+		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
+			SourceAzureBlobStorageUpdateAuthenticateViaOauth2: sourceAzureBlobStorageUpdateAuthenticateViaOauth2,
+		}
+	}
+	var sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials *shared.SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials
+	if r.Configuration.Credentials.AuthenticateViaClientCredentials != nil {
+		var appClientID string
+		appClientID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientID.ValueString()
+
+		var appClientSecret string
+		appClientSecret = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientSecret.ValueString()
+
+		var appTenantID string
+		appTenantID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppTenantID.ValueString()
+
+		sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials = &shared.SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials{
+			AppClientID:     appClientID,
+			AppClientSecret: appClientSecret,
+			AppTenantID:     appTenantID,
+		}
+	}
+	if sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials != nil {
+		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
+			SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials: sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials,
+		}
+	}
+	var sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey *shared.SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey
+	if r.Configuration.Credentials.AuthenticateViaStorageAccountKey != nil {
+		var azureBlobStorageAccountKey string
+		azureBlobStorageAccountKey = r.Configuration.Credentials.AuthenticateViaStorageAccountKey.AzureBlobStorageAccountKey.ValueString()
+
+		sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey = &shared.SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey{
+			AzureBlobStorageAccountKey: azureBlobStorageAccountKey,
+		}
+	}
+	if sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey != nil {
+		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
+			SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey: sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey,
+		}
+	}
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -445,25 +520,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 	}
 	var streams []shared.SourceAzureBlobStorageUpdateFileBasedStreamConfig = []shared.SourceAzureBlobStorageUpdateFileBasedStreamConfig{}
 	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceAzureBlobStorageUpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceAzureBlobStorageUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
 		daysToSyncIfHistoryIsFull := new(int64)
 		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
 			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
@@ -496,17 +552,11 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 			} else {
 				delimiter = nil
 			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
 			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
+				doubleQuote = nil
 			}
 			encoding := new(string)
 			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
@@ -514,33 +564,15 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 			} else {
 				encoding = nil
 			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
 			} else {
-				doubleQuote = nil
+				escapeChar = nil
 			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
 			}
 			var headerDefinition *shared.SourceAzureBlobStorageUpdateCSVHeaderDefinition
 			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
@@ -578,34 +610,58 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 					}
 				}
 			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
 			ignoreErrorsOnFieldsMismatch := new(bool)
 			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
 				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
 			} else {
 				ignoreErrorsOnFieldsMismatch = nil
 			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
 			sourceAzureBlobStorageUpdateCSVFormat = &shared.SourceAzureBlobStorageUpdateCSVFormat{
 				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
 				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
 				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
 				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
 			}
 		}
 		if sourceAzureBlobStorageUpdateCSVFormat != nil {
@@ -641,18 +697,6 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 		}
 		var sourceAzureBlobStorageUpdateUnstructuredDocumentFormat *shared.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat
 		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceAzureBlobStorageUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceAzureBlobStorageUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
 			var processing *shared.SourceAzureBlobStorageUpdateProcessing
 			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
 				var sourceAzureBlobStorageUpdateLocal *shared.SourceAzureBlobStorageUpdateLocal
@@ -665,10 +709,22 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 					}
 				}
 			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceAzureBlobStorageUpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceAzureBlobStorageUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
 			sourceAzureBlobStorageUpdateUnstructuredDocumentFormat = &shared.SourceAzureBlobStorageUpdateUnstructuredDocumentFormat{
+				Processing:             processing,
 				SkipUnprocessableFiles: skipUnprocessableFiles,
 				Strategy:               strategy,
-				Processing:             processing,
 			}
 		}
 		if sourceAzureBlobStorageUpdateUnstructuredDocumentFormat != nil {
@@ -676,111 +732,55 @@ func (r *SourceAzureBlobStorageResourceModel) ToSharedSourceAzureBlobStoragePutR
 				SourceAzureBlobStorageUpdateUnstructuredDocumentFormat: sourceAzureBlobStorageUpdateUnstructuredDocumentFormat,
 			}
 		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
 		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
 		recentNFilesToReadForSchemaDiscovery := new(int64)
 		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
 			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
 		} else {
 			recentNFilesToReadForSchemaDiscovery = nil
 		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceAzureBlobStorageUpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceAzureBlobStorageUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
 		streams = append(streams, shared.SourceAzureBlobStorageUpdateFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
 			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
 			Format:                               format,
-			Schemaless:                           schemaless,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
 			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
 		})
 	}
-	var credentials shared.SourceAzureBlobStorageUpdateAuthentication
-	var sourceAzureBlobStorageUpdateAuthenticateViaOauth2 *shared.SourceAzureBlobStorageUpdateAuthenticateViaOauth2
-	if r.Configuration.Credentials.AuthenticateViaOauth2 != nil {
-		var tenantID string
-		tenantID = r.Configuration.Credentials.AuthenticateViaOauth2.TenantID.ValueString()
-
-		var clientID string
-		clientID = r.Configuration.Credentials.AuthenticateViaOauth2.ClientID.ValueString()
-
-		var clientSecret string
-		clientSecret = r.Configuration.Credentials.AuthenticateViaOauth2.ClientSecret.ValueString()
-
-		var refreshToken string
-		refreshToken = r.Configuration.Credentials.AuthenticateViaOauth2.RefreshToken.ValueString()
-
-		sourceAzureBlobStorageUpdateAuthenticateViaOauth2 = &shared.SourceAzureBlobStorageUpdateAuthenticateViaOauth2{
-			TenantID:     tenantID,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
-		}
-	}
-	if sourceAzureBlobStorageUpdateAuthenticateViaOauth2 != nil {
-		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
-			SourceAzureBlobStorageUpdateAuthenticateViaOauth2: sourceAzureBlobStorageUpdateAuthenticateViaOauth2,
-		}
-	}
-	var sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials *shared.SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials
-	if r.Configuration.Credentials.AuthenticateViaClientCredentials != nil {
-		var appTenantID string
-		appTenantID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppTenantID.ValueString()
-
-		var appClientID string
-		appClientID = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientID.ValueString()
-
-		var appClientSecret string
-		appClientSecret = r.Configuration.Credentials.AuthenticateViaClientCredentials.AppClientSecret.ValueString()
-
-		sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials = &shared.SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials{
-			AppTenantID:     appTenantID,
-			AppClientID:     appClientID,
-			AppClientSecret: appClientSecret,
-		}
-	}
-	if sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials != nil {
-		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
-			SourceAzureBlobStorageUpdateAuthenticateViaClientCredentials: sourceAzureBlobStorageUpdateAuthenticateViaClientCredentials,
-		}
-	}
-	var sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey *shared.SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey
-	if r.Configuration.Credentials.AuthenticateViaStorageAccountKey != nil {
-		var azureBlobStorageAccountKey string
-		azureBlobStorageAccountKey = r.Configuration.Credentials.AuthenticateViaStorageAccountKey.AzureBlobStorageAccountKey.ValueString()
-
-		sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey = &shared.SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey{
-			AzureBlobStorageAccountKey: azureBlobStorageAccountKey,
-		}
-	}
-	if sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey != nil {
-		credentials = shared.SourceAzureBlobStorageUpdateAuthentication{
-			SourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey: sourceAzureBlobStorageUpdateAuthenticateViaStorageAccountKey,
-		}
-	}
-	var azureBlobStorageAccountName string
-	azureBlobStorageAccountName = r.Configuration.AzureBlobStorageAccountName.ValueString()
-
-	var azureBlobStorageContainerName string
-	azureBlobStorageContainerName = r.Configuration.AzureBlobStorageContainerName.ValueString()
-
-	azureBlobStorageEndpoint := new(string)
-	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
-		*azureBlobStorageEndpoint = r.Configuration.AzureBlobStorageEndpoint.ValueString()
-	} else {
-		azureBlobStorageEndpoint = nil
-	}
 	configuration := shared.SourceAzureBlobStorageUpdate{
-		StartDate:                     startDate,
-		Streams:                       streams,
-		Credentials:                   credentials,
 		AzureBlobStorageAccountName:   azureBlobStorageAccountName,
 		AzureBlobStorageContainerName: azureBlobStorageContainerName,
 		AzureBlobStorageEndpoint:      azureBlobStorageEndpoint,
+		Credentials:                   credentials,
+		StartDate:                     startDate,
+		Streams:                       streams,
 	}
 	out := shared.SourceAzureBlobStoragePutRequest{
 		Name:          name,

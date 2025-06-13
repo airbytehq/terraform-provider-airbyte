@@ -21,41 +21,17 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var consumerKey string
-	consumerKey = r.Configuration.ConsumerKey.ValueString()
-
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
-	state := new(shared.State)
-	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = shared.State(r.Configuration.State.ValueString())
-	} else {
-		state = nil
-	}
-	favorite := new(bool)
-	if !r.Configuration.Favorite.IsUnknown() && !r.Configuration.Favorite.IsNull() {
-		*favorite = r.Configuration.Favorite.ValueBool()
-	} else {
-		favorite = nil
-	}
-	tag := new(string)
-	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
-		*tag = r.Configuration.Tag.ValueString()
-	} else {
-		tag = nil
-	}
+	var consumerKey string
+	consumerKey = r.Configuration.ConsumerKey.ValueString()
+
 	contentType := new(shared.ContentType)
 	if !r.Configuration.ContentType.IsUnknown() && !r.Configuration.ContentType.IsNull() {
 		*contentType = shared.ContentType(r.Configuration.ContentType.ValueString())
 	} else {
 		contentType = nil
-	}
-	sort := new(shared.SourcePocketSortBy)
-	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
-		*sort = shared.SourcePocketSortBy(r.Configuration.Sort.ValueString())
-	} else {
-		sort = nil
 	}
 	detailType := new(shared.DetailType)
 	if !r.Configuration.DetailType.IsUnknown() && !r.Configuration.DetailType.IsNull() {
@@ -63,17 +39,23 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketCreateRequest() *shared.
 	} else {
 		detailType = nil
 	}
-	search := new(string)
-	if !r.Configuration.Search.IsUnknown() && !r.Configuration.Search.IsNull() {
-		*search = r.Configuration.Search.ValueString()
-	} else {
-		search = nil
-	}
 	domain := new(string)
 	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
 		*domain = r.Configuration.Domain.ValueString()
 	} else {
 		domain = nil
+	}
+	favorite := new(bool)
+	if !r.Configuration.Favorite.IsUnknown() && !r.Configuration.Favorite.IsNull() {
+		*favorite = r.Configuration.Favorite.ValueBool()
+	} else {
+		favorite = nil
+	}
+	search := new(string)
+	if !r.Configuration.Search.IsUnknown() && !r.Configuration.Search.IsNull() {
+		*search = r.Configuration.Search.ValueString()
+	} else {
+		search = nil
 	}
 	since := new(string)
 	if !r.Configuration.Since.IsUnknown() && !r.Configuration.Since.IsNull() {
@@ -81,18 +63,36 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketCreateRequest() *shared.
 	} else {
 		since = nil
 	}
+	sort := new(shared.SourcePocketSortBy)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = shared.SourcePocketSortBy(r.Configuration.Sort.ValueString())
+	} else {
+		sort = nil
+	}
+	state := new(shared.State)
+	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
+		*state = shared.State(r.Configuration.State.ValueString())
+	} else {
+		state = nil
+	}
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
 	configuration := shared.SourcePocket{
-		ConsumerKey: consumerKey,
 		AccessToken: accessToken,
-		State:       state,
-		Favorite:    favorite,
-		Tag:         tag,
+		ConsumerKey: consumerKey,
 		ContentType: contentType,
-		Sort:        sort,
 		DetailType:  detailType,
-		Search:      search,
 		Domain:      domain,
+		Favorite:    favorite,
+		Search:      search,
 		Since:       since,
+		Sort:        sort,
+		State:       state,
+		Tag:         tag,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -164,41 +164,17 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var consumerKey string
-	consumerKey = r.Configuration.ConsumerKey.ValueString()
-
 	var accessToken string
 	accessToken = r.Configuration.AccessToken.ValueString()
 
-	state := new(shared.SourcePocketUpdateState)
-	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = shared.SourcePocketUpdateState(r.Configuration.State.ValueString())
-	} else {
-		state = nil
-	}
-	favorite := new(bool)
-	if !r.Configuration.Favorite.IsUnknown() && !r.Configuration.Favorite.IsNull() {
-		*favorite = r.Configuration.Favorite.ValueBool()
-	} else {
-		favorite = nil
-	}
-	tag := new(string)
-	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
-		*tag = r.Configuration.Tag.ValueString()
-	} else {
-		tag = nil
-	}
+	var consumerKey string
+	consumerKey = r.Configuration.ConsumerKey.ValueString()
+
 	contentType := new(shared.SourcePocketUpdateContentType)
 	if !r.Configuration.ContentType.IsUnknown() && !r.Configuration.ContentType.IsNull() {
 		*contentType = shared.SourcePocketUpdateContentType(r.Configuration.ContentType.ValueString())
 	} else {
 		contentType = nil
-	}
-	sort := new(shared.SourcePocketUpdateSortBy)
-	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
-		*sort = shared.SourcePocketUpdateSortBy(r.Configuration.Sort.ValueString())
-	} else {
-		sort = nil
 	}
 	detailType := new(shared.SourcePocketUpdateDetailType)
 	if !r.Configuration.DetailType.IsUnknown() && !r.Configuration.DetailType.IsNull() {
@@ -206,17 +182,23 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketPutRequest() *shared.Sou
 	} else {
 		detailType = nil
 	}
-	search := new(string)
-	if !r.Configuration.Search.IsUnknown() && !r.Configuration.Search.IsNull() {
-		*search = r.Configuration.Search.ValueString()
-	} else {
-		search = nil
-	}
 	domain := new(string)
 	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
 		*domain = r.Configuration.Domain.ValueString()
 	} else {
 		domain = nil
+	}
+	favorite := new(bool)
+	if !r.Configuration.Favorite.IsUnknown() && !r.Configuration.Favorite.IsNull() {
+		*favorite = r.Configuration.Favorite.ValueBool()
+	} else {
+		favorite = nil
+	}
+	search := new(string)
+	if !r.Configuration.Search.IsUnknown() && !r.Configuration.Search.IsNull() {
+		*search = r.Configuration.Search.ValueString()
+	} else {
+		search = nil
 	}
 	since := new(string)
 	if !r.Configuration.Since.IsUnknown() && !r.Configuration.Since.IsNull() {
@@ -224,18 +206,36 @@ func (r *SourcePocketResourceModel) ToSharedSourcePocketPutRequest() *shared.Sou
 	} else {
 		since = nil
 	}
+	sort := new(shared.SourcePocketUpdateSortBy)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = shared.SourcePocketUpdateSortBy(r.Configuration.Sort.ValueString())
+	} else {
+		sort = nil
+	}
+	state := new(shared.SourcePocketUpdateState)
+	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
+		*state = shared.SourcePocketUpdateState(r.Configuration.State.ValueString())
+	} else {
+		state = nil
+	}
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
 	configuration := shared.SourcePocketUpdate{
-		ConsumerKey: consumerKey,
 		AccessToken: accessToken,
-		State:       state,
-		Favorite:    favorite,
-		Tag:         tag,
+		ConsumerKey: consumerKey,
 		ContentType: contentType,
-		Sort:        sort,
 		DetailType:  detailType,
-		Search:      search,
 		Domain:      domain,
+		Favorite:    favorite,
+		Search:      search,
 		Since:       since,
+		Sort:        sort,
+		State:       state,
+		Tag:         tag,
 	}
 	out := shared.SourcePocketPutRequest{
 		Name:          name,

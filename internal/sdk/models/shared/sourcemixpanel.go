@@ -34,9 +34,9 @@ func (e *SourceMixpanelSchemasOptionTitle) UnmarshalJSON(data []byte) error {
 }
 
 type ProjectSecret struct {
-	optionTitle *SourceMixpanelSchemasOptionTitle `const:"Project Secret" json:"option_title,omitempty"`
 	// Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
-	APISecret string `json:"api_secret"`
+	APISecret   string                            `json:"api_secret"`
+	optionTitle *SourceMixpanelSchemasOptionTitle `const:"Project Secret" json:"option_title,omitempty"`
 }
 
 func (p ProjectSecret) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (p *ProjectSecret) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProjectSecret) GetOptionTitle() *SourceMixpanelSchemasOptionTitle {
-	return SourceMixpanelSchemasOptionTitleProjectSecret.ToPointer()
-}
-
 func (o *ProjectSecret) GetAPISecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.APISecret
+}
+
+func (o *ProjectSecret) GetOptionTitle() *SourceMixpanelSchemasOptionTitle {
+	return SourceMixpanelSchemasOptionTitleProjectSecret.ToPointer()
 }
 
 type SourceMixpanelOptionTitle string
@@ -86,12 +86,12 @@ func (e *SourceMixpanelOptionTitle) UnmarshalJSON(data []byte) error {
 
 type ServiceAccount struct {
 	optionTitle *SourceMixpanelOptionTitle `const:"Service Account" json:"option_title,omitempty"`
-	// Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
-	Username string `json:"username"`
-	// Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
-	Secret string `json:"secret"`
 	// Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
 	ProjectID int64 `json:"project_id"`
+	// Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
+	Secret string `json:"secret"`
+	// Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
+	Username string `json:"username"`
 }
 
 func (s ServiceAccount) MarshalJSON() ([]byte, error) {
@@ -109,11 +109,11 @@ func (o *ServiceAccount) GetOptionTitle() *SourceMixpanelOptionTitle {
 	return SourceMixpanelOptionTitleServiceAccount.ToPointer()
 }
 
-func (o *ServiceAccount) GetUsername() string {
+func (o *ServiceAccount) GetProjectID() int64 {
 	if o == nil {
-		return ""
+		return 0
 	}
-	return o.Username
+	return o.ProjectID
 }
 
 func (o *ServiceAccount) GetSecret() string {
@@ -123,11 +123,11 @@ func (o *ServiceAccount) GetSecret() string {
 	return o.Secret
 }
 
-func (o *ServiceAccount) GetProjectID() int64 {
+func (o *ServiceAccount) GetUsername() string {
 	if o == nil {
-		return 0
+		return ""
 	}
-	return o.ProjectID
+	return o.Username
 }
 
 type AuthenticationWildcardType string
@@ -245,27 +245,27 @@ func (e *Mixpanel) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMixpanel struct {
-	// Choose how to authenticate to Mixpanel
-	Credentials AuthenticationWildcard `json:"credentials"`
 	// A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days. (This value should be non-negative integer)
 	AttributionWindow *int64 `default:"5" json:"attribution_window"`
+	// Choose how to authenticate to Mixpanel
+	Credentials AuthenticationWildcard `json:"credentials"`
+	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer)
+	DateWindowSize *int64 `default:"30" json:"date_window_size"`
+	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
+	EndDate *time.Time `json:"end_date,omitempty"`
+	// The number of seconds to look back from the last synced timestamp during incremental syncs of the Export stream. This ensures no data is missed due to delays in event recording. Default is 0 seconds. Must be a non-negative integer.
+	ExportLookbackWindow *int64 `default:"0" json:"export_lookback_window"`
+	// The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value.
+	PageSize *int64 `default:"1000" json:"page_size"`
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
 	ProjectTimezone *string `default:"US/Pacific" json:"project_timezone"`
+	// The region of mixpanel domain instance either US or EU.
+	Region *SourceMixpanelRegion `default:"US" json:"region"`
 	// Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
 	SelectPropertiesByDefault *bool `default:"true" json:"select_properties_by_default"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
-	EndDate *time.Time `json:"end_date,omitempty"`
-	// The region of mixpanel domain instance either US or EU.
-	Region *SourceMixpanelRegion `default:"US" json:"region"`
-	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment. (This value should be positive integer)
-	DateWindowSize *int64 `default:"30" json:"date_window_size"`
-	// The number of records to fetch per request for the engage stream. Default is 1000. If you are experiencing long sync times with this stream, try increasing this value.
-	PageSize *int64 `default:"1000" json:"page_size"`
-	// The number of seconds to look back from the last synced timestamp during incremental syncs of the Export stream. This ensures no data is missed due to delays in event recording. Default is 0 seconds. Must be a non-negative integer.
-	ExportLookbackWindow *int64   `default:"0" json:"export_lookback_window"`
-	sourceType           Mixpanel `const:"mixpanel" json:"sourceType"`
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Mixpanel   `const:"mixpanel" json:"sourceType"`
 }
 
 func (s SourceMixpanel) MarshalJSON() ([]byte, error) {
@@ -279,13 +279,6 @@ func (s *SourceMixpanel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMixpanel) GetCredentials() AuthenticationWildcard {
-	if o == nil {
-		return AuthenticationWildcard{}
-	}
-	return o.Credentials
-}
-
 func (o *SourceMixpanel) GetAttributionWindow() *int64 {
 	if o == nil {
 		return nil
@@ -293,11 +286,53 @@ func (o *SourceMixpanel) GetAttributionWindow() *int64 {
 	return o.AttributionWindow
 }
 
+func (o *SourceMixpanel) GetCredentials() AuthenticationWildcard {
+	if o == nil {
+		return AuthenticationWildcard{}
+	}
+	return o.Credentials
+}
+
+func (o *SourceMixpanel) GetDateWindowSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DateWindowSize
+}
+
+func (o *SourceMixpanel) GetEndDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceMixpanel) GetExportLookbackWindow() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ExportLookbackWindow
+}
+
+func (o *SourceMixpanel) GetPageSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
 func (o *SourceMixpanel) GetProjectTimezone() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ProjectTimezone
+}
+
+func (o *SourceMixpanel) GetRegion() *SourceMixpanelRegion {
+	if o == nil {
+		return nil
+	}
+	return o.Region
 }
 
 func (o *SourceMixpanel) GetSelectPropertiesByDefault() *bool {
@@ -312,41 +347,6 @@ func (o *SourceMixpanel) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
-}
-
-func (o *SourceMixpanel) GetEndDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
-}
-
-func (o *SourceMixpanel) GetRegion() *SourceMixpanelRegion {
-	if o == nil {
-		return nil
-	}
-	return o.Region
-}
-
-func (o *SourceMixpanel) GetDateWindowSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DateWindowSize
-}
-
-func (o *SourceMixpanel) GetPageSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PageSize
-}
-
-func (o *SourceMixpanel) GetExportLookbackWindow() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ExportLookbackWindow
 }
 
 func (o *SourceMixpanel) GetSourceType() Mixpanel {

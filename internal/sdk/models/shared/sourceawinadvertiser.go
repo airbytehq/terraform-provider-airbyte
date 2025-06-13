@@ -37,15 +37,15 @@ type SourceAwinAdvertiser struct {
 	AdvertiserID string `json:"advertiserId"`
 	// Your Awin API key. Generate this from your Awin account under API Credentials.
 	APIKey string `json:"api_key"`
-	// The time window size for each API request in ISO8601 duration format.
-	// For the campaign performance stream, Awin API explicitly limits the period between startDate and endDate to 400 days maximum.
-	//
-	StepIncrement *string `default:"P400D" json:"step_increment"`
 	// Number of days to look back on each sync to catch any updates to existing records.
 	LookbackDays int64 `json:"lookback_days"`
 	// Start date for data replication in YYYY-MM-DD format
-	StartDate  types.Date     `json:"start_date"`
-	sourceType AwinAdvertiser `const:"awin-advertiser" json:"sourceType"`
+	StartDate types.Date `json:"start_date"`
+	// The time window size for each API request in ISO8601 duration format.
+	// For the campaign performance stream, Awin API explicitly limits the period between startDate and endDate to 400 days maximum.
+	//
+	StepIncrement *string        `default:"P400D" json:"step_increment"`
+	sourceType    AwinAdvertiser `const:"awin-advertiser" json:"sourceType"`
 }
 
 func (s SourceAwinAdvertiser) MarshalJSON() ([]byte, error) {
@@ -73,13 +73,6 @@ func (o *SourceAwinAdvertiser) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceAwinAdvertiser) GetStepIncrement() *string {
-	if o == nil {
-		return nil
-	}
-	return o.StepIncrement
-}
-
 func (o *SourceAwinAdvertiser) GetLookbackDays() int64 {
 	if o == nil {
 		return 0
@@ -92,6 +85,13 @@ func (o *SourceAwinAdvertiser) GetStartDate() types.Date {
 		return types.Date{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceAwinAdvertiser) GetStepIncrement() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StepIncrement
 }
 
 func (o *SourceAwinAdvertiser) GetSourceType() AwinAdvertiser {

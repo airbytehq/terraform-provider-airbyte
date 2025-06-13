@@ -197,6 +197,232 @@ func (u SourceOracleEnterpriseUpdateConnectBy) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceOracleEnterpriseUpdateConnectBy: all fields are null")
 }
 
+type SourceOracleEnterpriseUpdateSchemasCursorMethod string
+
+const (
+	SourceOracleEnterpriseUpdateSchemasCursorMethodCdc SourceOracleEnterpriseUpdateSchemasCursorMethod = "cdc"
+)
+
+func (e SourceOracleEnterpriseUpdateSchemasCursorMethod) ToPointer() *SourceOracleEnterpriseUpdateSchemasCursorMethod {
+	return &e
+}
+func (e *SourceOracleEnterpriseUpdateSchemasCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "cdc":
+		*e = SourceOracleEnterpriseUpdateSchemasCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateSchemasCursorMethod: %v", v)
+	}
+}
+
+// SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+type SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced string
+
+const (
+	SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedFailSync   SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Fail sync"
+	SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedReSyncData SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
+)
+
+func (e SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
+	return &e
+}
+func (e *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Fail sync":
+		fallthrough
+	case "Re-sync data":
+		*e = SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced: %v", v)
+	}
+}
+
+// SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using Oracle's <a href="https://docs.airbyte.com/integrations/enterprise-connectors/source-oracle#getting-started"> change data capture feature</a>. This must be enabled on your database.
+type SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC struct {
+	CursorMethod *SourceOracleEnterpriseUpdateSchemasCursorMethod `default:"cdc" json:"cursor_method"`
+	// The amount of time to allow the Debezium Engine to shut down, in seconds.
+	DebeziumShutdownTimeoutSeconds *int64 `default:"60" json:"debezium_shutdown_timeout_seconds"`
+	// The amount of time an initial load is allowed to continue for before catching up on CDC events.
+	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	AdditionalProperties             any                                                             `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetCursorMethod() *SourceOracleEnterpriseUpdateSchemasCursorMethod {
+	if o == nil {
+		return nil
+	}
+	return o.CursorMethod
+}
+
+func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetDebeziumShutdownTimeoutSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DebeziumShutdownTimeoutSeconds
+}
+
+func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
+	if o == nil {
+		return nil
+	}
+	return o.InvalidCdcCursorPositionBehavior
+}
+
+func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceOracleEnterpriseUpdateCursorMethod string
+
+const (
+	SourceOracleEnterpriseUpdateCursorMethodUserDefined SourceOracleEnterpriseUpdateCursorMethod = "user_defined"
+)
+
+func (e SourceOracleEnterpriseUpdateCursorMethod) ToPointer() *SourceOracleEnterpriseUpdateCursorMethod {
+	return &e
+}
+func (e *SourceOracleEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user_defined":
+		*e = SourceOracleEnterpriseUpdateCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateCursorMethod: %v", v)
+	}
+}
+
+// SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
+	CursorMethod         *SourceOracleEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
+	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceOracleEnterpriseUpdateCursorMethod {
+	if o == nil {
+		return nil
+	}
+	return o.CursorMethod
+}
+
+func (o *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceOracleEnterpriseUpdateUpdateMethodType string
+
+const (
+	SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     SourceOracleEnterpriseUpdateUpdateMethodType = "source-oracle-enterprise-update_Scan Changes with User Defined Cursor"
+	SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateUpdateMethodType = "source-oracle-enterprise-update_Read Changes using Change Data Capture (CDC)"
+)
+
+// SourceOracleEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
+type SourceOracleEnterpriseUpdateUpdateMethod struct {
+	SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     `queryParam:"inline"`
+	SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
+
+	Type SourceOracleEnterpriseUpdateUpdateMethodType
+}
+
+func CreateSourceOracleEnterpriseUpdateUpdateMethodSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceOracleEnterpriseUpdateUpdateMethod {
+	typ := SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
+
+	return SourceOracleEnterpriseUpdateUpdateMethod{
+		SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor,
+		Type: typ,
+	}
+}
+
+func CreateSourceOracleEnterpriseUpdateUpdateMethodSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC(sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) SourceOracleEnterpriseUpdateUpdateMethod {
+	typ := SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+
+	return SourceOracleEnterpriseUpdateUpdateMethod{
+		SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
+		Type: typ,
+	}
+}
+
+func (u *SourceOracleEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor{}
+	if err := utils.UnmarshalJSON(data, &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
+		u.Type = SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
+		return nil
+	}
+
+	var sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{}
+	if err := utils.UnmarshalJSON(data, &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
+		u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+		u.Type = SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOracleEnterpriseUpdateUpdateMethod", string(data))
+}
+
+func (u SourceOracleEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	if u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
+		return utils.MarshalJSON(u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceOracleEnterpriseUpdateUpdateMethod: all fields are null")
+}
+
 type SourceOracleEnterpriseUpdateSchemasEncryptionEncryptionMethod string
 
 const (
@@ -260,29 +486,6 @@ func (o *SourceOracleEnterpriseUpdateTLSEncryptedVerifyCertificate) GetAdditiona
 	return o.AdditionalProperties
 }
 
-type SourceOracleEnterpriseUpdateSchemasEncryptionMethod string
-
-const (
-	SourceOracleEnterpriseUpdateSchemasEncryptionMethodClientNne SourceOracleEnterpriseUpdateSchemasEncryptionMethod = "client_nne"
-)
-
-func (e SourceOracleEnterpriseUpdateSchemasEncryptionMethod) ToPointer() *SourceOracleEnterpriseUpdateSchemasEncryptionMethod {
-	return &e
-}
-func (e *SourceOracleEnterpriseUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "client_nne":
-		*e = SourceOracleEnterpriseUpdateSchemasEncryptionMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateSchemasEncryptionMethod: %v", v)
-	}
-}
-
 // SourceOracleEnterpriseUpdateEncryptionAlgorithm - This parameter defines what encryption algorithm is used.
 type SourceOracleEnterpriseUpdateEncryptionAlgorithm string
 
@@ -322,12 +525,35 @@ func (e *SourceOracleEnterpriseUpdateEncryptionAlgorithm) UnmarshalJSON(data []b
 	}
 }
 
+type SourceOracleEnterpriseUpdateSchemasEncryptionMethod string
+
+const (
+	SourceOracleEnterpriseUpdateSchemasEncryptionMethodClientNne SourceOracleEnterpriseUpdateSchemasEncryptionMethod = "client_nne"
+)
+
+func (e SourceOracleEnterpriseUpdateSchemasEncryptionMethod) ToPointer() *SourceOracleEnterpriseUpdateSchemasEncryptionMethod {
+	return &e
+}
+func (e *SourceOracleEnterpriseUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_nne":
+		*e = SourceOracleEnterpriseUpdateSchemasEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateSchemasEncryptionMethod: %v", v)
+	}
+}
+
 // SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE struct {
-	EncryptionMethod *SourceOracleEnterpriseUpdateSchemasEncryptionMethod `default:"client_nne" json:"encryption_method"`
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm  *SourceOracleEnterpriseUpdateEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
-	AdditionalProperties any                                              `additionalProperties:"true" json:"-"`
+	EncryptionAlgorithm  *SourceOracleEnterpriseUpdateEncryptionAlgorithm     `default:"AES256" json:"encryption_algorithm"`
+	EncryptionMethod     *SourceOracleEnterpriseUpdateSchemasEncryptionMethod `default:"client_nne" json:"encryption_method"`
+	AdditionalProperties any                                                  `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -341,18 +567,18 @@ func (s *SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) UnmarshalJSON(d
 	return nil
 }
 
-func (o *SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceOracleEnterpriseUpdateSchemasEncryptionMethod {
-	if o == nil {
-		return nil
-	}
-	return o.EncryptionMethod
-}
-
 func (o *SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *SourceOracleEnterpriseUpdateEncryptionAlgorithm {
 	if o == nil {
 		return nil
 	}
 	return o.EncryptionAlgorithm
+}
+
+func (o *SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() *SourceOracleEnterpriseUpdateSchemasEncryptionMethod {
+	if o == nil {
+		return nil
+	}
+	return o.EncryptionMethod
 }
 
 func (o *SourceOracleEnterpriseUpdateNativeNetworkEncryptionNNE) GetAdditionalProperties() any {
@@ -527,9 +753,9 @@ func (e *SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJ
 
 // SourceOracleEnterpriseUpdatePasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
 type SourceOracleEnterpriseUpdatePasswordAuthentication struct {
-	TunnelMethod *SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                                       `json:"tunnel_host"`
+	TunnelMethod *SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -550,18 +776,18 @@ func (s *SourceOracleEnterpriseUpdatePasswordAuthentication) UnmarshalJSON(data 
 	return nil
 }
 
-func (o *SourceOracleEnterpriseUpdatePasswordAuthentication) GetTunnelMethod() *SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelMethod
-}
-
 func (o *SourceOracleEnterpriseUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceOracleEnterpriseUpdatePasswordAuthentication) GetTunnelMethod() *SourceOracleEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceOracleEnterpriseUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -617,15 +843,15 @@ func (e *SourceOracleEnterpriseUpdateSchemasTunnelMethod) UnmarshalJSON(data []b
 
 // SourceOracleEnterpriseUpdateSSHKeyAuthentication - Connect through a jump server tunnel host using username and ssh key
 type SourceOracleEnterpriseUpdateSSHKeyAuthentication struct {
-	TunnelMethod *SourceOracleEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                           `json:"tunnel_host"`
+	TunnelMethod *SourceOracleEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey               string `json:"ssh_key"`
+	TunnelUser           string `json:"tunnel_user"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
@@ -640,11 +866,11 @@ func (s *SourceOracleEnterpriseUpdateSSHKeyAuthentication) UnmarshalJSON(data []
 	return nil
 }
 
-func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceOracleEnterpriseUpdateSchemasTunnelMethod {
+func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.TunnelMethod
+	return o.SSHKey
 }
 
 func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -652,6 +878,13 @@ func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() strin
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceOracleEnterpriseUpdateSchemasTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -666,13 +899,6 @@ func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetTunnelUser() strin
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 func (o *SourceOracleEnterpriseUpdateSSHKeyAuthentication) GetAdditionalProperties() any {
@@ -822,262 +1048,36 @@ func (u SourceOracleEnterpriseUpdateSSHTunnelMethod) MarshalJSON() ([]byte, erro
 	return nil, errors.New("could not marshal union type SourceOracleEnterpriseUpdateSSHTunnelMethod: all fields are null")
 }
 
-type SourceOracleEnterpriseUpdateSchemasCursorMethod string
-
-const (
-	SourceOracleEnterpriseUpdateSchemasCursorMethodCdc SourceOracleEnterpriseUpdateSchemasCursorMethod = "cdc"
-)
-
-func (e SourceOracleEnterpriseUpdateSchemasCursorMethod) ToPointer() *SourceOracleEnterpriseUpdateSchemasCursorMethod {
-	return &e
-}
-func (e *SourceOracleEnterpriseUpdateSchemasCursorMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "cdc":
-		*e = SourceOracleEnterpriseUpdateSchemasCursorMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateSchemasCursorMethod: %v", v)
-	}
-}
-
-// SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced - Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-type SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced string
-
-const (
-	SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedFailSync   SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Fail sync"
-	SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvancedReSyncData SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced = "Re-sync data"
-)
-
-func (e SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) ToPointer() *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
-	return &e
-}
-func (e *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Fail sync":
-		fallthrough
-	case "Re-sync data":
-		*e = SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced: %v", v)
-	}
-}
-
-// SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using Oracle's <a href="https://docs.airbyte.com/integrations/enterprise-connectors/source-oracle#getting-started"> change data capture feature</a>. This must be enabled on your database.
-type SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC struct {
-	CursorMethod *SourceOracleEnterpriseUpdateSchemasCursorMethod `default:"cdc" json:"cursor_method"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value in the mined logs. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	// The amount of time an initial load is allowed to continue for before catching up on CDC events.
-	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
-	// The amount of time to allow the Debezium Engine to shut down, in seconds.
-	DebeziumShutdownTimeoutSeconds *int64 `default:"60" json:"debezium_shutdown_timeout_seconds"`
-	AdditionalProperties           any    `additionalProperties:"true" json:"-"`
-}
-
-func (s SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetCursorMethod() *SourceOracleEnterpriseUpdateSchemasCursorMethod {
-	if o == nil {
-		return nil
-	}
-	return o.CursorMethod
-}
-
-func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInvalidCdcCursorPositionBehavior() *SourceOracleEnterpriseUpdateInvalidCDCPositionBehaviorAdvanced {
-	if o == nil {
-		return nil
-	}
-	return o.InvalidCdcCursorPositionBehavior
-}
-
-func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
-}
-
-func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetDebeziumShutdownTimeoutSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DebeziumShutdownTimeoutSeconds
-}
-
-func (o *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourceOracleEnterpriseUpdateCursorMethod string
-
-const (
-	SourceOracleEnterpriseUpdateCursorMethodUserDefined SourceOracleEnterpriseUpdateCursorMethod = "user_defined"
-)
-
-func (e SourceOracleEnterpriseUpdateCursorMethod) ToPointer() *SourceOracleEnterpriseUpdateCursorMethod {
-	return &e
-}
-func (e *SourceOracleEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "user_defined":
-		*e = SourceOracleEnterpriseUpdateCursorMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOracleEnterpriseUpdateCursorMethod: %v", v)
-	}
-}
-
-// SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
-	CursorMethod         *SourceOracleEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
-	AdditionalProperties any                                       `additionalProperties:"true" json:"-"`
-}
-
-func (s SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceOracleEnterpriseUpdateCursorMethod {
-	if o == nil {
-		return nil
-	}
-	return o.CursorMethod
-}
-
-func (o *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourceOracleEnterpriseUpdateUpdateMethodType string
-
-const (
-	SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     SourceOracleEnterpriseUpdateUpdateMethodType = "source-oracle-enterprise-update_Scan Changes with User Defined Cursor"
-	SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateUpdateMethodType = "source-oracle-enterprise-update_Read Changes using Change Data Capture (CDC)"
-)
-
-// SourceOracleEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
-type SourceOracleEnterpriseUpdateUpdateMethod struct {
-	SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     *SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor     `queryParam:"inline"`
-	SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC *SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC `queryParam:"inline"`
-
-	Type SourceOracleEnterpriseUpdateUpdateMethodType
-}
-
-func CreateSourceOracleEnterpriseUpdateUpdateMethodSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceOracleEnterpriseUpdateUpdateMethod {
-	typ := SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
-
-	return SourceOracleEnterpriseUpdateUpdateMethod{
-		SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor,
-		Type: typ,
-	}
-}
-
-func CreateSourceOracleEnterpriseUpdateUpdateMethodSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC(sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC) SourceOracleEnterpriseUpdateUpdateMethod {
-	typ := SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-
-	return SourceOracleEnterpriseUpdateUpdateMethod{
-		SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC: &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC,
-		Type: typ,
-	}
-}
-
-func (u *SourceOracleEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-
-	var sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor{}
-	if err := utils.UnmarshalJSON(data, &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
-		u.Type = SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor
-		return nil
-	}
-
-	var sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC{}
-	if err := utils.UnmarshalJSON(data, &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true, true); err == nil {
-		u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC = &sourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-		u.Type = SourceOracleEnterpriseUpdateUpdateMethodTypeSourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceOracleEnterpriseUpdateUpdateMethod", string(data))
-}
-
-func (u SourceOracleEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.SourceOracleEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
-	}
-
-	if u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC != nil {
-		return utils.MarshalJSON(u.SourceOracleEnterpriseUpdateReadChangesUsingChangeDataCaptureCDC, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceOracleEnterpriseUpdateUpdateMethod: all fields are null")
-}
-
 type SourceOracleEnterpriseUpdate struct {
+	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
+	CheckPrivileges *bool `default:"true" json:"check_privileges"`
+	// How often (in seconds) a stream should checkpoint, when possible.
+	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
+	// Maximum number of concurrent queries to the database.
+	Concurrency *int64 `default:"1" json:"concurrency"`
+	// The scheme by which to establish a database connection.
+	ConnectionData SourceOracleEnterpriseUpdateConnectBy `json:"connection_data"`
+	// Configures how data is extracted from the database.
+	Cursor SourceOracleEnterpriseUpdateUpdateMethod `json:"cursor"`
+	// The encryption method with is used when communicating with the database.
+	Encryption SourceOracleEnterpriseUpdateEncryption `json:"encryption"`
 	// Hostname of the database.
 	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The password associated with the username.
+	Password *string `json:"password,omitempty"`
 	// Port of the database.
 	// Oracle Corporations recommends the following port numbers:
 	// 1521 - Default listening port for client connections to the listener.
 	// 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL.
 	Port *int64 `default:"1521" json:"port"`
-	// The scheme by which to establish a database connection.
-	ConnectionData SourceOracleEnterpriseUpdateConnectBy `json:"connection_data"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas []string `json:"schemas,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The encryption method with is used when communicating with the database.
-	Encryption SourceOracleEnterpriseUpdateEncryption `json:"encryption"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod SourceOracleEnterpriseUpdateSSHTunnelMethod `json:"tunnel_method"`
-	// Configures how data is extracted from the database.
-	Cursor SourceOracleEnterpriseUpdateUpdateMethod `json:"cursor"`
-	// How often (in seconds) a stream should checkpoint, when possible.
-	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
-	// Maximum number of concurrent queries to the database.
-	Concurrency *int64 `default:"1" json:"concurrency"`
-	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
-	CheckPrivileges *bool `default:"true" json:"check_privileges"`
+	// The username which is used to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceOracleEnterpriseUpdate) MarshalJSON() ([]byte, error) {
@@ -1091,74 +1091,11 @@ func (s *SourceOracleEnterpriseUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOracleEnterpriseUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetPort() *int64 {
+func (o *SourceOracleEnterpriseUpdate) GetCheckPrivileges() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.Port
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetConnectionData() SourceOracleEnterpriseUpdateConnectBy {
-	if o == nil {
-		return SourceOracleEnterpriseUpdateConnectBy{}
-	}
-	return o.ConnectionData
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetSchemas() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Schemas
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetEncryption() SourceOracleEnterpriseUpdateEncryption {
-	if o == nil {
-		return SourceOracleEnterpriseUpdateEncryption{}
-	}
-	return o.Encryption
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetTunnelMethod() SourceOracleEnterpriseUpdateSSHTunnelMethod {
-	if o == nil {
-		return SourceOracleEnterpriseUpdateSSHTunnelMethod{}
-	}
-	return o.TunnelMethod
-}
-
-func (o *SourceOracleEnterpriseUpdate) GetCursor() SourceOracleEnterpriseUpdateUpdateMethod {
-	if o == nil {
-		return SourceOracleEnterpriseUpdateUpdateMethod{}
-	}
-	return o.Cursor
+	return o.CheckPrivileges
 }
 
 func (o *SourceOracleEnterpriseUpdate) GetCheckpointTargetIntervalSeconds() *int64 {
@@ -1175,9 +1112,72 @@ func (o *SourceOracleEnterpriseUpdate) GetConcurrency() *int64 {
 	return o.Concurrency
 }
 
-func (o *SourceOracleEnterpriseUpdate) GetCheckPrivileges() *bool {
+func (o *SourceOracleEnterpriseUpdate) GetConnectionData() SourceOracleEnterpriseUpdateConnectBy {
+	if o == nil {
+		return SourceOracleEnterpriseUpdateConnectBy{}
+	}
+	return o.ConnectionData
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetCursor() SourceOracleEnterpriseUpdateUpdateMethod {
+	if o == nil {
+		return SourceOracleEnterpriseUpdateUpdateMethod{}
+	}
+	return o.Cursor
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetEncryption() SourceOracleEnterpriseUpdateEncryption {
+	if o == nil {
+		return SourceOracleEnterpriseUpdateEncryption{}
+	}
+	return o.Encryption
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetJdbcURLParams() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CheckPrivileges
+	return o.JdbcURLParams
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetTunnelMethod() SourceOracleEnterpriseUpdateSSHTunnelMethod {
+	if o == nil {
+		return SourceOracleEnterpriseUpdateSSHTunnelMethod{}
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceOracleEnterpriseUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

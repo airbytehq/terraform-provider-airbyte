@@ -22,52 +22,36 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var developerToken string
-	developerToken = r.Configuration.Credentials.DeveloperToken.ValueString()
-
-	var clientID string
-	clientID = r.Configuration.Credentials.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
-
-	var refreshToken string
-	refreshToken = r.Configuration.Credentials.RefreshToken.ValueString()
-
+	conversionWindowDays := new(int64)
+	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
+		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
+	} else {
+		conversionWindowDays = nil
+	}
 	accessToken := new(string)
 	if !r.Configuration.Credentials.AccessToken.IsUnknown() && !r.Configuration.Credentials.AccessToken.IsNull() {
 		*accessToken = r.Configuration.Credentials.AccessToken.ValueString()
 	} else {
 		accessToken = nil
 	}
+	var clientID string
+	clientID = r.Configuration.Credentials.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
+
+	var developerToken string
+	developerToken = r.Configuration.Credentials.DeveloperToken.ValueString()
+
+	var refreshToken string
+	refreshToken = r.Configuration.Credentials.RefreshToken.ValueString()
+
 	credentials := shared.GoogleCredentials{
-		DeveloperToken: developerToken,
+		AccessToken:    accessToken,
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
-		AccessToken:    accessToken,
-	}
-	customerID := new(string)
-	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
-		*customerID = r.Configuration.CustomerID.ValueString()
-	} else {
-		customerID = nil
-	}
-	var customerStatusFilter []shared.CustomerStatus = []shared.CustomerStatus{}
-	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
-		customerStatusFilter = append(customerStatusFilter, shared.CustomerStatus(customerStatusFilterItem.ValueString()))
-	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
 	}
 	var customQueriesArray []shared.CustomQueriesArray = []shared.CustomQueriesArray{}
 	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
@@ -82,20 +66,36 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsCreateRequest() *s
 			TableName: tableName,
 		})
 	}
-	conversionWindowDays := new(int64)
-	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
-		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
+	customerID := new(string)
+	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
+		*customerID = r.Configuration.CustomerID.ValueString()
 	} else {
-		conversionWindowDays = nil
+		customerID = nil
+	}
+	var customerStatusFilter []shared.CustomerStatus = []shared.CustomerStatus{}
+	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
+		customerStatusFilter = append(customerStatusFilter, shared.CustomerStatus(customerStatusFilterItem.ValueString()))
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceGoogleAds{
+		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,
+		CustomQueriesArray:   customQueriesArray,
 		CustomerID:           customerID,
 		CustomerStatusFilter: customerStatusFilter,
-		StartDate:            startDate,
 		EndDate:              endDate,
-		CustomQueriesArray:   customQueriesArray,
-		ConversionWindowDays: conversionWindowDays,
+		StartDate:            startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -167,52 +167,36 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var developerToken string
-	developerToken = r.Configuration.Credentials.DeveloperToken.ValueString()
-
-	var clientID string
-	clientID = r.Configuration.Credentials.ClientID.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
-
-	var refreshToken string
-	refreshToken = r.Configuration.Credentials.RefreshToken.ValueString()
-
+	conversionWindowDays := new(int64)
+	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
+		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
+	} else {
+		conversionWindowDays = nil
+	}
 	accessToken := new(string)
 	if !r.Configuration.Credentials.AccessToken.IsUnknown() && !r.Configuration.Credentials.AccessToken.IsNull() {
 		*accessToken = r.Configuration.Credentials.AccessToken.ValueString()
 	} else {
 		accessToken = nil
 	}
+	var clientID string
+	clientID = r.Configuration.Credentials.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
+
+	var developerToken string
+	developerToken = r.Configuration.Credentials.DeveloperToken.ValueString()
+
+	var refreshToken string
+	refreshToken = r.Configuration.Credentials.RefreshToken.ValueString()
+
 	credentials := shared.SourceGoogleAdsUpdateGoogleCredentials{
-		DeveloperToken: developerToken,
+		AccessToken:    accessToken,
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
+		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
-		AccessToken:    accessToken,
-	}
-	customerID := new(string)
-	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
-		*customerID = r.Configuration.CustomerID.ValueString()
-	} else {
-		customerID = nil
-	}
-	var customerStatusFilter []shared.SourceGoogleAdsUpdateCustomerStatus = []shared.SourceGoogleAdsUpdateCustomerStatus{}
-	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
-		customerStatusFilter = append(customerStatusFilter, shared.SourceGoogleAdsUpdateCustomerStatus(customerStatusFilterItem.ValueString()))
-	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	endDate := new(customTypes.Date)
-	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
-	} else {
-		endDate = nil
 	}
 	var customQueriesArray []shared.SourceGoogleAdsUpdateCustomQueriesArray = []shared.SourceGoogleAdsUpdateCustomQueriesArray{}
 	for _, customQueriesArrayItem := range r.Configuration.CustomQueriesArray {
@@ -227,20 +211,36 @@ func (r *SourceGoogleAdsResourceModel) ToSharedSourceGoogleAdsPutRequest() *shar
 			TableName: tableName,
 		})
 	}
-	conversionWindowDays := new(int64)
-	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
-		*conversionWindowDays = r.Configuration.ConversionWindowDays.ValueInt64()
+	customerID := new(string)
+	if !r.Configuration.CustomerID.IsUnknown() && !r.Configuration.CustomerID.IsNull() {
+		*customerID = r.Configuration.CustomerID.ValueString()
 	} else {
-		conversionWindowDays = nil
+		customerID = nil
+	}
+	var customerStatusFilter []shared.SourceGoogleAdsUpdateCustomerStatus = []shared.SourceGoogleAdsUpdateCustomerStatus{}
+	for _, customerStatusFilterItem := range r.Configuration.CustomerStatusFilter {
+		customerStatusFilter = append(customerStatusFilter, shared.SourceGoogleAdsUpdateCustomerStatus(customerStatusFilterItem.ValueString()))
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
 	configuration := shared.SourceGoogleAdsUpdate{
+		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,
+		CustomQueriesArray:   customQueriesArray,
 		CustomerID:           customerID,
 		CustomerStatusFilter: customerStatusFilter,
-		StartDate:            startDate,
 		EndDate:              endDate,
-		CustomQueriesArray:   customQueriesArray,
-		ConversionWindowDays: conversionWindowDays,
+		StartDate:            startDate,
 	}
 	out := shared.SourceGoogleAdsPutRequest{
 		Name:          name,

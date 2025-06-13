@@ -33,15 +33,15 @@ func (e *DestinationFireboltSchemasMethod) UnmarshalJSON(data []byte) error {
 }
 
 type ExternalTableViaS3 struct {
-	method DestinationFireboltSchemasMethod `const:"S3" json:"method"`
+	// AWS access key granting read and write access to S3.
+	AwsKeyID string `json:"aws_key_id"`
+	// Corresponding secret part of the AWS Key
+	AwsKeySecret string                           `json:"aws_key_secret"`
+	method       DestinationFireboltSchemasMethod `const:"S3" json:"method"`
 	// The name of the S3 bucket.
 	S3Bucket string `json:"s3_bucket"`
 	// Region name of the S3 bucket.
 	S3Region string `json:"s3_region"`
-	// AWS access key granting read and write access to S3.
-	AwsKeyID string `json:"aws_key_id"`
-	// Corresponding secret part of the AWS Key
-	AwsKeySecret string `json:"aws_key_secret"`
 }
 
 func (e ExternalTableViaS3) MarshalJSON() ([]byte, error) {
@@ -53,6 +53,20 @@ func (e *ExternalTableViaS3) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *ExternalTableViaS3) GetAwsKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeyID
+}
+
+func (o *ExternalTableViaS3) GetAwsKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeySecret
 }
 
 func (o *ExternalTableViaS3) GetMethod() DestinationFireboltSchemasMethod {
@@ -71,20 +85,6 @@ func (o *ExternalTableViaS3) GetS3Region() string {
 		return ""
 	}
 	return o.S3Region
-}
-
-func (o *ExternalTableViaS3) GetAwsKeyID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AwsKeyID
-}
-
-func (o *ExternalTableViaS3) GetAwsKeySecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.AwsKeySecret
 }
 
 type DestinationFireboltMethod string
@@ -217,18 +217,18 @@ func (e *DestinationFireboltFirebolt) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationFirebolt struct {
+	// Firebolt account to login.
+	Account string `json:"account"`
 	// Firebolt service account ID.
 	ClientID string `json:"client_id"`
 	// Firebolt secret, corresponding to the service account ID.
 	ClientSecret string `json:"client_secret"`
-	// Firebolt account to login.
-	Account string `json:"account"`
-	// The host name of your Firebolt database.
-	Host *string `json:"host,omitempty"`
 	// The database to connect to.
 	Database string `json:"database"`
 	// Engine name to connect to.
 	Engine string `json:"engine"`
+	// The host name of your Firebolt database.
+	Host *string `json:"host,omitempty"`
 	// Loading method used to select the way data will be uploaded to Firebolt
 	LoadingMethod   *DestinationFireboltLoadingMethod `json:"loading_method,omitempty"`
 	destinationType DestinationFireboltFirebolt       `const:"firebolt" json:"destinationType"`
@@ -245,6 +245,13 @@ func (d *DestinationFirebolt) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationFirebolt) GetAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.Account
+}
+
 func (o *DestinationFirebolt) GetClientID() string {
 	if o == nil {
 		return ""
@@ -259,20 +266,6 @@ func (o *DestinationFirebolt) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *DestinationFirebolt) GetAccount() string {
-	if o == nil {
-		return ""
-	}
-	return o.Account
-}
-
-func (o *DestinationFirebolt) GetHost() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Host
-}
-
 func (o *DestinationFirebolt) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -285,6 +278,13 @@ func (o *DestinationFirebolt) GetEngine() string {
 		return ""
 	}
 	return o.Engine
+}
+
+func (o *DestinationFirebolt) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
 }
 
 func (o *DestinationFirebolt) GetLoadingMethod() *DestinationFireboltLoadingMethod {

@@ -35,10 +35,10 @@ func (e *SourceHubspotSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type PrivateApp struct {
-	// Name of the credentials set
-	credentialsTitle SourceHubspotSchemasAuthType `const:"Private App Credentials" json:"credentials_title"`
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
+	// Name of the credentials set
+	credentialsTitle SourceHubspotSchemasAuthType `const:"Private App Credentials" json:"credentials_title"`
 }
 
 func (p PrivateApp) MarshalJSON() ([]byte, error) {
@@ -52,15 +52,15 @@ func (p *PrivateApp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PrivateApp) GetCredentialsTitle() SourceHubspotSchemasAuthType {
-	return SourceHubspotSchemasAuthTypePrivateAppCredentials
-}
-
 func (o *PrivateApp) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *PrivateApp) GetCredentialsTitle() SourceHubspotSchemasAuthType {
+	return SourceHubspotSchemasAuthTypePrivateAppCredentials
 }
 
 // SourceHubspotAuthType - Name of the credentials
@@ -88,12 +88,12 @@ func (e *SourceHubspotAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHubspotOAuth struct {
-	// Name of the credentials
-	credentialsTitle SourceHubspotAuthType `const:"OAuth Credentials" json:"credentials_title"`
 	// The Client ID of your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this ID.
 	ClientID string `json:"client_id"`
 	// The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
 	ClientSecret string `json:"client_secret"`
+	// Name of the credentials
+	credentialsTitle SourceHubspotAuthType `const:"OAuth Credentials" json:"credentials_title"`
 	// Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -109,10 +109,6 @@ func (s *SourceHubspotOAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceHubspotOAuth) GetCredentialsTitle() SourceHubspotAuthType {
-	return SourceHubspotAuthTypeOAuthCredentials
-}
-
 func (o *SourceHubspotOAuth) GetClientID() string {
 	if o == nil {
 		return ""
@@ -125,6 +121,10 @@ func (o *SourceHubspotOAuth) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceHubspotOAuth) GetCredentialsTitle() SourceHubspotAuthType {
+	return SourceHubspotAuthTypeOAuthCredentials
 }
 
 func (o *SourceHubspotOAuth) GetRefreshToken() string {
@@ -222,15 +222,15 @@ func (e *Hubspot) UnmarshalJSON(data []byte) error {
 }
 
 type SourceHubspot struct {
-	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If not set, "2006-06-01T00:00:00Z" (Hubspot creation date) will be used as start date. It's recommended to provide relevant to your data start date value to optimize synchronization.
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Choose how to authenticate to HubSpot.
 	Credentials SourceHubspotAuthentication `json:"credentials"`
 	// If enabled then experimental streams become available for sync.
 	EnableExperimentalStreams *bool `default:"false" json:"enable_experimental_streams"`
 	// The number of worker threads to use for the sync.
-	NumWorker  *int64  `default:"3" json:"num_worker"`
-	sourceType Hubspot `const:"hubspot" json:"sourceType"`
+	NumWorker *int64 `default:"3" json:"num_worker"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. If not set, "2006-06-01T00:00:00Z" (Hubspot creation date) will be used as start date. It's recommended to provide relevant to your data start date value to optimize synchronization.
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Hubspot    `const:"hubspot" json:"sourceType"`
 }
 
 func (s SourceHubspot) MarshalJSON() ([]byte, error) {
@@ -242,13 +242,6 @@ func (s *SourceHubspot) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceHubspot) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
 }
 
 func (o *SourceHubspot) GetCredentials() SourceHubspotAuthentication {
@@ -270,6 +263,13 @@ func (o *SourceHubspot) GetNumWorker() *int64 {
 		return nil
 	}
 	return o.NumWorker
+}
+
+func (o *SourceHubspot) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceHubspot) GetSourceType() Hubspot {

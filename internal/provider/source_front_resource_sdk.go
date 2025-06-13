@@ -25,17 +25,17 @@ func (r *SourceFrontResourceModel) ToSharedSourceFrontCreateRequest() *shared.So
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	pageLimit := new(string)
 	if !r.Configuration.PageLimit.IsUnknown() && !r.Configuration.PageLimit.IsNull() {
 		*pageLimit = r.Configuration.PageLimit.ValueString()
 	} else {
 		pageLimit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFront{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		PageLimit: pageLimit,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -110,17 +110,17 @@ func (r *SourceFrontResourceModel) ToSharedSourceFrontPutRequest() *shared.Sourc
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	pageLimit := new(string)
 	if !r.Configuration.PageLimit.IsUnknown() && !r.Configuration.PageLimit.IsNull() {
 		*pageLimit = r.Configuration.PageLimit.ValueString()
 	} else {
 		pageLimit = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFrontUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		PageLimit: pageLimit,
+		StartDate: startDate,
 	}
 	out := shared.SourceFrontPutRequest{
 		Name:          name,

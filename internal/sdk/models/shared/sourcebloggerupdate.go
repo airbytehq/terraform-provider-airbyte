@@ -4,8 +4,8 @@ package shared
 
 type SourceBloggerUpdate struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 }
 
 func (o *SourceBloggerUpdate) GetClientID() string {
@@ -15,16 +15,16 @@ func (o *SourceBloggerUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceBloggerUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceBloggerUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceBloggerUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }

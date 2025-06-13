@@ -10,8 +10,6 @@ import (
 type SourceBambooHrUpdate struct {
 	// Api key of bamboo hr
 	APIKey string `json:"api_key"`
-	// Sub Domain of bamboo hr
-	Subdomain string `json:"subdomain"`
 	// Comma-separated list of fields to include in custom reports.
 	CustomReportsFields *string `json:"custom_reports_fields,omitempty"`
 	// If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
@@ -19,6 +17,8 @@ type SourceBambooHrUpdate struct {
 	// Comma-separated list of fields to include for employees.
 	EmployeeFields *string    `default:"firstName,lastName" json:"employee_fields"`
 	StartDate      *time.Time `json:"start_date,omitempty"`
+	// Sub Domain of bamboo hr
+	Subdomain string `json:"subdomain"`
 }
 
 func (s SourceBambooHrUpdate) MarshalJSON() ([]byte, error) {
@@ -37,13 +37,6 @@ func (o *SourceBambooHrUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
-}
-
-func (o *SourceBambooHrUpdate) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
 }
 
 func (o *SourceBambooHrUpdate) GetCustomReportsFields() *string {
@@ -72,4 +65,11 @@ func (o *SourceBambooHrUpdate) GetStartDate() *time.Time {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceBambooHrUpdate) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

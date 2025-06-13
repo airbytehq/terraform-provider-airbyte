@@ -21,16 +21,10 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var period string
-	period = r.Configuration.Period.ValueString()
-
 	var credentials *shared.SourceMicrosoftTeamsAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var authenticateViaMicrosoftOAuth20 *shared.AuthenticateViaMicrosoftOAuth20
 		if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20 != nil {
-			var tenantID string
-			tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
-
 			var clientID string
 			clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.ClientID.ValueString()
 
@@ -40,11 +34,14 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsCreateRe
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.RefreshToken.ValueString()
 
+			var tenantID string
+			tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
+
 			authenticateViaMicrosoftOAuth20 = &shared.AuthenticateViaMicrosoftOAuth20{
-				TenantID:     tenantID,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
+				TenantID:     tenantID,
 			}
 		}
 		if authenticateViaMicrosoftOAuth20 != nil {
@@ -54,19 +51,19 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsCreateRe
 		}
 		var authenticateViaMicrosoft *shared.AuthenticateViaMicrosoft
 		if r.Configuration.Credentials.AuthenticateViaMicrosoft != nil {
-			var tenantId1 string
-			tenantId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.TenantID.ValueString()
-
 			var clientId1 string
 			clientId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.ClientID.ValueString()
 
 			var clientSecret1 string
 			clientSecret1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.ClientSecret.ValueString()
 
+			var tenantId1 string
+			tenantId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.TenantID.ValueString()
+
 			authenticateViaMicrosoft = &shared.AuthenticateViaMicrosoft{
-				TenantID:     tenantId1,
 				ClientID:     clientId1,
 				ClientSecret: clientSecret1,
+				TenantID:     tenantId1,
 			}
 		}
 		if authenticateViaMicrosoft != nil {
@@ -75,9 +72,12 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsCreateRe
 			}
 		}
 	}
+	var period string
+	period = r.Configuration.Period.ValueString()
+
 	configuration := shared.SourceMicrosoftTeams{
-		Period:      period,
 		Credentials: credentials,
+		Period:      period,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -149,16 +149,10 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var period string
-	period = r.Configuration.Period.ValueString()
-
 	var credentials *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20
 		if r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20 != nil {
-			var tenantID string
-			tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
-
 			var clientID string
 			clientID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.ClientID.ValueString()
 
@@ -168,11 +162,14 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsPutReque
 			var refreshToken string
 			refreshToken = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.RefreshToken.ValueString()
 
+			var tenantID string
+			tenantID = r.Configuration.Credentials.AuthenticateViaMicrosoftOAuth20.TenantID.ValueString()
+
 			sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20 = &shared.SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20{
-				TenantID:     tenantID,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
 				RefreshToken: refreshToken,
+				TenantID:     tenantID,
 			}
 		}
 		if sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoftOAuth20 != nil {
@@ -182,19 +179,19 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsPutReque
 		}
 		var sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft *shared.SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft
 		if r.Configuration.Credentials.AuthenticateViaMicrosoft != nil {
-			var tenantId1 string
-			tenantId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.TenantID.ValueString()
-
 			var clientId1 string
 			clientId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.ClientID.ValueString()
 
 			var clientSecret1 string
 			clientSecret1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.ClientSecret.ValueString()
 
+			var tenantId1 string
+			tenantId1 = r.Configuration.Credentials.AuthenticateViaMicrosoft.TenantID.ValueString()
+
 			sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft = &shared.SourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft{
-				TenantID:     tenantId1,
 				ClientID:     clientId1,
 				ClientSecret: clientSecret1,
+				TenantID:     tenantId1,
 			}
 		}
 		if sourceMicrosoftTeamsUpdateAuthenticateViaMicrosoft != nil {
@@ -203,9 +200,12 @@ func (r *SourceMicrosoftTeamsResourceModel) ToSharedSourceMicrosoftTeamsPutReque
 			}
 		}
 	}
+	var period string
+	period = r.Configuration.Period.ValueString()
+
 	configuration := shared.SourceMicrosoftTeamsUpdate{
-		Period:      period,
 		Credentials: credentials,
+		Period:      period,
 	}
 	out := shared.SourceMicrosoftTeamsPutRequest{
 		Name:          name,

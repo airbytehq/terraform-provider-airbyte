@@ -60,16 +60,16 @@ func (e *Chargebee) UnmarshalJSON(data []byte) error {
 }
 
 type SourceChargebee struct {
-	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-	SiteAPIKey string `json:"site_api_key"`
-	// The site prefix for your Chargebee instance.
-	Site string `json:"site"`
-	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
+	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://support.chargebee.com/support/solutions/articles/243576-what-are-the-chargebee-api-limits-">docs</a>.
+	NumWorkers *int64 `default:"3" json:"num_workers"`
 	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
 	ProductCatalog *ProductCatalog `default:"2.0" json:"product_catalog"`
-	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://support.chargebee.com/support/solutions/articles/243576-what-are-the-chargebee-api-limits-">docs</a>.
-	NumWorkers *int64    `default:"3" json:"num_workers"`
+	// The site prefix for your Chargebee instance.
+	Site string `json:"site"`
+	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
+	SiteAPIKey string `json:"site_api_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
+	StartDate  time.Time `json:"start_date"`
 	sourceType Chargebee `const:"chargebee" json:"sourceType"`
 }
 
@@ -84,25 +84,11 @@ func (s *SourceChargebee) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceChargebee) GetSiteAPIKey() string {
+func (o *SourceChargebee) GetNumWorkers() *int64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.SiteAPIKey
-}
-
-func (o *SourceChargebee) GetSite() string {
-	if o == nil {
-		return ""
-	}
-	return o.Site
-}
-
-func (o *SourceChargebee) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
+	return o.NumWorkers
 }
 
 func (o *SourceChargebee) GetProductCatalog() *ProductCatalog {
@@ -112,11 +98,25 @@ func (o *SourceChargebee) GetProductCatalog() *ProductCatalog {
 	return o.ProductCatalog
 }
 
-func (o *SourceChargebee) GetNumWorkers() *int64 {
+func (o *SourceChargebee) GetSite() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.NumWorkers
+	return o.Site
+}
+
+func (o *SourceChargebee) GetSiteAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteAPIKey
+}
+
+func (o *SourceChargebee) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceChargebee) GetSourceType() Chargebee {

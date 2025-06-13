@@ -3,19 +3,12 @@
 package shared
 
 type SourceCallrailUpdate struct {
-	// API access key
-	APIKey string `json:"api_key"`
 	// Account ID
 	AccountID string `json:"account_id"`
+	// API access key
+	APIKey string `json:"api_key"`
 	// Start getting data from that date.
 	StartDate string `json:"start_date"`
-}
-
-func (o *SourceCallrailUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
 }
 
 func (o *SourceCallrailUpdate) GetAccountID() string {
@@ -23,6 +16,13 @@ func (o *SourceCallrailUpdate) GetAccountID() string {
 		return ""
 	}
 	return o.AccountID
+}
+
+func (o *SourceCallrailUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceCallrailUpdate) GetStartDate() string {

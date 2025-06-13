@@ -35,10 +35,10 @@ func (e *SourceGoogleDirectorySchemasCredentialsTitle) UnmarshalJSON(data []byte
 
 // ServiceAccountKey - For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.
 type ServiceAccountKey struct {
-	// Authentication Scenario
-	credentialsTitle *SourceGoogleDirectorySchemasCredentialsTitle `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`
+	// Authentication Scenario
+	credentialsTitle *SourceGoogleDirectorySchemasCredentialsTitle `const:"Service accounts" json:"credentials_title,omitempty"`
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 }
@@ -54,15 +54,15 @@ func (s *ServiceAccountKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ServiceAccountKey) GetCredentialsTitle() *SourceGoogleDirectorySchemasCredentialsTitle {
-	return SourceGoogleDirectorySchemasCredentialsTitleServiceAccounts.ToPointer()
-}
-
 func (o *ServiceAccountKey) GetCredentialsJSON() string {
 	if o == nil {
 		return ""
 	}
 	return o.CredentialsJSON
+}
+
+func (o *ServiceAccountKey) GetCredentialsTitle() *SourceGoogleDirectorySchemasCredentialsTitle {
+	return SourceGoogleDirectorySchemasCredentialsTitleServiceAccounts.ToPointer()
 }
 
 func (o *ServiceAccountKey) GetEmail() string {
@@ -98,12 +98,12 @@ func (e *SourceGoogleDirectoryCredentialsTitle) UnmarshalJSON(data []byte) error
 
 // SignInViaGoogleOAuth - For these scenario user only needs to give permission to read Google Directory data.
 type SignInViaGoogleOAuth struct {
-	// Authentication Scenario
-	credentialsTitle *SourceGoogleDirectoryCredentialsTitle `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Client ID of the developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of the developer application.
 	ClientSecret string `json:"client_secret"`
+	// Authentication Scenario
+	credentialsTitle *SourceGoogleDirectoryCredentialsTitle `const:"Web server app" json:"credentials_title,omitempty"`
 	// The Token for obtaining a new access token.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -119,10 +119,6 @@ func (s *SignInViaGoogleOAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SignInViaGoogleOAuth) GetCredentialsTitle() *SourceGoogleDirectoryCredentialsTitle {
-	return SourceGoogleDirectoryCredentialsTitleWebServerApp.ToPointer()
-}
-
 func (o *SignInViaGoogleOAuth) GetClientID() string {
 	if o == nil {
 		return ""
@@ -135,6 +131,10 @@ func (o *SignInViaGoogleOAuth) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SignInViaGoogleOAuth) GetCredentialsTitle() *SourceGoogleDirectoryCredentialsTitle {
+	return SourceGoogleDirectoryCredentialsTitleWebServerApp.ToPointer()
 }
 
 func (o *SignInViaGoogleOAuth) GetRefreshToken() string {

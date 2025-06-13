@@ -27,6 +27,15 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakeCrea
 	} else {
 		awsAccountID = nil
 	}
+	var bucketName string
+	bucketName = r.Configuration.BucketName.ValueString()
+
+	bucketPrefix := new(string)
+	if !r.Configuration.BucketPrefix.IsUnknown() && !r.Configuration.BucketPrefix.IsNull() {
+		*bucketPrefix = r.Configuration.BucketPrefix.ValueString()
+	} else {
+		bucketPrefix = nil
+	}
 	var credentials shared.AuthenticationMode
 	var iamRole *shared.IAMRole
 	if r.Configuration.Credentials.IAMRole != nil {
@@ -60,24 +69,63 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakeCrea
 			IAMUser: iamUser,
 		}
 	}
-	region := new(shared.S3BucketRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.S3BucketRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
+	var format *shared.OutputFormatWildcard
+	if r.Configuration.Format != nil {
+		var jsonLinesNewlineDelimitedJSON *shared.JSONLinesNewlineDelimitedJSON
+		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+			compressionCodec := new(shared.CompressionCodecOptional)
+			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+				*compressionCodec = shared.CompressionCodecOptional(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+			} else {
+				compressionCodec = nil
+			}
+			formatType := new(shared.FormatTypeWildcard)
+			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+				*formatType = shared.FormatTypeWildcard(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+			} else {
+				formatType = nil
+			}
+			jsonLinesNewlineDelimitedJSON = &shared.JSONLinesNewlineDelimitedJSON{
+				CompressionCodec: compressionCodec,
+				FormatType:       formatType,
+			}
+		}
+		if jsonLinesNewlineDelimitedJSON != nil {
+			format = &shared.OutputFormatWildcard{
+				JSONLinesNewlineDelimitedJSON: jsonLinesNewlineDelimitedJSON,
+			}
+		}
+		var parquetColumnarStorage *shared.ParquetColumnarStorage
+		if r.Configuration.Format.ParquetColumnarStorage != nil {
+			compressionCodec1 := new(shared.DestinationAwsDatalakeCompressionCodecOptional)
+			if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
+				*compressionCodec1 = shared.DestinationAwsDatalakeCompressionCodecOptional(r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.ValueString())
+			} else {
+				compressionCodec1 = nil
+			}
+			formatType1 := new(shared.DestinationAwsDatalakeFormatTypeWildcard)
+			if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
+				*formatType1 = shared.DestinationAwsDatalakeFormatTypeWildcard(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+			} else {
+				formatType1 = nil
+			}
+			parquetColumnarStorage = &shared.ParquetColumnarStorage{
+				CompressionCodec: compressionCodec1,
+				FormatType:       formatType1,
+			}
+		}
+		if parquetColumnarStorage != nil {
+			format = &shared.OutputFormatWildcard{
+				ParquetColumnarStorage: parquetColumnarStorage,
+			}
+		}
 	}
-	var bucketName string
-	bucketName = r.Configuration.BucketName.ValueString()
-
-	bucketPrefix := new(string)
-	if !r.Configuration.BucketPrefix.IsUnknown() && !r.Configuration.BucketPrefix.IsNull() {
-		*bucketPrefix = r.Configuration.BucketPrefix.ValueString()
+	glueCatalogFloatAsDecimal := new(bool)
+	if !r.Configuration.GlueCatalogFloatAsDecimal.IsUnknown() && !r.Configuration.GlueCatalogFloatAsDecimal.IsNull() {
+		*glueCatalogFloatAsDecimal = r.Configuration.GlueCatalogFloatAsDecimal.ValueBool()
 	} else {
-		bucketPrefix = nil
+		glueCatalogFloatAsDecimal = nil
 	}
-	var lakeformationDatabaseName string
-	lakeformationDatabaseName = r.Configuration.LakeformationDatabaseName.ValueString()
-
 	lakeformationDatabaseDefaultTagKey := new(string)
 	if !r.Configuration.LakeformationDatabaseDefaultTagKey.IsUnknown() && !r.Configuration.LakeformationDatabaseDefaultTagKey.IsNull() {
 		*lakeformationDatabaseDefaultTagKey = r.Configuration.LakeformationDatabaseDefaultTagKey.ValueString()
@@ -90,62 +138,14 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakeCrea
 	} else {
 		lakeformationDatabaseDefaultTagValues = nil
 	}
+	var lakeformationDatabaseName string
+	lakeformationDatabaseName = r.Configuration.LakeformationDatabaseName.ValueString()
+
 	lakeformationGovernedTables := new(bool)
 	if !r.Configuration.LakeformationGovernedTables.IsUnknown() && !r.Configuration.LakeformationGovernedTables.IsNull() {
 		*lakeformationGovernedTables = r.Configuration.LakeformationGovernedTables.ValueBool()
 	} else {
 		lakeformationGovernedTables = nil
-	}
-	var format *shared.OutputFormatWildcard
-	if r.Configuration.Format != nil {
-		var jsonLinesNewlineDelimitedJSON *shared.JSONLinesNewlineDelimitedJSON
-		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-			formatType := new(shared.FormatTypeWildcard)
-			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
-				*formatType = shared.FormatTypeWildcard(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-			} else {
-				formatType = nil
-			}
-			compressionCodec := new(shared.CompressionCodecOptional)
-			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
-				*compressionCodec = shared.CompressionCodecOptional(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
-			} else {
-				compressionCodec = nil
-			}
-			jsonLinesNewlineDelimitedJSON = &shared.JSONLinesNewlineDelimitedJSON{
-				FormatType:       formatType,
-				CompressionCodec: compressionCodec,
-			}
-		}
-		if jsonLinesNewlineDelimitedJSON != nil {
-			format = &shared.OutputFormatWildcard{
-				JSONLinesNewlineDelimitedJSON: jsonLinesNewlineDelimitedJSON,
-			}
-		}
-		var parquetColumnarStorage *shared.ParquetColumnarStorage
-		if r.Configuration.Format.ParquetColumnarStorage != nil {
-			formatType1 := new(shared.DestinationAwsDatalakeFormatTypeWildcard)
-			if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
-				*formatType1 = shared.DestinationAwsDatalakeFormatTypeWildcard(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
-			} else {
-				formatType1 = nil
-			}
-			compressionCodec1 := new(shared.DestinationAwsDatalakeCompressionCodecOptional)
-			if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
-				*compressionCodec1 = shared.DestinationAwsDatalakeCompressionCodecOptional(r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.ValueString())
-			} else {
-				compressionCodec1 = nil
-			}
-			parquetColumnarStorage = &shared.ParquetColumnarStorage{
-				FormatType:       formatType1,
-				CompressionCodec: compressionCodec1,
-			}
-		}
-		if parquetColumnarStorage != nil {
-			format = &shared.OutputFormatWildcard{
-				ParquetColumnarStorage: parquetColumnarStorage,
-			}
-		}
 	}
 	partitioning := new(shared.ChooseHowToPartitionData)
 	if !r.Configuration.Partitioning.IsUnknown() && !r.Configuration.Partitioning.IsNull() {
@@ -153,25 +153,25 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakeCrea
 	} else {
 		partitioning = nil
 	}
-	glueCatalogFloatAsDecimal := new(bool)
-	if !r.Configuration.GlueCatalogFloatAsDecimal.IsUnknown() && !r.Configuration.GlueCatalogFloatAsDecimal.IsNull() {
-		*glueCatalogFloatAsDecimal = r.Configuration.GlueCatalogFloatAsDecimal.ValueBool()
+	region := new(shared.S3BucketRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.S3BucketRegion(r.Configuration.Region.ValueString())
 	} else {
-		glueCatalogFloatAsDecimal = nil
+		region = nil
 	}
 	configuration := shared.DestinationAwsDatalake{
 		AwsAccountID:                          awsAccountID,
-		Credentials:                           credentials,
-		Region:                                region,
 		BucketName:                            bucketName,
 		BucketPrefix:                          bucketPrefix,
-		LakeformationDatabaseName:             lakeformationDatabaseName,
+		Credentials:                           credentials,
+		Format:                                format,
+		GlueCatalogFloatAsDecimal:             glueCatalogFloatAsDecimal,
 		LakeformationDatabaseDefaultTagKey:    lakeformationDatabaseDefaultTagKey,
 		LakeformationDatabaseDefaultTagValues: lakeformationDatabaseDefaultTagValues,
+		LakeformationDatabaseName:             lakeformationDatabaseName,
 		LakeformationGovernedTables:           lakeformationGovernedTables,
-		Format:                                format,
 		Partitioning:                          partitioning,
-		GlueCatalogFloatAsDecimal:             glueCatalogFloatAsDecimal,
+		Region:                                region,
 	}
 	out := shared.DestinationAwsDatalakeCreateRequest{
 		Name:          name,
@@ -242,6 +242,15 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakePutR
 	} else {
 		awsAccountID = nil
 	}
+	var bucketName string
+	bucketName = r.Configuration.BucketName.ValueString()
+
+	bucketPrefix := new(string)
+	if !r.Configuration.BucketPrefix.IsUnknown() && !r.Configuration.BucketPrefix.IsNull() {
+		*bucketPrefix = r.Configuration.BucketPrefix.ValueString()
+	} else {
+		bucketPrefix = nil
+	}
 	var credentials shared.DestinationAwsDatalakeUpdateAuthenticationMode
 	var destinationAwsDatalakeUpdateIAMRole *shared.DestinationAwsDatalakeUpdateIAMRole
 	if r.Configuration.Credentials.IAMRole != nil {
@@ -275,24 +284,63 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakePutR
 			DestinationAwsDatalakeUpdateIAMUser: destinationAwsDatalakeUpdateIAMUser,
 		}
 	}
-	region := new(shared.DestinationAwsDatalakeUpdateS3BucketRegion)
-	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.DestinationAwsDatalakeUpdateS3BucketRegion(r.Configuration.Region.ValueString())
-	} else {
-		region = nil
+	var format *shared.DestinationAwsDatalakeUpdateOutputFormatWildcard
+	if r.Configuration.Format != nil {
+		var destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON
+		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
+			compressionCodec := new(shared.DestinationAwsDatalakeUpdateCompressionCodecOptional)
+			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+				*compressionCodec = shared.DestinationAwsDatalakeUpdateCompressionCodecOptional(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+			} else {
+				compressionCodec = nil
+			}
+			formatType := new(shared.DestinationAwsDatalakeUpdateFormatTypeWildcard)
+			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
+				*formatType = shared.DestinationAwsDatalakeUpdateFormatTypeWildcard(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+			} else {
+				formatType = nil
+			}
+			destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON{
+				CompressionCodec: compressionCodec,
+				FormatType:       formatType,
+			}
+		}
+		if destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON != nil {
+			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+				DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON,
+			}
+		}
+		var destinationAwsDatalakeUpdateParquetColumnarStorage *shared.DestinationAwsDatalakeUpdateParquetColumnarStorage
+		if r.Configuration.Format.ParquetColumnarStorage != nil {
+			compressionCodec1 := new(shared.DestinationAwsDatalakeUpdateSchemasCompressionCodecOptional)
+			if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
+				*compressionCodec1 = shared.DestinationAwsDatalakeUpdateSchemasCompressionCodecOptional(r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.ValueString())
+			} else {
+				compressionCodec1 = nil
+			}
+			formatType1 := new(shared.DestinationAwsDatalakeUpdateSchemasFormatTypeWildcard)
+			if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
+				*formatType1 = shared.DestinationAwsDatalakeUpdateSchemasFormatTypeWildcard(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
+			} else {
+				formatType1 = nil
+			}
+			destinationAwsDatalakeUpdateParquetColumnarStorage = &shared.DestinationAwsDatalakeUpdateParquetColumnarStorage{
+				CompressionCodec: compressionCodec1,
+				FormatType:       formatType1,
+			}
+		}
+		if destinationAwsDatalakeUpdateParquetColumnarStorage != nil {
+			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+				DestinationAwsDatalakeUpdateParquetColumnarStorage: destinationAwsDatalakeUpdateParquetColumnarStorage,
+			}
+		}
 	}
-	var bucketName string
-	bucketName = r.Configuration.BucketName.ValueString()
-
-	bucketPrefix := new(string)
-	if !r.Configuration.BucketPrefix.IsUnknown() && !r.Configuration.BucketPrefix.IsNull() {
-		*bucketPrefix = r.Configuration.BucketPrefix.ValueString()
+	glueCatalogFloatAsDecimal := new(bool)
+	if !r.Configuration.GlueCatalogFloatAsDecimal.IsUnknown() && !r.Configuration.GlueCatalogFloatAsDecimal.IsNull() {
+		*glueCatalogFloatAsDecimal = r.Configuration.GlueCatalogFloatAsDecimal.ValueBool()
 	} else {
-		bucketPrefix = nil
+		glueCatalogFloatAsDecimal = nil
 	}
-	var lakeformationDatabaseName string
-	lakeformationDatabaseName = r.Configuration.LakeformationDatabaseName.ValueString()
-
 	lakeformationDatabaseDefaultTagKey := new(string)
 	if !r.Configuration.LakeformationDatabaseDefaultTagKey.IsUnknown() && !r.Configuration.LakeformationDatabaseDefaultTagKey.IsNull() {
 		*lakeformationDatabaseDefaultTagKey = r.Configuration.LakeformationDatabaseDefaultTagKey.ValueString()
@@ -305,62 +353,14 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakePutR
 	} else {
 		lakeformationDatabaseDefaultTagValues = nil
 	}
+	var lakeformationDatabaseName string
+	lakeformationDatabaseName = r.Configuration.LakeformationDatabaseName.ValueString()
+
 	lakeformationGovernedTables := new(bool)
 	if !r.Configuration.LakeformationGovernedTables.IsUnknown() && !r.Configuration.LakeformationGovernedTables.IsNull() {
 		*lakeformationGovernedTables = r.Configuration.LakeformationGovernedTables.ValueBool()
 	} else {
 		lakeformationGovernedTables = nil
-	}
-	var format *shared.DestinationAwsDatalakeUpdateOutputFormatWildcard
-	if r.Configuration.Format != nil {
-		var destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON
-		if r.Configuration.Format.JSONLinesNewlineDelimitedJSON != nil {
-			formatType := new(shared.DestinationAwsDatalakeUpdateFormatTypeWildcard)
-			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.IsNull() {
-				*formatType = shared.DestinationAwsDatalakeUpdateFormatTypeWildcard(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-			} else {
-				formatType = nil
-			}
-			compressionCodec := new(shared.DestinationAwsDatalakeUpdateCompressionCodecOptional)
-			if !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
-				*compressionCodec = shared.DestinationAwsDatalakeUpdateCompressionCodecOptional(r.Configuration.Format.JSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
-			} else {
-				compressionCodec = nil
-			}
-			destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON{
-				FormatType:       formatType,
-				CompressionCodec: compressionCodec,
-			}
-		}
-		if destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON != nil {
-			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
-				DestinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeUpdateJSONLinesNewlineDelimitedJSON,
-			}
-		}
-		var destinationAwsDatalakeUpdateParquetColumnarStorage *shared.DestinationAwsDatalakeUpdateParquetColumnarStorage
-		if r.Configuration.Format.ParquetColumnarStorage != nil {
-			formatType1 := new(shared.DestinationAwsDatalakeUpdateSchemasFormatTypeWildcard)
-			if !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.FormatType.IsNull() {
-				*formatType1 = shared.DestinationAwsDatalakeUpdateSchemasFormatTypeWildcard(r.Configuration.Format.ParquetColumnarStorage.FormatType.ValueString())
-			} else {
-				formatType1 = nil
-			}
-			compressionCodec1 := new(shared.DestinationAwsDatalakeUpdateSchemasCompressionCodecOptional)
-			if !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.IsNull() {
-				*compressionCodec1 = shared.DestinationAwsDatalakeUpdateSchemasCompressionCodecOptional(r.Configuration.Format.ParquetColumnarStorage.CompressionCodec.ValueString())
-			} else {
-				compressionCodec1 = nil
-			}
-			destinationAwsDatalakeUpdateParquetColumnarStorage = &shared.DestinationAwsDatalakeUpdateParquetColumnarStorage{
-				FormatType:       formatType1,
-				CompressionCodec: compressionCodec1,
-			}
-		}
-		if destinationAwsDatalakeUpdateParquetColumnarStorage != nil {
-			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
-				DestinationAwsDatalakeUpdateParquetColumnarStorage: destinationAwsDatalakeUpdateParquetColumnarStorage,
-			}
-		}
 	}
 	partitioning := new(shared.DestinationAwsDatalakeUpdateChooseHowToPartitionData)
 	if !r.Configuration.Partitioning.IsUnknown() && !r.Configuration.Partitioning.IsNull() {
@@ -368,25 +368,25 @@ func (r *DestinationAwsDatalakeResourceModel) ToSharedDestinationAwsDatalakePutR
 	} else {
 		partitioning = nil
 	}
-	glueCatalogFloatAsDecimal := new(bool)
-	if !r.Configuration.GlueCatalogFloatAsDecimal.IsUnknown() && !r.Configuration.GlueCatalogFloatAsDecimal.IsNull() {
-		*glueCatalogFloatAsDecimal = r.Configuration.GlueCatalogFloatAsDecimal.ValueBool()
+	region := new(shared.DestinationAwsDatalakeUpdateS3BucketRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.DestinationAwsDatalakeUpdateS3BucketRegion(r.Configuration.Region.ValueString())
 	} else {
-		glueCatalogFloatAsDecimal = nil
+		region = nil
 	}
 	configuration := shared.DestinationAwsDatalakeUpdate{
 		AwsAccountID:                          awsAccountID,
-		Credentials:                           credentials,
-		Region:                                region,
 		BucketName:                            bucketName,
 		BucketPrefix:                          bucketPrefix,
-		LakeformationDatabaseName:             lakeformationDatabaseName,
+		Credentials:                           credentials,
+		Format:                                format,
+		GlueCatalogFloatAsDecimal:             glueCatalogFloatAsDecimal,
 		LakeformationDatabaseDefaultTagKey:    lakeformationDatabaseDefaultTagKey,
 		LakeformationDatabaseDefaultTagValues: lakeformationDatabaseDefaultTagValues,
+		LakeformationDatabaseName:             lakeformationDatabaseName,
 		LakeformationGovernedTables:           lakeformationGovernedTables,
-		Format:                                format,
 		Partitioning:                          partitioning,
-		GlueCatalogFloatAsDecimal:             glueCatalogFloatAsDecimal,
+		Region:                                region,
 	}
 	out := shared.DestinationAwsDatalakePutRequest{
 		Name:          name,

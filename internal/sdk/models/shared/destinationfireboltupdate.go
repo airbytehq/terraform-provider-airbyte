@@ -33,15 +33,15 @@ func (e *DestinationFireboltUpdateSchemasMethod) UnmarshalJSON(data []byte) erro
 }
 
 type DestinationFireboltUpdateExternalTableViaS3 struct {
-	method DestinationFireboltUpdateSchemasMethod `const:"S3" json:"method"`
+	// AWS access key granting read and write access to S3.
+	AwsKeyID string `json:"aws_key_id"`
+	// Corresponding secret part of the AWS Key
+	AwsKeySecret string                                 `json:"aws_key_secret"`
+	method       DestinationFireboltUpdateSchemasMethod `const:"S3" json:"method"`
 	// The name of the S3 bucket.
 	S3Bucket string `json:"s3_bucket"`
 	// Region name of the S3 bucket.
 	S3Region string `json:"s3_region"`
-	// AWS access key granting read and write access to S3.
-	AwsKeyID string `json:"aws_key_id"`
-	// Corresponding secret part of the AWS Key
-	AwsKeySecret string `json:"aws_key_secret"`
 }
 
 func (d DestinationFireboltUpdateExternalTableViaS3) MarshalJSON() ([]byte, error) {
@@ -53,6 +53,20 @@ func (d *DestinationFireboltUpdateExternalTableViaS3) UnmarshalJSON(data []byte)
 		return err
 	}
 	return nil
+}
+
+func (o *DestinationFireboltUpdateExternalTableViaS3) GetAwsKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeyID
+}
+
+func (o *DestinationFireboltUpdateExternalTableViaS3) GetAwsKeySecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.AwsKeySecret
 }
 
 func (o *DestinationFireboltUpdateExternalTableViaS3) GetMethod() DestinationFireboltUpdateSchemasMethod {
@@ -71,20 +85,6 @@ func (o *DestinationFireboltUpdateExternalTableViaS3) GetS3Region() string {
 		return ""
 	}
 	return o.S3Region
-}
-
-func (o *DestinationFireboltUpdateExternalTableViaS3) GetAwsKeyID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AwsKeyID
-}
-
-func (o *DestinationFireboltUpdateExternalTableViaS3) GetAwsKeySecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.AwsKeySecret
 }
 
 type DestinationFireboltUpdateMethod string
@@ -194,20 +194,27 @@ func (u DestinationFireboltUpdateLoadingMethod) MarshalJSON() ([]byte, error) {
 }
 
 type DestinationFireboltUpdate struct {
+	// Firebolt account to login.
+	Account string `json:"account"`
 	// Firebolt service account ID.
 	ClientID string `json:"client_id"`
 	// Firebolt secret, corresponding to the service account ID.
 	ClientSecret string `json:"client_secret"`
-	// Firebolt account to login.
-	Account string `json:"account"`
-	// The host name of your Firebolt database.
-	Host *string `json:"host,omitempty"`
 	// The database to connect to.
 	Database string `json:"database"`
 	// Engine name to connect to.
 	Engine string `json:"engine"`
+	// The host name of your Firebolt database.
+	Host *string `json:"host,omitempty"`
 	// Loading method used to select the way data will be uploaded to Firebolt
 	LoadingMethod *DestinationFireboltUpdateLoadingMethod `json:"loading_method,omitempty"`
+}
+
+func (o *DestinationFireboltUpdate) GetAccount() string {
+	if o == nil {
+		return ""
+	}
+	return o.Account
 }
 
 func (o *DestinationFireboltUpdate) GetClientID() string {
@@ -224,20 +231,6 @@ func (o *DestinationFireboltUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *DestinationFireboltUpdate) GetAccount() string {
-	if o == nil {
-		return ""
-	}
-	return o.Account
-}
-
-func (o *DestinationFireboltUpdate) GetHost() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Host
-}
-
 func (o *DestinationFireboltUpdate) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -250,6 +243,13 @@ func (o *DestinationFireboltUpdate) GetEngine() string {
 		return ""
 	}
 	return o.Engine
+}
+
+func (o *DestinationFireboltUpdate) GetHost() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Host
 }
 
 func (o *DestinationFireboltUpdate) GetLoadingMethod() *DestinationFireboltUpdateLoadingMethod {

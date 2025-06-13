@@ -41,7 +41,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.18.1"
+      version = "0.18.3"
     }
   }
 }
@@ -167,6 +167,7 @@ provider_installation {
 * [airbyte_source_appfigures](docs/resources/source_appfigures.md)
 * [airbyte_source_appfollow](docs/resources/source_appfollow.md)
 * [airbyte_source_apple_search_ads](docs/resources/source_apple_search_ads.md)
+* [airbyte_source_appsflyer](docs/resources/source_appsflyer.md)
 * [airbyte_source_apptivo](docs/resources/source_apptivo.md)
 * [airbyte_source_asana](docs/resources/source_asana.md)
 * [airbyte_source_ashby](docs/resources/source_ashby.md)
@@ -254,6 +255,7 @@ provider_installation {
 * [airbyte_source_dixa](docs/resources/source_dixa.md)
 * [airbyte_source_dockerhub](docs/resources/source_dockerhub.md)
 * [airbyte_source_docuseal](docs/resources/source_docuseal.md)
+* [airbyte_source_dolibarr](docs/resources/source_dolibarr.md)
 * [airbyte_source_dremio](docs/resources/source_dremio.md)
 * [airbyte_source_drift](docs/resources/source_drift.md)
 * [airbyte_source_drip](docs/resources/source_drip.md)
@@ -263,8 +265,10 @@ provider_installation {
 * [airbyte_source_easypost](docs/resources/source_easypost.md)
 * [airbyte_source_easypromos](docs/resources/source_easypromos.md)
 * [airbyte_source_ebay_finance](docs/resources/source_ebay_finance.md)
+* [airbyte_source_ebay_fulfillment](docs/resources/source_ebay_fulfillment.md)
 * [airbyte_source_e_conomic](docs/resources/source_e_conomic.md)
 * [airbyte_source_elasticemail](docs/resources/source_elasticemail.md)
+* [airbyte_source_elasticsearch](docs/resources/source_elasticsearch.md)
 * [airbyte_source_emailoctopus](docs/resources/source_emailoctopus.md)
 * [airbyte_source_employment_hero](docs/resources/source_employment_hero.md)
 * [airbyte_source_encharge](docs/resources/source_encharge.md)
@@ -408,6 +412,7 @@ provider_installation {
 * [airbyte_source_marketstack](docs/resources/source_marketstack.md)
 * [airbyte_source_mendeley](docs/resources/source_mendeley.md)
 * [airbyte_source_mention](docs/resources/source_mention.md)
+* [airbyte_source_mercado_ads](docs/resources/source_mercado_ads.md)
 * [airbyte_source_merge](docs/resources/source_merge.md)
 * [airbyte_source_metabase](docs/resources/source_metabase.md)
 * [airbyte_source_microsoft_dataverse](docs/resources/source_microsoft_dataverse.md)
@@ -452,6 +457,7 @@ provider_installation {
 * [airbyte_source_onfleet](docs/resources/source_onfleet.md)
 * [airbyte_source_openaq](docs/resources/source_openaq.md)
 * [airbyte_source_open_data_dc](docs/resources/source_open_data_dc.md)
+* [airbyte_source_open_exchange_rates](docs/resources/source_open_exchange_rates.md)
 * [airbyte_source_openfda](docs/resources/source_openfda.md)
 * [airbyte_source_openweather](docs/resources/source_openweather.md)
 * [airbyte_source_opinion_stage](docs/resources/source_opinion_stage.md)
@@ -604,6 +610,7 @@ provider_installation {
 * [airbyte_source_the_guardian_api](docs/resources/source_the_guardian_api.md)
 * [airbyte_source_thinkific](docs/resources/source_thinkific.md)
 * [airbyte_source_thinkific_courses](docs/resources/source_thinkific_courses.md)
+* [airbyte_source_thrive_learning](docs/resources/source_thrive_learning.md)
 * [airbyte_source_ticketmaster](docs/resources/source_ticketmaster.md)
 * [airbyte_source_tickettailor](docs/resources/source_tickettailor.md)
 * [airbyte_source_tiktok_marketing](docs/resources/source_tiktok_marketing.md)
@@ -686,6 +693,7 @@ provider_installation {
 ### Data Sources
 
 * [airbyte_connection](docs/data-sources/connection.md)
+* [airbyte_connections](docs/data-sources/connections.md)
 * [airbyte_declarative_source_definition](docs/data-sources/declarative_source_definition.md)
 * [airbyte_destination_astra](docs/data-sources/destination_astra.md)
 * [airbyte_destination_aws_datalake](docs/data-sources/destination_aws_datalake.md)
@@ -753,6 +761,7 @@ provider_installation {
 * [airbyte_source_appfigures](docs/data-sources/source_appfigures.md)
 * [airbyte_source_appfollow](docs/data-sources/source_appfollow.md)
 * [airbyte_source_apple_search_ads](docs/data-sources/source_apple_search_ads.md)
+* [airbyte_source_appsflyer](docs/data-sources/source_appsflyer.md)
 * [airbyte_source_apptivo](docs/data-sources/source_apptivo.md)
 * [airbyte_source_asana](docs/data-sources/source_asana.md)
 * [airbyte_source_ashby](docs/data-sources/source_ashby.md)
@@ -840,6 +849,7 @@ provider_installation {
 * [airbyte_source_dixa](docs/data-sources/source_dixa.md)
 * [airbyte_source_dockerhub](docs/data-sources/source_dockerhub.md)
 * [airbyte_source_docuseal](docs/data-sources/source_docuseal.md)
+* [airbyte_source_dolibarr](docs/data-sources/source_dolibarr.md)
 * [airbyte_source_dremio](docs/data-sources/source_dremio.md)
 * [airbyte_source_drift](docs/data-sources/source_drift.md)
 * [airbyte_source_drip](docs/data-sources/source_drip.md)
@@ -849,8 +859,10 @@ provider_installation {
 * [airbyte_source_easypost](docs/data-sources/source_easypost.md)
 * [airbyte_source_easypromos](docs/data-sources/source_easypromos.md)
 * [airbyte_source_ebay_finance](docs/data-sources/source_ebay_finance.md)
+* [airbyte_source_ebay_fulfillment](docs/data-sources/source_ebay_fulfillment.md)
 * [airbyte_source_e_conomic](docs/data-sources/source_e_conomic.md)
 * [airbyte_source_elasticemail](docs/data-sources/source_elasticemail.md)
+* [airbyte_source_elasticsearch](docs/data-sources/source_elasticsearch.md)
 * [airbyte_source_emailoctopus](docs/data-sources/source_emailoctopus.md)
 * [airbyte_source_employment_hero](docs/data-sources/source_employment_hero.md)
 * [airbyte_source_encharge](docs/data-sources/source_encharge.md)
@@ -994,6 +1006,7 @@ provider_installation {
 * [airbyte_source_marketstack](docs/data-sources/source_marketstack.md)
 * [airbyte_source_mendeley](docs/data-sources/source_mendeley.md)
 * [airbyte_source_mention](docs/data-sources/source_mention.md)
+* [airbyte_source_mercado_ads](docs/data-sources/source_mercado_ads.md)
 * [airbyte_source_merge](docs/data-sources/source_merge.md)
 * [airbyte_source_metabase](docs/data-sources/source_metabase.md)
 * [airbyte_source_microsoft_dataverse](docs/data-sources/source_microsoft_dataverse.md)
@@ -1038,6 +1051,7 @@ provider_installation {
 * [airbyte_source_onfleet](docs/data-sources/source_onfleet.md)
 * [airbyte_source_openaq](docs/data-sources/source_openaq.md)
 * [airbyte_source_open_data_dc](docs/data-sources/source_open_data_dc.md)
+* [airbyte_source_open_exchange_rates](docs/data-sources/source_open_exchange_rates.md)
 * [airbyte_source_openfda](docs/data-sources/source_openfda.md)
 * [airbyte_source_openweather](docs/data-sources/source_openweather.md)
 * [airbyte_source_opinion_stage](docs/data-sources/source_opinion_stage.md)
@@ -1190,6 +1204,7 @@ provider_installation {
 * [airbyte_source_the_guardian_api](docs/data-sources/source_the_guardian_api.md)
 * [airbyte_source_thinkific](docs/data-sources/source_thinkific.md)
 * [airbyte_source_thinkific_courses](docs/data-sources/source_thinkific_courses.md)
+* [airbyte_source_thrive_learning](docs/data-sources/source_thrive_learning.md)
 * [airbyte_source_ticketmaster](docs/data-sources/source_ticketmaster.md)
 * [airbyte_source_tickettailor](docs/data-sources/source_tickettailor.md)
 * [airbyte_source_tiktok_marketing](docs/data-sources/source_tiktok_marketing.md)

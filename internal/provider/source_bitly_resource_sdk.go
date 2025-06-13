@@ -25,12 +25,12 @@ func (r *SourceBitlyResourceModel) ToSharedSourceBitlyCreateRequest() *shared.So
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBitly{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -105,12 +105,12 @@ func (r *SourceBitlyResourceModel) ToSharedSourceBitlyPutRequest() *shared.Sourc
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceBitlyUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	out := shared.SourceBitlyPutRequest{
 		Name:          name,

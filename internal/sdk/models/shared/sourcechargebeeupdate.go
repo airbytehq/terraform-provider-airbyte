@@ -37,16 +37,16 @@ func (e *SourceChargebeeUpdateProductCatalog) UnmarshalJSON(data []byte) error {
 }
 
 type SourceChargebeeUpdate struct {
-	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-	SiteAPIKey string `json:"site_api_key"`
-	// The site prefix for your Chargebee instance.
-	Site string `json:"site"`
-	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
-	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
-	ProductCatalog *SourceChargebeeUpdateProductCatalog `default:"2.0" json:"product_catalog"`
 	// The number of worker threads to use for the sync. The performance upper boundary is based on the limit of your Chargebee plan. More info about the rate limit plan tiers can be found on Chargebee's API <a href="https://support.chargebee.com/support/solutions/articles/243576-what-are-the-chargebee-api-limits-">docs</a>.
 	NumWorkers *int64 `default:"3" json:"num_workers"`
+	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section. If left blank, the product catalog version will be set to 2.0.
+	ProductCatalog *SourceChargebeeUpdateProductCatalog `default:"2.0" json:"product_catalog"`
+	// The site prefix for your Chargebee instance.
+	Site string `json:"site"`
+	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
+	SiteAPIKey string `json:"site_api_key"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceChargebeeUpdate) MarshalJSON() ([]byte, error) {
@@ -60,25 +60,11 @@ func (s *SourceChargebeeUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceChargebeeUpdate) GetSiteAPIKey() string {
+func (o *SourceChargebeeUpdate) GetNumWorkers() *int64 {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.SiteAPIKey
-}
-
-func (o *SourceChargebeeUpdate) GetSite() string {
-	if o == nil {
-		return ""
-	}
-	return o.Site
-}
-
-func (o *SourceChargebeeUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
+	return o.NumWorkers
 }
 
 func (o *SourceChargebeeUpdate) GetProductCatalog() *SourceChargebeeUpdateProductCatalog {
@@ -88,9 +74,23 @@ func (o *SourceChargebeeUpdate) GetProductCatalog() *SourceChargebeeUpdateProduc
 	return o.ProductCatalog
 }
 
-func (o *SourceChargebeeUpdate) GetNumWorkers() *int64 {
+func (o *SourceChargebeeUpdate) GetSite() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.NumWorkers
+	return o.Site
+}
+
+func (o *SourceChargebeeUpdate) GetSiteAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteAPIKey
+}
+
+func (o *SourceChargebeeUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

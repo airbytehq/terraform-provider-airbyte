@@ -3,15 +3,8 @@
 package shared
 
 type SourceNutshellUpdate struct {
-	Username string  `json:"username"`
 	Password *string `json:"password,omitempty"`
-}
-
-func (o *SourceNutshellUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	Username string  `json:"username"`
 }
 
 func (o *SourceNutshellUpdate) GetPassword() *string {
@@ -19,4 +12,11 @@ func (o *SourceNutshellUpdate) GetPassword() *string {
 		return nil
 	}
 	return o.Password
+}
+
+func (o *SourceNutshellUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

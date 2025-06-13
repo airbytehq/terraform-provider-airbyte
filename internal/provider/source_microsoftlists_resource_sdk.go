@@ -21,8 +21,8 @@ func (r *SourceMicrosoftListsResourceModel) ToSharedSourceMicrosoftListsCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
+	var applicationIDURI string
+	applicationIDURI = r.Configuration.ApplicationIDURI.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
@@ -30,22 +30,22 @@ func (r *SourceMicrosoftListsResourceModel) ToSharedSourceMicrosoftListsCreateRe
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var applicationIDURI string
-	applicationIDURI = r.Configuration.ApplicationIDURI.ValueString()
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
+
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
 
 	var tenantID string
 	tenantID = r.Configuration.TenantID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	configuration := shared.SourceMicrosoftLists{
-		SiteID:           siteID,
+		ApplicationIDURI: applicationIDURI,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		ApplicationIDURI: applicationIDURI,
-		TenantID:         tenantID,
 		Domain:           domain,
+		SiteID:           siteID,
+		TenantID:         tenantID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,8 +117,8 @@ func (r *SourceMicrosoftListsResourceModel) ToSharedSourceMicrosoftListsPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
+	var applicationIDURI string
+	applicationIDURI = r.Configuration.ApplicationIDURI.ValueString()
 
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
@@ -126,22 +126,22 @@ func (r *SourceMicrosoftListsResourceModel) ToSharedSourceMicrosoftListsPutReque
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	var applicationIDURI string
-	applicationIDURI = r.Configuration.ApplicationIDURI.ValueString()
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
+
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
 
 	var tenantID string
 	tenantID = r.Configuration.TenantID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	configuration := shared.SourceMicrosoftListsUpdate{
-		SiteID:           siteID,
+		ApplicationIDURI: applicationIDURI,
 		ClientID:         clientID,
 		ClientSecret:     clientSecret,
-		ApplicationIDURI: applicationIDURI,
-		TenantID:         tenantID,
 		Domain:           domain,
+		SiteID:           siteID,
+		TenantID:         tenantID,
 	}
 	out := shared.SourceMicrosoftListsPutRequest{
 		Name:          name,

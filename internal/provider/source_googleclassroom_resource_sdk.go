@@ -24,16 +24,16 @@ func (r *SourceGoogleClassroomResourceModel) ToSharedSourceGoogleClassroomCreate
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceGoogleClassroom{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,16 +108,16 @@ func (r *SourceGoogleClassroomResourceModel) ToSharedSourceGoogleClassroomPutReq
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
 
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
+
 	configuration := shared.SourceGoogleClassroomUpdate{
 		ClientID:           clientID,
-		ClientSecret:       clientSecret,
 		ClientRefreshToken: clientRefreshToken,
+		ClientSecret:       clientSecret,
 	}
 	out := shared.SourceGoogleClassroomPutRequest{
 		Name:          name,

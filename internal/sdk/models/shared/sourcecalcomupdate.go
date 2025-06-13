@@ -3,16 +3,9 @@
 package shared
 
 type SourceCalComUpdate struct {
-	OrgID string `json:"orgId"`
 	// API key to use. Find it at https://cal.com/account
 	APIKey string `json:"api_key"`
-}
-
-func (o *SourceCalComUpdate) GetOrgID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrgID
+	OrgID  string `json:"orgId"`
 }
 
 func (o *SourceCalComUpdate) GetAPIKey() string {
@@ -20,4 +13,11 @@ func (o *SourceCalComUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceCalComUpdate) GetOrgID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OrgID
 }

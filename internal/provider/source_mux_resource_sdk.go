@@ -22,27 +22,27 @@ func (r *SourceMuxResourceModel) ToSharedSourceMuxCreateRequest() *shared.Source
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	playbackID := new(string)
 	if !r.Configuration.PlaybackID.IsUnknown() && !r.Configuration.PlaybackID.IsNull() {
 		*playbackID = r.Configuration.PlaybackID.ValueString()
 	} else {
 		playbackID = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMux{
-		Username:   username,
 		Password:   password,
-		StartDate:  startDate,
 		PlaybackID: playbackID,
+		StartDate:  startDate,
+		Username:   username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -114,27 +114,27 @@ func (r *SourceMuxResourceModel) ToSharedSourceMuxPutRequest() *shared.SourceMux
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	playbackID := new(string)
 	if !r.Configuration.PlaybackID.IsUnknown() && !r.Configuration.PlaybackID.IsNull() {
 		*playbackID = r.Configuration.PlaybackID.ValueString()
 	} else {
 		playbackID = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceMuxUpdate{
-		Username:   username,
 		Password:   password,
-		StartDate:  startDate,
 		PlaybackID: playbackID,
+		StartDate:  startDate,
+		Username:   username,
 	}
 	out := shared.SourceMuxPutRequest{
 		Name:          name,

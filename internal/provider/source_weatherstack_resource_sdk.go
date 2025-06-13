@@ -24,16 +24,16 @@ func (r *SourceWeatherstackResourceModel) ToSharedSourceWeatherstackCreateReques
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
-	var query string
-	query = r.Configuration.Query.ValueString()
-
 	var historicalDate string
 	historicalDate = r.Configuration.HistoricalDate.ValueString()
 
+	var query string
+	query = r.Configuration.Query.ValueString()
+
 	configuration := shared.SourceWeatherstack{
 		AccessKey:      accessKey,
-		Query:          query,
 		HistoricalDate: historicalDate,
+		Query:          query,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,16 +108,16 @@ func (r *SourceWeatherstackResourceModel) ToSharedSourceWeatherstackPutRequest()
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
-	var query string
-	query = r.Configuration.Query.ValueString()
-
 	var historicalDate string
 	historicalDate = r.Configuration.HistoricalDate.ValueString()
 
+	var query string
+	query = r.Configuration.Query.ValueString()
+
 	configuration := shared.SourceWeatherstackUpdate{
 		AccessKey:      accessKey,
-		Query:          query,
 		HistoricalDate: historicalDate,
+		Query:          query,
 	}
 	out := shared.SourceWeatherstackPutRequest{
 		Name:          name,

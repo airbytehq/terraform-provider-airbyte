@@ -34,11 +34,11 @@ func (e *Docuseal) UnmarshalJSON(data []byte) error {
 
 type SourceDocuseal struct {
 	// Your API key for authenticating with the DocuSeal API. Obtain it from the DocuSeal API Console at https://console.docuseal.com/api.
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// The pagination limit
-	Limit      *string  `default:"5" json:"limit"`
-	sourceType Docuseal `const:"docuseal" json:"sourceType"`
+	Limit      *string   `default:"5" json:"limit"`
+	StartDate  time.Time `json:"start_date"`
+	sourceType Docuseal  `const:"docuseal" json:"sourceType"`
 }
 
 func (s SourceDocuseal) MarshalJSON() ([]byte, error) {
@@ -59,18 +59,18 @@ func (o *SourceDocuseal) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceDocuseal) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceDocuseal) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceDocuseal) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceDocuseal) GetSourceType() Docuseal {

@@ -25,9 +25,6 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	customReportsFields := new(string)
 	if !r.Configuration.CustomReportsFields.IsUnknown() && !r.Configuration.CustomReportsFields.IsNull() {
 		*customReportsFields = r.Configuration.CustomReportsFields.ValueString()
@@ -52,13 +49,16 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrCreateRequest() *sha
 	} else {
 		startDate = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceBambooHr{
 		APIKey:                            apiKey,
-		Subdomain:                         subdomain,
 		CustomReportsFields:               customReportsFields,
 		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
 		EmployeeFields:                    employeeFields,
 		StartDate:                         startDate,
+		Subdomain:                         subdomain,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -133,9 +133,6 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
 	customReportsFields := new(string)
 	if !r.Configuration.CustomReportsFields.IsUnknown() && !r.Configuration.CustomReportsFields.IsNull() {
 		*customReportsFields = r.Configuration.CustomReportsFields.ValueString()
@@ -160,13 +157,16 @@ func (r *SourceBambooHrResourceModel) ToSharedSourceBambooHrPutRequest() *shared
 	} else {
 		startDate = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
 	configuration := shared.SourceBambooHrUpdate{
 		APIKey:                            apiKey,
-		Subdomain:                         subdomain,
 		CustomReportsFields:               customReportsFields,
 		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
 		EmployeeFields:                    employeeFields,
 		StartDate:                         startDate,
+		Subdomain:                         subdomain,
 	}
 	out := shared.SourceBambooHrPutRequest{
 		Name:          name,

@@ -3,16 +3,9 @@
 package shared
 
 type SourceConvexUpdate struct {
-	DeploymentURL string `json:"deployment_url"`
 	// API access key used to retrieve data from Convex.
-	AccessKey string `json:"access_key"`
-}
-
-func (o *SourceConvexUpdate) GetDeploymentURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentURL
+	AccessKey     string `json:"access_key"`
+	DeploymentURL string `json:"deployment_url"`
 }
 
 func (o *SourceConvexUpdate) GetAccessKey() string {
@@ -20,4 +13,11 @@ func (o *SourceConvexUpdate) GetAccessKey() string {
 		return ""
 	}
 	return o.AccessKey
+}
+
+func (o *SourceConvexUpdate) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
 }

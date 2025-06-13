@@ -34,14 +34,14 @@ func (e *DestinationPgvectorUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(
 
 // DestinationPgvectorUpdateOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationPgvectorUpdateOpenAICompatible struct {
-	mode   *DestinationPgvectorUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                                  `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                                    `json:"dimensions"`
+	mode       *DestinationPgvectorUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationPgvectorUpdateOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationPgvectorUpdateOpenAICompatible) UnmarshalJSON(data []byte) e
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPgvectorUpdateOpenAICompatible) GetMode() *DestinationPgvectorUpdateSchemasEmbeddingEmbedding5Mode {
-	return DestinationPgvectorUpdateSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationPgvectorUpdateOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationPgvectorUpdateOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationPgvectorUpdateOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationPgvectorUpdateOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationPgvectorUpdateOpenAICompatible) GetMode() *DestinationPgvectorUpdateSchemasEmbeddingEmbedding5Mode {
+	return DestinationPgvectorUpdateSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationPgvectorUpdateOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(d
 
 // DestinationPgvectorUpdateAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationPgvectorUpdateAzureOpenAI struct {
-	mode *DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                                  `json:"deployment"`
+	mode       *DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationPgvectorUpdateAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (d *DestinationPgvectorUpdateAzureOpenAI) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPgvectorUpdateAzureOpenAI) GetMode() *DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode {
-	return DestinationPgvectorUpdateSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationPgvectorUpdateAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationPgvectorUpdateAzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *DestinationPgvectorUpdateAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationPgvectorUpdateAzureOpenAI) GetMode() *DestinationPgvectorUpdateSchemasEmbeddingEmbeddingMode {
+	return DestinationPgvectorUpdateSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationPgvectorUpdateAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationPgvectorUpdateSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationPgvectorUpdateSchemasMode) UnmarshalJSON(data []byte) error 
 
 // DestinationPgvectorUpdateCohere - Use the Cohere API to embed text.
 type DestinationPgvectorUpdateCohere struct {
-	mode      *DestinationPgvectorUpdateSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                                `json:"cohere_key"`
+	mode      *DestinationPgvectorUpdateSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationPgvectorUpdateCohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (d *DestinationPgvectorUpdateCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationPgvectorUpdateCohere) GetMode() *DestinationPgvectorUpdateSchemasMode {
-	return DestinationPgvectorUpdateSchemasModeCohere.ToPointer()
-}
-
 func (o *DestinationPgvectorUpdateCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationPgvectorUpdateCohere) GetMode() *DestinationPgvectorUpdateSchemasMode {
+	return DestinationPgvectorUpdateSchemasModeCohere.ToPointer()
 }
 
 type DestinationPgvectorUpdateMode string
@@ -432,27 +432,105 @@ func (u DestinationPgvectorUpdateEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationPgvectorUpdateEmbedding: all fields are null")
 }
 
-type DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterModeCode DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
+type DestinationPgvectorUpdateCredentials struct {
+	// Enter the password you want to use to access the database
+	Password string `json:"password"`
 }
-func (e *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
+
+func (o *DestinationPgvectorUpdateCredentials) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
+}
+
+// DestinationPgvectorUpdatePostgresConnection - Postgres can be used to store vector data and retrieve embeddings.
+type DestinationPgvectorUpdatePostgresConnection struct {
+	Credentials DestinationPgvectorUpdateCredentials `json:"credentials"`
+	// Enter the name of the database that you want to sync data into
+	Database string `json:"database"`
+	// Enter the name of the default schema
+	DefaultSchema *string `default:"public" json:"default_schema"`
+	// Enter the account name you want to use to access the database.
+	Host string `json:"host"`
+	// Enter the port you want to use to access the database
+	Port *int64 `default:"5432" json:"port"`
+	// Enter the name of the user you want to use to access the database
+	Username string `json:"username"`
+}
+
+func (d DestinationPgvectorUpdatePostgresConnection) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DestinationPgvectorUpdatePostgresConnection) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
 		return err
 	}
-	switch v {
-	case "code":
-		*e = DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	return nil
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetCredentials() DestinationPgvectorUpdateCredentials {
+	if o == nil {
+		return DestinationPgvectorUpdateCredentials{}
 	}
+	return o.Credentials
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetDatabase() string {
+	if o == nil {
+		return ""
+	}
+	return o.Database
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetDefaultSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultSchema
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *DestinationPgvectorUpdatePostgresConnection) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
+}
+
+type DestinationPgvectorUpdateFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationPgvectorUpdateFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationPgvectorUpdateFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
 }
 
 // DestinationPgvectorUpdateLanguage - Split code in suitable places based on the programming language
@@ -524,11 +602,34 @@ func (e *DestinationPgvectorUpdateLanguage) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterModeCode DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
 // DestinationPgvectorUpdateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationPgvectorUpdateByProgrammingLanguage struct {
-	mode *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 	// Split code in suitable places based on the programming language
-	Language DestinationPgvectorUpdateLanguage `json:"language"`
+	Language DestinationPgvectorUpdateLanguage                                       `json:"language"`
+	mode     *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationPgvectorUpdateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -542,15 +643,15 @@ func (d *DestinationPgvectorUpdateByProgrammingLanguage) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationPgvectorUpdateByProgrammingLanguage) GetMode() *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
 func (o *DestinationPgvectorUpdateByProgrammingLanguage) GetLanguage() DestinationPgvectorUpdateLanguage {
 	if o == nil {
 		return DestinationPgvectorUpdateLanguage("")
 	}
 	return o.Language
+}
+
+func (o *DestinationPgvectorUpdateByProgrammingLanguage) GetMode() *DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationPgvectorUpdateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
 }
 
 type DestinationPgvectorUpdateSchemasProcessingTextSplitterMode string
@@ -630,11 +731,11 @@ func (e *DestinationPgvectorUpdateSchemasProcessingMode) UnmarshalJSON(data []by
 
 // DestinationPgvectorUpdateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationPgvectorUpdateBySeparator struct {
-	mode *DestinationPgvectorUpdateSchemasProcessingMode `const:"separator" json:"mode"`
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                           `default:"false" json:"keep_separator"`
+	mode          *DestinationPgvectorUpdateSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
 }
 
 func (d DestinationPgvectorUpdateBySeparator) MarshalJSON() ([]byte, error) {
@@ -648,6 +749,13 @@ func (d *DestinationPgvectorUpdateBySeparator) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+func (o *DestinationPgvectorUpdateBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
 func (o *DestinationPgvectorUpdateBySeparator) GetMode() *DestinationPgvectorUpdateSchemasProcessingMode {
 	return DestinationPgvectorUpdateSchemasProcessingModeSeparator.ToPointer()
 }
@@ -657,13 +765,6 @@ func (o *DestinationPgvectorUpdateBySeparator) GetSeparators() []string {
 		return nil
 	}
 	return o.Separators
-}
-
-func (o *DestinationPgvectorUpdateBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
 }
 
 type DestinationPgvectorUpdateTextSplitterType string
@@ -752,40 +853,19 @@ func (u DestinationPgvectorUpdateTextSplitter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationPgvectorUpdateTextSplitter: all fields are null")
 }
 
-type DestinationPgvectorUpdateFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationPgvectorUpdateFieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *DestinationPgvectorUpdateFieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
 type DestinationPgvectorUpdateProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationPgvectorUpdateTextSplitter `json:"text_splitter,omitempty"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
 	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
 	FieldNameMappings []DestinationPgvectorUpdateFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationPgvectorUpdateTextSplitter `json:"text_splitter,omitempty"`
 }
 
 func (d DestinationPgvectorUpdateProcessingConfigModel) MarshalJSON() ([]byte, error) {
@@ -799,13 +879,6 @@ func (d *DestinationPgvectorUpdateProcessingConfigModel) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationPgvectorUpdateProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
 func (o *DestinationPgvectorUpdateProcessingConfigModel) GetChunkOverlap() *int64 {
 	if o == nil {
 		return nil
@@ -813,25 +886,11 @@ func (o *DestinationPgvectorUpdateProcessingConfigModel) GetChunkOverlap() *int6
 	return o.ChunkOverlap
 }
 
-func (o *DestinationPgvectorUpdateProcessingConfigModel) GetTextFields() []string {
+func (o *DestinationPgvectorUpdateProcessingConfigModel) GetChunkSize() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.TextFields
-}
-
-func (o *DestinationPgvectorUpdateProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationPgvectorUpdateProcessingConfigModel) GetTextSplitter() *DestinationPgvectorUpdateTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
+	return o.ChunkSize
 }
 
 func (o *DestinationPgvectorUpdateProcessingConfigModel) GetFieldNameMappings() []DestinationPgvectorUpdateFieldNameMappingConfigModel {
@@ -841,84 +900,25 @@ func (o *DestinationPgvectorUpdateProcessingConfigModel) GetFieldNameMappings() 
 	return o.FieldNameMappings
 }
 
-type DestinationPgvectorUpdateCredentials struct {
-	// Enter the password you want to use to access the database
-	Password string `json:"password"`
-}
-
-func (o *DestinationPgvectorUpdateCredentials) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
-// DestinationPgvectorUpdatePostgresConnection - Postgres can be used to store vector data and retrieve embeddings.
-type DestinationPgvectorUpdatePostgresConnection struct {
-	// Enter the account name you want to use to access the database.
-	Host string `json:"host"`
-	// Enter the port you want to use to access the database
-	Port *int64 `default:"5432" json:"port"`
-	// Enter the name of the database that you want to sync data into
-	Database string `json:"database"`
-	// Enter the name of the default schema
-	DefaultSchema *string `default:"public" json:"default_schema"`
-	// Enter the name of the user you want to use to access the database
-	Username    string                               `json:"username"`
-	Credentials DestinationPgvectorUpdateCredentials `json:"credentials"`
-}
-
-func (d DestinationPgvectorUpdatePostgresConnection) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(d, "", false)
-}
-
-func (d *DestinationPgvectorUpdatePostgresConnection) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *DestinationPgvectorUpdatePostgresConnection) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationPgvectorUpdatePostgresConnection) GetPort() *int64 {
+func (o *DestinationPgvectorUpdateProcessingConfigModel) GetMetadataFields() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Port
+	return o.MetadataFields
 }
 
-func (o *DestinationPgvectorUpdatePostgresConnection) GetDatabase() string {
-	if o == nil {
-		return ""
-	}
-	return o.Database
-}
-
-func (o *DestinationPgvectorUpdatePostgresConnection) GetDefaultSchema() *string {
+func (o *DestinationPgvectorUpdateProcessingConfigModel) GetTextFields() []string {
 	if o == nil {
 		return nil
 	}
-	return o.DefaultSchema
+	return o.TextFields
 }
 
-func (o *DestinationPgvectorUpdatePostgresConnection) GetUsername() string {
+func (o *DestinationPgvectorUpdateProcessingConfigModel) GetTextSplitter() *DestinationPgvectorUpdateTextSplitter {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Username
-}
-
-func (o *DestinationPgvectorUpdatePostgresConnection) GetCredentials() DestinationPgvectorUpdateCredentials {
-	if o == nil {
-		return DestinationPgvectorUpdateCredentials{}
-	}
-	return o.Credentials
+	return o.TextSplitter
 }
 
 // DestinationPgvectorUpdate - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
@@ -933,12 +933,12 @@ func (o *DestinationPgvectorUpdatePostgresConnection) GetCredentials() Destinati
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationPgvectorUpdate struct {
 	// Embedding configuration
-	Embedding  DestinationPgvectorUpdateEmbedding             `json:"embedding"`
-	Processing DestinationPgvectorUpdateProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationPgvectorUpdateEmbedding `json:"embedding"`
 	// Postgres can be used to store vector data and retrieve embeddings.
 	Indexing DestinationPgvectorUpdatePostgresConnection `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                          `default:"false" json:"omit_raw_text"`
+	Processing  DestinationPgvectorUpdateProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationPgvectorUpdate) MarshalJSON() ([]byte, error) {
@@ -959,11 +959,11 @@ func (o *DestinationPgvectorUpdate) GetEmbedding() DestinationPgvectorUpdateEmbe
 	return o.Embedding
 }
 
-func (o *DestinationPgvectorUpdate) GetProcessing() DestinationPgvectorUpdateProcessingConfigModel {
+func (o *DestinationPgvectorUpdate) GetIndexing() DestinationPgvectorUpdatePostgresConnection {
 	if o == nil {
-		return DestinationPgvectorUpdateProcessingConfigModel{}
+		return DestinationPgvectorUpdatePostgresConnection{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationPgvectorUpdate) GetOmitRawText() *bool {
@@ -973,9 +973,9 @@ func (o *DestinationPgvectorUpdate) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationPgvectorUpdate) GetIndexing() DestinationPgvectorUpdatePostgresConnection {
+func (o *DestinationPgvectorUpdate) GetProcessing() DestinationPgvectorUpdateProcessingConfigModel {
 	if o == nil {
-		return DestinationPgvectorUpdatePostgresConnection{}
+		return DestinationPgvectorUpdateProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }

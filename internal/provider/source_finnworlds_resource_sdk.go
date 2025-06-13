@@ -23,6 +23,27 @@ func (r *SourceFinnworldsResourceModel) ToSharedSourceFinnworldsCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bondType []interface{} = []interface{}{}
+	for _, bondTypeItem := range r.Configuration.BondType {
+		var bondTypeTmp interface{}
+		_ = json.Unmarshal([]byte(bondTypeItem.ValueString()), &bondTypeTmp)
+		bondType = append(bondType, bondTypeTmp)
+	}
+	var commodities []interface{} = []interface{}{}
+	for _, commoditiesItem := range r.Configuration.Commodities {
+		var commoditiesTmp interface{}
+		_ = json.Unmarshal([]byte(commoditiesItem.ValueString()), &commoditiesTmp)
+		commodities = append(commodities, commoditiesTmp)
+	}
+	var countries []interface{} = []interface{}{}
+	for _, countriesItem := range r.Configuration.Countries {
+		var countriesTmp interface{}
+		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
+		countries = append(countries, countriesTmp)
+	}
+	var key string
+	key = r.Configuration.Key.ValueString()
+
 	list := new(string)
 	if !r.Configuration.List.IsUnknown() && !r.Configuration.List.IsNull() {
 		*list = r.Configuration.List.ValueString()
@@ -35,43 +56,22 @@ func (r *SourceFinnworldsResourceModel) ToSharedSourceFinnworldsCreateRequest() 
 	} else {
 		listCountriesForBonds = nil
 	}
-	var key string
-	key = r.Configuration.Key.ValueString()
-
-	var bondType []interface{} = []interface{}{}
-	for _, bondTypeItem := range r.Configuration.BondType {
-		var bondTypeTmp interface{}
-		_ = json.Unmarshal([]byte(bondTypeItem.ValueString()), &bondTypeTmp)
-		bondType = append(bondType, bondTypeTmp)
-	}
-	var countries []interface{} = []interface{}{}
-	for _, countriesItem := range r.Configuration.Countries {
-		var countriesTmp interface{}
-		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
-		countries = append(countries, countriesTmp)
-	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var tickers []interface{} = []interface{}{}
 	for _, tickersItem := range r.Configuration.Tickers {
 		var tickersTmp interface{}
 		_ = json.Unmarshal([]byte(tickersItem.ValueString()), &tickersTmp)
 		tickers = append(tickers, tickersTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var commodities []interface{} = []interface{}{}
-	for _, commoditiesItem := range r.Configuration.Commodities {
-		var commoditiesTmp interface{}
-		_ = json.Unmarshal([]byte(commoditiesItem.ValueString()), &commoditiesTmp)
-		commodities = append(commodities, commoditiesTmp)
-	}
 	configuration := shared.SourceFinnworlds{
+		BondType:              bondType,
+		Commodities:           commodities,
+		Countries:             countries,
+		Key:                   key,
 		List:                  list,
 		ListCountriesForBonds: listCountriesForBonds,
-		Key:                   key,
-		BondType:              bondType,
-		Countries:             countries,
-		Tickers:               tickers,
 		StartDate:             startDate,
-		Commodities:           commodities,
+		Tickers:               tickers,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -143,6 +143,27 @@ func (r *SourceFinnworldsResourceModel) ToSharedSourceFinnworldsPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var bondType []interface{} = []interface{}{}
+	for _, bondTypeItem := range r.Configuration.BondType {
+		var bondTypeTmp interface{}
+		_ = json.Unmarshal([]byte(bondTypeItem.ValueString()), &bondTypeTmp)
+		bondType = append(bondType, bondTypeTmp)
+	}
+	var commodities []interface{} = []interface{}{}
+	for _, commoditiesItem := range r.Configuration.Commodities {
+		var commoditiesTmp interface{}
+		_ = json.Unmarshal([]byte(commoditiesItem.ValueString()), &commoditiesTmp)
+		commodities = append(commodities, commoditiesTmp)
+	}
+	var countries []interface{} = []interface{}{}
+	for _, countriesItem := range r.Configuration.Countries {
+		var countriesTmp interface{}
+		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
+		countries = append(countries, countriesTmp)
+	}
+	var key string
+	key = r.Configuration.Key.ValueString()
+
 	list := new(string)
 	if !r.Configuration.List.IsUnknown() && !r.Configuration.List.IsNull() {
 		*list = r.Configuration.List.ValueString()
@@ -155,43 +176,22 @@ func (r *SourceFinnworldsResourceModel) ToSharedSourceFinnworldsPutRequest() *sh
 	} else {
 		listCountriesForBonds = nil
 	}
-	var key string
-	key = r.Configuration.Key.ValueString()
-
-	var bondType []interface{} = []interface{}{}
-	for _, bondTypeItem := range r.Configuration.BondType {
-		var bondTypeTmp interface{}
-		_ = json.Unmarshal([]byte(bondTypeItem.ValueString()), &bondTypeTmp)
-		bondType = append(bondType, bondTypeTmp)
-	}
-	var countries []interface{} = []interface{}{}
-	for _, countriesItem := range r.Configuration.Countries {
-		var countriesTmp interface{}
-		_ = json.Unmarshal([]byte(countriesItem.ValueString()), &countriesTmp)
-		countries = append(countries, countriesTmp)
-	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var tickers []interface{} = []interface{}{}
 	for _, tickersItem := range r.Configuration.Tickers {
 		var tickersTmp interface{}
 		_ = json.Unmarshal([]byte(tickersItem.ValueString()), &tickersTmp)
 		tickers = append(tickers, tickersTmp)
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var commodities []interface{} = []interface{}{}
-	for _, commoditiesItem := range r.Configuration.Commodities {
-		var commoditiesTmp interface{}
-		_ = json.Unmarshal([]byte(commoditiesItem.ValueString()), &commoditiesTmp)
-		commodities = append(commodities, commoditiesTmp)
-	}
 	configuration := shared.SourceFinnworldsUpdate{
+		BondType:              bondType,
+		Commodities:           commodities,
+		Countries:             countries,
+		Key:                   key,
 		List:                  list,
 		ListCountriesForBonds: listCountriesForBonds,
-		Key:                   key,
-		BondType:              bondType,
-		Countries:             countries,
-		Tickers:               tickers,
 		StartDate:             startDate,
-		Commodities:           commodities,
+		Tickers:               tickers,
 	}
 	out := shared.SourceFinnworldsPutRequest{
 		Name:          name,

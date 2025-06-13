@@ -25,14 +25,14 @@ func (r *SourceClarifAiResourceModel) ToSharedSourceClarifAiCreateRequest() *sha
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var userID string
 	userID = r.Configuration.UserID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceClarifAi{
 		APIKey:    apiKey,
-		UserID:    userID,
 		StartDate: startDate,
+		UserID:    userID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,14 +107,14 @@ func (r *SourceClarifAiResourceModel) ToSharedSourceClarifAiPutRequest() *shared
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var userID string
 	userID = r.Configuration.UserID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceClarifAiUpdate{
 		APIKey:    apiKey,
-		UserID:    userID,
 		StartDate: startDate,
+		UserID:    userID,
 	}
 	out := shared.SourceClarifAiPutRequest{
 		Name:          name,

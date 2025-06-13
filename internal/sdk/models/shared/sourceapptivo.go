@@ -32,9 +32,9 @@ func (e *Apptivo) UnmarshalJSON(data []byte) error {
 }
 
 type SourceApptivo struct {
+	AccessKey string `json:"access_key"`
 	// API key to use. Find it in your Apptivo account under Business Settings -> API Access.
 	APIKey     string  `json:"api_key"`
-	AccessKey  string  `json:"access_key"`
 	sourceType Apptivo `const:"apptivo" json:"sourceType"`
 }
 
@@ -49,18 +49,18 @@ func (s *SourceApptivo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceApptivo) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceApptivo) GetAccessKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessKey
+}
+
+func (o *SourceApptivo) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceApptivo) GetSourceType() Apptivo {

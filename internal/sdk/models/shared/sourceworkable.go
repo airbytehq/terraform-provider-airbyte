@@ -32,10 +32,10 @@ func (e *Workable) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWorkable struct {
-	// Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
-	APIKey string `json:"api_key"`
 	// Your Workable account subdomain, e.g. https://your_account_subdomain.workable.com.
 	AccountSubdomain string `json:"account_subdomain"`
+	// Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
+	APIKey string `json:"api_key"`
 	// Get data that was created since this date (format: YYYYMMDDTHHMMSSZ).
 	StartDate  string   `json:"start_date"`
 	sourceType Workable `const:"workable" json:"sourceType"`
@@ -52,18 +52,18 @@ func (s *SourceWorkable) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceWorkable) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceWorkable) GetAccountSubdomain() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccountSubdomain
+}
+
+func (o *SourceWorkable) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceWorkable) GetStartDate() string {

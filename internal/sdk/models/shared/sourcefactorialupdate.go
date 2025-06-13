@@ -8,10 +8,10 @@ import (
 )
 
 type SourceFactorialUpdate struct {
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
 	// Max records per page limit
-	Limit *string `default:"50" json:"limit"`
+	Limit     *string   `default:"50" json:"limit"`
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourceFactorialUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceFactorialUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceFactorialUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceFactorialUpdate) GetLimit() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
+}
+
+func (o *SourceFactorialUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

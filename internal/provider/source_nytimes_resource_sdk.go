@@ -24,9 +24,6 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -40,12 +37,15 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesCreateRequest() *share
 	} else {
 		shareType = nil
 	}
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceNytimes{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
 		Period:    period,
 		ShareType: shareType,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -120,9 +120,6 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -136,12 +133,15 @@ func (r *SourceNytimesResourceModel) ToSharedSourceNytimesPutRequest() *shared.S
 	} else {
 		shareType = nil
 	}
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceNytimesUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
 		Period:    period,
 		ShareType: shareType,
+		StartDate: startDate,
 	}
 	out := shared.SourceNytimesPutRequest{
 		Name:          name,

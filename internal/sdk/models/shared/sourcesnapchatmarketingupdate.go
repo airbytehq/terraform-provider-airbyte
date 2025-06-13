@@ -103,26 +103,26 @@ func (e *SourceSnapchatMarketingUpdateViewAttributionWindow) UnmarshalJSON(data 
 }
 
 type SourceSnapchatMarketingUpdate struct {
+	// Specifies the principle for conversion reporting.
+	ActionReportTime *SourceSnapchatMarketingUpdateActionReportTime `default:"conversion" json:"action_report_time"`
+	// Ad Account IDs of the ad accounts to retrieve
+	AdAccountIds []any `json:"ad_account_ids,omitempty"`
 	// The Client ID of your Snapchat developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Snapchat developer application.
 	ClientSecret string `json:"client_secret"`
+	// Date in the format 2017-01-25. Any data after this date will not be replicated.
+	EndDate *types.Date `json:"end_date,omitempty"`
+	// The IDs of the organizations to retrieve
+	OrganizationIds []any `json:"organization_ids,omitempty"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 	// Date in the format 2022-01-01. Any data before this date will not be replicated.
 	StartDate *types.Date `default:"2022-01-01" json:"start_date"`
-	// Date in the format 2017-01-25. Any data after this date will not be replicated.
-	EndDate *types.Date `json:"end_date,omitempty"`
-	// Specifies the principle for conversion reporting.
-	ActionReportTime *SourceSnapchatMarketingUpdateActionReportTime `default:"conversion" json:"action_report_time"`
 	// Attribution window for swipe ups.
 	SwipeUpAttributionWindow *SourceSnapchatMarketingUpdateSwipeUpAttributionWindow `default:"28_DAY" json:"swipe_up_attribution_window"`
 	// Attribution window for views.
 	ViewAttributionWindow *SourceSnapchatMarketingUpdateViewAttributionWindow `default:"1_DAY" json:"view_attribution_window"`
-	// The IDs of the organizations to retrieve
-	OrganizationIds []any `json:"organization_ids,omitempty"`
-	// Ad Account IDs of the ad accounts to retrieve
-	AdAccountIds []any `json:"ad_account_ids,omitempty"`
 }
 
 func (s SourceSnapchatMarketingUpdate) MarshalJSON() ([]byte, error) {
@@ -134,6 +134,20 @@ func (s *SourceSnapchatMarketingUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceSnapchatMarketingUpdate) GetActionReportTime() *SourceSnapchatMarketingUpdateActionReportTime {
+	if o == nil {
+		return nil
+	}
+	return o.ActionReportTime
+}
+
+func (o *SourceSnapchatMarketingUpdate) GetAdAccountIds() []any {
+	if o == nil {
+		return nil
+	}
+	return o.AdAccountIds
 }
 
 func (o *SourceSnapchatMarketingUpdate) GetClientID() string {
@@ -150,6 +164,20 @@ func (o *SourceSnapchatMarketingUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+func (o *SourceSnapchatMarketingUpdate) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
+}
+
+func (o *SourceSnapchatMarketingUpdate) GetOrganizationIds() []any {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationIds
+}
+
 func (o *SourceSnapchatMarketingUpdate) GetRefreshToken() string {
 	if o == nil {
 		return ""
@@ -164,20 +192,6 @@ func (o *SourceSnapchatMarketingUpdate) GetStartDate() *types.Date {
 	return o.StartDate
 }
 
-func (o *SourceSnapchatMarketingUpdate) GetEndDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
-}
-
-func (o *SourceSnapchatMarketingUpdate) GetActionReportTime() *SourceSnapchatMarketingUpdateActionReportTime {
-	if o == nil {
-		return nil
-	}
-	return o.ActionReportTime
-}
-
 func (o *SourceSnapchatMarketingUpdate) GetSwipeUpAttributionWindow() *SourceSnapchatMarketingUpdateSwipeUpAttributionWindow {
 	if o == nil {
 		return nil
@@ -190,18 +204,4 @@ func (o *SourceSnapchatMarketingUpdate) GetViewAttributionWindow() *SourceSnapch
 		return nil
 	}
 	return o.ViewAttributionWindow
-}
-
-func (o *SourceSnapchatMarketingUpdate) GetOrganizationIds() []any {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationIds
-}
-
-func (o *SourceSnapchatMarketingUpdate) GetAdAccountIds() []any {
-	if o == nil {
-		return nil
-	}
-	return o.AdAccountIds
 }

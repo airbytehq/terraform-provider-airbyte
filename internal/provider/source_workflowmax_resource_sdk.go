@@ -22,16 +22,16 @@ func (r *SourceWorkflowmaxResourceModel) ToSharedSourceWorkflowmaxCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey2 string
-	apiKey2 = r.Configuration.APIKey2.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var apiKey2 string
+	apiKey2 = r.Configuration.APIKey2.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceWorkflowmax{
-		APIKey2:   apiKey2,
 		AccountID: accountID,
+		APIKey2:   apiKey2,
 		StartDate: startDate,
 	}
 	secretID := new(string)
@@ -104,16 +104,16 @@ func (r *SourceWorkflowmaxResourceModel) ToSharedSourceWorkflowmaxPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey2 string
-	apiKey2 = r.Configuration.APIKey2.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var apiKey2 string
+	apiKey2 = r.Configuration.APIKey2.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceWorkflowmaxUpdate{
-		APIKey2:   apiKey2,
 		AccountID: accountID,
+		APIKey2:   apiKey2,
 		StartDate: startDate,
 	}
 	out := shared.SourceWorkflowmaxPutRequest{

@@ -22,16 +22,16 @@ func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var locationID string
-	locationID = r.Configuration.LocationID.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var locationID string
+	locationID = r.Configuration.LocationID.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHighLevel{
-		LocationID: locationID,
 		APIKey:     apiKey,
+		LocationID: locationID,
 		StartDate:  startDate,
 	}
 	secretID := new(string)
@@ -104,16 +104,16 @@ func (r *SourceHighLevelResourceModel) ToSharedSourceHighLevelPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var locationID string
-	locationID = r.Configuration.LocationID.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var locationID string
+	locationID = r.Configuration.LocationID.ValueString()
+
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHighLevelUpdate{
-		LocationID: locationID,
 		APIKey:     apiKey,
+		LocationID: locationID,
 		StartDate:  startDate,
 	}
 	out := shared.SourceHighLevelPutRequest{

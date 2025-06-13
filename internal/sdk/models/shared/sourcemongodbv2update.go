@@ -34,20 +34,20 @@ func (e *SourceMongodbV2UpdateSchemasClusterType) UnmarshalJSON(data []byte) err
 
 // SourceMongodbV2UpdateSelfManagedReplicaSet - MongoDB self-hosted cluster configured as a replica set
 type SourceMongodbV2UpdateSelfManagedReplicaSet struct {
+	// The authentication source where the user information is stored.
+	AuthSource  *string                                 `default:"admin" json:"auth_source"`
 	clusterType SourceMongodbV2UpdateSchemasClusterType `const:"SELF_MANAGED_REPLICA_SET" json:"cluster_type"`
 	// The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.
 	ConnectionString string `json:"connection_string"`
-	// The name of the MongoDB database that contains the collection(s) to replicate.
-	Database string `json:"database"`
-	// The username which is used to access the database.
-	Username *string `json:"username,omitempty"`
+	// The names of the MongoDB databases that contain the collection(s) to replicate.
+	Databases []string `json:"databases"`
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
-	// The authentication source where the user information is stored.
-	AuthSource *string `default:"admin" json:"auth_source"`
 	// When enabled, syncs will validate and structure records against the stream's schema.
-	SchemaEnforced       *bool `default:"true" json:"schema_enforced"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
+	// The username which is used to access the database.
+	Username             *string `json:"username,omitempty"`
+	AdditionalProperties any     `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMongodbV2UpdateSelfManagedReplicaSet) MarshalJSON() ([]byte, error) {
@@ -61,6 +61,13 @@ func (s *SourceMongodbV2UpdateSelfManagedReplicaSet) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
 func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetClusterType() SourceMongodbV2UpdateSchemasClusterType {
 	return SourceMongodbV2UpdateSchemasClusterTypeSelfManagedReplicaSet
 }
@@ -72,18 +79,11 @@ func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetConnectionString() strin
 	return o.ConnectionString
 }
 
-func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetDatabase() string {
+func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetDatabases() []string {
 	if o == nil {
-		return ""
+		return []string{}
 	}
-	return o.Database
-}
-
-func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Username
+	return o.Databases
 }
 
 func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetPassword() *string {
@@ -93,18 +93,18 @@ func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetAuthSource() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AuthSource
-}
-
 func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetSchemaEnforced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SchemaEnforced
+}
+
+func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
 }
 
 func (o *SourceMongodbV2UpdateSelfManagedReplicaSet) GetAdditionalProperties() any {
@@ -139,20 +139,20 @@ func (e *SourceMongodbV2UpdateSchemasDatabaseConfigClusterType) UnmarshalJSON(da
 
 // SourceMongodbV2UpdateMongoDBAtlasReplicaSet - MongoDB Atlas-hosted cluster configured as a replica set
 type SourceMongodbV2UpdateMongoDBAtlasReplicaSet struct {
+	// The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.
+	AuthSource  *string                                               `default:"admin" json:"auth_source"`
 	clusterType SourceMongodbV2UpdateSchemasDatabaseConfigClusterType `const:"ATLAS_REPLICA_SET" json:"cluster_type"`
 	// The connection string of the cluster that you want to replicate.
 	ConnectionString string `json:"connection_string"`
-	// The name of the MongoDB database that contains the collection(s) to replicate.
-	Database string `json:"database"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
+	// The names of the MongoDB databases that contain the collection(s) to replicate.
+	Databases []string `json:"databases"`
 	// The password associated with this username.
 	Password string `json:"password"`
-	// The authentication source where the user information is stored.  See https://www.mongodb.com/docs/manual/reference/connection-string/#mongodb-urioption-urioption.authSource for more details.
-	AuthSource *string `default:"admin" json:"auth_source"`
 	// When enabled, syncs will validate and structure records against the stream's schema.
-	SchemaEnforced       *bool `default:"true" json:"schema_enforced"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	SchemaEnforced *bool `default:"true" json:"schema_enforced"`
+	// The username which is used to access the database.
+	Username             string `json:"username"`
+	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
 func (s SourceMongodbV2UpdateMongoDBAtlasReplicaSet) MarshalJSON() ([]byte, error) {
@@ -166,6 +166,13 @@ func (s *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) UnmarshalJSON(data []byte)
 	return nil
 }
 
+func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetAuthSource() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AuthSource
+}
+
 func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetClusterType() SourceMongodbV2UpdateSchemasDatabaseConfigClusterType {
 	return SourceMongodbV2UpdateSchemasDatabaseConfigClusterTypeAtlasReplicaSet
 }
@@ -177,18 +184,11 @@ func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetConnectionString() stri
 	return o.ConnectionString
 }
 
-func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetDatabase() string {
+func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetDatabases() []string {
 	if o == nil {
-		return ""
+		return []string{}
 	}
-	return o.Database
-}
-
-func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	return o.Databases
 }
 
 func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetPassword() string {
@@ -198,18 +198,18 @@ func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetPassword() string {
 	return o.Password
 }
 
-func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetAuthSource() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AuthSource
-}
-
 func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetSchemaEnforced() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.SchemaEnforced
+}
+
+func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceMongodbV2UpdateMongoDBAtlasReplicaSet) GetAdditionalProperties() any {
@@ -340,20 +340,20 @@ func (e *SourceMongodbV2UpdateCaptureModeAdvanced) UnmarshalJSON(data []byte) er
 type SourceMongodbV2Update struct {
 	// Configures the MongoDB cluster type.
 	DatabaseConfig SourceMongodbV2UpdateClusterType `json:"database_config"`
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds.
-	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
-	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
-	QueueSize *int64 `default:"10000" json:"queue_size"`
 	// The maximum number of documents to sample when attempting to discover the unique fields for a collection.
 	DiscoverSampleSize *int64 `default:"10000" json:"discover_sample_size"`
 	// The amount of time the connector will wait when it discovers a document. Defaults to 600 seconds. Valid range: 5 seconds to 1200 seconds.
 	DiscoverTimeoutSeconds *int64 `default:"600" json:"discover_timeout_seconds"`
-	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
-	InvalidCdcCursorPositionBehavior *SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
-	// Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images.
-	UpdateCaptureMode *SourceMongodbV2UpdateCaptureModeAdvanced `default:"Lookup" json:"update_capture_mode"`
 	// The amount of time an initial load is allowed to continue for before catching up on CDC logs.
 	InitialLoadTimeoutHours *int64 `default:"8" json:"initial_load_timeout_hours"`
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds.
+	InitialWaitingSeconds *int64 `default:"300" json:"initial_waiting_seconds"`
+	// Determines whether Airbyte should fail or re-sync data in case of an stale/invalid cursor value into the WAL. If 'Fail sync' is chosen, a user will have to manually reset the connection before being able to continue syncing data. If 'Re-sync data' is chosen, Airbyte will automatically trigger a refresh but could lead to higher cloud costs and data loss.
+	InvalidCdcCursorPositionBehavior *SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced `default:"Fail sync" json:"invalid_cdc_cursor_position_behavior"`
+	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+	QueueSize *int64 `default:"10000" json:"queue_size"`
+	// Determines how Airbyte looks up the value of an updated document. If 'Lookup' is chosen, the current value of the document will be read. If 'Post Image' is chosen, then the version of the document immediately after an update will be read. WARNING : Severe data loss will occur if this option is chosen and the appropriate settings are not set on your Mongo instance : https://www.mongodb.com/docs/manual/changeStreams/#change-streams-with-document-pre-and-post-images.
+	UpdateCaptureMode *SourceMongodbV2UpdateCaptureModeAdvanced `default:"Lookup" json:"update_capture_mode"`
 }
 
 func (s SourceMongodbV2Update) MarshalJSON() ([]byte, error) {
@@ -374,20 +374,6 @@ func (o *SourceMongodbV2Update) GetDatabaseConfig() SourceMongodbV2UpdateCluster
 	return o.DatabaseConfig
 }
 
-func (o *SourceMongodbV2Update) GetInitialWaitingSeconds() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialWaitingSeconds
-}
-
-func (o *SourceMongodbV2Update) GetQueueSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.QueueSize
-}
-
 func (o *SourceMongodbV2Update) GetDiscoverSampleSize() *int64 {
 	if o == nil {
 		return nil
@@ -402,6 +388,20 @@ func (o *SourceMongodbV2Update) GetDiscoverTimeoutSeconds() *int64 {
 	return o.DiscoverTimeoutSeconds
 }
 
+func (o *SourceMongodbV2Update) GetInitialLoadTimeoutHours() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialLoadTimeoutHours
+}
+
+func (o *SourceMongodbV2Update) GetInitialWaitingSeconds() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.InitialWaitingSeconds
+}
+
 func (o *SourceMongodbV2Update) GetInvalidCdcCursorPositionBehavior() *SourceMongodbV2UpdateInvalidCDCPositionBehaviorAdvanced {
 	if o == nil {
 		return nil
@@ -409,16 +409,16 @@ func (o *SourceMongodbV2Update) GetInvalidCdcCursorPositionBehavior() *SourceMon
 	return o.InvalidCdcCursorPositionBehavior
 }
 
+func (o *SourceMongodbV2Update) GetQueueSize() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.QueueSize
+}
+
 func (o *SourceMongodbV2Update) GetUpdateCaptureMode() *SourceMongodbV2UpdateCaptureModeAdvanced {
 	if o == nil {
 		return nil
 	}
 	return o.UpdateCaptureMode
-}
-
-func (o *SourceMongodbV2Update) GetInitialLoadTimeoutHours() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.InitialLoadTimeoutHours
 }

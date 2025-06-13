@@ -25,12 +25,17 @@ func (r *SourceGiphyResourceModel) ToSharedSourceGiphyCreateRequest() *shared.So
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
 		*query = r.Configuration.Query.ValueString()
 	} else {
 		query = nil
+	}
+	queryForClips := new(string)
+	if !r.Configuration.QueryForClips.IsUnknown() && !r.Configuration.QueryForClips.IsNull() {
+		*queryForClips = r.Configuration.QueryForClips.ValueString()
+	} else {
+		queryForClips = nil
 	}
 	queryForGif := new(string)
 	if !r.Configuration.QueryForGif.IsUnknown() && !r.Configuration.QueryForGif.IsNull() {
@@ -44,19 +49,14 @@ func (r *SourceGiphyResourceModel) ToSharedSourceGiphyCreateRequest() *shared.So
 	} else {
 		queryForStickers = nil
 	}
-	queryForClips := new(string)
-	if !r.Configuration.QueryForClips.IsUnknown() && !r.Configuration.QueryForClips.IsNull() {
-		*queryForClips = r.Configuration.QueryForClips.ValueString()
-	} else {
-		queryForClips = nil
-	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGiphy{
 		APIKey:           apiKey,
-		StartDate:        startDate,
 		Query:            query,
+		QueryForClips:    queryForClips,
 		QueryForGif:      queryForGif,
 		QueryForStickers: queryForStickers,
-		QueryForClips:    queryForClips,
+		StartDate:        startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -131,12 +131,17 @@ func (r *SourceGiphyResourceModel) ToSharedSourceGiphyPutRequest() *shared.Sourc
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	query := new(string)
 	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
 		*query = r.Configuration.Query.ValueString()
 	} else {
 		query = nil
+	}
+	queryForClips := new(string)
+	if !r.Configuration.QueryForClips.IsUnknown() && !r.Configuration.QueryForClips.IsNull() {
+		*queryForClips = r.Configuration.QueryForClips.ValueString()
+	} else {
+		queryForClips = nil
 	}
 	queryForGif := new(string)
 	if !r.Configuration.QueryForGif.IsUnknown() && !r.Configuration.QueryForGif.IsNull() {
@@ -150,19 +155,14 @@ func (r *SourceGiphyResourceModel) ToSharedSourceGiphyPutRequest() *shared.Sourc
 	} else {
 		queryForStickers = nil
 	}
-	queryForClips := new(string)
-	if !r.Configuration.QueryForClips.IsUnknown() && !r.Configuration.QueryForClips.IsNull() {
-		*queryForClips = r.Configuration.QueryForClips.ValueString()
-	} else {
-		queryForClips = nil
-	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGiphyUpdate{
 		APIKey:           apiKey,
-		StartDate:        startDate,
 		Query:            query,
+		QueryForClips:    queryForClips,
 		QueryForGif:      queryForGif,
 		QueryForStickers: queryForStickers,
-		QueryForClips:    queryForClips,
+		StartDate:        startDate,
 	}
 	out := shared.SourceGiphyPutRequest{
 		Name:          name,

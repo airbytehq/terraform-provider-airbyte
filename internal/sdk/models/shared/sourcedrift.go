@@ -33,9 +33,9 @@ func (e *SourceDriftCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type AccessToken struct {
-	credentials *SourceDriftCredentials `const:"access_token" json:"credentials,omitempty"`
 	// Drift Access Token. See the <a href="https://docs.airbyte.com/integrations/sources/drift">docs</a> for more information on how to generate this key.
-	AccessToken string `json:"access_token"`
+	AccessToken string                  `json:"access_token"`
+	credentials *SourceDriftCredentials `const:"access_token" json:"credentials,omitempty"`
 }
 
 func (a AccessToken) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (a *AccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AccessToken) GetCredentials() *SourceDriftCredentials {
-	return SourceDriftCredentialsAccessToken.ToPointer()
-}
-
 func (o *AccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *AccessToken) GetCredentials() *SourceDriftCredentials {
+	return SourceDriftCredentialsAccessToken.ToPointer()
 }
 
 type SourceDriftSchemasCredentials string
@@ -84,13 +84,13 @@ func (e *SourceDriftSchemasCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDriftOAuth20 struct {
-	credentials *SourceDriftSchemasCredentials `const:"oauth2.0" json:"credentials,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken string `json:"access_token"`
 	// The Client ID of your Drift developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Drift developer application.
-	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	ClientSecret string                         `json:"client_secret"`
+	credentials  *SourceDriftSchemasCredentials `const:"oauth2.0" json:"credentials,omitempty"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -106,8 +106,11 @@ func (s *SourceDriftOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDriftOAuth20) GetCredentials() *SourceDriftSchemasCredentials {
-	return SourceDriftSchemasCredentialsOauth20.ToPointer()
+func (o *SourceDriftOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceDriftOAuth20) GetClientID() string {
@@ -124,11 +127,8 @@ func (o *SourceDriftOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceDriftOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
+func (o *SourceDriftOAuth20) GetCredentials() *SourceDriftSchemasCredentials {
+	return SourceDriftSchemasCredentialsOauth20.ToPointer()
 }
 
 func (o *SourceDriftOAuth20) GetRefreshToken() string {

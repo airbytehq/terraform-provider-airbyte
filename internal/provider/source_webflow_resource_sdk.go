@@ -21,22 +21,22 @@ func (r *SourceWebflowResourceModel) ToSharedSourceWebflowCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	acceptVersion := new(string)
 	if !r.Configuration.AcceptVersion.IsUnknown() && !r.Configuration.AcceptVersion.IsNull() {
 		*acceptVersion = r.Configuration.AcceptVersion.ValueString()
 	} else {
 		acceptVersion = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
+
 	configuration := shared.SourceWebflow{
-		SiteID:        siteID,
-		APIKey:        apiKey,
 		AcceptVersion: acceptVersion,
+		APIKey:        apiKey,
+		SiteID:        siteID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,22 +108,22 @@ func (r *SourceWebflowResourceModel) ToSharedSourceWebflowPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var siteID string
-	siteID = r.Configuration.SiteID.ValueString()
-
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	acceptVersion := new(string)
 	if !r.Configuration.AcceptVersion.IsUnknown() && !r.Configuration.AcceptVersion.IsNull() {
 		*acceptVersion = r.Configuration.AcceptVersion.ValueString()
 	} else {
 		acceptVersion = nil
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	var siteID string
+	siteID = r.Configuration.SiteID.ValueString()
+
 	configuration := shared.SourceWebflowUpdate{
-		SiteID:        siteID,
-		APIKey:        apiKey,
 		AcceptVersion: acceptVersion,
+		APIKey:        apiKey,
+		SiteID:        siteID,
 	}
 	out := shared.SourceWebflowPutRequest{
 		Name:          name,

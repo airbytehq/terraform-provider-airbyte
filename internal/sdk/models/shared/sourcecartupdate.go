@@ -33,9 +33,9 @@ func (e *SourceCartUpdateSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCartUpdateSingleStoreAccessToken struct {
-	authType SourceCartUpdateSchemasAuthType `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
 	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	AccessToken string                          `json:"access_token"`
+	authType    SourceCartUpdateSchemasAuthType `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
 	// The name of Cart.com Online Store. All API URLs start with https://[mystorename.com]/api/v1/, where [mystorename.com] is the domain name of your store.
 	StoreName string `json:"store_name"`
 }
@@ -51,15 +51,15 @@ func (s *SourceCartUpdateSingleStoreAccessToken) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *SourceCartUpdateSingleStoreAccessToken) GetAuthType() SourceCartUpdateSchemasAuthType {
-	return SourceCartUpdateSchemasAuthTypeSingleStoreAccessToken
-}
-
 func (o *SourceCartUpdateSingleStoreAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceCartUpdateSingleStoreAccessToken) GetAuthType() SourceCartUpdateSchemasAuthType {
+	return SourceCartUpdateSchemasAuthTypeSingleStoreAccessToken
 }
 
 func (o *SourceCartUpdateSingleStoreAccessToken) GetStoreName() string {
@@ -94,12 +94,12 @@ func (e *SourceCartUpdateAuthType) UnmarshalJSON(data []byte) error {
 
 type SourceCartUpdateCentralAPIRouter struct {
 	authType SourceCartUpdateAuthType `const:"CENTRAL_API_ROUTER" json:"auth_type"`
+	// You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
+	SiteID string `json:"site_id"`
 	// Enter your application's User Name
 	UserName string `json:"user_name"`
 	// Enter your application's User Secret
 	UserSecret string `json:"user_secret"`
-	// You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
-	SiteID string `json:"site_id"`
 }
 
 func (s SourceCartUpdateCentralAPIRouter) MarshalJSON() ([]byte, error) {
@@ -117,6 +117,13 @@ func (o *SourceCartUpdateCentralAPIRouter) GetAuthType() SourceCartUpdateAuthTyp
 	return SourceCartUpdateAuthTypeCentralAPIRouter
 }
 
+func (o *SourceCartUpdateCentralAPIRouter) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
+}
+
 func (o *SourceCartUpdateCentralAPIRouter) GetUserName() string {
 	if o == nil {
 		return ""
@@ -129,13 +136,6 @@ func (o *SourceCartUpdateCentralAPIRouter) GetUserSecret() string {
 		return ""
 	}
 	return o.UserSecret
-}
-
-func (o *SourceCartUpdateCentralAPIRouter) GetSiteID() string {
-	if o == nil {
-		return ""
-	}
-	return o.SiteID
 }
 
 type SourceCartUpdateAuthorizationMethodType string

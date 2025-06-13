@@ -66,19 +66,19 @@ func (r *SourceLeverHiringResourceModel) ToSharedSourceLeverHiringCreateRequest(
 			}
 		}
 	}
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	environment := new(shared.SourceLeverHiringEnvironment)
 	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
 		*environment = shared.SourceLeverHiringEnvironment(r.Configuration.Environment.ValueString())
 	} else {
 		environment = nil
 	}
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceLeverHiring{
 		Credentials: credentials,
-		StartDate:   startDate,
 		Environment: environment,
+		StartDate:   startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -195,19 +195,19 @@ func (r *SourceLeverHiringResourceModel) ToSharedSourceLeverHiringPutRequest() *
 			}
 		}
 	}
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	environment := new(shared.SourceLeverHiringUpdateEnvironment)
 	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
 		*environment = shared.SourceLeverHiringUpdateEnvironment(r.Configuration.Environment.ValueString())
 	} else {
 		environment = nil
 	}
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	configuration := shared.SourceLeverHiringUpdate{
 		Credentials: credentials,
-		StartDate:   startDate,
 		Environment: environment,
+		StartDate:   startDate,
 	}
 	out := shared.SourceLeverHiringPutRequest{
 		Name:          name,

@@ -34,9 +34,9 @@ func (e *SourceZendeskSunshineSchemasAuthMethod) UnmarshalJSON(data []byte) erro
 }
 
 type SourceZendeskSunshineAPIToken struct {
-	authMethod *SourceZendeskSunshineSchemasAuthMethod `const:"api_token" json:"auth_method"`
 	// API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-	APIToken string `json:"api_token"`
+	APIToken   string                                  `json:"api_token"`
+	authMethod *SourceZendeskSunshineSchemasAuthMethod `const:"api_token" json:"auth_method"`
 	// The user email for your Zendesk account
 	Email string `json:"email"`
 }
@@ -52,15 +52,15 @@ func (s *SourceZendeskSunshineAPIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskSunshineAPIToken) GetAuthMethod() *SourceZendeskSunshineSchemasAuthMethod {
-	return SourceZendeskSunshineSchemasAuthMethodAPIToken.ToPointer()
-}
-
 func (o *SourceZendeskSunshineAPIToken) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *SourceZendeskSunshineAPIToken) GetAuthMethod() *SourceZendeskSunshineSchemasAuthMethod {
+	return SourceZendeskSunshineSchemasAuthMethodAPIToken.ToPointer()
 }
 
 func (o *SourceZendeskSunshineAPIToken) GetEmail() string {
@@ -94,13 +94,13 @@ func (e *SourceZendeskSunshineAuthMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskSunshineOAuth20 struct {
-	authMethod *SourceZendeskSunshineAuthMethod `const:"oauth2.0" json:"auth_method"`
+	// Long-term access Token for making authenticated requests.
+	AccessToken string                           `json:"access_token"`
+	authMethod  *SourceZendeskSunshineAuthMethod `const:"oauth2.0" json:"auth_method"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
-	// Long-term access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
 }
 
 func (s SourceZendeskSunshineOAuth20) MarshalJSON() ([]byte, error) {
@@ -112,6 +112,13 @@ func (s *SourceZendeskSunshineOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceZendeskSunshineOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceZendeskSunshineOAuth20) GetAuthMethod() *SourceZendeskSunshineAuthMethod {
@@ -130,13 +137,6 @@ func (o *SourceZendeskSunshineOAuth20) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceZendeskSunshineOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 type SourceZendeskSunshineAuthorizationMethodType string
@@ -226,12 +226,12 @@ func (e *ZendeskSunshine) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZendeskSunshine struct {
-	// The subdomain for your Zendesk Account.
-	Subdomain string `json:"subdomain"`
-	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
-	StartDate   time.Time                                 `json:"start_date"`
 	Credentials *SourceZendeskSunshineAuthorizationMethod `json:"credentials,omitempty"`
-	sourceType  ZendeskSunshine                           `const:"zendesk-sunshine" json:"sourceType"`
+	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
+	StartDate time.Time `json:"start_date"`
+	// The subdomain for your Zendesk Account.
+	Subdomain  string          `json:"subdomain"`
+	sourceType ZendeskSunshine `const:"zendesk-sunshine" json:"sourceType"`
 }
 
 func (s SourceZendeskSunshine) MarshalJSON() ([]byte, error) {
@@ -245,11 +245,11 @@ func (s *SourceZendeskSunshine) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZendeskSunshine) GetSubdomain() string {
+func (o *SourceZendeskSunshine) GetCredentials() *SourceZendeskSunshineAuthorizationMethod {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.Subdomain
+	return o.Credentials
 }
 
 func (o *SourceZendeskSunshine) GetStartDate() time.Time {
@@ -259,11 +259,11 @@ func (o *SourceZendeskSunshine) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceZendeskSunshine) GetCredentials() *SourceZendeskSunshineAuthorizationMethod {
+func (o *SourceZendeskSunshine) GetSubdomain() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Credentials
+	return o.Subdomain
 }
 
 func (o *SourceZendeskSunshine) GetSourceType() ZendeskSunshine {

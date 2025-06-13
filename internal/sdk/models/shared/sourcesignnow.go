@@ -33,14 +33,14 @@ func (e *Signnow) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSignnow struct {
+	// Api key which could be found in API section after enlarging keys section
+	APIKeyID string `json:"api_key_id"`
 	// The authorization token is needed for `signing_links` stream which could be seen from enlarged view of `https://app.signnow.com/webapp/api-dashboard/keys`
 	AuthToken string `json:"auth_token"`
-	// Api key which could be found in API section after enlarging keys section
-	APIKeyID  string    `json:"api_key_id"`
-	StartDate time.Time `json:"start_date"`
 	// Name filter for documents stream
-	NameFilterForDocuments []any   `json:"name_filter_for_documents,omitempty"`
-	sourceType             Signnow `const:"signnow" json:"sourceType"`
+	NameFilterForDocuments []any     `json:"name_filter_for_documents,omitempty"`
+	StartDate              time.Time `json:"start_date"`
+	sourceType             Signnow   `const:"signnow" json:"sourceType"`
 }
 
 func (s SourceSignnow) MarshalJSON() ([]byte, error) {
@@ -54,13 +54,6 @@ func (s *SourceSignnow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceSignnow) GetAuthToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AuthToken
-}
-
 func (o *SourceSignnow) GetAPIKeyID() string {
 	if o == nil {
 		return ""
@@ -68,11 +61,11 @@ func (o *SourceSignnow) GetAPIKeyID() string {
 	return o.APIKeyID
 }
 
-func (o *SourceSignnow) GetStartDate() time.Time {
+func (o *SourceSignnow) GetAuthToken() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.StartDate
+	return o.AuthToken
 }
 
 func (o *SourceSignnow) GetNameFilterForDocuments() []any {
@@ -80,6 +73,13 @@ func (o *SourceSignnow) GetNameFilterForDocuments() []any {
 		return nil
 	}
 	return o.NameFilterForDocuments
+}
+
+func (o *SourceSignnow) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceSignnow) GetSourceType() Signnow {

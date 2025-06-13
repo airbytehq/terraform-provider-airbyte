@@ -8,10 +8,10 @@ import (
 )
 
 type SourceBunnyIncUpdate struct {
-	Apikey string `json:"apikey"`
-	// The subdomain specific to your Bunny account or service.
-	Subdomain string     `json:"subdomain"`
+	Apikey    string     `json:"apikey"`
 	StartDate *time.Time `json:"start_date,omitempty"`
+	// The subdomain specific to your Bunny account or service.
+	Subdomain string `json:"subdomain"`
 }
 
 func (s SourceBunnyIncUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceBunnyIncUpdate) GetApikey() string {
 	return o.Apikey
 }
 
-func (o *SourceBunnyIncUpdate) GetSubdomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Subdomain
-}
-
 func (o *SourceBunnyIncUpdate) GetStartDate() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceBunnyIncUpdate) GetSubdomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Subdomain
 }

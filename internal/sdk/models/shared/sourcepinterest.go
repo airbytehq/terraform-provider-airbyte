@@ -9,35 +9,6 @@ import (
 	"github.com/airbytehq/terraform-provider-airbyte/internal/sdk/types"
 )
 
-type Status string
-
-const (
-	StatusActive   Status = "ACTIVE"
-	StatusPaused   Status = "PAUSED"
-	StatusArchived Status = "ARCHIVED"
-)
-
-func (e Status) ToPointer() *Status {
-	return &e
-}
-func (e *Status) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ACTIVE":
-		fallthrough
-	case "PAUSED":
-		fallthrough
-	case "ARCHIVED":
-		*e = Status(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Status: %v", v)
-	}
-}
-
 type SourcePinterestAuthMethod string
 
 const (
@@ -107,221 +78,194 @@ func (o *OAuth20) GetRefreshToken() string {
 	return o.RefreshToken
 }
 
-// SourcePinterestLevel - Chosen level for API
-type SourcePinterestLevel string
-
-const (
-	SourcePinterestLevelAdvertiser            SourcePinterestLevel = "ADVERTISER"
-	SourcePinterestLevelAdvertiserTargeting   SourcePinterestLevel = "ADVERTISER_TARGETING"
-	SourcePinterestLevelCampaign              SourcePinterestLevel = "CAMPAIGN"
-	SourcePinterestLevelCampaignTargeting     SourcePinterestLevel = "CAMPAIGN_TARGETING"
-	SourcePinterestLevelAdGroup               SourcePinterestLevel = "AD_GROUP"
-	SourcePinterestLevelAdGroupTargeting      SourcePinterestLevel = "AD_GROUP_TARGETING"
-	SourcePinterestLevelPinPromotion          SourcePinterestLevel = "PIN_PROMOTION"
-	SourcePinterestLevelPinPromotionTargeting SourcePinterestLevel = "PIN_PROMOTION_TARGETING"
-	SourcePinterestLevelKeyword               SourcePinterestLevel = "KEYWORD"
-	SourcePinterestLevelProductGroup          SourcePinterestLevel = "PRODUCT_GROUP"
-	SourcePinterestLevelProductGroupTargeting SourcePinterestLevel = "PRODUCT_GROUP_TARGETING"
-	SourcePinterestLevelProductItem           SourcePinterestLevel = "PRODUCT_ITEM"
-)
-
-func (e SourcePinterestLevel) ToPointer() *SourcePinterestLevel {
-	return &e
-}
-func (e *SourcePinterestLevel) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ADVERTISER":
-		fallthrough
-	case "ADVERTISER_TARGETING":
-		fallthrough
-	case "CAMPAIGN":
-		fallthrough
-	case "CAMPAIGN_TARGETING":
-		fallthrough
-	case "AD_GROUP":
-		fallthrough
-	case "AD_GROUP_TARGETING":
-		fallthrough
-	case "PIN_PROMOTION":
-		fallthrough
-	case "PIN_PROMOTION_TARGETING":
-		fallthrough
-	case "KEYWORD":
-		fallthrough
-	case "PRODUCT_GROUP":
-		fallthrough
-	case "PRODUCT_GROUP_TARGETING":
-		fallthrough
-	case "PRODUCT_ITEM":
-		*e = SourcePinterestLevel(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePinterestLevel: %v", v)
-	}
-}
-
-// Granularity - Chosen granularity for API
-type Granularity string
-
-const (
-	GranularityTotal Granularity = "TOTAL"
-	GranularityDay   Granularity = "DAY"
-	GranularityHour  Granularity = "HOUR"
-	GranularityWeek  Granularity = "WEEK"
-	GranularityMonth Granularity = "MONTH"
-)
-
-func (e Granularity) ToPointer() *Granularity {
-	return &e
-}
-func (e *Granularity) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TOTAL":
-		fallthrough
-	case "DAY":
-		fallthrough
-	case "HOUR":
-		fallthrough
-	case "WEEK":
-		fallthrough
-	case "MONTH":
-		*e = Granularity(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Granularity: %v", v)
-	}
-}
-
 // SourcePinterestValidEnums - An enumeration.
 type SourcePinterestValidEnums string
 
 const (
-	SourcePinterestValidEnumsAdvertiserID                                 SourcePinterestValidEnums = "ADVERTISER_ID"
-	SourcePinterestValidEnumsAdAccountID                                  SourcePinterestValidEnums = "AD_ACCOUNT_ID"
-	SourcePinterestValidEnumsAdGroupEntityStatus                          SourcePinterestValidEnums = "AD_GROUP_ENTITY_STATUS"
-	SourcePinterestValidEnumsAdGroupID                                    SourcePinterestValidEnums = "AD_GROUP_ID"
-	SourcePinterestValidEnumsAdID                                         SourcePinterestValidEnums = "AD_ID"
-	SourcePinterestValidEnumsCampaignDailySpendCap                        SourcePinterestValidEnums = "CAMPAIGN_DAILY_SPEND_CAP"
-	SourcePinterestValidEnumsCampaignEntityStatus                         SourcePinterestValidEnums = "CAMPAIGN_ENTITY_STATUS"
-	SourcePinterestValidEnumsCampaignID                                   SourcePinterestValidEnums = "CAMPAIGN_ID"
-	SourcePinterestValidEnumsCampaignLifetimeSpendCap                     SourcePinterestValidEnums = "CAMPAIGN_LIFETIME_SPEND_CAP"
-	SourcePinterestValidEnumsCampaignName                                 SourcePinterestValidEnums = "CAMPAIGN_NAME"
-	SourcePinterestValidEnumsCheckoutRoas                                 SourcePinterestValidEnums = "CHECKOUT_ROAS"
-	SourcePinterestValidEnumsClickthrough1                                SourcePinterestValidEnums = "CLICKTHROUGH_1"
-	SourcePinterestValidEnumsClickthrough1Gross                           SourcePinterestValidEnums = "CLICKTHROUGH_1_GROSS"
-	SourcePinterestValidEnumsClickthrough2                                SourcePinterestValidEnums = "CLICKTHROUGH_2"
-	SourcePinterestValidEnumsCpcInMicroDollar                             SourcePinterestValidEnums = "CPC_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsCpmInDollar                                  SourcePinterestValidEnums = "CPM_IN_DOLLAR"
-	SourcePinterestValidEnumsCpmInMicroDollar                             SourcePinterestValidEnums = "CPM_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsCtr                                          SourcePinterestValidEnums = "CTR"
-	SourcePinterestValidEnumsCtr2                                         SourcePinterestValidEnums = "CTR_2"
-	SourcePinterestValidEnumsEcpcvInDollar                                SourcePinterestValidEnums = "ECPCV_IN_DOLLAR"
-	SourcePinterestValidEnumsEcpcvP95InDollar                             SourcePinterestValidEnums = "ECPCV_P95_IN_DOLLAR"
-	SourcePinterestValidEnumsEcpcInDollar                                 SourcePinterestValidEnums = "ECPC_IN_DOLLAR"
-	SourcePinterestValidEnumsEcpcInMicroDollar                            SourcePinterestValidEnums = "ECPC_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsEcpeInDollar                                 SourcePinterestValidEnums = "ECPE_IN_DOLLAR"
-	SourcePinterestValidEnumsEcpmInMicroDollar                            SourcePinterestValidEnums = "ECPM_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsEcpvInDollar                                 SourcePinterestValidEnums = "ECPV_IN_DOLLAR"
-	SourcePinterestValidEnumsEctr                                         SourcePinterestValidEnums = "ECTR"
-	SourcePinterestValidEnumsEengagementRate                              SourcePinterestValidEnums = "EENGAGEMENT_RATE"
-	SourcePinterestValidEnumsEngagement1                                  SourcePinterestValidEnums = "ENGAGEMENT_1"
-	SourcePinterestValidEnumsEngagement2                                  SourcePinterestValidEnums = "ENGAGEMENT_2"
-	SourcePinterestValidEnumsEngagementRate                               SourcePinterestValidEnums = "ENGAGEMENT_RATE"
-	SourcePinterestValidEnumsIdeaPinProductTagVisit1                      SourcePinterestValidEnums = "IDEA_PIN_PRODUCT_TAG_VISIT_1"
-	SourcePinterestValidEnumsIdeaPinProductTagVisit2                      SourcePinterestValidEnums = "IDEA_PIN_PRODUCT_TAG_VISIT_2"
-	SourcePinterestValidEnumsImpression1                                  SourcePinterestValidEnums = "IMPRESSION_1"
-	SourcePinterestValidEnumsImpression1Gross                             SourcePinterestValidEnums = "IMPRESSION_1_GROSS"
-	SourcePinterestValidEnumsImpression2                                  SourcePinterestValidEnums = "IMPRESSION_2"
-	SourcePinterestValidEnumsInappCheckoutCostPerAction                   SourcePinterestValidEnums = "INAPP_CHECKOUT_COST_PER_ACTION"
-	SourcePinterestValidEnumsOutboundClick1                               SourcePinterestValidEnums = "OUTBOUND_CLICK_1"
-	SourcePinterestValidEnumsOutboundClick2                               SourcePinterestValidEnums = "OUTBOUND_CLICK_2"
-	SourcePinterestValidEnumsPageVisitCostPerAction                       SourcePinterestValidEnums = "PAGE_VISIT_COST_PER_ACTION"
-	SourcePinterestValidEnumsPageVisitRoas                                SourcePinterestValidEnums = "PAGE_VISIT_ROAS"
-	SourcePinterestValidEnumsPaidImpression                               SourcePinterestValidEnums = "PAID_IMPRESSION"
-	SourcePinterestValidEnumsPinID                                        SourcePinterestValidEnums = "PIN_ID"
-	SourcePinterestValidEnumsPinPromotionID                               SourcePinterestValidEnums = "PIN_PROMOTION_ID"
-	SourcePinterestValidEnumsRepin1                                       SourcePinterestValidEnums = "REPIN_1"
-	SourcePinterestValidEnumsRepin2                                       SourcePinterestValidEnums = "REPIN_2"
-	SourcePinterestValidEnumsRepinRate                                    SourcePinterestValidEnums = "REPIN_RATE"
-	SourcePinterestValidEnumsSpendInDollar                                SourcePinterestValidEnums = "SPEND_IN_DOLLAR"
-	SourcePinterestValidEnumsSpendInMicroDollar                           SourcePinterestValidEnums = "SPEND_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalCheckout                                SourcePinterestValidEnums = "TOTAL_CHECKOUT"
-	SourcePinterestValidEnumsTotalCheckoutValueInMicroDollar              SourcePinterestValidEnums = "TOTAL_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalClickthrough                            SourcePinterestValidEnums = "TOTAL_CLICKTHROUGH"
-	SourcePinterestValidEnumsTotalClickAddToCart                          SourcePinterestValidEnums = "TOTAL_CLICK_ADD_TO_CART"
-	SourcePinterestValidEnumsTotalClickCheckout                           SourcePinterestValidEnums = "TOTAL_CLICK_CHECKOUT"
-	SourcePinterestValidEnumsTotalClickCheckoutValueInMicroDollar         SourcePinterestValidEnums = "TOTAL_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalClickLead                               SourcePinterestValidEnums = "TOTAL_CLICK_LEAD"
-	SourcePinterestValidEnumsTotalClickSignup                             SourcePinterestValidEnums = "TOTAL_CLICK_SIGNUP"
-	SourcePinterestValidEnumsTotalClickSignupValueInMicroDollar           SourcePinterestValidEnums = "TOTAL_CLICK_SIGNUP_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalConversions                             SourcePinterestValidEnums = "TOTAL_CONVERSIONS"
-	SourcePinterestValidEnumsTotalCustom                                  SourcePinterestValidEnums = "TOTAL_CUSTOM"
-	SourcePinterestValidEnumsTotalEngagement                              SourcePinterestValidEnums = "TOTAL_ENGAGEMENT"
-	SourcePinterestValidEnumsTotalEngagementCheckout                      SourcePinterestValidEnums = "TOTAL_ENGAGEMENT_CHECKOUT"
-	SourcePinterestValidEnumsTotalEngagementCheckoutValueInMicroDollar    SourcePinterestValidEnums = "TOTAL_ENGAGEMENT_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalEngagementLead                          SourcePinterestValidEnums = "TOTAL_ENGAGEMENT_LEAD"
-	SourcePinterestValidEnumsTotalEngagementSignup                        SourcePinterestValidEnums = "TOTAL_ENGAGEMENT_SIGNUP"
-	SourcePinterestValidEnumsTotalEngagementSignupValueInMicroDollar      SourcePinterestValidEnums = "TOTAL_ENGAGEMENT_SIGNUP_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalIdeaPinProductTagVisit                  SourcePinterestValidEnums = "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT"
-	SourcePinterestValidEnumsTotalImpressionFrequency                     SourcePinterestValidEnums = "TOTAL_IMPRESSION_FREQUENCY"
-	SourcePinterestValidEnumsTotalImpressionUser                          SourcePinterestValidEnums = "TOTAL_IMPRESSION_USER"
-	SourcePinterestValidEnumsTotalLead                                    SourcePinterestValidEnums = "TOTAL_LEAD"
-	SourcePinterestValidEnumsTotalOfflineCheckout                         SourcePinterestValidEnums = "TOTAL_OFFLINE_CHECKOUT"
-	SourcePinterestValidEnumsTotalPageVisit                               SourcePinterestValidEnums = "TOTAL_PAGE_VISIT"
-	SourcePinterestValidEnumsTotalRepinRate                               SourcePinterestValidEnums = "TOTAL_REPIN_RATE"
-	SourcePinterestValidEnumsTotalSignup                                  SourcePinterestValidEnums = "TOTAL_SIGNUP"
-	SourcePinterestValidEnumsTotalSignupValueInMicroDollar                SourcePinterestValidEnums = "TOTAL_SIGNUP_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalVideo3SecViews                          SourcePinterestValidEnums = "TOTAL_VIDEO_3SEC_VIEWS"
-	SourcePinterestValidEnumsTotalVideoAvgWatchtimeInSecond               SourcePinterestValidEnums = "TOTAL_VIDEO_AVG_WATCHTIME_IN_SECOND"
-	SourcePinterestValidEnumsTotalVideoMrcViews                           SourcePinterestValidEnums = "TOTAL_VIDEO_MRC_VIEWS"
-	SourcePinterestValidEnumsTotalVideoP0Combined                         SourcePinterestValidEnums = "TOTAL_VIDEO_P0_COMBINED"
-	SourcePinterestValidEnumsTotalVideoP100Complete                       SourcePinterestValidEnums = "TOTAL_VIDEO_P100_COMPLETE"
-	SourcePinterestValidEnumsTotalVideoP25Combined                        SourcePinterestValidEnums = "TOTAL_VIDEO_P25_COMBINED"
-	SourcePinterestValidEnumsTotalVideoP50Combined                        SourcePinterestValidEnums = "TOTAL_VIDEO_P50_COMBINED"
-	SourcePinterestValidEnumsTotalVideoP75Combined                        SourcePinterestValidEnums = "TOTAL_VIDEO_P75_COMBINED"
-	SourcePinterestValidEnumsTotalVideoP95Combined                        SourcePinterestValidEnums = "TOTAL_VIDEO_P95_COMBINED"
-	SourcePinterestValidEnumsTotalViewAddToCart                           SourcePinterestValidEnums = "TOTAL_VIEW_ADD_TO_CART"
-	SourcePinterestValidEnumsTotalViewCheckout                            SourcePinterestValidEnums = "TOTAL_VIEW_CHECKOUT"
-	SourcePinterestValidEnumsTotalViewCheckoutValueInMicroDollar          SourcePinterestValidEnums = "TOTAL_VIEW_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalViewLead                                SourcePinterestValidEnums = "TOTAL_VIEW_LEAD"
-	SourcePinterestValidEnumsTotalViewSignup                              SourcePinterestValidEnums = "TOTAL_VIEW_SIGNUP"
-	SourcePinterestValidEnumsTotalViewSignupValueInMicroDollar            SourcePinterestValidEnums = "TOTAL_VIEW_SIGNUP_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalWebCheckout                             SourcePinterestValidEnums = "TOTAL_WEB_CHECKOUT"
-	SourcePinterestValidEnumsTotalWebCheckoutValueInMicroDollar           SourcePinterestValidEnums = "TOTAL_WEB_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalWebClickCheckout                        SourcePinterestValidEnums = "TOTAL_WEB_CLICK_CHECKOUT"
-	SourcePinterestValidEnumsTotalWebClickCheckoutValueInMicroDollar      SourcePinterestValidEnums = "TOTAL_WEB_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalWebEngagementCheckout                   SourcePinterestValidEnums = "TOTAL_WEB_ENGAGEMENT_CHECKOUT"
-	SourcePinterestValidEnumsTotalWebEngagementCheckoutValueInMicroDollar SourcePinterestValidEnums = "TOTAL_WEB_ENGAGEMENT_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsTotalWebSessions                             SourcePinterestValidEnums = "TOTAL_WEB_SESSIONS"
-	SourcePinterestValidEnumsTotalWebViewCheckout                         SourcePinterestValidEnums = "TOTAL_WEB_VIEW_CHECKOUT"
-	SourcePinterestValidEnumsTotalWebViewCheckoutValueInMicroDollar       SourcePinterestValidEnums = "TOTAL_WEB_VIEW_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
-	SourcePinterestValidEnumsVideo3SecViews2                              SourcePinterestValidEnums = "VIDEO_3SEC_VIEWS_2"
-	SourcePinterestValidEnumsVideoLength                                  SourcePinterestValidEnums = "VIDEO_LENGTH"
-	SourcePinterestValidEnumsVideoMrcViews2                               SourcePinterestValidEnums = "VIDEO_MRC_VIEWS_2"
-	SourcePinterestValidEnumsVideoP0Combined2                             SourcePinterestValidEnums = "VIDEO_P0_COMBINED_2"
-	SourcePinterestValidEnumsVideoP100Complete2                           SourcePinterestValidEnums = "VIDEO_P100_COMPLETE_2"
-	SourcePinterestValidEnumsVideoP25Combined2                            SourcePinterestValidEnums = "VIDEO_P25_COMBINED_2"
-	SourcePinterestValidEnumsVideoP50Combined2                            SourcePinterestValidEnums = "VIDEO_P50_COMBINED_2"
-	SourcePinterestValidEnumsVideoP75Combined2                            SourcePinterestValidEnums = "VIDEO_P75_COMBINED_2"
-	SourcePinterestValidEnumsVideoP95Combined2                            SourcePinterestValidEnums = "VIDEO_P95_COMBINED_2"
-	SourcePinterestValidEnumsWebCheckoutCostPerAction                     SourcePinterestValidEnums = "WEB_CHECKOUT_COST_PER_ACTION"
-	SourcePinterestValidEnumsWebCheckoutRoas                              SourcePinterestValidEnums = "WEB_CHECKOUT_ROAS"
-	SourcePinterestValidEnumsWebSessions1                                 SourcePinterestValidEnums = "WEB_SESSIONS_1"
-	SourcePinterestValidEnumsWebSessions2                                 SourcePinterestValidEnums = "WEB_SESSIONS_2"
+	SourcePinterestValidEnumsIndividual SourcePinterestValidEnums = "INDIVIDUAL"
+	SourcePinterestValidEnumsHousehold  SourcePinterestValidEnums = "HOUSEHOLD"
 )
 
 func (e SourcePinterestValidEnums) ToPointer() *SourcePinterestValidEnums {
 	return &e
 }
 func (e *SourcePinterestValidEnums) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INDIVIDUAL":
+		fallthrough
+	case "HOUSEHOLD":
+		*e = SourcePinterestValidEnums(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePinterestValidEnums: %v", v)
+	}
+}
+
+// ClickWindowDays - Number of days to use as the conversion attribution window for a pin click action.
+type ClickWindowDays int64
+
+const (
+	ClickWindowDaysZero     ClickWindowDays = 0
+	ClickWindowDaysOne      ClickWindowDays = 1
+	ClickWindowDaysSeven    ClickWindowDays = 7
+	ClickWindowDaysFourteen ClickWindowDays = 14
+	ClickWindowDaysThirty   ClickWindowDays = 30
+	ClickWindowDaysSixty    ClickWindowDays = 60
+)
+
+func (e ClickWindowDays) ToPointer() *ClickWindowDays {
+	return &e
+}
+func (e *ClickWindowDays) UnmarshalJSON(data []byte) error {
+	var v int64
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case 0:
+		fallthrough
+	case 1:
+		fallthrough
+	case 7:
+		fallthrough
+	case 14:
+		fallthrough
+	case 30:
+		fallthrough
+	case 60:
+		*e = ClickWindowDays(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ClickWindowDays: %v", v)
+	}
+}
+
+// SourcePinterestSchemasValidEnums - An enumeration.
+type SourcePinterestSchemasValidEnums string
+
+const (
+	SourcePinterestSchemasValidEnumsAdvertiserID                                 SourcePinterestSchemasValidEnums = "ADVERTISER_ID"
+	SourcePinterestSchemasValidEnumsAdAccountID                                  SourcePinterestSchemasValidEnums = "AD_ACCOUNT_ID"
+	SourcePinterestSchemasValidEnumsAdGroupEntityStatus                          SourcePinterestSchemasValidEnums = "AD_GROUP_ENTITY_STATUS"
+	SourcePinterestSchemasValidEnumsAdGroupID                                    SourcePinterestSchemasValidEnums = "AD_GROUP_ID"
+	SourcePinterestSchemasValidEnumsAdID                                         SourcePinterestSchemasValidEnums = "AD_ID"
+	SourcePinterestSchemasValidEnumsCampaignDailySpendCap                        SourcePinterestSchemasValidEnums = "CAMPAIGN_DAILY_SPEND_CAP"
+	SourcePinterestSchemasValidEnumsCampaignEntityStatus                         SourcePinterestSchemasValidEnums = "CAMPAIGN_ENTITY_STATUS"
+	SourcePinterestSchemasValidEnumsCampaignID                                   SourcePinterestSchemasValidEnums = "CAMPAIGN_ID"
+	SourcePinterestSchemasValidEnumsCampaignLifetimeSpendCap                     SourcePinterestSchemasValidEnums = "CAMPAIGN_LIFETIME_SPEND_CAP"
+	SourcePinterestSchemasValidEnumsCampaignName                                 SourcePinterestSchemasValidEnums = "CAMPAIGN_NAME"
+	SourcePinterestSchemasValidEnumsCheckoutRoas                                 SourcePinterestSchemasValidEnums = "CHECKOUT_ROAS"
+	SourcePinterestSchemasValidEnumsClickthrough1                                SourcePinterestSchemasValidEnums = "CLICKTHROUGH_1"
+	SourcePinterestSchemasValidEnumsClickthrough1Gross                           SourcePinterestSchemasValidEnums = "CLICKTHROUGH_1_GROSS"
+	SourcePinterestSchemasValidEnumsClickthrough2                                SourcePinterestSchemasValidEnums = "CLICKTHROUGH_2"
+	SourcePinterestSchemasValidEnumsCpcInMicroDollar                             SourcePinterestSchemasValidEnums = "CPC_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsCpmInDollar                                  SourcePinterestSchemasValidEnums = "CPM_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsCpmInMicroDollar                             SourcePinterestSchemasValidEnums = "CPM_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsCtr                                          SourcePinterestSchemasValidEnums = "CTR"
+	SourcePinterestSchemasValidEnumsCtr2                                         SourcePinterestSchemasValidEnums = "CTR_2"
+	SourcePinterestSchemasValidEnumsEcpcvInDollar                                SourcePinterestSchemasValidEnums = "ECPCV_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpcvP95InDollar                             SourcePinterestSchemasValidEnums = "ECPCV_P95_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpcInDollar                                 SourcePinterestSchemasValidEnums = "ECPC_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpcInMicroDollar                            SourcePinterestSchemasValidEnums = "ECPC_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpeInDollar                                 SourcePinterestSchemasValidEnums = "ECPE_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpmInMicroDollar                            SourcePinterestSchemasValidEnums = "ECPM_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsEcpvInDollar                                 SourcePinterestSchemasValidEnums = "ECPV_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsEctr                                         SourcePinterestSchemasValidEnums = "ECTR"
+	SourcePinterestSchemasValidEnumsEengagementRate                              SourcePinterestSchemasValidEnums = "EENGAGEMENT_RATE"
+	SourcePinterestSchemasValidEnumsEngagement1                                  SourcePinterestSchemasValidEnums = "ENGAGEMENT_1"
+	SourcePinterestSchemasValidEnumsEngagement2                                  SourcePinterestSchemasValidEnums = "ENGAGEMENT_2"
+	SourcePinterestSchemasValidEnumsEngagementRate                               SourcePinterestSchemasValidEnums = "ENGAGEMENT_RATE"
+	SourcePinterestSchemasValidEnumsIdeaPinProductTagVisit1                      SourcePinterestSchemasValidEnums = "IDEA_PIN_PRODUCT_TAG_VISIT_1"
+	SourcePinterestSchemasValidEnumsIdeaPinProductTagVisit2                      SourcePinterestSchemasValidEnums = "IDEA_PIN_PRODUCT_TAG_VISIT_2"
+	SourcePinterestSchemasValidEnumsImpression1                                  SourcePinterestSchemasValidEnums = "IMPRESSION_1"
+	SourcePinterestSchemasValidEnumsImpression1Gross                             SourcePinterestSchemasValidEnums = "IMPRESSION_1_GROSS"
+	SourcePinterestSchemasValidEnumsImpression2                                  SourcePinterestSchemasValidEnums = "IMPRESSION_2"
+	SourcePinterestSchemasValidEnumsInappCheckoutCostPerAction                   SourcePinterestSchemasValidEnums = "INAPP_CHECKOUT_COST_PER_ACTION"
+	SourcePinterestSchemasValidEnumsOutboundClick1                               SourcePinterestSchemasValidEnums = "OUTBOUND_CLICK_1"
+	SourcePinterestSchemasValidEnumsOutboundClick2                               SourcePinterestSchemasValidEnums = "OUTBOUND_CLICK_2"
+	SourcePinterestSchemasValidEnumsPageVisitCostPerAction                       SourcePinterestSchemasValidEnums = "PAGE_VISIT_COST_PER_ACTION"
+	SourcePinterestSchemasValidEnumsPageVisitRoas                                SourcePinterestSchemasValidEnums = "PAGE_VISIT_ROAS"
+	SourcePinterestSchemasValidEnumsPaidImpression                               SourcePinterestSchemasValidEnums = "PAID_IMPRESSION"
+	SourcePinterestSchemasValidEnumsPinID                                        SourcePinterestSchemasValidEnums = "PIN_ID"
+	SourcePinterestSchemasValidEnumsPinPromotionID                               SourcePinterestSchemasValidEnums = "PIN_PROMOTION_ID"
+	SourcePinterestSchemasValidEnumsRepin1                                       SourcePinterestSchemasValidEnums = "REPIN_1"
+	SourcePinterestSchemasValidEnumsRepin2                                       SourcePinterestSchemasValidEnums = "REPIN_2"
+	SourcePinterestSchemasValidEnumsRepinRate                                    SourcePinterestSchemasValidEnums = "REPIN_RATE"
+	SourcePinterestSchemasValidEnumsSpendInDollar                                SourcePinterestSchemasValidEnums = "SPEND_IN_DOLLAR"
+	SourcePinterestSchemasValidEnumsSpendInMicroDollar                           SourcePinterestSchemasValidEnums = "SPEND_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalCheckout                                SourcePinterestSchemasValidEnums = "TOTAL_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalCheckoutValueInMicroDollar              SourcePinterestSchemasValidEnums = "TOTAL_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalClickthrough                            SourcePinterestSchemasValidEnums = "TOTAL_CLICKTHROUGH"
+	SourcePinterestSchemasValidEnumsTotalClickAddToCart                          SourcePinterestSchemasValidEnums = "TOTAL_CLICK_ADD_TO_CART"
+	SourcePinterestSchemasValidEnumsTotalClickCheckout                           SourcePinterestSchemasValidEnums = "TOTAL_CLICK_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalClickCheckoutValueInMicroDollar         SourcePinterestSchemasValidEnums = "TOTAL_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalClickLead                               SourcePinterestSchemasValidEnums = "TOTAL_CLICK_LEAD"
+	SourcePinterestSchemasValidEnumsTotalClickSignup                             SourcePinterestSchemasValidEnums = "TOTAL_CLICK_SIGNUP"
+	SourcePinterestSchemasValidEnumsTotalClickSignupValueInMicroDollar           SourcePinterestSchemasValidEnums = "TOTAL_CLICK_SIGNUP_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalConversions                             SourcePinterestSchemasValidEnums = "TOTAL_CONVERSIONS"
+	SourcePinterestSchemasValidEnumsTotalCustom                                  SourcePinterestSchemasValidEnums = "TOTAL_CUSTOM"
+	SourcePinterestSchemasValidEnumsTotalEngagement                              SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT"
+	SourcePinterestSchemasValidEnumsTotalEngagementCheckout                      SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalEngagementCheckoutValueInMicroDollar    SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalEngagementLead                          SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT_LEAD"
+	SourcePinterestSchemasValidEnumsTotalEngagementSignup                        SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT_SIGNUP"
+	SourcePinterestSchemasValidEnumsTotalEngagementSignupValueInMicroDollar      SourcePinterestSchemasValidEnums = "TOTAL_ENGAGEMENT_SIGNUP_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalIdeaPinProductTagVisit                  SourcePinterestSchemasValidEnums = "TOTAL_IDEA_PIN_PRODUCT_TAG_VISIT"
+	SourcePinterestSchemasValidEnumsTotalImpressionFrequency                     SourcePinterestSchemasValidEnums = "TOTAL_IMPRESSION_FREQUENCY"
+	SourcePinterestSchemasValidEnumsTotalImpressionUser                          SourcePinterestSchemasValidEnums = "TOTAL_IMPRESSION_USER"
+	SourcePinterestSchemasValidEnumsTotalLead                                    SourcePinterestSchemasValidEnums = "TOTAL_LEAD"
+	SourcePinterestSchemasValidEnumsTotalOfflineCheckout                         SourcePinterestSchemasValidEnums = "TOTAL_OFFLINE_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalPageVisit                               SourcePinterestSchemasValidEnums = "TOTAL_PAGE_VISIT"
+	SourcePinterestSchemasValidEnumsTotalRepinRate                               SourcePinterestSchemasValidEnums = "TOTAL_REPIN_RATE"
+	SourcePinterestSchemasValidEnumsTotalSignup                                  SourcePinterestSchemasValidEnums = "TOTAL_SIGNUP"
+	SourcePinterestSchemasValidEnumsTotalSignupValueInMicroDollar                SourcePinterestSchemasValidEnums = "TOTAL_SIGNUP_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalVideo3SecViews                          SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_3SEC_VIEWS"
+	SourcePinterestSchemasValidEnumsTotalVideoAvgWatchtimeInSecond               SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_AVG_WATCHTIME_IN_SECOND"
+	SourcePinterestSchemasValidEnumsTotalVideoMrcViews                           SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_MRC_VIEWS"
+	SourcePinterestSchemasValidEnumsTotalVideoP0Combined                         SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P0_COMBINED"
+	SourcePinterestSchemasValidEnumsTotalVideoP100Complete                       SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P100_COMPLETE"
+	SourcePinterestSchemasValidEnumsTotalVideoP25Combined                        SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P25_COMBINED"
+	SourcePinterestSchemasValidEnumsTotalVideoP50Combined                        SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P50_COMBINED"
+	SourcePinterestSchemasValidEnumsTotalVideoP75Combined                        SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P75_COMBINED"
+	SourcePinterestSchemasValidEnumsTotalVideoP95Combined                        SourcePinterestSchemasValidEnums = "TOTAL_VIDEO_P95_COMBINED"
+	SourcePinterestSchemasValidEnumsTotalViewAddToCart                           SourcePinterestSchemasValidEnums = "TOTAL_VIEW_ADD_TO_CART"
+	SourcePinterestSchemasValidEnumsTotalViewCheckout                            SourcePinterestSchemasValidEnums = "TOTAL_VIEW_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalViewCheckoutValueInMicroDollar          SourcePinterestSchemasValidEnums = "TOTAL_VIEW_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalViewLead                                SourcePinterestSchemasValidEnums = "TOTAL_VIEW_LEAD"
+	SourcePinterestSchemasValidEnumsTotalViewSignup                              SourcePinterestSchemasValidEnums = "TOTAL_VIEW_SIGNUP"
+	SourcePinterestSchemasValidEnumsTotalViewSignupValueInMicroDollar            SourcePinterestSchemasValidEnums = "TOTAL_VIEW_SIGNUP_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalWebCheckout                             SourcePinterestSchemasValidEnums = "TOTAL_WEB_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalWebCheckoutValueInMicroDollar           SourcePinterestSchemasValidEnums = "TOTAL_WEB_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalWebClickCheckout                        SourcePinterestSchemasValidEnums = "TOTAL_WEB_CLICK_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalWebClickCheckoutValueInMicroDollar      SourcePinterestSchemasValidEnums = "TOTAL_WEB_CLICK_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalWebEngagementCheckout                   SourcePinterestSchemasValidEnums = "TOTAL_WEB_ENGAGEMENT_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalWebEngagementCheckoutValueInMicroDollar SourcePinterestSchemasValidEnums = "TOTAL_WEB_ENGAGEMENT_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsTotalWebSessions                             SourcePinterestSchemasValidEnums = "TOTAL_WEB_SESSIONS"
+	SourcePinterestSchemasValidEnumsTotalWebViewCheckout                         SourcePinterestSchemasValidEnums = "TOTAL_WEB_VIEW_CHECKOUT"
+	SourcePinterestSchemasValidEnumsTotalWebViewCheckoutValueInMicroDollar       SourcePinterestSchemasValidEnums = "TOTAL_WEB_VIEW_CHECKOUT_VALUE_IN_MICRO_DOLLAR"
+	SourcePinterestSchemasValidEnumsVideo3SecViews2                              SourcePinterestSchemasValidEnums = "VIDEO_3SEC_VIEWS_2"
+	SourcePinterestSchemasValidEnumsVideoLength                                  SourcePinterestSchemasValidEnums = "VIDEO_LENGTH"
+	SourcePinterestSchemasValidEnumsVideoMrcViews2                               SourcePinterestSchemasValidEnums = "VIDEO_MRC_VIEWS_2"
+	SourcePinterestSchemasValidEnumsVideoP0Combined2                             SourcePinterestSchemasValidEnums = "VIDEO_P0_COMBINED_2"
+	SourcePinterestSchemasValidEnumsVideoP100Complete2                           SourcePinterestSchemasValidEnums = "VIDEO_P100_COMPLETE_2"
+	SourcePinterestSchemasValidEnumsVideoP25Combined2                            SourcePinterestSchemasValidEnums = "VIDEO_P25_COMBINED_2"
+	SourcePinterestSchemasValidEnumsVideoP50Combined2                            SourcePinterestSchemasValidEnums = "VIDEO_P50_COMBINED_2"
+	SourcePinterestSchemasValidEnumsVideoP75Combined2                            SourcePinterestSchemasValidEnums = "VIDEO_P75_COMBINED_2"
+	SourcePinterestSchemasValidEnumsVideoP95Combined2                            SourcePinterestSchemasValidEnums = "VIDEO_P95_COMBINED_2"
+	SourcePinterestSchemasValidEnumsWebCheckoutCostPerAction                     SourcePinterestSchemasValidEnums = "WEB_CHECKOUT_COST_PER_ACTION"
+	SourcePinterestSchemasValidEnumsWebCheckoutRoas                              SourcePinterestSchemasValidEnums = "WEB_CHECKOUT_ROAS"
+	SourcePinterestSchemasValidEnumsWebSessions1                                 SourcePinterestSchemasValidEnums = "WEB_SESSIONS_1"
+	SourcePinterestSchemasValidEnumsWebSessions2                                 SourcePinterestSchemasValidEnums = "WEB_SESSIONS_2"
+)
+
+func (e SourcePinterestSchemasValidEnums) ToPointer() *SourcePinterestSchemasValidEnums {
+	return &e
+}
+func (e *SourcePinterestSchemasValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -550,49 +494,37 @@ func (e *SourcePinterestValidEnums) UnmarshalJSON(data []byte) error {
 	case "WEB_SESSIONS_1":
 		fallthrough
 	case "WEB_SESSIONS_2":
-		*e = SourcePinterestValidEnums(v)
+		*e = SourcePinterestSchemasValidEnums(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestValidEnums: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestSchemasValidEnums: %v", v)
 	}
 }
 
-// ClickWindowDays - Number of days to use as the conversion attribution window for a pin click action.
-type ClickWindowDays int64
+// ConversionReportTime - The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..
+type ConversionReportTime string
 
 const (
-	ClickWindowDaysZero     ClickWindowDays = 0
-	ClickWindowDaysOne      ClickWindowDays = 1
-	ClickWindowDaysSeven    ClickWindowDays = 7
-	ClickWindowDaysFourteen ClickWindowDays = 14
-	ClickWindowDaysThirty   ClickWindowDays = 30
-	ClickWindowDaysSixty    ClickWindowDays = 60
+	ConversionReportTimeTimeOfAdAction   ConversionReportTime = "TIME_OF_AD_ACTION"
+	ConversionReportTimeTimeOfConversion ConversionReportTime = "TIME_OF_CONVERSION"
 )
 
-func (e ClickWindowDays) ToPointer() *ClickWindowDays {
+func (e ConversionReportTime) ToPointer() *ConversionReportTime {
 	return &e
 }
-func (e *ClickWindowDays) UnmarshalJSON(data []byte) error {
-	var v int64
+func (e *ConversionReportTime) UnmarshalJSON(data []byte) error {
+	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case 0:
+	case "TIME_OF_AD_ACTION":
 		fallthrough
-	case 1:
-		fallthrough
-	case 7:
-		fallthrough
-	case 14:
-		fallthrough
-	case 30:
-		fallthrough
-	case 60:
-		*e = ClickWindowDays(v)
+	case "TIME_OF_CONVERSION":
+		*e = ConversionReportTime(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ClickWindowDays: %v", v)
+		return fmt.Errorf("invalid value for ConversionReportTime: %v", v)
 	}
 }
 
@@ -635,6 +567,99 @@ func (e *EngagementWindowDays) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// Granularity - Chosen granularity for API
+type Granularity string
+
+const (
+	GranularityTotal Granularity = "TOTAL"
+	GranularityDay   Granularity = "DAY"
+	GranularityHour  Granularity = "HOUR"
+	GranularityWeek  Granularity = "WEEK"
+	GranularityMonth Granularity = "MONTH"
+)
+
+func (e Granularity) ToPointer() *Granularity {
+	return &e
+}
+func (e *Granularity) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "TOTAL":
+		fallthrough
+	case "DAY":
+		fallthrough
+	case "HOUR":
+		fallthrough
+	case "WEEK":
+		fallthrough
+	case "MONTH":
+		*e = Granularity(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Granularity: %v", v)
+	}
+}
+
+// SourcePinterestLevel - Chosen level for API
+type SourcePinterestLevel string
+
+const (
+	SourcePinterestLevelAdvertiser            SourcePinterestLevel = "ADVERTISER"
+	SourcePinterestLevelAdvertiserTargeting   SourcePinterestLevel = "ADVERTISER_TARGETING"
+	SourcePinterestLevelCampaign              SourcePinterestLevel = "CAMPAIGN"
+	SourcePinterestLevelCampaignTargeting     SourcePinterestLevel = "CAMPAIGN_TARGETING"
+	SourcePinterestLevelAdGroup               SourcePinterestLevel = "AD_GROUP"
+	SourcePinterestLevelAdGroupTargeting      SourcePinterestLevel = "AD_GROUP_TARGETING"
+	SourcePinterestLevelPinPromotion          SourcePinterestLevel = "PIN_PROMOTION"
+	SourcePinterestLevelPinPromotionTargeting SourcePinterestLevel = "PIN_PROMOTION_TARGETING"
+	SourcePinterestLevelKeyword               SourcePinterestLevel = "KEYWORD"
+	SourcePinterestLevelProductGroup          SourcePinterestLevel = "PRODUCT_GROUP"
+	SourcePinterestLevelProductGroupTargeting SourcePinterestLevel = "PRODUCT_GROUP_TARGETING"
+	SourcePinterestLevelProductItem           SourcePinterestLevel = "PRODUCT_ITEM"
+)
+
+func (e SourcePinterestLevel) ToPointer() *SourcePinterestLevel {
+	return &e
+}
+func (e *SourcePinterestLevel) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ADVERTISER":
+		fallthrough
+	case "ADVERTISER_TARGETING":
+		fallthrough
+	case "CAMPAIGN":
+		fallthrough
+	case "CAMPAIGN_TARGETING":
+		fallthrough
+	case "AD_GROUP":
+		fallthrough
+	case "AD_GROUP_TARGETING":
+		fallthrough
+	case "PIN_PROMOTION":
+		fallthrough
+	case "PIN_PROMOTION_TARGETING":
+		fallthrough
+	case "KEYWORD":
+		fallthrough
+	case "PRODUCT_GROUP":
+		fallthrough
+	case "PRODUCT_GROUP_TARGETING":
+		fallthrough
+	case "PRODUCT_ITEM":
+		*e = SourcePinterestLevel(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePinterestLevel: %v", v)
+	}
+}
+
 // ViewWindowDays - Number of days to use as the conversion attribution window for a view action.
 type ViewWindowDays int64
 
@@ -674,82 +699,28 @@ func (e *ViewWindowDays) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ConversionReportTime - The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..
-type ConversionReportTime string
-
-const (
-	ConversionReportTimeTimeOfAdAction   ConversionReportTime = "TIME_OF_AD_ACTION"
-	ConversionReportTimeTimeOfConversion ConversionReportTime = "TIME_OF_CONVERSION"
-)
-
-func (e ConversionReportTime) ToPointer() *ConversionReportTime {
-	return &e
-}
-func (e *ConversionReportTime) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TIME_OF_AD_ACTION":
-		fallthrough
-	case "TIME_OF_CONVERSION":
-		*e = ConversionReportTime(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConversionReportTime: %v", v)
-	}
-}
-
-// SourcePinterestSchemasValidEnums - An enumeration.
-type SourcePinterestSchemasValidEnums string
-
-const (
-	SourcePinterestSchemasValidEnumsIndividual SourcePinterestSchemasValidEnums = "INDIVIDUAL"
-	SourcePinterestSchemasValidEnumsHousehold  SourcePinterestSchemasValidEnums = "HOUSEHOLD"
-)
-
-func (e SourcePinterestSchemasValidEnums) ToPointer() *SourcePinterestSchemasValidEnums {
-	return &e
-}
-func (e *SourcePinterestSchemasValidEnums) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "INDIVIDUAL":
-		fallthrough
-	case "HOUSEHOLD":
-		*e = SourcePinterestSchemasValidEnums(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePinterestSchemasValidEnums: %v", v)
-	}
-}
-
 // ReportConfig - Config for custom report
 type ReportConfig struct {
-	// The name value of report
-	Name string `json:"name"`
-	// Chosen level for API
-	Level *SourcePinterestLevel `default:"ADVERTISER" json:"level"`
-	// Chosen granularity for API
-	Granularity *Granularity `default:"TOTAL" json:"granularity"`
-	// A list of chosen columns
-	Columns []SourcePinterestValidEnums `json:"columns,omitempty"`
+	// List of types of attribution for the conversion report
+	AttributionTypes []SourcePinterestValidEnums `json:"attribution_types,omitempty"`
 	// Number of days to use as the conversion attribution window for a pin click action.
 	ClickWindowDays *ClickWindowDays `default:"30" json:"click_window_days"`
-	// Number of days to use as the conversion attribution window for an engagement action.
-	EngagementWindowDays *EngagementWindowDays `default:"30" json:"engagement_window_days"`
-	// Number of days to use as the conversion attribution window for a view action.
-	ViewWindowDays *ViewWindowDays `default:"30" json:"view_window_days"`
+	// A list of chosen columns
+	Columns []SourcePinterestSchemasValidEnums `json:"columns,omitempty"`
 	// The date by which the conversion metrics returned from this endpoint will be reported. There are two dates associated with a conversion event: the date that the user interacted with the ad, and the date that the user completed a conversion event..
 	ConversionReportTime *ConversionReportTime `default:"TIME_OF_AD_ACTION" json:"conversion_report_time"`
-	// List of types of attribution for the conversion report
-	AttributionTypes []SourcePinterestSchemasValidEnums `json:"attribution_types,omitempty"`
+	// Number of days to use as the conversion attribution window for an engagement action.
+	EngagementWindowDays *EngagementWindowDays `default:"30" json:"engagement_window_days"`
+	// Chosen granularity for API
+	Granularity *Granularity `default:"TOTAL" json:"granularity"`
+	// Chosen level for API
+	Level *SourcePinterestLevel `default:"ADVERTISER" json:"level"`
+	// The name value of report
+	Name string `json:"name"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by report api (913 days from today).
 	StartDate *types.Date `json:"start_date,omitempty"`
+	// Number of days to use as the conversion attribution window for a view action.
+	ViewWindowDays *ViewWindowDays `default:"30" json:"view_window_days"`
 }
 
 func (r ReportConfig) MarshalJSON() ([]byte, error) {
@@ -763,32 +734,11 @@ func (r *ReportConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ReportConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *ReportConfig) GetLevel() *SourcePinterestLevel {
+func (o *ReportConfig) GetAttributionTypes() []SourcePinterestValidEnums {
 	if o == nil {
 		return nil
 	}
-	return o.Level
-}
-
-func (o *ReportConfig) GetGranularity() *Granularity {
-	if o == nil {
-		return nil
-	}
-	return o.Granularity
-}
-
-func (o *ReportConfig) GetColumns() []SourcePinterestValidEnums {
-	if o == nil {
-		return nil
-	}
-	return o.Columns
+	return o.AttributionTypes
 }
 
 func (o *ReportConfig) GetClickWindowDays() *ClickWindowDays {
@@ -798,18 +748,11 @@ func (o *ReportConfig) GetClickWindowDays() *ClickWindowDays {
 	return o.ClickWindowDays
 }
 
-func (o *ReportConfig) GetEngagementWindowDays() *EngagementWindowDays {
+func (o *ReportConfig) GetColumns() []SourcePinterestSchemasValidEnums {
 	if o == nil {
 		return nil
 	}
-	return o.EngagementWindowDays
-}
-
-func (o *ReportConfig) GetViewWindowDays() *ViewWindowDays {
-	if o == nil {
-		return nil
-	}
-	return o.ViewWindowDays
+	return o.Columns
 }
 
 func (o *ReportConfig) GetConversionReportTime() *ConversionReportTime {
@@ -819,11 +762,32 @@ func (o *ReportConfig) GetConversionReportTime() *ConversionReportTime {
 	return o.ConversionReportTime
 }
 
-func (o *ReportConfig) GetAttributionTypes() []SourcePinterestSchemasValidEnums {
+func (o *ReportConfig) GetEngagementWindowDays() *EngagementWindowDays {
 	if o == nil {
 		return nil
 	}
-	return o.AttributionTypes
+	return o.EngagementWindowDays
+}
+
+func (o *ReportConfig) GetGranularity() *Granularity {
+	if o == nil {
+		return nil
+	}
+	return o.Granularity
+}
+
+func (o *ReportConfig) GetLevel() *SourcePinterestLevel {
+	if o == nil {
+		return nil
+	}
+	return o.Level
+}
+
+func (o *ReportConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *ReportConfig) GetStartDate() *types.Date {
@@ -831,6 +795,42 @@ func (o *ReportConfig) GetStartDate() *types.Date {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *ReportConfig) GetViewWindowDays() *ViewWindowDays {
+	if o == nil {
+		return nil
+	}
+	return o.ViewWindowDays
+}
+
+type Status string
+
+const (
+	StatusActive   Status = "ACTIVE"
+	StatusPaused   Status = "PAUSED"
+	StatusArchived Status = "ARCHIVED"
+)
+
+func (e Status) ToPointer() *Status {
+	return &e
+}
+func (e *Status) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ACTIVE":
+		fallthrough
+	case "PAUSED":
+		fallthrough
+	case "ARCHIVED":
+		*e = Status(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Status: %v", v)
+	}
 }
 
 type Pinterest string
@@ -857,15 +857,15 @@ func (e *Pinterest) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePinterest struct {
-	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
-	StartDate *types.Date `json:"start_date,omitempty"`
-	// For the ads, ad_groups, and campaigns streams, specifying a status will filter out records that do not match the specified ones. If a status is not specified, the source will default to records with a status of either ACTIVE or PAUSED.
-	Status      []Status `json:"status,omitempty"`
+	// The Pinterest account ID you want to fetch data for. This ID must be provided to filter the data for a specific account.
+	AccountID   *string  `json:"account_id,omitempty"`
 	Credentials *OAuth20 `json:"credentials,omitempty"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomReports []ReportConfig `json:"custom_reports,omitempty"`
-	// The Pinterest account ID you want to fetch data for. This ID must be provided to filter the data for a specific account.
-	AccountID  *string    `json:"account_id,omitempty"`
+	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
+	StartDate *types.Date `json:"start_date,omitempty"`
+	// For the ads, ad_groups, and campaigns streams, specifying a status will filter out records that do not match the specified ones. If a status is not specified, the source will default to records with a status of either ACTIVE or PAUSED.
+	Status     []Status   `json:"status,omitempty"`
 	sourceType *Pinterest `const:"pinterest" json:"sourceType,omitempty"`
 }
 
@@ -880,18 +880,11 @@ func (s *SourcePinterest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePinterest) GetStartDate() *types.Date {
+func (o *SourcePinterest) GetAccountID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StartDate
-}
-
-func (o *SourcePinterest) GetStatus() []Status {
-	if o == nil {
-		return nil
-	}
-	return o.Status
+	return o.AccountID
 }
 
 func (o *SourcePinterest) GetCredentials() *OAuth20 {
@@ -908,11 +901,18 @@ func (o *SourcePinterest) GetCustomReports() []ReportConfig {
 	return o.CustomReports
 }
 
-func (o *SourcePinterest) GetAccountID() *string {
+func (o *SourcePinterest) GetStartDate() *types.Date {
 	if o == nil {
 		return nil
 	}
-	return o.AccountID
+	return o.StartDate
+}
+
+func (o *SourcePinterest) GetStatus() []Status {
+	if o == nil {
+		return nil
+	}
+	return o.Status
 }
 
 func (o *SourcePinterest) GetSourceType() *Pinterest {

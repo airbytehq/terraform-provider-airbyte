@@ -25,22 +25,22 @@ func (r *SourceEmploymentHeroResourceModel) ToSharedSourceEmploymentHeroCreateRe
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var organizationConfigids []interface{} = []interface{}{}
-	for _, organizationConfigidsItem := range r.Configuration.OrganizationConfigids {
-		var organizationConfigidsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationConfigidsItem.ValueString()), &organizationConfigidsTmp)
-		organizationConfigids = append(organizationConfigids, organizationConfigidsTmp)
-	}
 	var employeesConfigids []interface{} = []interface{}{}
 	for _, employeesConfigidsItem := range r.Configuration.EmployeesConfigids {
 		var employeesConfigidsTmp interface{}
 		_ = json.Unmarshal([]byte(employeesConfigidsItem.ValueString()), &employeesConfigidsTmp)
 		employeesConfigids = append(employeesConfigids, employeesConfigidsTmp)
 	}
+	var organizationConfigids []interface{} = []interface{}{}
+	for _, organizationConfigidsItem := range r.Configuration.OrganizationConfigids {
+		var organizationConfigidsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationConfigidsItem.ValueString()), &organizationConfigidsTmp)
+		organizationConfigids = append(organizationConfigids, organizationConfigidsTmp)
+	}
 	configuration := shared.SourceEmploymentHero{
 		APIKey:                apiKey,
-		OrganizationConfigids: organizationConfigids,
 		EmployeesConfigids:    employeesConfigids,
+		OrganizationConfigids: organizationConfigids,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -115,22 +115,22 @@ func (r *SourceEmploymentHeroResourceModel) ToSharedSourceEmploymentHeroPutReque
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var organizationConfigids []interface{} = []interface{}{}
-	for _, organizationConfigidsItem := range r.Configuration.OrganizationConfigids {
-		var organizationConfigidsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationConfigidsItem.ValueString()), &organizationConfigidsTmp)
-		organizationConfigids = append(organizationConfigids, organizationConfigidsTmp)
-	}
 	var employeesConfigids []interface{} = []interface{}{}
 	for _, employeesConfigidsItem := range r.Configuration.EmployeesConfigids {
 		var employeesConfigidsTmp interface{}
 		_ = json.Unmarshal([]byte(employeesConfigidsItem.ValueString()), &employeesConfigidsTmp)
 		employeesConfigids = append(employeesConfigids, employeesConfigidsTmp)
 	}
+	var organizationConfigids []interface{} = []interface{}{}
+	for _, organizationConfigidsItem := range r.Configuration.OrganizationConfigids {
+		var organizationConfigidsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationConfigidsItem.ValueString()), &organizationConfigidsTmp)
+		organizationConfigids = append(organizationConfigids, organizationConfigidsTmp)
+	}
 	configuration := shared.SourceEmploymentHeroUpdate{
 		APIKey:                apiKey,
-		OrganizationConfigids: organizationConfigids,
 		EmployeesConfigids:    employeesConfigids,
+		OrganizationConfigids: organizationConfigids,
 	}
 	out := shared.SourceEmploymentHeroPutRequest{
 		Name:          name,

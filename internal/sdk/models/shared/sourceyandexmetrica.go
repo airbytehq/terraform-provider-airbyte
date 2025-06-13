@@ -37,10 +37,10 @@ type SourceYandexMetrica struct {
 	AuthToken string `json:"auth_token"`
 	// Counter ID
 	CounterID string `json:"counter_id"`
-	// Starting point for your data replication, in format of "YYYY-MM-DD".
-	StartDate types.Date `json:"start_date"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
-	EndDate    *types.Date   `json:"end_date,omitempty"`
+	EndDate *types.Date `json:"end_date,omitempty"`
+	// Starting point for your data replication, in format of "YYYY-MM-DD".
+	StartDate  types.Date    `json:"start_date"`
 	sourceType YandexMetrica `const:"yandex-metrica" json:"sourceType"`
 }
 
@@ -69,18 +69,18 @@ func (o *SourceYandexMetrica) GetCounterID() string {
 	return o.CounterID
 }
 
-func (o *SourceYandexMetrica) GetStartDate() types.Date {
-	if o == nil {
-		return types.Date{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceYandexMetrica) GetEndDate() *types.Date {
 	if o == nil {
 		return nil
 	}
 	return o.EndDate
+}
+
+func (o *SourceYandexMetrica) GetStartDate() types.Date {
+	if o == nil {
+		return types.Date{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceYandexMetrica) GetSourceType() YandexMetrica {

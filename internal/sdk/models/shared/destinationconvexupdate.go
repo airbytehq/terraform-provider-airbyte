@@ -3,17 +3,10 @@
 package shared
 
 type DestinationConvexUpdate struct {
-	// URL of the Convex deployment that is the destination
-	DeploymentURL string `json:"deployment_url"`
 	// API access key used to send data to a Convex deployment.
 	AccessKey string `json:"access_key"`
-}
-
-func (o *DestinationConvexUpdate) GetDeploymentURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.DeploymentURL
+	// URL of the Convex deployment that is the destination
+	DeploymentURL string `json:"deployment_url"`
 }
 
 func (o *DestinationConvexUpdate) GetAccessKey() string {
@@ -21,4 +14,11 @@ func (o *DestinationConvexUpdate) GetAccessKey() string {
 		return ""
 	}
 	return o.AccessKey
+}
+
+func (o *DestinationConvexUpdate) GetDeploymentURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.DeploymentURL
 }

@@ -1,7 +1,9 @@
 resource "airbyte_destination_teradata" "my_destination_teradata" {
   configuration = {
-    host            = "...my_host..."
-    jdbc_url_params = "...my_jdbc_url_params..."
+    disable_type_dedupe = true
+    drop_cascade        = false
+    host                = "...my_host..."
+    jdbc_url_params     = "...my_jdbc_url_params..."
     logmech = {
       ldap = {
         password = "...my_password..."
@@ -12,9 +14,10 @@ resource "airbyte_destination_teradata" "my_destination_teradata" {
         username = "...my_username..."
       }
     }
-    query_band = "...my_query_band..."
-    schema     = "airbyte_td"
-    ssl        = false
+    query_band      = "...my_query_band..."
+    raw_data_schema = "...my_raw_data_schema..."
+    schema          = "airbyte_td"
+    ssl             = false
     ssl_mode = {
       # ...
     }

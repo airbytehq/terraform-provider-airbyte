@@ -9,10 +9,10 @@ import (
 
 type SourceBasecampUpdate struct {
 	AccountID           float64   `json:"account_id"`
-	StartDate           time.Time `json:"start_date"`
 	ClientID            string    `json:"client_id"`
-	ClientSecret        string    `json:"client_secret"`
 	ClientRefreshToken2 string    `json:"client_refresh_token_2"`
+	ClientSecret        string    `json:"client_secret"`
+	StartDate           time.Time `json:"start_date"`
 }
 
 func (s SourceBasecampUpdate) MarshalJSON() ([]byte, error) {
@@ -33,18 +33,18 @@ func (o *SourceBasecampUpdate) GetAccountID() float64 {
 	return o.AccountID
 }
 
-func (o *SourceBasecampUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceBasecampUpdate) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
+}
+
+func (o *SourceBasecampUpdate) GetClientRefreshToken2() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientRefreshToken2
 }
 
 func (o *SourceBasecampUpdate) GetClientSecret() string {
@@ -54,9 +54,9 @@ func (o *SourceBasecampUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceBasecampUpdate) GetClientRefreshToken2() string {
+func (o *SourceBasecampUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ClientRefreshToken2
+	return o.StartDate
 }

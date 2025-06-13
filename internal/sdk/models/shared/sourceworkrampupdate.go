@@ -3,17 +3,10 @@
 package shared
 
 type SourceWorkrampUpdate struct {
-	// The API Token for Workramp
-	APIKey string `json:"api_key"`
 	// The id of the Academy
 	AcademyID string `json:"academy_id"`
-}
-
-func (o *SourceWorkrampUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
+	// The API Token for Workramp
+	APIKey string `json:"api_key"`
 }
 
 func (o *SourceWorkrampUpdate) GetAcademyID() string {
@@ -21,4 +14,11 @@ func (o *SourceWorkrampUpdate) GetAcademyID() string {
 		return ""
 	}
 	return o.AcademyID
+}
+
+func (o *SourceWorkrampUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }

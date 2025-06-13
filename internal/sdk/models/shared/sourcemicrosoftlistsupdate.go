@@ -3,19 +3,19 @@
 package shared
 
 type SourceMicrosoftListsUpdate struct {
-	SiteID           string `json:"site_id"`
+	ApplicationIDURI string `json:"application_id_uri"`
 	ClientID         string `json:"client_id"`
 	ClientSecret     string `json:"client_secret"`
-	ApplicationIDURI string `json:"application_id_uri"`
-	TenantID         string `json:"tenant_id"`
 	Domain           string `json:"domain"`
+	SiteID           string `json:"site_id"`
+	TenantID         string `json:"tenant_id"`
 }
 
-func (o *SourceMicrosoftListsUpdate) GetSiteID() string {
+func (o *SourceMicrosoftListsUpdate) GetApplicationIDURI() string {
 	if o == nil {
 		return ""
 	}
-	return o.SiteID
+	return o.ApplicationIDURI
 }
 
 func (o *SourceMicrosoftListsUpdate) GetClientID() string {
@@ -32,11 +32,18 @@ func (o *SourceMicrosoftListsUpdate) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceMicrosoftListsUpdate) GetApplicationIDURI() string {
+func (o *SourceMicrosoftListsUpdate) GetDomain() string {
 	if o == nil {
 		return ""
 	}
-	return o.ApplicationIDURI
+	return o.Domain
+}
+
+func (o *SourceMicrosoftListsUpdate) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
 }
 
 func (o *SourceMicrosoftListsUpdate) GetTenantID() string {
@@ -44,11 +51,4 @@ func (o *SourceMicrosoftListsUpdate) GetTenantID() string {
 		return ""
 	}
 	return o.TenantID
-}
-
-func (o *SourceMicrosoftListsUpdate) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
 }

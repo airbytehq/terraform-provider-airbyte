@@ -3,16 +3,9 @@
 package shared
 
 type SourceCampaynUpdate struct {
-	SubDomain string `json:"sub_domain"`
 	// API key to use. Find it in your Campayn account settings. Keep it secure as it grants access to your Campayn data.
-	APIKey string `json:"api_key"`
-}
-
-func (o *SourceCampaynUpdate) GetSubDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.SubDomain
+	APIKey    string `json:"api_key"`
+	SubDomain string `json:"sub_domain"`
 }
 
 func (o *SourceCampaynUpdate) GetAPIKey() string {
@@ -20,4 +13,11 @@ func (o *SourceCampaynUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceCampaynUpdate) GetSubDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.SubDomain
 }

@@ -85,11 +85,11 @@ func (e *SourceSalesloftAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type AuthenticateViaOAuth struct {
-	authType SourceSalesloftAuthType `const:"oauth2.0" json:"auth_type"`
+	// Access Token for making authenticated requests.
+	AccessToken string                  `json:"access_token"`
+	authType    SourceSalesloftAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your Salesloft developer application.
 	ClientID string `json:"client_id"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
 	// The Client Secret of your Salesloft developer application.
 	ClientSecret string `json:"client_secret"`
 	// The token for obtaining a new access token.
@@ -109,6 +109,13 @@ func (a *AuthenticateViaOAuth) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *AuthenticateViaOAuth) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
+}
+
 func (o *AuthenticateViaOAuth) GetAuthType() SourceSalesloftAuthType {
 	return SourceSalesloftAuthTypeOauth20
 }
@@ -118,13 +125,6 @@ func (o *AuthenticateViaOAuth) GetClientID() string {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *AuthenticateViaOAuth) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 func (o *AuthenticateViaOAuth) GetClientSecret() string {

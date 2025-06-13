@@ -3,19 +3,12 @@
 package shared
 
 type SourceAkeneoUpdate struct {
+	APIUsername string `json:"api_username"`
+	ClientID    string `json:"client_id"`
 	// https://cb8715249e.trial.akeneo.cloud
-	Host        string  `json:"host"`
-	APIUsername string  `json:"api_username"`
-	Password    string  `json:"password"`
-	ClientID    string  `json:"client_id"`
-	Secret      *string `json:"secret,omitempty"`
-}
-
-func (o *SourceAkeneoUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
+	Host     string  `json:"host"`
+	Password string  `json:"password"`
+	Secret   *string `json:"secret,omitempty"`
 }
 
 func (o *SourceAkeneoUpdate) GetAPIUsername() string {
@@ -25,18 +18,25 @@ func (o *SourceAkeneoUpdate) GetAPIUsername() string {
 	return o.APIUsername
 }
 
-func (o *SourceAkeneoUpdate) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
-}
-
 func (o *SourceAkeneoUpdate) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
+}
+
+func (o *SourceAkeneoUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceAkeneoUpdate) GetPassword() string {
+	if o == nil {
+		return ""
+	}
+	return o.Password
 }
 
 func (o *SourceAkeneoUpdate) GetSecret() *string {

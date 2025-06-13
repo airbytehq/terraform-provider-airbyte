@@ -227,29 +227,6 @@ func (o *SourceOracleUpdateTLSEncryptedVerifyCertificate) GetSslCertificate() st
 	return o.SslCertificate
 }
 
-type SourceOracleUpdateSchemasEncryptionMethod string
-
-const (
-	SourceOracleUpdateSchemasEncryptionMethodClientNne SourceOracleUpdateSchemasEncryptionMethod = "client_nne"
-)
-
-func (e SourceOracleUpdateSchemasEncryptionMethod) ToPointer() *SourceOracleUpdateSchemasEncryptionMethod {
-	return &e
-}
-func (e *SourceOracleUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "client_nne":
-		*e = SourceOracleUpdateSchemasEncryptionMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceOracleUpdateSchemasEncryptionMethod: %v", v)
-	}
-}
-
 // SourceOracleUpdateEncryptionAlgorithm - This parameter defines what encryption algorithm is used.
 type SourceOracleUpdateEncryptionAlgorithm string
 
@@ -280,11 +257,34 @@ func (e *SourceOracleUpdateEncryptionAlgorithm) UnmarshalJSON(data []byte) error
 	}
 }
 
+type SourceOracleUpdateSchemasEncryptionMethod string
+
+const (
+	SourceOracleUpdateSchemasEncryptionMethodClientNne SourceOracleUpdateSchemasEncryptionMethod = "client_nne"
+)
+
+func (e SourceOracleUpdateSchemasEncryptionMethod) ToPointer() *SourceOracleUpdateSchemasEncryptionMethod {
+	return &e
+}
+func (e *SourceOracleUpdateSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_nne":
+		*e = SourceOracleUpdateSchemasEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceOracleUpdateSchemasEncryptionMethod: %v", v)
+	}
+}
+
 // SourceOracleUpdateNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type SourceOracleUpdateNativeNetworkEncryptionNNE struct {
-	encryptionMethod SourceOracleUpdateSchemasEncryptionMethod `const:"client_nne" json:"encryption_method"`
 	// This parameter defines what encryption algorithm is used.
-	EncryptionAlgorithm *SourceOracleUpdateEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
+	EncryptionAlgorithm *SourceOracleUpdateEncryptionAlgorithm    `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    SourceOracleUpdateSchemasEncryptionMethod `const:"client_nne" json:"encryption_method"`
 }
 
 func (s SourceOracleUpdateNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -298,15 +298,15 @@ func (s *SourceOracleUpdateNativeNetworkEncryptionNNE) UnmarshalJSON(data []byte
 	return nil
 }
 
-func (o *SourceOracleUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() SourceOracleUpdateSchemasEncryptionMethod {
-	return SourceOracleUpdateSchemasEncryptionMethodClientNne
-}
-
 func (o *SourceOracleUpdateNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *SourceOracleUpdateEncryptionAlgorithm {
 	if o == nil {
 		return nil
 	}
 	return o.EncryptionAlgorithm
+}
+
+func (o *SourceOracleUpdateNativeNetworkEncryptionNNE) GetEncryptionMethod() SourceOracleUpdateSchemasEncryptionMethod {
+	return SourceOracleUpdateSchemasEncryptionMethodClientNne
 }
 
 type SourceOracleUpdateEncryptionMethod string
@@ -463,10 +463,10 @@ func (e *SourceOracleUpdateSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data [
 }
 
 type SourceOracleUpdatePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod SourceOracleUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod SourceOracleUpdateSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -486,15 +486,15 @@ func (s *SourceOracleUpdatePasswordAuthentication) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethodTunnelMethod {
-	return SourceOracleUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethodTunnelMethod {
+	return SourceOracleUpdateSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *SourceOracleUpdatePasswordAuthentication) GetTunnelPort() *int64 {
@@ -543,16 +543,16 @@ func (e *SourceOracleUpdateSchemasTunnelMethod) UnmarshalJSON(data []byte) error
 }
 
 type SourceOracleUpdateSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod SourceOracleUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod SourceOracleUpdateSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (s SourceOracleUpdateSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -566,8 +566,11 @@ func (s *SourceOracleUpdateSSHKeyAuthentication) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethod {
-	return SourceOracleUpdateSchemasTunnelMethodSSHKeyAuth
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -575,6 +578,10 @@ func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelMethod() SourceOracleUpdateSchemasTunnelMethod {
+	return SourceOracleUpdateSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -589,13 +596,6 @@ func (o *SourceOracleUpdateSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceOracleUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // SourceOracleUpdateTunnelMethod - No ssh tunnel needed to connect to database
@@ -729,27 +729,27 @@ func (u SourceOracleUpdateSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type SourceOracleUpdate struct {
+	// Connect data that will be used for DB connection
+	ConnectionData *SourceOracleUpdateConnectBy `json:"connection_data,omitempty"`
+	// The encryption method with is used when communicating with the database.
+	Encryption *SourceOracleUpdateEncryption `json:"encryption,omitempty"`
 	// Hostname of the database.
 	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The password associated with the username.
+	Password *string `json:"password,omitempty"`
 	// Port of the database.
 	// Oracle Corporations recommends the following port numbers:
 	// 1521 - Default listening port for client connections to the listener.
 	// 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
 	Port *int64 `default:"1521" json:"port"`
-	// Connect data that will be used for DB connection
-	ConnectionData *SourceOracleUpdateConnectBy `json:"connection_data,omitempty"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas []string `json:"schemas,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The encryption method with is used when communicating with the database.
-	Encryption *SourceOracleUpdateEncryption `json:"encryption,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceOracleUpdateSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// The username which is used to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceOracleUpdate) MarshalJSON() ([]byte, error) {
@@ -763,53 +763,11 @@ func (s *SourceOracleUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceOracleUpdate) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *SourceOracleUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *SourceOracleUpdate) GetConnectionData() *SourceOracleUpdateConnectBy {
 	if o == nil {
 		return nil
 	}
 	return o.ConnectionData
-}
-
-func (o *SourceOracleUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *SourceOracleUpdate) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
-}
-
-func (o *SourceOracleUpdate) GetSchemas() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Schemas
-}
-
-func (o *SourceOracleUpdate) GetJdbcURLParams() *string {
-	if o == nil {
-		return nil
-	}
-	return o.JdbcURLParams
 }
 
 func (o *SourceOracleUpdate) GetEncryption() *SourceOracleUpdateEncryption {
@@ -819,9 +777,51 @@ func (o *SourceOracleUpdate) GetEncryption() *SourceOracleUpdateEncryption {
 	return o.Encryption
 }
 
+func (o *SourceOracleUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceOracleUpdate) GetJdbcURLParams() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JdbcURLParams
+}
+
+func (o *SourceOracleUpdate) GetPassword() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Password
+}
+
+func (o *SourceOracleUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceOracleUpdate) GetSchemas() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Schemas
+}
+
 func (o *SourceOracleUpdate) GetTunnelMethod() *SourceOracleUpdateSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *SourceOracleUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -22,333 +22,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	var streams []shared.SourceGoogleDriveFileBasedStreamConfig = []shared.SourceGoogleDriveFileBasedStreamConfig{}
-	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceGoogleDriveValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceGoogleDriveValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
-		daysToSyncIfHistoryIsFull := new(int64)
-		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
-			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
-		} else {
-			daysToSyncIfHistoryIsFull = nil
-		}
-		var format shared.SourceGoogleDriveFormat
-		var sourceGoogleDriveAvroFormat *shared.SourceGoogleDriveAvroFormat
-		if streamsItem.Format.AvroFormat != nil {
-			doubleAsString := new(bool)
-			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
-				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
-			} else {
-				doubleAsString = nil
-			}
-			sourceGoogleDriveAvroFormat = &shared.SourceGoogleDriveAvroFormat{
-				DoubleAsString: doubleAsString,
-			}
-		}
-		if sourceGoogleDriveAvroFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveAvroFormat: sourceGoogleDriveAvroFormat,
-			}
-		}
-		var sourceGoogleDriveCSVFormat *shared.SourceGoogleDriveCSVFormat
-		if streamsItem.Format.CSVFormat != nil {
-			delimiter := new(string)
-			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
-				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
-			} else {
-				delimiter = nil
-			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
-			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
-			}
-			encoding := new(string)
-			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
-				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
-			} else {
-				encoding = nil
-			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
-			} else {
-				doubleQuote = nil
-			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
-			}
-			var headerDefinition *shared.SourceGoogleDriveCSVHeaderDefinition
-			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
-				var sourceGoogleDriveFromCSV *shared.SourceGoogleDriveFromCSV
-				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
-					sourceGoogleDriveFromCSV = &shared.SourceGoogleDriveFromCSV{}
-				}
-				if sourceGoogleDriveFromCSV != nil {
-					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
-						SourceGoogleDriveFromCSV: sourceGoogleDriveFromCSV,
-					}
-				}
-				var sourceGoogleDriveAutogenerated *shared.SourceGoogleDriveAutogenerated
-				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
-					sourceGoogleDriveAutogenerated = &shared.SourceGoogleDriveAutogenerated{}
-				}
-				if sourceGoogleDriveAutogenerated != nil {
-					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
-						SourceGoogleDriveAutogenerated: sourceGoogleDriveAutogenerated,
-					}
-				}
-				var sourceGoogleDriveUserProvided *shared.SourceGoogleDriveUserProvided
-				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = []string{}
-					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
-						columnNames = append(columnNames, columnNamesItem.ValueString())
-					}
-					sourceGoogleDriveUserProvided = &shared.SourceGoogleDriveUserProvided{
-						ColumnNames: columnNames,
-					}
-				}
-				if sourceGoogleDriveUserProvided != nil {
-					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
-						SourceGoogleDriveUserProvided: sourceGoogleDriveUserProvided,
-					}
-				}
-			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
-			ignoreErrorsOnFieldsMismatch := new(bool)
-			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
-				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
-			} else {
-				ignoreErrorsOnFieldsMismatch = nil
-			}
-			sourceGoogleDriveCSVFormat = &shared.SourceGoogleDriveCSVFormat{
-				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
-				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
-				FalseValues:                  falseValues,
-				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-			}
-		}
-		if sourceGoogleDriveCSVFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveCSVFormat: sourceGoogleDriveCSVFormat,
-			}
-		}
-		var sourceGoogleDriveJsonlFormat *shared.SourceGoogleDriveJsonlFormat
-		if streamsItem.Format.JsonlFormat != nil {
-			sourceGoogleDriveJsonlFormat = &shared.SourceGoogleDriveJsonlFormat{}
-		}
-		if sourceGoogleDriveJsonlFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveJsonlFormat: sourceGoogleDriveJsonlFormat,
-			}
-		}
-		var sourceGoogleDriveParquetFormat *shared.SourceGoogleDriveParquetFormat
-		if streamsItem.Format.ParquetFormat != nil {
-			decimalAsFloat := new(bool)
-			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
-				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
-			} else {
-				decimalAsFloat = nil
-			}
-			sourceGoogleDriveParquetFormat = &shared.SourceGoogleDriveParquetFormat{
-				DecimalAsFloat: decimalAsFloat,
-			}
-		}
-		if sourceGoogleDriveParquetFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveParquetFormat: sourceGoogleDriveParquetFormat,
-			}
-		}
-		var sourceGoogleDriveUnstructuredDocumentFormat *shared.SourceGoogleDriveUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceGoogleDriveParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceGoogleDriveParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
-			var processing *shared.SourceGoogleDriveProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
-				var sourceGoogleDriveLocal *shared.SourceGoogleDriveLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
-					sourceGoogleDriveLocal = &shared.SourceGoogleDriveLocal{}
-				}
-				if sourceGoogleDriveLocal != nil {
-					processing = &shared.SourceGoogleDriveProcessing{
-						SourceGoogleDriveLocal: sourceGoogleDriveLocal,
-					}
-				}
-			}
-			sourceGoogleDriveUnstructuredDocumentFormat = &shared.SourceGoogleDriveUnstructuredDocumentFormat{
-				SkipUnprocessableFiles: skipUnprocessableFiles,
-				Strategy:               strategy,
-				Processing:             processing,
-			}
-		}
-		if sourceGoogleDriveUnstructuredDocumentFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveUnstructuredDocumentFormat: sourceGoogleDriveUnstructuredDocumentFormat,
-			}
-		}
-		var sourceGoogleDriveExcelFormat *shared.SourceGoogleDriveExcelFormat
-		if streamsItem.Format.ExcelFormat != nil {
-			sourceGoogleDriveExcelFormat = &shared.SourceGoogleDriveExcelFormat{}
-		}
-		if sourceGoogleDriveExcelFormat != nil {
-			format = shared.SourceGoogleDriveFormat{
-				SourceGoogleDriveExcelFormat: sourceGoogleDriveExcelFormat,
-			}
-		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
-		}
-		recentNFilesToReadForSchemaDiscovery := new(int64)
-		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
-			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
-		} else {
-			recentNFilesToReadForSchemaDiscovery = nil
-		}
-		streams = append(streams, shared.SourceGoogleDriveFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
-			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
-			Format:                               format,
-			Schemaless:                           schemaless,
-			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
-		})
-	}
-	var deliveryMethod *shared.DeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var replicateRecords *shared.ReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			replicateRecords = &shared.ReplicateRecords{}
-		}
-		if replicateRecords != nil {
-			deliveryMethod = &shared.DeliveryMethod{
-				ReplicateRecords: replicateRecords,
-			}
-		}
-		var copyRawFiles *shared.CopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			copyRawFiles = &shared.CopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if copyRawFiles != nil {
-			deliveryMethod = &shared.DeliveryMethod{
-				CopyRawFiles: copyRawFiles,
-			}
-		}
-		var replicatePermissionsACL *shared.ReplicatePermissionsACL
-		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
-			includeIdentitiesStream := new(bool)
-			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
-				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
-			} else {
-				includeIdentitiesStream = nil
-			}
-			domain := new(string)
-			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
-				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
-			} else {
-				domain = nil
-			}
-			replicatePermissionsACL = &shared.ReplicatePermissionsACL{
-				IncludeIdentitiesStream: includeIdentitiesStream,
-				Domain:                  domain,
-			}
-		}
-		if replicatePermissionsACL != nil {
-			deliveryMethod = &shared.DeliveryMethod{
-				ReplicatePermissionsACL: replicatePermissionsACL,
-			}
-		}
-	}
-	var folderURL string
-	folderURL = r.Configuration.FolderURL.ValueString()
-
 	var credentials shared.SourceGoogleDriveAuthentication
 	var sourceGoogleDriveAuthenticateViaGoogleOAuth *shared.SourceGoogleDriveAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -386,12 +59,339 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDriveCreateRequest(
 			SourceGoogleDriveServiceAccountKeyAuthentication: sourceGoogleDriveServiceAccountKeyAuthentication,
 		}
 	}
+	var deliveryMethod *shared.DeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var replicateRecords *shared.ReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			replicateRecords = &shared.ReplicateRecords{}
+		}
+		if replicateRecords != nil {
+			deliveryMethod = &shared.DeliveryMethod{
+				ReplicateRecords: replicateRecords,
+			}
+		}
+		var copyRawFiles *shared.CopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			copyRawFiles = &shared.CopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if copyRawFiles != nil {
+			deliveryMethod = &shared.DeliveryMethod{
+				CopyRawFiles: copyRawFiles,
+			}
+		}
+		var replicatePermissionsACL *shared.ReplicatePermissionsACL
+		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
+			domain := new(string)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
+				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
+			} else {
+				domain = nil
+			}
+			includeIdentitiesStream := new(bool)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
+				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
+			} else {
+				includeIdentitiesStream = nil
+			}
+			replicatePermissionsACL = &shared.ReplicatePermissionsACL{
+				Domain:                  domain,
+				IncludeIdentitiesStream: includeIdentitiesStream,
+			}
+		}
+		if replicatePermissionsACL != nil {
+			deliveryMethod = &shared.DeliveryMethod{
+				ReplicatePermissionsACL: replicatePermissionsACL,
+			}
+		}
+	}
+	var folderURL string
+	folderURL = r.Configuration.FolderURL.ValueString()
+
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var streams []shared.SourceGoogleDriveFileBasedStreamConfig = []shared.SourceGoogleDriveFileBasedStreamConfig{}
+	for _, streamsItem := range r.Configuration.Streams {
+		daysToSyncIfHistoryIsFull := new(int64)
+		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
+			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
+		} else {
+			daysToSyncIfHistoryIsFull = nil
+		}
+		var format shared.SourceGoogleDriveFormat
+		var sourceGoogleDriveAvroFormat *shared.SourceGoogleDriveAvroFormat
+		if streamsItem.Format.AvroFormat != nil {
+			doubleAsString := new(bool)
+			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
+				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
+			} else {
+				doubleAsString = nil
+			}
+			sourceGoogleDriveAvroFormat = &shared.SourceGoogleDriveAvroFormat{
+				DoubleAsString: doubleAsString,
+			}
+		}
+		if sourceGoogleDriveAvroFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveAvroFormat: sourceGoogleDriveAvroFormat,
+			}
+		}
+		var sourceGoogleDriveCSVFormat *shared.SourceGoogleDriveCSVFormat
+		if streamsItem.Format.CSVFormat != nil {
+			delimiter := new(string)
+			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
+				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
+			} else {
+				delimiter = nil
+			}
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			} else {
+				doubleQuote = nil
+			}
+			encoding := new(string)
+			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
+				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
+			} else {
+				encoding = nil
+			}
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
+			} else {
+				escapeChar = nil
+			}
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
+			}
+			var headerDefinition *shared.SourceGoogleDriveCSVHeaderDefinition
+			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
+				var sourceGoogleDriveFromCSV *shared.SourceGoogleDriveFromCSV
+				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
+					sourceGoogleDriveFromCSV = &shared.SourceGoogleDriveFromCSV{}
+				}
+				if sourceGoogleDriveFromCSV != nil {
+					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
+						SourceGoogleDriveFromCSV: sourceGoogleDriveFromCSV,
+					}
+				}
+				var sourceGoogleDriveAutogenerated *shared.SourceGoogleDriveAutogenerated
+				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
+					sourceGoogleDriveAutogenerated = &shared.SourceGoogleDriveAutogenerated{}
+				}
+				if sourceGoogleDriveAutogenerated != nil {
+					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
+						SourceGoogleDriveAutogenerated: sourceGoogleDriveAutogenerated,
+					}
+				}
+				var sourceGoogleDriveUserProvided *shared.SourceGoogleDriveUserProvided
+				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
+					var columnNames []string = []string{}
+					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
+						columnNames = append(columnNames, columnNamesItem.ValueString())
+					}
+					sourceGoogleDriveUserProvided = &shared.SourceGoogleDriveUserProvided{
+						ColumnNames: columnNames,
+					}
+				}
+				if sourceGoogleDriveUserProvided != nil {
+					headerDefinition = &shared.SourceGoogleDriveCSVHeaderDefinition{
+						SourceGoogleDriveUserProvided: sourceGoogleDriveUserProvided,
+					}
+				}
+			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
+			sourceGoogleDriveCSVFormat = &shared.SourceGoogleDriveCSVFormat{
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
+			}
+		}
+		if sourceGoogleDriveCSVFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveCSVFormat: sourceGoogleDriveCSVFormat,
+			}
+		}
+		var sourceGoogleDriveJsonlFormat *shared.SourceGoogleDriveJsonlFormat
+		if streamsItem.Format.JsonlFormat != nil {
+			sourceGoogleDriveJsonlFormat = &shared.SourceGoogleDriveJsonlFormat{}
+		}
+		if sourceGoogleDriveJsonlFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveJsonlFormat: sourceGoogleDriveJsonlFormat,
+			}
+		}
+		var sourceGoogleDriveParquetFormat *shared.SourceGoogleDriveParquetFormat
+		if streamsItem.Format.ParquetFormat != nil {
+			decimalAsFloat := new(bool)
+			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
+				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
+			} else {
+				decimalAsFloat = nil
+			}
+			sourceGoogleDriveParquetFormat = &shared.SourceGoogleDriveParquetFormat{
+				DecimalAsFloat: decimalAsFloat,
+			}
+		}
+		if sourceGoogleDriveParquetFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveParquetFormat: sourceGoogleDriveParquetFormat,
+			}
+		}
+		var sourceGoogleDriveUnstructuredDocumentFormat *shared.SourceGoogleDriveUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+			var processing *shared.SourceGoogleDriveProcessing
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+				var sourceGoogleDriveLocal *shared.SourceGoogleDriveLocal
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+					sourceGoogleDriveLocal = &shared.SourceGoogleDriveLocal{}
+				}
+				if sourceGoogleDriveLocal != nil {
+					processing = &shared.SourceGoogleDriveProcessing{
+						SourceGoogleDriveLocal: sourceGoogleDriveLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGoogleDriveParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceGoogleDriveParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
+			sourceGoogleDriveUnstructuredDocumentFormat = &shared.SourceGoogleDriveUnstructuredDocumentFormat{
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
+			}
+		}
+		if sourceGoogleDriveUnstructuredDocumentFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveUnstructuredDocumentFormat: sourceGoogleDriveUnstructuredDocumentFormat,
+			}
+		}
+		var sourceGoogleDriveExcelFormat *shared.SourceGoogleDriveExcelFormat
+		if streamsItem.Format.ExcelFormat != nil {
+			sourceGoogleDriveExcelFormat = &shared.SourceGoogleDriveExcelFormat{}
+		}
+		if sourceGoogleDriveExcelFormat != nil {
+			format = shared.SourceGoogleDriveFormat{
+				SourceGoogleDriveExcelFormat: sourceGoogleDriveExcelFormat,
+			}
+		}
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceGoogleDriveValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceGoogleDriveValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
+		streams = append(streams, shared.SourceGoogleDriveFileBasedStreamConfig{
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
+		})
+	}
 	configuration := shared.SourceGoogleDrive{
-		StartDate:      startDate,
-		Streams:        streams,
+		Credentials:    credentials,
 		DeliveryMethod: deliveryMethod,
 		FolderURL:      folderURL,
-		Credentials:    credentials,
+		StartDate:      startDate,
+		Streams:        streams,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -463,333 +463,6 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	var streams []shared.SourceGoogleDriveUpdateFileBasedStreamConfig = []shared.SourceGoogleDriveUpdateFileBasedStreamConfig{}
-	for _, streamsItem := range r.Configuration.Streams {
-		var name1 string
-		name1 = streamsItem.Name.ValueString()
-
-		var globs []string = []string{}
-		for _, globsItem := range streamsItem.Globs {
-			globs = append(globs, globsItem.ValueString())
-		}
-		validationPolicy := new(shared.SourceGoogleDriveUpdateValidationPolicy)
-		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
-			*validationPolicy = shared.SourceGoogleDriveUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
-		} else {
-			validationPolicy = nil
-		}
-		inputSchema := new(string)
-		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
-			*inputSchema = streamsItem.InputSchema.ValueString()
-		} else {
-			inputSchema = nil
-		}
-		daysToSyncIfHistoryIsFull := new(int64)
-		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
-			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
-		} else {
-			daysToSyncIfHistoryIsFull = nil
-		}
-		var format shared.SourceGoogleDriveUpdateFormat
-		var sourceGoogleDriveUpdateAvroFormat *shared.SourceGoogleDriveUpdateAvroFormat
-		if streamsItem.Format.AvroFormat != nil {
-			doubleAsString := new(bool)
-			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
-				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
-			} else {
-				doubleAsString = nil
-			}
-			sourceGoogleDriveUpdateAvroFormat = &shared.SourceGoogleDriveUpdateAvroFormat{
-				DoubleAsString: doubleAsString,
-			}
-		}
-		if sourceGoogleDriveUpdateAvroFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateAvroFormat: sourceGoogleDriveUpdateAvroFormat,
-			}
-		}
-		var sourceGoogleDriveUpdateCSVFormat *shared.SourceGoogleDriveUpdateCSVFormat
-		if streamsItem.Format.CSVFormat != nil {
-			delimiter := new(string)
-			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
-				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
-			} else {
-				delimiter = nil
-			}
-			quoteChar := new(string)
-			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
-				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
-			} else {
-				quoteChar = nil
-			}
-			escapeChar := new(string)
-			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
-				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
-			} else {
-				escapeChar = nil
-			}
-			encoding := new(string)
-			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
-				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
-			} else {
-				encoding = nil
-			}
-			doubleQuote := new(bool)
-			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
-				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
-			} else {
-				doubleQuote = nil
-			}
-			var nullValues []string = []string{}
-			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
-				nullValues = append(nullValues, nullValuesItem.ValueString())
-			}
-			stringsCanBeNull := new(bool)
-			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
-				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
-			} else {
-				stringsCanBeNull = nil
-			}
-			skipRowsBeforeHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
-				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
-			} else {
-				skipRowsBeforeHeader = nil
-			}
-			skipRowsAfterHeader := new(int64)
-			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
-				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
-			} else {
-				skipRowsAfterHeader = nil
-			}
-			var headerDefinition *shared.SourceGoogleDriveUpdateCSVHeaderDefinition
-			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
-				var sourceGoogleDriveUpdateFromCSV *shared.SourceGoogleDriveUpdateFromCSV
-				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
-					sourceGoogleDriveUpdateFromCSV = &shared.SourceGoogleDriveUpdateFromCSV{}
-				}
-				if sourceGoogleDriveUpdateFromCSV != nil {
-					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
-						SourceGoogleDriveUpdateFromCSV: sourceGoogleDriveUpdateFromCSV,
-					}
-				}
-				var sourceGoogleDriveUpdateAutogenerated *shared.SourceGoogleDriveUpdateAutogenerated
-				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
-					sourceGoogleDriveUpdateAutogenerated = &shared.SourceGoogleDriveUpdateAutogenerated{}
-				}
-				if sourceGoogleDriveUpdateAutogenerated != nil {
-					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
-						SourceGoogleDriveUpdateAutogenerated: sourceGoogleDriveUpdateAutogenerated,
-					}
-				}
-				var sourceGoogleDriveUpdateUserProvided *shared.SourceGoogleDriveUpdateUserProvided
-				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
-					var columnNames []string = []string{}
-					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
-						columnNames = append(columnNames, columnNamesItem.ValueString())
-					}
-					sourceGoogleDriveUpdateUserProvided = &shared.SourceGoogleDriveUpdateUserProvided{
-						ColumnNames: columnNames,
-					}
-				}
-				if sourceGoogleDriveUpdateUserProvided != nil {
-					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
-						SourceGoogleDriveUpdateUserProvided: sourceGoogleDriveUpdateUserProvided,
-					}
-				}
-			}
-			var trueValues []string = []string{}
-			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
-				trueValues = append(trueValues, trueValuesItem.ValueString())
-			}
-			var falseValues []string = []string{}
-			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
-				falseValues = append(falseValues, falseValuesItem.ValueString())
-			}
-			ignoreErrorsOnFieldsMismatch := new(bool)
-			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
-				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
-			} else {
-				ignoreErrorsOnFieldsMismatch = nil
-			}
-			sourceGoogleDriveUpdateCSVFormat = &shared.SourceGoogleDriveUpdateCSVFormat{
-				Delimiter:                    delimiter,
-				QuoteChar:                    quoteChar,
-				EscapeChar:                   escapeChar,
-				Encoding:                     encoding,
-				DoubleQuote:                  doubleQuote,
-				NullValues:                   nullValues,
-				StringsCanBeNull:             stringsCanBeNull,
-				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
-				SkipRowsAfterHeader:          skipRowsAfterHeader,
-				HeaderDefinition:             headerDefinition,
-				TrueValues:                   trueValues,
-				FalseValues:                  falseValues,
-				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
-			}
-		}
-		if sourceGoogleDriveUpdateCSVFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateCSVFormat: sourceGoogleDriveUpdateCSVFormat,
-			}
-		}
-		var sourceGoogleDriveUpdateJsonlFormat *shared.SourceGoogleDriveUpdateJsonlFormat
-		if streamsItem.Format.JsonlFormat != nil {
-			sourceGoogleDriveUpdateJsonlFormat = &shared.SourceGoogleDriveUpdateJsonlFormat{}
-		}
-		if sourceGoogleDriveUpdateJsonlFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateJsonlFormat: sourceGoogleDriveUpdateJsonlFormat,
-			}
-		}
-		var sourceGoogleDriveUpdateParquetFormat *shared.SourceGoogleDriveUpdateParquetFormat
-		if streamsItem.Format.ParquetFormat != nil {
-			decimalAsFloat := new(bool)
-			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
-				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
-			} else {
-				decimalAsFloat = nil
-			}
-			sourceGoogleDriveUpdateParquetFormat = &shared.SourceGoogleDriveUpdateParquetFormat{
-				DecimalAsFloat: decimalAsFloat,
-			}
-		}
-		if sourceGoogleDriveUpdateParquetFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateParquetFormat: sourceGoogleDriveUpdateParquetFormat,
-			}
-		}
-		var sourceGoogleDriveUpdateUnstructuredDocumentFormat *shared.SourceGoogleDriveUpdateUnstructuredDocumentFormat
-		if streamsItem.Format.UnstructuredDocumentFormat != nil {
-			skipUnprocessableFiles := new(bool)
-			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
-				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
-			} else {
-				skipUnprocessableFiles = nil
-			}
-			strategy := new(shared.SourceGoogleDriveUpdateParsingStrategy)
-			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
-				*strategy = shared.SourceGoogleDriveUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
-			} else {
-				strategy = nil
-			}
-			var processing *shared.SourceGoogleDriveUpdateProcessing
-			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
-				var sourceGoogleDriveUpdateLocal *shared.SourceGoogleDriveUpdateLocal
-				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
-					sourceGoogleDriveUpdateLocal = &shared.SourceGoogleDriveUpdateLocal{}
-				}
-				if sourceGoogleDriveUpdateLocal != nil {
-					processing = &shared.SourceGoogleDriveUpdateProcessing{
-						SourceGoogleDriveUpdateLocal: sourceGoogleDriveUpdateLocal,
-					}
-				}
-			}
-			sourceGoogleDriveUpdateUnstructuredDocumentFormat = &shared.SourceGoogleDriveUpdateUnstructuredDocumentFormat{
-				SkipUnprocessableFiles: skipUnprocessableFiles,
-				Strategy:               strategy,
-				Processing:             processing,
-			}
-		}
-		if sourceGoogleDriveUpdateUnstructuredDocumentFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateUnstructuredDocumentFormat: sourceGoogleDriveUpdateUnstructuredDocumentFormat,
-			}
-		}
-		var sourceGoogleDriveUpdateExcelFormat *shared.SourceGoogleDriveUpdateExcelFormat
-		if streamsItem.Format.ExcelFormat != nil {
-			sourceGoogleDriveUpdateExcelFormat = &shared.SourceGoogleDriveUpdateExcelFormat{}
-		}
-		if sourceGoogleDriveUpdateExcelFormat != nil {
-			format = shared.SourceGoogleDriveUpdateFormat{
-				SourceGoogleDriveUpdateExcelFormat: sourceGoogleDriveUpdateExcelFormat,
-			}
-		}
-		schemaless := new(bool)
-		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
-			*schemaless = streamsItem.Schemaless.ValueBool()
-		} else {
-			schemaless = nil
-		}
-		recentNFilesToReadForSchemaDiscovery := new(int64)
-		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
-			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
-		} else {
-			recentNFilesToReadForSchemaDiscovery = nil
-		}
-		streams = append(streams, shared.SourceGoogleDriveUpdateFileBasedStreamConfig{
-			Name:                                 name1,
-			Globs:                                globs,
-			ValidationPolicy:                     validationPolicy,
-			InputSchema:                          inputSchema,
-			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
-			Format:                               format,
-			Schemaless:                           schemaless,
-			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
-		})
-	}
-	var deliveryMethod *shared.SourceGoogleDriveUpdateDeliveryMethod
-	if r.Configuration.DeliveryMethod != nil {
-		var sourceGoogleDriveUpdateReplicateRecords *shared.SourceGoogleDriveUpdateReplicateRecords
-		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
-			sourceGoogleDriveUpdateReplicateRecords = &shared.SourceGoogleDriveUpdateReplicateRecords{}
-		}
-		if sourceGoogleDriveUpdateReplicateRecords != nil {
-			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
-				SourceGoogleDriveUpdateReplicateRecords: sourceGoogleDriveUpdateReplicateRecords,
-			}
-		}
-		var sourceGoogleDriveUpdateCopyRawFiles *shared.SourceGoogleDriveUpdateCopyRawFiles
-		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
-			preserveDirectoryStructure := new(bool)
-			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
-				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
-			} else {
-				preserveDirectoryStructure = nil
-			}
-			sourceGoogleDriveUpdateCopyRawFiles = &shared.SourceGoogleDriveUpdateCopyRawFiles{
-				PreserveDirectoryStructure: preserveDirectoryStructure,
-			}
-		}
-		if sourceGoogleDriveUpdateCopyRawFiles != nil {
-			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
-				SourceGoogleDriveUpdateCopyRawFiles: sourceGoogleDriveUpdateCopyRawFiles,
-			}
-		}
-		var sourceGoogleDriveUpdateReplicatePermissionsACL *shared.SourceGoogleDriveUpdateReplicatePermissionsACL
-		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
-			includeIdentitiesStream := new(bool)
-			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
-				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
-			} else {
-				includeIdentitiesStream = nil
-			}
-			domain := new(string)
-			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
-				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
-			} else {
-				domain = nil
-			}
-			sourceGoogleDriveUpdateReplicatePermissionsACL = &shared.SourceGoogleDriveUpdateReplicatePermissionsACL{
-				IncludeIdentitiesStream: includeIdentitiesStream,
-				Domain:                  domain,
-			}
-		}
-		if sourceGoogleDriveUpdateReplicatePermissionsACL != nil {
-			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
-				SourceGoogleDriveUpdateReplicatePermissionsACL: sourceGoogleDriveUpdateReplicatePermissionsACL,
-			}
-		}
-	}
-	var folderURL string
-	folderURL = r.Configuration.FolderURL.ValueString()
-
 	var credentials shared.SourceGoogleDriveUpdateAuthentication
 	var sourceGoogleDriveUpdateAuthenticateViaGoogleOAuth *shared.SourceGoogleDriveUpdateAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -827,12 +500,339 @@ func (r *SourceGoogleDriveResourceModel) ToSharedSourceGoogleDrivePutRequest() *
 			SourceGoogleDriveUpdateServiceAccountKeyAuthentication: sourceGoogleDriveUpdateServiceAccountKeyAuthentication,
 		}
 	}
+	var deliveryMethod *shared.SourceGoogleDriveUpdateDeliveryMethod
+	if r.Configuration.DeliveryMethod != nil {
+		var sourceGoogleDriveUpdateReplicateRecords *shared.SourceGoogleDriveUpdateReplicateRecords
+		if r.Configuration.DeliveryMethod.ReplicateRecords != nil {
+			sourceGoogleDriveUpdateReplicateRecords = &shared.SourceGoogleDriveUpdateReplicateRecords{}
+		}
+		if sourceGoogleDriveUpdateReplicateRecords != nil {
+			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
+				SourceGoogleDriveUpdateReplicateRecords: sourceGoogleDriveUpdateReplicateRecords,
+			}
+		}
+		var sourceGoogleDriveUpdateCopyRawFiles *shared.SourceGoogleDriveUpdateCopyRawFiles
+		if r.Configuration.DeliveryMethod.CopyRawFiles != nil {
+			preserveDirectoryStructure := new(bool)
+			if !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsUnknown() && !r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.IsNull() {
+				*preserveDirectoryStructure = r.Configuration.DeliveryMethod.CopyRawFiles.PreserveDirectoryStructure.ValueBool()
+			} else {
+				preserveDirectoryStructure = nil
+			}
+			sourceGoogleDriveUpdateCopyRawFiles = &shared.SourceGoogleDriveUpdateCopyRawFiles{
+				PreserveDirectoryStructure: preserveDirectoryStructure,
+			}
+		}
+		if sourceGoogleDriveUpdateCopyRawFiles != nil {
+			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
+				SourceGoogleDriveUpdateCopyRawFiles: sourceGoogleDriveUpdateCopyRawFiles,
+			}
+		}
+		var sourceGoogleDriveUpdateReplicatePermissionsACL *shared.SourceGoogleDriveUpdateReplicatePermissionsACL
+		if r.Configuration.DeliveryMethod.ReplicatePermissionsACL != nil {
+			domain := new(string)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.IsNull() {
+				*domain = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.Domain.ValueString()
+			} else {
+				domain = nil
+			}
+			includeIdentitiesStream := new(bool)
+			if !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsUnknown() && !r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.IsNull() {
+				*includeIdentitiesStream = r.Configuration.DeliveryMethod.ReplicatePermissionsACL.IncludeIdentitiesStream.ValueBool()
+			} else {
+				includeIdentitiesStream = nil
+			}
+			sourceGoogleDriveUpdateReplicatePermissionsACL = &shared.SourceGoogleDriveUpdateReplicatePermissionsACL{
+				Domain:                  domain,
+				IncludeIdentitiesStream: includeIdentitiesStream,
+			}
+		}
+		if sourceGoogleDriveUpdateReplicatePermissionsACL != nil {
+			deliveryMethod = &shared.SourceGoogleDriveUpdateDeliveryMethod{
+				SourceGoogleDriveUpdateReplicatePermissionsACL: sourceGoogleDriveUpdateReplicatePermissionsACL,
+			}
+		}
+	}
+	var folderURL string
+	folderURL = r.Configuration.FolderURL.ValueString()
+
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	var streams []shared.SourceGoogleDriveUpdateFileBasedStreamConfig = []shared.SourceGoogleDriveUpdateFileBasedStreamConfig{}
+	for _, streamsItem := range r.Configuration.Streams {
+		daysToSyncIfHistoryIsFull := new(int64)
+		if !streamsItem.DaysToSyncIfHistoryIsFull.IsUnknown() && !streamsItem.DaysToSyncIfHistoryIsFull.IsNull() {
+			*daysToSyncIfHistoryIsFull = streamsItem.DaysToSyncIfHistoryIsFull.ValueInt64()
+		} else {
+			daysToSyncIfHistoryIsFull = nil
+		}
+		var format shared.SourceGoogleDriveUpdateFormat
+		var sourceGoogleDriveUpdateAvroFormat *shared.SourceGoogleDriveUpdateAvroFormat
+		if streamsItem.Format.AvroFormat != nil {
+			doubleAsString := new(bool)
+			if !streamsItem.Format.AvroFormat.DoubleAsString.IsUnknown() && !streamsItem.Format.AvroFormat.DoubleAsString.IsNull() {
+				*doubleAsString = streamsItem.Format.AvroFormat.DoubleAsString.ValueBool()
+			} else {
+				doubleAsString = nil
+			}
+			sourceGoogleDriveUpdateAvroFormat = &shared.SourceGoogleDriveUpdateAvroFormat{
+				DoubleAsString: doubleAsString,
+			}
+		}
+		if sourceGoogleDriveUpdateAvroFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateAvroFormat: sourceGoogleDriveUpdateAvroFormat,
+			}
+		}
+		var sourceGoogleDriveUpdateCSVFormat *shared.SourceGoogleDriveUpdateCSVFormat
+		if streamsItem.Format.CSVFormat != nil {
+			delimiter := new(string)
+			if !streamsItem.Format.CSVFormat.Delimiter.IsUnknown() && !streamsItem.Format.CSVFormat.Delimiter.IsNull() {
+				*delimiter = streamsItem.Format.CSVFormat.Delimiter.ValueString()
+			} else {
+				delimiter = nil
+			}
+			doubleQuote := new(bool)
+			if !streamsItem.Format.CSVFormat.DoubleQuote.IsUnknown() && !streamsItem.Format.CSVFormat.DoubleQuote.IsNull() {
+				*doubleQuote = streamsItem.Format.CSVFormat.DoubleQuote.ValueBool()
+			} else {
+				doubleQuote = nil
+			}
+			encoding := new(string)
+			if !streamsItem.Format.CSVFormat.Encoding.IsUnknown() && !streamsItem.Format.CSVFormat.Encoding.IsNull() {
+				*encoding = streamsItem.Format.CSVFormat.Encoding.ValueString()
+			} else {
+				encoding = nil
+			}
+			escapeChar := new(string)
+			if !streamsItem.Format.CSVFormat.EscapeChar.IsUnknown() && !streamsItem.Format.CSVFormat.EscapeChar.IsNull() {
+				*escapeChar = streamsItem.Format.CSVFormat.EscapeChar.ValueString()
+			} else {
+				escapeChar = nil
+			}
+			var falseValues []string = []string{}
+			for _, falseValuesItem := range streamsItem.Format.CSVFormat.FalseValues {
+				falseValues = append(falseValues, falseValuesItem.ValueString())
+			}
+			var headerDefinition *shared.SourceGoogleDriveUpdateCSVHeaderDefinition
+			if streamsItem.Format.CSVFormat.HeaderDefinition != nil {
+				var sourceGoogleDriveUpdateFromCSV *shared.SourceGoogleDriveUpdateFromCSV
+				if streamsItem.Format.CSVFormat.HeaderDefinition.FromCSV != nil {
+					sourceGoogleDriveUpdateFromCSV = &shared.SourceGoogleDriveUpdateFromCSV{}
+				}
+				if sourceGoogleDriveUpdateFromCSV != nil {
+					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
+						SourceGoogleDriveUpdateFromCSV: sourceGoogleDriveUpdateFromCSV,
+					}
+				}
+				var sourceGoogleDriveUpdateAutogenerated *shared.SourceGoogleDriveUpdateAutogenerated
+				if streamsItem.Format.CSVFormat.HeaderDefinition.Autogenerated != nil {
+					sourceGoogleDriveUpdateAutogenerated = &shared.SourceGoogleDriveUpdateAutogenerated{}
+				}
+				if sourceGoogleDriveUpdateAutogenerated != nil {
+					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
+						SourceGoogleDriveUpdateAutogenerated: sourceGoogleDriveUpdateAutogenerated,
+					}
+				}
+				var sourceGoogleDriveUpdateUserProvided *shared.SourceGoogleDriveUpdateUserProvided
+				if streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided != nil {
+					var columnNames []string = []string{}
+					for _, columnNamesItem := range streamsItem.Format.CSVFormat.HeaderDefinition.UserProvided.ColumnNames {
+						columnNames = append(columnNames, columnNamesItem.ValueString())
+					}
+					sourceGoogleDriveUpdateUserProvided = &shared.SourceGoogleDriveUpdateUserProvided{
+						ColumnNames: columnNames,
+					}
+				}
+				if sourceGoogleDriveUpdateUserProvided != nil {
+					headerDefinition = &shared.SourceGoogleDriveUpdateCSVHeaderDefinition{
+						SourceGoogleDriveUpdateUserProvided: sourceGoogleDriveUpdateUserProvided,
+					}
+				}
+			}
+			ignoreErrorsOnFieldsMismatch := new(bool)
+			if !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsUnknown() && !streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.IsNull() {
+				*ignoreErrorsOnFieldsMismatch = streamsItem.Format.CSVFormat.IgnoreErrorsOnFieldsMismatch.ValueBool()
+			} else {
+				ignoreErrorsOnFieldsMismatch = nil
+			}
+			var nullValues []string = []string{}
+			for _, nullValuesItem := range streamsItem.Format.CSVFormat.NullValues {
+				nullValues = append(nullValues, nullValuesItem.ValueString())
+			}
+			quoteChar := new(string)
+			if !streamsItem.Format.CSVFormat.QuoteChar.IsUnknown() && !streamsItem.Format.CSVFormat.QuoteChar.IsNull() {
+				*quoteChar = streamsItem.Format.CSVFormat.QuoteChar.ValueString()
+			} else {
+				quoteChar = nil
+			}
+			skipRowsAfterHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsAfterHeader.IsNull() {
+				*skipRowsAfterHeader = streamsItem.Format.CSVFormat.SkipRowsAfterHeader.ValueInt64()
+			} else {
+				skipRowsAfterHeader = nil
+			}
+			skipRowsBeforeHeader := new(int64)
+			if !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsUnknown() && !streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.IsNull() {
+				*skipRowsBeforeHeader = streamsItem.Format.CSVFormat.SkipRowsBeforeHeader.ValueInt64()
+			} else {
+				skipRowsBeforeHeader = nil
+			}
+			stringsCanBeNull := new(bool)
+			if !streamsItem.Format.CSVFormat.StringsCanBeNull.IsUnknown() && !streamsItem.Format.CSVFormat.StringsCanBeNull.IsNull() {
+				*stringsCanBeNull = streamsItem.Format.CSVFormat.StringsCanBeNull.ValueBool()
+			} else {
+				stringsCanBeNull = nil
+			}
+			var trueValues []string = []string{}
+			for _, trueValuesItem := range streamsItem.Format.CSVFormat.TrueValues {
+				trueValues = append(trueValues, trueValuesItem.ValueString())
+			}
+			sourceGoogleDriveUpdateCSVFormat = &shared.SourceGoogleDriveUpdateCSVFormat{
+				Delimiter:                    delimiter,
+				DoubleQuote:                  doubleQuote,
+				Encoding:                     encoding,
+				EscapeChar:                   escapeChar,
+				FalseValues:                  falseValues,
+				HeaderDefinition:             headerDefinition,
+				IgnoreErrorsOnFieldsMismatch: ignoreErrorsOnFieldsMismatch,
+				NullValues:                   nullValues,
+				QuoteChar:                    quoteChar,
+				SkipRowsAfterHeader:          skipRowsAfterHeader,
+				SkipRowsBeforeHeader:         skipRowsBeforeHeader,
+				StringsCanBeNull:             stringsCanBeNull,
+				TrueValues:                   trueValues,
+			}
+		}
+		if sourceGoogleDriveUpdateCSVFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateCSVFormat: sourceGoogleDriveUpdateCSVFormat,
+			}
+		}
+		var sourceGoogleDriveUpdateJsonlFormat *shared.SourceGoogleDriveUpdateJsonlFormat
+		if streamsItem.Format.JsonlFormat != nil {
+			sourceGoogleDriveUpdateJsonlFormat = &shared.SourceGoogleDriveUpdateJsonlFormat{}
+		}
+		if sourceGoogleDriveUpdateJsonlFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateJsonlFormat: sourceGoogleDriveUpdateJsonlFormat,
+			}
+		}
+		var sourceGoogleDriveUpdateParquetFormat *shared.SourceGoogleDriveUpdateParquetFormat
+		if streamsItem.Format.ParquetFormat != nil {
+			decimalAsFloat := new(bool)
+			if !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsUnknown() && !streamsItem.Format.ParquetFormat.DecimalAsFloat.IsNull() {
+				*decimalAsFloat = streamsItem.Format.ParquetFormat.DecimalAsFloat.ValueBool()
+			} else {
+				decimalAsFloat = nil
+			}
+			sourceGoogleDriveUpdateParquetFormat = &shared.SourceGoogleDriveUpdateParquetFormat{
+				DecimalAsFloat: decimalAsFloat,
+			}
+		}
+		if sourceGoogleDriveUpdateParquetFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateParquetFormat: sourceGoogleDriveUpdateParquetFormat,
+			}
+		}
+		var sourceGoogleDriveUpdateUnstructuredDocumentFormat *shared.SourceGoogleDriveUpdateUnstructuredDocumentFormat
+		if streamsItem.Format.UnstructuredDocumentFormat != nil {
+			var processing *shared.SourceGoogleDriveUpdateProcessing
+			if streamsItem.Format.UnstructuredDocumentFormat.Processing != nil {
+				var sourceGoogleDriveUpdateLocal *shared.SourceGoogleDriveUpdateLocal
+				if streamsItem.Format.UnstructuredDocumentFormat.Processing.Local != nil {
+					sourceGoogleDriveUpdateLocal = &shared.SourceGoogleDriveUpdateLocal{}
+				}
+				if sourceGoogleDriveUpdateLocal != nil {
+					processing = &shared.SourceGoogleDriveUpdateProcessing{
+						SourceGoogleDriveUpdateLocal: sourceGoogleDriveUpdateLocal,
+					}
+				}
+			}
+			skipUnprocessableFiles := new(bool)
+			if !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.IsNull() {
+				*skipUnprocessableFiles = streamsItem.Format.UnstructuredDocumentFormat.SkipUnprocessableFiles.ValueBool()
+			} else {
+				skipUnprocessableFiles = nil
+			}
+			strategy := new(shared.SourceGoogleDriveUpdateParsingStrategy)
+			if !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsUnknown() && !streamsItem.Format.UnstructuredDocumentFormat.Strategy.IsNull() {
+				*strategy = shared.SourceGoogleDriveUpdateParsingStrategy(streamsItem.Format.UnstructuredDocumentFormat.Strategy.ValueString())
+			} else {
+				strategy = nil
+			}
+			sourceGoogleDriveUpdateUnstructuredDocumentFormat = &shared.SourceGoogleDriveUpdateUnstructuredDocumentFormat{
+				Processing:             processing,
+				SkipUnprocessableFiles: skipUnprocessableFiles,
+				Strategy:               strategy,
+			}
+		}
+		if sourceGoogleDriveUpdateUnstructuredDocumentFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateUnstructuredDocumentFormat: sourceGoogleDriveUpdateUnstructuredDocumentFormat,
+			}
+		}
+		var sourceGoogleDriveUpdateExcelFormat *shared.SourceGoogleDriveUpdateExcelFormat
+		if streamsItem.Format.ExcelFormat != nil {
+			sourceGoogleDriveUpdateExcelFormat = &shared.SourceGoogleDriveUpdateExcelFormat{}
+		}
+		if sourceGoogleDriveUpdateExcelFormat != nil {
+			format = shared.SourceGoogleDriveUpdateFormat{
+				SourceGoogleDriveUpdateExcelFormat: sourceGoogleDriveUpdateExcelFormat,
+			}
+		}
+		var globs []string = []string{}
+		for _, globsItem := range streamsItem.Globs {
+			globs = append(globs, globsItem.ValueString())
+		}
+		inputSchema := new(string)
+		if !streamsItem.InputSchema.IsUnknown() && !streamsItem.InputSchema.IsNull() {
+			*inputSchema = streamsItem.InputSchema.ValueString()
+		} else {
+			inputSchema = nil
+		}
+		var name1 string
+		name1 = streamsItem.Name.ValueString()
+
+		recentNFilesToReadForSchemaDiscovery := new(int64)
+		if !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsUnknown() && !streamsItem.RecentNFilesToReadForSchemaDiscovery.IsNull() {
+			*recentNFilesToReadForSchemaDiscovery = streamsItem.RecentNFilesToReadForSchemaDiscovery.ValueInt64()
+		} else {
+			recentNFilesToReadForSchemaDiscovery = nil
+		}
+		schemaless := new(bool)
+		if !streamsItem.Schemaless.IsUnknown() && !streamsItem.Schemaless.IsNull() {
+			*schemaless = streamsItem.Schemaless.ValueBool()
+		} else {
+			schemaless = nil
+		}
+		validationPolicy := new(shared.SourceGoogleDriveUpdateValidationPolicy)
+		if !streamsItem.ValidationPolicy.IsUnknown() && !streamsItem.ValidationPolicy.IsNull() {
+			*validationPolicy = shared.SourceGoogleDriveUpdateValidationPolicy(streamsItem.ValidationPolicy.ValueString())
+		} else {
+			validationPolicy = nil
+		}
+		streams = append(streams, shared.SourceGoogleDriveUpdateFileBasedStreamConfig{
+			DaysToSyncIfHistoryIsFull:            daysToSyncIfHistoryIsFull,
+			Format:                               format,
+			Globs:                                globs,
+			InputSchema:                          inputSchema,
+			Name:                                 name1,
+			RecentNFilesToReadForSchemaDiscovery: recentNFilesToReadForSchemaDiscovery,
+			Schemaless:                           schemaless,
+			ValidationPolicy:                     validationPolicy,
+		})
+	}
 	configuration := shared.SourceGoogleDriveUpdate{
-		StartDate:      startDate,
-		Streams:        streams,
+		Credentials:    credentials,
 		DeliveryMethod: deliveryMethod,
 		FolderURL:      folderURL,
-		Credentials:    credentials,
+		StartDate:      startDate,
+		Streams:        streams,
 	}
 	out := shared.SourceGoogleDrivePutRequest{
 		Name:          name,

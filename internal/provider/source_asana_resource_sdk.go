@@ -61,22 +61,22 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaCreateRequest() *shared.So
 			}
 		}
 	}
-	var organizationExportIds []interface{} = []interface{}{}
-	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
-		var organizationExportIdsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
-		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
 	} else {
 		numWorkers = nil
 	}
+	var organizationExportIds []interface{} = []interface{}{}
+	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
+		var organizationExportIdsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
+		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
+	}
 	configuration := shared.SourceAsana{
 		Credentials:           credentials,
-		OrganizationExportIds: organizationExportIds,
 		NumWorkers:            numWorkers,
+		OrganizationExportIds: organizationExportIds,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -187,22 +187,22 @@ func (r *SourceAsanaResourceModel) ToSharedSourceAsanaPutRequest() *shared.Sourc
 			}
 		}
 	}
-	var organizationExportIds []interface{} = []interface{}{}
-	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
-		var organizationExportIdsTmp interface{}
-		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
-		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
 	} else {
 		numWorkers = nil
 	}
+	var organizationExportIds []interface{} = []interface{}{}
+	for _, organizationExportIdsItem := range r.Configuration.OrganizationExportIds {
+		var organizationExportIdsTmp interface{}
+		_ = json.Unmarshal([]byte(organizationExportIdsItem.ValueString()), &organizationExportIdsTmp)
+		organizationExportIds = append(organizationExportIds, organizationExportIdsTmp)
+	}
 	configuration := shared.SourceAsanaUpdate{
 		Credentials:           credentials,
-		OrganizationExportIds: organizationExportIds,
 		NumWorkers:            numWorkers,
+		OrganizationExportIds: organizationExportIds,
 	}
 	out := shared.SourceAsanaPutRequest{
 		Name:          name,

@@ -133,6 +133,10 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						Required:    true,
 						Description: `The full url of the Elasticsearch server`,
 					},
+					"path_prefix": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Path Prefix of the Elasticsearch server`,
+					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{

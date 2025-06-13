@@ -33,9 +33,9 @@ func (e *SourceDriftUpdateSchemasCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDriftUpdateAccessToken struct {
-	credentials *SourceDriftUpdateSchemasCredentials `const:"access_token" json:"credentials,omitempty"`
 	// Drift Access Token. See the <a href="https://docs.airbyte.com/integrations/sources/drift">docs</a> for more information on how to generate this key.
-	AccessToken string `json:"access_token"`
+	AccessToken string                               `json:"access_token"`
+	credentials *SourceDriftUpdateSchemasCredentials `const:"access_token" json:"credentials,omitempty"`
 }
 
 func (s SourceDriftUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (s *SourceDriftUpdateAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDriftUpdateAccessToken) GetCredentials() *SourceDriftUpdateSchemasCredentials {
-	return SourceDriftUpdateSchemasCredentialsAccessToken.ToPointer()
-}
-
 func (o *SourceDriftUpdateAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceDriftUpdateAccessToken) GetCredentials() *SourceDriftUpdateSchemasCredentials {
+	return SourceDriftUpdateSchemasCredentialsAccessToken.ToPointer()
 }
 
 type SourceDriftUpdateCredentials string
@@ -84,13 +84,13 @@ func (e *SourceDriftUpdateCredentials) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDriftUpdateOAuth20 struct {
-	credentials *SourceDriftUpdateCredentials `const:"oauth2.0" json:"credentials,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken string `json:"access_token"`
 	// The Client ID of your Drift developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Drift developer application.
-	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	ClientSecret string                        `json:"client_secret"`
+	credentials  *SourceDriftUpdateCredentials `const:"oauth2.0" json:"credentials,omitempty"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 }
@@ -106,8 +106,11 @@ func (s *SourceDriftUpdateOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDriftUpdateOAuth20) GetCredentials() *SourceDriftUpdateCredentials {
-	return SourceDriftUpdateCredentialsOauth20.ToPointer()
+func (o *SourceDriftUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceDriftUpdateOAuth20) GetClientID() string {
@@ -124,11 +127,8 @@ func (o *SourceDriftUpdateOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceDriftUpdateOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
+func (o *SourceDriftUpdateOAuth20) GetCredentials() *SourceDriftUpdateCredentials {
+	return SourceDriftUpdateCredentialsOauth20.ToPointer()
 }
 
 func (o *SourceDriftUpdateOAuth20) GetRefreshToken() string {

@@ -3,19 +3,12 @@
 package shared
 
 type SourceWorkableUpdate struct {
-	// Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
-	APIKey string `json:"api_key"`
 	// Your Workable account subdomain, e.g. https://your_account_subdomain.workable.com.
 	AccountSubdomain string `json:"account_subdomain"`
+	// Your Workable API Key. See <a href="https://workable.readme.io/reference/generate-an-access-token">here</a>.
+	APIKey string `json:"api_key"`
 	// Get data that was created since this date (format: YYYYMMDDTHHMMSSZ).
 	StartDate string `json:"start_date"`
-}
-
-func (o *SourceWorkableUpdate) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
 }
 
 func (o *SourceWorkableUpdate) GetAccountSubdomain() string {
@@ -23,6 +16,13 @@ func (o *SourceWorkableUpdate) GetAccountSubdomain() string {
 		return ""
 	}
 	return o.AccountSubdomain
+}
+
+func (o *SourceWorkableUpdate) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceWorkableUpdate) GetStartDate() string {

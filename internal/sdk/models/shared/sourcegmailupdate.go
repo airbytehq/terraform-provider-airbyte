@@ -8,8 +8,8 @@ import (
 
 type SourceGmailUpdate struct {
 	ClientID           string `json:"client_id"`
-	ClientSecret       string `json:"client_secret"`
 	ClientRefreshToken string `json:"client_refresh_token"`
+	ClientSecret       string `json:"client_secret"`
 	// Include drafts/messages from SPAM and TRASH in the results. Defaults to false.
 	IncludeSpamAndTrash *bool `default:"false" json:"include_spam_and_trash"`
 }
@@ -32,18 +32,18 @@ func (o *SourceGmailUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceGmailUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceGmailUpdate) GetClientRefreshToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientRefreshToken
+}
+
+func (o *SourceGmailUpdate) GetClientSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.ClientSecret
 }
 
 func (o *SourceGmailUpdate) GetIncludeSpamAndTrash() *bool {

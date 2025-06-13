@@ -92,12 +92,12 @@ func (e *Cimis) UnmarshalJSON(data []byte) error {
 
 type SourceCimis struct {
 	APIKey          string         `json:"api_key"`
-	TargetsType     TargetsType    `json:"targets_type"`
-	Targets         []any          `json:"targets"`
 	DailyDataItems  []any          `json:"daily_data_items,omitempty"`
+	EndDate         time.Time      `json:"end_date"`
 	HourlyDataItems []any          `json:"hourly_data_items,omitempty"`
 	StartDate       time.Time      `json:"start_date"`
-	EndDate         time.Time      `json:"end_date"`
+	Targets         []any          `json:"targets"`
+	TargetsType     TargetsType    `json:"targets_type"`
 	UnitOfMeasure   *UnitOfMeasure `json:"unit_of_measure,omitempty"`
 	sourceType      Cimis          `const:"cimis" json:"sourceType"`
 }
@@ -120,25 +120,18 @@ func (o *SourceCimis) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceCimis) GetTargetsType() TargetsType {
-	if o == nil {
-		return TargetsType("")
-	}
-	return o.TargetsType
-}
-
-func (o *SourceCimis) GetTargets() []any {
-	if o == nil {
-		return []any{}
-	}
-	return o.Targets
-}
-
 func (o *SourceCimis) GetDailyDataItems() []any {
 	if o == nil {
 		return nil
 	}
 	return o.DailyDataItems
+}
+
+func (o *SourceCimis) GetEndDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.EndDate
 }
 
 func (o *SourceCimis) GetHourlyDataItems() []any {
@@ -155,11 +148,18 @@ func (o *SourceCimis) GetStartDate() time.Time {
 	return o.StartDate
 }
 
-func (o *SourceCimis) GetEndDate() time.Time {
+func (o *SourceCimis) GetTargets() []any {
 	if o == nil {
-		return time.Time{}
+		return []any{}
 	}
-	return o.EndDate
+	return o.Targets
+}
+
+func (o *SourceCimis) GetTargetsType() TargetsType {
+	if o == nil {
+		return TargetsType("")
+	}
+	return o.TargetsType
 }
 
 func (o *SourceCimis) GetUnitOfMeasure() *UnitOfMeasure {

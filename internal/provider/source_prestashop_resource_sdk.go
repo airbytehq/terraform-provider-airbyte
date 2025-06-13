@@ -25,14 +25,14 @@ func (r *SourcePrestashopResourceModel) ToSharedSourcePrestashopCreateRequest() 
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var url string
 	url = r.Configuration.URL.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePrestashop{
 		AccessKey: accessKey,
-		URL:       url,
 		StartDate: startDate,
+		URL:       url,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,14 +107,14 @@ func (r *SourcePrestashopResourceModel) ToSharedSourcePrestashopPutRequest() *sh
 	var accessKey string
 	accessKey = r.Configuration.AccessKey.ValueString()
 
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	var url string
 	url = r.Configuration.URL.ValueString()
 
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePrestashopUpdate{
 		AccessKey: accessKey,
-		URL:       url,
 		StartDate: startDate,
+		URL:       url,
 	}
 	out := shared.SourcePrestashopPutRequest{
 		Name:          name,

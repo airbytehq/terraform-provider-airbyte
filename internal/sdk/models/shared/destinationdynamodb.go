@@ -155,14 +155,14 @@ func (e *DestinationDynamodbDynamodb) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationDynamodb struct {
-	// This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
-	DynamodbEndpoint *string `default:"" json:"dynamodb_endpoint"`
-	// The prefix to use when naming DynamoDB tables.
-	DynamodbTableNamePrefix string `json:"dynamodb_table_name_prefix"`
-	// The region of the DynamoDB.
-	DynamodbRegion *DestinationDynamodbDynamoDBRegion `default:"" json:"dynamodb_region"`
 	// The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
 	AccessKeyID string `json:"access_key_id"`
+	// This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
+	DynamodbEndpoint *string `default:"" json:"dynamodb_endpoint"`
+	// The region of the DynamoDB.
+	DynamodbRegion *DestinationDynamodbDynamoDBRegion `default:"" json:"dynamodb_region"`
+	// The prefix to use when naming DynamoDB tables.
+	DynamodbTableNamePrefix string `json:"dynamodb_table_name_prefix"`
 	// The corresponding secret to the access key id.
 	SecretAccessKey string                      `json:"secret_access_key"`
 	destinationType DestinationDynamodbDynamodb `const:"dynamodb" json:"destinationType"`
@@ -179,18 +179,18 @@ func (d *DestinationDynamodb) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationDynamodb) GetAccessKeyID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessKeyID
+}
+
 func (o *DestinationDynamodb) GetDynamodbEndpoint() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DynamodbEndpoint
-}
-
-func (o *DestinationDynamodb) GetDynamodbTableNamePrefix() string {
-	if o == nil {
-		return ""
-	}
-	return o.DynamodbTableNamePrefix
 }
 
 func (o *DestinationDynamodb) GetDynamodbRegion() *DestinationDynamodbDynamoDBRegion {
@@ -200,11 +200,11 @@ func (o *DestinationDynamodb) GetDynamodbRegion() *DestinationDynamodbDynamoDBRe
 	return o.DynamodbRegion
 }
 
-func (o *DestinationDynamodb) GetAccessKeyID() string {
+func (o *DestinationDynamodb) GetDynamodbTableNamePrefix() string {
 	if o == nil {
 		return ""
 	}
-	return o.AccessKeyID
+	return o.DynamodbTableNamePrefix
 }
 
 func (o *DestinationDynamodb) GetSecretAccessKey() string {

@@ -34,12 +34,12 @@ func (e *TyntecSms) UnmarshalJSON(data []byte) error {
 type SourceTyntecSms struct {
 	// Your Tyntec API Key. See <a href="https://www.tyntec.com/docs/docs-center-sms-api-quick-start">here</a>
 	APIKey string `json:"api_key"`
-	// The phone number of the SMS message recipient (international).
-	To string `json:"to"`
 	// The phone number of the SMS message sender (international).
 	From string `json:"from"`
 	// The content of the SMS message to be sent.
-	Message    *string   `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
+	// The phone number of the SMS message recipient (international).
+	To         string    `json:"to"`
 	sourceType TyntecSms `const:"tyntec-sms" json:"sourceType"`
 }
 
@@ -61,13 +61,6 @@ func (o *SourceTyntecSms) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceTyntecSms) GetTo() string {
-	if o == nil {
-		return ""
-	}
-	return o.To
-}
-
 func (o *SourceTyntecSms) GetFrom() string {
 	if o == nil {
 		return ""
@@ -80,6 +73,13 @@ func (o *SourceTyntecSms) GetMessage() *string {
 		return nil
 	}
 	return o.Message
+}
+
+func (o *SourceTyntecSms) GetTo() string {
+	if o == nil {
+		return ""
+	}
+	return o.To
 }
 
 func (o *SourceTyntecSms) GetSourceType() TyntecSms {

@@ -66,21 +66,14 @@ func (e *DestinationCobraUpdateUpdateMode) UnmarshalJSON(data []byte) error {
 
 // DestinationCobraUpdateStreamMapping - Describes the relationship between a source stream and a destination table and how to update the information.
 type DestinationCobraUpdateStreamMapping struct {
-	// The name for the input stream.
-	SourceStream string `json:"source_stream"`
 	// The name for the table to update the data in the destination.
 	DestinationTable string `json:"destination_table"`
+	// The name for the input stream.
+	SourceStream string `json:"source_stream"`
 	// How to update the data in the destination.
 	UpdateMode DestinationCobraUpdateUpdateMode `json:"update_mode"`
 	// Given the operation is an upsert, a field representing an external ID needs to be provided
 	UpsertKey *string `json:"upsert_key,omitempty"`
-}
-
-func (o *DestinationCobraUpdateStreamMapping) GetSourceStream() string {
-	if o == nil {
-		return ""
-	}
-	return o.SourceStream
 }
 
 func (o *DestinationCobraUpdateStreamMapping) GetDestinationTable() string {
@@ -88,6 +81,13 @@ func (o *DestinationCobraUpdateStreamMapping) GetDestinationTable() string {
 		return ""
 	}
 	return o.DestinationTable
+}
+
+func (o *DestinationCobraUpdateStreamMapping) GetSourceStream() string {
+	if o == nil {
+		return ""
+	}
+	return o.SourceStream
 }
 
 func (o *DestinationCobraUpdateStreamMapping) GetUpdateMode() DestinationCobraUpdateUpdateMode {
@@ -105,20 +105,20 @@ func (o *DestinationCobraUpdateStreamMapping) GetUpsertKey() *string {
 }
 
 type DestinationCobraUpdate struct {
-	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
-	ClientID string                          `json:"client_id"`
 	authType *DestinationCobraUpdateAuthType `const:"Client" json:"auth_type,omitempty"`
+	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
+	ClientID string `json:"client_id"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 	ClientSecret string `json:"client_secret"`
+	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
+	IsSandbox *bool `default:"false" json:"is_sandbox"`
+	// If enabled, the records content will be printed as part of the log in case of failure which allows for easier debugging.
+	PrintRecordContentOnError *bool `default:"false" json:"print_record_content_on_error"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 	RefreshToken   string                                `json:"refresh_token"`
 	StreamMappings []DestinationCobraUpdateStreamMapping `json:"stream_mappings,omitempty"`
 	// The order in which the streams should be synced. Streams are synced in the order they are listed. Only those streams will be synced so make sure all the input streams are configured here.
 	StreamOrder []string `json:"stream_order,omitempty"`
-	// If enabled, the records content will be printed as part of the log in case of failure which allows for easier debugging.
-	PrintRecordContentOnError *bool `default:"false" json:"print_record_content_on_error"`
-	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
-	IsSandbox *bool `default:"false" json:"is_sandbox"`
 }
 
 func (d DestinationCobraUpdate) MarshalJSON() ([]byte, error) {
@@ -132,6 +132,10 @@ func (d *DestinationCobraUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationCobraUpdate) GetAuthType() *DestinationCobraUpdateAuthType {
+	return DestinationCobraUpdateAuthTypeClient.ToPointer()
+}
+
 func (o *DestinationCobraUpdate) GetClientID() string {
 	if o == nil {
 		return ""
@@ -139,15 +143,25 @@ func (o *DestinationCobraUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *DestinationCobraUpdate) GetAuthType() *DestinationCobraUpdateAuthType {
-	return DestinationCobraUpdateAuthTypeClient.ToPointer()
-}
-
 func (o *DestinationCobraUpdate) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *DestinationCobraUpdate) GetIsSandbox() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsSandbox
+}
+
+func (o *DestinationCobraUpdate) GetPrintRecordContentOnError() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PrintRecordContentOnError
 }
 
 func (o *DestinationCobraUpdate) GetRefreshToken() string {
@@ -169,18 +183,4 @@ func (o *DestinationCobraUpdate) GetStreamOrder() []string {
 		return nil
 	}
 	return o.StreamOrder
-}
-
-func (o *DestinationCobraUpdate) GetPrintRecordContentOnError() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PrintRecordContentOnError
-}
-
-func (o *DestinationCobraUpdate) GetIsSandbox() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.IsSandbox
 }

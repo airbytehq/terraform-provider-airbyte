@@ -44,13 +44,13 @@ func (e *SourceFinnhubUpdateMarketNewsCategory) UnmarshalJSON(data []byte) error
 
 type SourceFinnhubUpdate struct {
 	// The API key to use for authentication
-	APIKey  string `json:"api_key"`
-	Symbols []any  `json:"symbols"`
+	APIKey string `json:"api_key"`
+	// More info: https://finnhub.io/docs/api/stock-symbols
+	Exchange *string `default:"US" json:"exchange"`
 	// This parameter can be 1 of the following values general, forex, crypto, merger.
 	MarketNewsCategory *SourceFinnhubUpdateMarketNewsCategory `default:"general" json:"market_news_category"`
-	// More info: https://finnhub.io/docs/api/stock-symbols
-	Exchange   *string   `default:"US" json:"exchange"`
-	StartDate2 time.Time `json:"start_date_2"`
+	StartDate2         time.Time                              `json:"start_date_2"`
+	Symbols            []any                                  `json:"symbols"`
 }
 
 func (s SourceFinnhubUpdate) MarshalJSON() ([]byte, error) {
@@ -71,11 +71,11 @@ func (o *SourceFinnhubUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceFinnhubUpdate) GetSymbols() []any {
+func (o *SourceFinnhubUpdate) GetExchange() *string {
 	if o == nil {
-		return []any{}
+		return nil
 	}
-	return o.Symbols
+	return o.Exchange
 }
 
 func (o *SourceFinnhubUpdate) GetMarketNewsCategory() *SourceFinnhubUpdateMarketNewsCategory {
@@ -85,16 +85,16 @@ func (o *SourceFinnhubUpdate) GetMarketNewsCategory() *SourceFinnhubUpdateMarket
 	return o.MarketNewsCategory
 }
 
-func (o *SourceFinnhubUpdate) GetExchange() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Exchange
-}
-
 func (o *SourceFinnhubUpdate) GetStartDate2() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate2
+}
+
+func (o *SourceFinnhubUpdate) GetSymbols() []any {
+	if o == nil {
+		return []any{}
+	}
+	return o.Symbols
 }

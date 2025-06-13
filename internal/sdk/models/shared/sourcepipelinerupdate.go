@@ -40,17 +40,10 @@ func (e *SourcePipelinerUpdateDataCenter) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePipelinerUpdate struct {
-	Username string                          `json:"username"`
 	Password *string                         `json:"password,omitempty"`
 	Service  SourcePipelinerUpdateDataCenter `json:"service"`
 	Spaceid  string                          `json:"spaceid"`
-}
-
-func (o *SourcePipelinerUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	Username string                          `json:"username"`
 }
 
 func (o *SourcePipelinerUpdate) GetPassword() *string {
@@ -72,4 +65,11 @@ func (o *SourcePipelinerUpdate) GetSpaceid() string {
 		return ""
 	}
 	return o.Spaceid
+}
+
+func (o *SourcePipelinerUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

@@ -7,10 +7,10 @@ import (
 )
 
 type DestinationTimeplusUpdate struct {
-	// Timeplus workspace endpoint
-	Endpoint *string `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
 	// Personal API key
 	Apikey string `json:"apikey"`
+	// Timeplus workspace endpoint
+	Endpoint *string `default:"https://us-west-2.timeplus.cloud/<workspace_id>" json:"endpoint"`
 }
 
 func (d DestinationTimeplusUpdate) MarshalJSON() ([]byte, error) {
@@ -24,16 +24,16 @@ func (d *DestinationTimeplusUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationTimeplusUpdate) GetEndpoint() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Endpoint
-}
-
 func (o *DestinationTimeplusUpdate) GetApikey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Apikey
+}
+
+func (o *DestinationTimeplusUpdate) GetEndpoint() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Endpoint
 }

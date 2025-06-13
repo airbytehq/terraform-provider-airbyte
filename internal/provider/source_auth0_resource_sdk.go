@@ -27,19 +27,19 @@ func (r *SourceAuth0ResourceModel) ToSharedSourceAuth0CreateRequest() *shared.So
 	var credentials shared.AuthenticationMethod
 	var oAuth2ConfidentialApplication *shared.OAuth2ConfidentialApplication
 	if r.Configuration.Credentials.OAuth2ConfidentialApplication != nil {
+		var audience string
+		audience = r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientSecret.ValueString()
 
-		var audience string
-		audience = r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
-
 		oAuth2ConfidentialApplication = &shared.OAuth2ConfidentialApplication{
+			Audience:     audience,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			Audience:     audience,
 		}
 	}
 	if oAuth2ConfidentialApplication != nil {
@@ -148,19 +148,19 @@ func (r *SourceAuth0ResourceModel) ToSharedSourceAuth0PutRequest() *shared.Sourc
 	var credentials shared.SourceAuth0UpdateAuthenticationMethod
 	var sourceAuth0UpdateOAuth2ConfidentialApplication *shared.SourceAuth0UpdateOAuth2ConfidentialApplication
 	if r.Configuration.Credentials.OAuth2ConfidentialApplication != nil {
+		var audience string
+		audience = r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
+
 		var clientID string
 		clientID = r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientID.ValueString()
 
 		var clientSecret string
 		clientSecret = r.Configuration.Credentials.OAuth2ConfidentialApplication.ClientSecret.ValueString()
 
-		var audience string
-		audience = r.Configuration.Credentials.OAuth2ConfidentialApplication.Audience.ValueString()
-
 		sourceAuth0UpdateOAuth2ConfidentialApplication = &shared.SourceAuth0UpdateOAuth2ConfidentialApplication{
+			Audience:     audience,
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			Audience:     audience,
 		}
 	}
 	if sourceAuth0UpdateOAuth2ConfidentialApplication != nil {

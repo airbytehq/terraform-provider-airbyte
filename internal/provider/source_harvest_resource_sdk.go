@@ -26,7 +26,6 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestCreateRequest() *share
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	var credentials *shared.SourceHarvestAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var authenticateViaHarvestOAuth *shared.AuthenticateViaHarvestOAuth
@@ -76,10 +75,11 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestCreateRequest() *share
 			}
 		}
 	}
+	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	configuration := shared.SourceHarvest{
 		AccountID:            accountID,
-		ReplicationStartDate: replicationStartDate,
 		Credentials:          credentials,
+		ReplicationStartDate: replicationStartDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -154,7 +154,6 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestPutRequest() *shared.S
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	var credentials *shared.SourceHarvestUpdateAuthenticationMechanism
 	if r.Configuration.Credentials != nil {
 		var sourceHarvestUpdateAuthenticateViaHarvestOAuth *shared.SourceHarvestUpdateAuthenticateViaHarvestOAuth
@@ -204,10 +203,11 @@ func (r *SourceHarvestResourceModel) ToSharedSourceHarvestPutRequest() *shared.S
 			}
 		}
 	}
+	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
 	configuration := shared.SourceHarvestUpdate{
 		AccountID:            accountID,
-		ReplicationStartDate: replicationStartDate,
 		Credentials:          credentials,
+		ReplicationStartDate: replicationStartDate,
 	}
 	out := shared.SourceHarvestPutRequest{
 		Name:          name,

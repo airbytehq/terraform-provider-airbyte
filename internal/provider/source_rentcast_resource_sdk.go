@@ -21,14 +21,26 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	address := new(string)
 	if !r.Configuration.Address.IsUnknown() && !r.Configuration.Address.IsNull() {
 		*address = r.Configuration.Address.ValueString()
 	} else {
 		address = nil
+	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	bathRooms := new(int64)
+	if !r.Configuration.BathRooms.IsUnknown() && !r.Configuration.BathRooms.IsNull() {
+		*bathRooms = r.Configuration.BathRooms.ValueInt64()
+	} else {
+		bathRooms = nil
+	}
+	bedrooms := new(float64)
+	if !r.Configuration.Bedrooms.IsUnknown() && !r.Configuration.Bedrooms.IsNull() {
+		*bedrooms, _ = r.Configuration.Bedrooms.ValueBigFloat().Float64()
+	} else {
+		bedrooms = nil
 	}
 	city := new(string)
 	if !r.Configuration.City.IsUnknown() && !r.Configuration.City.IsNull() {
@@ -36,17 +48,23 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastCreateRequest() *sha
 	} else {
 		city = nil
 	}
-	state := new(string)
-	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = r.Configuration.State.ValueString()
+	dataType := new(string)
+	if !r.Configuration.DataType.IsUnknown() && !r.Configuration.DataType.IsNull() {
+		*dataType = r.Configuration.DataType.ValueString()
 	} else {
-		state = nil
+		dataType = nil
 	}
-	zipcode := new(string)
-	if !r.Configuration.Zipcode.IsUnknown() && !r.Configuration.Zipcode.IsNull() {
-		*zipcode = r.Configuration.Zipcode.ValueString()
+	daysOld := new(string)
+	if !r.Configuration.DaysOld.IsUnknown() && !r.Configuration.DaysOld.IsNull() {
+		*daysOld = r.Configuration.DaysOld.ValueString()
 	} else {
-		zipcode = nil
+		daysOld = nil
+	}
+	historyRange := new(string)
+	if !r.Configuration.HistoryRange.IsUnknown() && !r.Configuration.HistoryRange.IsNull() {
+		*historyRange = r.Configuration.HistoryRange.ValueString()
+	} else {
+		historyRange = nil
 	}
 	latitude := new(string)
 	if !r.Configuration.Latitude.IsUnknown() && !r.Configuration.Latitude.IsNull() {
@@ -60,29 +78,23 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastCreateRequest() *sha
 	} else {
 		longitude = nil
 	}
-	radius := new(string)
-	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
-		*radius = r.Configuration.Radius.ValueString()
-	} else {
-		radius = nil
-	}
 	propertyType := new(string)
 	if !r.Configuration.PropertyType.IsUnknown() && !r.Configuration.PropertyType.IsNull() {
 		*propertyType = r.Configuration.PropertyType.ValueString()
 	} else {
 		propertyType = nil
 	}
-	bedrooms := new(float64)
-	if !r.Configuration.Bedrooms.IsUnknown() && !r.Configuration.Bedrooms.IsNull() {
-		*bedrooms, _ = r.Configuration.Bedrooms.ValueBigFloat().Float64()
+	radius := new(string)
+	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
+		*radius = r.Configuration.Radius.ValueString()
 	} else {
-		bedrooms = nil
+		radius = nil
 	}
-	bathRooms := new(int64)
-	if !r.Configuration.BathRooms.IsUnknown() && !r.Configuration.BathRooms.IsNull() {
-		*bathRooms = r.Configuration.BathRooms.ValueInt64()
+	state := new(string)
+	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
+		*state = r.Configuration.State.ValueString()
 	} else {
-		bathRooms = nil
+		state = nil
 	}
 	status := new(string)
 	if !r.Configuration.Status.IsUnknown() && !r.Configuration.Status.IsNull() {
@@ -90,40 +102,28 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastCreateRequest() *sha
 	} else {
 		status = nil
 	}
-	daysOld := new(string)
-	if !r.Configuration.DaysOld.IsUnknown() && !r.Configuration.DaysOld.IsNull() {
-		*daysOld = r.Configuration.DaysOld.ValueString()
+	zipcode := new(string)
+	if !r.Configuration.Zipcode.IsUnknown() && !r.Configuration.Zipcode.IsNull() {
+		*zipcode = r.Configuration.Zipcode.ValueString()
 	} else {
-		daysOld = nil
-	}
-	dataType := new(string)
-	if !r.Configuration.DataType.IsUnknown() && !r.Configuration.DataType.IsNull() {
-		*dataType = r.Configuration.DataType.ValueString()
-	} else {
-		dataType = nil
-	}
-	historyRange := new(string)
-	if !r.Configuration.HistoryRange.IsUnknown() && !r.Configuration.HistoryRange.IsNull() {
-		*historyRange = r.Configuration.HistoryRange.ValueString()
-	} else {
-		historyRange = nil
+		zipcode = nil
 	}
 	configuration := shared.SourceRentcast{
-		APIKey:       apiKey,
 		Address:      address,
+		APIKey:       apiKey,
+		BathRooms:    bathRooms,
+		Bedrooms:     bedrooms,
 		City:         city,
-		State:        state,
-		Zipcode:      zipcode,
+		DataType:     dataType,
+		DaysOld:      daysOld,
+		HistoryRange: historyRange,
 		Latitude:     latitude,
 		Longitude:    longitude,
-		Radius:       radius,
 		PropertyType: propertyType,
-		Bedrooms:     bedrooms,
-		BathRooms:    bathRooms,
+		Radius:       radius,
+		State:        state,
 		Status:       status,
-		DaysOld:      daysOld,
-		DataType:     dataType,
-		HistoryRange: historyRange,
+		Zipcode:      zipcode,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -195,14 +195,26 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	address := new(string)
 	if !r.Configuration.Address.IsUnknown() && !r.Configuration.Address.IsNull() {
 		*address = r.Configuration.Address.ValueString()
 	} else {
 		address = nil
+	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	bathRooms := new(int64)
+	if !r.Configuration.BathRooms.IsUnknown() && !r.Configuration.BathRooms.IsNull() {
+		*bathRooms = r.Configuration.BathRooms.ValueInt64()
+	} else {
+		bathRooms = nil
+	}
+	bedrooms := new(float64)
+	if !r.Configuration.Bedrooms.IsUnknown() && !r.Configuration.Bedrooms.IsNull() {
+		*bedrooms, _ = r.Configuration.Bedrooms.ValueBigFloat().Float64()
+	} else {
+		bedrooms = nil
 	}
 	city := new(string)
 	if !r.Configuration.City.IsUnknown() && !r.Configuration.City.IsNull() {
@@ -210,17 +222,23 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastPutRequest() *shared
 	} else {
 		city = nil
 	}
-	state := new(string)
-	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = r.Configuration.State.ValueString()
+	dataType := new(string)
+	if !r.Configuration.DataType.IsUnknown() && !r.Configuration.DataType.IsNull() {
+		*dataType = r.Configuration.DataType.ValueString()
 	} else {
-		state = nil
+		dataType = nil
 	}
-	zipcode := new(string)
-	if !r.Configuration.Zipcode.IsUnknown() && !r.Configuration.Zipcode.IsNull() {
-		*zipcode = r.Configuration.Zipcode.ValueString()
+	daysOld := new(string)
+	if !r.Configuration.DaysOld.IsUnknown() && !r.Configuration.DaysOld.IsNull() {
+		*daysOld = r.Configuration.DaysOld.ValueString()
 	} else {
-		zipcode = nil
+		daysOld = nil
+	}
+	historyRange := new(string)
+	if !r.Configuration.HistoryRange.IsUnknown() && !r.Configuration.HistoryRange.IsNull() {
+		*historyRange = r.Configuration.HistoryRange.ValueString()
+	} else {
+		historyRange = nil
 	}
 	latitude := new(string)
 	if !r.Configuration.Latitude.IsUnknown() && !r.Configuration.Latitude.IsNull() {
@@ -234,29 +252,23 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastPutRequest() *shared
 	} else {
 		longitude = nil
 	}
-	radius := new(string)
-	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
-		*radius = r.Configuration.Radius.ValueString()
-	} else {
-		radius = nil
-	}
 	propertyType := new(string)
 	if !r.Configuration.PropertyType.IsUnknown() && !r.Configuration.PropertyType.IsNull() {
 		*propertyType = r.Configuration.PropertyType.ValueString()
 	} else {
 		propertyType = nil
 	}
-	bedrooms := new(float64)
-	if !r.Configuration.Bedrooms.IsUnknown() && !r.Configuration.Bedrooms.IsNull() {
-		*bedrooms, _ = r.Configuration.Bedrooms.ValueBigFloat().Float64()
+	radius := new(string)
+	if !r.Configuration.Radius.IsUnknown() && !r.Configuration.Radius.IsNull() {
+		*radius = r.Configuration.Radius.ValueString()
 	} else {
-		bedrooms = nil
+		radius = nil
 	}
-	bathRooms := new(int64)
-	if !r.Configuration.BathRooms.IsUnknown() && !r.Configuration.BathRooms.IsNull() {
-		*bathRooms = r.Configuration.BathRooms.ValueInt64()
+	state := new(string)
+	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
+		*state = r.Configuration.State.ValueString()
 	} else {
-		bathRooms = nil
+		state = nil
 	}
 	status := new(string)
 	if !r.Configuration.Status.IsUnknown() && !r.Configuration.Status.IsNull() {
@@ -264,40 +276,28 @@ func (r *SourceRentcastResourceModel) ToSharedSourceRentcastPutRequest() *shared
 	} else {
 		status = nil
 	}
-	daysOld := new(string)
-	if !r.Configuration.DaysOld.IsUnknown() && !r.Configuration.DaysOld.IsNull() {
-		*daysOld = r.Configuration.DaysOld.ValueString()
+	zipcode := new(string)
+	if !r.Configuration.Zipcode.IsUnknown() && !r.Configuration.Zipcode.IsNull() {
+		*zipcode = r.Configuration.Zipcode.ValueString()
 	} else {
-		daysOld = nil
-	}
-	dataType := new(string)
-	if !r.Configuration.DataType.IsUnknown() && !r.Configuration.DataType.IsNull() {
-		*dataType = r.Configuration.DataType.ValueString()
-	} else {
-		dataType = nil
-	}
-	historyRange := new(string)
-	if !r.Configuration.HistoryRange.IsUnknown() && !r.Configuration.HistoryRange.IsNull() {
-		*historyRange = r.Configuration.HistoryRange.ValueString()
-	} else {
-		historyRange = nil
+		zipcode = nil
 	}
 	configuration := shared.SourceRentcastUpdate{
-		APIKey:       apiKey,
 		Address:      address,
+		APIKey:       apiKey,
+		BathRooms:    bathRooms,
+		Bedrooms:     bedrooms,
 		City:         city,
-		State:        state,
-		Zipcode:      zipcode,
+		DataType:     dataType,
+		DaysOld:      daysOld,
+		HistoryRange: historyRange,
 		Latitude:     latitude,
 		Longitude:    longitude,
-		Radius:       radius,
 		PropertyType: propertyType,
-		Bedrooms:     bedrooms,
-		BathRooms:    bathRooms,
+		Radius:       radius,
+		State:        state,
 		Status:       status,
-		DaysOld:      daysOld,
-		DataType:     dataType,
-		HistoryRange: historyRange,
+		Zipcode:      zipcode,
 	}
 	out := shared.SourceRentcastPutRequest{
 		Name:          name,

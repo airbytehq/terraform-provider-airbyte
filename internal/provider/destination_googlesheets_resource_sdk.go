@@ -21,9 +21,6 @@ func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsCr
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
 	var credentials shared.DestinationGoogleSheetsAuthentication
 	var destinationGoogleSheetsAuthenticateViaGoogleOAuth *shared.DestinationGoogleSheetsAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -61,9 +58,12 @@ func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsCr
 			DestinationGoogleSheetsServiceAccountKeyAuthentication: destinationGoogleSheetsServiceAccountKeyAuthentication,
 		}
 	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
 	configuration := shared.DestinationGoogleSheets{
-		SpreadsheetID: spreadsheetID,
 		Credentials:   credentials,
+		SpreadsheetID: spreadsheetID,
 	}
 	out := shared.DestinationGoogleSheetsCreateRequest{
 		Name:          name,
@@ -128,9 +128,6 @@ func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsPu
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var spreadsheetID string
-	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
-
 	var credentials shared.DestinationGoogleSheetsUpdateAuthentication
 	var destinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth *shared.DestinationGoogleSheetsUpdateAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.AuthenticateViaGoogleOAuth != nil {
@@ -168,9 +165,12 @@ func (r *DestinationGoogleSheetsResourceModel) ToSharedDestinationGoogleSheetsPu
 			DestinationGoogleSheetsUpdateServiceAccountKeyAuthentication: destinationGoogleSheetsUpdateServiceAccountKeyAuthentication,
 		}
 	}
+	var spreadsheetID string
+	spreadsheetID = r.Configuration.SpreadsheetID.ValueString()
+
 	configuration := shared.DestinationGoogleSheetsUpdate{
-		SpreadsheetID: spreadsheetID,
 		Credentials:   credentials,
+		SpreadsheetID: spreadsheetID,
 	}
 	out := shared.DestinationGoogleSheetsPutRequest{
 		Name:          name,

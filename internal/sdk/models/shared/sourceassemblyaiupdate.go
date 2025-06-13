@@ -38,12 +38,12 @@ func (e *SourceAssemblyaiUpdateSubtitleFormat) UnmarshalJSON(data []byte) error 
 
 type SourceAssemblyaiUpdate struct {
 	// Your AssemblyAI API key. You can find it in the AssemblyAI dashboard at https://www.assemblyai.com/app/api-keys.
-	APIKey    string    `json:"api_key"`
+	APIKey string `json:"api_key"`
+	// The request ID for LeMur responses
+	RequestID *string   `json:"request_id,omitempty"`
 	StartDate time.Time `json:"start_date"`
 	// The subtitle format for transcript_subtitle stream
 	SubtitleFormat *SourceAssemblyaiUpdateSubtitleFormat `default:"srt" json:"subtitle_format"`
-	// The request ID for LeMur responses
-	RequestID *string `json:"request_id,omitempty"`
 }
 
 func (s SourceAssemblyaiUpdate) MarshalJSON() ([]byte, error) {
@@ -64,6 +64,13 @@ func (o *SourceAssemblyaiUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
+func (o *SourceAssemblyaiUpdate) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
+}
+
 func (o *SourceAssemblyaiUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -76,11 +83,4 @@ func (o *SourceAssemblyaiUpdate) GetSubtitleFormat() *SourceAssemblyaiUpdateSubt
 		return nil
 	}
 	return o.SubtitleFormat
-}
-
-func (o *SourceAssemblyaiUpdate) GetRequestID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RequestID
 }

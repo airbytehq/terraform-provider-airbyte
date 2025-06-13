@@ -71,7 +71,6 @@ func (r *DeclarativeSourceDefinitionResource) Schema(ctx context.Context, req re
 			},
 			"version": schema.Int64Attribute{
 				Computed: true,
-				Optional: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

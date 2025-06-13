@@ -25,19 +25,19 @@ func (r *SourceCartResourceModel) ToSharedSourceCartCreateRequest() *shared.Sour
 	if r.Configuration.Credentials != nil {
 		var centralAPIRouter *shared.CentralAPIRouter
 		if r.Configuration.Credentials.CentralAPIRouter != nil {
+			var siteID string
+			siteID = r.Configuration.Credentials.CentralAPIRouter.SiteID.ValueString()
+
 			var userName string
 			userName = r.Configuration.Credentials.CentralAPIRouter.UserName.ValueString()
 
 			var userSecret string
 			userSecret = r.Configuration.Credentials.CentralAPIRouter.UserSecret.ValueString()
 
-			var siteID string
-			siteID = r.Configuration.Credentials.CentralAPIRouter.SiteID.ValueString()
-
 			centralAPIRouter = &shared.CentralAPIRouter{
+				SiteID:     siteID,
 				UserName:   userName,
 				UserSecret: userSecret,
-				SiteID:     siteID,
 			}
 		}
 		if centralAPIRouter != nil {
@@ -145,19 +145,19 @@ func (r *SourceCartResourceModel) ToSharedSourceCartPutRequest() *shared.SourceC
 	if r.Configuration.Credentials != nil {
 		var sourceCartUpdateCentralAPIRouter *shared.SourceCartUpdateCentralAPIRouter
 		if r.Configuration.Credentials.CentralAPIRouter != nil {
+			var siteID string
+			siteID = r.Configuration.Credentials.CentralAPIRouter.SiteID.ValueString()
+
 			var userName string
 			userName = r.Configuration.Credentials.CentralAPIRouter.UserName.ValueString()
 
 			var userSecret string
 			userSecret = r.Configuration.Credentials.CentralAPIRouter.UserSecret.ValueString()
 
-			var siteID string
-			siteID = r.Configuration.Credentials.CentralAPIRouter.SiteID.ValueString()
-
 			sourceCartUpdateCentralAPIRouter = &shared.SourceCartUpdateCentralAPIRouter{
+				SiteID:     siteID,
 				UserName:   userName,
 				UserSecret: userSecret,
-				SiteID:     siteID,
 			}
 		}
 		if sourceCartUpdateCentralAPIRouter != nil {

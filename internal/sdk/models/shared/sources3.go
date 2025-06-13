@@ -10,34 +10,162 @@ import (
 	"time"
 )
 
-// SourceS3ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-type SourceS3ValidationPolicy string
+type SourceS3SchemasDeliveryType string
 
 const (
-	SourceS3ValidationPolicyEmitRecord      SourceS3ValidationPolicy = "Emit Record"
-	SourceS3ValidationPolicySkipRecord      SourceS3ValidationPolicy = "Skip Record"
-	SourceS3ValidationPolicyWaitForDiscover SourceS3ValidationPolicy = "Wait for Discover"
+	SourceS3SchemasDeliveryTypeUseFileTransfer SourceS3SchemasDeliveryType = "use_file_transfer"
 )
 
-func (e SourceS3ValidationPolicy) ToPointer() *SourceS3ValidationPolicy {
+func (e SourceS3SchemasDeliveryType) ToPointer() *SourceS3SchemasDeliveryType {
 	return &e
 }
-func (e *SourceS3ValidationPolicy) UnmarshalJSON(data []byte) error {
+func (e *SourceS3SchemasDeliveryType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Emit Record":
-		fallthrough
-	case "Skip Record":
-		fallthrough
-	case "Wait for Discover":
-		*e = SourceS3ValidationPolicy(v)
+	case "use_file_transfer":
+		*e = SourceS3SchemasDeliveryType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3ValidationPolicy: %v", v)
+		return fmt.Errorf("invalid value for SourceS3SchemasDeliveryType: %v", v)
 	}
+}
+
+// SourceS3CopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
+type SourceS3CopyRawFiles struct {
+	deliveryType *SourceS3SchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
+	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
+	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
+}
+
+func (s SourceS3CopyRawFiles) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceS3CopyRawFiles) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceS3CopyRawFiles) GetDeliveryType() *SourceS3SchemasDeliveryType {
+	return SourceS3SchemasDeliveryTypeUseFileTransfer.ToPointer()
+}
+
+func (o *SourceS3CopyRawFiles) GetPreserveDirectoryStructure() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreserveDirectoryStructure
+}
+
+type SourceS3DeliveryType string
+
+const (
+	SourceS3DeliveryTypeUseRecordsTransfer SourceS3DeliveryType = "use_records_transfer"
+)
+
+func (e SourceS3DeliveryType) ToPointer() *SourceS3DeliveryType {
+	return &e
+}
+func (e *SourceS3DeliveryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "use_records_transfer":
+		*e = SourceS3DeliveryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3DeliveryType: %v", v)
+	}
+}
+
+// SourceS3ReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
+type SourceS3ReplicateRecords struct {
+	deliveryType *SourceS3DeliveryType `const:"use_records_transfer" json:"delivery_type"`
+}
+
+func (s SourceS3ReplicateRecords) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceS3ReplicateRecords) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceS3ReplicateRecords) GetDeliveryType() *SourceS3DeliveryType {
+	return SourceS3DeliveryTypeUseRecordsTransfer.ToPointer()
+}
+
+type SourceS3DeliveryMethodType string
+
+const (
+	SourceS3DeliveryMethodTypeSourceS3ReplicateRecords SourceS3DeliveryMethodType = "source-s3_Replicate Records"
+	SourceS3DeliveryMethodTypeSourceS3CopyRawFiles     SourceS3DeliveryMethodType = "source-s3_Copy Raw Files"
+)
+
+type SourceS3DeliveryMethod struct {
+	SourceS3ReplicateRecords *SourceS3ReplicateRecords `queryParam:"inline"`
+	SourceS3CopyRawFiles     *SourceS3CopyRawFiles     `queryParam:"inline"`
+
+	Type SourceS3DeliveryMethodType
+}
+
+func CreateSourceS3DeliveryMethodSourceS3ReplicateRecords(sourceS3ReplicateRecords SourceS3ReplicateRecords) SourceS3DeliveryMethod {
+	typ := SourceS3DeliveryMethodTypeSourceS3ReplicateRecords
+
+	return SourceS3DeliveryMethod{
+		SourceS3ReplicateRecords: &sourceS3ReplicateRecords,
+		Type:                     typ,
+	}
+}
+
+func CreateSourceS3DeliveryMethodSourceS3CopyRawFiles(sourceS3CopyRawFiles SourceS3CopyRawFiles) SourceS3DeliveryMethod {
+	typ := SourceS3DeliveryMethodTypeSourceS3CopyRawFiles
+
+	return SourceS3DeliveryMethod{
+		SourceS3CopyRawFiles: &sourceS3CopyRawFiles,
+		Type:                 typ,
+	}
+}
+
+func (u *SourceS3DeliveryMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceS3ReplicateRecords SourceS3ReplicateRecords = SourceS3ReplicateRecords{}
+	if err := utils.UnmarshalJSON(data, &sourceS3ReplicateRecords, "", true, true); err == nil {
+		u.SourceS3ReplicateRecords = &sourceS3ReplicateRecords
+		u.Type = SourceS3DeliveryMethodTypeSourceS3ReplicateRecords
+		return nil
+	}
+
+	var sourceS3CopyRawFiles SourceS3CopyRawFiles = SourceS3CopyRawFiles{}
+	if err := utils.UnmarshalJSON(data, &sourceS3CopyRawFiles, "", true, true); err == nil {
+		u.SourceS3CopyRawFiles = &sourceS3CopyRawFiles
+		u.Type = SourceS3DeliveryMethodTypeSourceS3CopyRawFiles
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3DeliveryMethod", string(data))
+}
+
+func (u SourceS3DeliveryMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceS3ReplicateRecords != nil {
+		return utils.MarshalJSON(u.SourceS3ReplicateRecords, "", true)
+	}
+
+	if u.SourceS3CopyRawFiles != nil {
+		return utils.MarshalJSON(u.SourceS3CopyRawFiles, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceS3DeliveryMethod: all fields are null")
 }
 
 type SourceS3SchemasStreamsFormatFormat6Filetype string
@@ -102,39 +230,6 @@ func (e *SourceS3SchemasStreamsFormatFormatFiletype) UnmarshalJSON(data []byte) 
 		return nil
 	default:
 		return fmt.Errorf("invalid value for SourceS3SchemasStreamsFormatFormatFiletype: %v", v)
-	}
-}
-
-// SourceS3ParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
-type SourceS3ParsingStrategy string
-
-const (
-	SourceS3ParsingStrategyAuto    SourceS3ParsingStrategy = "auto"
-	SourceS3ParsingStrategyFast    SourceS3ParsingStrategy = "fast"
-	SourceS3ParsingStrategyOcrOnly SourceS3ParsingStrategy = "ocr_only"
-	SourceS3ParsingStrategyHiRes   SourceS3ParsingStrategy = "hi_res"
-)
-
-func (e SourceS3ParsingStrategy) ToPointer() *SourceS3ParsingStrategy {
-	return &e
-}
-func (e *SourceS3ParsingStrategy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "auto":
-		fallthrough
-	case "fast":
-		fallthrough
-	case "ocr_only":
-		fallthrough
-	case "hi_res":
-		*e = SourceS3ParsingStrategy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3ParsingStrategy: %v", v)
 	}
 }
 
@@ -223,15 +318,48 @@ func (u SourceS3Processing) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceS3Processing: all fields are null")
 }
 
+// SourceS3ParsingStrategy - The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
+type SourceS3ParsingStrategy string
+
+const (
+	SourceS3ParsingStrategyAuto    SourceS3ParsingStrategy = "auto"
+	SourceS3ParsingStrategyFast    SourceS3ParsingStrategy = "fast"
+	SourceS3ParsingStrategyOcrOnly SourceS3ParsingStrategy = "ocr_only"
+	SourceS3ParsingStrategyHiRes   SourceS3ParsingStrategy = "hi_res"
+)
+
+func (e SourceS3ParsingStrategy) ToPointer() *SourceS3ParsingStrategy {
+	return &e
+}
+func (e *SourceS3ParsingStrategy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "auto":
+		fallthrough
+	case "fast":
+		fallthrough
+	case "ocr_only":
+		fallthrough
+	case "hi_res":
+		*e = SourceS3ParsingStrategy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3ParsingStrategy: %v", v)
+	}
+}
+
 // SourceS3UnstructuredDocumentFormat - Extract text from document formats (.pdf, .docx, .md, .pptx) and emit as one record per file.
 type SourceS3UnstructuredDocumentFormat struct {
 	filetype *SourceS3SchemasStreamsFormatFormatFiletype `const:"unstructured" json:"filetype"`
+	// Processing configuration
+	Processing *SourceS3Processing `json:"processing,omitempty"`
 	// If true, skip files that cannot be parsed and pass the error message along as the _ab_source_file_parse_error field. If false, fail the sync.
 	SkipUnprocessableFiles *bool `default:"true" json:"skip_unprocessable_files"`
 	// The strategy used to parse documents. `fast` extracts text directly from the document which doesn't work for all files. `ocr_only` is more reliable, but slower. `hi_res` is the most reliable, but requires an API key and a hosted instance of unstructured and can't be used with local mode. See the unstructured.io documentation for more details: https://unstructured-io.github.io/unstructured/core/partition.html#partition-pdf
 	Strategy *SourceS3ParsingStrategy `default:"auto" json:"strategy"`
-	// Processing configuration
-	Processing *SourceS3Processing `json:"processing,omitempty"`
 }
 
 func (s SourceS3UnstructuredDocumentFormat) MarshalJSON() ([]byte, error) {
@@ -249,6 +377,13 @@ func (o *SourceS3UnstructuredDocumentFormat) GetFiletype() *SourceS3SchemasStrea
 	return SourceS3SchemasStreamsFormatFormatFiletypeUnstructured.ToPointer()
 }
 
+func (o *SourceS3UnstructuredDocumentFormat) GetProcessing() *SourceS3Processing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
 func (o *SourceS3UnstructuredDocumentFormat) GetSkipUnprocessableFiles() *bool {
 	if o == nil {
 		return nil
@@ -261,13 +396,6 @@ func (o *SourceS3UnstructuredDocumentFormat) GetStrategy() *SourceS3ParsingStrat
 		return nil
 	}
 	return o.Strategy
-}
-
-func (o *SourceS3UnstructuredDocumentFormat) GetProcessing() *SourceS3Processing {
-	if o == nil {
-		return nil
-	}
-	return o.Processing
 }
 
 type SourceS3SchemasStreamsFormatFiletype string
@@ -294,9 +422,9 @@ func (e *SourceS3SchemasStreamsFormatFiletype) UnmarshalJSON(data []byte) error 
 }
 
 type SourceS3ParquetFormat struct {
-	filetype *SourceS3SchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
-	DecimalAsFloat *bool `default:"false" json:"decimal_as_float"`
+	DecimalAsFloat *bool                                 `default:"false" json:"decimal_as_float"`
+	filetype       *SourceS3SchemasStreamsFormatFiletype `const:"parquet" json:"filetype"`
 }
 
 func (s SourceS3ParquetFormat) MarshalJSON() ([]byte, error) {
@@ -310,15 +438,15 @@ func (s *SourceS3ParquetFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3ParquetFormat) GetFiletype() *SourceS3SchemasStreamsFormatFiletype {
-	return SourceS3SchemasStreamsFormatFiletypeParquet.ToPointer()
-}
-
 func (o *SourceS3ParquetFormat) GetDecimalAsFloat() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DecimalAsFloat
+}
+
+func (o *SourceS3ParquetFormat) GetFiletype() *SourceS3SchemasStreamsFormatFiletype {
+	return SourceS3SchemasStreamsFormatFiletypeParquet.ToPointer()
 }
 
 type SourceS3SchemasStreamsFiletype string
@@ -410,9 +538,9 @@ func (e *SourceS3SchemasStreamsHeaderDefinitionType) UnmarshalJSON(data []byte) 
 }
 
 type SourceS3UserProvided struct {
-	headerDefinitionType *SourceS3SchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 	// The column names that will be used while emitting the CSV records
-	ColumnNames []string `json:"column_names"`
+	ColumnNames          []string                                    `json:"column_names"`
+	headerDefinitionType *SourceS3SchemasStreamsHeaderDefinitionType `const:"User Provided" json:"header_definition_type"`
 }
 
 func (s SourceS3UserProvided) MarshalJSON() ([]byte, error) {
@@ -426,15 +554,15 @@ func (s *SourceS3UserProvided) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3UserProvided) GetHeaderDefinitionType() *SourceS3SchemasStreamsHeaderDefinitionType {
-	return SourceS3SchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
-}
-
 func (o *SourceS3UserProvided) GetColumnNames() []string {
 	if o == nil {
 		return []string{}
 	}
 	return o.ColumnNames
+}
+
+func (o *SourceS3UserProvided) GetHeaderDefinitionType() *SourceS3SchemasStreamsHeaderDefinitionType {
+	return SourceS3SchemasStreamsHeaderDefinitionTypeUserProvided.ToPointer()
 }
 
 type SourceS3SchemasHeaderDefinitionType string
@@ -608,33 +736,33 @@ func (u SourceS3CSVHeaderDefinition) MarshalJSON() ([]byte, error) {
 }
 
 type SourceS3CSVFormat struct {
-	filetype *SourceS3SchemasFiletype `const:"csv" json:"filetype"`
 	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `default:"," json:"delimiter"`
-	// The character used for quoting CSV values. To disallow quoting, make this field blank.
-	QuoteChar *string `default:"\"" json:"quote_char"`
-	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string `json:"escape_char,omitempty"`
-	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
-	Encoding *string `default:"utf8" json:"encoding"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `default:"true" json:"double_quote"`
-	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
-	NullValues []string `json:"null_values,omitempty"`
-	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
-	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
-	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
-	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
-	// The number of rows to skip after the header row.
-	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `default:"utf8" json:"encoding"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                 `json:"false_values,omitempty"`
+	filetype    *SourceS3SchemasFiletype `const:"csv" json:"filetype"`
 	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
 	HeaderDefinition *SourceS3CSVHeaderDefinition `json:"header_definition,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as true values.
-	TrueValues []string `json:"true_values,omitempty"`
-	// A set of case-sensitive strings that should be interpreted as false values.
-	FalseValues []string `json:"false_values,omitempty"`
 	// Whether to ignore errors that occur when the number of fields in the CSV does not match the number of columns in the schema.
 	IgnoreErrorsOnFieldsMismatch *bool `default:"false" json:"ignore_errors_on_fields_mismatch"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `default:"\"" json:"quote_char"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `default:"0" json:"skip_rows_after_header"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `default:"0" json:"skip_rows_before_header"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `default:"true" json:"strings_can_be_null"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
 }
 
 func (s SourceS3CSVFormat) MarshalJSON() ([]byte, error) {
@@ -648,36 +776,11 @@ func (s *SourceS3CSVFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3CSVFormat) GetFiletype() *SourceS3SchemasFiletype {
-	return SourceS3SchemasFiletypeCsv.ToPointer()
-}
-
 func (o *SourceS3CSVFormat) GetDelimiter() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Delimiter
-}
-
-func (o *SourceS3CSVFormat) GetQuoteChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QuoteChar
-}
-
-func (o *SourceS3CSVFormat) GetEscapeChar() *string {
-	if o == nil {
-		return nil
-	}
-	return o.EscapeChar
-}
-
-func (o *SourceS3CSVFormat) GetEncoding() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Encoding
 }
 
 func (o *SourceS3CSVFormat) GetDoubleQuote() *bool {
@@ -687,46 +790,18 @@ func (o *SourceS3CSVFormat) GetDoubleQuote() *bool {
 	return o.DoubleQuote
 }
 
-func (o *SourceS3CSVFormat) GetNullValues() []string {
+func (o *SourceS3CSVFormat) GetEncoding() *string {
 	if o == nil {
 		return nil
 	}
-	return o.NullValues
+	return o.Encoding
 }
 
-func (o *SourceS3CSVFormat) GetStringsCanBeNull() *bool {
+func (o *SourceS3CSVFormat) GetEscapeChar() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StringsCanBeNull
-}
-
-func (o *SourceS3CSVFormat) GetSkipRowsBeforeHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsBeforeHeader
-}
-
-func (o *SourceS3CSVFormat) GetSkipRowsAfterHeader() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SkipRowsAfterHeader
-}
-
-func (o *SourceS3CSVFormat) GetHeaderDefinition() *SourceS3CSVHeaderDefinition {
-	if o == nil {
-		return nil
-	}
-	return o.HeaderDefinition
-}
-
-func (o *SourceS3CSVFormat) GetTrueValues() []string {
-	if o == nil {
-		return nil
-	}
-	return o.TrueValues
+	return o.EscapeChar
 }
 
 func (o *SourceS3CSVFormat) GetFalseValues() []string {
@@ -736,11 +811,64 @@ func (o *SourceS3CSVFormat) GetFalseValues() []string {
 	return o.FalseValues
 }
 
+func (o *SourceS3CSVFormat) GetFiletype() *SourceS3SchemasFiletype {
+	return SourceS3SchemasFiletypeCsv.ToPointer()
+}
+
+func (o *SourceS3CSVFormat) GetHeaderDefinition() *SourceS3CSVHeaderDefinition {
+	if o == nil {
+		return nil
+	}
+	return o.HeaderDefinition
+}
+
 func (o *SourceS3CSVFormat) GetIgnoreErrorsOnFieldsMismatch() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IgnoreErrorsOnFieldsMismatch
+}
+
+func (o *SourceS3CSVFormat) GetNullValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.NullValues
+}
+
+func (o *SourceS3CSVFormat) GetQuoteChar() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QuoteChar
+}
+
+func (o *SourceS3CSVFormat) GetSkipRowsAfterHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsAfterHeader
+}
+
+func (o *SourceS3CSVFormat) GetSkipRowsBeforeHeader() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SkipRowsBeforeHeader
+}
+
+func (o *SourceS3CSVFormat) GetStringsCanBeNull() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StringsCanBeNull
+}
+
+func (o *SourceS3CSVFormat) GetTrueValues() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TrueValues
 }
 
 type SourceS3Filetype string
@@ -767,9 +895,9 @@ func (e *SourceS3Filetype) UnmarshalJSON(data []byte) error {
 }
 
 type SourceS3AvroFormat struct {
-	filetype *SourceS3Filetype `const:"avro" json:"filetype"`
 	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
-	DoubleAsString *bool `default:"false" json:"double_as_string"`
+	DoubleAsString *bool             `default:"false" json:"double_as_string"`
+	filetype       *SourceS3Filetype `const:"avro" json:"filetype"`
 }
 
 func (s SourceS3AvroFormat) MarshalJSON() ([]byte, error) {
@@ -783,15 +911,15 @@ func (s *SourceS3AvroFormat) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3AvroFormat) GetFiletype() *SourceS3Filetype {
-	return SourceS3FiletypeAvro.ToPointer()
-}
-
 func (o *SourceS3AvroFormat) GetDoubleAsString() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.DoubleAsString
+}
+
+func (o *SourceS3AvroFormat) GetFiletype() *SourceS3Filetype {
+	return SourceS3FiletypeAvro.ToPointer()
 }
 
 type SourceS3FormatType string
@@ -946,23 +1074,53 @@ func (u SourceS3Format) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SourceS3Format: all fields are null")
 }
 
+// SourceS3ValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceS3ValidationPolicy string
+
+const (
+	SourceS3ValidationPolicyEmitRecord      SourceS3ValidationPolicy = "Emit Record"
+	SourceS3ValidationPolicySkipRecord      SourceS3ValidationPolicy = "Skip Record"
+	SourceS3ValidationPolicyWaitForDiscover SourceS3ValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceS3ValidationPolicy) ToPointer() *SourceS3ValidationPolicy {
+	return &e
+}
+func (e *SourceS3ValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceS3ValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3ValidationPolicy: %v", v)
+	}
+}
+
 type SourceS3FileBasedStreamConfig struct {
-	// The name of the stream.
-	Name string `json:"name"`
-	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
-	Globs []string `json:"globs,omitempty"`
-	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
-	ValidationPolicy *SourceS3ValidationPolicy `default:"Emit Record" json:"validation_policy"`
-	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
-	InputSchema *string `json:"input_schema,omitempty"`
 	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
 	DaysToSyncIfHistoryIsFull *int64 `default:"3" json:"days_to_sync_if_history_is_full"`
 	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
 	Format SourceS3Format `json:"format"`
-	// When enabled, syncs will not validate or structure records against the stream's schema.
-	Schemaless *bool `default:"false" json:"schemaless"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
 	// The number of resent files which will be used to discover the schema for this stream.
 	RecentNFilesToReadForSchemaDiscovery *int64 `json:"recent_n_files_to_read_for_schema_discovery,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `default:"false" json:"schemaless"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceS3ValidationPolicy `default:"Emit Record" json:"validation_policy"`
 }
 
 func (s SourceS3FileBasedStreamConfig) MarshalJSON() ([]byte, error) {
@@ -974,34 +1132,6 @@ func (s *SourceS3FileBasedStreamConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceS3FileBasedStreamConfig) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *SourceS3FileBasedStreamConfig) GetGlobs() []string {
-	if o == nil {
-		return nil
-	}
-	return o.Globs
-}
-
-func (o *SourceS3FileBasedStreamConfig) GetValidationPolicy() *SourceS3ValidationPolicy {
-	if o == nil {
-		return nil
-	}
-	return o.ValidationPolicy
-}
-
-func (o *SourceS3FileBasedStreamConfig) GetInputSchema() *string {
-	if o == nil {
-		return nil
-	}
-	return o.InputSchema
 }
 
 func (o *SourceS3FileBasedStreamConfig) GetDaysToSyncIfHistoryIsFull() *int64 {
@@ -1018,11 +1148,25 @@ func (o *SourceS3FileBasedStreamConfig) GetFormat() SourceS3Format {
 	return o.Format
 }
 
-func (o *SourceS3FileBasedStreamConfig) GetSchemaless() *bool {
+func (o *SourceS3FileBasedStreamConfig) GetGlobs() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Schemaless
+	return o.Globs
+}
+
+func (o *SourceS3FileBasedStreamConfig) GetInputSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InputSchema
+}
+
+func (o *SourceS3FileBasedStreamConfig) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
 }
 
 func (o *SourceS3FileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery() *int64 {
@@ -1032,162 +1176,18 @@ func (o *SourceS3FileBasedStreamConfig) GetRecentNFilesToReadForSchemaDiscovery(
 	return o.RecentNFilesToReadForSchemaDiscovery
 }
 
-type SourceS3SchemasDeliveryType string
-
-const (
-	SourceS3SchemasDeliveryTypeUseFileTransfer SourceS3SchemasDeliveryType = "use_file_transfer"
-)
-
-func (e SourceS3SchemasDeliveryType) ToPointer() *SourceS3SchemasDeliveryType {
-	return &e
-}
-func (e *SourceS3SchemasDeliveryType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "use_file_transfer":
-		*e = SourceS3SchemasDeliveryType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3SchemasDeliveryType: %v", v)
-	}
-}
-
-// SourceS3CopyRawFiles - Copy raw files without parsing their contents. Bits are copied into the destination exactly as they appeared in the source. Recommended for use with unstructured text data, non-text and compressed files.
-type SourceS3CopyRawFiles struct {
-	deliveryType *SourceS3SchemasDeliveryType `const:"use_file_transfer" json:"delivery_type"`
-	// If enabled, sends subdirectory folder structure along with source file names to the destination. Otherwise, files will be synced by their names only. This option is ignored when file-based replication is not enabled.
-	PreserveDirectoryStructure *bool `default:"true" json:"preserve_directory_structure"`
-}
-
-func (s SourceS3CopyRawFiles) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceS3CopyRawFiles) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceS3CopyRawFiles) GetDeliveryType() *SourceS3SchemasDeliveryType {
-	return SourceS3SchemasDeliveryTypeUseFileTransfer.ToPointer()
-}
-
-func (o *SourceS3CopyRawFiles) GetPreserveDirectoryStructure() *bool {
+func (o *SourceS3FileBasedStreamConfig) GetSchemaless() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.PreserveDirectoryStructure
+	return o.Schemaless
 }
 
-type SourceS3DeliveryType string
-
-const (
-	SourceS3DeliveryTypeUseRecordsTransfer SourceS3DeliveryType = "use_records_transfer"
-)
-
-func (e SourceS3DeliveryType) ToPointer() *SourceS3DeliveryType {
-	return &e
-}
-func (e *SourceS3DeliveryType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "use_records_transfer":
-		*e = SourceS3DeliveryType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceS3DeliveryType: %v", v)
-	}
-}
-
-// SourceS3ReplicateRecords - Recommended - Extract and load structured records into your destination of choice. This is the classic method of moving data in Airbyte. It allows for blocking and hashing individual fields or files from a structured schema. Data can be flattened, typed and deduped depending on the destination.
-type SourceS3ReplicateRecords struct {
-	deliveryType *SourceS3DeliveryType `const:"use_records_transfer" json:"delivery_type"`
-}
-
-func (s SourceS3ReplicateRecords) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceS3ReplicateRecords) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceS3ReplicateRecords) GetDeliveryType() *SourceS3DeliveryType {
-	return SourceS3DeliveryTypeUseRecordsTransfer.ToPointer()
-}
-
-type SourceS3DeliveryMethodType string
-
-const (
-	SourceS3DeliveryMethodTypeSourceS3ReplicateRecords SourceS3DeliveryMethodType = "source-s3_Replicate Records"
-	SourceS3DeliveryMethodTypeSourceS3CopyRawFiles     SourceS3DeliveryMethodType = "source-s3_Copy Raw Files"
-)
-
-type SourceS3DeliveryMethod struct {
-	SourceS3ReplicateRecords *SourceS3ReplicateRecords `queryParam:"inline"`
-	SourceS3CopyRawFiles     *SourceS3CopyRawFiles     `queryParam:"inline"`
-
-	Type SourceS3DeliveryMethodType
-}
-
-func CreateSourceS3DeliveryMethodSourceS3ReplicateRecords(sourceS3ReplicateRecords SourceS3ReplicateRecords) SourceS3DeliveryMethod {
-	typ := SourceS3DeliveryMethodTypeSourceS3ReplicateRecords
-
-	return SourceS3DeliveryMethod{
-		SourceS3ReplicateRecords: &sourceS3ReplicateRecords,
-		Type:                     typ,
-	}
-}
-
-func CreateSourceS3DeliveryMethodSourceS3CopyRawFiles(sourceS3CopyRawFiles SourceS3CopyRawFiles) SourceS3DeliveryMethod {
-	typ := SourceS3DeliveryMethodTypeSourceS3CopyRawFiles
-
-	return SourceS3DeliveryMethod{
-		SourceS3CopyRawFiles: &sourceS3CopyRawFiles,
-		Type:                 typ,
-	}
-}
-
-func (u *SourceS3DeliveryMethod) UnmarshalJSON(data []byte) error {
-
-	var sourceS3ReplicateRecords SourceS3ReplicateRecords = SourceS3ReplicateRecords{}
-	if err := utils.UnmarshalJSON(data, &sourceS3ReplicateRecords, "", true, true); err == nil {
-		u.SourceS3ReplicateRecords = &sourceS3ReplicateRecords
-		u.Type = SourceS3DeliveryMethodTypeSourceS3ReplicateRecords
+func (o *SourceS3FileBasedStreamConfig) GetValidationPolicy() *SourceS3ValidationPolicy {
+	if o == nil {
 		return nil
 	}
-
-	var sourceS3CopyRawFiles SourceS3CopyRawFiles = SourceS3CopyRawFiles{}
-	if err := utils.UnmarshalJSON(data, &sourceS3CopyRawFiles, "", true, true); err == nil {
-		u.SourceS3CopyRawFiles = &sourceS3CopyRawFiles
-		u.Type = SourceS3DeliveryMethodTypeSourceS3CopyRawFiles
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceS3DeliveryMethod", string(data))
-}
-
-func (u SourceS3DeliveryMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceS3ReplicateRecords != nil {
-		return utils.MarshalJSON(u.SourceS3ReplicateRecords, "", true)
-	}
-
-	if u.SourceS3CopyRawFiles != nil {
-		return utils.MarshalJSON(u.SourceS3CopyRawFiles, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceS3DeliveryMethod: all fields are null")
+	return o.ValidationPolicy
 }
 
 type S3 string
@@ -1216,24 +1216,24 @@ func (e *S3) UnmarshalJSON(data []byte) error {
 // SourceS3 - NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
 // because it is responsible for converting legacy S3 v3 configs into v4 configs using the File-Based CDK.
 type SourceS3 struct {
-	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
-	StartDate *time.Time `json:"start_date,omitempty"`
-	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
-	Streams        []SourceS3FileBasedStreamConfig `json:"streams"`
-	DeliveryMethod *SourceS3DeliveryMethod         `json:"delivery_method,omitempty"`
-	// Name of the S3 bucket where the file(s) exist.
-	Bucket string `json:"bucket"`
 	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
-	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
-	RoleArn *string `json:"role_arn,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
+	// Name of the S3 bucket where the file(s) exist.
+	Bucket         string                  `json:"bucket"`
+	DeliveryMethod *SourceS3DeliveryMethod `json:"delivery_method,omitempty"`
 	// Endpoint to an S3 compatible service. Leave empty to use AWS.
 	Endpoint *string `default:"" json:"endpoint"`
 	// AWS region where the S3 bucket is located. If not provided, the region will be determined automatically.
 	RegionName *string `json:"region_name,omitempty"`
-	sourceType S3      `const:"s3" json:"sourceType"`
+	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. Set the External ID to the Airbyte workspace ID, which can be found in the URL of this page.
+	RoleArn *string `json:"role_arn,omitempty"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams    []SourceS3FileBasedStreamConfig `json:"streams"`
+	sourceType S3                              `const:"s3" json:"sourceType"`
 }
 
 func (s SourceS3) MarshalJSON() ([]byte, error) {
@@ -1247,25 +1247,18 @@ func (s *SourceS3) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceS3) GetStartDate() *time.Time {
+func (o *SourceS3) GetAwsAccessKeyID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.StartDate
+	return o.AwsAccessKeyID
 }
 
-func (o *SourceS3) GetStreams() []SourceS3FileBasedStreamConfig {
-	if o == nil {
-		return []SourceS3FileBasedStreamConfig{}
-	}
-	return o.Streams
-}
-
-func (o *SourceS3) GetDeliveryMethod() *SourceS3DeliveryMethod {
+func (o *SourceS3) GetAwsSecretAccessKey() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DeliveryMethod
+	return o.AwsSecretAccessKey
 }
 
 func (o *SourceS3) GetBucket() string {
@@ -1275,25 +1268,11 @@ func (o *SourceS3) GetBucket() string {
 	return o.Bucket
 }
 
-func (o *SourceS3) GetAwsAccessKeyID() *string {
+func (o *SourceS3) GetDeliveryMethod() *SourceS3DeliveryMethod {
 	if o == nil {
 		return nil
 	}
-	return o.AwsAccessKeyID
-}
-
-func (o *SourceS3) GetRoleArn() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RoleArn
-}
-
-func (o *SourceS3) GetAwsSecretAccessKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AwsSecretAccessKey
+	return o.DeliveryMethod
 }
 
 func (o *SourceS3) GetEndpoint() *string {
@@ -1308,6 +1287,27 @@ func (o *SourceS3) GetRegionName() *string {
 		return nil
 	}
 	return o.RegionName
+}
+
+func (o *SourceS3) GetRoleArn() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleArn
+}
+
+func (o *SourceS3) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
+}
+
+func (o *SourceS3) GetStreams() []SourceS3FileBasedStreamConfig {
+	if o == nil {
+		return []SourceS3FileBasedStreamConfig{}
+	}
+	return o.Streams
 }
 
 func (o *SourceS3) GetSourceType() S3 {

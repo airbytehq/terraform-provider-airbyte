@@ -24,9 +24,21 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRe
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	batchSize := new(int64)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	path := new(string)
+	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
+		*path = r.Configuration.Path.ValueString()
+	} else {
+		path = nil
+	}
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueString()
@@ -39,25 +51,13 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesenseCreateRe
 	} else {
 		protocol = nil
 	}
-	batchSize := new(int64)
-	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
-		*batchSize = r.Configuration.BatchSize.ValueInt64()
-	} else {
-		batchSize = nil
-	}
-	path := new(string)
-	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
-		*path = r.Configuration.Path.ValueString()
-	} else {
-		path = nil
-	}
 	configuration := shared.DestinationTypesense{
 		APIKey:    apiKey,
+		BatchSize: batchSize,
 		Host:      host,
+		Path:      path,
 		Port:      port,
 		Protocol:  protocol,
-		BatchSize: batchSize,
-		Path:      path,
 	}
 	out := shared.DestinationTypesenseCreateRequest{
 		Name:          name,
@@ -125,9 +125,21 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutReque
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	batchSize := new(int64)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
 
+	path := new(string)
+	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
+		*path = r.Configuration.Path.ValueString()
+	} else {
+		path = nil
+	}
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
 		*port = r.Configuration.Port.ValueString()
@@ -140,25 +152,13 @@ func (r *DestinationTypesenseResourceModel) ToSharedDestinationTypesensePutReque
 	} else {
 		protocol = nil
 	}
-	batchSize := new(int64)
-	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
-		*batchSize = r.Configuration.BatchSize.ValueInt64()
-	} else {
-		batchSize = nil
-	}
-	path := new(string)
-	if !r.Configuration.Path.IsUnknown() && !r.Configuration.Path.IsNull() {
-		*path = r.Configuration.Path.ValueString()
-	} else {
-		path = nil
-	}
 	configuration := shared.DestinationTypesenseUpdate{
 		APIKey:    apiKey,
+		BatchSize: batchSize,
 		Host:      host,
+		Path:      path,
 		Port:      port,
 		Protocol:  protocol,
-		BatchSize: batchSize,
-		Path:      path,
 	}
 	out := shared.DestinationTypesensePutRequest{
 		Name:          name,

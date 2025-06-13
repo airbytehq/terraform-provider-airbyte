@@ -8,14 +8,14 @@ import (
 )
 
 type SourcePosthogUpdate struct {
-	// The date from which you'd like to replicate the data. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
 	// API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 	APIKey string `json:"api_key"`
 	// Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
 	BaseURL *string `default:"https://app.posthog.com" json:"base_url"`
 	// Set lower value in case of failing long running sync of events stream.
 	EventsTimeStep *int64 `default:"30" json:"events_time_step"`
+	// The date from which you'd like to replicate the data. Any data before this date will not be replicated.
+	StartDate time.Time `json:"start_date"`
 }
 
 func (s SourcePosthogUpdate) MarshalJSON() ([]byte, error) {
@@ -27,13 +27,6 @@ func (s *SourcePosthogUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourcePosthogUpdate) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
 }
 
 func (o *SourcePosthogUpdate) GetAPIKey() string {
@@ -55,4 +48,11 @@ func (o *SourcePosthogUpdate) GetEventsTimeStep() *int64 {
 		return nil
 	}
 	return o.EventsTimeStep
+}
+
+func (o *SourcePosthogUpdate) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }

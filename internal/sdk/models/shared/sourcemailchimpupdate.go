@@ -34,9 +34,9 @@ func (e *SourceMailchimpUpdateSchemasAuthType) UnmarshalJSON(data []byte) error 
 }
 
 type SourceMailchimpUpdateAPIKey struct {
-	authType SourceMailchimpUpdateSchemasAuthType `const:"apikey" json:"auth_type"`
 	// Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-	Apikey string `json:"apikey"`
+	Apikey   string                               `json:"apikey"`
+	authType SourceMailchimpUpdateSchemasAuthType `const:"apikey" json:"auth_type"`
 }
 
 func (s SourceMailchimpUpdateAPIKey) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceMailchimpUpdateAPIKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMailchimpUpdateAPIKey) GetAuthType() SourceMailchimpUpdateSchemasAuthType {
-	return SourceMailchimpUpdateSchemasAuthTypeApikey
-}
-
 func (o *SourceMailchimpUpdateAPIKey) GetApikey() string {
 	if o == nil {
 		return ""
 	}
 	return o.Apikey
+}
+
+func (o *SourceMailchimpUpdateAPIKey) GetAuthType() SourceMailchimpUpdateSchemasAuthType {
+	return SourceMailchimpUpdateSchemasAuthTypeApikey
 }
 
 type SourceMailchimpUpdateAuthType string
@@ -85,13 +85,13 @@ func (e *SourceMailchimpUpdateAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMailchimpUpdateOAuth20 struct {
-	authType SourceMailchimpUpdateAuthType `const:"oauth2.0" json:"auth_type"`
+	// An access token generated using the above client ID and secret.
+	AccessToken string                        `json:"access_token"`
+	authType    SourceMailchimpUpdateAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	// An access token generated using the above client ID and secret.
-	AccessToken string `json:"access_token"`
 }
 
 func (s SourceMailchimpUpdateOAuth20) MarshalJSON() ([]byte, error) {
@@ -103,6 +103,13 @@ func (s *SourceMailchimpUpdateOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceMailchimpUpdateOAuth20) GetAccessToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AccessToken
 }
 
 func (o *SourceMailchimpUpdateOAuth20) GetAuthType() SourceMailchimpUpdateAuthType {
@@ -121,13 +128,6 @@ func (o *SourceMailchimpUpdateOAuth20) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceMailchimpUpdateOAuth20) GetAccessToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccessToken
 }
 
 type SourceMailchimpUpdateAuthenticationType string

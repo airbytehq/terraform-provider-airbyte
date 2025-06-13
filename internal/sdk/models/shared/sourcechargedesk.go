@@ -33,9 +33,9 @@ func (e *Chargedesk) UnmarshalJSON(data []byte) error {
 
 type SourceChargedesk struct {
 	Password *string `json:"password,omitempty"`
-	Username string  `json:"username"`
 	// Date from when the sync should start in epoch Unix timestamp
 	StartDate  *int64     `json:"start_date,omitempty"`
+	Username   string     `json:"username"`
 	sourceType Chargedesk `const:"chargedesk" json:"sourceType"`
 }
 
@@ -57,18 +57,18 @@ func (o *SourceChargedesk) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourceChargedesk) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
 func (o *SourceChargedesk) GetStartDate() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.StartDate
+}
+
+func (o *SourceChargedesk) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourceChargedesk) GetSourceType() Chargedesk {

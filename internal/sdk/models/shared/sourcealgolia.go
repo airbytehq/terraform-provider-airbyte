@@ -36,12 +36,12 @@ type SourceAlgolia struct {
 	APIKey string `json:"api_key"`
 	// The application ID for your application found in settings
 	ApplicationID string `json:"application_id"`
+	// Object ID within index for search queries
+	ObjectID *string `default:"ecommerce-sample-data-9999996" json:"object_id"`
 	// Search query to be used with indexes_query stream with format defined in `https://www.algolia.com/doc/rest-api/search/#tag/Search/operation/searchSingleIndex`
 	SearchQuery *string   `default:"hitsPerPage=2&getRankingInfo=1" json:"search_query"`
 	StartDate   time.Time `json:"start_date"`
-	// Object ID within index for search queries
-	ObjectID   *string `default:"ecommerce-sample-data-9999996" json:"object_id"`
-	sourceType Algolia `const:"algolia" json:"sourceType"`
+	sourceType  Algolia   `const:"algolia" json:"sourceType"`
 }
 
 func (s SourceAlgolia) MarshalJSON() ([]byte, error) {
@@ -69,6 +69,13 @@ func (o *SourceAlgolia) GetApplicationID() string {
 	return o.ApplicationID
 }
 
+func (o *SourceAlgolia) GetObjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ObjectID
+}
+
 func (o *SourceAlgolia) GetSearchQuery() *string {
 	if o == nil {
 		return nil
@@ -81,13 +88,6 @@ func (o *SourceAlgolia) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceAlgolia) GetObjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ObjectID
 }
 
 func (o *SourceAlgolia) GetSourceType() Algolia {

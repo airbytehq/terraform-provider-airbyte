@@ -165,29 +165,6 @@ func (e *DatasetLocation) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationBigquerySchemasMethod string
-
-const (
-	DestinationBigquerySchemasMethodGcsStaging DestinationBigquerySchemasMethod = "GCS Staging"
-)
-
-func (e DestinationBigquerySchemasMethod) ToPointer() *DestinationBigquerySchemasMethod {
-	return &e
-}
-func (e *DestinationBigquerySchemasMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GCS Staging":
-		*e = DestinationBigquerySchemasMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationBigquerySchemasMethod: %v", v)
-	}
-}
-
 type DestinationBigqueryCredentialType string
 
 const (
@@ -317,9 +294,31 @@ func (e *GCSTmpFilesAfterwardProcessing) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DestinationBigquerySchemasMethod string
+
+const (
+	DestinationBigquerySchemasMethodGcsStaging DestinationBigquerySchemasMethod = "GCS Staging"
+)
+
+func (e DestinationBigquerySchemasMethod) ToPointer() *DestinationBigquerySchemasMethod {
+	return &e
+}
+func (e *DestinationBigquerySchemasMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "GCS Staging":
+		*e = DestinationBigquerySchemasMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationBigquerySchemasMethod: %v", v)
+	}
+}
+
 // GCSStaging - Writes large batches of records to a file, uploads the file to GCS, then uses COPY INTO to load your data into BigQuery.
 type GCSStaging struct {
-	method DestinationBigquerySchemasMethod `const:"GCS Staging" json:"method"`
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential Credential `json:"credential"`
 	// The name of the GCS bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
@@ -327,7 +326,8 @@ type GCSStaging struct {
 	// Directory under the GCS bucket where data will be written.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
-	KeepFilesInGcsBucket *GCSTmpFilesAfterwardProcessing `default:"Delete all tmp files from GCS" json:"keep_files_in_gcs-bucket"`
+	KeepFilesInGcsBucket *GCSTmpFilesAfterwardProcessing  `default:"Delete all tmp files from GCS" json:"keep_files_in_gcs-bucket"`
+	method               DestinationBigquerySchemasMethod `const:"GCS Staging" json:"method"`
 }
 
 func (g GCSStaging) MarshalJSON() ([]byte, error) {
@@ -339,10 +339,6 @@ func (g *GCSStaging) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *GCSStaging) GetMethod() DestinationBigquerySchemasMethod {
-	return DestinationBigquerySchemasMethodGcsStaging
 }
 
 func (o *GCSStaging) GetCredential() Credential {
@@ -371,6 +367,10 @@ func (o *GCSStaging) GetKeepFilesInGcsBucket() *GCSTmpFilesAfterwardProcessing {
 		return nil
 	}
 	return o.KeepFilesInGcsBucket
+}
+
+func (o *GCSStaging) GetMethod() DestinationBigquerySchemasMethod {
+	return DestinationBigquerySchemasMethodGcsStaging
 }
 
 type DestinationBigqueryMethod string
@@ -531,25 +531,25 @@ func (e *DestinationBigqueryBigquery) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationBigquery struct {
-	// The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
-	ProjectID string `json:"project_id"`
-	// The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
-	DatasetLocation DatasetLocation `json:"dataset_location"`
-	// The default BigQuery Dataset ID that tables are replicated to if the source does not specify a namespace. Read more <a href="https://cloud.google.com/bigquery/docs/datasets#create-dataset">here</a>.
-	DatasetID string `json:"dataset_id"`
-	// The way data will be uploaded to BigQuery.
-	LoadingMethod *LoadingMethod `json:"loading_method,omitempty"`
-	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-	CredentialsJSON *string `json:"credentials_json,omitempty"`
-	// Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
-	TransformationPriority *TransformationQueryRunType `default:"interactive" json:"transformation_priority"`
 	// Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
 	BigQueryClientBufferSizeMb *int64 `default:"15" json:"big_query_client_buffer_size_mb"`
+	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
+	CredentialsJSON *string `json:"credentials_json,omitempty"`
+	// The default BigQuery Dataset ID that tables are replicated to if the source does not specify a namespace. Read more <a href="https://cloud.google.com/bigquery/docs/datasets#create-dataset">here</a>.
+	DatasetID string `json:"dataset_id"`
+	// The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
+	DatasetLocation DatasetLocation `json:"dataset_location"`
+	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
+	DisableTypeDedupe *bool `default:"false" json:"disable_type_dedupe"`
+	// The way data will be uploaded to BigQuery.
+	LoadingMethod *LoadingMethod `json:"loading_method,omitempty"`
+	// The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
+	ProjectID string `json:"project_id"`
 	// The dataset to write raw tables into (default: airbyte_internal)
 	RawDataDataset *string `json:"raw_data_dataset,omitempty"`
-	// Disable Writing Final Tables. WARNING! The data format in _airbyte_data is likely stable but there are no guarantees that other metadata columns will remain the same in future versions
-	DisableTypeDedupe *bool                       `default:"false" json:"disable_type_dedupe"`
-	destinationType   DestinationBigqueryBigquery `const:"bigquery" json:"destinationType"`
+	// Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
+	TransformationPriority *TransformationQueryRunType `default:"interactive" json:"transformation_priority"`
+	destinationType        DestinationBigqueryBigquery `const:"bigquery" json:"destinationType"`
 }
 
 func (d DestinationBigquery) MarshalJSON() ([]byte, error) {
@@ -563,32 +563,11 @@ func (d *DestinationBigquery) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationBigquery) GetProjectID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProjectID
-}
-
-func (o *DestinationBigquery) GetDatasetLocation() DatasetLocation {
-	if o == nil {
-		return DatasetLocation("")
-	}
-	return o.DatasetLocation
-}
-
-func (o *DestinationBigquery) GetDatasetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.DatasetID
-}
-
-func (o *DestinationBigquery) GetLoadingMethod() *LoadingMethod {
+func (o *DestinationBigquery) GetBigQueryClientBufferSizeMb() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.LoadingMethod
+	return o.BigQueryClientBufferSizeMb
 }
 
 func (o *DestinationBigquery) GetCredentialsJSON() *string {
@@ -598,18 +577,39 @@ func (o *DestinationBigquery) GetCredentialsJSON() *string {
 	return o.CredentialsJSON
 }
 
-func (o *DestinationBigquery) GetTransformationPriority() *TransformationQueryRunType {
+func (o *DestinationBigquery) GetDatasetID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.TransformationPriority
+	return o.DatasetID
 }
 
-func (o *DestinationBigquery) GetBigQueryClientBufferSizeMb() *int64 {
+func (o *DestinationBigquery) GetDatasetLocation() DatasetLocation {
+	if o == nil {
+		return DatasetLocation("")
+	}
+	return o.DatasetLocation
+}
+
+func (o *DestinationBigquery) GetDisableTypeDedupe() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.BigQueryClientBufferSizeMb
+	return o.DisableTypeDedupe
+}
+
+func (o *DestinationBigquery) GetLoadingMethod() *LoadingMethod {
+	if o == nil {
+		return nil
+	}
+	return o.LoadingMethod
+}
+
+func (o *DestinationBigquery) GetProjectID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ProjectID
 }
 
 func (o *DestinationBigquery) GetRawDataDataset() *string {
@@ -619,11 +619,11 @@ func (o *DestinationBigquery) GetRawDataDataset() *string {
 	return o.RawDataDataset
 }
 
-func (o *DestinationBigquery) GetDisableTypeDedupe() *bool {
+func (o *DestinationBigquery) GetTransformationPriority() *TransformationQueryRunType {
 	if o == nil {
 		return nil
 	}
-	return o.DisableTypeDedupe
+	return o.TransformationPriority
 }
 
 func (o *DestinationBigquery) GetDestinationType() DestinationBigqueryBigquery {

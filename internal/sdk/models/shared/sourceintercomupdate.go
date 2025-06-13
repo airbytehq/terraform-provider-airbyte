@@ -10,12 +10,12 @@ import (
 type SourceIntercomUpdate struct {
 	// Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 	AccessToken string `json:"access_token"`
+	// Set lower value in case of failing long running sync of Activity Logs stream.
+	ActivityLogsTimeStep *int64 `default:"30" json:"activity_logs_time_step"`
 	// Client Id for your Intercom application.
 	ClientID *string `json:"client_id,omitempty"`
 	// Client Secret for your Intercom application.
 	ClientSecret *string `json:"client_secret,omitempty"`
-	// Set lower value in case of failing long running sync of Activity Logs stream.
-	ActivityLogsTimeStep *int64 `default:"30" json:"activity_logs_time_step"`
 	// The number of days to shift the state value backward for record sync
 	LookbackWindow *int64 `default:"0" json:"lookback_window"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
@@ -40,6 +40,13 @@ func (o *SourceIntercomUpdate) GetAccessToken() string {
 	return o.AccessToken
 }
 
+func (o *SourceIntercomUpdate) GetActivityLogsTimeStep() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.ActivityLogsTimeStep
+}
+
 func (o *SourceIntercomUpdate) GetClientID() *string {
 	if o == nil {
 		return nil
@@ -52,13 +59,6 @@ func (o *SourceIntercomUpdate) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
-}
-
-func (o *SourceIntercomUpdate) GetActivityLogsTimeStep() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.ActivityLogsTimeStep
 }
 
 func (o *SourceIntercomUpdate) GetLookbackWindow() *int64 {

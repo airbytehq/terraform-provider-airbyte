@@ -3,18 +3,11 @@
 package shared
 
 type SourceModeUpdate struct {
-	// API token to use as the username for Basic Authentication.
-	APIToken string `json:"api_token"`
 	// API secret to use as the password for Basic Authentication.
 	APISecret string `json:"api_secret"`
+	// API token to use as the username for Basic Authentication.
+	APIToken  string `json:"api_token"`
 	Workspace string `json:"workspace"`
-}
-
-func (o *SourceModeUpdate) GetAPIToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIToken
 }
 
 func (o *SourceModeUpdate) GetAPISecret() string {
@@ -22,6 +15,13 @@ func (o *SourceModeUpdate) GetAPISecret() string {
 		return ""
 	}
 	return o.APISecret
+}
+
+func (o *SourceModeUpdate) GetAPIToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIToken
 }
 
 func (o *SourceModeUpdate) GetWorkspace() string {

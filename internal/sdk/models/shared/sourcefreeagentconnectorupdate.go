@@ -9,10 +9,10 @@ import (
 
 type SourceFreeAgentConnectorUpdate struct {
 	ClientID            string     `json:"client_id"`
-	ClientSecret        string     `json:"client_secret"`
 	ClientRefreshToken2 string     `json:"client_refresh_token_2"`
-	UpdatedSince        *time.Time `json:"updated_since,omitempty"`
+	ClientSecret        string     `json:"client_secret"`
 	PayrollYear         *float64   `json:"payroll_year,omitempty"`
+	UpdatedSince        *time.Time `json:"updated_since,omitempty"`
 }
 
 func (s SourceFreeAgentConnectorUpdate) MarshalJSON() ([]byte, error) {
@@ -33,13 +33,6 @@ func (o *SourceFreeAgentConnectorUpdate) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceFreeAgentConnectorUpdate) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
-
 func (o *SourceFreeAgentConnectorUpdate) GetClientRefreshToken2() string {
 	if o == nil {
 		return ""
@@ -47,11 +40,11 @@ func (o *SourceFreeAgentConnectorUpdate) GetClientRefreshToken2() string {
 	return o.ClientRefreshToken2
 }
 
-func (o *SourceFreeAgentConnectorUpdate) GetUpdatedSince() *time.Time {
+func (o *SourceFreeAgentConnectorUpdate) GetClientSecret() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.UpdatedSince
+	return o.ClientSecret
 }
 
 func (o *SourceFreeAgentConnectorUpdate) GetPayrollYear() *float64 {
@@ -59,4 +52,11 @@ func (o *SourceFreeAgentConnectorUpdate) GetPayrollYear() *float64 {
 		return nil
 	}
 	return o.PayrollYear
+}
+
+func (o *SourceFreeAgentConnectorUpdate) GetUpdatedSince() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedSince
 }

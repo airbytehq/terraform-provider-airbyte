@@ -33,13 +33,13 @@ func (e *Braze) UnmarshalJSON(data []byte) error {
 }
 
 type SourceBraze struct {
-	// Braze REST API endpoint
-	URL string `json:"url"`
 	// Braze REST API key
 	APIKey string `json:"api_key"`
 	// Rows after this date will be synced
-	StartDate  types.Date `json:"start_date"`
-	sourceType Braze      `const:"braze" json:"sourceType"`
+	StartDate types.Date `json:"start_date"`
+	// Braze REST API endpoint
+	URL        string `json:"url"`
+	sourceType Braze  `const:"braze" json:"sourceType"`
 }
 
 func (s SourceBraze) MarshalJSON() ([]byte, error) {
@@ -51,13 +51,6 @@ func (s *SourceBraze) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceBraze) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
 }
 
 func (o *SourceBraze) GetAPIKey() string {
@@ -72,6 +65,13 @@ func (o *SourceBraze) GetStartDate() types.Date {
 		return types.Date{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceBraze) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }
 
 func (o *SourceBraze) GetSourceType() Braze {

@@ -21,13 +21,13 @@ func (r *SourceZonkaFeedbackResourceModel) ToSharedSourceZonkaFeedbackCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	datacenter := shared.DataCenterID(r.Configuration.Datacenter.ValueString())
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
 
+	datacenter := shared.DataCenterID(r.Configuration.Datacenter.ValueString())
 	configuration := shared.SourceZonkaFeedback{
-		Datacenter: datacenter,
 		AuthToken:  authToken,
+		Datacenter: datacenter,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -99,13 +99,13 @@ func (r *SourceZonkaFeedbackResourceModel) ToSharedSourceZonkaFeedbackPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	datacenter := shared.SourceZonkaFeedbackUpdateDataCenterID(r.Configuration.Datacenter.ValueString())
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
 
+	datacenter := shared.SourceZonkaFeedbackUpdateDataCenterID(r.Configuration.Datacenter.ValueString())
 	configuration := shared.SourceZonkaFeedbackUpdate{
-		Datacenter: datacenter,
 		AuthToken:  authToken,
+		Datacenter: datacenter,
 	}
 	out := shared.SourceZonkaFeedbackPutRequest{
 		Name:          name,

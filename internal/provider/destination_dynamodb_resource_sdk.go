@@ -21,32 +21,32 @@ func (r *DestinationDynamodbResourceModel) ToSharedDestinationDynamodbCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accessKeyID string
+	accessKeyID = r.Configuration.AccessKeyID.ValueString()
+
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
 		*dynamodbEndpoint = r.Configuration.DynamodbEndpoint.ValueString()
 	} else {
 		dynamodbEndpoint = nil
 	}
-	var dynamodbTableNamePrefix string
-	dynamodbTableNamePrefix = r.Configuration.DynamodbTableNamePrefix.ValueString()
-
 	dynamodbRegion := new(shared.DestinationDynamodbDynamoDBRegion)
 	if !r.Configuration.DynamodbRegion.IsUnknown() && !r.Configuration.DynamodbRegion.IsNull() {
 		*dynamodbRegion = shared.DestinationDynamodbDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
 	} else {
 		dynamodbRegion = nil
 	}
-	var accessKeyID string
-	accessKeyID = r.Configuration.AccessKeyID.ValueString()
+	var dynamodbTableNamePrefix string
+	dynamodbTableNamePrefix = r.Configuration.DynamodbTableNamePrefix.ValueString()
 
 	var secretAccessKey string
 	secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
 
 	configuration := shared.DestinationDynamodb{
-		DynamodbEndpoint:        dynamodbEndpoint,
-		DynamodbTableNamePrefix: dynamodbTableNamePrefix,
-		DynamodbRegion:          dynamodbRegion,
 		AccessKeyID:             accessKeyID,
+		DynamodbEndpoint:        dynamodbEndpoint,
+		DynamodbRegion:          dynamodbRegion,
+		DynamodbTableNamePrefix: dynamodbTableNamePrefix,
 		SecretAccessKey:         secretAccessKey,
 	}
 	out := shared.DestinationDynamodbCreateRequest{
@@ -112,32 +112,32 @@ func (r *DestinationDynamodbResourceModel) ToSharedDestinationDynamodbPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accessKeyID string
+	accessKeyID = r.Configuration.AccessKeyID.ValueString()
+
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
 		*dynamodbEndpoint = r.Configuration.DynamodbEndpoint.ValueString()
 	} else {
 		dynamodbEndpoint = nil
 	}
-	var dynamodbTableNamePrefix string
-	dynamodbTableNamePrefix = r.Configuration.DynamodbTableNamePrefix.ValueString()
-
 	dynamodbRegion := new(shared.DestinationDynamodbUpdateDynamoDBRegion)
 	if !r.Configuration.DynamodbRegion.IsUnknown() && !r.Configuration.DynamodbRegion.IsNull() {
 		*dynamodbRegion = shared.DestinationDynamodbUpdateDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
 	} else {
 		dynamodbRegion = nil
 	}
-	var accessKeyID string
-	accessKeyID = r.Configuration.AccessKeyID.ValueString()
+	var dynamodbTableNamePrefix string
+	dynamodbTableNamePrefix = r.Configuration.DynamodbTableNamePrefix.ValueString()
 
 	var secretAccessKey string
 	secretAccessKey = r.Configuration.SecretAccessKey.ValueString()
 
 	configuration := shared.DestinationDynamodbUpdate{
-		DynamodbEndpoint:        dynamodbEndpoint,
-		DynamodbTableNamePrefix: dynamodbTableNamePrefix,
-		DynamodbRegion:          dynamodbRegion,
 		AccessKeyID:             accessKeyID,
+		DynamodbEndpoint:        dynamodbEndpoint,
+		DynamodbRegion:          dynamodbRegion,
+		DynamodbTableNamePrefix: dynamodbTableNamePrefix,
 		SecretAccessKey:         secretAccessKey,
 	}
 	out := shared.DestinationDynamodbPutRequest{

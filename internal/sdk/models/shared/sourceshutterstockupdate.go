@@ -9,16 +9,16 @@ import (
 
 type SourceShutterstockUpdate struct {
 	// Your OAuth 2.0 token for accessing the Shutterstock API. Obtain this token from your Shutterstock developer account.
-	APIToken  string    `json:"api_token"`
-	StartDate time.Time `json:"start_date"`
-	// The query for image search
-	QueryForImageSearch *string `default:"mountain" json:"query_for_image_search"`
-	// The Query for `videos_search` stream
-	QueryForVideoSearch *string `default:"mountain" json:"query_for_video_search"`
+	APIToken string `json:"api_token"`
 	// The query for image search
 	QueryForAudioSearch *string `default:"mountain" json:"query_for_audio_search"`
 	// The query for catalog search
 	QueryForCatalogSearch *string `default:"mountain" json:"query_for_catalog_search"`
+	// The query for image search
+	QueryForImageSearch *string `default:"mountain" json:"query_for_image_search"`
+	// The Query for `videos_search` stream
+	QueryForVideoSearch *string   `default:"mountain" json:"query_for_video_search"`
+	StartDate           time.Time `json:"start_date"`
 }
 
 func (s SourceShutterstockUpdate) MarshalJSON() ([]byte, error) {
@@ -39,11 +39,18 @@ func (o *SourceShutterstockUpdate) GetAPIToken() string {
 	return o.APIToken
 }
 
-func (o *SourceShutterstockUpdate) GetStartDate() time.Time {
+func (o *SourceShutterstockUpdate) GetQueryForAudioSearch() *string {
 	if o == nil {
-		return time.Time{}
+		return nil
 	}
-	return o.StartDate
+	return o.QueryForAudioSearch
+}
+
+func (o *SourceShutterstockUpdate) GetQueryForCatalogSearch() *string {
+	if o == nil {
+		return nil
+	}
+	return o.QueryForCatalogSearch
 }
 
 func (o *SourceShutterstockUpdate) GetQueryForImageSearch() *string {
@@ -60,16 +67,9 @@ func (o *SourceShutterstockUpdate) GetQueryForVideoSearch() *string {
 	return o.QueryForVideoSearch
 }
 
-func (o *SourceShutterstockUpdate) GetQueryForAudioSearch() *string {
+func (o *SourceShutterstockUpdate) GetStartDate() time.Time {
 	if o == nil {
-		return nil
+		return time.Time{}
 	}
-	return o.QueryForAudioSearch
-}
-
-func (o *SourceShutterstockUpdate) GetQueryForCatalogSearch() *string {
-	if o == nil {
-		return nil
-	}
-	return o.QueryForCatalogSearch
+	return o.StartDate
 }

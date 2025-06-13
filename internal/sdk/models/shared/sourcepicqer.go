@@ -33,11 +33,11 @@ func (e *Picqer) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePicqer struct {
-	Username string  `json:"username"`
-	Password *string `json:"password,omitempty"`
 	// The organization name which is used to login to picqer
 	OrganizationName string    `json:"organization_name"`
+	Password         *string   `json:"password,omitempty"`
 	StartDate        time.Time `json:"start_date"`
+	Username         string    `json:"username"`
 	sourceType       Picqer    `const:"picqer" json:"sourceType"`
 }
 
@@ -52,11 +52,11 @@ func (s *SourcePicqer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePicqer) GetUsername() string {
+func (o *SourcePicqer) GetOrganizationName() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
+	return o.OrganizationName
 }
 
 func (o *SourcePicqer) GetPassword() *string {
@@ -66,18 +66,18 @@ func (o *SourcePicqer) GetPassword() *string {
 	return o.Password
 }
 
-func (o *SourcePicqer) GetOrganizationName() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrganizationName
-}
-
 func (o *SourcePicqer) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourcePicqer) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourcePicqer) GetSourceType() Picqer {

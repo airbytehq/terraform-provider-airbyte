@@ -22,7 +22,6 @@ func (r *SourcePaystackResourceModel) ToSharedSourcePaystackCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
@@ -32,10 +31,11 @@ func (r *SourcePaystackResourceModel) ToSharedSourcePaystackCreateRequest() *sha
 	var secretKey string
 	secretKey = r.Configuration.SecretKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaystack{
-		StartDate:          startDate,
 		LookbackWindowDays: lookbackWindowDays,
 		SecretKey:          secretKey,
+		StartDate:          startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -107,7 +107,6 @@ func (r *SourcePaystackResourceModel) ToSharedSourcePaystackPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	lookbackWindowDays := new(int64)
 	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
 		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
@@ -117,10 +116,11 @@ func (r *SourcePaystackResourceModel) ToSharedSourcePaystackPutRequest() *shared
 	var secretKey string
 	secretKey = r.Configuration.SecretKey.ValueString()
 
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaystackUpdate{
-		StartDate:          startDate,
 		LookbackWindowDays: lookbackWindowDays,
 		SecretKey:          secretKey,
+		StartDate:          startDate,
 	}
 	out := shared.SourcePaystackPutRequest{
 		Name:          name,

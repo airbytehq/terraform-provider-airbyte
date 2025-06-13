@@ -22,26 +22,26 @@ func (r *SourceZohoInventoryResourceModel) ToSharedSourceZohoInventoryCreateRequ
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	domain := new(shared.Domain)
-	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
-		*domain = shared.Domain(r.Configuration.Domain.ValueString())
-	} else {
-		domain = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	domain := new(shared.Domain)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = shared.Domain(r.Configuration.Domain.ValueString())
+	} else {
+		domain = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZohoInventory{
-		Domain:       domain,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		Domain:       domain,
 		RefreshToken: refreshToken,
 		StartDate:    startDate,
 	}
@@ -115,26 +115,26 @@ func (r *SourceZohoInventoryResourceModel) ToSharedSourceZohoInventoryPutRequest
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	domain := new(shared.SourceZohoInventoryUpdateDomain)
-	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
-		*domain = shared.SourceZohoInventoryUpdateDomain(r.Configuration.Domain.ValueString())
-	} else {
-		domain = nil
-	}
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
+	domain := new(shared.SourceZohoInventoryUpdateDomain)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = shared.SourceZohoInventoryUpdateDomain(r.Configuration.Domain.ValueString())
+	} else {
+		domain = nil
+	}
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZohoInventoryUpdate{
-		Domain:       domain,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
+		Domain:       domain,
 		RefreshToken: refreshToken,
 		StartDate:    startDate,
 	}

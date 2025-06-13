@@ -21,22 +21,22 @@ func (r *SourceJamfProResourceModel) ToSharedSourceJamfProCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceJamfPro{
+		Password:  password,
 		Subdomain: subdomain,
 		Username:  username,
-		Password:  password,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -108,22 +108,22 @@ func (r *SourceJamfProResourceModel) ToSharedSourceJamfProPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var subdomain string
-	subdomain = r.Configuration.Subdomain.ValueString()
-
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
 	}
+	var subdomain string
+	subdomain = r.Configuration.Subdomain.ValueString()
+
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceJamfProUpdate{
+		Password:  password,
 		Subdomain: subdomain,
 		Username:  username,
-		Password:  password,
 	}
 	out := shared.SourceJamfProPutRequest{
 		Name:          name,

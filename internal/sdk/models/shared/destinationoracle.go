@@ -61,29 +61,6 @@ func (o *DestinationOracleTLSEncryptedVerifyCertificate) GetSslCertificate() str
 	return o.SslCertificate
 }
 
-type DestinationOracleSchemasEncryptionMethod string
-
-const (
-	DestinationOracleSchemasEncryptionMethodClientNne DestinationOracleSchemasEncryptionMethod = "client_nne"
-)
-
-func (e DestinationOracleSchemasEncryptionMethod) ToPointer() *DestinationOracleSchemasEncryptionMethod {
-	return &e
-}
-func (e *DestinationOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "client_nne":
-		*e = DestinationOracleSchemasEncryptionMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationOracleSchemasEncryptionMethod: %v", v)
-	}
-}
-
 // DestinationOracleEncryptionAlgorithm - This parameter defines the database encryption algorithm.
 type DestinationOracleEncryptionAlgorithm string
 
@@ -114,11 +91,34 @@ func (e *DestinationOracleEncryptionAlgorithm) UnmarshalJSON(data []byte) error 
 	}
 }
 
+type DestinationOracleSchemasEncryptionMethod string
+
+const (
+	DestinationOracleSchemasEncryptionMethodClientNne DestinationOracleSchemasEncryptionMethod = "client_nne"
+)
+
+func (e DestinationOracleSchemasEncryptionMethod) ToPointer() *DestinationOracleSchemasEncryptionMethod {
+	return &e
+}
+func (e *DestinationOracleSchemasEncryptionMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "client_nne":
+		*e = DestinationOracleSchemasEncryptionMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationOracleSchemasEncryptionMethod: %v", v)
+	}
+}
+
 // DestinationOracleNativeNetworkEncryptionNNE - The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.
 type DestinationOracleNativeNetworkEncryptionNNE struct {
-	encryptionMethod *DestinationOracleSchemasEncryptionMethod `const:"client_nne" json:"encryption_method"`
 	// This parameter defines the database encryption algorithm.
-	EncryptionAlgorithm *DestinationOracleEncryptionAlgorithm `default:"AES256" json:"encryption_algorithm"`
+	EncryptionAlgorithm *DestinationOracleEncryptionAlgorithm     `default:"AES256" json:"encryption_algorithm"`
+	encryptionMethod    *DestinationOracleSchemasEncryptionMethod `const:"client_nne" json:"encryption_method"`
 }
 
 func (d DestinationOracleNativeNetworkEncryptionNNE) MarshalJSON() ([]byte, error) {
@@ -132,15 +132,15 @@ func (d *DestinationOracleNativeNetworkEncryptionNNE) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *DestinationOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() *DestinationOracleSchemasEncryptionMethod {
-	return DestinationOracleSchemasEncryptionMethodClientNne.ToPointer()
-}
-
 func (o *DestinationOracleNativeNetworkEncryptionNNE) GetEncryptionAlgorithm() *DestinationOracleEncryptionAlgorithm {
 	if o == nil {
 		return nil
 	}
 	return o.EncryptionAlgorithm
+}
+
+func (o *DestinationOracleNativeNetworkEncryptionNNE) GetEncryptionMethod() *DestinationOracleSchemasEncryptionMethod {
+	return DestinationOracleSchemasEncryptionMethodClientNne.ToPointer()
 }
 
 type DestinationOracleEncryptionMethod string
@@ -297,10 +297,10 @@ func (e *DestinationOracleSchemasTunnelMethodTunnelMethod) UnmarshalJSON(data []
 }
 
 type DestinationOraclePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationOracleSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationOracleSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -320,15 +320,15 @@ func (d *DestinationOraclePasswordAuthentication) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *DestinationOraclePasswordAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethodTunnelMethod {
-	return DestinationOracleSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationOraclePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationOraclePasswordAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethodTunnelMethod {
+	return DestinationOracleSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationOraclePasswordAuthentication) GetTunnelPort() *int64 {
@@ -377,16 +377,16 @@ func (e *DestinationOracleSchemasTunnelMethod) UnmarshalJSON(data []byte) error 
 }
 
 type DestinationOracleSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationOracleSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationOracleSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationOracleSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -400,8 +400,11 @@ func (d *DestinationOracleSSHKeyAuthentication) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *DestinationOracleSSHKeyAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethod {
-	return DestinationOracleSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationOracleSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationOracleSSHKeyAuthentication) GetTunnelHost() string {
@@ -409,6 +412,10 @@ func (o *DestinationOracleSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationOracleSSHKeyAuthentication) GetTunnelMethod() DestinationOracleSchemasTunnelMethod {
+	return DestinationOracleSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationOracleSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -423,13 +430,6 @@ func (o *DestinationOracleSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationOracleSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationOracleTunnelMethod - No ssh tunnel needed to connect to database
@@ -586,27 +586,27 @@ func (e *DestinationOracleOracle) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationOracle struct {
-	// The hostname of the database.
-	Host string `json:"host"`
-	// The port of the database.
-	Port *int64 `default:"1521" json:"port"`
-	// The System Identifier uniquely distinguishes the instance from any other instance on the same computer.
-	Sid string `json:"sid"`
-	// The username to access the database. This user must have CREATE USER privileges in the database.
-	Username string `json:"username"`
-	// The password associated with the username.
-	Password *string `json:"password,omitempty"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.
-	Schema *string `default:"airbyte" json:"schema"`
 	// The encryption method which is used when communicating with the database.
 	Encryption *DestinationOracleEncryption `json:"encryption,omitempty"`
+	// The hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// The password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// The port of the database.
+	Port *int64 `default:"1521" json:"port"`
 	// The schema to write raw tables into (default: airbyte_internal)
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.
+	Schema *string `default:"airbyte" json:"schema"`
+	// The System Identifier uniquely distinguishes the instance from any other instance on the same computer.
+	Sid string `json:"sid"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod    *DestinationOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	destinationType DestinationOracleOracle           `const:"oracle" json:"destinationType"`
+	TunnelMethod *DestinationOracleSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// The username to access the database. This user must have CREATE USER privileges in the database.
+	Username        string                  `json:"username"`
+	destinationType DestinationOracleOracle `const:"oracle" json:"destinationType"`
 }
 
 func (d DestinationOracle) MarshalJSON() ([]byte, error) {
@@ -620,39 +620,18 @@ func (d *DestinationOracle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *DestinationOracle) GetEncryption() *DestinationOracleEncryption {
+	if o == nil {
+		return nil
+	}
+	return o.Encryption
+}
+
 func (o *DestinationOracle) GetHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.Host
-}
-
-func (o *DestinationOracle) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *DestinationOracle) GetSid() string {
-	if o == nil {
-		return ""
-	}
-	return o.Sid
-}
-
-func (o *DestinationOracle) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
-}
-
-func (o *DestinationOracle) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
 }
 
 func (o *DestinationOracle) GetJdbcURLParams() *string {
@@ -662,18 +641,18 @@ func (o *DestinationOracle) GetJdbcURLParams() *string {
 	return o.JdbcURLParams
 }
 
-func (o *DestinationOracle) GetSchema() *string {
+func (o *DestinationOracle) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Schema
+	return o.Password
 }
 
-func (o *DestinationOracle) GetEncryption() *DestinationOracleEncryption {
+func (o *DestinationOracle) GetPort() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Encryption
+	return o.Port
 }
 
 func (o *DestinationOracle) GetRawDataSchema() *string {
@@ -683,11 +662,32 @@ func (o *DestinationOracle) GetRawDataSchema() *string {
 	return o.RawDataSchema
 }
 
+func (o *DestinationOracle) GetSchema() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Schema
+}
+
+func (o *DestinationOracle) GetSid() string {
+	if o == nil {
+		return ""
+	}
+	return o.Sid
+}
+
 func (o *DestinationOracle) GetTunnelMethod() *DestinationOracleSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationOracle) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *DestinationOracle) GetDestinationType() DestinationOracleOracle {

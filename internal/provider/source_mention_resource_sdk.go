@@ -26,6 +26,12 @@ func (r *SourceMentionResourceModel) ToSharedSourceMentionCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	statsEndDate := new(customTypes.Date)
+	if !r.Configuration.StatsEndDate.IsUnknown() && !r.Configuration.StatsEndDate.IsNull() {
+		statsEndDate = customTypes.MustNewDateFromString(r.Configuration.StatsEndDate.ValueString())
+	} else {
+		statsEndDate = nil
+	}
 	statsInterval := new(shared.StatisticsInterval)
 	if !r.Configuration.StatsInterval.IsUnknown() && !r.Configuration.StatsInterval.IsNull() {
 		*statsInterval = shared.StatisticsInterval(r.Configuration.StatsInterval.ValueString())
@@ -33,17 +39,11 @@ func (r *SourceMentionResourceModel) ToSharedSourceMentionCreateRequest() *share
 		statsInterval = nil
 	}
 	statsStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StatsStartDate.ValueString())
-	statsEndDate := new(customTypes.Date)
-	if !r.Configuration.StatsEndDate.IsUnknown() && !r.Configuration.StatsEndDate.IsNull() {
-		statsEndDate = customTypes.MustNewDateFromString(r.Configuration.StatsEndDate.ValueString())
-	} else {
-		statsEndDate = nil
-	}
 	configuration := shared.SourceMention{
 		APIKey:         apiKey,
+		StatsEndDate:   statsEndDate,
 		StatsInterval:  statsInterval,
 		StatsStartDate: statsStartDate,
-		StatsEndDate:   statsEndDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -118,6 +118,12 @@ func (r *SourceMentionResourceModel) ToSharedSourceMentionPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	statsEndDate := new(customTypes.Date)
+	if !r.Configuration.StatsEndDate.IsUnknown() && !r.Configuration.StatsEndDate.IsNull() {
+		statsEndDate = customTypes.MustNewDateFromString(r.Configuration.StatsEndDate.ValueString())
+	} else {
+		statsEndDate = nil
+	}
 	statsInterval := new(shared.SourceMentionUpdateStatisticsInterval)
 	if !r.Configuration.StatsInterval.IsUnknown() && !r.Configuration.StatsInterval.IsNull() {
 		*statsInterval = shared.SourceMentionUpdateStatisticsInterval(r.Configuration.StatsInterval.ValueString())
@@ -125,17 +131,11 @@ func (r *SourceMentionResourceModel) ToSharedSourceMentionPutRequest() *shared.S
 		statsInterval = nil
 	}
 	statsStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StatsStartDate.ValueString())
-	statsEndDate := new(customTypes.Date)
-	if !r.Configuration.StatsEndDate.IsUnknown() && !r.Configuration.StatsEndDate.IsNull() {
-		statsEndDate = customTypes.MustNewDateFromString(r.Configuration.StatsEndDate.ValueString())
-	} else {
-		statsEndDate = nil
-	}
 	configuration := shared.SourceMentionUpdate{
 		APIKey:         apiKey,
+		StatsEndDate:   statsEndDate,
 		StatsInterval:  statsInterval,
 		StatsStartDate: statsStartDate,
-		StatsEndDate:   statsEndDate,
 	}
 	out := shared.SourceMentionPutRequest{
 		Name:          name,

@@ -34,10 +34,10 @@ func (e *DestinationClickhouseSchemasTunnelMethodTunnelMethod) UnmarshalJSON(dat
 }
 
 type DestinationClickhousePasswordAuthentication struct {
-	// Connect through a jump server tunnel host using username and password authentication
-	tunnelMethod DestinationClickhouseSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and password authentication
+	tunnelMethod DestinationClickhouseSchemasTunnelMethodTunnelMethod `const:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -57,15 +57,15 @@ func (d *DestinationClickhousePasswordAuthentication) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *DestinationClickhousePasswordAuthentication) GetTunnelMethod() DestinationClickhouseSchemasTunnelMethodTunnelMethod {
-	return DestinationClickhouseSchemasTunnelMethodTunnelMethodSSHPasswordAuth
-}
-
 func (o *DestinationClickhousePasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationClickhousePasswordAuthentication) GetTunnelMethod() DestinationClickhouseSchemasTunnelMethodTunnelMethod {
+	return DestinationClickhouseSchemasTunnelMethodTunnelMethodSSHPasswordAuth
 }
 
 func (o *DestinationClickhousePasswordAuthentication) GetTunnelPort() *int64 {
@@ -114,16 +114,16 @@ func (e *DestinationClickhouseSchemasTunnelMethod) UnmarshalJSON(data []byte) er
 }
 
 type DestinationClickhouseSSHKeyAuthentication struct {
-	// Connect through a jump server tunnel host using username and ssh key
-	tunnelMethod DestinationClickhouseSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
+	// Connect through a jump server tunnel host using username and ssh key
+	tunnelMethod DestinationClickhouseSchemasTunnelMethod `const:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey string `json:"ssh_key"`
 }
 
 func (d DestinationClickhouseSSHKeyAuthentication) MarshalJSON() ([]byte, error) {
@@ -137,8 +137,11 @@ func (d *DestinationClickhouseSSHKeyAuthentication) UnmarshalJSON(data []byte) e
 	return nil
 }
 
-func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelMethod() DestinationClickhouseSchemasTunnelMethod {
-	return DestinationClickhouseSchemasTunnelMethodSSHKeyAuth
+func (o *DestinationClickhouseSSHKeyAuthentication) GetSSHKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.SSHKey
 }
 
 func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelHost() string {
@@ -146,6 +149,10 @@ func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelHost() string {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelMethod() DestinationClickhouseSchemasTunnelMethod {
+	return DestinationClickhouseSchemasTunnelMethodSSHKeyAuth
 }
 
 func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -160,13 +167,6 @@ func (o *DestinationClickhouseSSHKeyAuthentication) GetTunnelUser() string {
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *DestinationClickhouseSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 // DestinationClickhouseTunnelMethod - No ssh tunnel needed to connect to database
@@ -323,25 +323,25 @@ func (e *DestinationClickhouseClickhouse) UnmarshalJSON(data []byte) error {
 }
 
 type DestinationClickhouse struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// HTTP port of the database.
-	Port *int64 `default:"8123" json:"port"`
 	// Name of the database.
 	Database string `json:"database"`
-	// Username to use to access the database.
-	Username string `json:"username"`
-	// Password associated with the username.
-	Password *string `json:"password,omitempty"`
+	// Hostname of the database.
+	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// Encrypt data using SSL.
-	Ssl *bool `default:"false" json:"ssl"`
+	// Password associated with the username.
+	Password *string `json:"password,omitempty"`
+	// HTTP port of the database.
+	Port *int64 `default:"8123" json:"port"`
 	// The schema to write raw tables into (default: airbyte_internal)
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
+	// Encrypt data using SSL.
+	Ssl *bool `default:"false" json:"ssl"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod    *DestinationClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
-	destinationType DestinationClickhouseClickhouse       `const:"clickhouse" json:"destinationType"`
+	TunnelMethod *DestinationClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
+	// Username to use to access the database.
+	Username        string                          `json:"username"`
+	destinationType DestinationClickhouseClickhouse `const:"clickhouse" json:"destinationType"`
 }
 
 func (d DestinationClickhouse) MarshalJSON() ([]byte, error) {
@@ -355,20 +355,6 @@ func (d *DestinationClickhouse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationClickhouse) GetHost() string {
-	if o == nil {
-		return ""
-	}
-	return o.Host
-}
-
-func (o *DestinationClickhouse) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
 func (o *DestinationClickhouse) GetDatabase() string {
 	if o == nil {
 		return ""
@@ -376,18 +362,11 @@ func (o *DestinationClickhouse) GetDatabase() string {
 	return o.Database
 }
 
-func (o *DestinationClickhouse) GetUsername() string {
+func (o *DestinationClickhouse) GetHost() string {
 	if o == nil {
 		return ""
 	}
-	return o.Username
-}
-
-func (o *DestinationClickhouse) GetPassword() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Password
+	return o.Host
 }
 
 func (o *DestinationClickhouse) GetJdbcURLParams() *string {
@@ -397,11 +376,18 @@ func (o *DestinationClickhouse) GetJdbcURLParams() *string {
 	return o.JdbcURLParams
 }
 
-func (o *DestinationClickhouse) GetSsl() *bool {
+func (o *DestinationClickhouse) GetPassword() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Ssl
+	return o.Password
+}
+
+func (o *DestinationClickhouse) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
 }
 
 func (o *DestinationClickhouse) GetRawDataSchema() *string {
@@ -411,11 +397,25 @@ func (o *DestinationClickhouse) GetRawDataSchema() *string {
 	return o.RawDataSchema
 }
 
+func (o *DestinationClickhouse) GetSsl() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Ssl
+}
+
 func (o *DestinationClickhouse) GetTunnelMethod() *DestinationClickhouseSSHTunnelMethod {
 	if o == nil {
 		return nil
 	}
 	return o.TunnelMethod
+}
+
+func (o *DestinationClickhouse) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *DestinationClickhouse) GetDestinationType() DestinationClickhouseClickhouse {

@@ -22,13 +22,22 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var shop string
-	shop = r.Configuration.Shop.ValueString()
-
+	bulkWindowInDays := new(int64)
+	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
+		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
+	} else {
+		bulkWindowInDays = nil
+	}
 	var credentials *shared.ShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyOAuth20 *shared.SourceShopifyOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -41,16 +50,10 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 			} else {
 				clientSecret = nil
 			}
-			accessToken := new(string)
-			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			sourceShopifyOAuth20 = &shared.SourceShopifyOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceShopifyOAuth20 != nil {
@@ -73,23 +76,17 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 			}
 		}
 	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	bulkWindowInDays := new(int64)
-	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
-		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
-	} else {
-		bulkWindowInDays = nil
-	}
 	fetchTransactionsUserID := new(bool)
 	if !r.Configuration.FetchTransactionsUserID.IsUnknown() && !r.Configuration.FetchTransactionsUserID.IsNull() {
 		*fetchTransactionsUserID = r.Configuration.FetchTransactionsUserID.ValueBool()
 	} else {
 		fetchTransactionsUserID = nil
+	}
+	jobCheckpointInterval := new(int64)
+	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
+		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	} else {
+		jobCheckpointInterval = nil
 	}
 	jobProductVariantsIncludePresPrices := new(bool)
 	if !r.Configuration.JobProductVariantsIncludePresPrices.IsUnknown() && !r.Configuration.JobProductVariantsIncludePresPrices.IsNull() {
@@ -103,21 +100,24 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyCreateRequest() *share
 	} else {
 		jobTerminationThreshold = nil
 	}
-	jobCheckpointInterval := new(int64)
-	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
-		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	var shop string
+	shop = r.Configuration.Shop.ValueString()
+
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
-		jobCheckpointInterval = nil
+		startDate = nil
 	}
 	configuration := shared.SourceShopify{
-		Shop:                                shop,
-		Credentials:                         credentials,
-		StartDate:                           startDate,
 		BulkWindowInDays:                    bulkWindowInDays,
+		Credentials:                         credentials,
 		FetchTransactionsUserID:             fetchTransactionsUserID,
+		JobCheckpointInterval:               jobCheckpointInterval,
 		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
 		JobTerminationThreshold:             jobTerminationThreshold,
-		JobCheckpointInterval:               jobCheckpointInterval,
+		Shop:                                shop,
+		StartDate:                           startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -189,13 +189,22 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var shop string
-	shop = r.Configuration.Shop.ValueString()
-
+	bulkWindowInDays := new(int64)
+	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
+		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
+	} else {
+		bulkWindowInDays = nil
+	}
 	var credentials *shared.SourceShopifyUpdateShopifyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceShopifyUpdateOAuth20 *shared.SourceShopifyUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
 			clientID := new(string)
 			if !r.Configuration.Credentials.OAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.OAuth20.ClientID.IsNull() {
 				*clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
@@ -208,16 +217,10 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 			} else {
 				clientSecret = nil
 			}
-			accessToken := new(string)
-			if !r.Configuration.Credentials.OAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.OAuth20.AccessToken.IsNull() {
-				*accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-			} else {
-				accessToken = nil
-			}
 			sourceShopifyUpdateOAuth20 = &shared.SourceShopifyUpdateOAuth20{
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
 			}
 		}
 		if sourceShopifyUpdateOAuth20 != nil {
@@ -240,23 +243,17 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 			}
 		}
 	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
-	bulkWindowInDays := new(int64)
-	if !r.Configuration.BulkWindowInDays.IsUnknown() && !r.Configuration.BulkWindowInDays.IsNull() {
-		*bulkWindowInDays = r.Configuration.BulkWindowInDays.ValueInt64()
-	} else {
-		bulkWindowInDays = nil
-	}
 	fetchTransactionsUserID := new(bool)
 	if !r.Configuration.FetchTransactionsUserID.IsUnknown() && !r.Configuration.FetchTransactionsUserID.IsNull() {
 		*fetchTransactionsUserID = r.Configuration.FetchTransactionsUserID.ValueBool()
 	} else {
 		fetchTransactionsUserID = nil
+	}
+	jobCheckpointInterval := new(int64)
+	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
+		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	} else {
+		jobCheckpointInterval = nil
 	}
 	jobProductVariantsIncludePresPrices := new(bool)
 	if !r.Configuration.JobProductVariantsIncludePresPrices.IsUnknown() && !r.Configuration.JobProductVariantsIncludePresPrices.IsNull() {
@@ -270,21 +267,24 @@ func (r *SourceShopifyResourceModel) ToSharedSourceShopifyPutRequest() *shared.S
 	} else {
 		jobTerminationThreshold = nil
 	}
-	jobCheckpointInterval := new(int64)
-	if !r.Configuration.JobCheckpointInterval.IsUnknown() && !r.Configuration.JobCheckpointInterval.IsNull() {
-		*jobCheckpointInterval = r.Configuration.JobCheckpointInterval.ValueInt64()
+	var shop string
+	shop = r.Configuration.Shop.ValueString()
+
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
-		jobCheckpointInterval = nil
+		startDate = nil
 	}
 	configuration := shared.SourceShopifyUpdate{
-		Shop:                                shop,
-		Credentials:                         credentials,
-		StartDate:                           startDate,
 		BulkWindowInDays:                    bulkWindowInDays,
+		Credentials:                         credentials,
 		FetchTransactionsUserID:             fetchTransactionsUserID,
+		JobCheckpointInterval:               jobCheckpointInterval,
 		JobProductVariantsIncludePresPrices: jobProductVariantsIncludePresPrices,
 		JobTerminationThreshold:             jobTerminationThreshold,
-		JobCheckpointInterval:               jobCheckpointInterval,
+		Shop:                                shop,
+		StartDate:                           startDate,
 	}
 	out := shared.SourceShopifyPutRequest{
 		Name:          name,

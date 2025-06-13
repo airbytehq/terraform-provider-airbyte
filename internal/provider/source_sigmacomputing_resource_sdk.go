@@ -22,14 +22,17 @@ func (r *SourceSigmaComputingResourceModel) ToSharedSourceSigmaComputingCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var baseURL string
+	baseURL = r.Configuration.BaseURL.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
@@ -43,16 +46,13 @@ func (r *SourceSigmaComputingResourceModel) ToSharedSourceSigmaComputingCreateRe
 	} else {
 		oauthTokenExpiryDate = nil
 	}
-	var baseURL string
-	baseURL = r.Configuration.BaseURL.ValueString()
-
 	configuration := shared.SourceSigmaComputing{
+		BaseURL:              baseURL,
 		ClientID:             clientID,
-		ClientSecret:         clientSecret,
 		ClientRefreshToken:   clientRefreshToken,
+		ClientSecret:         clientSecret,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
-		BaseURL:              baseURL,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -124,14 +124,17 @@ func (r *SourceSigmaComputingResourceModel) ToSharedSourceSigmaComputingPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var baseURL string
+	baseURL = r.Configuration.BaseURL.ValueString()
+
 	var clientID string
 	clientID = r.Configuration.ClientID.ValueString()
 
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	var clientRefreshToken string
 	clientRefreshToken = r.Configuration.ClientRefreshToken.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
@@ -145,16 +148,13 @@ func (r *SourceSigmaComputingResourceModel) ToSharedSourceSigmaComputingPutReque
 	} else {
 		oauthTokenExpiryDate = nil
 	}
-	var baseURL string
-	baseURL = r.Configuration.BaseURL.ValueString()
-
 	configuration := shared.SourceSigmaComputingUpdate{
+		BaseURL:              baseURL,
 		ClientID:             clientID,
-		ClientSecret:         clientSecret,
 		ClientRefreshToken:   clientRefreshToken,
+		ClientSecret:         clientSecret,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
-		BaseURL:              baseURL,
 	}
 	out := shared.SourceSigmaComputingPutRequest{
 		Name:          name,

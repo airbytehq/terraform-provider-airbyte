@@ -31,29 +31,29 @@ func (r *SourceCoingeckoCoinsResourceModel) ToSharedSourceCoingeckoCoinsCreateRe
 	var coinID string
 	coinID = r.Configuration.CoinID.ValueString()
 
-	var vsCurrency string
-	vsCurrency = r.Configuration.VsCurrency.ValueString()
-
 	days := new(shared.Days)
 	if !r.Configuration.Days.IsUnknown() && !r.Configuration.Days.IsNull() {
 		*days = shared.Days(r.Configuration.Days.ValueString())
 	} else {
 		days = nil
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	var vsCurrency string
+	vsCurrency = r.Configuration.VsCurrency.ValueString()
+
 	configuration := shared.SourceCoingeckoCoins{
 		APIKey:     apiKey,
 		CoinID:     coinID,
-		VsCurrency: vsCurrency,
 		Days:       days,
-		StartDate:  startDate,
 		EndDate:    endDate,
+		StartDate:  startDate,
+		VsCurrency: vsCurrency,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -134,29 +134,29 @@ func (r *SourceCoingeckoCoinsResourceModel) ToSharedSourceCoingeckoCoinsPutReque
 	var coinID string
 	coinID = r.Configuration.CoinID.ValueString()
 
-	var vsCurrency string
-	vsCurrency = r.Configuration.VsCurrency.ValueString()
-
 	days := new(shared.SourceCoingeckoCoinsUpdateDays)
 	if !r.Configuration.Days.IsUnknown() && !r.Configuration.Days.IsNull() {
 		*days = shared.SourceCoingeckoCoinsUpdateDays(r.Configuration.Days.ValueString())
 	} else {
 		days = nil
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	var vsCurrency string
+	vsCurrency = r.Configuration.VsCurrency.ValueString()
+
 	configuration := shared.SourceCoingeckoCoinsUpdate{
 		APIKey:     apiKey,
 		CoinID:     coinID,
-		VsCurrency: vsCurrency,
 		Days:       days,
-		StartDate:  startDate,
 		EndDate:    endDate,
+		StartDate:  startDate,
+		VsCurrency: vsCurrency,
 	}
 	out := shared.SourceCoingeckoCoinsPutRequest{
 		Name:          name,

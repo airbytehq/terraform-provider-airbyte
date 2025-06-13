@@ -33,9 +33,9 @@ func (e *SourceMondaySchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type APIToken struct {
-	authType SourceMondaySchemasAuthType `const:"api_token" json:"auth_type"`
 	// API Token for making authenticated requests.
-	APIToken string `json:"api_token"`
+	APIToken string                      `json:"api_token"`
+	authType SourceMondaySchemasAuthType `const:"api_token" json:"auth_type"`
 }
 
 func (a APIToken) MarshalJSON() ([]byte, error) {
@@ -49,15 +49,15 @@ func (a *APIToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *APIToken) GetAuthType() SourceMondaySchemasAuthType {
-	return SourceMondaySchemasAuthTypeAPIToken
-}
-
 func (o *APIToken) GetAPIToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIToken
+}
+
+func (o *APIToken) GetAuthType() SourceMondaySchemasAuthType {
+	return SourceMondaySchemasAuthTypeAPIToken
 }
 
 type SourceMondayAuthType string
@@ -84,15 +84,15 @@ func (e *SourceMondayAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMondayOAuth20 struct {
-	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
-	Subdomain *string              `default:"" json:"subdomain"`
-	authType  SourceMondayAuthType `const:"oauth2.0" json:"auth_type"`
+	// Access Token for making authenticated requests.
+	AccessToken string               `json:"access_token"`
+	authType    SourceMondayAuthType `const:"oauth2.0" json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	// Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
+	Subdomain *string `default:"" json:"subdomain"`
 }
 
 func (s SourceMondayOAuth20) MarshalJSON() ([]byte, error) {
@@ -106,11 +106,11 @@ func (s *SourceMondayOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMondayOAuth20) GetSubdomain() *string {
+func (o *SourceMondayOAuth20) GetAccessToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Subdomain
+	return o.AccessToken
 }
 
 func (o *SourceMondayOAuth20) GetAuthType() SourceMondayAuthType {
@@ -131,11 +131,11 @@ func (o *SourceMondayOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceMondayOAuth20) GetAccessToken() string {
+func (o *SourceMondayOAuth20) GetSubdomain() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.AccessToken
+	return o.Subdomain
 }
 
 type SourceMondayAuthorizationMethodType string
@@ -225,9 +225,9 @@ func (e *Monday) UnmarshalJSON(data []byte) error {
 }
 
 type SourceMonday struct {
-	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
 	// The IDs of the boards that the Items and Boards streams will extract records from. When left empty, streams will extract records from all boards that exist within the account.
-	BoardIds []int64 `json:"board_ids,omitempty"`
+	BoardIds    []int64                          `json:"board_ids,omitempty"`
+	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
 	// The number of worker threads to use for the sync.
 	NumWorkers *int64 `default:"4" json:"num_workers"`
 	sourceType Monday `const:"monday" json:"sourceType"`
@@ -244,18 +244,18 @@ func (s *SourceMonday) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceMonday) GetCredentials() *SourceMondayAuthorizationMethod {
-	if o == nil {
-		return nil
-	}
-	return o.Credentials
-}
-
 func (o *SourceMonday) GetBoardIds() []int64 {
 	if o == nil {
 		return nil
 	}
 	return o.BoardIds
+}
+
+func (o *SourceMonday) GetCredentials() *SourceMondayAuthorizationMethod {
+	if o == nil {
+		return nil
+	}
+	return o.Credentials
 }
 
 func (o *SourceMonday) GetNumWorkers() *int64 {

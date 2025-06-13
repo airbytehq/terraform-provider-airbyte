@@ -61,8 +61,8 @@ func (e *Nylas) UnmarshalJSON(data []byte) error {
 type SourceNylas struct {
 	APIKey     string    `json:"api_key"`
 	APIServer  APIServer `json:"api_server"`
-	StartDate  time.Time `json:"start_date"`
 	EndDate    time.Time `json:"end_date"`
+	StartDate  time.Time `json:"start_date"`
 	sourceType Nylas     `const:"nylas" json:"sourceType"`
 }
 
@@ -91,18 +91,18 @@ func (o *SourceNylas) GetAPIServer() APIServer {
 	return o.APIServer
 }
 
-func (o *SourceNylas) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceNylas) GetEndDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.EndDate
+}
+
+func (o *SourceNylas) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceNylas) GetSourceType() Nylas {

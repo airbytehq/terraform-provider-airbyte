@@ -63,14 +63,14 @@ func (e *CastorEdc) UnmarshalJSON(data []byte) error {
 }
 
 type SourceCastorEdc struct {
-	// The url region given at time of registration
-	URLRegion *URLRegion `default:"uk" json:"url_region"`
 	// Visit `https://YOUR_REGION.castoredc.com/account/settings`
 	ClientID string `json:"client_id"`
 	// Visit `https://YOUR_REGION.castoredc.com/account/settings`
 	ClientSecret string    `json:"client_secret"`
 	StartDate    time.Time `json:"start_date"`
-	sourceType   CastorEdc `const:"castor-edc" json:"sourceType"`
+	// The url region given at time of registration
+	URLRegion  *URLRegion `default:"uk" json:"url_region"`
+	sourceType CastorEdc  `const:"castor-edc" json:"sourceType"`
 }
 
 func (s SourceCastorEdc) MarshalJSON() ([]byte, error) {
@@ -82,13 +82,6 @@ func (s *SourceCastorEdc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceCastorEdc) GetURLRegion() *URLRegion {
-	if o == nil {
-		return nil
-	}
-	return o.URLRegion
 }
 
 func (o *SourceCastorEdc) GetClientID() string {
@@ -110,6 +103,13 @@ func (o *SourceCastorEdc) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceCastorEdc) GetURLRegion() *URLRegion {
+	if o == nil {
+		return nil
+	}
+	return o.URLRegion
 }
 
 func (o *SourceCastorEdc) GetSourceType() CastorEdc {

@@ -3,16 +3,9 @@
 package shared
 
 type SourceTeamtailorUpdate struct {
+	API string `json:"api"`
 	// The version of the API
 	XAPIVersion string `json:"x_api_version"`
-	API         string `json:"api"`
-}
-
-func (o *SourceTeamtailorUpdate) GetXAPIVersion() string {
-	if o == nil {
-		return ""
-	}
-	return o.XAPIVersion
 }
 
 func (o *SourceTeamtailorUpdate) GetAPI() string {
@@ -20,4 +13,11 @@ func (o *SourceTeamtailorUpdate) GetAPI() string {
 		return ""
 	}
 	return o.API
+}
+
+func (o *SourceTeamtailorUpdate) GetXAPIVersion() string {
+	if o == nil {
+		return ""
+	}
+	return o.XAPIVersion
 }

@@ -85,13 +85,13 @@ func (e *OptionTitle) UnmarshalJSON(data []byte) error {
 }
 
 type OAuth struct {
-	optionTitle *OptionTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
 	// OAuth access token
 	AccessToken string `json:"access_token"`
 	// OAuth Client Id
 	ClientID *string `json:"client_id,omitempty"`
 	// OAuth Client secret
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret *string      `json:"client_secret,omitempty"`
+	optionTitle  *OptionTitle `const:"OAuth Credentials" json:"option_title,omitempty"`
 }
 
 func (o OAuth) MarshalJSON() ([]byte, error) {
@@ -103,10 +103,6 @@ func (o *OAuth) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *OAuth) GetOptionTitle() *OptionTitle {
-	return OptionTitleOAuthCredentials.ToPointer()
 }
 
 func (o *OAuth) GetAccessToken() string {
@@ -128,6 +124,10 @@ func (o *OAuth) GetClientSecret() *string {
 		return nil
 	}
 	return o.ClientSecret
+}
+
+func (o *OAuth) GetOptionTitle() *OptionTitle {
+	return OptionTitleOAuthCredentials.ToPointer()
 }
 
 type SourceGithubAuthenticationType string
@@ -218,19 +218,19 @@ func (e *Github) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGithub struct {
-	// Choose how to authenticate to GitHub
-	Credentials SourceGithubAuthentication `json:"credentials"`
-	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
-	Repositories []string `json:"repositories"`
-	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
-	StartDate *time.Time `json:"start_date,omitempty"`
 	// Please enter your basic URL from self-hosted GitHub instance or leave it empty to use GitHub.
 	APIURL *string `default:"https://api.github.com/" json:"api_url"`
 	// List of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 	Branches []string `json:"branches,omitempty"`
+	// Choose how to authenticate to GitHub
+	Credentials SourceGithubAuthentication `json:"credentials"`
 	// Max Waiting Time for rate limit. Set higher value to wait till rate limits will be resetted to continue sync
 	MaxWaitingTime *int64 `default:"10" json:"max_waiting_time"`
-	sourceType     Github `const:"github" json:"sourceType"`
+	// List of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/a* for matching multiple repositories by pattern.
+	Repositories []string `json:"repositories"`
+	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. If the date is not set, all data will be replicated.  For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
+	StartDate  *time.Time `json:"start_date,omitempty"`
+	sourceType Github     `const:"github" json:"sourceType"`
 }
 
 func (s SourceGithub) MarshalJSON() ([]byte, error) {
@@ -242,27 +242,6 @@ func (s *SourceGithub) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceGithub) GetCredentials() SourceGithubAuthentication {
-	if o == nil {
-		return SourceGithubAuthentication{}
-	}
-	return o.Credentials
-}
-
-func (o *SourceGithub) GetRepositories() []string {
-	if o == nil {
-		return []string{}
-	}
-	return o.Repositories
-}
-
-func (o *SourceGithub) GetStartDate() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.StartDate
 }
 
 func (o *SourceGithub) GetAPIURL() *string {
@@ -279,11 +258,32 @@ func (o *SourceGithub) GetBranches() []string {
 	return o.Branches
 }
 
+func (o *SourceGithub) GetCredentials() SourceGithubAuthentication {
+	if o == nil {
+		return SourceGithubAuthentication{}
+	}
+	return o.Credentials
+}
+
 func (o *SourceGithub) GetMaxWaitingTime() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxWaitingTime
+}
+
+func (o *SourceGithub) GetRepositories() []string {
+	if o == nil {
+		return []string{}
+	}
+	return o.Repositories
+}
+
+func (o *SourceGithub) GetStartDate() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }
 
 func (o *SourceGithub) GetSourceType() Github {

@@ -39,14 +39,14 @@ func (e *SourceKlarnaUpdateRegion) UnmarshalJSON(data []byte) error {
 }
 
 type SourceKlarnaUpdate struct {
-	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
-	Region SourceKlarnaUpdateRegion `json:"region"`
-	// Propertie defining if connector is used against playground or production environment
-	Playground *bool `default:"false" json:"playground"`
-	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
-	Username string `json:"username"`
 	// A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
 	Password string `json:"password"`
+	// Propertie defining if connector is used against playground or production environment
+	Playground *bool `default:"false" json:"playground"`
+	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'na', 'oc'
+	Region SourceKlarnaUpdateRegion `json:"region"`
+	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
+	Username string `json:"username"`
 }
 
 func (s SourceKlarnaUpdate) MarshalJSON() ([]byte, error) {
@@ -60,11 +60,11 @@ func (s *SourceKlarnaUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceKlarnaUpdate) GetRegion() SourceKlarnaUpdateRegion {
+func (o *SourceKlarnaUpdate) GetPassword() string {
 	if o == nil {
-		return SourceKlarnaUpdateRegion("")
+		return ""
 	}
-	return o.Region
+	return o.Password
 }
 
 func (o *SourceKlarnaUpdate) GetPlayground() *bool {
@@ -74,16 +74,16 @@ func (o *SourceKlarnaUpdate) GetPlayground() *bool {
 	return o.Playground
 }
 
+func (o *SourceKlarnaUpdate) GetRegion() SourceKlarnaUpdateRegion {
+	if o == nil {
+		return SourceKlarnaUpdateRegion("")
+	}
+	return o.Region
+}
+
 func (o *SourceKlarnaUpdate) GetUsername() string {
 	if o == nil {
 		return ""
 	}
 	return o.Username
-}
-
-func (o *SourceKlarnaUpdate) GetPassword() string {
-	if o == nil {
-		return ""
-	}
-	return o.Password
 }

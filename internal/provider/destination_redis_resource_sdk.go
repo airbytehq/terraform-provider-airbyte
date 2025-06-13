@@ -21,23 +21,26 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	cacheType := new(shared.CacheType)
+	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
+		*cacheType = shared.CacheType(r.Configuration.CacheType.ValueString())
+	} else {
+		cacheType = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -86,12 +89,6 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() 
 			}
 		}
 	}
-	cacheType := new(shared.CacheType)
-	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
-		*cacheType = shared.CacheType(r.Configuration.CacheType.ValueString())
-	} else {
-		cacheType = nil
-	}
 	var tunnelMethod *shared.DestinationRedisSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationRedisNoTunnel *shared.DestinationRedisNoTunnel
@@ -105,6 +102,9 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() 
 		}
 		var destinationRedisSSHKeyAuthentication *shared.DestinationRedisSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -117,14 +117,11 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() 
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationRedisSSHKeyAuthentication = &shared.DestinationRedisSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationRedisSSHKeyAuthentication != nil {
@@ -162,15 +159,18 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisCreateRequest() 
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationRedis{
+		CacheType:    cacheType,
 		Host:         host,
-		Port:         port,
-		Username:     username,
 		Password:     password,
+		Port:         port,
 		Ssl:          ssl,
 		SslMode:      sslMode,
-		CacheType:    cacheType,
 		TunnelMethod: tunnelMethod,
+		Username:     username,
 	}
 	out := shared.DestinationRedisCreateRequest{
 		Name:          name,
@@ -235,23 +235,26 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	cacheType := new(shared.DestinationRedisUpdateCacheType)
+	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
+		*cacheType = shared.DestinationRedisUpdateCacheType(r.Configuration.CacheType.ValueString())
+	} else {
+		cacheType = nil
+	}
 	var host string
 	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
 	}
 	ssl := new(bool)
 	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
@@ -300,12 +303,6 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *sh
 			}
 		}
 	}
-	cacheType := new(shared.DestinationRedisUpdateCacheType)
-	if !r.Configuration.CacheType.IsUnknown() && !r.Configuration.CacheType.IsNull() {
-		*cacheType = shared.DestinationRedisUpdateCacheType(r.Configuration.CacheType.ValueString())
-	} else {
-		cacheType = nil
-	}
 	var tunnelMethod *shared.DestinationRedisUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var destinationRedisUpdateNoTunnel *shared.DestinationRedisUpdateNoTunnel
@@ -319,6 +316,9 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *sh
 		}
 		var destinationRedisUpdateSSHKeyAuthentication *shared.DestinationRedisUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -331,14 +331,11 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *sh
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			destinationRedisUpdateSSHKeyAuthentication = &shared.DestinationRedisUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if destinationRedisUpdateSSHKeyAuthentication != nil {
@@ -376,15 +373,18 @@ func (r *DestinationRedisResourceModel) ToSharedDestinationRedisPutRequest() *sh
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.DestinationRedisUpdate{
+		CacheType:    cacheType,
 		Host:         host,
-		Port:         port,
-		Username:     username,
 		Password:     password,
+		Port:         port,
 		Ssl:          ssl,
 		SslMode:      sslMode,
-		CacheType:    cacheType,
 		TunnelMethod: tunnelMethod,
+		Username:     username,
 	}
 	out := shared.DestinationRedisPutRequest{
 		Name:          name,

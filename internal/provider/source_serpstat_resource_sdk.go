@@ -31,12 +31,6 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatCreateRequest() *sha
 	} else {
 		domain = nil
 	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
 	var domains []interface{} = []interface{}{}
 	for _, domainsItem := range r.Configuration.Domains {
 		var domainsTmp interface{}
@@ -55,17 +49,11 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatCreateRequest() *sha
 	} else {
 		filterValue = nil
 	}
-	sortBy := new(string)
-	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
-		*sortBy = r.Configuration.SortBy.ValueString()
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
 	} else {
-		sortBy = nil
-	}
-	sortValue := new(string)
-	if !r.Configuration.SortValue.IsUnknown() && !r.Configuration.SortValue.IsNull() {
-		*sortValue = r.Configuration.SortValue.ValueString()
-	} else {
-		sortValue = nil
+		pageSize = nil
 	}
 	pagesToFetch := new(int64)
 	if !r.Configuration.PagesToFetch.IsUnknown() && !r.Configuration.PagesToFetch.IsNull() {
@@ -79,17 +67,29 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatCreateRequest() *sha
 	} else {
 		regionID = nil
 	}
+	sortBy := new(string)
+	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
+		*sortBy = r.Configuration.SortBy.ValueString()
+	} else {
+		sortBy = nil
+	}
+	sortValue := new(string)
+	if !r.Configuration.SortValue.IsUnknown() && !r.Configuration.SortValue.IsNull() {
+		*sortValue = r.Configuration.SortValue.ValueString()
+	} else {
+		sortValue = nil
+	}
 	configuration := shared.SourceSerpstat{
 		APIKey:       apiKey,
 		Domain:       domain,
-		PageSize:     pageSize,
 		Domains:      domains,
 		FilterBy:     filterBy,
 		FilterValue:  filterValue,
-		SortBy:       sortBy,
-		SortValue:    sortValue,
+		PageSize:     pageSize,
 		PagesToFetch: pagesToFetch,
 		RegionID:     regionID,
+		SortBy:       sortBy,
+		SortValue:    sortValue,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -170,12 +170,6 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatPutRequest() *shared
 	} else {
 		domain = nil
 	}
-	pageSize := new(int64)
-	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
-		*pageSize = r.Configuration.PageSize.ValueInt64()
-	} else {
-		pageSize = nil
-	}
 	var domains []interface{} = []interface{}{}
 	for _, domainsItem := range r.Configuration.Domains {
 		var domainsTmp interface{}
@@ -194,17 +188,11 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatPutRequest() *shared
 	} else {
 		filterValue = nil
 	}
-	sortBy := new(string)
-	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
-		*sortBy = r.Configuration.SortBy.ValueString()
+	pageSize := new(int64)
+	if !r.Configuration.PageSize.IsUnknown() && !r.Configuration.PageSize.IsNull() {
+		*pageSize = r.Configuration.PageSize.ValueInt64()
 	} else {
-		sortBy = nil
-	}
-	sortValue := new(string)
-	if !r.Configuration.SortValue.IsUnknown() && !r.Configuration.SortValue.IsNull() {
-		*sortValue = r.Configuration.SortValue.ValueString()
-	} else {
-		sortValue = nil
+		pageSize = nil
 	}
 	pagesToFetch := new(int64)
 	if !r.Configuration.PagesToFetch.IsUnknown() && !r.Configuration.PagesToFetch.IsNull() {
@@ -218,17 +206,29 @@ func (r *SourceSerpstatResourceModel) ToSharedSourceSerpstatPutRequest() *shared
 	} else {
 		regionID = nil
 	}
+	sortBy := new(string)
+	if !r.Configuration.SortBy.IsUnknown() && !r.Configuration.SortBy.IsNull() {
+		*sortBy = r.Configuration.SortBy.ValueString()
+	} else {
+		sortBy = nil
+	}
+	sortValue := new(string)
+	if !r.Configuration.SortValue.IsUnknown() && !r.Configuration.SortValue.IsNull() {
+		*sortValue = r.Configuration.SortValue.ValueString()
+	} else {
+		sortValue = nil
+	}
 	configuration := shared.SourceSerpstatUpdate{
 		APIKey:       apiKey,
 		Domain:       domain,
-		PageSize:     pageSize,
 		Domains:      domains,
 		FilterBy:     filterBy,
 		FilterValue:  filterValue,
-		SortBy:       sortBy,
-		SortValue:    sortValue,
+		PageSize:     pageSize,
 		PagesToFetch: pagesToFetch,
 		RegionID:     regionID,
+		SortBy:       sortBy,
+		SortValue:    sortValue,
 	}
 	out := shared.SourceSerpstatPutRequest{
 		Name:          name,

@@ -22,11 +22,11 @@ func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
+
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
@@ -47,8 +47,8 @@ func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerCreateRequest(
 		syncLagMinutes = nil
 	}
 	configuration := shared.SourceFreshcaller{
-		Domain:            domain,
 		APIKey:            apiKey,
+		Domain:            domain,
 		RequestsPerMinute: requestsPerMinute,
 		StartDate:         startDate,
 		SyncLagMinutes:    syncLagMinutes,
@@ -123,11 +123,11 @@ func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var domain string
-	domain = r.Configuration.Domain.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
+
+	var domain string
+	domain = r.Configuration.Domain.ValueString()
 
 	requestsPerMinute := new(int64)
 	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
@@ -148,8 +148,8 @@ func (r *SourceFreshcallerResourceModel) ToSharedSourceFreshcallerPutRequest() *
 		syncLagMinutes = nil
 	}
 	configuration := shared.SourceFreshcallerUpdate{
-		Domain:            domain,
 		APIKey:            apiKey,
+		Domain:            domain,
 		RequestsPerMinute: requestsPerMinute,
 		StartDate:         startDate,
 		SyncLagMinutes:    syncLagMinutes,

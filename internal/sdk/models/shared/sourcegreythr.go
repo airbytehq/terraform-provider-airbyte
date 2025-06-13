@@ -32,10 +32,10 @@ func (e *Greythr) UnmarshalJSON(data []byte) error {
 }
 
 type SourceGreythr struct {
-	// Your GreytHR Host URL
-	Domain string `json:"domain"`
 	// https://api.greythr.com
-	BaseURL    string  `json:"base_url"`
+	BaseURL string `json:"base_url"`
+	// Your GreytHR Host URL
+	Domain     string  `json:"domain"`
 	Password   *string `json:"password,omitempty"`
 	Username   string  `json:"username"`
 	sourceType Greythr `const:"greythr" json:"sourceType"`
@@ -52,18 +52,18 @@ func (s *SourceGreythr) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGreythr) GetDomain() string {
-	if o == nil {
-		return ""
-	}
-	return o.Domain
-}
-
 func (o *SourceGreythr) GetBaseURL() string {
 	if o == nil {
 		return ""
 	}
 	return o.BaseURL
+}
+
+func (o *SourceGreythr) GetDomain() string {
+	if o == nil {
+		return ""
+	}
+	return o.Domain
 }
 
 func (o *SourceGreythr) GetPassword() *string {

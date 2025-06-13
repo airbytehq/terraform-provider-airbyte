@@ -26,11 +26,11 @@ func (r *SourceStockdataResourceModel) ToSharedSourceStockdataCreateRequest() *s
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var symbols []interface{} = []interface{}{}
-	for _, symbolsItem := range r.Configuration.Symbols {
-		var symbolsTmp interface{}
-		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
-		symbols = append(symbols, symbolsTmp)
+	filterEntities := new(bool)
+	if !r.Configuration.FilterEntities.IsUnknown() && !r.Configuration.FilterEntities.IsNull() {
+		*filterEntities = r.Configuration.FilterEntities.ValueBool()
+	} else {
+		filterEntities = nil
 	}
 	var industries []interface{} = []interface{}{}
 	for _, industriesItem := range r.Configuration.Industries {
@@ -38,19 +38,19 @@ func (r *SourceStockdataResourceModel) ToSharedSourceStockdataCreateRequest() *s
 		_ = json.Unmarshal([]byte(industriesItem.ValueString()), &industriesTmp)
 		industries = append(industries, industriesTmp)
 	}
-	filterEntities := new(bool)
-	if !r.Configuration.FilterEntities.IsUnknown() && !r.Configuration.FilterEntities.IsNull() {
-		*filterEntities = r.Configuration.FilterEntities.ValueBool()
-	} else {
-		filterEntities = nil
-	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var symbols []interface{} = []interface{}{}
+	for _, symbolsItem := range r.Configuration.Symbols {
+		var symbolsTmp interface{}
+		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
+		symbols = append(symbols, symbolsTmp)
+	}
 	configuration := shared.SourceStockdata{
 		APIKey:         apiKey,
-		Symbols:        symbols,
-		Industries:     industries,
 		FilterEntities: filterEntities,
+		Industries:     industries,
 		StartDate:      startDate,
+		Symbols:        symbols,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -125,11 +125,11 @@ func (r *SourceStockdataResourceModel) ToSharedSourceStockdataPutRequest() *shar
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	var symbols []interface{} = []interface{}{}
-	for _, symbolsItem := range r.Configuration.Symbols {
-		var symbolsTmp interface{}
-		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
-		symbols = append(symbols, symbolsTmp)
+	filterEntities := new(bool)
+	if !r.Configuration.FilterEntities.IsUnknown() && !r.Configuration.FilterEntities.IsNull() {
+		*filterEntities = r.Configuration.FilterEntities.ValueBool()
+	} else {
+		filterEntities = nil
 	}
 	var industries []interface{} = []interface{}{}
 	for _, industriesItem := range r.Configuration.Industries {
@@ -137,19 +137,19 @@ func (r *SourceStockdataResourceModel) ToSharedSourceStockdataPutRequest() *shar
 		_ = json.Unmarshal([]byte(industriesItem.ValueString()), &industriesTmp)
 		industries = append(industries, industriesTmp)
 	}
-	filterEntities := new(bool)
-	if !r.Configuration.FilterEntities.IsUnknown() && !r.Configuration.FilterEntities.IsNull() {
-		*filterEntities = r.Configuration.FilterEntities.ValueBool()
-	} else {
-		filterEntities = nil
-	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var symbols []interface{} = []interface{}{}
+	for _, symbolsItem := range r.Configuration.Symbols {
+		var symbolsTmp interface{}
+		_ = json.Unmarshal([]byte(symbolsItem.ValueString()), &symbolsTmp)
+		symbols = append(symbols, symbolsTmp)
+	}
 	configuration := shared.SourceStockdataUpdate{
 		APIKey:         apiKey,
-		Symbols:        symbols,
-		Industries:     industries,
 		FilterEntities: filterEntities,
+		Industries:     industries,
 		StartDate:      startDate,
+		Symbols:        symbols,
 	}
 	out := shared.SourceStockdataPutRequest{
 		Name:          name,

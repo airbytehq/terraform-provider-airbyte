@@ -22,14 +22,17 @@ func (r *SourceGuruResourceModel) ToSharedSourceGuruCreateRequest() *shared.Sour
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
+	}
+	searchCardsQuery := new(string)
+	if !r.Configuration.SearchCardsQuery.IsUnknown() && !r.Configuration.SearchCardsQuery.IsNull() {
+		*searchCardsQuery = r.Configuration.SearchCardsQuery.ValueString()
+	} else {
+		searchCardsQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	teamID := new(string)
@@ -38,18 +41,15 @@ func (r *SourceGuruResourceModel) ToSharedSourceGuruCreateRequest() *shared.Sour
 	} else {
 		teamID = nil
 	}
-	searchCardsQuery := new(string)
-	if !r.Configuration.SearchCardsQuery.IsUnknown() && !r.Configuration.SearchCardsQuery.IsNull() {
-		*searchCardsQuery = r.Configuration.SearchCardsQuery.ValueString()
-	} else {
-		searchCardsQuery = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceGuru{
-		Username:         username,
 		Password:         password,
+		SearchCardsQuery: searchCardsQuery,
 		StartDate:        startDate,
 		TeamID:           teamID,
-		SearchCardsQuery: searchCardsQuery,
+		Username:         username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -121,14 +121,17 @@ func (r *SourceGuruResourceModel) ToSharedSourceGuruPutRequest() *shared.SourceG
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
 	} else {
 		password = nil
+	}
+	searchCardsQuery := new(string)
+	if !r.Configuration.SearchCardsQuery.IsUnknown() && !r.Configuration.SearchCardsQuery.IsNull() {
+		*searchCardsQuery = r.Configuration.SearchCardsQuery.ValueString()
+	} else {
+		searchCardsQuery = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	teamID := new(string)
@@ -137,18 +140,15 @@ func (r *SourceGuruResourceModel) ToSharedSourceGuruPutRequest() *shared.SourceG
 	} else {
 		teamID = nil
 	}
-	searchCardsQuery := new(string)
-	if !r.Configuration.SearchCardsQuery.IsUnknown() && !r.Configuration.SearchCardsQuery.IsNull() {
-		*searchCardsQuery = r.Configuration.SearchCardsQuery.ValueString()
-	} else {
-		searchCardsQuery = nil
-	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceGuruUpdate{
-		Username:         username,
 		Password:         password,
+		SearchCardsQuery: searchCardsQuery,
 		StartDate:        startDate,
 		TeamID:           teamID,
-		SearchCardsQuery: searchCardsQuery,
+		Username:         username,
 	}
 	out := shared.SourceGuruPutRequest{
 		Name:          name,

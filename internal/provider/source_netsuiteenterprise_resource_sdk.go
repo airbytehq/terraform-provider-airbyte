@@ -22,17 +22,8 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
 
 	var authenticationMethod shared.SourceNetsuiteEnterpriseAuthenticationMethod
 	var sourceNetsuiteEnterprisePasswordAuthentication *shared.SourceNetsuiteEnterprisePasswordAuthentication
@@ -99,146 +90,12 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 			TokenBasedAuthentication: tokenBasedAuthentication,
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
 	} else {
-		jdbcURLParams = nil
+		checkPrivileges = nil
 	}
-	var tunnelMethod shared.SourceNetsuiteEnterpriseSSHTunnelMethod
-	var sourceNetsuiteEnterpriseNoTunnel *shared.SourceNetsuiteEnterpriseNoTunnel
-	if r.Configuration.TunnelMethod.NoTunnel != nil {
-		tunnelMethod1 := new(shared.SourceNetsuiteEnterpriseTunnelMethod)
-		if !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsNull() {
-			*tunnelMethod1 = shared.SourceNetsuiteEnterpriseTunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod1 = nil
-		}
-		var additionalProperties2 interface{}
-		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties2)
-		}
-		sourceNetsuiteEnterpriseNoTunnel = &shared.SourceNetsuiteEnterpriseNoTunnel{
-			TunnelMethod:         tunnelMethod1,
-			AdditionalProperties: additionalProperties2,
-		}
-	}
-	if sourceNetsuiteEnterpriseNoTunnel != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
-			SourceNetsuiteEnterpriseNoTunnel: sourceNetsuiteEnterpriseNoTunnel,
-		}
-	}
-	var sourceNetsuiteEnterpriseSSHKeyAuthentication *shared.SourceNetsuiteEnterpriseSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
-		tunnelMethod2 := new(shared.SourceNetsuiteEnterpriseSchemasTunnelMethod)
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
-			*tunnelMethod2 = shared.SourceNetsuiteEnterpriseSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod2 = nil
-		}
-		var tunnelHost string
-		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
-		tunnelPort := new(int64)
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
-			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
-		} else {
-			tunnelPort = nil
-		}
-		var tunnelUser string
-		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
-
-		var sshKey string
-		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-		var additionalProperties3 interface{}
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties3)
-		}
-		sourceNetsuiteEnterpriseSSHKeyAuthentication = &shared.SourceNetsuiteEnterpriseSSHKeyAuthentication{
-			TunnelMethod:         tunnelMethod2,
-			TunnelHost:           tunnelHost,
-			TunnelPort:           tunnelPort,
-			TunnelUser:           tunnelUser,
-			SSHKey:               sshKey,
-			AdditionalProperties: additionalProperties3,
-		}
-	}
-	if sourceNetsuiteEnterpriseSSHKeyAuthentication != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
-			SourceNetsuiteEnterpriseSSHKeyAuthentication: sourceNetsuiteEnterpriseSSHKeyAuthentication,
-		}
-	}
-	var sourceNetsuiteEnterpriseSchemasPasswordAuthentication *shared.SourceNetsuiteEnterpriseSchemasPasswordAuthentication
-	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
-		tunnelMethod3 := new(shared.SourceNetsuiteEnterpriseSchemasTunnelMethodTunnelMethod)
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
-			*tunnelMethod3 = shared.SourceNetsuiteEnterpriseSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod3 = nil
-		}
-		var tunnelHost1 string
-		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
-		tunnelPort1 := new(int64)
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
-			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
-		} else {
-			tunnelPort1 = nil
-		}
-		var tunnelUser1 string
-		tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
-
-		var tunnelUserPassword string
-		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
-
-		var additionalProperties4 interface{}
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties4)
-		}
-		sourceNetsuiteEnterpriseSchemasPasswordAuthentication = &shared.SourceNetsuiteEnterpriseSchemasPasswordAuthentication{
-			TunnelMethod:         tunnelMethod3,
-			TunnelHost:           tunnelHost1,
-			TunnelPort:           tunnelPort1,
-			TunnelUser:           tunnelUser1,
-			TunnelUserPassword:   tunnelUserPassword,
-			AdditionalProperties: additionalProperties4,
-		}
-	}
-	if sourceNetsuiteEnterpriseSchemasPasswordAuthentication != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
-			SourceNetsuiteEnterpriseSchemasPasswordAuthentication: sourceNetsuiteEnterpriseSchemasPasswordAuthentication,
-		}
-	}
-	var cursor shared.SourceNetsuiteEnterpriseUpdateMethod
-	var sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor *shared.SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor
-	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
-		cursorMethod := new(shared.CursorMethod)
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
-			*cursorMethod = shared.CursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
-		} else {
-			cursorMethod = nil
-		}
-		var additionalProperties5 interface{}
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties5)
-		}
-		sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor = &shared.SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor{
-			CursorMethod:         cursorMethod,
-			AdditionalProperties: additionalProperties5,
-		}
-	}
-	if sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor != nil {
-		cursor = shared.SourceNetsuiteEnterpriseUpdateMethod{
-			SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor: sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor,
-		}
-	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
-	var roleID string
-	roleID = r.Configuration.RoleID.ValueString()
-
 	checkpointTargetIntervalSeconds := new(int64)
 	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
 		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
@@ -251,25 +108,168 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 	} else {
 		concurrency = nil
 	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
+	var cursor shared.SourceNetsuiteEnterpriseUpdateMethod
+	var sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor *shared.SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor
+	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
+		cursorMethod := new(shared.CursorMethod)
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
+			*cursorMethod = shared.CursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
+		} else {
+			cursorMethod = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor = &shared.SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor{
+			CursorMethod:         cursorMethod,
+			AdditionalProperties: additionalProperties2,
+		}
 	}
+	if sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor != nil {
+		cursor = shared.SourceNetsuiteEnterpriseUpdateMethod{
+			SourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor: sourceNetsuiteEnterpriseScanChangesWithUserDefinedCursor,
+		}
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var roleID string
+	roleID = r.Configuration.RoleID.ValueString()
+
+	var tunnelMethod shared.SourceNetsuiteEnterpriseSSHTunnelMethod
+	var sourceNetsuiteEnterpriseNoTunnel *shared.SourceNetsuiteEnterpriseNoTunnel
+	if r.Configuration.TunnelMethod.NoTunnel != nil {
+		tunnelMethod1 := new(shared.SourceNetsuiteEnterpriseTunnelMethod)
+		if !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsNull() {
+			*tunnelMethod1 = shared.SourceNetsuiteEnterpriseTunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod1 = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		sourceNetsuiteEnterpriseNoTunnel = &shared.SourceNetsuiteEnterpriseNoTunnel{
+			TunnelMethod:         tunnelMethod1,
+			AdditionalProperties: additionalProperties3,
+		}
+	}
+	if sourceNetsuiteEnterpriseNoTunnel != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
+			SourceNetsuiteEnterpriseNoTunnel: sourceNetsuiteEnterpriseNoTunnel,
+		}
+	}
+	var sourceNetsuiteEnterpriseSSHKeyAuthentication *shared.SourceNetsuiteEnterpriseSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+		var sshKey string
+		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+		var tunnelHost string
+		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
+		tunnelMethod2 := new(shared.SourceNetsuiteEnterpriseSchemasTunnelMethod)
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
+			*tunnelMethod2 = shared.SourceNetsuiteEnterpriseSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod2 = nil
+		}
+		tunnelPort := new(int64)
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+		} else {
+			tunnelPort = nil
+		}
+		var tunnelUser string
+		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+
+		var additionalProperties4 interface{}
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties4)
+		}
+		sourceNetsuiteEnterpriseSSHKeyAuthentication = &shared.SourceNetsuiteEnterpriseSSHKeyAuthentication{
+			SSHKey:               sshKey,
+			TunnelHost:           tunnelHost,
+			TunnelMethod:         tunnelMethod2,
+			TunnelPort:           tunnelPort,
+			TunnelUser:           tunnelUser,
+			AdditionalProperties: additionalProperties4,
+		}
+	}
+	if sourceNetsuiteEnterpriseSSHKeyAuthentication != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
+			SourceNetsuiteEnterpriseSSHKeyAuthentication: sourceNetsuiteEnterpriseSSHKeyAuthentication,
+		}
+	}
+	var sourceNetsuiteEnterpriseSchemasPasswordAuthentication *shared.SourceNetsuiteEnterpriseSchemasPasswordAuthentication
+	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+		var tunnelHost1 string
+		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
+		tunnelMethod3 := new(shared.SourceNetsuiteEnterpriseSchemasTunnelMethodTunnelMethod)
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
+			*tunnelMethod3 = shared.SourceNetsuiteEnterpriseSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod3 = nil
+		}
+		tunnelPort1 := new(int64)
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+		} else {
+			tunnelPort1 = nil
+		}
+		var tunnelUser1 string
+		tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+
+		var tunnelUserPassword string
+		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+
+		var additionalProperties5 interface{}
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties5)
+		}
+		sourceNetsuiteEnterpriseSchemasPasswordAuthentication = &shared.SourceNetsuiteEnterpriseSchemasPasswordAuthentication{
+			TunnelHost:           tunnelHost1,
+			TunnelMethod:         tunnelMethod3,
+			TunnelPort:           tunnelPort1,
+			TunnelUser:           tunnelUser1,
+			TunnelUserPassword:   tunnelUserPassword,
+			AdditionalProperties: additionalProperties5,
+		}
+	}
+	if sourceNetsuiteEnterpriseSchemasPasswordAuthentication != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseSSHTunnelMethod{
+			SourceNetsuiteEnterpriseSchemasPasswordAuthentication: sourceNetsuiteEnterpriseSchemasPasswordAuthentication,
+		}
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceNetsuiteEnterprise{
-		Host:                            host,
-		Port:                            port,
-		Username:                        username,
-		AuthenticationMethod:            authenticationMethod,
-		JdbcURLParams:                   jdbcURLParams,
-		TunnelMethod:                    tunnelMethod,
-		Cursor:                          cursor,
 		AccountID:                       accountID,
-		RoleID:                          roleID,
+		AuthenticationMethod:            authenticationMethod,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		Cursor:                          cursor,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Port:                            port,
+		RoleID:                          roleID,
+		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -341,17 +341,8 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var accountID string
+	accountID = r.Configuration.AccountID.ValueString()
 
 	var authenticationMethod shared.SourceNetsuiteEnterpriseUpdateAuthenticationMethod
 	var sourceNetsuiteEnterpriseUpdatePasswordAuthentication *shared.SourceNetsuiteEnterpriseUpdatePasswordAuthentication
@@ -418,146 +409,12 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 			SourceNetsuiteEnterpriseUpdateTokenBasedAuthentication: sourceNetsuiteEnterpriseUpdateTokenBasedAuthentication,
 		}
 	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	checkPrivileges := new(bool)
+	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
+		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
 	} else {
-		jdbcURLParams = nil
+		checkPrivileges = nil
 	}
-	var tunnelMethod shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod
-	var sourceNetsuiteEnterpriseUpdateNoTunnel *shared.SourceNetsuiteEnterpriseUpdateNoTunnel
-	if r.Configuration.TunnelMethod.NoTunnel != nil {
-		tunnelMethod1 := new(shared.SourceNetsuiteEnterpriseUpdateTunnelMethod)
-		if !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsNull() {
-			*tunnelMethod1 = shared.SourceNetsuiteEnterpriseUpdateTunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod1 = nil
-		}
-		var additionalProperties2 interface{}
-		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties2)
-		}
-		sourceNetsuiteEnterpriseUpdateNoTunnel = &shared.SourceNetsuiteEnterpriseUpdateNoTunnel{
-			TunnelMethod:         tunnelMethod1,
-			AdditionalProperties: additionalProperties2,
-		}
-	}
-	if sourceNetsuiteEnterpriseUpdateNoTunnel != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
-			SourceNetsuiteEnterpriseUpdateNoTunnel: sourceNetsuiteEnterpriseUpdateNoTunnel,
-		}
-	}
-	var sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication *shared.SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
-		tunnelMethod2 := new(shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod)
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
-			*tunnelMethod2 = shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod2 = nil
-		}
-		var tunnelHost string
-		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
-
-		tunnelPort := new(int64)
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
-			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
-		} else {
-			tunnelPort = nil
-		}
-		var tunnelUser string
-		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
-
-		var sshKey string
-		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
-		var additionalProperties3 interface{}
-		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties3)
-		}
-		sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication = &shared.SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication{
-			TunnelMethod:         tunnelMethod2,
-			TunnelHost:           tunnelHost,
-			TunnelPort:           tunnelPort,
-			TunnelUser:           tunnelUser,
-			SSHKey:               sshKey,
-			AdditionalProperties: additionalProperties3,
-		}
-	}
-	if sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
-			SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication: sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication,
-		}
-	}
-	var sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication *shared.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication
-	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
-		tunnelMethod3 := new(shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod)
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
-			*tunnelMethod3 = shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
-		} else {
-			tunnelMethod3 = nil
-		}
-		var tunnelHost1 string
-		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
-
-		tunnelPort1 := new(int64)
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
-			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
-		} else {
-			tunnelPort1 = nil
-		}
-		var tunnelUser1 string
-		tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
-
-		var tunnelUserPassword string
-		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
-
-		var additionalProperties4 interface{}
-		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties4)
-		}
-		sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication = &shared.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication{
-			TunnelMethod:         tunnelMethod3,
-			TunnelHost:           tunnelHost1,
-			TunnelPort:           tunnelPort1,
-			TunnelUser:           tunnelUser1,
-			TunnelUserPassword:   tunnelUserPassword,
-			AdditionalProperties: additionalProperties4,
-		}
-	}
-	if sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication != nil {
-		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
-			SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication: sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication,
-		}
-	}
-	var cursor shared.SourceNetsuiteEnterpriseUpdateUpdateMethod
-	var sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor *shared.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
-	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
-		cursorMethod := new(shared.SourceNetsuiteEnterpriseUpdateCursorMethod)
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
-			*cursorMethod = shared.SourceNetsuiteEnterpriseUpdateCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
-		} else {
-			cursorMethod = nil
-		}
-		var additionalProperties5 interface{}
-		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties5)
-		}
-		sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = &shared.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor{
-			CursorMethod:         cursorMethod,
-			AdditionalProperties: additionalProperties5,
-		}
-	}
-	if sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
-		cursor = shared.SourceNetsuiteEnterpriseUpdateUpdateMethod{
-			SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor: sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor,
-		}
-	}
-	var accountID string
-	accountID = r.Configuration.AccountID.ValueString()
-
-	var roleID string
-	roleID = r.Configuration.RoleID.ValueString()
-
 	checkpointTargetIntervalSeconds := new(int64)
 	if !r.Configuration.CheckpointTargetIntervalSeconds.IsUnknown() && !r.Configuration.CheckpointTargetIntervalSeconds.IsNull() {
 		*checkpointTargetIntervalSeconds = r.Configuration.CheckpointTargetIntervalSeconds.ValueInt64()
@@ -570,25 +427,168 @@ func (r *SourceNetsuiteEnterpriseResourceModel) ToSharedSourceNetsuiteEnterprise
 	} else {
 		concurrency = nil
 	}
-	checkPrivileges := new(bool)
-	if !r.Configuration.CheckPrivileges.IsUnknown() && !r.Configuration.CheckPrivileges.IsNull() {
-		*checkPrivileges = r.Configuration.CheckPrivileges.ValueBool()
-	} else {
-		checkPrivileges = nil
+	var cursor shared.SourceNetsuiteEnterpriseUpdateUpdateMethod
+	var sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor *shared.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
+	if r.Configuration.Cursor.ScanChangesWithUserDefinedCursor != nil {
+		cursorMethod := new(shared.SourceNetsuiteEnterpriseUpdateCursorMethod)
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.IsNull() {
+			*cursorMethod = shared.SourceNetsuiteEnterpriseUpdateCursorMethod(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.CursorMethod.ValueString())
+		} else {
+			cursorMethod = nil
+		}
+		var additionalProperties2 interface{}
+		if !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsUnknown() && !r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Cursor.ScanChangesWithUserDefinedCursor.AdditionalProperties.ValueString()), &additionalProperties2)
+		}
+		sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = &shared.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor{
+			CursorMethod:         cursorMethod,
+			AdditionalProperties: additionalProperties2,
+		}
 	}
+	if sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
+		cursor = shared.SourceNetsuiteEnterpriseUpdateUpdateMethod{
+			SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor: sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor,
+		}
+	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var roleID string
+	roleID = r.Configuration.RoleID.ValueString()
+
+	var tunnelMethod shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod
+	var sourceNetsuiteEnterpriseUpdateNoTunnel *shared.SourceNetsuiteEnterpriseUpdateNoTunnel
+	if r.Configuration.TunnelMethod.NoTunnel != nil {
+		tunnelMethod1 := new(shared.SourceNetsuiteEnterpriseUpdateTunnelMethod)
+		if !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.IsNull() {
+			*tunnelMethod1 = shared.SourceNetsuiteEnterpriseUpdateTunnelMethod(r.Configuration.TunnelMethod.NoTunnel.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod1 = nil
+		}
+		var additionalProperties3 interface{}
+		if !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.NoTunnel.AdditionalProperties.ValueString()), &additionalProperties3)
+		}
+		sourceNetsuiteEnterpriseUpdateNoTunnel = &shared.SourceNetsuiteEnterpriseUpdateNoTunnel{
+			TunnelMethod:         tunnelMethod1,
+			AdditionalProperties: additionalProperties3,
+		}
+	}
+	if sourceNetsuiteEnterpriseUpdateNoTunnel != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
+			SourceNetsuiteEnterpriseUpdateNoTunnel: sourceNetsuiteEnterpriseUpdateNoTunnel,
+		}
+	}
+	var sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication *shared.SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+		var sshKey string
+		sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
+		var tunnelHost string
+		tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
+
+		tunnelMethod2 := new(shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod)
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.IsNull() {
+			*tunnelMethod2 = shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod(r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod2 = nil
+		}
+		tunnelPort := new(int64)
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.IsNull() {
+			*tunnelPort = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelPort.ValueInt64()
+		} else {
+			tunnelPort = nil
+		}
+		var tunnelUser string
+		tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
+
+		var additionalProperties4 interface{}
+		if !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.SSHKeyAuthentication.AdditionalProperties.ValueString()), &additionalProperties4)
+		}
+		sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication = &shared.SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication{
+			SSHKey:               sshKey,
+			TunnelHost:           tunnelHost,
+			TunnelMethod:         tunnelMethod2,
+			TunnelPort:           tunnelPort,
+			TunnelUser:           tunnelUser,
+			AdditionalProperties: additionalProperties4,
+		}
+	}
+	if sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
+			SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication: sourceNetsuiteEnterpriseUpdateSSHKeyAuthentication,
+		}
+	}
+	var sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication *shared.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication
+	if r.Configuration.TunnelMethod.PasswordAuthentication != nil {
+		var tunnelHost1 string
+		tunnelHost1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelHost.ValueString()
+
+		tunnelMethod3 := new(shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod)
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.IsNull() {
+			*tunnelMethod3 = shared.SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod(r.Configuration.TunnelMethod.PasswordAuthentication.TunnelMethod.ValueString())
+		} else {
+			tunnelMethod3 = nil
+		}
+		tunnelPort1 := new(int64)
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.IsNull() {
+			*tunnelPort1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelPort.ValueInt64()
+		} else {
+			tunnelPort1 = nil
+		}
+		var tunnelUser1 string
+		tunnelUser1 = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUser.ValueString()
+
+		var tunnelUserPassword string
+		tunnelUserPassword = r.Configuration.TunnelMethod.PasswordAuthentication.TunnelUserPassword.ValueString()
+
+		var additionalProperties5 interface{}
+		if !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsUnknown() && !r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.TunnelMethod.PasswordAuthentication.AdditionalProperties.ValueString()), &additionalProperties5)
+		}
+		sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication = &shared.SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication{
+			TunnelHost:           tunnelHost1,
+			TunnelMethod:         tunnelMethod3,
+			TunnelPort:           tunnelPort1,
+			TunnelUser:           tunnelUser1,
+			TunnelUserPassword:   tunnelUserPassword,
+			AdditionalProperties: additionalProperties5,
+		}
+	}
+	if sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication != nil {
+		tunnelMethod = shared.SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{
+			SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication: sourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication,
+		}
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceNetsuiteEnterpriseUpdate{
-		Host:                            host,
-		Port:                            port,
-		Username:                        username,
-		AuthenticationMethod:            authenticationMethod,
-		JdbcURLParams:                   jdbcURLParams,
-		TunnelMethod:                    tunnelMethod,
-		Cursor:                          cursor,
 		AccountID:                       accountID,
-		RoleID:                          roleID,
+		AuthenticationMethod:            authenticationMethod,
+		CheckPrivileges:                 checkPrivileges,
 		CheckpointTargetIntervalSeconds: checkpointTargetIntervalSeconds,
 		Concurrency:                     concurrency,
-		CheckPrivileges:                 checkPrivileges,
+		Cursor:                          cursor,
+		Host:                            host,
+		JdbcURLParams:                   jdbcURLParams,
+		Port:                            port,
+		RoleID:                          roleID,
+		TunnelMethod:                    tunnelMethod,
+		Username:                        username,
 	}
 	out := shared.SourceNetsuiteEnterprisePutRequest{
 		Name:          name,

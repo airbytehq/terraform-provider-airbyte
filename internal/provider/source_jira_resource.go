@@ -18,7 +18,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -79,12 +78,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"email": schema.StringAttribute{
 						Required:    true,
 						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
-					},
-					"enable_experimental_streams": schema.BoolAttribute{
-						Computed:    true,
-						Optional:    true,
-						Default:     booldefault.StaticBool(false),
-						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info. Default: false`,
 					},
 					"lookback_window_minutes": schema.Int64Attribute{
 						Computed:    true,

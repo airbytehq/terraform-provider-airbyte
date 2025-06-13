@@ -33,9 +33,9 @@ func (e *SourceCartSchemasAuthType) UnmarshalJSON(data []byte) error {
 }
 
 type SingleStoreAccessToken struct {
-	authType SourceCartSchemasAuthType `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
 	// Access Token for making authenticated requests.
-	AccessToken string `json:"access_token"`
+	AccessToken string                    `json:"access_token"`
+	authType    SourceCartSchemasAuthType `const:"SINGLE_STORE_ACCESS_TOKEN" json:"auth_type"`
 	// The name of Cart.com Online Store. All API URLs start with https://[mystorename.com]/api/v1/, where [mystorename.com] is the domain name of your store.
 	StoreName string `json:"store_name"`
 }
@@ -51,15 +51,15 @@ func (s *SingleStoreAccessToken) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SingleStoreAccessToken) GetAuthType() SourceCartSchemasAuthType {
-	return SourceCartSchemasAuthTypeSingleStoreAccessToken
-}
-
 func (o *SingleStoreAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SingleStoreAccessToken) GetAuthType() SourceCartSchemasAuthType {
+	return SourceCartSchemasAuthTypeSingleStoreAccessToken
 }
 
 func (o *SingleStoreAccessToken) GetStoreName() string {
@@ -94,12 +94,12 @@ func (e *SourceCartAuthType) UnmarshalJSON(data []byte) error {
 
 type CentralAPIRouter struct {
 	authType SourceCartAuthType `const:"CENTRAL_API_ROUTER" json:"auth_type"`
+	// You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
+	SiteID string `json:"site_id"`
 	// Enter your application's User Name
 	UserName string `json:"user_name"`
 	// Enter your application's User Secret
 	UserSecret string `json:"user_secret"`
-	// You can determine a site provisioning site Id by hitting https://site.com/store/sitemonitor.aspx and reading the response param PSID
-	SiteID string `json:"site_id"`
 }
 
 func (c CentralAPIRouter) MarshalJSON() ([]byte, error) {
@@ -117,6 +117,13 @@ func (o *CentralAPIRouter) GetAuthType() SourceCartAuthType {
 	return SourceCartAuthTypeCentralAPIRouter
 }
 
+func (o *CentralAPIRouter) GetSiteID() string {
+	if o == nil {
+		return ""
+	}
+	return o.SiteID
+}
+
 func (o *CentralAPIRouter) GetUserName() string {
 	if o == nil {
 		return ""
@@ -129,13 +136,6 @@ func (o *CentralAPIRouter) GetUserSecret() string {
 		return ""
 	}
 	return o.UserSecret
-}
-
-func (o *CentralAPIRouter) GetSiteID() string {
-	if o == nil {
-		return ""
-	}
-	return o.SiteID
 }
 
 type AuthorizationMethodType string

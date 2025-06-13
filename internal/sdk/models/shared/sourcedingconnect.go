@@ -33,12 +33,12 @@ func (e *DingConnect) UnmarshalJSON(data []byte) error {
 }
 
 type SourceDingConnect struct {
-	// Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
-	APIKey string `json:"api_key"`
 	// Optional header to correlate HTTP requests between a client and server.
-	XCorrelationID *string     `json:"X-Correlation-Id,omitempty"`
-	StartDate      time.Time   `json:"start_date"`
-	sourceType     DingConnect `const:"ding-connect" json:"sourceType"`
+	XCorrelationID *string `json:"X-Correlation-Id,omitempty"`
+	// Your API key for authenticating with the DingConnect API. You can generate this key by navigating to the Developer tab in the Account Settings section of your DingConnect account.
+	APIKey     string      `json:"api_key"`
+	StartDate  time.Time   `json:"start_date"`
+	sourceType DingConnect `const:"ding-connect" json:"sourceType"`
 }
 
 func (s SourceDingConnect) MarshalJSON() ([]byte, error) {
@@ -52,18 +52,18 @@ func (s *SourceDingConnect) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceDingConnect) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 func (o *SourceDingConnect) GetXCorrelationID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.XCorrelationID
+}
+
+func (o *SourceDingConnect) GetAPIKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.APIKey
 }
 
 func (o *SourceDingConnect) GetStartDate() time.Time {

@@ -9,8 +9,10 @@ import (
 
 type SourceCalendlyUpdate struct {
 	// Go to Integrations → API & Webhooks to obtain your bearer token. https://calendly.com/integrations/api_webhooks
-	APIKey    string    `json:"api_key"`
-	StartDate time.Time `json:"start_date"`
+	APIKey string `json:"api_key"`
+	// Number of days to be subtracted from the last cutoff date before starting to sync the `scheduled_events` stream.
+	LookbackDays *float64  `default:"0" json:"lookback_days"`
+	StartDate    time.Time `json:"start_date"`
 }
 
 func (s SourceCalendlyUpdate) MarshalJSON() ([]byte, error) {
@@ -29,6 +31,13 @@ func (o *SourceCalendlyUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceCalendlyUpdate) GetLookbackDays() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.LookbackDays
 }
 
 func (o *SourceCalendlyUpdate) GetStartDate() time.Time {

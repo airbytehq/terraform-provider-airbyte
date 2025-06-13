@@ -8,8 +8,8 @@ import (
 )
 
 type SourcePennylaneUpdate struct {
-	StartTime time.Time `json:"start_time"`
 	APIKey    string    `json:"api_key"`
+	StartTime time.Time `json:"start_time"`
 }
 
 func (s SourcePennylaneUpdate) MarshalJSON() ([]byte, error) {
@@ -23,16 +23,16 @@ func (s *SourcePennylaneUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourcePennylaneUpdate) GetStartTime() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartTime
-}
-
 func (o *SourcePennylaneUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourcePennylaneUpdate) GetStartTime() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartTime
 }

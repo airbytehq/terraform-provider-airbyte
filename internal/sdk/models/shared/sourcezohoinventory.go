@@ -78,10 +78,10 @@ func (e *ZohoInventory) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoInventory struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
 	// The domain suffix for the Zoho Inventory API based on your data center location (e.g., 'com', 'eu', 'in', etc.)
 	Domain       *Domain       `default:"com" json:"domain"`
-	ClientID     string        `json:"client_id"`
-	ClientSecret string        `json:"client_secret"`
 	RefreshToken string        `json:"refresh_token"`
 	StartDate    time.Time     `json:"start_date"`
 	sourceType   ZohoInventory `const:"zoho-inventory" json:"sourceType"`
@@ -98,13 +98,6 @@ func (s *SourceZohoInventory) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceZohoInventory) GetDomain() *Domain {
-	if o == nil {
-		return nil
-	}
-	return o.Domain
-}
-
 func (o *SourceZohoInventory) GetClientID() string {
 	if o == nil {
 		return ""
@@ -117,6 +110,13 @@ func (o *SourceZohoInventory) GetClientSecret() string {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourceZohoInventory) GetDomain() *Domain {
+	if o == nil {
+		return nil
+	}
+	return o.Domain
 }
 
 func (o *SourceZohoInventory) GetRefreshToken() string {

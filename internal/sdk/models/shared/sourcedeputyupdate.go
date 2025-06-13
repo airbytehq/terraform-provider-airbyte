@@ -3,16 +3,9 @@
 package shared
 
 type SourceDeputyUpdate struct {
+	APIKey string `json:"api_key"`
 	// The base url for your deputy account to make API requests
 	BaseURL string `json:"base_url"`
-	APIKey  string `json:"api_key"`
-}
-
-func (o *SourceDeputyUpdate) GetBaseURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.BaseURL
 }
 
 func (o *SourceDeputyUpdate) GetAPIKey() string {
@@ -20,4 +13,11 @@ func (o *SourceDeputyUpdate) GetAPIKey() string {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceDeputyUpdate) GetBaseURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.BaseURL
 }

@@ -25,7 +25,6 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -38,19 +37,9 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 	} else {
 		lookbackWindowDays = nil
 	}
-	var stringEventPropertiesKeys []string = []string{}
-	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
-		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
-	}
 	var numericEventPropertiesKeys []string = []string{}
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
-	}
-	subscriptionUsageGroupingKey := new(string)
-	if !r.Configuration.SubscriptionUsageGroupingKey.IsUnknown() && !r.Configuration.SubscriptionUsageGroupingKey.IsNull() {
-		*subscriptionUsageGroupingKey = r.Configuration.SubscriptionUsageGroupingKey.ValueString()
-	} else {
-		subscriptionUsageGroupingKey = nil
 	}
 	planID := new(string)
 	if !r.Configuration.PlanID.IsUnknown() && !r.Configuration.PlanID.IsNull() {
@@ -58,15 +47,26 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbCreateRequest() *shared.Source
 	} else {
 		planID = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var stringEventPropertiesKeys []string = []string{}
+	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
+		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
+	}
+	subscriptionUsageGroupingKey := new(string)
+	if !r.Configuration.SubscriptionUsageGroupingKey.IsUnknown() && !r.Configuration.SubscriptionUsageGroupingKey.IsNull() {
+		*subscriptionUsageGroupingKey = r.Configuration.SubscriptionUsageGroupingKey.ValueString()
+	} else {
+		subscriptionUsageGroupingKey = nil
+	}
 	configuration := shared.SourceOrb{
 		APIKey:                       apiKey,
-		StartDate:                    startDate,
 		EndDate:                      endDate,
 		LookbackWindowDays:           lookbackWindowDays,
-		StringEventPropertiesKeys:    stringEventPropertiesKeys,
 		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
-		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
 		PlanID:                       planID,
+		StartDate:                    startDate,
+		StringEventPropertiesKeys:    stringEventPropertiesKeys,
+		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -141,7 +141,6 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
@@ -154,19 +153,9 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 	} else {
 		lookbackWindowDays = nil
 	}
-	var stringEventPropertiesKeys []string = []string{}
-	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
-		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
-	}
 	var numericEventPropertiesKeys []string = []string{}
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
-	}
-	subscriptionUsageGroupingKey := new(string)
-	if !r.Configuration.SubscriptionUsageGroupingKey.IsUnknown() && !r.Configuration.SubscriptionUsageGroupingKey.IsNull() {
-		*subscriptionUsageGroupingKey = r.Configuration.SubscriptionUsageGroupingKey.ValueString()
-	} else {
-		subscriptionUsageGroupingKey = nil
 	}
 	planID := new(string)
 	if !r.Configuration.PlanID.IsUnknown() && !r.Configuration.PlanID.IsNull() {
@@ -174,15 +163,26 @@ func (r *SourceOrbResourceModel) ToSharedSourceOrbPutRequest() *shared.SourceOrb
 	} else {
 		planID = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	var stringEventPropertiesKeys []string = []string{}
+	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
+		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
+	}
+	subscriptionUsageGroupingKey := new(string)
+	if !r.Configuration.SubscriptionUsageGroupingKey.IsUnknown() && !r.Configuration.SubscriptionUsageGroupingKey.IsNull() {
+		*subscriptionUsageGroupingKey = r.Configuration.SubscriptionUsageGroupingKey.ValueString()
+	} else {
+		subscriptionUsageGroupingKey = nil
+	}
 	configuration := shared.SourceOrbUpdate{
 		APIKey:                       apiKey,
-		StartDate:                    startDate,
 		EndDate:                      endDate,
 		LookbackWindowDays:           lookbackWindowDays,
-		StringEventPropertiesKeys:    stringEventPropertiesKeys,
 		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
-		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
 		PlanID:                       planID,
+		StartDate:                    startDate,
+		StringEventPropertiesKeys:    stringEventPropertiesKeys,
+		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
 	}
 	out := shared.SourceOrbPutRequest{
 		Name:          name,

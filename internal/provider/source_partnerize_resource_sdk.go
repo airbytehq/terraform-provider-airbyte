@@ -21,15 +21,15 @@ func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizeCreateRequest() 
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userAPIKey string
-	userAPIKey = r.Configuration.UserAPIKey.ValueString()
-
 	var applicationKey string
 	applicationKey = r.Configuration.ApplicationKey.ValueString()
 
+	var userAPIKey string
+	userAPIKey = r.Configuration.UserAPIKey.ValueString()
+
 	configuration := shared.SourcePartnerize{
-		UserAPIKey:     userAPIKey,
 		ApplicationKey: applicationKey,
+		UserAPIKey:     userAPIKey,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourcePartnerizeResourceModel) ToSharedSourcePartnerizePutRequest() *sh
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var userAPIKey string
-	userAPIKey = r.Configuration.UserAPIKey.ValueString()
-
 	var applicationKey string
 	applicationKey = r.Configuration.ApplicationKey.ValueString()
 
+	var userAPIKey string
+	userAPIKey = r.Configuration.UserAPIKey.ValueString()
+
 	configuration := shared.SourcePartnerizeUpdate{
-		UserAPIKey:     userAPIKey,
 		ApplicationKey: applicationKey,
+		UserAPIKey:     userAPIKey,
 	}
 	out := shared.SourcePartnerizePutRequest{
 		Name:          name,

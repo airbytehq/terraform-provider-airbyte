@@ -8,10 +8,10 @@ import (
 )
 
 type SourceClarifAiUpdate struct {
-	APIKey string `json:"api_key"`
-	// User ID found in settings
-	UserID    string    `json:"user_id"`
+	APIKey    string    `json:"api_key"`
 	StartDate time.Time `json:"start_date"`
+	// User ID found in settings
+	UserID string `json:"user_id"`
 }
 
 func (s SourceClarifAiUpdate) MarshalJSON() ([]byte, error) {
@@ -32,16 +32,16 @@ func (o *SourceClarifAiUpdate) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceClarifAiUpdate) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
-}
-
 func (o *SourceClarifAiUpdate) GetStartDate() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceClarifAiUpdate) GetUserID() string {
+	if o == nil {
+		return ""
+	}
+	return o.UserID
 }

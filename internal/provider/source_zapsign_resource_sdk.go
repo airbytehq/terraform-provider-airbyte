@@ -26,17 +26,17 @@ func (r *SourceZapsignResourceModel) ToSharedSourceZapsignCreateRequest() *share
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var signerIds []interface{} = []interface{}{}
 	for _, signerIdsItem := range r.Configuration.SignerIds {
 		var signerIdsTmp interface{}
 		_ = json.Unmarshal([]byte(signerIdsItem.ValueString()), &signerIdsTmp)
 		signerIds = append(signerIds, signerIdsTmp)
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZapsign{
 		APIToken:  apiToken,
-		StartDate: startDate,
 		SignerIds: signerIds,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,17 +111,17 @@ func (r *SourceZapsignResourceModel) ToSharedSourceZapsignPutRequest() *shared.S
 	var apiToken string
 	apiToken = r.Configuration.APIToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var signerIds []interface{} = []interface{}{}
 	for _, signerIdsItem := range r.Configuration.SignerIds {
 		var signerIdsTmp interface{}
 		_ = json.Unmarshal([]byte(signerIdsItem.ValueString()), &signerIdsTmp)
 		signerIds = append(signerIds, signerIdsTmp)
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceZapsignUpdate{
 		APIToken:  apiToken,
-		StartDate: startDate,
 		SignerIds: signerIds,
+		StartDate: startDate,
 	}
 	out := shared.SourceZapsignPutRequest{
 		Name:          name,

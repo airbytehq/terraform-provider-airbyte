@@ -32,11 +32,11 @@ func (e *EConomic) UnmarshalJSON(data []byte) error {
 }
 
 type SourceEConomic struct {
-	// Your private token that identifies your app. Find it in your e-conomic account settings.
-	AppSecretToken string `json:"app_secret_token"`
 	// Token that identifies the grant issued by an agreement, allowing your app to access data. Obtain it from your e-conomic account settings.
-	AgreementGrantToken string   `json:"agreement_grant_token"`
-	sourceType          EConomic `const:"e-conomic" json:"sourceType"`
+	AgreementGrantToken string `json:"agreement_grant_token"`
+	// Your private token that identifies your app. Find it in your e-conomic account settings.
+	AppSecretToken string   `json:"app_secret_token"`
+	sourceType     EConomic `const:"e-conomic" json:"sourceType"`
 }
 
 func (s SourceEConomic) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (s *SourceEConomic) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceEConomic) GetAppSecretToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppSecretToken
-}
-
 func (o *SourceEConomic) GetAgreementGrantToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AgreementGrantToken
+}
+
+func (o *SourceEConomic) GetAppSecretToken() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppSecretToken
 }
 
 func (o *SourceEConomic) GetSourceType() EConomic {

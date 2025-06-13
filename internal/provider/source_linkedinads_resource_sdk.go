@@ -22,6 +22,23 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountIds []int64 = []int64{}
+	for _, accountIdsItem := range r.Configuration.AccountIds {
+		accountIds = append(accountIds, accountIdsItem.ValueInt64())
+	}
+	var adAnalyticsReports []shared.AdAnalyticsReportConfiguration = []shared.AdAnalyticsReportConfiguration{}
+	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
+		var name1 string
+		name1 = adAnalyticsReportsItem.Name.ValueString()
+
+		pivotBy := shared.PivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.TimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		adAnalyticsReports = append(adAnalyticsReports, shared.AdAnalyticsReportConfiguration{
+			Name:            name1,
+			PivotBy:         pivotBy,
+			TimeGranularity: timeGranularity,
+		})
+	}
 	var credentials *shared.SourceLinkedinAdsAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceLinkedinAdsOAuth20 *shared.SourceLinkedinAdsOAuth20
@@ -61,36 +78,19 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsCreateRequest(
 			}
 		}
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
-	var accountIds []int64 = []int64{}
-	for _, accountIdsItem := range r.Configuration.AccountIds {
-		accountIds = append(accountIds, accountIdsItem.ValueInt64())
-	}
-	var adAnalyticsReports []shared.AdAnalyticsReportConfiguration = []shared.AdAnalyticsReportConfiguration{}
-	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
-		var name1 string
-		name1 = adAnalyticsReportsItem.Name.ValueString()
-
-		pivotBy := shared.PivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
-		timeGranularity := shared.TimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
-		adAnalyticsReports = append(adAnalyticsReports, shared.AdAnalyticsReportConfiguration{
-			Name:            name1,
-			PivotBy:         pivotBy,
-			TimeGranularity: timeGranularity,
-		})
-	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAds{
-		Credentials:        credentials,
-		StartDate:          startDate,
-		LookbackWindow:     lookbackWindow,
 		AccountIds:         accountIds,
 		AdAnalyticsReports: adAnalyticsReports,
+		Credentials:        credentials,
+		LookbackWindow:     lookbackWindow,
+		StartDate:          startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -162,6 +162,23 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsPutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountIds []int64 = []int64{}
+	for _, accountIdsItem := range r.Configuration.AccountIds {
+		accountIds = append(accountIds, accountIdsItem.ValueInt64())
+	}
+	var adAnalyticsReports []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration = []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{}
+	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
+		var name1 string
+		name1 = adAnalyticsReportsItem.Name.ValueString()
+
+		pivotBy := shared.SourceLinkedinAdsUpdatePivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.SourceLinkedinAdsUpdateTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{
+			Name:            name1,
+			PivotBy:         pivotBy,
+			TimeGranularity: timeGranularity,
+		})
+	}
 	var credentials *shared.SourceLinkedinAdsUpdateAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceLinkedinAdsUpdateOAuth20 *shared.SourceLinkedinAdsUpdateOAuth20
@@ -201,36 +218,19 @@ func (r *SourceLinkedinAdsResourceModel) ToSharedSourceLinkedinAdsPutRequest() *
 			}
 		}
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
-	var accountIds []int64 = []int64{}
-	for _, accountIdsItem := range r.Configuration.AccountIds {
-		accountIds = append(accountIds, accountIdsItem.ValueInt64())
-	}
-	var adAnalyticsReports []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration = []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{}
-	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
-		var name1 string
-		name1 = adAnalyticsReportsItem.Name.ValueString()
-
-		pivotBy := shared.SourceLinkedinAdsUpdatePivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
-		timeGranularity := shared.SourceLinkedinAdsUpdateTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
-		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{
-			Name:            name1,
-			PivotBy:         pivotBy,
-			TimeGranularity: timeGranularity,
-		})
-	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAdsUpdate{
-		Credentials:        credentials,
-		StartDate:          startDate,
-		LookbackWindow:     lookbackWindow,
 		AccountIds:         accountIds,
 		AdAnalyticsReports: adAnalyticsReports,
+		Credentials:        credentials,
+		LookbackWindow:     lookbackWindow,
+		StartDate:          startDate,
 	}
 	out := shared.SourceLinkedinAdsPutRequest{
 		Name:          name,

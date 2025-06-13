@@ -25,12 +25,6 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	disableFetchingPredictiveAnalytics := new(bool)
 	if !r.Configuration.DisableFetchingPredictiveAnalytics.IsUnknown() && !r.Configuration.DisableFetchingPredictiveAnalytics.IsNull() {
 		*disableFetchingPredictiveAnalytics = r.Configuration.DisableFetchingPredictiveAnalytics.ValueBool()
@@ -43,11 +37,17 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoCreateRequest() *share
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceKlaviyo{
 		APIKey:                             apiKey,
-		StartDate:                          startDate,
 		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
 		NumWorkers:                         numWorkers,
+		StartDate:                          startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -122,12 +122,6 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate := new(time.Time)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	disableFetchingPredictiveAnalytics := new(bool)
 	if !r.Configuration.DisableFetchingPredictiveAnalytics.IsUnknown() && !r.Configuration.DisableFetchingPredictiveAnalytics.IsNull() {
 		*disableFetchingPredictiveAnalytics = r.Configuration.DisableFetchingPredictiveAnalytics.ValueBool()
@@ -140,11 +134,17 @@ func (r *SourceKlaviyoResourceModel) ToSharedSourceKlaviyoPutRequest() *shared.S
 	} else {
 		numWorkers = nil
 	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceKlaviyoUpdate{
 		APIKey:                             apiKey,
-		StartDate:                          startDate,
 		DisableFetchingPredictiveAnalytics: disableFetchingPredictiveAnalytics,
 		NumWorkers:                         numWorkers,
+		StartDate:                          startDate,
 	}
 	out := shared.SourceKlaviyoPutRequest{
 		Name:          name,

@@ -22,15 +22,12 @@ func (r *SourceEbayFinanceResourceModel) ToSharedSourceEbayFinanceCreateRequest(
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tokenRefreshEndpoint := new(shared.RefreshTokenEndpoint)
-	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
-		*tokenRefreshEndpoint = shared.RefreshTokenEndpoint(r.Configuration.TokenRefreshEndpoint.ValueString())
+	apiHost := new(shared.APIHost)
+	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
+		*apiHost = shared.APIHost(r.Configuration.APIHost.ValueString())
 	} else {
-		tokenRefreshEndpoint = nil
+		apiHost = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -43,21 +40,24 @@ func (r *SourceEbayFinanceResourceModel) ToSharedSourceEbayFinanceCreateRequest(
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	apiHost := new(shared.APIHost)
-	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
-		*apiHost = shared.APIHost(r.Configuration.APIHost.ValueString())
-	} else {
-		apiHost = nil
-	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	tokenRefreshEndpoint := new(shared.RefreshTokenEndpoint)
+	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
+		*tokenRefreshEndpoint = shared.RefreshTokenEndpoint(r.Configuration.TokenRefreshEndpoint.ValueString())
+	} else {
+		tokenRefreshEndpoint = nil
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceEbayFinance{
-		TokenRefreshEndpoint: tokenRefreshEndpoint,
-		Username:             username,
+		APIHost:              apiHost,
 		Password:             password,
 		RedirectURI:          redirectURI,
 		RefreshToken:         refreshToken,
-		APIHost:              apiHost,
 		StartDate:            startDate,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
+		Username:             username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -129,15 +129,12 @@ func (r *SourceEbayFinanceResourceModel) ToSharedSourceEbayFinancePutRequest() *
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	tokenRefreshEndpoint := new(shared.SourceEbayFinanceUpdateRefreshTokenEndpoint)
-	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
-		*tokenRefreshEndpoint = shared.SourceEbayFinanceUpdateRefreshTokenEndpoint(r.Configuration.TokenRefreshEndpoint.ValueString())
+	apiHost := new(shared.SourceEbayFinanceUpdateAPIHost)
+	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
+		*apiHost = shared.SourceEbayFinanceUpdateAPIHost(r.Configuration.APIHost.ValueString())
 	} else {
-		tokenRefreshEndpoint = nil
+		apiHost = nil
 	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
 		*password = r.Configuration.Password.ValueString()
@@ -150,21 +147,24 @@ func (r *SourceEbayFinanceResourceModel) ToSharedSourceEbayFinancePutRequest() *
 	var refreshToken string
 	refreshToken = r.Configuration.RefreshToken.ValueString()
 
-	apiHost := new(shared.SourceEbayFinanceUpdateAPIHost)
-	if !r.Configuration.APIHost.IsUnknown() && !r.Configuration.APIHost.IsNull() {
-		*apiHost = shared.SourceEbayFinanceUpdateAPIHost(r.Configuration.APIHost.ValueString())
-	} else {
-		apiHost = nil
-	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	tokenRefreshEndpoint := new(shared.SourceEbayFinanceUpdateRefreshTokenEndpoint)
+	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
+		*tokenRefreshEndpoint = shared.SourceEbayFinanceUpdateRefreshTokenEndpoint(r.Configuration.TokenRefreshEndpoint.ValueString())
+	} else {
+		tokenRefreshEndpoint = nil
+	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceEbayFinanceUpdate{
-		TokenRefreshEndpoint: tokenRefreshEndpoint,
-		Username:             username,
+		APIHost:              apiHost,
 		Password:             password,
 		RedirectURI:          redirectURI,
 		RefreshToken:         refreshToken,
-		APIHost:              apiHost,
 		StartDate:            startDate,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
+		Username:             username,
 	}
 	out := shared.SourceEbayFinancePutRequest{
 		Name:          name,

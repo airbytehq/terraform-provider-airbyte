@@ -21,15 +21,15 @@ func (r *SourceEConomicResourceModel) ToSharedSourceEConomicCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var appSecretToken string
-	appSecretToken = r.Configuration.AppSecretToken.ValueString()
-
 	var agreementGrantToken string
 	agreementGrantToken = r.Configuration.AgreementGrantToken.ValueString()
 
+	var appSecretToken string
+	appSecretToken = r.Configuration.AppSecretToken.ValueString()
+
 	configuration := shared.SourceEConomic{
-		AppSecretToken:      appSecretToken,
 		AgreementGrantToken: agreementGrantToken,
+		AppSecretToken:      appSecretToken,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceEConomicResourceModel) ToSharedSourceEConomicPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var appSecretToken string
-	appSecretToken = r.Configuration.AppSecretToken.ValueString()
-
 	var agreementGrantToken string
 	agreementGrantToken = r.Configuration.AgreementGrantToken.ValueString()
 
+	var appSecretToken string
+	appSecretToken = r.Configuration.AppSecretToken.ValueString()
+
 	configuration := shared.SourceEConomicUpdate{
-		AppSecretToken:      appSecretToken,
 		AgreementGrantToken: agreementGrantToken,
+		AppSecretToken:      appSecretToken,
 	}
 	out := shared.SourceEConomicPutRequest{
 		Name:          name,

@@ -4,10 +4,10 @@ package shared
 
 type SourceHuggingFaceDatasetsUpdate struct {
 	DatasetName string `json:"dataset_name"`
-	// Dataset Subsets to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
-	DatasetSubsets []any `json:"dataset_subsets,omitempty"`
 	// Splits to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
 	DatasetSplits []any `json:"dataset_splits,omitempty"`
+	// Dataset Subsets to import. Will import all of them if nothing is provided (see https://huggingface.co/docs/dataset-viewer/en/configs_and_splits for more details)
+	DatasetSubsets []any `json:"dataset_subsets,omitempty"`
 }
 
 func (o *SourceHuggingFaceDatasetsUpdate) GetDatasetName() string {
@@ -17,16 +17,16 @@ func (o *SourceHuggingFaceDatasetsUpdate) GetDatasetName() string {
 	return o.DatasetName
 }
 
-func (o *SourceHuggingFaceDatasetsUpdate) GetDatasetSubsets() []any {
-	if o == nil {
-		return nil
-	}
-	return o.DatasetSubsets
-}
-
 func (o *SourceHuggingFaceDatasetsUpdate) GetDatasetSplits() []any {
 	if o == nil {
 		return nil
 	}
 	return o.DatasetSplits
+}
+
+func (o *SourceHuggingFaceDatasetsUpdate) GetDatasetSubsets() []any {
+	if o == nil {
+		return nil
+	}
+	return o.DatasetSubsets
 }

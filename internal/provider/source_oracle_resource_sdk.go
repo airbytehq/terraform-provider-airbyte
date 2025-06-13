@@ -21,15 +21,6 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var connectionData *shared.ConnectBy
 	if r.Configuration.ConnectionData != nil {
 		var serviceName *shared.ServiceName
@@ -60,25 +51,6 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 				SystemIDSID: systemIDSID,
 			}
 		}
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
 	}
 	var encryption *shared.SourceOracleEncryption
 	if r.Configuration.Encryption != nil {
@@ -123,6 +95,31 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 			}
 		}
 	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
 	var tunnelMethod *shared.SourceOracleSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var sourceOracleNoTunnel *shared.SourceOracleNoTunnel
@@ -136,6 +133,9 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 		}
 		var sourceOracleSSHKeyAuthentication *shared.SourceOracleSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -148,14 +148,11 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourceOracleSSHKeyAuthentication = &shared.SourceOracleSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourceOracleSSHKeyAuthentication != nil {
@@ -193,16 +190,19 @@ func (r *SourceOracleResourceModel) ToSharedSourceOracleCreateRequest() *shared.
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceOracle{
-		Host:           host,
-		Port:           port,
 		ConnectionData: connectionData,
-		Username:       username,
-		Password:       password,
-		Schemas:        schemas,
-		JdbcURLParams:  jdbcURLParams,
 		Encryption:     encryption,
+		Host:           host,
+		JdbcURLParams:  jdbcURLParams,
+		Password:       password,
+		Port:           port,
+		Schemas:        schemas,
 		TunnelMethod:   tunnelMethod,
+		Username:       username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -274,15 +274,6 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var host string
-	host = r.Configuration.Host.ValueString()
-
-	port := new(int64)
-	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
-		*port = r.Configuration.Port.ValueInt64()
-	} else {
-		port = nil
-	}
 	var connectionData *shared.SourceOracleUpdateConnectBy
 	if r.Configuration.ConnectionData != nil {
 		var sourceOracleUpdateServiceName *shared.SourceOracleUpdateServiceName
@@ -313,25 +304,6 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 				SourceOracleUpdateSystemIDSID: sourceOracleUpdateSystemIDSID,
 			}
 		}
-	}
-	var username string
-	username = r.Configuration.Username.ValueString()
-
-	password := new(string)
-	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
-		*password = r.Configuration.Password.ValueString()
-	} else {
-		password = nil
-	}
-	var schemas []string = []string{}
-	for _, schemasItem := range r.Configuration.Schemas {
-		schemas = append(schemas, schemasItem.ValueString())
-	}
-	jdbcURLParams := new(string)
-	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
-		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
-	} else {
-		jdbcURLParams = nil
 	}
 	var encryption *shared.SourceOracleUpdateEncryption
 	if r.Configuration.Encryption != nil {
@@ -376,6 +348,31 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 			}
 		}
 	}
+	var host string
+	host = r.Configuration.Host.ValueString()
+
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	var schemas []string = []string{}
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
 	var tunnelMethod *shared.SourceOracleUpdateSSHTunnelMethod
 	if r.Configuration.TunnelMethod != nil {
 		var sourceOracleUpdateNoTunnel *shared.SourceOracleUpdateNoTunnel
@@ -389,6 +386,9 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 		}
 		var sourceOracleUpdateSSHKeyAuthentication *shared.SourceOracleUpdateSSHKeyAuthentication
 		if r.Configuration.TunnelMethod.SSHKeyAuthentication != nil {
+			var sshKey string
+			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
+
 			var tunnelHost string
 			tunnelHost = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelHost.ValueString()
 
@@ -401,14 +401,11 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 			var tunnelUser string
 			tunnelUser = r.Configuration.TunnelMethod.SSHKeyAuthentication.TunnelUser.ValueString()
 
-			var sshKey string
-			sshKey = r.Configuration.TunnelMethod.SSHKeyAuthentication.SSHKey.ValueString()
-
 			sourceOracleUpdateSSHKeyAuthentication = &shared.SourceOracleUpdateSSHKeyAuthentication{
+				SSHKey:     sshKey,
 				TunnelHost: tunnelHost,
 				TunnelPort: tunnelPort,
 				TunnelUser: tunnelUser,
-				SSHKey:     sshKey,
 			}
 		}
 		if sourceOracleUpdateSSHKeyAuthentication != nil {
@@ -446,16 +443,19 @@ func (r *SourceOracleResourceModel) ToSharedSourceOraclePutRequest() *shared.Sou
 			}
 		}
 	}
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceOracleUpdate{
-		Host:           host,
-		Port:           port,
 		ConnectionData: connectionData,
-		Username:       username,
-		Password:       password,
-		Schemas:        schemas,
-		JdbcURLParams:  jdbcURLParams,
 		Encryption:     encryption,
+		Host:           host,
+		JdbcURLParams:  jdbcURLParams,
+		Password:       password,
+		Port:           port,
+		Schemas:        schemas,
 		TunnelMethod:   tunnelMethod,
+		Username:       username,
 	}
 	out := shared.SourceOraclePutRequest{
 		Name:          name,

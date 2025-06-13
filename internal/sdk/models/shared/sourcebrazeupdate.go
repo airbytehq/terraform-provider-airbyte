@@ -8,12 +8,12 @@ import (
 )
 
 type SourceBrazeUpdate struct {
-	// Braze REST API endpoint
-	URL string `json:"url"`
 	// Braze REST API key
 	APIKey string `json:"api_key"`
 	// Rows after this date will be synced
 	StartDate types.Date `json:"start_date"`
+	// Braze REST API endpoint
+	URL string `json:"url"`
 }
 
 func (s SourceBrazeUpdate) MarshalJSON() ([]byte, error) {
@@ -25,13 +25,6 @@ func (s *SourceBrazeUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceBrazeUpdate) GetURL() string {
-	if o == nil {
-		return ""
-	}
-	return o.URL
 }
 
 func (o *SourceBrazeUpdate) GetAPIKey() string {
@@ -46,4 +39,11 @@ func (o *SourceBrazeUpdate) GetStartDate() types.Date {
 		return types.Date{}
 	}
 	return o.StartDate
+}
+
+func (o *SourceBrazeUpdate) GetURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.URL
 }

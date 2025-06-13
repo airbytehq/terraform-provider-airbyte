@@ -22,17 +22,17 @@ func (r *SourceFreshchatResourceModel) ToSharedSourceFreshchatCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountName string
+	accountName = r.Configuration.AccountName.ValueString()
+
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var accountName string
-	accountName = r.Configuration.AccountName.ValueString()
-
 	configuration := shared.SourceFreshchat{
+		AccountName: accountName,
 		APIKey:      apiKey,
 		StartDate:   startDate,
-		AccountName: accountName,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -104,17 +104,17 @@ func (r *SourceFreshchatResourceModel) ToSharedSourceFreshchatPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var accountName string
+	accountName = r.Configuration.AccountName.ValueString()
+
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var accountName string
-	accountName = r.Configuration.AccountName.ValueString()
-
 	configuration := shared.SourceFreshchatUpdate{
+		AccountName: accountName,
 		APIKey:      apiKey,
 		StartDate:   startDate,
-		AccountName: accountName,
 	}
 	out := shared.SourceFreshchatPutRequest{
 		Name:          name,

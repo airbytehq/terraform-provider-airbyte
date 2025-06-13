@@ -11,11 +11,11 @@ type SourceAlgoliaUpdate struct {
 	APIKey string `json:"api_key"`
 	// The application ID for your application found in settings
 	ApplicationID string `json:"application_id"`
+	// Object ID within index for search queries
+	ObjectID *string `default:"ecommerce-sample-data-9999996" json:"object_id"`
 	// Search query to be used with indexes_query stream with format defined in `https://www.algolia.com/doc/rest-api/search/#tag/Search/operation/searchSingleIndex`
 	SearchQuery *string   `default:"hitsPerPage=2&getRankingInfo=1" json:"search_query"`
 	StartDate   time.Time `json:"start_date"`
-	// Object ID within index for search queries
-	ObjectID *string `default:"ecommerce-sample-data-9999996" json:"object_id"`
 }
 
 func (s SourceAlgoliaUpdate) MarshalJSON() ([]byte, error) {
@@ -43,6 +43,13 @@ func (o *SourceAlgoliaUpdate) GetApplicationID() string {
 	return o.ApplicationID
 }
 
+func (o *SourceAlgoliaUpdate) GetObjectID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ObjectID
+}
+
 func (o *SourceAlgoliaUpdate) GetSearchQuery() *string {
 	if o == nil {
 		return nil
@@ -55,11 +62,4 @@ func (o *SourceAlgoliaUpdate) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceAlgoliaUpdate) GetObjectID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ObjectID
 }

@@ -34,14 +34,14 @@ func (e *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode) UnmarshalJSON(
 
 // DestinationPineconeUpdateOpenAICompatible - Use a service that's compatible with the OpenAI API to embed text.
 type DestinationPineconeUpdateOpenAICompatible struct {
-	mode   *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
-	APIKey *string                                                  `default:"" json:"api_key"`
+	APIKey *string `default:"" json:"api_key"`
 	// The base URL for your OpenAI-compatible service
 	BaseURL string `json:"base_url"`
+	// The number of dimensions the embedding model is generating
+	Dimensions int64                                                    `json:"dimensions"`
+	mode       *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode `const:"openai_compatible" json:"mode"`
 	// The name of the model to use for embedding
 	ModelName *string `default:"text-embedding-ada-002" json:"model_name"`
-	// The number of dimensions the embedding model is generating
-	Dimensions int64 `json:"dimensions"`
 }
 
 func (d DestinationPineconeUpdateOpenAICompatible) MarshalJSON() ([]byte, error) {
@@ -53,10 +53,6 @@ func (d *DestinationPineconeUpdateOpenAICompatible) UnmarshalJSON(data []byte) e
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPineconeUpdateOpenAICompatible) GetMode() *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode {
-	return DestinationPineconeUpdateSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
 }
 
 func (o *DestinationPineconeUpdateOpenAICompatible) GetAPIKey() *string {
@@ -73,18 +69,22 @@ func (o *DestinationPineconeUpdateOpenAICompatible) GetBaseURL() string {
 	return o.BaseURL
 }
 
-func (o *DestinationPineconeUpdateOpenAICompatible) GetModelName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ModelName
-}
-
 func (o *DestinationPineconeUpdateOpenAICompatible) GetDimensions() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.Dimensions
+}
+
+func (o *DestinationPineconeUpdateOpenAICompatible) GetMode() *DestinationPineconeUpdateSchemasEmbeddingEmbedding5Mode {
+	return DestinationPineconeUpdateSchemasEmbeddingEmbedding5ModeOpenaiCompatible.ToPointer()
+}
+
+func (o *DestinationPineconeUpdateOpenAICompatible) GetModelName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ModelName
 }
 
 type DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode string
@@ -112,13 +112,13 @@ func (e *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode) UnmarshalJSON(d
 
 // DestinationPineconeUpdateAzureOpenAI - Use the Azure-hosted OpenAI API to embed text. This option is using the text-embedding-ada-002 model with 1536 embedding dimensions.
 type DestinationPineconeUpdateAzureOpenAI struct {
-	mode *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
-	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	OpenaiKey string `json:"openai_key"`
 	// The base URL for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
 	APIBase string `json:"api_base"`
 	// The deployment for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
-	Deployment string `json:"deployment"`
+	Deployment string                                                  `json:"deployment"`
+	mode       *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode `const:"azure_openai" json:"mode"`
+	// The API key for your Azure OpenAI resource.  You can find this in the Azure portal under your Azure OpenAI resource
+	OpenaiKey string `json:"openai_key"`
 }
 
 func (d DestinationPineconeUpdateAzureOpenAI) MarshalJSON() ([]byte, error) {
@@ -130,17 +130,6 @@ func (d *DestinationPineconeUpdateAzureOpenAI) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	return nil
-}
-
-func (o *DestinationPineconeUpdateAzureOpenAI) GetMode() *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode {
-	return DestinationPineconeUpdateSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
-}
-
-func (o *DestinationPineconeUpdateAzureOpenAI) GetOpenaiKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.OpenaiKey
 }
 
 func (o *DestinationPineconeUpdateAzureOpenAI) GetAPIBase() string {
@@ -155,6 +144,17 @@ func (o *DestinationPineconeUpdateAzureOpenAI) GetDeployment() string {
 		return ""
 	}
 	return o.Deployment
+}
+
+func (o *DestinationPineconeUpdateAzureOpenAI) GetMode() *DestinationPineconeUpdateSchemasEmbeddingEmbeddingMode {
+	return DestinationPineconeUpdateSchemasEmbeddingEmbeddingModeAzureOpenai.ToPointer()
+}
+
+func (o *DestinationPineconeUpdateAzureOpenAI) GetOpenaiKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.OpenaiKey
 }
 
 type DestinationPineconeUpdateSchemasEmbeddingMode string
@@ -225,8 +225,8 @@ func (e *DestinationPineconeUpdateSchemasMode) UnmarshalJSON(data []byte) error 
 
 // DestinationPineconeUpdateCohere - Use the Cohere API to embed text.
 type DestinationPineconeUpdateCohere struct {
-	mode      *DestinationPineconeUpdateSchemasMode `const:"cohere" json:"mode"`
 	CohereKey string                                `json:"cohere_key"`
+	mode      *DestinationPineconeUpdateSchemasMode `const:"cohere" json:"mode"`
 }
 
 func (d DestinationPineconeUpdateCohere) MarshalJSON() ([]byte, error) {
@@ -240,15 +240,15 @@ func (d *DestinationPineconeUpdateCohere) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DestinationPineconeUpdateCohere) GetMode() *DestinationPineconeUpdateSchemasMode {
-	return DestinationPineconeUpdateSchemasModeCohere.ToPointer()
-}
-
 func (o *DestinationPineconeUpdateCohere) GetCohereKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.CohereKey
+}
+
+func (o *DestinationPineconeUpdateCohere) GetMode() *DestinationPineconeUpdateSchemasMode {
+	return DestinationPineconeUpdateSchemasModeCohere.ToPointer()
 }
 
 type DestinationPineconeUpdateMode string
@@ -432,27 +432,56 @@ func (u DestinationPineconeUpdateEmbedding) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationPineconeUpdateEmbedding: all fields are null")
 }
 
-type DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode string
-
-const (
-	DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterModeCode DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode = "code"
-)
-
-func (e DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode {
-	return &e
+// DestinationPineconeUpdateIndexing - Pinecone is a popular vector store that can be used to store and retrieve embeddings.
+type DestinationPineconeUpdateIndexing struct {
+	// Pinecone index in your project to load data into
+	Index string `json:"index"`
+	// Pinecone Cloud environment to use
+	PineconeEnvironment string `json:"pinecone_environment"`
+	// The Pinecone API key to use matching the environment (copy from Pinecone console)
+	PineconeKey string `json:"pinecone_key"`
 }
-func (e *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
+
+func (o *DestinationPineconeUpdateIndexing) GetIndex() string {
+	if o == nil {
+		return ""
 	}
-	switch v {
-	case "code":
-		*e = DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	return o.Index
+}
+
+func (o *DestinationPineconeUpdateIndexing) GetPineconeEnvironment() string {
+	if o == nil {
+		return ""
 	}
+	return o.PineconeEnvironment
+}
+
+func (o *DestinationPineconeUpdateIndexing) GetPineconeKey() string {
+	if o == nil {
+		return ""
+	}
+	return o.PineconeKey
+}
+
+type DestinationPineconeUpdateFieldNameMappingConfigModel struct {
+	// The field name in the source
+	FromField string `json:"from_field"`
+	// The field name to use in the destination
+	ToField string `json:"to_field"`
+}
+
+func (o *DestinationPineconeUpdateFieldNameMappingConfigModel) GetFromField() string {
+	if o == nil {
+		return ""
+	}
+	return o.FromField
+}
+
+func (o *DestinationPineconeUpdateFieldNameMappingConfigModel) GetToField() string {
+	if o == nil {
+		return ""
+	}
+	return o.ToField
 }
 
 // DestinationPineconeUpdateLanguage - Split code in suitable places based on the programming language
@@ -524,11 +553,34 @@ func (e *DestinationPineconeUpdateLanguage) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode string
+
+const (
+	DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterModeCode DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode = "code"
+)
+
+func (e DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) ToPointer() *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode {
+	return &e
+}
+func (e *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode: %v", v)
+	}
+}
+
 // DestinationPineconeUpdateByProgrammingLanguage - Split the text by suitable delimiters based on the programming language. This is useful for splitting code into chunks.
 type DestinationPineconeUpdateByProgrammingLanguage struct {
-	mode *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 	// Split code in suitable places based on the programming language
-	Language DestinationPineconeUpdateLanguage `json:"language"`
+	Language DestinationPineconeUpdateLanguage                                       `json:"language"`
+	mode     *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode `const:"code" json:"mode"`
 }
 
 func (d DestinationPineconeUpdateByProgrammingLanguage) MarshalJSON() ([]byte, error) {
@@ -542,15 +594,15 @@ func (d *DestinationPineconeUpdateByProgrammingLanguage) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationPineconeUpdateByProgrammingLanguage) GetMode() *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode {
-	return DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
-}
-
 func (o *DestinationPineconeUpdateByProgrammingLanguage) GetLanguage() DestinationPineconeUpdateLanguage {
 	if o == nil {
 		return DestinationPineconeUpdateLanguage("")
 	}
 	return o.Language
+}
+
+func (o *DestinationPineconeUpdateByProgrammingLanguage) GetMode() *DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterMode {
+	return DestinationPineconeUpdateSchemasProcessingTextSplitterTextSplitterModeCode.ToPointer()
 }
 
 type DestinationPineconeUpdateSchemasProcessingTextSplitterMode string
@@ -630,11 +682,11 @@ func (e *DestinationPineconeUpdateSchemasProcessingMode) UnmarshalJSON(data []by
 
 // DestinationPineconeUpdateBySeparator - Split the text by the list of separators until the chunk size is reached, using the earlier mentioned separators where possible. This is useful for splitting text fields by paragraphs, sentences, words, etc.
 type DestinationPineconeUpdateBySeparator struct {
-	mode *DestinationPineconeUpdateSchemasProcessingMode `const:"separator" json:"mode"`
+	// Whether to keep the separator in the resulting chunks
+	KeepSeparator *bool                                           `default:"false" json:"keep_separator"`
+	mode          *DestinationPineconeUpdateSchemasProcessingMode `const:"separator" json:"mode"`
 	// List of separator strings to split text fields by. The separator itself needs to be wrapped in double quotes, e.g. to split by the dot character, use ".". To split by a newline, use "\n".
 	Separators []string `json:"separators,omitempty"`
-	// Whether to keep the separator in the resulting chunks
-	KeepSeparator *bool `default:"false" json:"keep_separator"`
 }
 
 func (d DestinationPineconeUpdateBySeparator) MarshalJSON() ([]byte, error) {
@@ -648,6 +700,13 @@ func (d *DestinationPineconeUpdateBySeparator) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+func (o *DestinationPineconeUpdateBySeparator) GetKeepSeparator() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.KeepSeparator
+}
+
 func (o *DestinationPineconeUpdateBySeparator) GetMode() *DestinationPineconeUpdateSchemasProcessingMode {
 	return DestinationPineconeUpdateSchemasProcessingModeSeparator.ToPointer()
 }
@@ -657,13 +716,6 @@ func (o *DestinationPineconeUpdateBySeparator) GetSeparators() []string {
 		return nil
 	}
 	return o.Separators
-}
-
-func (o *DestinationPineconeUpdateBySeparator) GetKeepSeparator() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.KeepSeparator
 }
 
 type DestinationPineconeUpdateTextSplitterType string
@@ -752,40 +804,19 @@ func (u DestinationPineconeUpdateTextSplitter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DestinationPineconeUpdateTextSplitter: all fields are null")
 }
 
-type DestinationPineconeUpdateFieldNameMappingConfigModel struct {
-	// The field name in the source
-	FromField string `json:"from_field"`
-	// The field name to use in the destination
-	ToField string `json:"to_field"`
-}
-
-func (o *DestinationPineconeUpdateFieldNameMappingConfigModel) GetFromField() string {
-	if o == nil {
-		return ""
-	}
-	return o.FromField
-}
-
-func (o *DestinationPineconeUpdateFieldNameMappingConfigModel) GetToField() string {
-	if o == nil {
-		return ""
-	}
-	return o.ToField
-}
-
 type DestinationPineconeUpdateProcessingConfigModel struct {
-	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
-	ChunkSize int64 `json:"chunk_size"`
 	// Size of overlap between chunks in tokens to store in vector store to better capture relevant context
 	ChunkOverlap *int64 `default:"0" json:"chunk_overlap"`
-	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
-	TextFields []string `json:"text_fields,omitempty"`
-	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
-	MetadataFields []string `json:"metadata_fields,omitempty"`
-	// Split text fields into chunks based on the specified method.
-	TextSplitter *DestinationPineconeUpdateTextSplitter `json:"text_splitter,omitempty"`
+	// Size of chunks in tokens to store in vector store (make sure it is not too big for the context if your LLM)
+	ChunkSize int64 `json:"chunk_size"`
 	// List of fields to rename. Not applicable for nested fields, but can be used to rename fields already flattened via dot notation.
 	FieldNameMappings []DestinationPineconeUpdateFieldNameMappingConfigModel `json:"field_name_mappings,omitempty"`
+	// List of fields in the record that should be stored as metadata. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered metadata fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array. When specifying nested paths, all matching values are flattened into an array set to a field named by the path.
+	MetadataFields []string `json:"metadata_fields,omitempty"`
+	// List of fields in the record that should be used to calculate the embedding. The field list is applied to all streams in the same way and non-existing fields are ignored. If none are defined, all fields are considered text fields. When specifying text fields, you can access nested fields in the record by using dot notation, e.g. `user.name` will access the `name` field in the `user` object. It's also possible to use wildcards to access all fields in an object, e.g. `users.*.name` will access all `names` fields in all entries of the `users` array.
+	TextFields []string `json:"text_fields,omitempty"`
+	// Split text fields into chunks based on the specified method.
+	TextSplitter *DestinationPineconeUpdateTextSplitter `json:"text_splitter,omitempty"`
 }
 
 func (d DestinationPineconeUpdateProcessingConfigModel) MarshalJSON() ([]byte, error) {
@@ -799,13 +830,6 @@ func (d *DestinationPineconeUpdateProcessingConfigModel) UnmarshalJSON(data []by
 	return nil
 }
 
-func (o *DestinationPineconeUpdateProcessingConfigModel) GetChunkSize() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.ChunkSize
-}
-
 func (o *DestinationPineconeUpdateProcessingConfigModel) GetChunkOverlap() *int64 {
 	if o == nil {
 		return nil
@@ -813,25 +837,11 @@ func (o *DestinationPineconeUpdateProcessingConfigModel) GetChunkOverlap() *int6
 	return o.ChunkOverlap
 }
 
-func (o *DestinationPineconeUpdateProcessingConfigModel) GetTextFields() []string {
+func (o *DestinationPineconeUpdateProcessingConfigModel) GetChunkSize() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
-	return o.TextFields
-}
-
-func (o *DestinationPineconeUpdateProcessingConfigModel) GetMetadataFields() []string {
-	if o == nil {
-		return nil
-	}
-	return o.MetadataFields
-}
-
-func (o *DestinationPineconeUpdateProcessingConfigModel) GetTextSplitter() *DestinationPineconeUpdateTextSplitter {
-	if o == nil {
-		return nil
-	}
-	return o.TextSplitter
+	return o.ChunkSize
 }
 
 func (o *DestinationPineconeUpdateProcessingConfigModel) GetFieldNameMappings() []DestinationPineconeUpdateFieldNameMappingConfigModel {
@@ -841,35 +851,25 @@ func (o *DestinationPineconeUpdateProcessingConfigModel) GetFieldNameMappings() 
 	return o.FieldNameMappings
 }
 
-// DestinationPineconeUpdateIndexing - Pinecone is a popular vector store that can be used to store and retrieve embeddings.
-type DestinationPineconeUpdateIndexing struct {
-	// The Pinecone API key to use matching the environment (copy from Pinecone console)
-	PineconeKey string `json:"pinecone_key"`
-	// Pinecone Cloud environment to use
-	PineconeEnvironment string `json:"pinecone_environment"`
-	// Pinecone index in your project to load data into
-	Index string `json:"index"`
+func (o *DestinationPineconeUpdateProcessingConfigModel) GetMetadataFields() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MetadataFields
 }
 
-func (o *DestinationPineconeUpdateIndexing) GetPineconeKey() string {
+func (o *DestinationPineconeUpdateProcessingConfigModel) GetTextFields() []string {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.PineconeKey
+	return o.TextFields
 }
 
-func (o *DestinationPineconeUpdateIndexing) GetPineconeEnvironment() string {
+func (o *DestinationPineconeUpdateProcessingConfigModel) GetTextSplitter() *DestinationPineconeUpdateTextSplitter {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.PineconeEnvironment
-}
-
-func (o *DestinationPineconeUpdateIndexing) GetIndex() string {
-	if o == nil {
-		return ""
-	}
-	return o.Index
+	return o.TextSplitter
 }
 
 // DestinationPineconeUpdate - The configuration model for the Vector DB based destinations. This model is used to generate the UI for the destination configuration,
@@ -884,12 +884,12 @@ func (o *DestinationPineconeUpdateIndexing) GetIndex() string {
 // Processing, embedding and advanced configuration are provided by this base class, while the indexing configuration is provided by the destination connector in the sub class.
 type DestinationPineconeUpdate struct {
 	// Embedding configuration
-	Embedding  DestinationPineconeUpdateEmbedding             `json:"embedding"`
-	Processing DestinationPineconeUpdateProcessingConfigModel `json:"processing"`
-	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
-	OmitRawText *bool `default:"false" json:"omit_raw_text"`
+	Embedding DestinationPineconeUpdateEmbedding `json:"embedding"`
 	// Pinecone is a popular vector store that can be used to store and retrieve embeddings.
 	Indexing DestinationPineconeUpdateIndexing `json:"indexing"`
+	// Do not store the text that gets embedded along with the vector and the metadata in the destination. If set to true, only the vector and the metadata will be stored - in this case raw text for LLM use cases needs to be retrieved from another source.
+	OmitRawText *bool                                          `default:"false" json:"omit_raw_text"`
+	Processing  DestinationPineconeUpdateProcessingConfigModel `json:"processing"`
 }
 
 func (d DestinationPineconeUpdate) MarshalJSON() ([]byte, error) {
@@ -910,11 +910,11 @@ func (o *DestinationPineconeUpdate) GetEmbedding() DestinationPineconeUpdateEmbe
 	return o.Embedding
 }
 
-func (o *DestinationPineconeUpdate) GetProcessing() DestinationPineconeUpdateProcessingConfigModel {
+func (o *DestinationPineconeUpdate) GetIndexing() DestinationPineconeUpdateIndexing {
 	if o == nil {
-		return DestinationPineconeUpdateProcessingConfigModel{}
+		return DestinationPineconeUpdateIndexing{}
 	}
-	return o.Processing
+	return o.Indexing
 }
 
 func (o *DestinationPineconeUpdate) GetOmitRawText() *bool {
@@ -924,9 +924,9 @@ func (o *DestinationPineconeUpdate) GetOmitRawText() *bool {
 	return o.OmitRawText
 }
 
-func (o *DestinationPineconeUpdate) GetIndexing() DestinationPineconeUpdateIndexing {
+func (o *DestinationPineconeUpdate) GetProcessing() DestinationPineconeUpdateProcessingConfigModel {
 	if o == nil {
-		return DestinationPineconeUpdateIndexing{}
+		return DestinationPineconeUpdateProcessingConfigModel{}
 	}
-	return o.Indexing
+	return o.Processing
 }

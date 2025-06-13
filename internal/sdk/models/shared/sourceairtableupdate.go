@@ -34,9 +34,9 @@ func (e *SourceAirtableUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) error
 }
 
 type SourceAirtableUpdatePersonalAccessToken struct {
-	authMethod *SourceAirtableUpdateSchemasAuthMethod `const:"api_key" json:"auth_method,omitempty"`
 	// The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-	APIKey string `json:"api_key"`
+	APIKey     string                                 `json:"api_key"`
+	authMethod *SourceAirtableUpdateSchemasAuthMethod `const:"api_key" json:"auth_method,omitempty"`
 }
 
 func (s SourceAirtableUpdatePersonalAccessToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceAirtableUpdatePersonalAccessToken) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *SourceAirtableUpdatePersonalAccessToken) GetAuthMethod() *SourceAirtableUpdateSchemasAuthMethod {
-	return SourceAirtableUpdateSchemasAuthMethodAPIKey.ToPointer()
-}
-
 func (o *SourceAirtableUpdatePersonalAccessToken) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceAirtableUpdatePersonalAccessToken) GetAuthMethod() *SourceAirtableUpdateSchemasAuthMethod {
+	return SourceAirtableUpdateSchemasAuthMethodAPIKey.ToPointer()
 }
 
 type SourceAirtableUpdateAuthMethod string
@@ -85,17 +85,17 @@ func (e *SourceAirtableUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourceAirtableUpdateOAuth20 struct {
-	authMethod *SourceAirtableUpdateAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
+	// Access Token for making authenticated requests.
+	AccessToken *string                         `json:"access_token,omitempty"`
+	authMethod  *SourceAirtableUpdateAuthMethod `const:"oauth2.0" json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID string `json:"client_id"`
 	// The client secret of the Airtable developer application.
 	ClientSecret string `json:"client_secret"`
-	// Access Token for making authenticated requests.
-	AccessToken *string `json:"access_token,omitempty"`
-	// The date-time when the access token should be refreshed.
-	TokenExpiryDate *time.Time `json:"token_expiry_date,omitempty"`
 	// The key to refresh the expired access token.
 	RefreshToken string `json:"refresh_token"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate *time.Time `json:"token_expiry_date,omitempty"`
 }
 
 func (s SourceAirtableUpdateOAuth20) MarshalJSON() ([]byte, error) {
@@ -107,6 +107,13 @@ func (s *SourceAirtableUpdateOAuth20) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *SourceAirtableUpdateOAuth20) GetAccessToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessToken
 }
 
 func (o *SourceAirtableUpdateOAuth20) GetAuthMethod() *SourceAirtableUpdateAuthMethod {
@@ -127,11 +134,11 @@ func (o *SourceAirtableUpdateOAuth20) GetClientSecret() string {
 	return o.ClientSecret
 }
 
-func (o *SourceAirtableUpdateOAuth20) GetAccessToken() *string {
+func (o *SourceAirtableUpdateOAuth20) GetRefreshToken() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.AccessToken
+	return o.RefreshToken
 }
 
 func (o *SourceAirtableUpdateOAuth20) GetTokenExpiryDate() *time.Time {
@@ -139,13 +146,6 @@ func (o *SourceAirtableUpdateOAuth20) GetTokenExpiryDate() *time.Time {
 		return nil
 	}
 	return o.TokenExpiryDate
-}
-
-func (o *SourceAirtableUpdateOAuth20) GetRefreshToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.RefreshToken
 }
 
 type SourceAirtableUpdateAuthenticationType string

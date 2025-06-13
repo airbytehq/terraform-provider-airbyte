@@ -21,8 +21,17 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsCreateRe
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var orgID int64
-	orgID = r.Configuration.OrgID.ValueInt64()
+	backoffFactor := new(int64)
+	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
+		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
+	} else {
+		backoffFactor = nil
+	}
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -30,42 +39,40 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsCreateRe
 	} else {
 		endDate = nil
 	}
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
-	backoffFactor := new(int64)
-	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
-		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
-	} else {
-		backoffFactor = nil
-	}
+	var orgID int64
+	orgID = r.Configuration.OrgID.ValueInt64()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	timezone := new(shared.TimeZone)
 	if !r.Configuration.Timezone.IsUnknown() && !r.Configuration.Timezone.IsNull() {
 		*timezone = shared.TimeZone(r.Configuration.Timezone.ValueString())
 	} else {
 		timezone = nil
 	}
+	tokenRefreshEndpoint := new(string)
+	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
+		*tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
+	} else {
+		tokenRefreshEndpoint = nil
+	}
 	configuration := shared.SourceAppleSearchAds{
-		OrgID:          orgID,
-		EndDate:        endDate,
-		ClientID:       clientID,
-		StartDate:      startDate,
-		ClientSecret:   clientSecret,
-		LookbackWindow: lookbackWindow,
-		BackoffFactor:  backoffFactor,
-		Timezone:       timezone,
+		BackoffFactor:        backoffFactor,
+		ClientID:             clientID,
+		ClientSecret:         clientSecret,
+		EndDate:              endDate,
+		LookbackWindow:       lookbackWindow,
+		OrgID:                orgID,
+		StartDate:            startDate,
+		Timezone:             timezone,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -137,8 +144,17 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsPutReque
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var orgID int64
-	orgID = r.Configuration.OrgID.ValueInt64()
+	backoffFactor := new(int64)
+	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
+		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
+	} else {
+		backoffFactor = nil
+	}
+	var clientID string
+	clientID = r.Configuration.ClientID.ValueString()
+
+	var clientSecret string
+	clientSecret = r.Configuration.ClientSecret.ValueString()
 
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
@@ -146,42 +162,40 @@ func (r *SourceAppleSearchAdsResourceModel) ToSharedSourceAppleSearchAdsPutReque
 	} else {
 		endDate = nil
 	}
-	var clientID string
-	clientID = r.Configuration.ClientID.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
-	var clientSecret string
-	clientSecret = r.Configuration.ClientSecret.ValueString()
-
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
-	backoffFactor := new(int64)
-	if !r.Configuration.BackoffFactor.IsUnknown() && !r.Configuration.BackoffFactor.IsNull() {
-		*backoffFactor = r.Configuration.BackoffFactor.ValueInt64()
-	} else {
-		backoffFactor = nil
-	}
+	var orgID int64
+	orgID = r.Configuration.OrgID.ValueInt64()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
 	timezone := new(shared.SourceAppleSearchAdsUpdateTimeZone)
 	if !r.Configuration.Timezone.IsUnknown() && !r.Configuration.Timezone.IsNull() {
 		*timezone = shared.SourceAppleSearchAdsUpdateTimeZone(r.Configuration.Timezone.ValueString())
 	} else {
 		timezone = nil
 	}
+	tokenRefreshEndpoint := new(string)
+	if !r.Configuration.TokenRefreshEndpoint.IsUnknown() && !r.Configuration.TokenRefreshEndpoint.IsNull() {
+		*tokenRefreshEndpoint = r.Configuration.TokenRefreshEndpoint.ValueString()
+	} else {
+		tokenRefreshEndpoint = nil
+	}
 	configuration := shared.SourceAppleSearchAdsUpdate{
-		OrgID:          orgID,
-		EndDate:        endDate,
-		ClientID:       clientID,
-		StartDate:      startDate,
-		ClientSecret:   clientSecret,
-		LookbackWindow: lookbackWindow,
-		BackoffFactor:  backoffFactor,
-		Timezone:       timezone,
+		BackoffFactor:        backoffFactor,
+		ClientID:             clientID,
+		ClientSecret:         clientSecret,
+		EndDate:              endDate,
+		LookbackWindow:       lookbackWindow,
+		OrgID:                orgID,
+		StartDate:            startDate,
+		Timezone:             timezone,
+		TokenRefreshEndpoint: tokenRefreshEndpoint,
 	}
 	out := shared.SourceAppleSearchAdsPutRequest{
 		Name:          name,

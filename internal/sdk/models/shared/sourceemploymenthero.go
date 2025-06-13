@@ -33,11 +33,11 @@ func (e *EmploymentHero) UnmarshalJSON(data []byte) error {
 
 type SourceEmploymentHero struct {
 	APIKey string `json:"api_key"`
-	// Organization ID which could be found as result of `organizations` stream to be used in other substreams
-	OrganizationConfigids []any `json:"organization_configids,omitempty"`
 	// Employees IDs in the given organisation found in `employees` stream for passing to sub-streams
-	EmployeesConfigids []any          `json:"employees_configids,omitempty"`
-	sourceType         EmploymentHero `const:"employment-hero" json:"sourceType"`
+	EmployeesConfigids []any `json:"employees_configids,omitempty"`
+	// Organization ID which could be found as result of `organizations` stream to be used in other substreams
+	OrganizationConfigids []any          `json:"organization_configids,omitempty"`
+	sourceType            EmploymentHero `const:"employment-hero" json:"sourceType"`
 }
 
 func (s SourceEmploymentHero) MarshalJSON() ([]byte, error) {
@@ -58,18 +58,18 @@ func (o *SourceEmploymentHero) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceEmploymentHero) GetOrganizationConfigids() []any {
-	if o == nil {
-		return nil
-	}
-	return o.OrganizationConfigids
-}
-
 func (o *SourceEmploymentHero) GetEmployeesConfigids() []any {
 	if o == nil {
 		return nil
 	}
 	return o.EmployeesConfigids
+}
+
+func (o *SourceEmploymentHero) GetOrganizationConfigids() []any {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationConfigids
 }
 
 func (o *SourceEmploymentHero) GetSourceType() EmploymentHero {

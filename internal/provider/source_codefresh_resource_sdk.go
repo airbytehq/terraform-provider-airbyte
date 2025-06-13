@@ -23,30 +23,30 @@ func (r *SourceCodefreshResourceModel) ToSharedSourceCodefreshCreateRequest() *s
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	reportGranularity := new(string)
-	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
-		*reportGranularity = r.Configuration.ReportGranularity.ValueString()
-	} else {
-		reportGranularity = nil
-	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	var reportDateRange []interface{} = []interface{}{}
 	for _, reportDateRangeItem := range r.Configuration.ReportDateRange {
 		var reportDateRangeTmp interface{}
 		_ = json.Unmarshal([]byte(reportDateRangeItem.ValueString()), &reportDateRangeTmp)
 		reportDateRange = append(reportDateRange, reportDateRangeTmp)
 	}
+	reportGranularity := new(string)
+	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
+		*reportGranularity = r.Configuration.ReportGranularity.ValueString()
+	} else {
+		reportGranularity = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCodefresh{
-		APIKey:            apiKey,
 		AccountID:         accountID,
-		ReportGranularity: reportGranularity,
+		APIKey:            apiKey,
 		ReportDateRange:   reportDateRange,
+		ReportGranularity: reportGranularity,
 		StartDate:         startDate,
 	}
 	secretID := new(string)
@@ -119,30 +119,30 @@ func (r *SourceCodefreshResourceModel) ToSharedSourceCodefreshPutRequest() *shar
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
-	reportGranularity := new(string)
-	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
-		*reportGranularity = r.Configuration.ReportGranularity.ValueString()
-	} else {
-		reportGranularity = nil
-	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
 	var reportDateRange []interface{} = []interface{}{}
 	for _, reportDateRangeItem := range r.Configuration.ReportDateRange {
 		var reportDateRangeTmp interface{}
 		_ = json.Unmarshal([]byte(reportDateRangeItem.ValueString()), &reportDateRangeTmp)
 		reportDateRange = append(reportDateRange, reportDateRangeTmp)
 	}
+	reportGranularity := new(string)
+	if !r.Configuration.ReportGranularity.IsUnknown() && !r.Configuration.ReportGranularity.IsNull() {
+		*reportGranularity = r.Configuration.ReportGranularity.ValueString()
+	} else {
+		reportGranularity = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceCodefreshUpdate{
-		APIKey:            apiKey,
 		AccountID:         accountID,
-		ReportGranularity: reportGranularity,
+		APIKey:            apiKey,
 		ReportDateRange:   reportDateRange,
+		ReportGranularity: reportGranularity,
 		StartDate:         startDate,
 	}
 	out := shared.SourceCodefreshPutRequest{

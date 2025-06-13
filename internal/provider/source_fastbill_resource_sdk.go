@@ -21,15 +21,15 @@ func (r *SourceFastbillResourceModel) ToSharedSourceFastbillCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceFastbill{
-		Username: username,
 		APIKey:   apiKey,
+		Username: username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceFastbillResourceModel) ToSharedSourceFastbillPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
-
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
+	var username string
+	username = r.Configuration.Username.ValueString()
+
 	configuration := shared.SourceFastbillUpdate{
-		Username: username,
 		APIKey:   apiKey,
+		Username: username,
 	}
 	out := shared.SourceFastbillPutRequest{
 		Name:          name,

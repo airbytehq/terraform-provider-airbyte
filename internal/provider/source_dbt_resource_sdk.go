@@ -21,15 +21,15 @@ func (r *SourceDbtResourceModel) ToSharedSourceDbtCreateRequest() *shared.Source
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey2 string
-	apiKey2 = r.Configuration.APIKey2.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var apiKey2 string
+	apiKey2 = r.Configuration.APIKey2.ValueString()
+
 	configuration := shared.SourceDbt{
-		APIKey2:   apiKey2,
 		AccountID: accountID,
+		APIKey2:   apiKey2,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -101,15 +101,15 @@ func (r *SourceDbtResourceModel) ToSharedSourceDbtPutRequest() *shared.SourceDbt
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey2 string
-	apiKey2 = r.Configuration.APIKey2.ValueString()
-
 	var accountID string
 	accountID = r.Configuration.AccountID.ValueString()
 
+	var apiKey2 string
+	apiKey2 = r.Configuration.APIKey2.ValueString()
+
 	configuration := shared.SourceDbtUpdate{
-		APIKey2:   apiKey2,
 		AccountID: accountID,
+		APIKey2:   apiKey2,
 	}
 	out := shared.SourceDbtPutRequest{
 		Name:          name,

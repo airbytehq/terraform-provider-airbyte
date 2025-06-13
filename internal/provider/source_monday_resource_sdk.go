@@ -21,30 +21,34 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var boardIds []int64 = []int64{}
+	for _, boardIdsItem := range r.Configuration.BoardIds {
+		boardIds = append(boardIds, boardIdsItem.ValueInt64())
+	}
 	var credentials *shared.SourceMondayAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceMondayOAuth20 *shared.SourceMondayOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			subdomain := new(string)
-			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
-				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
-			} else {
-				subdomain = nil
-			}
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
+			subdomain := new(string)
+			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
+				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
+			} else {
+				subdomain = nil
+			}
 			sourceMondayOAuth20 = &shared.SourceMondayOAuth20{
-				Subdomain:    subdomain,
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
+				Subdomain:    subdomain,
 			}
 		}
 		if sourceMondayOAuth20 != nil {
@@ -67,10 +71,6 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayCreateRequest() *shared.
 			}
 		}
 	}
-	var boardIds []int64 = []int64{}
-	for _, boardIdsItem := range r.Configuration.BoardIds {
-		boardIds = append(boardIds, boardIdsItem.ValueInt64())
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
@@ -78,8 +78,8 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayCreateRequest() *shared.
 		numWorkers = nil
 	}
 	configuration := shared.SourceMonday{
-		Credentials: credentials,
 		BoardIds:    boardIds,
+		Credentials: credentials,
 		NumWorkers:  numWorkers,
 	}
 	secretID := new(string)
@@ -152,30 +152,34 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	var boardIds []int64 = []int64{}
+	for _, boardIdsItem := range r.Configuration.BoardIds {
+		boardIds = append(boardIds, boardIdsItem.ValueInt64())
+	}
 	var credentials *shared.SourceMondayUpdateAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceMondayUpdateOAuth20 *shared.SourceMondayUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			subdomain := new(string)
-			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
-				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
-			} else {
-				subdomain = nil
-			}
+			var accessToken string
+			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
+
 			var clientID string
 			clientID = r.Configuration.Credentials.OAuth20.ClientID.ValueString()
 
 			var clientSecret string
 			clientSecret = r.Configuration.Credentials.OAuth20.ClientSecret.ValueString()
 
-			var accessToken string
-			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
-
+			subdomain := new(string)
+			if !r.Configuration.Credentials.OAuth20.Subdomain.IsUnknown() && !r.Configuration.Credentials.OAuth20.Subdomain.IsNull() {
+				*subdomain = r.Configuration.Credentials.OAuth20.Subdomain.ValueString()
+			} else {
+				subdomain = nil
+			}
 			sourceMondayUpdateOAuth20 = &shared.SourceMondayUpdateOAuth20{
-				Subdomain:    subdomain,
+				AccessToken:  accessToken,
 				ClientID:     clientID,
 				ClientSecret: clientSecret,
-				AccessToken:  accessToken,
+				Subdomain:    subdomain,
 			}
 		}
 		if sourceMondayUpdateOAuth20 != nil {
@@ -198,10 +202,6 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayPutRequest() *shared.Sou
 			}
 		}
 	}
-	var boardIds []int64 = []int64{}
-	for _, boardIdsItem := range r.Configuration.BoardIds {
-		boardIds = append(boardIds, boardIdsItem.ValueInt64())
-	}
 	numWorkers := new(int64)
 	if !r.Configuration.NumWorkers.IsUnknown() && !r.Configuration.NumWorkers.IsNull() {
 		*numWorkers = r.Configuration.NumWorkers.ValueInt64()
@@ -209,8 +209,8 @@ func (r *SourceMondayResourceModel) ToSharedSourceMondayPutRequest() *shared.Sou
 		numWorkers = nil
 	}
 	configuration := shared.SourceMondayUpdate{
-		Credentials: credentials,
 		BoardIds:    boardIds,
+		Credentials: credentials,
 		NumWorkers:  numWorkers,
 	}
 	out := shared.SourceMondayPutRequest{

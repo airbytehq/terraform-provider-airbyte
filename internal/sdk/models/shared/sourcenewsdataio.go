@@ -35,20 +35,20 @@ func (e *NewsdataIo) UnmarshalJSON(data []byte) error {
 
 type SourceNewsdataIo struct {
 	APIKey string `json:"api_key"`
-	// Search news articles for specific keywords or phrases present in the news title, content, URL, meta keywords and meta description.
-	SearchQuery *string `json:"search_query,omitempty"`
-	// Search the news articles from a specific country. You can add up to 5 countries in a single query. Example: au, jp, br
-	Countries []any `json:"countries,omitempty"`
 	// Search the news articles for a specific category. You can add up to 5 categories in a single query.
 	Categories []any `json:"categories,omitempty"`
+	// Search the news articles from a specific country. You can add up to 5 countries in a single query. Example: au, jp, br
+	Countries []any `json:"countries,omitempty"`
+	// Search the news articles for specific domains or news sources. You can add up to 5 domains in a single query.
+	Domains []any `json:"domains,omitempty"`
+	// Choose an end date. Now UTC is default value
+	EndDate *types.Date `json:"end_date,omitempty"`
 	// Search the news articles for a specific language. You can add up to 5 languages in a single query.
 	Languages []any `json:"languages,omitempty"`
-	// Search the news articles for specific domains or news sources. You can add up to 5 domains in a single query.
-	Domains   []any     `json:"domains,omitempty"`
-	StartDate time.Time `json:"start_date"`
-	// Choose an end date. Now UTC is default value
-	EndDate    *types.Date `json:"end_date,omitempty"`
-	sourceType NewsdataIo  `const:"newsdata-io" json:"sourceType"`
+	// Search news articles for specific keywords or phrases present in the news title, content, URL, meta keywords and meta description.
+	SearchQuery *string    `json:"search_query,omitempty"`
+	StartDate   time.Time  `json:"start_date"`
+	sourceType  NewsdataIo `const:"newsdata-io" json:"sourceType"`
 }
 
 func (s SourceNewsdataIo) MarshalJSON() ([]byte, error) {
@@ -69,11 +69,11 @@ func (o *SourceNewsdataIo) GetAPIKey() string {
 	return o.APIKey
 }
 
-func (o *SourceNewsdataIo) GetSearchQuery() *string {
+func (o *SourceNewsdataIo) GetCategories() []any {
 	if o == nil {
 		return nil
 	}
-	return o.SearchQuery
+	return o.Categories
 }
 
 func (o *SourceNewsdataIo) GetCountries() []any {
@@ -83,11 +83,18 @@ func (o *SourceNewsdataIo) GetCountries() []any {
 	return o.Countries
 }
 
-func (o *SourceNewsdataIo) GetCategories() []any {
+func (o *SourceNewsdataIo) GetDomains() []any {
 	if o == nil {
 		return nil
 	}
-	return o.Categories
+	return o.Domains
+}
+
+func (o *SourceNewsdataIo) GetEndDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.EndDate
 }
 
 func (o *SourceNewsdataIo) GetLanguages() []any {
@@ -97,11 +104,11 @@ func (o *SourceNewsdataIo) GetLanguages() []any {
 	return o.Languages
 }
 
-func (o *SourceNewsdataIo) GetDomains() []any {
+func (o *SourceNewsdataIo) GetSearchQuery() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Domains
+	return o.SearchQuery
 }
 
 func (o *SourceNewsdataIo) GetStartDate() time.Time {
@@ -109,13 +116,6 @@ func (o *SourceNewsdataIo) GetStartDate() time.Time {
 		return time.Time{}
 	}
 	return o.StartDate
-}
-
-func (o *SourceNewsdataIo) GetEndDate() *types.Date {
-	if o == nil {
-		return nil
-	}
-	return o.EndDate
 }
 
 func (o *SourceNewsdataIo) GetSourceType() NewsdataIo {

@@ -65,12 +65,12 @@ func (e *Phyllo) UnmarshalJSON(data []byte) error {
 type SourcePhyllo struct {
 	// Your Client ID for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
 	ClientID string `json:"client_id"`
+	// Your Client Secret for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
+	ClientSecret string `json:"client_secret"`
 	// The environment for the API (e.g., 'api.sandbox', 'api.staging', 'api')
 	Environment *SourcePhylloEnvironment `default:"api" json:"environment"`
-	// Your Client Secret for the Phyllo API. You can find this in the Phyllo Developer Dashboard under API credentials.
-	ClientSecret string    `json:"client_secret"`
-	StartDate    time.Time `json:"start_date"`
-	sourceType   Phyllo    `const:"phyllo" json:"sourceType"`
+	StartDate   time.Time                `json:"start_date"`
+	sourceType  Phyllo                   `const:"phyllo" json:"sourceType"`
 }
 
 func (s SourcePhyllo) MarshalJSON() ([]byte, error) {
@@ -91,18 +91,18 @@ func (o *SourcePhyllo) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourcePhyllo) GetEnvironment() *SourcePhylloEnvironment {
-	if o == nil {
-		return nil
-	}
-	return o.Environment
-}
-
 func (o *SourcePhyllo) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
+}
+
+func (o *SourcePhyllo) GetEnvironment() *SourcePhylloEnvironment {
+	if o == nil {
+		return nil
+	}
+	return o.Environment
 }
 
 func (o *SourcePhyllo) GetStartDate() time.Time {

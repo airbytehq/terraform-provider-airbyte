@@ -64,8 +64,8 @@ func (e *CapsuleCrm) UnmarshalJSON(data []byte) error {
 type SourceCapsuleCrm struct {
 	// Bearer token to authenticate API requests. Generate it from the 'My Preferences' > 'API Authentication Tokens' page in your Capsule account.
 	BearerToken string     `json:"bearer_token"`
-	StartDate   time.Time  `json:"start_date"`
 	Entity      Entity     `json:"entity"`
+	StartDate   time.Time  `json:"start_date"`
 	sourceType  CapsuleCrm `const:"capsule-crm" json:"sourceType"`
 }
 
@@ -87,18 +87,18 @@ func (o *SourceCapsuleCrm) GetBearerToken() string {
 	return o.BearerToken
 }
 
-func (o *SourceCapsuleCrm) GetStartDate() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.StartDate
-}
-
 func (o *SourceCapsuleCrm) GetEntity() Entity {
 	if o == nil {
 		return Entity("")
 	}
 	return o.Entity
+}
+
+func (o *SourceCapsuleCrm) GetStartDate() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.StartDate
 }
 
 func (o *SourceCapsuleCrm) GetSourceType() CapsuleCrm {

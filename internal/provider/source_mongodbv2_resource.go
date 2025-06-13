@@ -92,9 +92,10 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										Required:    true,
 										Description: `The connection string of the cluster that you want to replicate.`,
 									},
-									"database": schema.StringAttribute{
+									"databases": schema.ListAttribute{
 										Required:    true,
-										Description: `The name of the MongoDB database that contains the collection(s) to replicate.`,
+										ElementType: types.StringType,
+										Description: `The names of the MongoDB databases that contain the collection(s) to replicate.`,
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
@@ -139,9 +140,10 @@ func (r *SourceMongodbV2Resource) Schema(ctx context.Context, req resource.Schem
 										Required:    true,
 										Description: `The connection string of the cluster that you want to replicate.  https://www.mongodb.com/docs/manual/reference/connection-string/#find-your-self-hosted-deployment-s-connection-string for more information.`,
 									},
-									"database": schema.StringAttribute{
+									"databases": schema.ListAttribute{
 										Required:    true,
-										Description: `The name of the MongoDB database that contains the collection(s) to replicate.`,
+										ElementType: types.StringType,
+										Description: `The names of the MongoDB databases that contain the collection(s) to replicate.`,
 									},
 									"password": schema.StringAttribute{
 										Optional:    true,

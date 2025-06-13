@@ -24,26 +24,17 @@ func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPICreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	environment := new(shared.Environment)
-	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
-		*environment = shared.Environment(r.Configuration.Environment.ValueString())
-	} else {
-		environment = nil
-	}
-	var symbolID string
-	symbolID = r.Configuration.SymbolID.ValueString()
-
-	var period string
-	period = r.Configuration.Period.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
 		endDate = nil
+	}
+	environment := new(shared.Environment)
+	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
+		*environment = shared.Environment(r.Configuration.Environment.ValueString())
+	} else {
+		environment = nil
 	}
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
@@ -51,14 +42,23 @@ func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPICreateRequest() *share
 	} else {
 		limit = nil
 	}
+	var period string
+	period = r.Configuration.Period.ValueString()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
+	var symbolID string
+	symbolID = r.Configuration.SymbolID.ValueString()
+
 	configuration := shared.SourceCoinAPI{
 		APIKey:      apiKey,
+		EndDate:     endDate,
 		Environment: environment,
-		SymbolID:    symbolID,
+		Limit:       limit,
 		Period:      period,
 		StartDate:   startDate,
-		EndDate:     endDate,
-		Limit:       limit,
+		SymbolID:    symbolID,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -133,26 +133,17 @@ func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPIPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	environment := new(shared.SourceCoinAPIUpdateEnvironment)
-	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
-		*environment = shared.SourceCoinAPIUpdateEnvironment(r.Configuration.Environment.ValueString())
-	} else {
-		environment = nil
-	}
-	var symbolID string
-	symbolID = r.Configuration.SymbolID.ValueString()
-
-	var period string
-	period = r.Configuration.Period.ValueString()
-
-	var startDate string
-	startDate = r.Configuration.StartDate.ValueString()
-
 	endDate := new(string)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		*endDate = r.Configuration.EndDate.ValueString()
 	} else {
 		endDate = nil
+	}
+	environment := new(shared.SourceCoinAPIUpdateEnvironment)
+	if !r.Configuration.Environment.IsUnknown() && !r.Configuration.Environment.IsNull() {
+		*environment = shared.SourceCoinAPIUpdateEnvironment(r.Configuration.Environment.ValueString())
+	} else {
+		environment = nil
 	}
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
@@ -160,14 +151,23 @@ func (r *SourceCoinAPIResourceModel) ToSharedSourceCoinAPIPutRequest() *shared.S
 	} else {
 		limit = nil
 	}
+	var period string
+	period = r.Configuration.Period.ValueString()
+
+	var startDate string
+	startDate = r.Configuration.StartDate.ValueString()
+
+	var symbolID string
+	symbolID = r.Configuration.SymbolID.ValueString()
+
 	configuration := shared.SourceCoinAPIUpdate{
 		APIKey:      apiKey,
+		EndDate:     endDate,
 		Environment: environment,
-		SymbolID:    symbolID,
+		Limit:       limit,
 		Period:      period,
 		StartDate:   startDate,
-		EndDate:     endDate,
-		Limit:       limit,
+		SymbolID:    symbolID,
 	}
 	out := shared.SourceCoinAPIPutRequest{
 		Name:          name,

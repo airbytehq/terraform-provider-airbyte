@@ -25,12 +25,12 @@ func (r *SourceStatsigResourceModel) ToSharedSourceStatsigCreateRequest() *share
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStatsig{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -105,12 +105,12 @@ func (r *SourceStatsigResourceModel) ToSharedSourceStatsigPutRequest() *shared.S
 	var apiKey string
 	apiKey = r.Configuration.APIKey.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStatsigUpdate{
 		APIKey:    apiKey,
-		StartDate: startDate,
 		EndDate:   endDate,
+		StartDate: startDate,
 	}
 	out := shared.SourceStatsigPutRequest{
 		Name:          name,

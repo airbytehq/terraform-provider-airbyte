@@ -33,10 +33,10 @@ func (e *DestinationDevNullSchemasTestDestinationTestDestinationType) UnmarshalJ
 }
 
 type Failing struct {
-	TestDestinationType *DestinationDevNullSchemasTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
 	// Number of messages after which to fail.
-	NumMessages          int64 `json:"num_messages"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	NumMessages          int64                                                        `json:"num_messages"`
+	TestDestinationType  *DestinationDevNullSchemasTestDestinationTestDestinationType `default:"FAILING" json:"test_destination_type"`
+	AdditionalProperties any                                                          `additionalProperties:"true" json:"-"`
 }
 
 func (f Failing) MarshalJSON() ([]byte, error) {
@@ -50,18 +50,18 @@ func (f *Failing) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Failing) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationTestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *Failing) GetNumMessages() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.NumMessages
+}
+
+func (o *Failing) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationTestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *Failing) GetAdditionalProperties() any {
@@ -95,10 +95,10 @@ func (e *DestinationDevNullSchemasTestDestinationType) UnmarshalJSON(data []byte
 }
 
 type Throttled struct {
-	TestDestinationType *DestinationDevNullSchemasTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
 	// The number of milliseconds to wait between each record.
-	MillisPerRecord      int64 `json:"millis_per_record"`
-	AdditionalProperties any   `additionalProperties:"true" json:"-"`
+	MillisPerRecord      int64                                         `json:"millis_per_record"`
+	TestDestinationType  *DestinationDevNullSchemasTestDestinationType `default:"THROTTLED" json:"test_destination_type"`
+	AdditionalProperties any                                           `additionalProperties:"true" json:"-"`
 }
 
 func (t Throttled) MarshalJSON() ([]byte, error) {
@@ -112,18 +112,18 @@ func (t *Throttled) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Throttled) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *Throttled) GetMillisPerRecord() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.MillisPerRecord
+}
+
+func (o *Throttled) GetTestDestinationType() *DestinationDevNullSchemasTestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *Throttled) GetAdditionalProperties() any {
@@ -186,29 +186,6 @@ func (o *Silent) GetAdditionalProperties() any {
 	return o.AdditionalProperties
 }
 
-type TestDestinationType string
-
-const (
-	TestDestinationTypeLogging TestDestinationType = "LOGGING"
-)
-
-func (e TestDestinationType) ToPointer() *TestDestinationType {
-	return &e
-}
-func (e *TestDestinationType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "LOGGING":
-		*e = TestDestinationType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TestDestinationType: %v", v)
-	}
-}
-
 type DestinationDevNullSchemasLoggingType string
 
 const (
@@ -235,12 +212,12 @@ func (e *DestinationDevNullSchemasLoggingType) UnmarshalJSON(data []byte) error 
 // RandomSampling - For each stream, randomly log a percentage of the entries with a maximum cap.
 type RandomSampling struct {
 	LoggingType *DestinationDevNullSchemasLoggingType `default:"RandomSampling" json:"logging_type"`
+	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
+	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
 	// A positive floating number smaller than 1.
 	SamplingRatio *float64 `default:"0.001" json:"sampling_ratio"`
 	// When the seed is unspecified, the current time millis will be used as the seed.
-	Seed *float64 `json:"seed,omitempty"`
-	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
+	Seed                 *float64 `json:"seed,omitempty"`
 	AdditionalProperties any      `additionalProperties:"true" json:"-"`
 }
 
@@ -262,6 +239,13 @@ func (o *RandomSampling) GetLoggingType() *DestinationDevNullSchemasLoggingType 
 	return o.LoggingType
 }
 
+func (o *RandomSampling) GetMaxEntryCount() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.MaxEntryCount
+}
+
 func (o *RandomSampling) GetSamplingRatio() *float64 {
 	if o == nil {
 		return nil
@@ -274,13 +258,6 @@ func (o *RandomSampling) GetSeed() *float64 {
 		return nil
 	}
 	return o.Seed
-}
-
-func (o *RandomSampling) GetMaxEntryCount() *float64 {
-	if o == nil {
-		return nil
-	}
-	return o.MaxEntryCount
 }
 
 func (o *RandomSampling) GetAdditionalProperties() any {
@@ -316,11 +293,11 @@ func (e *DestinationDevNullLoggingType) UnmarshalJSON(data []byte) error {
 // EveryNThEntry - For each stream, log every N-th entry with a maximum cap.
 type EveryNThEntry struct {
 	LoggingType *DestinationDevNullLoggingType `default:"EveryNth" json:"logging_type"`
-	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
-	NthEntryToLog int64 `json:"nth_entry_to_log"`
 	// Number of entries to log. This destination is for testing only. So it won't make sense to log infinitely. The maximum is 1,000 entries.
-	MaxEntryCount        *float64 `default:"100" json:"max_entry_count"`
-	AdditionalProperties any      `additionalProperties:"true" json:"-"`
+	MaxEntryCount *float64 `default:"100" json:"max_entry_count"`
+	// The N-th entry to log for each stream. N starts from 1. For example, when N = 1, every entry is logged; when N = 2, every other entry is logged; when N = 3, one out of three entries is logged.
+	NthEntryToLog        int64 `json:"nth_entry_to_log"`
+	AdditionalProperties any   `additionalProperties:"true" json:"-"`
 }
 
 func (e EveryNThEntry) MarshalJSON() ([]byte, error) {
@@ -341,18 +318,18 @@ func (o *EveryNThEntry) GetLoggingType() *DestinationDevNullLoggingType {
 	return o.LoggingType
 }
 
-func (o *EveryNThEntry) GetNthEntryToLog() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.NthEntryToLog
-}
-
 func (o *EveryNThEntry) GetMaxEntryCount() *float64 {
 	if o == nil {
 		return nil
 	}
 	return o.MaxEntryCount
+}
+
+func (o *EveryNThEntry) GetNthEntryToLog() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.NthEntryToLog
 }
 
 func (o *EveryNThEntry) GetAdditionalProperties() any {
@@ -511,10 +488,33 @@ func (u LoggingConfiguration) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type LoggingConfiguration: all fields are null")
 }
 
+type TestDestinationType string
+
+const (
+	TestDestinationTypeLogging TestDestinationType = "LOGGING"
+)
+
+func (e TestDestinationType) ToPointer() *TestDestinationType {
+	return &e
+}
+func (e *TestDestinationType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "LOGGING":
+		*e = TestDestinationType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TestDestinationType: %v", v)
+	}
+}
+
 type Logging struct {
-	TestDestinationType *TestDestinationType `default:"LOGGING" json:"test_destination_type"`
 	// Configurate how the messages are logged.
 	LoggingConfig        LoggingConfiguration `json:"logging_config"`
+	TestDestinationType  *TestDestinationType `default:"LOGGING" json:"test_destination_type"`
 	AdditionalProperties any                  `additionalProperties:"true" json:"-"`
 }
 
@@ -529,18 +529,18 @@ func (l *Logging) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Logging) GetTestDestinationType() *TestDestinationType {
-	if o == nil {
-		return nil
-	}
-	return o.TestDestinationType
-}
-
 func (o *Logging) GetLoggingConfig() LoggingConfiguration {
 	if o == nil {
 		return LoggingConfiguration{}
 	}
 	return o.LoggingConfig
+}
+
+func (o *Logging) GetTestDestinationType() *TestDestinationType {
+	if o == nil {
+		return nil
+	}
+	return o.TestDestinationType
 }
 
 func (o *Logging) GetAdditionalProperties() any {

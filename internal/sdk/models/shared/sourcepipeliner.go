@@ -64,10 +64,10 @@ func (e *Pipeliner) UnmarshalJSON(data []byte) error {
 }
 
 type SourcePipeliner struct {
-	Username   string     `json:"username"`
 	Password   *string    `json:"password,omitempty"`
 	Service    DataCenter `json:"service"`
 	Spaceid    string     `json:"spaceid"`
+	Username   string     `json:"username"`
 	sourceType Pipeliner  `const:"pipeliner" json:"sourceType"`
 }
 
@@ -80,13 +80,6 @@ func (s *SourcePipeliner) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourcePipeliner) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
 }
 
 func (o *SourcePipeliner) GetPassword() *string {
@@ -108,6 +101,13 @@ func (o *SourcePipeliner) GetSpaceid() string {
 		return ""
 	}
 	return o.Spaceid
+}
+
+func (o *SourcePipeliner) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }
 
 func (o *SourcePipeliner) GetSourceType() Pipeliner {

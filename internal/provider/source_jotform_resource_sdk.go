@@ -22,11 +22,6 @@ func (r *SourceJotformResourceModel) ToSharedSourceJotformCreateRequest() *share
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiEndpoint shared.APIEndpoint
 	var basic *shared.Basic
 	if r.Configuration.APIEndpoint.Basic != nil {
@@ -59,11 +54,16 @@ func (r *SourceJotformResourceModel) ToSharedSourceJotformCreateRequest() *share
 			Enterprise: enterprise,
 		}
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceJotform{
+		APIEndpoint: apiEndpoint,
 		APIKey:      apiKey,
 		EndDate:     endDate,
 		StartDate:   startDate,
-		APIEndpoint: apiEndpoint,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -135,11 +135,6 @@ func (r *SourceJotformResourceModel) ToSharedSourceJotformPutRequest() *shared.S
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var apiKey string
-	apiKey = r.Configuration.APIKey.ValueString()
-
-	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	var apiEndpoint shared.SourceJotformUpdateAPIEndpoint
 	var sourceJotformUpdateBasic *shared.SourceJotformUpdateBasic
 	if r.Configuration.APIEndpoint.Basic != nil {
@@ -172,11 +167,16 @@ func (r *SourceJotformResourceModel) ToSharedSourceJotformPutRequest() *shared.S
 			SourceJotformUpdateEnterprise: sourceJotformUpdateEnterprise,
 		}
 	}
+	var apiKey string
+	apiKey = r.Configuration.APIKey.ValueString()
+
+	endDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceJotformUpdate{
+		APIEndpoint: apiEndpoint,
 		APIKey:      apiKey,
 		EndDate:     endDate,
 		StartDate:   startDate,
-		APIEndpoint: apiEndpoint,
 	}
 	out := shared.SourceJotformPutRequest{
 		Name:          name,

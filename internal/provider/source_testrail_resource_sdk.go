@@ -22,8 +22,8 @@ func (r *SourceTestrailResourceModel) ToSharedSourceTestrailCreateRequest() *sha
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var domainName string
+	domainName = r.Configuration.DomainName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -32,14 +32,14 @@ func (r *SourceTestrailResourceModel) ToSharedSourceTestrailCreateRequest() *sha
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var domainName string
-	domainName = r.Configuration.DomainName.ValueString()
+	var username string
+	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceTestrail{
-		Username:   username,
+		DomainName: domainName,
 		Password:   password,
 		StartDate:  startDate,
-		DomainName: domainName,
+		Username:   username,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -111,8 +111,8 @@ func (r *SourceTestrailResourceModel) ToSharedSourceTestrailPutRequest() *shared
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
-	var username string
-	username = r.Configuration.Username.ValueString()
+	var domainName string
+	domainName = r.Configuration.DomainName.ValueString()
 
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -121,14 +121,14 @@ func (r *SourceTestrailResourceModel) ToSharedSourceTestrailPutRequest() *shared
 		password = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var domainName string
-	domainName = r.Configuration.DomainName.ValueString()
+	var username string
+	username = r.Configuration.Username.ValueString()
 
 	configuration := shared.SourceTestrailUpdate{
-		Username:   username,
+		DomainName: domainName,
 		Password:   password,
 		StartDate:  startDate,
-		DomainName: domainName,
+		Username:   username,
 	}
 	out := shared.SourceTestrailPutRequest{
 		Name:          name,

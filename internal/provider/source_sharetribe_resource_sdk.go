@@ -28,7 +28,6 @@ func (r *SourceSharetribeResourceModel) ToSharedSourceSharetribeCreateRequest() 
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
 		*oauthAccessToken = r.Configuration.OauthAccessToken.ValueString()
@@ -41,12 +40,13 @@ func (r *SourceSharetribeResourceModel) ToSharedSourceSharetribeCreateRequest() 
 	} else {
 		oauthTokenExpiryDate = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSharetribe{
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		StartDate:            startDate,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
+		StartDate:            startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -124,7 +124,6 @@ func (r *SourceSharetribeResourceModel) ToSharedSourceSharetribePutRequest() *sh
 	var clientSecret string
 	clientSecret = r.Configuration.ClientSecret.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	oauthAccessToken := new(string)
 	if !r.Configuration.OauthAccessToken.IsUnknown() && !r.Configuration.OauthAccessToken.IsNull() {
 		*oauthAccessToken = r.Configuration.OauthAccessToken.ValueString()
@@ -137,12 +136,13 @@ func (r *SourceSharetribeResourceModel) ToSharedSourceSharetribePutRequest() *sh
 	} else {
 		oauthTokenExpiryDate = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSharetribeUpdate{
 		ClientID:             clientID,
 		ClientSecret:         clientSecret,
-		StartDate:            startDate,
 		OauthAccessToken:     oauthAccessToken,
 		OauthTokenExpiryDate: oauthTokenExpiryDate,
+		StartDate:            startDate,
 	}
 	out := shared.SourceSharetribePutRequest{
 		Name:          name,

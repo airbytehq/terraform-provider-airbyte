@@ -34,17 +34,17 @@ func (e *Mendeley) UnmarshalJSON(data []byte) error {
 
 type SourceMendeley struct {
 	// Could be found at `https://dev.mendeley.com/myapps.html`
-	ClientID  string    `json:"client_id"`
-	StartDate time.Time `json:"start_date"`
-	// Could be found at `https://dev.mendeley.com/myapps.html`
-	ClientSecret string `json:"client_secret"`
-	// Query for catalog search
-	QueryForCatalog *string `default:"Polar Bear" json:"query_for_catalog"`
+	ClientID string `json:"client_id"`
 	// Use cURL or Postman with the OAuth 2.0 Authorization tab. Set the Auth URL to https://api.mendeley.com/oauth/authorize, the Token URL to https://api.mendeley.com/oauth/token, and use all as the scope.
 	ClientRefreshToken string `json:"client_refresh_token"`
+	// Could be found at `https://dev.mendeley.com/myapps.html`
+	ClientSecret string `json:"client_secret"`
 	// The name parameter for institutions search
-	NameForInstitution *string  `default:"City University" json:"name_for_institution"`
-	sourceType         Mendeley `const:"mendeley" json:"sourceType"`
+	NameForInstitution *string `default:"City University" json:"name_for_institution"`
+	// Query for catalog search
+	QueryForCatalog *string   `default:"Polar Bear" json:"query_for_catalog"`
+	StartDate       time.Time `json:"start_date"`
+	sourceType      Mendeley  `const:"mendeley" json:"sourceType"`
 }
 
 func (s SourceMendeley) MarshalJSON() ([]byte, error) {
@@ -65,11 +65,11 @@ func (o *SourceMendeley) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *SourceMendeley) GetStartDate() time.Time {
+func (o *SourceMendeley) GetClientRefreshToken() string {
 	if o == nil {
-		return time.Time{}
+		return ""
 	}
-	return o.StartDate
+	return o.ClientRefreshToken
 }
 
 func (o *SourceMendeley) GetClientSecret() string {
@@ -79,6 +79,13 @@ func (o *SourceMendeley) GetClientSecret() string {
 	return o.ClientSecret
 }
 
+func (o *SourceMendeley) GetNameForInstitution() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NameForInstitution
+}
+
 func (o *SourceMendeley) GetQueryForCatalog() *string {
 	if o == nil {
 		return nil
@@ -86,18 +93,11 @@ func (o *SourceMendeley) GetQueryForCatalog() *string {
 	return o.QueryForCatalog
 }
 
-func (o *SourceMendeley) GetClientRefreshToken() string {
+func (o *SourceMendeley) GetStartDate() time.Time {
 	if o == nil {
-		return ""
+		return time.Time{}
 	}
-	return o.ClientRefreshToken
-}
-
-func (o *SourceMendeley) GetNameForInstitution() *string {
-	if o == nil {
-		return nil
-	}
-	return o.NameForInstitution
+	return o.StartDate
 }
 
 func (o *SourceMendeley) GetSourceType() Mendeley {

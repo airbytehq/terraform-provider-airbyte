@@ -55,12 +55,12 @@ func (e *SourceZohoBooksUpdateRegion) UnmarshalJSON(data []byte) error {
 }
 
 type SourceZohoBooksUpdate struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	RefreshToken string `json:"refresh_token"`
 	// The region code for the Zoho Books API, such as 'com', 'eu', 'in', etc.
-	Region       SourceZohoBooksUpdateRegion `json:"region"`
-	ClientID     string                      `json:"client_id"`
-	ClientSecret string                      `json:"client_secret"`
-	RefreshToken string                      `json:"refresh_token"`
-	StartDate    time.Time                   `json:"start_date"`
+	Region    SourceZohoBooksUpdateRegion `json:"region"`
+	StartDate time.Time                   `json:"start_date"`
 }
 
 func (s SourceZohoBooksUpdate) MarshalJSON() ([]byte, error) {
@@ -72,13 +72,6 @@ func (s *SourceZohoBooksUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (o *SourceZohoBooksUpdate) GetRegion() SourceZohoBooksUpdateRegion {
-	if o == nil {
-		return SourceZohoBooksUpdateRegion("")
-	}
-	return o.Region
 }
 
 func (o *SourceZohoBooksUpdate) GetClientID() string {
@@ -100,6 +93,13 @@ func (o *SourceZohoBooksUpdate) GetRefreshToken() string {
 		return ""
 	}
 	return o.RefreshToken
+}
+
+func (o *SourceZohoBooksUpdate) GetRegion() SourceZohoBooksUpdateRegion {
+	if o == nil {
+		return SourceZohoBooksUpdateRegion("")
+	}
+	return o.Region
 }
 
 func (o *SourceZohoBooksUpdate) GetStartDate() time.Time {

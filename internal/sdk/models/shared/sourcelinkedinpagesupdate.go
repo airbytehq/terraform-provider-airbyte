@@ -34,9 +34,9 @@ func (e *SourceLinkedinPagesUpdateSchemasAuthMethod) UnmarshalJSON(data []byte) 
 }
 
 type SourceLinkedinPagesUpdateAccessToken struct {
-	authMethod *SourceLinkedinPagesUpdateSchemasAuthMethod `const:"access_token" json:"auth_method,omitempty"`
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-	AccessToken string `json:"access_token"`
+	AccessToken string                                      `json:"access_token"`
+	authMethod  *SourceLinkedinPagesUpdateSchemasAuthMethod `const:"access_token" json:"auth_method,omitempty"`
 }
 
 func (s SourceLinkedinPagesUpdateAccessToken) MarshalJSON() ([]byte, error) {
@@ -50,15 +50,15 @@ func (s *SourceLinkedinPagesUpdateAccessToken) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *SourceLinkedinPagesUpdateAccessToken) GetAuthMethod() *SourceLinkedinPagesUpdateSchemasAuthMethod {
-	return SourceLinkedinPagesUpdateSchemasAuthMethodAccessToken.ToPointer()
-}
-
 func (o *SourceLinkedinPagesUpdateAccessToken) GetAccessToken() string {
 	if o == nil {
 		return ""
 	}
 	return o.AccessToken
+}
+
+func (o *SourceLinkedinPagesUpdateAccessToken) GetAuthMethod() *SourceLinkedinPagesUpdateSchemasAuthMethod {
+	return SourceLinkedinPagesUpdateSchemasAuthMethodAccessToken.ToPointer()
 }
 
 type SourceLinkedinPagesUpdateAuthMethod string
@@ -85,9 +85,9 @@ func (e *SourceLinkedinPagesUpdateAuthMethod) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLinkedinPagesUpdateOAuth20 struct {
-	// The client ID of the LinkedIn developer application.
-	ClientID   string                               `json:"client_id"`
 	authMethod *SourceLinkedinPagesUpdateAuthMethod `const:"oAuth2.0" json:"auth_method,omitempty"`
+	// The client ID of the LinkedIn developer application.
+	ClientID string `json:"client_id"`
 	// The client secret of the LinkedIn developer application.
 	ClientSecret string `json:"client_secret"`
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
@@ -105,15 +105,15 @@ func (s *SourceLinkedinPagesUpdateOAuth20) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *SourceLinkedinPagesUpdateOAuth20) GetAuthMethod() *SourceLinkedinPagesUpdateAuthMethod {
+	return SourceLinkedinPagesUpdateAuthMethodOAuth20.ToPointer()
+}
+
 func (o *SourceLinkedinPagesUpdateOAuth20) GetClientID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientID
-}
-
-func (o *SourceLinkedinPagesUpdateOAuth20) GetAuthMethod() *SourceLinkedinPagesUpdateAuthMethod {
-	return SourceLinkedinPagesUpdateAuthMethodOAuth20.ToPointer()
 }
 
 func (o *SourceLinkedinPagesUpdateOAuth20) GetClientSecret() string {

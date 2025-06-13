@@ -40,13 +40,13 @@ func (o *SourceAwsCloudtrailUpdateFilterAppliedWhileFetchingRecordsBasedOnAttrib
 type SourceAwsCloudtrailUpdate struct {
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 	AwsKeyID string `json:"aws_key_id"`
-	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-	AwsSecretKey string `json:"aws_secret_key"`
 	// The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
 	AwsRegionName *string `default:"us-east-1" json:"aws_region_name"`
-	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
-	StartDate              *types.Date                                                                                                                        `json:"start_date,omitempty"`
+	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
+	AwsSecretKey           string                                                                                                                             `json:"aws_secret_key"`
 	LookupAttributesFilter *SourceAwsCloudtrailUpdateFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody `json:"lookup_attributes_filter,omitempty"`
+	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
+	StartDate *types.Date `json:"start_date,omitempty"`
 }
 
 func (s SourceAwsCloudtrailUpdate) MarshalJSON() ([]byte, error) {
@@ -67,13 +67,6 @@ func (o *SourceAwsCloudtrailUpdate) GetAwsKeyID() string {
 	return o.AwsKeyID
 }
 
-func (o *SourceAwsCloudtrailUpdate) GetAwsSecretKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.AwsSecretKey
-}
-
 func (o *SourceAwsCloudtrailUpdate) GetAwsRegionName() *string {
 	if o == nil {
 		return nil
@@ -81,11 +74,11 @@ func (o *SourceAwsCloudtrailUpdate) GetAwsRegionName() *string {
 	return o.AwsRegionName
 }
 
-func (o *SourceAwsCloudtrailUpdate) GetStartDate() *types.Date {
+func (o *SourceAwsCloudtrailUpdate) GetAwsSecretKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.StartDate
+	return o.AwsSecretKey
 }
 
 func (o *SourceAwsCloudtrailUpdate) GetLookupAttributesFilter() *SourceAwsCloudtrailUpdateFilterAppliedWhileFetchingRecordsBasedOnAttributeKeyAndAttributeValueWhichWillBeAppendedOnTheRequestBody {
@@ -93,4 +86,11 @@ func (o *SourceAwsCloudtrailUpdate) GetLookupAttributesFilter() *SourceAwsCloudt
 		return nil
 	}
 	return o.LookupAttributesFilter
+}
+
+func (o *SourceAwsCloudtrailUpdate) GetStartDate() *types.Date {
+	if o == nil {
+		return nil
+	}
+	return o.StartDate
 }

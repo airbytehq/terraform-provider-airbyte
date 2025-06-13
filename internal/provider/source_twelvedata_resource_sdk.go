@@ -36,24 +36,24 @@ func (r *SourceTwelveDataResourceModel) ToSharedSourceTwelveDataCreateRequest() 
 	} else {
 		exchange = nil
 	}
-	symbol := new(string)
-	if !r.Configuration.Symbol.IsUnknown() && !r.Configuration.Symbol.IsNull() {
-		*symbol = r.Configuration.Symbol.ValueString()
-	} else {
-		symbol = nil
-	}
 	interval := new(shared.SourceTwelveDataInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
 		*interval = shared.SourceTwelveDataInterval(r.Configuration.Interval.ValueString())
 	} else {
 		interval = nil
 	}
+	symbol := new(string)
+	if !r.Configuration.Symbol.IsUnknown() && !r.Configuration.Symbol.IsNull() {
+		*symbol = r.Configuration.Symbol.ValueString()
+	} else {
+		symbol = nil
+	}
 	configuration := shared.SourceTwelveData{
 		APIKey:   apiKey,
 		Country:  country,
 		Exchange: exchange,
-		Symbol:   symbol,
 		Interval: interval,
+		Symbol:   symbol,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -140,24 +140,24 @@ func (r *SourceTwelveDataResourceModel) ToSharedSourceTwelveDataPutRequest() *sh
 	} else {
 		exchange = nil
 	}
-	symbol := new(string)
-	if !r.Configuration.Symbol.IsUnknown() && !r.Configuration.Symbol.IsNull() {
-		*symbol = r.Configuration.Symbol.ValueString()
-	} else {
-		symbol = nil
-	}
 	interval := new(shared.SourceTwelveDataUpdateInterval)
 	if !r.Configuration.Interval.IsUnknown() && !r.Configuration.Interval.IsNull() {
 		*interval = shared.SourceTwelveDataUpdateInterval(r.Configuration.Interval.ValueString())
 	} else {
 		interval = nil
 	}
+	symbol := new(string)
+	if !r.Configuration.Symbol.IsUnknown() && !r.Configuration.Symbol.IsNull() {
+		*symbol = r.Configuration.Symbol.ValueString()
+	} else {
+		symbol = nil
+	}
 	configuration := shared.SourceTwelveDataUpdate{
 		APIKey:   apiKey,
 		Country:  country,
 		Exchange: exchange,
-		Symbol:   symbol,
 		Interval: interval,
+		Symbol:   symbol,
 	}
 	out := shared.SourceTwelveDataPutRequest{
 		Name:          name,

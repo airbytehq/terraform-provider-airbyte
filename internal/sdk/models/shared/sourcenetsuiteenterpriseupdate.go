@@ -226,6 +226,102 @@ func (u SourceNetsuiteEnterpriseUpdateAuthenticationMethod) MarshalJSON() ([]byt
 	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateAuthenticationMethod: all fields are null")
 }
 
+type SourceNetsuiteEnterpriseUpdateCursorMethod string
+
+const (
+	SourceNetsuiteEnterpriseUpdateCursorMethodUserDefined SourceNetsuiteEnterpriseUpdateCursorMethod = "user_defined"
+)
+
+func (e SourceNetsuiteEnterpriseUpdateCursorMethod) ToPointer() *SourceNetsuiteEnterpriseUpdateCursorMethod {
+	return &e
+}
+func (e *SourceNetsuiteEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user_defined":
+		*e = SourceNetsuiteEnterpriseUpdateCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceNetsuiteEnterpriseUpdateCursorMethod: %v", v)
+	}
+}
+
+// SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
+	CursorMethod         *SourceNetsuiteEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
+	AdditionalProperties any                                         `additionalProperties:"true" json:"-"`
+}
+
+func (s SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceNetsuiteEnterpriseUpdateCursorMethod {
+	if o == nil {
+		return nil
+	}
+	return o.CursorMethod
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
+type SourceNetsuiteEnterpriseUpdateUpdateMethodType string
+
+const (
+	SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateUpdateMethodType = "source-netsuite-enterprise-update_Scan Changes with User Defined Cursor"
+)
+
+// SourceNetsuiteEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
+type SourceNetsuiteEnterpriseUpdateUpdateMethod struct {
+	SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor `queryParam:"inline"`
+
+	Type SourceNetsuiteEnterpriseUpdateUpdateMethodType
+}
+
+func CreateSourceNetsuiteEnterpriseUpdateUpdateMethodSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceNetsuiteEnterpriseUpdateUpdateMethod {
+	typ := SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
+
+	return SourceNetsuiteEnterpriseUpdateUpdateMethod{
+		SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor,
+		Type: typ,
+	}
+}
+
+func (u *SourceNetsuiteEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
+
+	var sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor{}
+	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
+		u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
+		u.Type = SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceNetsuiteEnterpriseUpdateUpdateMethod", string(data))
+}
+
+func (u SourceNetsuiteEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
+		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateUpdateMethod: all fields are null")
+}
+
 type SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod string
 
 const (
@@ -251,9 +347,9 @@ func (e *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod) Unmarsha
 
 // SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication - Connect through a jump server tunnel host using username and password authentication
 type SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication struct {
-	TunnelMethod *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                                         `json:"tunnel_host"`
+	TunnelMethod *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod `default:"SSH_PASSWORD_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -274,18 +370,18 @@ func (s *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) UnmarshalJ
 	return nil
 }
 
-func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
-	if o == nil {
-		return nil
-	}
-	return o.TunnelMethod
-}
-
 func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelHost() string {
 	if o == nil {
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethodTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceNetsuiteEnterpriseUpdateSchemasPasswordAuthentication) GetTunnelPort() *int64 {
@@ -341,15 +437,15 @@ func (e *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod) UnmarshalJSON(data [
 
 // SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication - Connect through a jump server tunnel host using username and ssh key
 type SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication struct {
-	TunnelMethod *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
+	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+	SSHKey string `json:"ssh_key"`
 	// Hostname of the jump server host that allows inbound ssh tunnel.
-	TunnelHost string `json:"tunnel_host"`
+	TunnelHost   string                                             `json:"tunnel_host"`
+	TunnelMethod *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod `default:"SSH_KEY_AUTH" json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort *int64 `default:"22" json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
-	TunnelUser string `json:"tunnel_user"`
-	// OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
-	SSHKey               string `json:"ssh_key"`
+	TunnelUser           string `json:"tunnel_user"`
 	AdditionalProperties any    `additionalProperties:"true" json:"-"`
 }
 
@@ -364,11 +460,11 @@ func (s *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) UnmarshalJSON(data 
 	return nil
 }
 
-func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod {
+func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.TunnelMethod
+	return o.SSHKey
 }
 
 func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() string {
@@ -376,6 +472,13 @@ func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelHost() str
 		return ""
 	}
 	return o.TunnelHost
+}
+
+func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelMethod() *SourceNetsuiteEnterpriseUpdateSchemasTunnelMethod {
+	if o == nil {
+		return nil
+	}
+	return o.TunnelMethod
 }
 
 func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelPort() *int64 {
@@ -390,13 +493,6 @@ func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetTunnelUser() str
 		return ""
 	}
 	return o.TunnelUser
-}
-
-func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetSSHKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.SSHKey
 }
 
 func (o *SourceNetsuiteEnterpriseUpdateSSHKeyAuthentication) GetAdditionalProperties() any {
@@ -546,127 +642,31 @@ func (u SourceNetsuiteEnterpriseUpdateSSHTunnelMethod) MarshalJSON() ([]byte, er
 	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateSSHTunnelMethod: all fields are null")
 }
 
-type SourceNetsuiteEnterpriseUpdateCursorMethod string
-
-const (
-	SourceNetsuiteEnterpriseUpdateCursorMethodUserDefined SourceNetsuiteEnterpriseUpdateCursorMethod = "user_defined"
-)
-
-func (e SourceNetsuiteEnterpriseUpdateCursorMethod) ToPointer() *SourceNetsuiteEnterpriseUpdateCursorMethod {
-	return &e
-}
-func (e *SourceNetsuiteEnterpriseUpdateCursorMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "user_defined":
-		*e = SourceNetsuiteEnterpriseUpdateCursorMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceNetsuiteEnterpriseUpdateCursorMethod: %v", v)
-	}
-}
-
-// SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
-type SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor struct {
-	CursorMethod         *SourceNetsuiteEnterpriseUpdateCursorMethod `default:"user_defined" json:"cursor_method"`
-	AdditionalProperties any                                         `additionalProperties:"true" json:"-"`
-}
-
-func (s SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(s, "", false)
-}
-
-func (s *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) GetCursorMethod() *SourceNetsuiteEnterpriseUpdateCursorMethod {
-	if o == nil {
-		return nil
-	}
-	return o.CursorMethod
-}
-
-func (o *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) GetAdditionalProperties() any {
-	if o == nil {
-		return nil
-	}
-	return o.AdditionalProperties
-}
-
-type SourceNetsuiteEnterpriseUpdateUpdateMethodType string
-
-const (
-	SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateUpdateMethodType = "source-netsuite-enterprise-update_Scan Changes with User Defined Cursor"
-)
-
-// SourceNetsuiteEnterpriseUpdateUpdateMethod - Configures how data is extracted from the database.
-type SourceNetsuiteEnterpriseUpdateUpdateMethod struct {
-	SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor *SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor `queryParam:"inline"`
-
-	Type SourceNetsuiteEnterpriseUpdateUpdateMethodType
-}
-
-func CreateSourceNetsuiteEnterpriseUpdateUpdateMethodSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor(sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor) SourceNetsuiteEnterpriseUpdateUpdateMethod {
-	typ := SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
-
-	return SourceNetsuiteEnterpriseUpdateUpdateMethod{
-		SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor: &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor,
-		Type: typ,
-	}
-}
-
-func (u *SourceNetsuiteEnterpriseUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
-
-	var sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor{}
-	if err := utils.UnmarshalJSON(data, &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true, true); err == nil {
-		u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor = &sourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
-		u.Type = SourceNetsuiteEnterpriseUpdateUpdateMethodTypeSourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SourceNetsuiteEnterpriseUpdateUpdateMethod", string(data))
-}
-
-func (u SourceNetsuiteEnterpriseUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor != nil {
-		return utils.MarshalJSON(u.SourceNetsuiteEnterpriseUpdateScanChangesWithUserDefinedCursor, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SourceNetsuiteEnterpriseUpdateUpdateMethod: all fields are null")
-}
-
 type SourceNetsuiteEnterpriseUpdate struct {
-	// Hostname of the database.
-	Host string `json:"host"`
-	// Port of the database.
-	Port *int64 `default:"1708" json:"port"`
-	// The username which is used to access the database.
-	Username string `json:"username"`
-	// Configure how to authenticate to Netsuite. Options include username/password or token-based authentication.
-	AuthenticationMethod SourceNetsuiteEnterpriseUpdateAuthenticationMethod `json:"authentication_method"`
-	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
-	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
-	TunnelMethod SourceNetsuiteEnterpriseUpdateSSHTunnelMethod `json:"tunnel_method"`
-	// Configures how data is extracted from the database.
-	Cursor SourceNetsuiteEnterpriseUpdateUpdateMethod `json:"cursor"`
 	// The username which is used to access the database.
 	AccountID string `json:"account_id"`
-	// The username which is used to access the database.
-	RoleID string `json:"role_id"`
+	// Configure how to authenticate to Netsuite. Options include username/password or token-based authentication.
+	AuthenticationMethod SourceNetsuiteEnterpriseUpdateAuthenticationMethod `json:"authentication_method"`
+	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
+	CheckPrivileges *bool `default:"true" json:"check_privileges"`
 	// How often (in seconds) a stream should checkpoint, when possible.
 	CheckpointTargetIntervalSeconds *int64 `default:"300" json:"checkpoint_target_interval_seconds"`
 	// Maximum number of concurrent queries to the database.
 	Concurrency *int64 `default:"1" json:"concurrency"`
-	// When this feature is enabled, during schema discovery the connector will query each table or view individually to check access privileges and inaccessible tables, views, or columns therein will be removed. In large schemas, this might cause schema discovery to take too long, in which case it might be advisable to disable this feature.
-	CheckPrivileges *bool `default:"true" json:"check_privileges"`
+	// Configures how data is extracted from the database.
+	Cursor SourceNetsuiteEnterpriseUpdateUpdateMethod `json:"cursor"`
+	// Hostname of the database.
+	Host string `json:"host"`
+	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
+	// Port of the database.
+	Port *int64 `default:"1708" json:"port"`
+	// The username which is used to access the database.
+	RoleID string `json:"role_id"`
+	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
+	TunnelMethod SourceNetsuiteEnterpriseUpdateSSHTunnelMethod `json:"tunnel_method"`
+	// The username which is used to access the database.
+	Username string `json:"username"`
 }
 
 func (s SourceNetsuiteEnterpriseUpdate) MarshalJSON() ([]byte, error) {
@@ -680,25 +680,11 @@ func (s *SourceNetsuiteEnterpriseUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceNetsuiteEnterpriseUpdate) GetHost() string {
+func (o *SourceNetsuiteEnterpriseUpdate) GetAccountID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Host
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetPort() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.Port
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetUsername() string {
-	if o == nil {
-		return ""
-	}
-	return o.Username
+	return o.AccountID
 }
 
 func (o *SourceNetsuiteEnterpriseUpdate) GetAuthenticationMethod() SourceNetsuiteEnterpriseUpdateAuthenticationMethod {
@@ -708,39 +694,11 @@ func (o *SourceNetsuiteEnterpriseUpdate) GetAuthenticationMethod() SourceNetsuit
 	return o.AuthenticationMethod
 }
 
-func (o *SourceNetsuiteEnterpriseUpdate) GetJdbcURLParams() *string {
+func (o *SourceNetsuiteEnterpriseUpdate) GetCheckPrivileges() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.JdbcURLParams
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetTunnelMethod() SourceNetsuiteEnterpriseUpdateSSHTunnelMethod {
-	if o == nil {
-		return SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{}
-	}
-	return o.TunnelMethod
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetCursor() SourceNetsuiteEnterpriseUpdateUpdateMethod {
-	if o == nil {
-		return SourceNetsuiteEnterpriseUpdateUpdateMethod{}
-	}
-	return o.Cursor
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetAccountID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AccountID
-}
-
-func (o *SourceNetsuiteEnterpriseUpdate) GetRoleID() string {
-	if o == nil {
-		return ""
-	}
-	return o.RoleID
+	return o.CheckPrivileges
 }
 
 func (o *SourceNetsuiteEnterpriseUpdate) GetCheckpointTargetIntervalSeconds() *int64 {
@@ -757,9 +715,51 @@ func (o *SourceNetsuiteEnterpriseUpdate) GetConcurrency() *int64 {
 	return o.Concurrency
 }
 
-func (o *SourceNetsuiteEnterpriseUpdate) GetCheckPrivileges() *bool {
+func (o *SourceNetsuiteEnterpriseUpdate) GetCursor() SourceNetsuiteEnterpriseUpdateUpdateMethod {
+	if o == nil {
+		return SourceNetsuiteEnterpriseUpdateUpdateMethod{}
+	}
+	return o.Cursor
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetHost() string {
+	if o == nil {
+		return ""
+	}
+	return o.Host
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetJdbcURLParams() *string {
 	if o == nil {
 		return nil
 	}
-	return o.CheckPrivileges
+	return o.JdbcURLParams
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetPort() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Port
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetRoleID() string {
+	if o == nil {
+		return ""
+	}
+	return o.RoleID
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetTunnelMethod() SourceNetsuiteEnterpriseUpdateSSHTunnelMethod {
+	if o == nil {
+		return SourceNetsuiteEnterpriseUpdateSSHTunnelMethod{}
+	}
+	return o.TunnelMethod
+}
+
+func (o *SourceNetsuiteEnterpriseUpdate) GetUsername() string {
+	if o == nil {
+		return ""
+	}
+	return o.Username
 }

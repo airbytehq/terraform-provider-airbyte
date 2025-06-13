@@ -22,16 +22,16 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreate
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	attributionWindow := new(int64)
+	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
+		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	} else {
+		attributionWindow = nil
+	}
 	var credentials *shared.SourceTiktokMarketingAuthenticationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceTiktokMarketingOAuth20 *shared.SourceTiktokMarketingOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var appID string
-			appID = r.Configuration.Credentials.OAuth20.AppID.ValueString()
-
-			var secret string
-			secret = r.Configuration.Credentials.OAuth20.Secret.ValueString()
-
 			var accessToken string
 			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 
@@ -41,11 +41,17 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreate
 			} else {
 				advertiserID = nil
 			}
+			var appID string
+			appID = r.Configuration.Credentials.OAuth20.AppID.ValueString()
+
+			var secret string
+			secret = r.Configuration.Credentials.OAuth20.Secret.ValueString()
+
 			sourceTiktokMarketingOAuth20 = &shared.SourceTiktokMarketingOAuth20{
-				AppID:        appID,
-				Secret:       secret,
 				AccessToken:  accessToken,
 				AdvertiserID: advertiserID,
+				AppID:        appID,
+				Secret:       secret,
 			}
 		}
 		if sourceTiktokMarketingOAuth20 != nil {
@@ -55,15 +61,15 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreate
 		}
 		var sandboxAccessToken *shared.SandboxAccessToken
 		if r.Configuration.Credentials.SandboxAccessToken != nil {
-			var advertiserId1 string
-			advertiserId1 = r.Configuration.Credentials.SandboxAccessToken.AdvertiserID.ValueString()
-
 			var accessToken1 string
 			accessToken1 = r.Configuration.Credentials.SandboxAccessToken.AccessToken.ValueString()
 
+			var advertiserId1 string
+			advertiserId1 = r.Configuration.Credentials.SandboxAccessToken.AdvertiserID.ValueString()
+
 			sandboxAccessToken = &shared.SandboxAccessToken{
-				AdvertiserID: advertiserId1,
 				AccessToken:  accessToken1,
+				AdvertiserID: advertiserId1,
 			}
 		}
 		if sandboxAccessToken != nil {
@@ -72,23 +78,11 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreate
 			}
 		}
 	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
-	}
-	attributionWindow := new(int64)
-	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
-		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
-	} else {
-		attributionWindow = nil
 	}
 	includeDeleted := new(bool)
 	if !r.Configuration.IncludeDeleted.IsUnknown() && !r.Configuration.IncludeDeleted.IsNull() {
@@ -96,12 +90,18 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingCreate
 	} else {
 		includeDeleted = nil
 	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceTiktokMarketing{
-		Credentials:       credentials,
-		StartDate:         startDate,
-		EndDate:           endDate,
 		AttributionWindow: attributionWindow,
+		Credentials:       credentials,
+		EndDate:           endDate,
 		IncludeDeleted:    includeDeleted,
+		StartDate:         startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -173,16 +173,16 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutReq
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	attributionWindow := new(int64)
+	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
+		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
+	} else {
+		attributionWindow = nil
+	}
 	var credentials *shared.SourceTiktokMarketingUpdateAuthenticationMethod
 	if r.Configuration.Credentials != nil {
 		var sourceTiktokMarketingUpdateOAuth20 *shared.SourceTiktokMarketingUpdateOAuth20
 		if r.Configuration.Credentials.OAuth20 != nil {
-			var appID string
-			appID = r.Configuration.Credentials.OAuth20.AppID.ValueString()
-
-			var secret string
-			secret = r.Configuration.Credentials.OAuth20.Secret.ValueString()
-
 			var accessToken string
 			accessToken = r.Configuration.Credentials.OAuth20.AccessToken.ValueString()
 
@@ -192,11 +192,17 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutReq
 			} else {
 				advertiserID = nil
 			}
+			var appID string
+			appID = r.Configuration.Credentials.OAuth20.AppID.ValueString()
+
+			var secret string
+			secret = r.Configuration.Credentials.OAuth20.Secret.ValueString()
+
 			sourceTiktokMarketingUpdateOAuth20 = &shared.SourceTiktokMarketingUpdateOAuth20{
-				AppID:        appID,
-				Secret:       secret,
 				AccessToken:  accessToken,
 				AdvertiserID: advertiserID,
+				AppID:        appID,
+				Secret:       secret,
 			}
 		}
 		if sourceTiktokMarketingUpdateOAuth20 != nil {
@@ -206,15 +212,15 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutReq
 		}
 		var sourceTiktokMarketingUpdateSandboxAccessToken *shared.SourceTiktokMarketingUpdateSandboxAccessToken
 		if r.Configuration.Credentials.SandboxAccessToken != nil {
-			var advertiserId1 string
-			advertiserId1 = r.Configuration.Credentials.SandboxAccessToken.AdvertiserID.ValueString()
-
 			var accessToken1 string
 			accessToken1 = r.Configuration.Credentials.SandboxAccessToken.AccessToken.ValueString()
 
+			var advertiserId1 string
+			advertiserId1 = r.Configuration.Credentials.SandboxAccessToken.AdvertiserID.ValueString()
+
 			sourceTiktokMarketingUpdateSandboxAccessToken = &shared.SourceTiktokMarketingUpdateSandboxAccessToken{
-				AdvertiserID: advertiserId1,
 				AccessToken:  accessToken1,
+				AdvertiserID: advertiserId1,
 			}
 		}
 		if sourceTiktokMarketingUpdateSandboxAccessToken != nil {
@@ -223,23 +229,11 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutReq
 			}
 		}
 	}
-	startDate := new(customTypes.Date)
-	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
-	} else {
-		startDate = nil
-	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
-	}
-	attributionWindow := new(int64)
-	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
-		*attributionWindow = r.Configuration.AttributionWindow.ValueInt64()
-	} else {
-		attributionWindow = nil
 	}
 	includeDeleted := new(bool)
 	if !r.Configuration.IncludeDeleted.IsUnknown() && !r.Configuration.IncludeDeleted.IsNull() {
@@ -247,12 +241,18 @@ func (r *SourceTiktokMarketingResourceModel) ToSharedSourceTiktokMarketingPutReq
 	} else {
 		includeDeleted = nil
 	}
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceTiktokMarketingUpdate{
-		Credentials:       credentials,
-		StartDate:         startDate,
-		EndDate:           endDate,
 		AttributionWindow: attributionWindow,
+		Credentials:       credentials,
+		EndDate:           endDate,
 		IncludeDeleted:    includeDeleted,
+		StartDate:         startDate,
 	}
 	out := shared.SourceTiktokMarketingPutRequest{
 		Name:          name,

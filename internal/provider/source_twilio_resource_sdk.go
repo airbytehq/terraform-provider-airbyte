@@ -28,18 +28,18 @@ func (r *SourceTwilioResourceModel) ToSharedSourceTwilioCreateRequest() *shared.
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceTwilio{
 		AccountSid:     accountSid,
 		AuthToken:      authToken,
-		StartDate:      startDate,
 		LookbackWindow: lookbackWindow,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -117,18 +117,18 @@ func (r *SourceTwilioResourceModel) ToSharedSourceTwilioPutRequest() *shared.Sou
 	var authToken string
 	authToken = r.Configuration.AuthToken.ValueString()
 
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	lookbackWindow := new(int64)
 	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
 		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
 	} else {
 		lookbackWindow = nil
 	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceTwilioUpdate{
 		AccountSid:     accountSid,
 		AuthToken:      authToken,
-		StartDate:      startDate,
 		LookbackWindow: lookbackWindow,
+		StartDate:      startDate,
 	}
 	out := shared.SourceTwilioPutRequest{
 		Name:          name,

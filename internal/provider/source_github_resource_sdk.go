@@ -22,6 +22,16 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
+	var branches []string = []string{}
+	for _, branchesItem := range r.Configuration.Branches {
+		branches = append(branches, branchesItem.ValueString())
+	}
 	var credentials shared.SourceGithubAuthentication
 	var oAuth *shared.OAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -65,6 +75,12 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 			SourceGithubPersonalAccessToken: sourceGithubPersonalAccessToken,
 		}
 	}
+	maxWaitingTime := new(int64)
+	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
+		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
+	} else {
+		maxWaitingTime = nil
+	}
 	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
@@ -75,29 +91,13 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubCreateRequest() *shared.
 	} else {
 		startDate = nil
 	}
-	apiURL := new(string)
-	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
-		*apiURL = r.Configuration.APIURL.ValueString()
-	} else {
-		apiURL = nil
-	}
-	var branches []string = []string{}
-	for _, branchesItem := range r.Configuration.Branches {
-		branches = append(branches, branchesItem.ValueString())
-	}
-	maxWaitingTime := new(int64)
-	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
-		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
-	} else {
-		maxWaitingTime = nil
-	}
 	configuration := shared.SourceGithub{
-		Credentials:    credentials,
-		Repositories:   repositories,
-		StartDate:      startDate,
 		APIURL:         apiURL,
 		Branches:       branches,
+		Credentials:    credentials,
 		MaxWaitingTime: maxWaitingTime,
+		Repositories:   repositories,
+		StartDate:      startDate,
 	}
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
@@ -169,6 +169,16 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 	var workspaceID string
 	workspaceID = r.WorkspaceID.ValueString()
 
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
+	var branches []string = []string{}
+	for _, branchesItem := range r.Configuration.Branches {
+		branches = append(branches, branchesItem.ValueString())
+	}
 	var credentials shared.SourceGithubUpdateAuthentication
 	var sourceGithubUpdateOAuth *shared.SourceGithubUpdateOAuth
 	if r.Configuration.Credentials.OAuth != nil {
@@ -212,6 +222,12 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 			SourceGithubUpdatePersonalAccessToken: sourceGithubUpdatePersonalAccessToken,
 		}
 	}
+	maxWaitingTime := new(int64)
+	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
+		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
+	} else {
+		maxWaitingTime = nil
+	}
 	var repositories []string = []string{}
 	for _, repositoriesItem := range r.Configuration.Repositories {
 		repositories = append(repositories, repositoriesItem.ValueString())
@@ -222,29 +238,13 @@ func (r *SourceGithubResourceModel) ToSharedSourceGithubPutRequest() *shared.Sou
 	} else {
 		startDate = nil
 	}
-	apiURL := new(string)
-	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
-		*apiURL = r.Configuration.APIURL.ValueString()
-	} else {
-		apiURL = nil
-	}
-	var branches []string = []string{}
-	for _, branchesItem := range r.Configuration.Branches {
-		branches = append(branches, branchesItem.ValueString())
-	}
-	maxWaitingTime := new(int64)
-	if !r.Configuration.MaxWaitingTime.IsUnknown() && !r.Configuration.MaxWaitingTime.IsNull() {
-		*maxWaitingTime = r.Configuration.MaxWaitingTime.ValueInt64()
-	} else {
-		maxWaitingTime = nil
-	}
 	configuration := shared.SourceGithubUpdate{
-		Credentials:    credentials,
-		Repositories:   repositories,
-		StartDate:      startDate,
 		APIURL:         apiURL,
 		Branches:       branches,
+		Credentials:    credentials,
 		MaxWaitingTime: maxWaitingTime,
+		Repositories:   repositories,
+		StartDate:      startDate,
 	}
 	out := shared.SourceGithubPutRequest{
 		Name:          name,

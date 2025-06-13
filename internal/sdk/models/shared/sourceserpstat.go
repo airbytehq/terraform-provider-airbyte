@@ -36,22 +36,22 @@ type SourceSerpstat struct {
 	APIKey string `json:"api_key"`
 	// The domain name to get data for (ex. serpstat.com)
 	Domain *string `default:"serpstat.com" json:"domain"`
-	// The number of data rows per page to be returned. Each data row can contain multiple data points. The max value is 1000. Reducing the size of the page will result in fewer API credits spent.
-	PageSize *int64 `default:"10" json:"page_size"`
 	// The list of domains that will be used in streams that support batch operations
 	Domains []any `json:"domains,omitempty"`
 	// The field name by which the results should be filtered. Filtering the results will result in fewer API credits spent. Each stream has different filtering options. See https://serpstat.com/api/ for more details.
 	FilterBy *string `json:"filter_by,omitempty"`
 	// The value of the field to filter by. Each stream has different filtering options. See https://serpstat.com/api/ for more details.
 	FilterValue *string `json:"filter_value,omitempty"`
-	// The field name by which the results should be sorted. Each stream has different sorting options. See https://serpstat.com/api/ for more details.
-	SortBy *string `json:"sort_by,omitempty"`
-	// The value of the field to sort by. Each stream has different sorting options. See https://serpstat.com/api/ for more details.
-	SortValue *string `json:"sort_value,omitempty"`
+	// The number of data rows per page to be returned. Each data row can contain multiple data points. The max value is 1000. Reducing the size of the page will result in fewer API credits spent.
+	PageSize *int64 `default:"10" json:"page_size"`
 	// The number of pages that should be fetched. All results will be obtained if left blank. Reducing the number of pages will result in fewer API credits spent.
 	PagesToFetch *int64 `default:"1" json:"pages_to_fetch"`
 	// The ID of a region to get data from in the form of a two-letter country code prepended with the g_ prefix. See the list of supported region IDs here: https://serpstat.com/api/664-request-parameters-v4/.
-	RegionID   *string  `default:"g_us" json:"region_id"`
+	RegionID *string `default:"g_us" json:"region_id"`
+	// The field name by which the results should be sorted. Each stream has different sorting options. See https://serpstat.com/api/ for more details.
+	SortBy *string `json:"sort_by,omitempty"`
+	// The value of the field to sort by. Each stream has different sorting options. See https://serpstat.com/api/ for more details.
+	SortValue  *string  `json:"sort_value,omitempty"`
 	sourceType Serpstat `const:"serpstat" json:"sourceType"`
 }
 
@@ -80,13 +80,6 @@ func (o *SourceSerpstat) GetDomain() *string {
 	return o.Domain
 }
 
-func (o *SourceSerpstat) GetPageSize() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PageSize
-}
-
 func (o *SourceSerpstat) GetDomains() []any {
 	if o == nil {
 		return nil
@@ -108,18 +101,11 @@ func (o *SourceSerpstat) GetFilterValue() *string {
 	return o.FilterValue
 }
 
-func (o *SourceSerpstat) GetSortBy() *string {
+func (o *SourceSerpstat) GetPageSize() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.SortBy
-}
-
-func (o *SourceSerpstat) GetSortValue() *string {
-	if o == nil {
-		return nil
-	}
-	return o.SortValue
+	return o.PageSize
 }
 
 func (o *SourceSerpstat) GetPagesToFetch() *int64 {
@@ -134,6 +120,20 @@ func (o *SourceSerpstat) GetRegionID() *string {
 		return nil
 	}
 	return o.RegionID
+}
+
+func (o *SourceSerpstat) GetSortBy() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SortBy
+}
+
+func (o *SourceSerpstat) GetSortValue() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SortValue
 }
 
 func (o *SourceSerpstat) GetSourceType() Serpstat {

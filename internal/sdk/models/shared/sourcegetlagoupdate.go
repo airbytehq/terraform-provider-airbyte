@@ -7,10 +7,10 @@ import (
 )
 
 type SourceGetlagoUpdate struct {
-	// Your Lago API URL
-	APIURL *string `default:"https://api.getlago.com/api/v1" json:"api_url"`
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 	APIKey string `json:"api_key"`
+	// Your Lago API URL
+	APIURL *string `default:"https://api.getlago.com/api/v1" json:"api_url"`
 }
 
 func (s SourceGetlagoUpdate) MarshalJSON() ([]byte, error) {
@@ -24,16 +24,16 @@ func (s *SourceGetlagoUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SourceGetlagoUpdate) GetAPIURL() *string {
-	if o == nil {
-		return nil
-	}
-	return o.APIURL
-}
-
 func (o *SourceGetlagoUpdate) GetAPIKey() string {
 	if o == nil {
 		return ""
 	}
 	return o.APIKey
+}
+
+func (o *SourceGetlagoUpdate) GetAPIURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.APIURL
 }
